@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string sessionName = Recording.GenerateAssetName("session");
             await CreateSession(sessionName);
             var list = await _sessionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

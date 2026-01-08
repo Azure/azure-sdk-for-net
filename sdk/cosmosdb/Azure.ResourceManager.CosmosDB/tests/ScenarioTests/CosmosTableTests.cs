@@ -195,12 +195,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyTables(CosmosDBTableResource expectedValue, CosmosDBTableResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.Resource.TableName, Is.EqualTo(expectedValue.Data.Resource.TableName));
-            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
-            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
-            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.Resource.TableName, Is.EqualTo(expectedValue.Data.Resource.TableName));
+                Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+            });
         }
     }
 }

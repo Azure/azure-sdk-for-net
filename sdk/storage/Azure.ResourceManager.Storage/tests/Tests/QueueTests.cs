@@ -52,16 +52,22 @@ namespace Azure.ResourceManager.Storage.Tests
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
             StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
-            Assert.IsNotNull(queue1);
-            Assert.That(storageQueueName, Is.EqualTo(queue1.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue1, Is.Not.Null);
+                Assert.That(storageQueueName, Is.EqualTo(queue1.Id.Name));
+            });
 
             //validate if successfully created
             StorageQueueResource queue2 = await _storageQueueCollection.GetAsync(storageQueueName);
             AssertStorageQueueEqual(queue1, queue2);
-            Assert.That((bool)await _storageQueueCollection.ExistsAsync(storageQueueName), Is.True);
-            Assert.That((bool)await _storageQueueCollection.ExistsAsync(storageQueueName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await _storageQueueCollection.ExistsAsync(storageQueueName), Is.True);
+                Assert.That((bool)await _storageQueueCollection.ExistsAsync(storageQueueName + "1"), Is.False);
+            });
             StorageQueueData queueData = queue2.Data;
-            Assert.IsEmpty(queueData.Metadata);
+            Assert.That(queueData.Metadata, Is.Empty);
 
             string queueName2 = Recording.GenerateAssetName("queue2");
             var data = new StorageQueueData()
@@ -69,11 +75,11 @@ namespace Azure.ResourceManager.Storage.Tests
                 Metadata = { { "metadata1", "true" }, { "metadata2", "value2" } }
             };
             queue2 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName2, data)).Value;
-            Assert.That(queue2.Data.Metadata.Count, Is.EqualTo(2));
+            Assert.That(queue2.Data.Metadata, Has.Count.EqualTo(2));
             Assert.That(queue2.Data.Metadata, Is.EqualTo(data.Metadata));
 
             queue2 = await _storageQueueCollection.GetAsync(queueName2);
-            Assert.That(queue2.Data.Metadata.Count, Is.EqualTo(2));
+            Assert.That(queue2.Data.Metadata, Has.Count.EqualTo(2));
             Assert.That(queue2.Data.Metadata, Is.EqualTo(data.Metadata));
 
             //delete storage queue
@@ -107,9 +113,13 @@ namespace Azure.ResourceManager.Storage.Tests
                 if (queue.Id.Name == queueName2)
                     queue4 = queue;
             }
-            Assert.That(count, Is.EqualTo(2));
-            Assert.IsNotNull(queue3);
-            Assert.IsNotNull(queue4);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(count, Is.EqualTo(2));
+                Assert.That(queue3, Is.Not.Null);
+                Assert.That(queue4, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -119,8 +129,11 @@ namespace Azure.ResourceManager.Storage.Tests
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
             StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
-            Assert.IsNotNull(queue1);
-            Assert.That(storageQueueName, Is.EqualTo(queue1.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue1, Is.Not.Null);
+                Assert.That(storageQueueName, Is.EqualTo(queue1.Id.Name));
+            });
 
             //update queue's meta data
             StorageQueueData queueData = new StorageQueueData();
@@ -130,8 +143,11 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.That(queue2, Is.Not.Null);
             Assert.That(queue2.Data.Metadata, Is.Not.Null);
-            Assert.That(queue2.Data.Metadata["key1"], Is.EqualTo("value1"));
-            Assert.That(queue2.Data.Metadata["key2"], Is.EqualTo("value2"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue2.Data.Metadata["key1"], Is.EqualTo("value1"));
+                Assert.That(queue2.Data.Metadata["key2"], Is.EqualTo("value2"));
+            });
         }
 
         [Test]
@@ -164,33 +180,39 @@ namespace Azure.ResourceManager.Storage.Tests
             _queueService = (await _queueService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
-            Assert.That(_queueService.Data.Cors.CorsRules.Count, Is.EqualTo(parameter.Cors.CorsRules.Count));
+            Assert.That(_queueService.Data.Cors.CorsRules, Has.Count.EqualTo(parameter.Cors.CorsRules.Count));
             for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
             {
                 StorageCorsRule getRule = _queueService.Data.Cors.CorsRules[i];
                 StorageCorsRule putRule = parameter.Cors.CorsRules[i];
 
-                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
-                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
-                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
-                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
-                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                    Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                    Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                    Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                    Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                });
             }
 
             _queueService = (await _queueService.GetAsync()).Value;
 
             //Validate CORS Rules
-            Assert.That(_queueService.Data.Cors.CorsRules.Count, Is.EqualTo(parameter.Cors.CorsRules.Count));
+            Assert.That(_queueService.Data.Cors.CorsRules, Has.Count.EqualTo(parameter.Cors.CorsRules.Count));
             for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
             {
                 StorageCorsRule getRule = _queueService.Data.Cors.CorsRules[i];
                 StorageCorsRule putRule = parameter.Cors.CorsRules[i];
 
-                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
-                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
-                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
-                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
-                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                    Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                    Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                    Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                    Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                });
             }
         }
     }

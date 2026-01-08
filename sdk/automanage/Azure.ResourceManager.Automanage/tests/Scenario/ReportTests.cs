@@ -39,9 +39,12 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             {
                 var reportData = report.Data;
                 Assert.That(reportData, Is.Not.Null);
-                Assert.That(reportData.Name, Is.Not.Null);
-                Assert.That(reportData.ConfigurationProfile, Is.EqualTo(profileName));
-                Assert.That(reportData.Id, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(reportData.Name, Is.Not.Null);
+                    Assert.That(reportData.ConfigurationProfile, Is.EqualTo(profileName));
+                    Assert.That(reportData.Id, Is.Not.Null);
+                });
             }
         }
     }

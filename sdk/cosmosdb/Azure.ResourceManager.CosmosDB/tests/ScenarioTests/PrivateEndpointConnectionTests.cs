@@ -159,12 +159,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyPrivateEndpointConnections(NetworkPrivateLinkServiceConnection expectedValue, CosmosDBPrivateEndpointConnectionResource actualValue)
         {
-            // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
-            //Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.That(actualValue.Data.ConnectionState.Status, Is.EqualTo(expectedValue.ConnectionState.Status));
-            Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
-            Assert.That(actualValue.Data.ConnectionState.ActionsRequired, Is.EqualTo(expectedValue.ConnectionState.ActionsRequired));
+            Assert.Multiple(() =>
+            {
+                // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
+                //Assert.AreEqual(expectedValue.Id, actualValue.Id);
+                //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
+                Assert.That(actualValue.Data.ConnectionState.Status, Is.EqualTo(expectedValue.ConnectionState.Status));
+                Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
+                Assert.That(actualValue.Data.ConnectionState.ActionsRequired, Is.EqualTo(expectedValue.ConnectionState.ActionsRequired));
+            });
         }
     }
 }

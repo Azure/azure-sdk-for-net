@@ -30,12 +30,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
 
             UserAssignedIdentityResource userAssignedIdentity2 = await userAssignedIdentity.GetAsync();
 
-            Assert.That(userAssignedIdentity2.Data.Id, Is.EqualTo(userAssignedIdentity.Data.Id));
-            Assert.That(userAssignedIdentity2.Data.Name, Is.EqualTo(userAssignedIdentity.Data.Name));
-            Assert.That(userAssignedIdentity2.Data.ResourceType, Is.EqualTo(userAssignedIdentity.Data.ResourceType));
-            Assert.That(userAssignedIdentity2.Data.TenantId, Is.EqualTo(userAssignedIdentity.Data.TenantId));
-            Assert.That(userAssignedIdentity2.Data.ClientId, Is.EqualTo(userAssignedIdentity.Data.ClientId));
-            Assert.That(userAssignedIdentity2.Data.PrincipalId, Is.EqualTo(userAssignedIdentity.Data.PrincipalId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(userAssignedIdentity2.Data.Id, Is.EqualTo(userAssignedIdentity.Data.Id));
+                Assert.That(userAssignedIdentity2.Data.Name, Is.EqualTo(userAssignedIdentity.Data.Name));
+                Assert.That(userAssignedIdentity2.Data.ResourceType, Is.EqualTo(userAssignedIdentity.Data.ResourceType));
+                Assert.That(userAssignedIdentity2.Data.TenantId, Is.EqualTo(userAssignedIdentity.Data.TenantId));
+                Assert.That(userAssignedIdentity2.Data.ClientId, Is.EqualTo(userAssignedIdentity.Data.ClientId));
+                Assert.That(userAssignedIdentity2.Data.PrincipalId, Is.EqualTo(userAssignedIdentity.Data.PrincipalId));
+            });
         }
 
         [RecordedTest]
@@ -60,8 +63,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             var value = "value";
             userAssignedIdentity = await userAssignedIdentity.AddTagAsync(key, value);
 
-            Assert.That(userAssignedIdentity.Data.Tags.ContainsKey(key), Is.True);
-            Assert.That(userAssignedIdentity.Data.Tags[key], Is.EqualTo(value));
+            Assert.Multiple(() =>
+            {
+                Assert.That(userAssignedIdentity.Data.Tags.ContainsKey(key), Is.True);
+                Assert.That(userAssignedIdentity.Data.Tags[key], Is.EqualTo(value));
+            });
         }
 
         [TestCase(null)]
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             };
             userAssignedIdentity = await userAssignedIdentity.SetTagsAsync(tags);
 
-            CollectionAssert.AreEquivalent(tags, userAssignedIdentity.Data.Tags);
+            Assert.That(userAssignedIdentity.Data.Tags, Is.EquivalentTo(tags));
         }
 
         [TestCase(null)]
@@ -101,8 +107,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
 
             userAssignedIdentity = await userAssignedIdentity.RemoveTagAsync("key1");
 
-            Assert.That(userAssignedIdentity.Data.Tags.ContainsKey("key1"), Is.False);
-            Assert.That(userAssignedIdentity.Data.Tags.ContainsKey("key2"), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(userAssignedIdentity.Data.Tags.ContainsKey("key1"), Is.False);
+                Assert.That(userAssignedIdentity.Data.Tags.ContainsKey("key2"), Is.True);
+            });
         }
     }
 }

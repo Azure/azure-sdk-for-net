@@ -83,19 +83,25 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             var assessmentResponse = await assessmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentName, asmData);
             var assessmentResource = assessmentResponse.Value;
-            Assert.That(assessmentResponse.HasCompleted, Is.True);
-            Assert.That(assessmentResource, Is.Not.Null);
-            Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assessmentResponse.HasCompleted, Is.True);
+                Assert.That(assessmentResource, Is.Not.Null);
+                Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            });
 
             // Get Assessment
             assessmentResource = await assessmentCollection.GetAsync(assessmentName);
-            Assert.That(assessmentResource, Is.Not.Null);
-            Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assessmentResource, Is.Not.Null);
+                Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            });
 
             // Get All Assessments
             var allAssessments = await assessmentCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(allAssessments, Is.Not.Null);
-            Assert.GreaterOrEqual(allAssessments.Count, 1);
+            Assert.That(allAssessments, Is.Not.Empty);
 
             // add wait period of 10 mins
             //await Task.Delay(360000);
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessed Machines
             var assessedMachines = await assessmentResource.GetMigrationAssessedSqlMachines().ToEnumerableAsync();
             Assert.That(assessedMachines, Is.Not.Null);
-            Assert.GreaterOrEqual(assessedMachines.Count, 1);
+            Assert.That(assessedMachines, Is.Not.Empty);
 
             // Get an Assessed Machine
             var assessedMachine = await assessmentResource.GetMigrationAssessedSqlMachineAsync(assessedMachines.First().Data.Name);
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessed DBs
             var assessedDBs = await assessmentResource.GetMigrationAssessedSqlDatabaseV2s().ToEnumerableAsync();
             Assert.That(assessedDBs, Is.Not.Null);
-            Assert.GreaterOrEqual(assessedDBs.Count, 1);
+            Assert.That(assessedDBs, Is.Not.Empty);
 
             // Get an Assessed DB
             var assessedDB = await assessmentResource.GetMigrationAssessedSqlDatabaseV2Async(assessedDBs.First().Data.Name);
@@ -128,7 +134,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessed Instances
             var assessedInstances = await assessmentResource.GetMigrationAssessedSqlInstanceV2s().ToEnumerableAsync();
             Assert.That(assessedInstances, Is.Not.Null);
-            Assert.GreaterOrEqual(assessedInstances.Count, 1);
+            Assert.That(assessedInstances, Is.Not.Empty);
 
             // Get an Assessed Machine
             var assessedInstance = await assessmentResource.GetMigrationAssessedSqlInstanceV2Async(assessedInstances.First().Data.Name);
@@ -137,7 +143,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessed Machines
             var recommendedEntities = await assessmentResource.GetMigrationAssessedSqlRecommendedEntities().ToEnumerableAsync();
             Assert.That(recommendedEntities, Is.Not.Null);
-            Assert.GreaterOrEqual(recommendedEntities.Count, 1);
+            Assert.That(recommendedEntities, Is.Not.Empty);
 
             // Get an Assessed Machine
             var recommendedEntity = await assessmentResource.GetMigrationAssessedSqlRecommendedEntityAsync(recommendedEntities.First().Data.Name);
@@ -169,13 +175,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessment Options
             var assessmentOptionResponse = await collection.GetAsync(assessmentOptionsName);
             var assessmentOptionsResource = assessmentOptionResponse.Value;
-            Assert.That(assessmentOptionsResource, Is.Not.Null);
-            Assert.That(assessmentOptionsName, Is.EqualTo(assessmentOptionsResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assessmentOptionsResource, Is.Not.Null);
+                Assert.That(assessmentOptionsName, Is.EqualTo(assessmentOptionsResource.Data.Name));
+            });
 
             // Get All Assessment Options
             var allAssessmentOptions = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.That(allAssessmentOptions, Is.Not.Null);
-            Assert.GreaterOrEqual(allAssessmentOptions.Count, 1);
+            Assert.That(allAssessmentOptions, Is.Not.Empty);
         }
     }
 }

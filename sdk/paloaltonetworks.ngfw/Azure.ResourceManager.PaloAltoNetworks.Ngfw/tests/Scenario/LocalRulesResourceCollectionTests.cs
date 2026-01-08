@@ -54,8 +54,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
             LocalRulestackRuleResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
-            Assert.That(rulesResource, Is.Not.Null);
-            Assert.That(DefaultResource1.Data.RuleName, Is.EqualTo(rulesResource.Data.RuleName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(rulesResource, Is.Not.Null);
+                Assert.That(DefaultResource1.Data.RuleName, Is.EqualTo(rulesResource.Data.RuleName));
+            });
         }
 
         [TestCase]
@@ -63,8 +66,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
-            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Priority.ToString()), Is.True);
-            Assert.That((bool)await collection.ExistsAsync("999"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Priority.ToString()), Is.True);
+                Assert.That((bool)await collection.ExistsAsync("999"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 

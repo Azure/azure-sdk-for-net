@@ -110,16 +110,22 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         discoverySitePatch.Tags.Add("Key1", "TestPatchValue");
         sapDiscoverySiteResource = await sapDiscoverySiteResource.UpdateAsync(discoverySitePatch);
         string discoverySitetagValue = string.Empty;
-        Assert.That(sapDiscoverySiteResource.Data.Tags.TryGetValue("Key1", out discoverySitetagValue), Is.True);
-        Assert.That(discoverySitetagValue, Is.EqualTo("TestPatchValue"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(sapDiscoverySiteResource.Data.Tags.TryGetValue("Key1", out discoverySitetagValue), Is.True);
+            Assert.That(discoverySitetagValue, Is.EqualTo("TestPatchValue"));
+        });
 
         //Patch Sap Instance
         var sapInstancePatch = new SapInstancePatch();
         sapInstancePatch.Tags.Add("Key1", "TestPatchValue");
         sapInstance = await sapInstance.UpdateAsync(sapInstancePatch);
         string sapInstancetagValue = string.Empty;
-        Assert.That(sapInstance.Data.Tags.TryGetValue("Key1", out sapInstancetagValue), Is.True);
-        Assert.That(sapInstancetagValue, Is.EqualTo("TestPatchValue"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(sapInstance.Data.Tags.TryGetValue("Key1", out sapInstancetagValue), Is.True);
+            Assert.That(sapInstancetagValue, Is.EqualTo("TestPatchValue"));
+        });
 
         // Delete Sap DiscoverySite
         await sapDiscoverySiteResource.DeleteAsync(WaitUntil.Completed);

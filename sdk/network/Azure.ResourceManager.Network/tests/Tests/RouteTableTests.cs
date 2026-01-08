@@ -52,15 +52,21 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get RouteTable
             Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
-            Assert.That(getRouteTableResponse.Value.Data.Routes.Any(), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+                Assert.That(getRouteTableResponse.Value.Data.Routes.Any(), Is.False);
+            });
 
             // List RouteTable
             AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(listRouteTableResponse);
-            Assert.That(listRouteTableResponse.First().Data.Name, Is.EqualTo(getRouteTableResponse.Value.Data.Name));
-            Assert.That(listRouteTableResponse.First().Id, Is.EqualTo(getRouteTableResponse.Value.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listRouteTableResponse.First().Data.Name, Is.EqualTo(getRouteTableResponse.Value.Data.Name));
+                Assert.That(listRouteTableResponse.First().Id, Is.EqualTo(getRouteTableResponse.Value.Id));
+            });
 
             // Delete RouteTable
             var deleteOperation = await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.Network.Tests
             listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
 
-            Assert.IsEmpty(listRouteTableResponse);
+            Assert.That(listRouteTableResponse, Is.Empty);
         }
 
         [Test]
@@ -106,12 +112,18 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get RouteTable
             Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
-            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(1));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(route1Name));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].AddressPrefix, Is.EqualTo("192.168.1.0/24"));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress, Is.EqualTo("23.108.1.1"));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(RouteNextHopType.VirtualAppliance));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+                Assert.That(getRouteTableResponse.Value.Data.Routes, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(route1Name));
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].AddressPrefix, Is.EqualTo("192.168.1.0/24"));
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress, Is.EqualTo("23.108.1.1"));
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(RouteNextHopType.VirtualAppliance));
+            });
 
             // Add another route
             var route2 = new RouteData()
@@ -125,12 +137,18 @@ namespace Azure.ResourceManager.Network.Tests
             await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, getRouteTableResponse.Value.Data);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
-            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(2));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[1].Name, Is.EqualTo(route2Name));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[1].AddressPrefix, Is.EqualTo("10.0.1.0/24"));
-            Assert.That(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress), Is.True);
-            Assert.That(getRouteTableResponse.Value.Data.Routes[1].NextHopType, Is.EqualTo(RouteNextHopType.VnetLocal));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+                Assert.That(getRouteTableResponse.Value.Data.Routes, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Routes[1].Name, Is.EqualTo(route2Name));
+                Assert.That(getRouteTableResponse.Value.Data.Routes[1].AddressPrefix, Is.EqualTo("10.0.1.0/24"));
+                Assert.That(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress), Is.True);
+                Assert.That(getRouteTableResponse.Value.Data.Routes[1].NextHopType, Is.EqualTo(RouteNextHopType.VnetLocal));
+            });
 
             // Delete a route
             getRouteTableResponse.Value.Data.Routes.RemoveAt(0);
@@ -138,12 +156,18 @@ namespace Azure.ResourceManager.Network.Tests
             await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, getRouteTableResponse.Value.Data);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
-            Assert.That(getRouteTableResponse.Value.Data.Routes.Count, Is.EqualTo(1));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(route2Name));
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].AddressPrefix, Is.EqualTo("10.0.1.0/24"));
-            Assert.That(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress), Is.True);
-            Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(RouteNextHopType.VnetLocal));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Name, Is.EqualTo(routeTableName));
+                Assert.That(getRouteTableResponse.Value.Data.Routes, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].Name, Is.EqualTo(route2Name));
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].AddressPrefix, Is.EqualTo("10.0.1.0/24"));
+                Assert.That(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[0].NextHopIPAddress), Is.True);
+                Assert.That(getRouteTableResponse.Value.Data.Routes[0].NextHopType, Is.EqualTo(RouteNextHopType.VnetLocal));
+            });
 
             // Delete RouteTable
             var deleteOperation = await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -152,7 +176,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify delete
             AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
             List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listRouteTableResponse);
+            Assert.That(listRouteTableResponse, Is.Empty);
         }
 
         [Test]
@@ -188,7 +212,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
 
             // Verify that the subnet reference is null
-            Assert.IsEmpty(getRouteTableResponse.Value.Data.Subnets);
+            Assert.That(getRouteTableResponse.Value.Data.Subnets, Is.Empty);
 
             // Create Vnet with subnet and add a route table
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -228,7 +252,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get RouteTable
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
-            Assert.That(getRouteTableResponse.Value.Data.Subnets.Count, Is.EqualTo(1));
+            Assert.That(getRouteTableResponse.Value.Data.Subnets, Has.Count.EqualTo(1));
             Assert.That(getRouteTableResponse.Value.Data.Subnets[0].Id, Is.EqualTo(getSubnetResponse.Value.Id));
         }
     }

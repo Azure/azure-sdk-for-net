@@ -249,14 +249,20 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyMongoDBDatabases(MongoDBDatabaseResource expectedValue, MongoDBDatabaseResource actualValue, bool isRestoredResource = false)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.Resource.DatabaseName, Is.EqualTo(expectedValue.Data.Resource.DatabaseName));
-            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.Resource.DatabaseName, Is.EqualTo(expectedValue.Data.Resource.DatabaseName));
+                Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            });
             if (!isRestoredResource)
             {
-                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
-                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                    Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                });
             }
         }
 

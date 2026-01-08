@@ -38,9 +38,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             CarbonEmissionAvailableDateRange result = await Tenant.QueryCarbonEmissionAvailableDateRangeAsync();
             Assert.That(result, Is.Not.Null);
 
-            // validate the result startDate and endDate format is like 'yyyy-MM-dd'
-            Assert.That(result.StartOn, Is.Not.Null);
-            Assert.That(result.EndOn, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                // validate the result startDate and endDate format is like 'yyyy-MM-dd'
+                Assert.That(result.StartOn, Is.Not.Null);
+                Assert.That(result.EndOn, Is.Not.Null);
+            });
         }
     }
 }

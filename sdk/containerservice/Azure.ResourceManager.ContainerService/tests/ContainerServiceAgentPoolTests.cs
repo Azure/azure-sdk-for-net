@@ -25,8 +25,11 @@ namespace Azure.ResourceManager.ContainerService.Tests
             string clusterName = Recording.GenerateAssetName("akscluster");
             // Create cluster
             ContainerServiceManagedClusterResource cluster = await CreateContainerServiceAsync(rg, clusterName, rg.Data.Location);
-            Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
-            Assert.That(cluster.Data.DnsPrefix, Is.EqualTo(DnsPrefix));
+            Assert.Multiple(() =>
+            {
+                Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
+                Assert.That(cluster.Data.DnsPrefix, Is.EqualTo(DnsPrefix));
+            });
             // Create agent pool
             ContainerServiceAgentPoolCollection collection = cluster.GetContainerServiceAgentPools();
             string agentPoolName = Recording.GenerateAssetName("ap");

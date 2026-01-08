@@ -587,50 +587,62 @@ namespace Azure.ResourceManager.Network.Tests
             //compare base data
             CompareApplicationGatewayBase(gw1,gw2);
 
-            //compare WAF
-            Assert.That(gw2.WebApplicationFirewallConfiguration.Enabled, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.Enabled));
-            Assert.That(gw2.WebApplicationFirewallConfiguration.FirewallMode, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.FirewallMode));
-            Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetType, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetType));
-            Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetVersion, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetVersion));
+            Assert.Multiple(() =>
+            {
+                //compare WAF
+                Assert.That(gw2.WebApplicationFirewallConfiguration.Enabled, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.Enabled));
+                Assert.That(gw2.WebApplicationFirewallConfiguration.FirewallMode, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.FirewallMode));
+                Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetType, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetType));
+                Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetVersion, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetVersion));
+            });
             if (gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups != null)
             {
                 Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups, Is.Not.Null);
-                Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count));
+                Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups, Has.Count.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count));
                 for (int i = 0; i < gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count; i++)
                 {
-                    Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName));
-                    Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName));
+                        Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules));
+                    });
                 }
             }
             else
             {
-                Assert.IsEmpty(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
+                Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups, Is.Empty);
             }
 
-            // ssl policy
-            Assert.That(gw2.SslPolicy.PolicyType, Is.EqualTo(gw1.SslPolicy.PolicyType));
-            Assert.That(gw2.SslPolicy.PolicyName, Is.EqualTo(gw1.SslPolicy.PolicyName));
-            Assert.That(gw2.SslPolicy.MinProtocolVersion, Is.EqualTo(gw1.SslPolicy.MinProtocolVersion));
+            Assert.Multiple(() =>
+            {
+                // ssl policy
+                Assert.That(gw2.SslPolicy.PolicyType, Is.EqualTo(gw1.SslPolicy.PolicyType));
+                Assert.That(gw2.SslPolicy.PolicyName, Is.EqualTo(gw1.SslPolicy.PolicyName));
+                Assert.That(gw2.SslPolicy.MinProtocolVersion, Is.EqualTo(gw1.SslPolicy.MinProtocolVersion));
+            });
         }
 
         private void CompareApplicationGatewayBase(ApplicationGatewayData gw1, ApplicationGatewayData gw2)
         {
-            // compare count of child resources
-            Assert.That(gw2.GatewayIPConfigurations.Count, Is.EqualTo(gw1.GatewayIPConfigurations.Count));
-            Assert.That(gw2.FrontendIPConfigurations.Count, Is.EqualTo(gw1.FrontendIPConfigurations.Count));
-            Assert.That(gw2.FrontendPorts.Count, Is.EqualTo(gw1.FrontendPorts.Count));
-            Assert.That(gw2.Probes.Count, Is.EqualTo(gw1.Probes.Count));
-            Assert.That(gw2.BackendAddressPools.Count, Is.EqualTo(gw1.BackendAddressPools.Count));
-            Assert.That(gw2.BackendHttpSettingsCollection.Count, Is.EqualTo(gw1.BackendHttpSettingsCollection.Count));
-            Assert.That(gw2.HttpListeners.Count, Is.EqualTo(gw1.HttpListeners.Count));
-            Assert.That(gw2.RequestRoutingRules.Count, Is.EqualTo(gw1.RequestRoutingRules.Count));
-            Assert.That(gw2.RedirectConfigurations.Count, Is.EqualTo(gw1.RedirectConfigurations.Count));
-            Assert.That(gw2.AuthenticationCertificates.Count, Is.EqualTo(gw1.AuthenticationCertificates.Count));
+            Assert.Multiple(() =>
+            {
+                // compare count of child resources
+                Assert.That(gw2.GatewayIPConfigurations, Has.Count.EqualTo(gw1.GatewayIPConfigurations.Count));
+                Assert.That(gw2.FrontendIPConfigurations, Has.Count.EqualTo(gw1.FrontendIPConfigurations.Count));
+                Assert.That(gw2.FrontendPorts, Has.Count.EqualTo(gw1.FrontendPorts.Count));
+                Assert.That(gw2.Probes, Has.Count.EqualTo(gw1.Probes.Count));
+                Assert.That(gw2.BackendAddressPools, Has.Count.EqualTo(gw1.BackendAddressPools.Count));
+                Assert.That(gw2.BackendHttpSettingsCollection, Has.Count.EqualTo(gw1.BackendHttpSettingsCollection.Count));
+                Assert.That(gw2.HttpListeners, Has.Count.EqualTo(gw1.HttpListeners.Count));
+                Assert.That(gw2.RequestRoutingRules, Has.Count.EqualTo(gw1.RequestRoutingRules.Count));
+                Assert.That(gw2.RedirectConfigurations, Has.Count.EqualTo(gw1.RedirectConfigurations.Count));
+                Assert.That(gw2.AuthenticationCertificates, Has.Count.EqualTo(gw1.AuthenticationCertificates.Count));
 
-            // compare sku
-            Assert.That(gw2.Sku.Name, Is.EqualTo(gw1.Sku.Name));
-            Assert.That(gw2.Sku.Tier, Is.EqualTo(gw1.Sku.Tier));
-            Assert.That(gw2.Sku.Capacity, Is.EqualTo(gw1.Sku.Capacity));
+                // compare sku
+                Assert.That(gw2.Sku.Name, Is.EqualTo(gw1.Sku.Name));
+                Assert.That(gw2.Sku.Tier, Is.EqualTo(gw1.Sku.Tier));
+                Assert.That(gw2.Sku.Capacity, Is.EqualTo(gw1.Sku.Capacity));
+            });
 
             // compare connectionDraining
             for (int i = 0; i < gw1.BackendHttpSettingsCollection.Count; i++)
@@ -638,8 +650,11 @@ namespace Azure.ResourceManager.Network.Tests
                 if (gw1.BackendHttpSettingsCollection[i].ConnectionDraining != null)
                 {
                     Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining, Is.Not.Null);
-                    Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled));
-                    Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled));
+                        Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds));
+                    });
                 }
                 else
                 {
@@ -702,12 +717,18 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             Assert.That(availableWAFRuleSet, Is.Not.Null);
-            Assert.That(availableWAFRuleSet.Name, Is.Not.Null);
-            Assert.That(availableWAFRuleSet.RuleSetType, Is.Not.Null);
-            Assert.That(availableWAFRuleSet.RuleSetVersion, Is.Not.Null);
-            Assert.IsNotEmpty(availableWAFRuleSet.RuleGroups);
-            Assert.That(availableWAFRuleSet.RuleGroups[0].RuleGroupName, Is.Not.Null);
-            Assert.IsNotEmpty(availableWAFRuleSet.RuleGroups[0].Rules);
+            Assert.Multiple(() =>
+            {
+                Assert.That(availableWAFRuleSet.Name, Is.Not.Null);
+                Assert.That(availableWAFRuleSet.RuleSetType, Is.Not.Null);
+                Assert.That(availableWAFRuleSet.RuleSetVersion, Is.Not.Null);
+                Assert.That(availableWAFRuleSet.RuleGroups, Is.Not.Empty);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(availableWAFRuleSet.RuleGroups[0].RuleGroupName, Is.Not.Null);
+                Assert.That(availableWAFRuleSet.RuleGroups[0].Rules, Is.Not.Empty);
+            });
             // Assert.NotNull(availableWAFRuleSet.RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
@@ -761,17 +782,20 @@ namespace Azure.ResourceManager.Network.Tests
             Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync(WaitUntil.Started, "true");
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
-            Assert.That(backendHealth.Value.BackendAddressPools.Count, Is.EqualTo(2));
-            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection.Count, Is.EqualTo(1));
-            Assert.That(backendHealth.Value.BackendAddressPools[1].BackendHttpSettingsCollection.Count, Is.EqualTo(1));
-            Assert.That(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any(), Is.True);
+            Assert.That(backendHealth.Value.BackendAddressPools, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection, Has.Count.EqualTo(1));
+                Assert.That(backendHealth.Value.BackendAddressPools[1].BackendHttpSettingsCollection, Has.Count.EqualTo(1));
+                Assert.That(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any(), Is.True);
+            });
 
             //Start AppGw
             await getGateway.Value.StartAsync(WaitUntil.Completed);
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayCollection.GetAsync(appGwName);
-            Assert.That(getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count, Is.EqualTo(2));
+            Assert.That(getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations, Has.Count.EqualTo(2));
 
             //Stop AppGw
             await getGateway.Value.StopAsync(WaitUntil.Completed);
@@ -851,8 +875,11 @@ namespace Azure.ResourceManager.Network.Tests
             // Add NIC to application gateway backend address pool.
             var nic1 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName1);
             var nic2 = GetNetworkInterfaceCollection(resourceGroup).GetAsync(nicName2);
-            Assert.That(nic1, Is.Not.Null);
-            Assert.That(nic2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nic1, Is.Not.Null);
+                Assert.That(nic2, Is.Not.Null);
+            });
             nic1.Result.Value.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             nic2.Result.Value.Data.IPConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
 
@@ -868,9 +895,12 @@ namespace Azure.ResourceManager.Network.Tests
             Operation<ApplicationGatewayBackendHealth> backendHealthOperation = InstrumentOperation(await getGateway.Value.BackendHealthAsync(WaitUntil.Started, "true"));
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
-            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers.Count, Is.EqualTo(2));
-            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[0].Address, Is.EqualTo(nicPrivateIpAdd1));
-            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address, Is.EqualTo(nicPrivateIpAdd2));
+            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[0].Address, Is.EqualTo(nicPrivateIpAdd1));
+                Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address, Is.EqualTo(nicPrivateIpAdd2));
+            });
 
             //Start AppGw
             // TODO: ADO 6162, but consider to move this into another test
@@ -878,7 +908,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayCollection.GetAsync(appGwName);
-            Assert.That(getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count, Is.EqualTo(2));
+            Assert.That(getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations, Has.Count.EqualTo(2));
 
             //Stop AppGw
             // TODO: ADO 6162, but consider to move this into another test
@@ -895,10 +925,13 @@ namespace Azure.ResourceManager.Network.Tests
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
             Assert.That(sslOptionsInfo, Is.Not.Null);
-            Assert.That(sslOptionsInfo.Name, Is.EqualTo("default"));
-            Assert.That(sslOptionsInfo.ResourceType, Is.EqualTo(sslOptionsInfo.Id.ResourceType));
-            Assert.That(ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101, Is.EqualTo(sslOptionsInfo.DefaultPolicy));
-            Assert.That(sslOptionsInfo.PredefinedPolicies.Count, Is.EqualTo(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sslOptionsInfo.Name, Is.EqualTo("default"));
+                Assert.That(sslOptionsInfo.ResourceType, Is.EqualTo(sslOptionsInfo.Id.ResourceType));
+                Assert.That(ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101, Is.EqualTo(sslOptionsInfo.DefaultPolicy));
+                Assert.That(sslOptionsInfo.PredefinedPolicies, Has.Count.EqualTo(5));
+            });
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
             {
                 Assert.That(predefinedPolicy.Id.ResourceType, Is.EqualTo("Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy"));
@@ -924,8 +957,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             string predefinedPolicyName = predefinedPolicies[0].Name;
             ApplicationGatewaySslPredefinedPolicy predefinedPolicy = await subscription.GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName);
-            Assert.That(predefinedPolicyName, Is.EqualTo(predefinedPolicy.Name));
-            Assert.That(predefinedPolicy.ResourceType, Is.EqualTo(predefinedPolicy.Id.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(predefinedPolicyName, Is.EqualTo(predefinedPolicy.Name));
+                Assert.That(predefinedPolicy.ResourceType, Is.EqualTo(predefinedPolicy.Id.ResourceType));
+            });
         }
     }
 }

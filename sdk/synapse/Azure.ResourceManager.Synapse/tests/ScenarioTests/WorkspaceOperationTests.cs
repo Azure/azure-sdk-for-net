@@ -33,8 +33,11 @@ namespace Azure.ResourceManager.Synapse.Tests
             var createParams = CommonData.PrepareWorkspaceCreateParams();
             SynapseWorkspaceCollection workspaceCollection = ResourceGroup.GetSynapseWorkspaces();
             var workspaceCreate = (await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, createParams)).Value;
-            Assert.That(workspaceCreate.Id.ResourceType, Is.EqualTo(CommonTestFixture.WorkspaceType));
-            Assert.That(workspaceCreate.Id.Name, Is.EqualTo(workspaceName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(workspaceCreate.Id.ResourceType, Is.EqualTo(CommonTestFixture.WorkspaceType));
+                Assert.That(workspaceCreate.Id.Name, Is.EqualTo(workspaceName));
+            });
 
             // update workspace
             createParams.Tags.Add("TestTag", "TestUpdate");
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             }
 
             workspaceList = await workspaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(workspaceList.Count, Is.EqualTo(workspaceCount - 1));
+            Assert.That(workspaceList, Has.Count.EqualTo(workspaceCount - 1));
         }
     }
 }

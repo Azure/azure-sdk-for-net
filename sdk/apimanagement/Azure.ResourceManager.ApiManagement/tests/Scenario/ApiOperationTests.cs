@@ -47,21 +47,24 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await CreateApiServiceAsync();
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
             var api = list.Single();
 
             var collection = api.GetApiOperations();
             var operations = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.That(operations, Is.Not.Null);
-            Assert.GreaterOrEqual(operations.Count, 1);
+            Assert.That(operations.Count, Is.GreaterThanOrEqualTo(1));
 
             // Get first operation
             var firstOperation = operations.First();
             var getResponse = (await collection.GetAsync(firstOperation.Data.Name)).Value;
             Assert.That(getResponse, Is.Not.Null);
-            Assert.That(getResponse.Data.Name, Is.EqualTo(firstOperation.Data.Name));
-            Assert.That(getResponse.Data.Method, Is.EqualTo(firstOperation.Data.Method));
-            Assert.That(getResponse.Data.UriTemplate, Is.EqualTo(firstOperation.Data.UriTemplate));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Data.Name, Is.EqualTo(firstOperation.Data.Name));
+                Assert.That(getResponse.Data.Method, Is.EqualTo(firstOperation.Data.Method));
+                Assert.That(getResponse.Data.UriTemplate, Is.EqualTo(firstOperation.Data.UriTemplate));
+            });
 
             // Add new operation
             string newOperationId = Recording.GenerateAssetName("operationid");
@@ -154,8 +157,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Method = patchedMethod,
             };
             getResponse = (await apiOperationResponse.UpdateAsync(ETag.All, patchOperation)).Value;
-            Assert.That(getResponse, Is.Not.Null);
-            Assert.That(patchedMethod, Is.EqualTo(getResponse.Data.Method));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse, Is.Not.Null);
+                Assert.That(patchedMethod, Is.EqualTo(getResponse.Data.Method));
+            });
 
             // Delete the operation
             await apiOperationResponse.DeleteAsync(WaitUntil.Completed, ETag.All);

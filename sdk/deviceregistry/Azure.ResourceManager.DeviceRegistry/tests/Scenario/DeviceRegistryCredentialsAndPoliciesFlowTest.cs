@@ -106,9 +106,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var namespaceResponse = await namespacesCollection.GetAsync(_namespaceName, CancellationToken.None);
             DeviceRegistryNamespaceResource namespaceResource = namespaceResponse.Value;
 
-            Assert.That(namespaceResource, Is.Not.Null);
-            Assert.That(_region, Is.EqualTo(namespaceResource.Data.Location));
-            Assert.That(_namespaceName, Is.EqualTo(namespaceResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(namespaceResource, Is.Not.Null);
+                Assert.That(_region, Is.EqualTo(namespaceResource.Data.Location));
+                Assert.That(_namespaceName, Is.EqualTo(namespaceResource.Data.Name));
+            });
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Namespace retrieved successfully\n");
 
             // Test Credential Flow
@@ -128,8 +131,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     credentialData,
                     CancellationToken.None);
                 credentialResource = credentialOperation.Value;
-                Assert.That(credentialResource, Is.Not.Null);
-                Assert.That(_region, Is.EqualTo(credentialResource.Data.Location));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(credentialResource, Is.Not.Null);
+                    Assert.That(_region, Is.EqualTo(credentialResource.Data.Location));
+                });
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential created successfully\n");
 
                 // Allow backend propagation after credential creation
@@ -145,9 +151,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential retrieved successfully\n");
             }
 
-            // Verify credential was created or retrieved successfully
-            Assert.That(credentialResource.Data, Is.Not.Null);
-            Assert.That(_region, Is.EqualTo(credentialResource.Data.Location));
+            Assert.Multiple(() =>
+            {
+                // Verify credential was created or retrieved successfully
+                Assert.That(credentialResource.Data, Is.Not.Null);
+                Assert.That(_region, Is.EqualTo(credentialResource.Data.Location));
+            });
 
             // Test Policy Flow
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 4: Checking if policy '{_policyName}' exists...");
@@ -182,9 +191,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     policyData,
                     CancellationToken.None);
                 policyResource = policyOperation.Value;
-                Assert.That(policyResource, Is.Not.Null);
-                Assert.That(_region, Is.EqualTo(policyResource.Data.Location));
-                Assert.That(_policyName, Is.EqualTo(policyResource.Data.Name));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(policyResource, Is.Not.Null);
+                    Assert.That(_region, Is.EqualTo(policyResource.Data.Location));
+                    Assert.That(_policyName, Is.EqualTo(policyResource.Data.Name));
+                });
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
 
                 // Allow backend propagation after policy creation
@@ -200,18 +212,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy retrieved successfully\n");
             }
 
-            // Verify policy was created or retrieved successfully
-            Assert.That(policyResource.Data, Is.Not.Null);
-            Assert.That(_region, Is.EqualTo(policyResource.Data.Location));
+            Assert.Multiple(() =>
+            {
+                // Verify policy was created or retrieved successfully
+                Assert.That(policyResource.Data, Is.Not.Null);
+                Assert.That(_region, Is.EqualTo(policyResource.Data.Location));
+            });
             Assert.That(policyResource.Data.Properties, Is.Not.Null);
             Assert.That(policyResource.Data.Properties.Certificate, Is.Not.Null);
 
             // Verify certificate configuration details
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Verifying certificate properties...");
-            Assert.That(policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.KeyType,
-                Is.EqualTo(SupportedKeyType.ECC));
-            Assert.That(policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays,
-                Is.EqualTo(90));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.KeyType,
+                            Is.EqualTo(SupportedKeyType.ECC));
+                Assert.That(policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays,
+                    Is.EqualTo(90));
+            });
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Certificate: ECC key type, 90-day validity");
 
             // Verify provisioning state

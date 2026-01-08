@@ -98,63 +98,102 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidDeploymentScript(AzurePowerShellScript model, AzurePowerShellScript getResult)
         {
-            Assert.That(getResult.Id, Is.EqualTo(model.Id));
-            Assert.That(getResult.Name, Is.EqualTo(model.Name));
-            Assert.That(getResult.ResourceType, Is.EqualTo(model.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Id, Is.EqualTo(model.Id));
+                Assert.That(getResult.Name, Is.EqualTo(model.Name));
+                Assert.That(getResult.ResourceType, Is.EqualTo(model.ResourceType));
+            });
             if (model.ContainerSettings != null || getResult.ContainerSettings != null)
             {
-                Assert.That(model.ContainerSettings, Is.Not.Null);
-                Assert.That(getResult.ContainerSettings, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.ContainerSettings, Is.Not.Null);
+                    Assert.That(getResult.ContainerSettings, Is.Not.Null);
+                });
                 Assert.That(getResult.ContainerSettings.ContainerGroupName, Is.EqualTo(model.ContainerSettings.ContainerGroupName));
             }
             if (model.StorageAccountSettings != null || getResult.StorageAccountSettings != null)
             {
-                Assert.That(model.StorageAccountSettings, Is.Not.Null);
-                Assert.That(getResult.StorageAccountSettings, Is.Not.Null);
-                Assert.That(getResult.StorageAccountSettings.StorageAccountName, Is.EqualTo(model.StorageAccountSettings.StorageAccountName));
-                Assert.That(getResult.StorageAccountSettings.StorageAccountKey, Is.EqualTo(model.StorageAccountSettings.StorageAccountKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.StorageAccountSettings, Is.Not.Null);
+                    Assert.That(getResult.StorageAccountSettings, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.StorageAccountSettings.StorageAccountName, Is.EqualTo(model.StorageAccountSettings.StorageAccountName));
+                    Assert.That(getResult.StorageAccountSettings.StorageAccountKey, Is.EqualTo(model.StorageAccountSettings.StorageAccountKey));
+                });
             }
-            Assert.That(getResult.CleanupPreference, Is.EqualTo(model.CleanupPreference));
-            Assert.That(getResult.ProvisioningState, Is.EqualTo(model.ProvisioningState));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.CleanupPreference, Is.EqualTo(model.CleanupPreference));
+                Assert.That(getResult.ProvisioningState, Is.EqualTo(model.ProvisioningState));
+            });
             if (model.Status != null || getResult.Status != null)
             {
-                Assert.That(model.Status, Is.Not.Null);
-                Assert.That(getResult.Status, Is.Not.Null);
-                Assert.That(getResult.Status.ContainerInstanceId, Is.EqualTo(model.Status.ContainerInstanceId));
-                Assert.That(getResult.Status.StorageAccountId, Is.EqualTo(model.Status.StorageAccountId));
-                Assert.That(getResult.Status.StartOn, Is.EqualTo(model.Status.StartOn));
-                Assert.That(getResult.Status.EndOn, Is.EqualTo(model.Status.EndOn));
-                Assert.That(getResult.Status.ExpirationOn, Is.EqualTo(model.Status.ExpirationOn));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Status, Is.Not.Null);
+                    Assert.That(getResult.Status, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.Status.ContainerInstanceId, Is.EqualTo(model.Status.ContainerInstanceId));
+                    Assert.That(getResult.Status.StorageAccountId, Is.EqualTo(model.Status.StorageAccountId));
+                    Assert.That(getResult.Status.StartOn, Is.EqualTo(model.Status.StartOn));
+                    Assert.That(getResult.Status.EndOn, Is.EqualTo(model.Status.EndOn));
+                    Assert.That(getResult.Status.ExpirationOn, Is.EqualTo(model.Status.ExpirationOn));
+                });
                 //Assert.AreEqual(model.Status.Error, getResult.Status.Error);
             }
             var modelOutputs = model.Outputs.ToObjectFromJson<Dictionary<string, object>>();
             var getOutputs = getResult.Outputs.ToObjectFromJson<Dictionary<string, object>>();
-            Assert.That(getOutputs.Count, Is.EqualTo(modelOutputs.Count));
+            Assert.That(getOutputs, Has.Count.EqualTo(modelOutputs.Count));
             foreach (var kv in modelOutputs)
             {
-                Assert.That(getOutputs.ContainsKey(kv.Key), Is.True);
-                Assert.That(getOutputs[kv.Key].ToString(), Is.EqualTo(kv.Value.ToString()));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getOutputs.ContainsKey(kv.Key), Is.True);
+                    Assert.That(getOutputs[kv.Key].ToString(), Is.EqualTo(kv.Value.ToString()));
+                });
             }
-            Assert.That(getResult.PrimaryScriptUri, Is.EqualTo(model.PrimaryScriptUri));
-            Assert.That(getResult.SupportingScriptUris, Is.EqualTo(model.SupportingScriptUris));
-            Assert.That(getResult.ScriptContent, Is.EqualTo(model.ScriptContent));
-            Assert.That(getResult.Arguments, Is.EqualTo(model.Arguments));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.PrimaryScriptUri, Is.EqualTo(model.PrimaryScriptUri));
+                Assert.That(getResult.SupportingScriptUris, Is.EqualTo(model.SupportingScriptUris));
+                Assert.That(getResult.ScriptContent, Is.EqualTo(model.ScriptContent));
+                Assert.That(getResult.Arguments, Is.EqualTo(model.Arguments));
+            });
             if (model.EnvironmentVariables != null || getResult.EnvironmentVariables != null)
             {
-                Assert.That(model.EnvironmentVariables, Is.Not.Null);
-                Assert.That(getResult.EnvironmentVariables, Is.Not.Null);
-                Assert.That(getResult.EnvironmentVariables.Count, Is.EqualTo(model.EnvironmentVariables.Count));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.EnvironmentVariables, Is.Not.Null);
+                    Assert.That(getResult.EnvironmentVariables, Is.Not.Null);
+                });
+                Assert.That(getResult.EnvironmentVariables, Has.Count.EqualTo(model.EnvironmentVariables.Count));
                 for (int i = 0; i < model.EnvironmentVariables.Count; ++i)
                 {
-                    Assert.That(getResult.EnvironmentVariables[i].Name, Is.EqualTo(model.EnvironmentVariables[i].Name));
-                    Assert.That(getResult.EnvironmentVariables[i].Value, Is.EqualTo(model.EnvironmentVariables[i].Value));
-                    Assert.That(getResult.EnvironmentVariables[i].SecureValue, Is.EqualTo(model.EnvironmentVariables[i].SecureValue));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(getResult.EnvironmentVariables[i].Name, Is.EqualTo(model.EnvironmentVariables[i].Name));
+                        Assert.That(getResult.EnvironmentVariables[i].Value, Is.EqualTo(model.EnvironmentVariables[i].Value));
+                        Assert.That(getResult.EnvironmentVariables[i].SecureValue, Is.EqualTo(model.EnvironmentVariables[i].SecureValue));
+                    });
                 }
             }
-            Assert.That(getResult.ForceUpdateTag, Is.EqualTo(model.ForceUpdateTag));
-            Assert.That(getResult.RetentionInterval, Is.EqualTo(model.RetentionInterval));
-            Assert.That(getResult.Timeout, Is.EqualTo(model.Timeout));
-            Assert.That(getResult.AzPowerShellVersion, Is.EqualTo(model.AzPowerShellVersion));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.ForceUpdateTag, Is.EqualTo(model.ForceUpdateTag));
+                Assert.That(getResult.RetentionInterval, Is.EqualTo(model.RetentionInterval));
+                Assert.That(getResult.Timeout, Is.EqualTo(model.Timeout));
+                Assert.That(getResult.AzPowerShellVersion, Is.EqualTo(model.AzPowerShellVersion));
+            });
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             var list = await _iotSecuritySolutionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateIotSecuritySolutionResource(list.First(item => item.Data.Name == solutionName), solutionName);
         }
 
@@ -100,10 +100,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             // AddTag
             await solution.AddTagAsync("addtagkey", "addtagvalue");
             solution = await _iotSecuritySolutionCollection.GetAsync(solutionName);
-            Assert.That(solution.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(solution.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = solution.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await solution.RemoveTagAsync("addtagkey");
@@ -113,14 +116,17 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateIotSecuritySolutionResource(IotSecuritySolutionResource solution, string solutionName)
         {
-            Assert.IsNotNull(solution);
-            Assert.IsNotNull(solution.Data.Id);
-            Assert.That(solution.Data.Name, Is.EqualTo(solutionName));
-            Assert.That(solution.Data.DisplayName, Is.EqualTo(solutionName));
-            Assert.That(solution.Data.IotHubs.Count, Is.EqualTo(1));
-            Assert.That(solution.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));
-            Assert.That(solution.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/iotSecuritySolutions"));
-            Assert.That(solution.Data.Status.ToString(), Is.EqualTo("Enabled"));
+            Assert.That(solution, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(solution.Data.Id, Is.Not.Null);
+                Assert.That(solution.Data.Name, Is.EqualTo(solutionName));
+                Assert.That(solution.Data.DisplayName, Is.EqualTo(solutionName));
+                Assert.That(solution.Data.IotHubs, Has.Count.EqualTo(1));
+                Assert.That(solution.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));
+                Assert.That(solution.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/iotSecuritySolutions"));
+                Assert.That(solution.Data.Status.ToString(), Is.EqualTo("Enabled"));
+            });
         }
     }
 }

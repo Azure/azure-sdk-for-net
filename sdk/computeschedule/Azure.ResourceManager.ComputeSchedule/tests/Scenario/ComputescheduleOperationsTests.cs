@@ -60,13 +60,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                Assert.That(submitStartResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(submitStartResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else
@@ -114,14 +120,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                // Assert results are returned
-                Assert.That(submitDeallocateResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(submitDeallocateResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else
@@ -168,14 +180,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                // Assert results are returned
-                Assert.That(submitHibernateResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(submitHibernateResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else
@@ -216,14 +234,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                // Assert results are returned
-                Assert.That(executeHibernateResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(executeHibernateResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else
@@ -264,14 +288,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                // Assert results are returned
-                Assert.That(executeDeallocateResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(executeDeallocateResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else
@@ -312,14 +342,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                // Assert results are returned
-                Assert.That(executeStartResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(executeStartResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else
@@ -370,15 +406,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
                 }).GetAwaiter().GetResult();
 
-                // Assert results are returned
-                Assert.That(submitDeallocateResult, Is.Not.Null);
-                Assert.That(canceloperationsResponse, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(submitDeallocateResult, Is.Not.Null);
+                    Assert.That(canceloperationsResponse, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.That(ScheduledActionOperationState.Cancelled, Is.EqualTo(result.Operation.State));
-                    Assert.That(result.Operation.ResourceOperationError, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(ScheduledActionOperationState.Cancelled, Is.EqualTo(result.Operation.State));
+                        Assert.That(result.Operation.ResourceOperationError, Is.Not.Null);
+                    });
                     Assert.That(result.Operation.ResourceOperationError.ErrorCode, Is.EqualTo("OperationCancelledByUser"));
                 }
             }
@@ -424,15 +466,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 GetOperationErrorsContent getOperationsErrorsRequest = new(validOperationIds);
                 GetOperationErrorsResult getOperationsErrorsResponse = await TestGetOperationErrorsAsync(Location, getOperationsErrorsRequest, subId, Client);
 
-                // Assert results are returned
-                Assert.That(executeDeallocateResult, Is.Not.Null);
-                Assert.That(getOperationStatus, Is.Not.Null);
-                Assert.That(getOperationsErrorsResponse, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    // Assert results are returned
+                    Assert.That(executeDeallocateResult, Is.Not.Null);
+                    Assert.That(getOperationStatus, Is.Not.Null);
+                    Assert.That(getOperationsErrorsResponse, Is.Not.Null);
+                });
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(s_terminalList, Does.Contain(result.Operation.State));
+                        Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
+                    });
                 }
             }
             else

@@ -103,15 +103,24 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             Assert.That(eventHubNamespace, Is.Not.Null);
             Assert.That(eventHubNamespace.Id, Is.Not.Null);
-            Assert.That(eventHubNamespace.Id.Name, Is.Not.Null);
-            Assert.That(eventHubNamespace.Data, Is.Not.Null);
-            Assert.That(eventHubNamespace.Data.Location, Is.Not.Null);
-            Assert.That(eventHubNamespace.Data.CreatedOn, Is.Not.Null);
-            Assert.That(eventHubNamespace.Data.Sku, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubNamespace.Id.Name, Is.Not.Null);
+                Assert.That(eventHubNamespace.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubNamespace.Data.Location, Is.Not.Null);
+                Assert.That(eventHubNamespace.Data.CreatedOn, Is.Not.Null);
+                Assert.That(eventHubNamespace.Data.Sku, Is.Not.Null);
+            });
             if (useDefaults)
             {
-                Assert.That(eventHubNamespace.Data.Location, Is.EqualTo(DefaultLocation));
-                Assert.That(eventHubNamespace.Data.Sku.Tier, Is.EqualTo(EventHubsSkuTier.Standard));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(eventHubNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                    Assert.That(eventHubNamespace.Data.Sku.Tier, Is.EqualTo(EventHubsSkuTier.Standard));
+                });
             }
         }
     }

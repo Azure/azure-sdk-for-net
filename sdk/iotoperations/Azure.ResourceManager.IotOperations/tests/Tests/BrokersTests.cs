@@ -36,8 +36,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsBrokerResource brokerResource = await brokerResourceCollection.GetAsync(BrokersName);
 
             Assert.That(brokerResource, Is.Not.Null);
-            Assert.That(brokerResource.Data, Is.Not.Null);
-            Assert.That(BrokersName, Is.EqualTo(brokerResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(brokerResource.Data, Is.Not.Null);
+                Assert.That(BrokersName, Is.EqualTo(brokerResource.Data.Name));
+            });
 
             // Cant update Broker
         }

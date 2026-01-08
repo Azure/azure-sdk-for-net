@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             // GetAll
             var list = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // Get
             string connectionName = list.FirstOrDefault().Data.Name;

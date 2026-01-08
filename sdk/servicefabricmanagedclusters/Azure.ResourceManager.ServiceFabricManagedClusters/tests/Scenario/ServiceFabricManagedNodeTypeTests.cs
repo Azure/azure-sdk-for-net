@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // GetAll
             var list = await _nodeTypeCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePurviewAccount(list.FirstOrDefault().Data, nodeTypeName);
         }
 
@@ -141,23 +141,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     mostRecentSimulationId = simulation.SimulationId;
                 }
 
-                Assert.That(faultSimulationCount, Is.EqualTo(1));
-                Assert.That(mostRecentSimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(faultSimulationCount, Is.EqualTo(1));
+                    Assert.That(mostRecentSimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                });
 
                 // Get Fault Simulation
                 FaultSimulationIdContent faultSimulationIdContent = new FaultSimulationIdContent(startFaultSimulationResult.SimulationId);
                 var getFaultSimulationResult = (await secondaryNodeType.GetFaultSimulationAsync(faultSimulationIdContent)).Value;
 
-                Assert.That(getFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
-                Assert.That(getFaultSimulationResult.Details.ClusterId, Is.EqualTo(startFaultSimulationResult.Details.ClusterId));
-                Assert.That(getFaultSimulationResult.StartOn, Is.EqualTo(startFaultSimulationResult.StartOn));
-                Assert.That(getFaultSimulationResult.EndOn, Is.EqualTo(startFaultSimulationResult.EndOn));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                    Assert.That(getFaultSimulationResult.Details.ClusterId, Is.EqualTo(startFaultSimulationResult.Details.ClusterId));
+                    Assert.That(getFaultSimulationResult.StartOn, Is.EqualTo(startFaultSimulationResult.StartOn));
+                    Assert.That(getFaultSimulationResult.EndOn, Is.EqualTo(startFaultSimulationResult.EndOn));
+                });
 
                 // Stop Fault Simulation
                 var stopFaultSimulationResult = (await secondaryNodeType.StopFaultSimulationAsync(WaitUntil.Completed, faultSimulationIdContent)).Value;
 
-                Assert.That(stopFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
-                Assert.That(FaultSimulationStatus.Done, Is.EqualTo(stopFaultSimulationResult.Status));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(stopFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                    Assert.That(FaultSimulationStatus.Done, Is.EqualTo(stopFaultSimulationResult.Status));
+                });
             }
             catch (Exception ex)
             {
@@ -168,8 +177,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidatePurviewAccount(ServiceFabricManagedNodeTypeData nodeType, string nodeTypeName)
         {
-            Assert.IsNotNull(nodeType);
-            Assert.IsNotEmpty(nodeType.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nodeType, Is.Not.Null);
+                Assert.That((string)nodeType.Id, Is.Not.Empty);
+            });
             Assert.That(nodeType.Name, Is.EqualTo(nodeTypeName));
             Assert.That(nodeType.DataDiskLetter, Is.EqualTo("S"));
             Assert.That(nodeType.DataDiskSizeInGB, Is.EqualTo(256));

@@ -126,8 +126,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete RegisteredServer before it's created
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncServiceResource.GetStorageSyncRegisteredServerAsync(_guid)).Value?.Delete(WaitUntil.Completed));
-            Assert.That(deleteException.Status, Is.EqualTo(404));
-            Assert.That((await registeredServersCollection.ExistsAsync(_guid)).Value, Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(deleteException.Status, Is.EqualTo(404));
+                Assert.That((await registeredServersCollection.ExistsAsync(_guid)).Value, Is.False);
+            });
 
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await registeredServersCollection.CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;

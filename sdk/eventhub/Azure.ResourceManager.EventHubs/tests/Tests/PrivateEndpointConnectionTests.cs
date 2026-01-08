@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint1 = await CreatePrivateEndpoint();
-            Assert.That(privateEndpoint1.Data.ManualPrivateLinkServiceConnections.Count, Is.EqualTo(1));
+            Assert.That(privateEndpoint1.Data.ManualPrivateLinkServiceConnections, Has.Count.EqualTo(1));
 
             List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections1 = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(privateEndpointConnections1.Count, Is.EqualTo(1));
+            Assert.That(privateEndpointConnections1, Has.Count.EqualTo(1));
             VerifyPrivateEndpointConnections(privateEndpoint1.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections1[0]);
         }
 
@@ -134,11 +134,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         private void VerifyPrivateEndpointConnections(NetworkPrivateLinkServiceConnection expectedValue, EventHubsPrivateEndpointConnectionResource actualValue)
         {
-            // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
-            //Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.That(actualValue.Data.ConnectionState.Status.ToString(), Is.EqualTo(expectedValue.ConnectionState.Status));
-            Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
+            Assert.Multiple(() =>
+            {
+                // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
+                //Assert.AreEqual(expectedValue.Id, actualValue.Id);
+                //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
+                Assert.That(actualValue.Data.ConnectionState.Status.ToString(), Is.EqualTo(expectedValue.ConnectionState.Status));
+                Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
+            });
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Tests
         {
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             var SqlServer = await CreateOrUpdateSqlServer(sqlServerName);
-            Assert.IsNotNull(SqlServer.Data);
+            Assert.That(SqlServer.Data, Is.Not.Null);
             Assert.That(SqlServer.Data.Name, Is.EqualTo(sqlServerName));
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServer = await _resourceGroup.GetSqlServers().GetAsync(sqlServerName);
-            Assert.IsNotNull(SqlServer.Value.Data);
+            Assert.That(SqlServer.Value.Data, Is.Not.Null);
             Assert.That(SqlServer.Value.Data.Name, Is.EqualTo(sqlServerName));
         }
 
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Sql.Tests
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(SqlServerList);
-            Assert.That(SqlServerList.Count, Is.EqualTo(1));
+            Assert.That(SqlServerList, Is.Not.Empty);
+            Assert.That(SqlServerList, Has.Count.EqualTo(1));
             Assert.That(SqlServerList[0].Data.Name, Is.EqualTo(sqlServerName));
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string SqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(SqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
-            Assert.That(SqlServerList.Count, Is.EqualTo(1));
+            Assert.That(SqlServerList, Has.Count.EqualTo(1));
 
             await SqlServerList[0].DeleteAsync(WaitUntil.Completed);
             SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();

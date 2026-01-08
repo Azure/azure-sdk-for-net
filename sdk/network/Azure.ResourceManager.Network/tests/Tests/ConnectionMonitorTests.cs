@@ -75,13 +75,16 @@ namespace Azure.ResourceManager.Network.Tests
             var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
             Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
-            Assert.That(putConnectionMonitor.Value.Data.MonitoringStatus, Is.EqualTo("Running"));
-            Assert.That(putConnectionMonitor.Value.Data.Location, Is.EqualTo("centraluseuap"));
-            Assert.That(putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds, Is.EqualTo(30));
-            Assert.That(putConnectionMonitor.Value.Data.Name, Is.EqualTo(connectionMonitorName));
-            Assert.That(putConnectionMonitor.Value.Data.Source.ResourceId, Is.EqualTo(vm.Id));
-            Assert.That(putConnectionMonitor.Value.Data.Destination.Address, Is.EqualTo("bing.com"));
-            Assert.That(putConnectionMonitor.Value.Data.Destination.Port, Is.EqualTo(80));
+            Assert.Multiple(() =>
+            {
+                Assert.That(putConnectionMonitor.Value.Data.MonitoringStatus, Is.EqualTo("Running"));
+                Assert.That(putConnectionMonitor.Value.Data.Location, Is.EqualTo("centraluseuap"));
+                Assert.That(putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds, Is.EqualTo(30));
+                Assert.That(putConnectionMonitor.Value.Data.Name, Is.EqualTo(connectionMonitorName));
+                Assert.That(putConnectionMonitor.Value.Data.Source.ResourceId, Is.EqualTo(vm.Id));
+                Assert.That(putConnectionMonitor.Value.Data.Destination.Address, Is.EqualTo("bing.com"));
+                Assert.That(putConnectionMonitor.Value.Data.Destination.Port, Is.EqualTo(80));
+            });
         }
 
         [Test]
@@ -225,7 +228,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             AsyncPageable<ConnectionMonitorResource> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
             Task<List<ConnectionMonitorResource>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
-            Assert.That(getConnectionMonitors1.Result.Count, Is.EqualTo(2));
+            Assert.That(getConnectionMonitors1.Result, Has.Count.EqualTo(2));
 
             var operation = await connectionMonitor2.DeleteAsync(WaitUntil.Completed);
             await operation.WaitForCompletionResponseAsync();

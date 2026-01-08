@@ -55,8 +55,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 agData);
 
             Assert.That(opApplicationGroupCreate, Is.Not.Null);
-            Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
-            Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
+                Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
+            });
 
             VirtualApplicationGroupResource desktopApplicationGroup = opApplicationGroupCreate.Value;
 
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             List<VirtualDesktopResource> desktopList = await desktops.ToEnumerableAsync();
 
-            Assert.That(desktopList.Count, Is.EqualTo(1));
+            Assert.That(desktopList, Has.Count.EqualTo(1));
 
             VirtualDesktopResource desktop = desktopList[0];
 
@@ -78,9 +81,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.That(updatedDesktop, Is.Not.Null);
 
-            Assert.That(updatedDesktop.Value.Data.Description, Is.EqualTo("Updated"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDesktop.Value.Data.Description, Is.EqualTo("Updated"));
 
-            Assert.That(updatedDesktop.Value.Data.FriendlyName, Is.EqualTo("UpdatedFriendlyName"));
+                Assert.That(updatedDesktop.Value.Data.FriendlyName, Is.EqualTo("UpdatedFriendlyName"));
+            });
 
             Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);

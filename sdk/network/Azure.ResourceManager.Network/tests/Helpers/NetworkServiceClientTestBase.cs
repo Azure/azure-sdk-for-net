@@ -621,12 +621,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var networkInterfaceCollection = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
             await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, nicParameters);
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(name);
-            Assert.That(name, Is.EqualTo(getNicResponse.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(name, Is.EqualTo(getNicResponse.Value.Data.Name));
 
-            // because its a single CA nic, primaryOnCA is always true
-            Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
+                // because its a single CA nic, primaryOnCA is always true
+                Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
 
-            Assert.That(getNicResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getNicResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            });
 
             return getNicResponse;
         }
@@ -657,12 +660,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var operation = InstrumentOperation(await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, nicParameters));
             await operation.WaitForCompletionAsync();
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(name);
-            Assert.That(name, Is.EqualTo(getNicResponse.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(name, Is.EqualTo(getNicResponse.Value.Data.Name));
 
-            // because its a single CA nic, primaryOnCA is always true
-            Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
+                // because its a single CA nic, primaryOnCA is always true
+                Assert.That(getNicResponse.Value.Data.IPConfigurations[0].Primary, Is.True);
 
-            Assert.That(getNicResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getNicResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            });
 
             return getNicResponse;
         }

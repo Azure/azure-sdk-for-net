@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null && act != null)
             {
-                Assert.That(act.Count, Is.EqualTo(exp.Count));
+                Assert.That(act, Has.Count.EqualTo(exp.Count));
 
                 foreach (var value in exp)
                 {
-                    Assert.Contains(value, (System.Collections.ICollection)act);
+                    Assert.That((System.Collections.ICollection)act, Does.Contain(value));
                 }
             }
         }
@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.That(exp == null || act == null, Is.False);
-                Assert.That(act.Count, Is.EqualTo(exp.Count));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(exp == null || act == null, Is.False);
+                    Assert.That(act, Has.Count.EqualTo(exp.Count));
+                });
                 foreach (AlertProcessingRuleCondition actCond in act)
                 {
                     AlertProcessingRuleCondition expCond = exp.Where(condition => condition.Field.Equals(actCond.Field)).FirstOrDefault();
@@ -61,8 +64,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.That(act.Field, Is.EqualTo(exp.Field));
-                Assert.That(act.Operator, Is.EqualTo(exp.Operator));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(act.Field, Is.EqualTo(exp.Field));
+                    Assert.That(act.Operator, Is.EqualTo(exp.Operator));
+                });
             }
         }
     }

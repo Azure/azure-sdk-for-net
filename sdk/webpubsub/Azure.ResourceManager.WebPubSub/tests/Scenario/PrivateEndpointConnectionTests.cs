@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.That(list.Count, Is.EqualTo(1));
@@ -126,8 +126,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.That((bool)await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name), Is.True);
-            Assert.That((bool)await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name), Is.True);
+                Assert.That((bool)await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"), Is.False);
+            });
         }
 
         [RecordedTest]
@@ -141,7 +144,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 await item.DeleteAsync(WaitUntil.Completed);
             }
             list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
         }
     }
 }

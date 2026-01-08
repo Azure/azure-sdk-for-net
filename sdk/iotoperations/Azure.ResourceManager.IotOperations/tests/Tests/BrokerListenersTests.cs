@@ -35,8 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 await brokerListenerResourceCollection.GetAsync(BrokersListenersName);
 
             Assert.That(brokerListenerResource, Is.Not.Null);
-            Assert.That(brokerListenerResource.Data, Is.Not.Null);
-            Assert.That(BrokersListenersName, Is.EqualTo(brokerListenerResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(brokerListenerResource.Data, Is.Not.Null);
+                Assert.That(BrokersListenersName, Is.EqualTo(brokerListenerResource.Data.Name));
+            });
 
             // Create new BrokerListener
             IotOperationsBrokerListenerData brokerListenerResourceData =

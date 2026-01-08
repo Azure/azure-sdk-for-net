@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var assessmentMetadataName = Recording.Random.NewGuid().ToString();
             await CreateSubscriptionAssessmentMetadata(assessmentMetadataName);
             var list = await _subAssessmentMetadataCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSubscriptionAssessmentMetadata(list.First(item => item.Data.Name == assessmentMetadataName), assessmentMetadataName);
         }
 
@@ -114,15 +114,18 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateSubscriptionAssessmentMetadata(SubscriptionAssessmentMetadataResource subAssessmentMetadata, string assessmentMetadataName)
         {
-            Assert.IsNotNull(subAssessmentMetadata);
-            Assert.IsNotNull(subAssessmentMetadata.Data.Id);
-            Assert.That(subAssessmentMetadata.Data.Name, Is.EqualTo(assessmentMetadataName));
-            Assert.That(subAssessmentMetadata.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/assessmentMetadata"));
-            Assert.That(subAssessmentMetadata.Data.DisplayName, Is.EqualTo("JustForTest"));
-            Assert.That(subAssessmentMetadata.Data.Severity, Is.EqualTo(SecurityAssessmentSeverity.Medium));
-            Assert.That(subAssessmentMetadata.Data.UserImpact, Is.EqualTo(SecurityAssessmentUserImpact.Low));
-            Assert.That(subAssessmentMetadata.Data.ImplementationEffort, Is.EqualTo(ImplementationEffort.Low));
-            Assert.That(subAssessmentMetadata.Data.AssessmentType, Is.EqualTo(SecurityAssessmentType.CustomerManaged));
+            Assert.That(subAssessmentMetadata, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(subAssessmentMetadata.Data.Id, Is.Not.Null);
+                Assert.That(subAssessmentMetadata.Data.Name, Is.EqualTo(assessmentMetadataName));
+                Assert.That(subAssessmentMetadata.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/assessmentMetadata"));
+                Assert.That(subAssessmentMetadata.Data.DisplayName, Is.EqualTo("JustForTest"));
+                Assert.That(subAssessmentMetadata.Data.Severity, Is.EqualTo(SecurityAssessmentSeverity.Medium));
+                Assert.That(subAssessmentMetadata.Data.UserImpact, Is.EqualTo(SecurityAssessmentUserImpact.Low));
+                Assert.That(subAssessmentMetadata.Data.ImplementationEffort, Is.EqualTo(ImplementationEffort.Low));
+                Assert.That(subAssessmentMetadata.Data.AssessmentType, Is.EqualTo(SecurityAssessmentType.CustomerManaged));
+            });
         }
     }
 }

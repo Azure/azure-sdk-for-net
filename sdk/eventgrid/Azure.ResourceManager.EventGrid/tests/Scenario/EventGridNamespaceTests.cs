@@ -87,32 +87,50 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
             Assert.That(createNamespaceResponse, Is.Not.Null);
             Assert.That(createNamespaceResponse.Data, Is.Not.Null);
-            Assert.That(createNamespaceResponse.Data.Name, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse.Data.Name, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getNamespaceResponse, Is.Not.Null);
             Assert.That(getNamespaceResponse.Data, Is.Not.Null);
             Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.Not.Null);
-            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
-            Assert.That(getNamespaceResponse.Data.Tags, Is.Not.Null);
-            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"), Is.True);
-            Assert.That(getNamespaceResponse.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
-            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"), Is.True);
-            Assert.That(getNamespaceResponse.Data.Tags["originalTag2"], Is.EqualTo("originalValue2"));
-            Assert.That(getNamespaceResponse.Data.Sku, Is.Not.Null);
-            Assert.That(getNamespaceResponse.Data.Sku.Name, Is.Not.Null);
-            Assert.That(namespaceSkuName, Is.EqualTo(getNamespaceResponse.Data.Sku.Name.Value.ToString()));
-            Assert.That(getNamespaceResponse.Data.Sku.Capacity, Is.Not.Null);
-            Assert.That(getNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(1));
-            Assert.That(getNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+                Assert.That(getNamespaceResponse.Data.Tags, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+                Assert.That(getNamespaceResponse.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+                Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"), Is.True);
+                Assert.That(getNamespaceResponse.Data.Tags["originalTag2"], Is.EqualTo("originalValue2"));
+                Assert.That(getNamespaceResponse.Data.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespaceResponse.Data.Sku.Name, Is.Not.Null);
+                Assert.That(namespaceSkuName, Is.EqualTo(getNamespaceResponse.Data.Sku.Name.Value.ToString()));
+                Assert.That(getNamespaceResponse.Data.Sku.Capacity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(1));
+                Assert.That(getNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
+            });
 
             // Validate original tags
             var tagsAfterCreate = getNamespaceResponse.Data.Tags;
-            Assert.That(tagsAfterCreate.Count, Is.EqualTo(2));
-            Assert.That(tagsAfterCreate["originalTag1"], Is.EqualTo("originalValue1"));
-            Assert.That(tagsAfterCreate["originalTag2"], Is.EqualTo("originalValue2"));
+            Assert.That(tagsAfterCreate, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagsAfterCreate["originalTag1"], Is.EqualTo("originalValue1"));
+                Assert.That(tagsAfterCreate["originalTag2"], Is.EqualTo("originalValue2"));
+            });
 
             // update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -132,44 +150,68 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
             Assert.That(updateNamespaceResponse, Is.Not.Null);
             Assert.That(updateNamespaceResponse.Data, Is.Not.Null);
-            Assert.That(updateNamespaceResponse.Data.Name, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateNamespaceResponse.Data.Name, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            });
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
             Assert.That(getUpdatedNamespaceResponse.Data, Is.Not.Null);
             Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], Is.EqualTo("updatedValue1"));
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"), Is.True);
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], Is.EqualTo("updatedValue2"));
-            Assert.That(getUpdatedNamespaceResponse.Data.Sku, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Name, Is.Not.Null);
-            Assert.That(namespaceSkuName, Is.EqualTo(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString()));
-            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(2));
-            Assert.That(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], Is.EqualTo("updatedValue1"));
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"), Is.True);
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], Is.EqualTo("updatedValue2"));
+                Assert.That(getUpdatedNamespaceResponse.Data.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.Sku.Name, Is.Not.Null);
+                Assert.That(namespaceSkuName, Is.EqualTo(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString()));
+                Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(2));
+                Assert.That(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
+            });
 
             // Validate updated tags
             var tagsAfterUpdate = getUpdatedNamespaceResponse.Data.Tags;
-            Assert.That(tagsAfterUpdate.Count, Is.EqualTo(2));
-            Assert.That(tagsAfterUpdate["updatedTag1"], Is.EqualTo("updatedValue1"));
-            Assert.That(tagsAfterUpdate["updatedTag2"], Is.EqualTo("updatedValue2"));
+            Assert.That(tagsAfterUpdate, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagsAfterUpdate["updatedTag1"], Is.EqualTo("updatedValue1"));
+                Assert.That(tagsAfterUpdate["updatedTag2"], Is.EqualTo("updatedValue2"));
+            });
 
             //Create 2nd and 3rd Namespace
             var createNamespaceResponse2 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, nameSpace)).Value;
             Assert.That(createNamespaceResponse2, Is.Not.Null);
             Assert.That(createNamespaceResponse2.Data, Is.Not.Null);
-            Assert.That(createNamespaceResponse2.Data.Name, Is.Not.Null);
-            Assert.That(namespaceName2, Is.EqualTo(createNamespaceResponse2.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse2.Data.Name, Is.Not.Null);
+                Assert.That(namespaceName2, Is.EqualTo(createNamespaceResponse2.Data.Name));
+            });
             var createNamespaceResponse3 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName3, nameSpace)).Value;
             Assert.That(createNamespaceResponse3, Is.Not.Null);
             Assert.That(createNamespaceResponse3.Data, Is.Not.Null);
-            Assert.That(createNamespaceResponse3.Data.Name, Is.Not.Null);
-            Assert.That(namespaceName3, Is.EqualTo(createNamespaceResponse3.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse3.Data.Name, Is.Not.Null);
+                Assert.That(namespaceName3, Is.EqualTo(createNamespaceResponse3.Data.Name));
+            });
 
             // Get the created namespaces
             var getNamespace2Response = (await NamespaceCollection.GetAsync(namespaceName2)).Value;
@@ -181,29 +223,44 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.That(getNamespace3Response, Is.Not.Null);
             Assert.That(getNamespace3Response.Data, Is.Not.Null);
             Assert.That(getNamespace3Response.Data.ProvisioningState, Is.Not.Null);
-            Assert.That(getNamespace3Response.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespace3Response.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
-            // Validate created namespaces
-            Assert.That(namespaceName2, Is.EqualTo(getNamespace2Response.Data.Name));
-            Assert.That(namespaceName3, Is.EqualTo(getNamespace3Response.Data.Name));
-            Assert.That(getNamespace2Response.Data.Tags, Is.Not.Null);
-            Assert.That(getNamespace2Response.Data.Sku, Is.Not.Null);
-            Assert.That(getNamespace2Response.Data.Sku.Name, Is.Not.Null);
-            Assert.That(namespaceSkuName, Is.EqualTo(getNamespace2Response.Data.Sku.Name.Value.ToString()));
-            Assert.That(getNamespace3Response.Data.Tags, Is.Not.Null);
-            Assert.That(getNamespace3Response.Data.Sku, Is.Not.Null);
-            Assert.That(getNamespace3Response.Data.Sku.Name, Is.Not.Null);
-            Assert.That(namespaceSkuName, Is.EqualTo(getNamespace3Response.Data.Sku.Name.Value.ToString()));
-            Assert.That(getNamespace2Response.Data.Sku.Capacity, Is.Not.Null);
-            Assert.That(getNamespace2Response.Data.Sku.Capacity.Value, Is.EqualTo(1));
-            Assert.That(getNamespace3Response.Data.Sku.Capacity, Is.Not.Null);
-            Assert.That(getNamespace3Response.Data.Sku.Capacity.Value, Is.EqualTo(1));
-            Assert.That(getNamespace2Response.Data.IsZoneRedundant.Value, Is.True);
-            Assert.That(getNamespace3Response.Data.IsZoneRedundant.Value, Is.True);
-            Assert.That(getNamespace2Response.Data.Tags.Keys.Contains("originalTag1"), Is.True);
-            Assert.That(getNamespace2Response.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
-            Assert.That(getNamespace3Response.Data.Tags.Keys.Contains("originalTag1"), Is.True);
-            Assert.That(getNamespace3Response.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+                // Validate created namespaces
+                Assert.That(namespaceName2, Is.EqualTo(getNamespace2Response.Data.Name));
+                Assert.That(namespaceName3, Is.EqualTo(getNamespace3Response.Data.Name));
+                Assert.That(getNamespace2Response.Data.Tags, Is.Not.Null);
+                Assert.That(getNamespace2Response.Data.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespace2Response.Data.Sku.Name, Is.Not.Null);
+                Assert.That(namespaceSkuName, Is.EqualTo(getNamespace2Response.Data.Sku.Name.Value.ToString()));
+                Assert.That(getNamespace3Response.Data.Tags, Is.Not.Null);
+                Assert.That(getNamespace3Response.Data.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespace3Response.Data.Sku.Name, Is.Not.Null);
+                Assert.That(namespaceSkuName, Is.EqualTo(getNamespace3Response.Data.Sku.Name.Value.ToString()));
+                Assert.That(getNamespace2Response.Data.Sku.Capacity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespace2Response.Data.Sku.Capacity.Value, Is.EqualTo(1));
+                Assert.That(getNamespace3Response.Data.Sku.Capacity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespace3Response.Data.Sku.Capacity.Value, Is.EqualTo(1));
+                Assert.That(getNamespace2Response.Data.IsZoneRedundant.Value, Is.True);
+                Assert.That(getNamespace3Response.Data.IsZoneRedundant.Value, Is.True);
+                Assert.That(getNamespace2Response.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+                Assert.That(getNamespace2Response.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+                Assert.That(getNamespace3Response.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+                Assert.That(getNamespace3Response.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+            });
 
             // Tag operations
             var addTagResponse = await getNamespaceResponse.AddTagAsync("env", "test");
@@ -211,12 +268,18 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.That(addTagResponse.Value, Is.Not.Null);
             Assert.That(addTagResponse.Value.Data, Is.Not.Null);
             Assert.That(addTagResponse.Value.Data.Tags, Is.Not.Null);
-            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("env"), Is.True);
-            Assert.That(addTagResponse.Value.Data.Tags["env"], Is.EqualTo("test"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("env"), Is.True);
+                Assert.That(addTagResponse.Value.Data.Tags["env"], Is.EqualTo("test"));
+            });
 
             addTagResponse = await getNamespaceResponse.SetTagsAsync(new Dictionary<string, string> { { "project", "sdk" } });
-            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("project"), Is.True);
-            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("env"), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("project"), Is.True);
+                Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("env"), Is.False);
+            });
 
             addTagResponse = await getNamespaceResponse.RemoveTagAsync("project");
             Assert.That(addTagResponse.Value.Data.Tags.ContainsKey("project"), Is.False);
@@ -227,13 +290,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var sharedAccessKey2Before = sharedAccessKeys.Key2;
             NamespaceRegenerateKeyContent namespaceRegenerateKeyContent = new NamespaceRegenerateKeyContent("key1");
             var regenKeysResponse = (await getNamespaceResponse.RegenerateKeyAsync(WaitUntil.Completed, namespaceRegenerateKeyContent)).Value;
-            Assert.That(sharedAccessKey1Before, Is.Not.EqualTo(regenKeysResponse.Key1));
-            Assert.That(sharedAccessKey2Before, Is.EqualTo(regenKeysResponse.Key2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sharedAccessKey1Before, Is.Not.EqualTo(regenKeysResponse.Key1));
+                Assert.That(sharedAccessKey2Before, Is.EqualTo(regenKeysResponse.Key2));
+            });
 
             // List all namespaces
             var namespacesInResourceGroup = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(namespacesInResourceGroup, Is.Not.Null);
-            Assert.That(namespacesInResourceGroup.Count, Is.EqualTo(3));
+            Assert.That(namespacesInResourceGroup, Has.Count.EqualTo(3));
 
             // Check Exists method
             var namespaceExists = await NamespaceCollection.ExistsAsync(namespaceName3);
@@ -245,12 +311,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // List all namespaces under resourc group again to check updated number of namespaces.
             var namespacesInResourceGroupUpdated = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(namespacesInResourceGroupUpdated, Is.Not.Null);
-            Assert.That(namespacesInResourceGroupUpdated.Count, Is.EqualTo(2));
+            Assert.That(namespacesInResourceGroupUpdated, Has.Count.EqualTo(2));
 
             // Get all namespaces created within the subscription irrespective of the resourceGroup
             var namespacesInAzureSubscription = await DefaultSubscription.GetEventGridNamespacesAsync().ToEnumerableAsync();
             Assert.That(namespacesInAzureSubscription, Is.Not.Null);
-            Assert.GreaterOrEqual(namespacesInAzureSubscription.Count, 1);
+            Assert.That(namespacesInAzureSubscription.Count, Is.GreaterThanOrEqualTo(1));
             var falseFlag = false;
             foreach (var item in namespacesInAzureSubscription)
             {
@@ -273,11 +339,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // List all namespaces under resource group again to check updated number of namespaces.
             var namespacesInResourceGroupDeleted = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(namespacesInResourceGroupDeleted, Is.Not.Null);
-            Assert.That(namespacesInResourceGroupDeleted.Count, Is.EqualTo(0));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(namespacesInResourceGroupDeleted.Count, Is.EqualTo(0));
 
-            Assert.That((bool)await NamespaceCollection.ExistsAsync(namespaceName), Is.False);
-            Assert.That((bool)await NamespaceCollection.ExistsAsync(namespaceName2), Is.False);
-            Assert.That((await NamespaceCollection.GetAllAsync().ToEnumerableAsync()).Count, Is.EqualTo(0));
+                Assert.That((bool)await NamespaceCollection.ExistsAsync(namespaceName), Is.False);
+                Assert.That((bool)await NamespaceCollection.ExistsAsync(namespaceName2), Is.False);
+                Assert.That((await NamespaceCollection.GetAllAsync().ToEnumerableAsync()).Count, Is.EqualTo(0));
+            });
 
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
@@ -307,20 +376,26 @@ namespace Azure.ResourceManager.EventGrid.Tests
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.That(createNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getNamespaceResponse, Is.Not.Null);
-            Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
-            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"), Is.True);
-            Assert.That(getNamespaceResponse.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
-            Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"), Is.True);
-            Assert.That(getNamespaceResponse.Data.Tags["originalTag2"], Is.EqualTo("originalValue2"));
-            Assert.That(namespaceSkuName, Is.EqualTo(getNamespaceResponse.Data.Sku.Name.Value.ToString()));
-            Assert.That(getNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(1));
-            Assert.That(getNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+                Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"), Is.True);
+                Assert.That(getNamespaceResponse.Data.Tags["originalTag1"], Is.EqualTo("originalValue1"));
+                Assert.That(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"), Is.True);
+                Assert.That(getNamespaceResponse.Data.Tags["originalTag2"], Is.EqualTo("originalValue2"));
+                Assert.That(namespaceSkuName, Is.EqualTo(getNamespaceResponse.Data.Sku.Name.Value.ToString()));
+                Assert.That(getNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(1));
+                Assert.That(getNamespaceResponse.Data.IsZoneRedundant.Value, Is.True);
+            });
 
             // update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -358,22 +433,28 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 CertificateUri = new Uri("https://sdk-centraleuap-testakv.vault.azure.net/certificates/test-custom-domain/"),
             });
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.That(updateNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            });
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], Is.EqualTo("updatedValue1"));
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"), Is.True);
-            Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], Is.EqualTo("updatedValue2"));
-            Assert.That(namespaceSkuName, Is.EqualTo(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString()));
-            Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(2));
-            // verify custom domain
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], Is.EqualTo("updatedValue1"));
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"), Is.True);
+                Assert.That(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], Is.EqualTo("updatedValue2"));
+                Assert.That(namespaceSkuName, Is.EqualTo(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString()));
+                Assert.That(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, Is.EqualTo(2));
+                // verify custom domain
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains, Is.Not.Null);
+            });
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains, Has.Count.EqualTo(1));
             Assert.That(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, Is.EqualTo("www.contoso.com"));
 
             // Delete 1st custom domain
@@ -427,8 +508,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             );
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.That(createNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
@@ -469,20 +553,29 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.That(updateNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            });
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
-            // Verify custom JWT authentication
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Count, Is.EqualTo(1));
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, Is.EqualTo(KeyVaultCertificateUrl));
-            Assert.That("sts.windows.net", Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer));
-            Assert.That(CustomJwtAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType));
+                // Verify custom JWT authentication
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication, Is.Not.Null);
+            });
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, Is.EqualTo(KeyVaultCertificateUrl));
+                Assert.That("sts.windows.net", Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer));
+                Assert.That(CustomJwtAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType));
+            });
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
@@ -524,8 +617,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             );
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.That(createNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
@@ -562,20 +658,29 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.That(updateNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
+            });
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
-            // Verify custom Webhook authentication
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, Is.EqualTo(EventSubscriptionDestinationEndpoint));
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, Is.EqualTo(AzureActiveDirectoryApplicationId));
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
-            Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));
+                // Verify custom Webhook authentication
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, Is.EqualTo(EventSubscriptionDestinationEndpoint));
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, Is.EqualTo(AzureActiveDirectoryApplicationId));
+                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
+                Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));
+            });
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
@@ -616,8 +721,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.That(createNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
@@ -627,8 +735,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
-            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+                Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            });
             Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
@@ -666,14 +777,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 ExpireOn = expirationTime,
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.That(createEventsubscription1, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription1, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
+            });
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.That(getEventSubscription1, Is.Not.Null);
-            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
-            Assert.That(DeliveryMode.Queue.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getEventSubscription1, Is.Not.Null);
+                Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+                Assert.That(DeliveryMode.Queue.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
+            });
             Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(1));
             Assert.AreEqual(5, getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount);
 
@@ -749,8 +866,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.That(createNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
@@ -760,8 +880,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
-            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+                Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            });
             Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
@@ -792,22 +915,34 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DeliveryConfiguration = deliveryConfiguration
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.That(createEventsubscription1, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription1, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
+            });
 
             var createEventsubscription2 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName2, subscriptionData)).Value;
-            Assert.That(createEventsubscription2, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription2.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription2, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription2.Data.ProvisioningState));
+            });
 
             var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
-            Assert.That(createEventsubscription3, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription3.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription3, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription3.Data.ProvisioningState));
+            });
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.That(getEventSubscription1, Is.Not.Null);
-            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
-            Assert.That(DeliveryMode.Push.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getEventSubscription1, Is.Not.Null);
+                Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+                Assert.That(DeliveryMode.Push.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
+            });
 
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
@@ -893,8 +1028,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.That(createNamespaceResponse, Is.Not.Null);
-            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createNamespaceResponse, Is.Not.Null);
+                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
+            });
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
@@ -904,8 +1042,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
-            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+                Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
+            });
             Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
@@ -931,22 +1072,34 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.That(createEventsubscription1, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription1, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
+            });
 
             var createEventsubscription2 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName2, subscriptionData)).Value;
-            Assert.That(createEventsubscription2, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription2.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription2, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription2.Data.ProvisioningState));
+            });
 
             var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
-            Assert.That(createEventsubscription3, Is.Not.Null);
-            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription3.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createEventsubscription3, Is.Not.Null);
+                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription3.Data.ProvisioningState));
+            });
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.That(getEventSubscription1, Is.Not.Null);
-            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
-            Assert.That(DeliveryMode.Push.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getEventSubscription1, Is.Not.Null);
+                Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+                Assert.That(DeliveryMode.Push.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
+            });
             // test for full uri of event subscription
             var eventSubscription1FullUri = (await getEventSubscription1.GetFullUriAsync());
             Assert.That(eventSubscription1FullUri, Is.Not.Null);
@@ -1056,33 +1209,45 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createCaCertificateResponse1 = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate1", caCertificateData1)).Value;
-            Assert.That(createCaCertificateResponse1, Is.Not.Null);
-            Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createCaCertificateResponse1, Is.Not.Null);
+                Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse1.Data.ProvisioningState));
+            });
 
             var createCaCertificateResponse2 = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate2", caCertificateData2)).Value;
-            Assert.That(createCaCertificateResponse2, Is.Not.Null);
-            Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse2.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createCaCertificateResponse2, Is.Not.Null);
+                Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse2.Data.ProvisioningState));
+            });
 
             var createCaCertificateResponse3 = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificate3", caCertificateData3)).Value;
-            Assert.That(createCaCertificateResponse3, Is.Not.Null);
-            Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse3.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createCaCertificateResponse3, Is.Not.Null);
+                Assert.That(CaCertificateProvisioningState.Succeeded, Is.EqualTo(createCaCertificateResponse3.Data.ProvisioningState));
+            });
 
             //Get CaCertificate
             var getCaCertificate1Response = (await caCertificatesCollection.GetAsync("testCertificate1")).Value;
             Assert.That(getCaCertificate1Response, Is.Not.Null);
-            Assert.That(getCaCertificate1Response.Data.Name, Is.EqualTo("testCertificate1"));
-            Assert.That(caCertificateData1.EncodedCertificate, Is.EqualTo(getCaCertificate1Response.Data.EncodedCertificate));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getCaCertificate1Response.Data.Name, Is.EqualTo("testCertificate1"));
+                Assert.That(caCertificateData1.EncodedCertificate, Is.EqualTo(getCaCertificate1Response.Data.EncodedCertificate));
+            });
 
             //List CaCertificates
             var listCaCertificatesBeforeDeletion = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listCaCertificatesBeforeDeletion, Is.Not.Null);
-            Assert.That(listCaCertificatesBeforeDeletion.Count, Is.EqualTo(3));
+            Assert.That(listCaCertificatesBeforeDeletion, Has.Count.EqualTo(3));
 
             await getCaCertificate1Response.DeleteAsync(WaitUntil.Completed);
 
             var listCaCertificatesAfterDeletion = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listCaCertificatesAfterDeletion, Is.Not.Null);
-            Assert.That(listCaCertificatesAfterDeletion.Count, Is.EqualTo(2));
+            Assert.That(listCaCertificatesAfterDeletion, Has.Count.EqualTo(2));
 
             // Update certificate by deleting and recreating with a new description
             await createCaCertificateResponse1.DeleteAsync(WaitUntil.Completed);
@@ -1119,13 +1284,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createClientResponse1 = (await clientCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientName1, clientData)).Value;
-            Assert.That(createClientResponse1, Is.Not.Null);
-            Assert.That(clientName1, Is.EqualTo(createClientResponse1.Data.Name));
-            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(createClientResponse1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createClientResponse1, Is.Not.Null);
+                Assert.That(clientName1, Is.EqualTo(createClientResponse1.Data.Name));
+                Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(createClientResponse1.Data.ProvisioningState));
+            });
             var createClientResponse2 = (await clientCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientName2, clientData)).Value;
-            Assert.That(createClientResponse2, Is.Not.Null);
-            Assert.That(clientName2, Is.EqualTo(createClientResponse2.Data.Name));
-            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(createClientResponse2.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createClientResponse2, Is.Not.Null);
+                Assert.That(clientName2, Is.EqualTo(createClientResponse2.Data.Name));
+                Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(createClientResponse2.Data.ProvisioningState));
+            });
 
             //update client
             EventGridNamespaceClientData updatedClientData = new EventGridNamespaceClientData()
@@ -1134,20 +1305,26 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Description = "After"
             };
             var updateClientResponse = (await createClientResponse1.UpdateAsync(WaitUntil.Completed, updatedClientData)).Value;
-            Assert.That(updateClientResponse, Is.Not.Null);
-            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(updateClientResponse.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateClientResponse, Is.Not.Null);
+                Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(updateClientResponse.Data.ProvisioningState));
+            });
 
             // Get updated client
             var getClientResponse = (await updateClientResponse.GetAsync()).Value;
-            Assert.That(getClientResponse, Is.Not.Null);
-            Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(getClientResponse.Data.ProvisioningState));
-            Assert.That(clientName1, Is.EqualTo(getClientResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getClientResponse, Is.Not.Null);
+                Assert.That(EventGridNamespaceClientProvisioningState.Succeeded, Is.EqualTo(getClientResponse.Data.ProvisioningState));
+                Assert.That(clientName1, Is.EqualTo(getClientResponse.Data.Name));
+            });
             Assert.That(getClientResponse.Data.Description, Is.EqualTo("After"));
 
             // List clients
             var getAllClientsBeforeDeletion = await clientCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(getAllClientsBeforeDeletion, Is.Not.Null);
-            Assert.That(getAllClientsBeforeDeletion.Count, Is.EqualTo(2));
+            Assert.That(getAllClientsBeforeDeletion, Has.Count.EqualTo(2));
             await getClientResponse.DeleteAsync(WaitUntil.Completed);
             await createClientResponse2.DeleteAsync(WaitUntil.Completed);
             var getAllClientsAfterDeletion = await clientCollection.GetAllAsync().ToEnumerableAsync();
@@ -1164,13 +1341,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createClientGroupResponse1 = (await clientGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientGroupName1, clientGroupData)).Value;
-            Assert.That(createClientGroupResponse1, Is.Not.Null);
-            Assert.That(clientGroupName1, Is.EqualTo(createClientGroupResponse1.Data.Name));
-            Assert.That(ClientGroupProvisioningState.Succeeded, Is.EqualTo(createClientGroupResponse1.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createClientGroupResponse1, Is.Not.Null);
+                Assert.That(clientGroupName1, Is.EqualTo(createClientGroupResponse1.Data.Name));
+                Assert.That(ClientGroupProvisioningState.Succeeded, Is.EqualTo(createClientGroupResponse1.Data.ProvisioningState));
+            });
             var createClientGroupResponse2 = (await clientGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientGroupName2, clientGroupData)).Value;
-            Assert.That(createClientGroupResponse2, Is.Not.Null);
-            Assert.That(clientGroupName2, Is.EqualTo(createClientGroupResponse2.Data.Name));
-            Assert.That(ClientGroupProvisioningState.Succeeded, Is.EqualTo(createClientGroupResponse2.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createClientGroupResponse2, Is.Not.Null);
+                Assert.That(clientGroupName2, Is.EqualTo(createClientGroupResponse2.Data.Name));
+                Assert.That(ClientGroupProvisioningState.Succeeded, Is.EqualTo(createClientGroupResponse2.Data.ProvisioningState));
+            });
 
             //Get Client Group
             var getClientGroup1Response = (await clientGroupCollection.GetAsync("clientGroupName1")).Value;
@@ -1180,13 +1363,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
             //List Client Groups ==> Note : 1 extra default client group is added by the service.
             var listCientGroupBeforeDeletion = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listCientGroupBeforeDeletion, Is.Not.Null);
-            Assert.That(listCientGroupBeforeDeletion.Count, Is.EqualTo(3));
+            Assert.That(listCientGroupBeforeDeletion, Has.Count.EqualTo(3));
 
             await getClientGroup1Response.DeleteAsync(WaitUntil.Completed);
 
             var listCientGroupAfterDeletion = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listCientGroupAfterDeletion, Is.Not.Null);
-            Assert.That(listCientGroupAfterDeletion.Count, Is.EqualTo(2));
+            Assert.That(listCientGroupAfterDeletion, Has.Count.EqualTo(2));
 
             // Create topic spaces
             var topicSpacesCollection = createNamespaceResponse.GetTopicSpaces();
@@ -1195,39 +1378,51 @@ namespace Azure.ResourceManager.EventGrid.Tests
             TopicSpaceData topicSpaceData = new TopicSpaceData();
             topicSpaceData.TopicTemplates.Add("testTopicTemplate1");
             var topicSpaceResponse1 = (await topicSpacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicSpaceName1, topicSpaceData)).Value;
-            Assert.That(topicSpaceResponse1, Is.Not.Null);
-            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(topicSpaceResponse1.Data.ProvisioningState));
-            Assert.That(topicSpaceName1, Is.EqualTo(topicSpaceResponse1.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(topicSpaceResponse1, Is.Not.Null);
+                Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(topicSpaceResponse1.Data.ProvisioningState));
+                Assert.That(topicSpaceName1, Is.EqualTo(topicSpaceResponse1.Data.Name));
+            });
             var topicSpaceResponse2 = (await topicSpacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicSpaceName2, topicSpaceData)).Value;
-            Assert.That(topicSpaceResponse2, Is.Not.Null);
-            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(topicSpaceResponse2.Data.ProvisioningState));
-            Assert.That(topicSpaceName2, Is.EqualTo(topicSpaceResponse2.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(topicSpaceResponse2, Is.Not.Null);
+                Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(topicSpaceResponse2.Data.ProvisioningState));
+                Assert.That(topicSpaceName2, Is.EqualTo(topicSpaceResponse2.Data.Name));
+            });
 
             // get topic spaces
             var getTopicSpaceResponse1 = (await topicSpacesCollection.GetAsync(topicSpaceName1)).Value;
-            Assert.That(getTopicSpaceResponse1, Is.Not.Null);
-            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(getTopicSpaceResponse1.Data.ProvisioningState));
-            Assert.That(topicSpaceName1, Is.EqualTo(getTopicSpaceResponse1.Data.Name));
-            Assert.That(getTopicSpaceResponse1.Data.TopicTemplates.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getTopicSpaceResponse1, Is.Not.Null);
+                Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(getTopicSpaceResponse1.Data.ProvisioningState));
+                Assert.That(topicSpaceName1, Is.EqualTo(getTopicSpaceResponse1.Data.Name));
+            });
+            Assert.That(getTopicSpaceResponse1.Data.TopicTemplates, Has.Count.EqualTo(1));
 
             // update topic spaces
             TopicSpaceData updateTopicSpaceData = new TopicSpaceData();
             updateTopicSpaceData.TopicTemplates.Add("testTopicTemplate1");
             updateTopicSpaceData.TopicTemplates.Add("testTopicTemplate2");
             var updateTopicSpaceResponse = (await getTopicSpaceResponse1.UpdateAsync(WaitUntil.Completed, updateTopicSpaceData)).Value;
-            Assert.That(updateTopicSpaceResponse, Is.Not.Null);
-            Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(updateTopicSpaceResponse.Data.ProvisioningState));
-            Assert.That(topicSpaceName1, Is.EqualTo(updateTopicSpaceResponse.Data.Name));
-            Assert.That(updateTopicSpaceResponse.Data.TopicTemplates.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateTopicSpaceResponse, Is.Not.Null);
+                Assert.That(TopicSpaceProvisioningState.Succeeded, Is.EqualTo(updateTopicSpaceResponse.Data.ProvisioningState));
+                Assert.That(topicSpaceName1, Is.EqualTo(updateTopicSpaceResponse.Data.Name));
+            });
+            Assert.That(updateTopicSpaceResponse.Data.TopicTemplates, Has.Count.EqualTo(2));
 
             //List topic spaces
             var listTopicSpacesBeforeDeletion = await topicSpacesCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listTopicSpacesBeforeDeletion, Is.Not.Null);
-            Assert.That(listTopicSpacesBeforeDeletion.Count, Is.EqualTo(2));
+            Assert.That(listTopicSpacesBeforeDeletion, Has.Count.EqualTo(2));
             await getTopicSpaceResponse1.DeleteAsync(WaitUntil.Completed);
             var listTopicSpacesAfterDeletion = await topicSpacesCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listTopicSpacesAfterDeletion, Is.Not.Null);
-            Assert.That(listTopicSpacesAfterDeletion.Count, Is.EqualTo(1));
+            Assert.That(listTopicSpacesAfterDeletion, Has.Count.EqualTo(1));
 
             // Create Permission Bindings
             var permissionBindingsCollection = createNamespaceResponse.GetEventGridNamespacePermissionBindings();
@@ -1240,15 +1435,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Permission = PermissionType.Subscriber
             };
             var permissionBindingResponse1 = (await permissionBindingsCollection.CreateOrUpdateAsync(WaitUntil.Completed, PermissionBindingName1, permissionBindingData)).Value;
-            Assert.That(permissionBindingResponse1, Is.Not.Null);
-            Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(permissionBindingResponse1.Data.ProvisioningState));
-            Assert.That(PermissionBindingName1, Is.EqualTo(permissionBindingResponse1.Data.Name));
-            Assert.That(PermissionType.Subscriber, Is.EqualTo(permissionBindingResponse1.Data.Permission));
+            Assert.Multiple(() =>
+            {
+                Assert.That(permissionBindingResponse1, Is.Not.Null);
+                Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(permissionBindingResponse1.Data.ProvisioningState));
+                Assert.That(PermissionBindingName1, Is.EqualTo(permissionBindingResponse1.Data.Name));
+                Assert.That(PermissionType.Subscriber, Is.EqualTo(permissionBindingResponse1.Data.Permission));
+            });
 
             var permissionBindingResponse2 = (await permissionBindingsCollection.CreateOrUpdateAsync(WaitUntil.Completed, PermissionBindingName2, permissionBindingData)).Value;
-            Assert.That(permissionBindingResponse2, Is.Not.Null);
-            Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(permissionBindingResponse2.Data.ProvisioningState));
-            Assert.That(PermissionBindingName2, Is.EqualTo(permissionBindingResponse2.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(permissionBindingResponse2, Is.Not.Null);
+                Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(permissionBindingResponse2.Data.ProvisioningState));
+                Assert.That(PermissionBindingName2, Is.EqualTo(permissionBindingResponse2.Data.Name));
+            });
 
             // udpate permission bindings
             EventGridNamespacePermissionBindingData permissionBindingDataAfter = new EventGridNamespacePermissionBindingData()
@@ -1258,19 +1459,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Permission = PermissionType.Publisher
             };
             var updatePermissionBindingResponse = (await permissionBindingResponse1.UpdateAsync(WaitUntil.Completed, permissionBindingDataAfter)).Value;
-            Assert.That(updatePermissionBindingResponse, Is.Not.Null);
-            Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(updatePermissionBindingResponse.Data.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatePermissionBindingResponse, Is.Not.Null);
+                Assert.That(PermissionBindingProvisioningState.Succeeded, Is.EqualTo(updatePermissionBindingResponse.Data.ProvisioningState));
+            });
 
             // get permission bindings
             var getPermissionBindingResponse = (await permissionBindingsCollection.GetAsync(PermissionBindingName1)).Value;
-            Assert.That(getPermissionBindingResponse, Is.Not.Null);
-            Assert.That(PermissionBindingName1, Is.EqualTo(getPermissionBindingResponse.Data.Name));
-            Assert.That(PermissionType.Publisher, Is.EqualTo(getPermissionBindingResponse.Data.Permission));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getPermissionBindingResponse, Is.Not.Null);
+                Assert.That(PermissionBindingName1, Is.EqualTo(getPermissionBindingResponse.Data.Name));
+                Assert.That(PermissionType.Publisher, Is.EqualTo(getPermissionBindingResponse.Data.Permission));
+            });
 
             // list permission bindings
             var getAllPermissionBindingsBeforeDelete = await permissionBindingsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(getAllPermissionBindingsBeforeDelete, Is.Not.Null);
-            Assert.That(getAllPermissionBindingsBeforeDelete.Count, Is.EqualTo(2));
+            Assert.That(getAllPermissionBindingsBeforeDelete, Has.Count.EqualTo(2));
 
             // delete permission bindings
             await getPermissionBindingResponse.DeleteAsync(WaitUntil.Completed);
@@ -1286,9 +1493,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var listCientGroupAfterAllDeleted = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
             var listClientsAfterAllDeleted = await clientCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listClientsAfterAllDeleted, Is.Not.Null);
-            Assert.That(listClientsAfterAllDeleted.Count, Is.EqualTo(0));
-            Assert.That(listCientGroupAfterAllDeleted, Is.Not.Null);
-            Assert.That(listCientGroupAfterAllDeleted.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listClientsAfterAllDeleted.Count, Is.EqualTo(0));
+                Assert.That(listCientGroupAfterAllDeleted, Is.Not.Null);
+            });
+            Assert.That(listCientGroupAfterAllDeleted, Has.Count.EqualTo(1));
 
             await topicSpaceResponse2.DeleteAsync(WaitUntil.Completed);
             var listTopicSpaceAfterAllDeleted = await topicSpacesCollection.GetAllAsync().ToEnumerableAsync();

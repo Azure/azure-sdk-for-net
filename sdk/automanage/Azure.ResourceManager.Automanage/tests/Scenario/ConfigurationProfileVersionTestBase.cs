@@ -52,10 +52,13 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         protected void AssertValues(AutomanageConfigurationProfileVersionResource version, string versionName)
         {
             Assert.That(version, Is.Not.Null);
-            Assert.That(version.HasData, Is.True);
-            Assert.That(version.Id.Name, Is.EqualTo(versionName));
-            Assert.That(version.Id, Is.Not.Null);
-            Assert.That(version.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(version.HasData, Is.True);
+                Assert.That(version.Id.Name, Is.EqualTo(versionName));
+                Assert.That(version.Id, Is.Not.Null);
+                Assert.That(version.Data, Is.Not.Null);
+            });
             Assert.That(version.Data.Configuration, Is.Not.Null);
         }
     }

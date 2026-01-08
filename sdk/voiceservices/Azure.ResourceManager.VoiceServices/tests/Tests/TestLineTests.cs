@@ -40,44 +40,50 @@ namespace Azure.ResourceManager.VoiceServices.Tests
 
             // PUT - Create
             var createOperation = await _communicationsGateway.GetVoiceServicesTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, DefaultTestLineData());
-            Assert.That(createOperation.HasCompleted, Is.True);
-            Assert.That(createOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createOperation.HasCompleted, Is.True);
+                Assert.That(createOperation.HasValue, Is.True);
+            });
 
             // GET - check it exists
             var getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             var testLine = getResponse.Value;
-            Assert.IsNotNull(testLine);
+            Assert.That(testLine, Is.Not.Null);
 
             // PUT - Update
             var updatedTestLineData = DefaultTestLineData();
             updatedTestLineData.PhoneNumber = "123";
             var putOperation = await _communicationsGateway.GetVoiceServicesTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedTestLineData);
-            Assert.That(putOperation.HasCompleted, Is.True);
-            Assert.That(putOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(putOperation.HasCompleted, Is.True);
+                Assert.That(putOperation.HasValue, Is.True);
+            });
 
             // GET - check the updated testLine name
             getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             testLine = getResponse.Value;
-            Assert.IsNotNull(testLine);
+            Assert.That(testLine, Is.Not.Null);
             Assert.That(testLine.Data.PhoneNumber, Is.EqualTo("123"));
 
             // PATCH
             var patch = new VoiceServicesTestLinePatch();
             patch.Tags.Add("tagKey", "tagValue");
             var patchOperation = await testLine.UpdateAsync(patch);
-            Assert.IsNotNull(patchOperation.Value);
+            Assert.That(patchOperation.Value, Is.Not.Null);
 
             // GET - check the updated tags
             getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             testLine = getResponse.Value;
-            Assert.IsNotNull(testLine);
+            Assert.That(testLine, Is.Not.Null);
             Assert.That(testLine.Data.Tags["tagKey"], Is.EqualTo("tagValue"));
 
             // List TestLines by CommunicationsGateway
             var testLines = _communicationsGateway.GetVoiceServicesTestLines().GetAllAsync();
             var testLinesResult = await testLines.ToEnumerableAsync();
             Assert.That(testLinesResult, Is.Not.Null);
-            Assert.That(testLinesResult.Count >= 1, Is.True);
+            Assert.That(testLinesResult, Is.Not.Empty);
 
             // Delete
             var deleteOperation = await testLine.DeleteAsync(WaitUntil.Completed);

@@ -47,17 +47,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAllowedConnections(list.FirstOrDefault());
         }
 
         private void ValidateAllowedConnections(SecurityCenterAllowedConnection allowedConnections)
         {
-            Assert.IsNotNull(allowedConnections);
-            Assert.IsNotNull(allowedConnections.Id);
-            Assert.That(allowedConnections.Name, Is.EqualTo("Internal"));
-            Assert.That(allowedConnections.Location.ToString(), Is.EqualTo("centralus"));
-            Assert.That(allowedConnections.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/locations/allowedConnections"));
+            Assert.That(allowedConnections, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(allowedConnections.Id, Is.Not.Null);
+                Assert.That(allowedConnections.Name, Is.EqualTo("Internal"));
+                Assert.That(allowedConnections.Location.ToString(), Is.EqualTo("centralus"));
+                Assert.That(allowedConnections.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/locations/allowedConnections"));
+            });
         }
     }
 }

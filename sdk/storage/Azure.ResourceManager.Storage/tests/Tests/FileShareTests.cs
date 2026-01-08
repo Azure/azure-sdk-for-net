@@ -67,11 +67,14 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if created successfully
             FileShareData shareData = share1.Data;
-            Assert.IsEmpty(shareData.Metadata);
+            Assert.That(shareData.Metadata, Is.Empty);
             FileShareResource share2 = await _fileShareCollection.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
-            Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.True);
-            Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.True);
+                Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName + "1"), Is.False);
+            });
 
             string shareName2 = Recording.GenerateAssetName("share");
             var data = new FileShareData()
@@ -81,24 +84,33 @@ namespace Azure.ResourceManager.Storage.Tests
                 AccessTier = FileShareAccessTier.Hot
             };
             share2 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, shareName2, data)).Value;
-            Assert.That(share2.Data.Metadata.Count, Is.EqualTo(2));
-            Assert.That(share2.Data.Metadata.FirstOrDefault().Key, Is.EqualTo("metadata1"));
-            Assert.That(share2.Data.ShareQuota, Is.EqualTo(500));
-            Assert.That(share2.Data.AccessTier, Is.EqualTo(FileShareAccessTier.Hot));
+            Assert.That(share2.Data.Metadata, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share2.Data.Metadata.FirstOrDefault().Key, Is.EqualTo("metadata1"));
+                Assert.That(share2.Data.ShareQuota, Is.EqualTo(500));
+                Assert.That(share2.Data.AccessTier, Is.EqualTo(FileShareAccessTier.Hot));
+            });
 
             share2 = (await _fileShareCollection.GetAsync(shareName2)).Value;
-            Assert.That(share2.Data.Metadata.Count, Is.EqualTo(2));
-            Assert.That(share2.Data.Metadata.FirstOrDefault().Key, Is.EqualTo("metadata1"));
-            Assert.That(share2.Data.ShareQuota, Is.EqualTo(500));
-            Assert.That(share2.Data.AccessTier, Is.EqualTo(FileShareAccessTier.Hot));
+            Assert.That(share2.Data.Metadata, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share2.Data.Metadata.FirstOrDefault().Key, Is.EqualTo("metadata1"));
+                Assert.That(share2.Data.ShareQuota, Is.EqualTo(500));
+                Assert.That(share2.Data.AccessTier, Is.EqualTo(FileShareAccessTier.Hot));
+            });
 
             //delete file share
             await share1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.False);
+            });
         }
 
         [Test]
@@ -141,14 +153,14 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //list share with snapshot
             List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(expand: "snapshots").ToEnumerableAsync();
-            Assert.That(fileShares.Count, Is.EqualTo(3));
+            Assert.That(fileShares, Has.Count.EqualTo(3));
 
             //delete share snapshot
             await shareSnapshot.DeleteAsync(WaitUntil.Completed);
 
             // List share with deleted
             fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
-            Assert.That(fileShares.Count, Is.EqualTo(2));
+            Assert.That(fileShares, Has.Count.EqualTo(2));
         }
 
         [Test]
@@ -173,9 +185,13 @@ namespace Azure.ResourceManager.Storage.Tests
                 if (share.Id.Name == fileShareName2)
                     share4 = share;
             }
-            Assert.That(count, Is.EqualTo(2));
-            Assert.IsNotNull(share3);
-            Assert.IsNotNull(share4);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(count, Is.EqualTo(2));
+                Assert.That(share3, Is.Not.Null);
+                Assert.That(share4, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -194,14 +210,20 @@ namespace Azure.ResourceManager.Storage.Tests
             shareData.ShareQuota = 5000;
             FileShareResource share2 = await share1.UpdateAsync(shareData);
 
-            //validate
-            Assert.That(share2.Data.Metadata, Is.Not.Null);
-            Assert.That(shareData.ShareQuota, Is.EqualTo(share2.Data.ShareQuota));
-            Assert.That(shareData.Metadata, Is.EqualTo(share2.Data.Metadata));
+            Assert.Multiple(() =>
+            {
+                //validate
+                Assert.That(share2.Data.Metadata, Is.Not.Null);
+                Assert.That(shareData.ShareQuota, Is.EqualTo(share2.Data.ShareQuota));
+                Assert.That(shareData.Metadata, Is.EqualTo(share2.Data.Metadata));
+            });
             FileShareResource share3 = await _fileShareCollection.GetAsync(fileShareName);
-            Assert.That(share3.Data.Metadata, Is.Not.Null);
-            Assert.That(shareData.ShareQuota, Is.EqualTo(share3.Data.ShareQuota));
-            Assert.That(shareData.Metadata, Is.EqualTo(share3.Data.Metadata));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share3.Data.Metadata, Is.Not.Null);
+                Assert.That(shareData.ShareQuota, Is.EqualTo(share3.Data.ShareQuota));
+                Assert.That(shareData.Metadata, Is.EqualTo(share3.Data.Metadata));
+            });
         }
 
         [Test]
@@ -225,9 +247,12 @@ namespace Azure.ResourceManager.Storage.Tests
             };
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
-            //validate
-            Assert.That(_fileService.Data.ShareDeleteRetentionPolicy.IsEnabled, Is.True);
-            Assert.That(_fileService.Data.ShareDeleteRetentionPolicy.Days, Is.EqualTo(5));
+            Assert.Multiple(() =>
+            {
+                //validate
+                Assert.That(_fileService.Data.ShareDeleteRetentionPolicy.IsEnabled, Is.True);
+                Assert.That(_fileService.Data.ShareDeleteRetentionPolicy.Days, Is.EqualTo(5));
+            });
 
             // Get after account create
             var service = (await _fileService.GetAsync()).Value;
@@ -252,19 +277,25 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             };
             service = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, data)).Value;
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled, Is.True);
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.Versions, Is.EqualTo("SMB2.1;SMB3.0;SMB3.1.1"));
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods, Is.EqualTo("NTLMv2;Kerberos"));
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption, Is.EqualTo("RC4-HMAC;AES-256"));
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.ChannelEncryption, Is.EqualTo("AES-128-CCM;AES-128-GCM;AES-256-GCM"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled, Is.True);
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.Versions, Is.EqualTo("SMB2.1;SMB3.0;SMB3.1.1"));
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods, Is.EqualTo("NTLMv2;Kerberos"));
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption, Is.EqualTo("RC4-HMAC;AES-256"));
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.ChannelEncryption, Is.EqualTo("AES-128-CCM;AES-128-GCM;AES-256-GCM"));
+            });
 
             // Get and validate
             service = (await _fileService.GetAsync()).Value;
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled, Is.True);
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.Versions, Is.EqualTo("SMB2.1;SMB3.0;SMB3.1.1"));
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods, Is.EqualTo("NTLMv2;Kerberos"));
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption, Is.EqualTo("RC4-HMAC;AES-256"));
-            Assert.That(service.Data.ProtocolSettings.SmbSetting.ChannelEncryption, Is.EqualTo("AES-128-CCM;AES-128-GCM;AES-256-GCM"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled, Is.True);
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.Versions, Is.EqualTo("SMB2.1;SMB3.0;SMB3.1.1"));
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods, Is.EqualTo("NTLMv2;Kerberos"));
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption, Is.EqualTo("RC4-HMAC;AES-256"));
+                Assert.That(service.Data.ProtocolSettings.SmbSetting.ChannelEncryption, Is.EqualTo("AES-128-CCM;AES-128-GCM;AES-256-GCM"));
+            });
         }
 
         [Test]
@@ -306,7 +337,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate
             fileShares = await _fileShareCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(fileShares.Count, Is.EqualTo(1));
+            Assert.That(fileShares, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -345,9 +376,12 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Update share
             share = await share.UpdateAsync(updateParameters2);
-            Assert.That(share.Data.SignedIdentifiers.Count, Is.EqualTo(2));
-            Assert.That(share.Data.SignedIdentifiers[0].Id, Is.EqualTo("testSig1"));
-            Assert.That(share.Data.SignedIdentifiers[0].AccessPolicy.Permission, Is.EqualTo("rw"));
+            Assert.That(share.Data.SignedIdentifiers, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share.Data.SignedIdentifiers[0].Id, Is.EqualTo("testSig1"));
+                Assert.That(share.Data.SignedIdentifiers[0].AccessPolicy.Permission, Is.EqualTo("rw"));
+            });
         }
 
         [Test]
@@ -376,9 +410,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.That(leaseResponse.LeaseId, Is.EqualTo(proposedLeaseID1));
 
             share = await share.GetAsync();
-            Assert.That(share.Data.LeaseDuration, Is.EqualTo(StorageLeaseDurationType.Fixed));
-            Assert.That(share.Data.LeaseState, Is.EqualTo(StorageLeaseState.Leased));
-            Assert.That(share.Data.LeaseStatus, Is.EqualTo(StorageLeaseStatus.Locked));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share.Data.LeaseDuration, Is.EqualTo(StorageLeaseDurationType.Fixed));
+                Assert.That(share.Data.LeaseState, Is.EqualTo(StorageLeaseState.Leased));
+                Assert.That(share.Data.LeaseStatus, Is.EqualTo(StorageLeaseStatus.Locked));
+            });
 
             //renew lease share
             leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
@@ -402,9 +439,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.That(leaseResponse.LeaseId, Is.EqualTo(proposedLeaseID1));
 
             shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
-            Assert.That(share.Data.LeaseDuration, Is.EqualTo(StorageLeaseDurationType.Fixed));
-            Assert.That(share.Data.LeaseState, Is.EqualTo(StorageLeaseState.Leased));
-            Assert.That(share.Data.LeaseStatus, Is.EqualTo(StorageLeaseStatus.Locked));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share.Data.LeaseDuration, Is.EqualTo(StorageLeaseDurationType.Fixed));
+                Assert.That(share.Data.LeaseState, Is.EqualTo(StorageLeaseState.Leased));
+                Assert.That(share.Data.LeaseStatus, Is.EqualTo(StorageLeaseStatus.Locked));
+            });
 
             bool DeleteFail = false;
             // try delete with include = none
@@ -456,17 +496,20 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules
-            Assert.That(properties3.Cors.CorsRules.Count, Is.EqualTo(properties2.Cors.CorsRules.Count));
+            Assert.That(properties3.Cors.CorsRules, Has.Count.EqualTo(properties2.Cors.CorsRules.Count));
             for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
             {
                 var putRule = properties2.Cors.CorsRules[i];
                 var getRule = properties3.Cors.CorsRules[i];
 
-                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
-                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
-                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
-                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
-                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                    Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                    Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                    Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                    Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                });
             }
 
             _fileService = await _fileService.GetAsync();
@@ -474,17 +517,20 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties4 = _fileService.Data;
 
             //validate CORS rules
-            Assert.That(properties4.Cors.CorsRules.Count, Is.EqualTo(properties2.Cors.CorsRules.Count));
+            Assert.That(properties4.Cors.CorsRules, Has.Count.EqualTo(properties2.Cors.CorsRules.Count));
             for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
             {
                 var putRule = properties2.Cors.CorsRules[i];
                 var getRule = properties4.Cors.CorsRules[i];
 
-                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
-                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
-                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
-                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
-                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                    Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                    Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                    Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                    Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                });
             }
         }
 
@@ -509,23 +555,26 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Get share usage
             var usage = (_fileService.GetFileServiceUsage()).GetAsync().Result.Value.Data;
-            Assert.IsNotNull(usage.Properties.FileShareLimits);
-            Assert.That(usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareLimits.MaxProvisionedIops.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareLimits.MinProvisionedIops.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value > 0, Is.True);
-            Assert.IsNotNull(usage.Properties.BurstingConstants);
-            Assert.That(usage.Properties.FileShareRecommendations.BandwidthScalar.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareRecommendations.BaseBandwidthMiBPerSec.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareRecommendations.BaseIops.Value > 0, Is.True);
-            Assert.That(usage.Properties.FileShareRecommendations.IoScalar.Value > 0, Is.True);
-            Assert.That(usage.Properties.StorageAccountLimits.MaxFileShares.Value > 0, Is.True);
-            Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0, Is.True);
-            Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedIops.Value > 0, Is.True);
-            Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedStorageGiB.Value > 0, Is.True);
-            Assert.IsNotNull(usage.Properties.StorageAccountUsage);
+            Assert.That(usage.Properties.FileShareLimits, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareLimits.MaxProvisionedIops.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareLimits.MinProvisionedIops.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.BurstingConstants, Is.Not.Null);
+                Assert.That(usage.Properties.FileShareRecommendations.BandwidthScalar.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareRecommendations.BaseBandwidthMiBPerSec.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareRecommendations.BaseIops.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.FileShareRecommendations.IoScalar.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.StorageAccountLimits.MaxFileShares.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedBandwidthMiBPerSec.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedIops.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.StorageAccountLimits.MaxProvisionedStorageGiB.Value, Is.GreaterThan(0));
+                Assert.That(usage.Properties.StorageAccountUsage, Is.Not.Null);
+            });
 
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
@@ -536,16 +585,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 ShareQuota = usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value - 1
             };
             FileShareResource share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
-            Assert.That(fileShareName, Is.EqualTo(share1.Id.Name));
-            Assert.That(share1.Data.ProvisionedBandwidthMibps, Is.EqualTo(data.ProvisionedBandwidthMibps));
-            Assert.That(share1.Data.ProvisionedIops, Is.EqualTo(data.ProvisionedIops));
-            Assert.That(share1.Data.ShareQuota, Is.EqualTo(data.ShareQuota));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fileShareName, Is.EqualTo(share1.Id.Name));
+                Assert.That(share1.Data.ProvisionedBandwidthMibps, Is.EqualTo(data.ProvisionedBandwidthMibps));
+                Assert.That(share1.Data.ProvisionedIops, Is.EqualTo(data.ProvisionedIops));
+                Assert.That(share1.Data.ShareQuota, Is.EqualTo(data.ShareQuota));
+            });
 
             //validate if created successfully
             FileShareResource share2 = await _fileShareCollection.GetAsync(fileShareName);
-            Assert.That(share2.Data.ProvisionedBandwidthMibps, Is.EqualTo(share1.Data.ProvisionedBandwidthMibps));
-            Assert.That(share2.Data.ProvisionedIops, Is.EqualTo(share1.Data.ProvisionedIops));
-            Assert.That(share2.Data.ShareQuota, Is.EqualTo(share1.Data.ShareQuota));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share2.Data.ProvisionedBandwidthMibps, Is.EqualTo(share1.Data.ProvisionedBandwidthMibps));
+                Assert.That(share2.Data.ProvisionedIops, Is.EqualTo(share1.Data.ProvisionedIops));
+                Assert.That(share2.Data.ShareQuota, Is.EqualTo(share1.Data.ShareQuota));
+            });
 
             // Update File share
             data.ProvisionedBandwidthMibps = usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value + 1;
@@ -553,23 +608,32 @@ namespace Azure.ResourceManager.Storage.Tests
             data.ShareQuota = usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value + 1;
 
             share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
-            Assert.That(fileShareName, Is.EqualTo(share1.Id.Name));
-            Assert.That(share1.Data.ProvisionedBandwidthMibps, Is.EqualTo(data.ProvisionedBandwidthMibps));
-            Assert.That(share1.Data.ProvisionedIops, Is.EqualTo(data.ProvisionedIops));
-            Assert.That(share1.Data.ShareQuota, Is.EqualTo(data.ShareQuota));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fileShareName, Is.EqualTo(share1.Id.Name));
+                Assert.That(share1.Data.ProvisionedBandwidthMibps, Is.EqualTo(data.ProvisionedBandwidthMibps));
+                Assert.That(share1.Data.ProvisionedIops, Is.EqualTo(data.ProvisionedIops));
+                Assert.That(share1.Data.ShareQuota, Is.EqualTo(data.ShareQuota));
+            });
 
             share2 = (await _fileShareCollection.GetAsync(fileShareName)).Value;
-            Assert.That(share2.Data.ProvisionedBandwidthMibps, Is.EqualTo(share1.Data.ProvisionedBandwidthMibps));
-            Assert.That(share2.Data.ProvisionedIops, Is.EqualTo(share1.Data.ProvisionedIops));
-            Assert.That(share2.Data.ShareQuota, Is.EqualTo(share1.Data.ShareQuota));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share2.Data.ProvisionedBandwidthMibps, Is.EqualTo(share1.Data.ProvisionedBandwidthMibps));
+                Assert.That(share2.Data.ProvisionedIops, Is.EqualTo(share1.Data.ProvisionedIops));
+                Assert.That(share2.Data.ShareQuota, Is.EqualTo(share1.Data.ShareQuota));
+            });
 
             //delete file share
             await share1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _fileShareCollection.ExistsAsync(fileShareName), Is.False);
+            });
         }
 
         [Test]
@@ -592,17 +656,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 PaidBurstingMaxIops = 3230
             };
             FileShareResource share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
-            Assert.That(fileShareName, Is.EqualTo(share1.Id.Name));
-            Assert.That(share1.Data.FileSharePaidBursting.PaidBurstingEnabled, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingEnabled));
-            Assert.That(share1.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps));
-            Assert.That(share1.Data.FileSharePaidBursting.PaidBurstingMaxIops, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxIops));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fileShareName, Is.EqualTo(share1.Id.Name));
+                Assert.That(share1.Data.FileSharePaidBursting.PaidBurstingEnabled, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingEnabled));
+                Assert.That(share1.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps));
+                Assert.That(share1.Data.FileSharePaidBursting.PaidBurstingMaxIops, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxIops));
+            });
 
             //validate if created successfully
             FileShareResource share2 = await _fileShareCollection.GetAsync(fileShareName);
             AssertFileShareEqual(share1, share2);
-            Assert.That(share2.Data.FileSharePaidBursting.PaidBurstingEnabled, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingEnabled));
-            Assert.That(share2.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps));
-            Assert.That(share2.Data.FileSharePaidBursting.PaidBurstingMaxIops, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxIops));
+            Assert.Multiple(() =>
+            {
+                Assert.That(share2.Data.FileSharePaidBursting.PaidBurstingEnabled, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingEnabled));
+                Assert.That(share2.Data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxBandwidthMibps));
+                Assert.That(share2.Data.FileSharePaidBursting.PaidBurstingMaxIops, Is.EqualTo(data.FileSharePaidBursting.PaidBurstingMaxIops));
+            });
 
             // update file share - disable PaidBursting
             data = new FileShareData();

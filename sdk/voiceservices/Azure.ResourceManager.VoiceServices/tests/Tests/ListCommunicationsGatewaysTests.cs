@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
             var comminicationsGatewaysResult = await communicationsGateways.ToEnumerableAsync();
 
             Assert.That(comminicationsGatewaysResult, Is.Not.Null);
-            Assert.That(comminicationsGatewaysResult.Count >= 1, Is.True);
+            Assert.That(comminicationsGatewaysResult, Is.Not.Empty);
         }
 
         [TestCase, Order(2)]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
             var filteredCommunicationsGateways = communicationsGatewaysResult.Where(cg => cg.Id.ResourceGroupName == _rg.Id.ResourceGroupName);
 
             // Check that we have at least one (we should at a minimum have the one we added in SetUp)
-            Assert.That(filteredCommunicationsGateways.Count() >= 1, Is.True);
+            Assert.That(filteredCommunicationsGateways.Count(), Is.GreaterThanOrEqualTo(1));
         }
     }
 }

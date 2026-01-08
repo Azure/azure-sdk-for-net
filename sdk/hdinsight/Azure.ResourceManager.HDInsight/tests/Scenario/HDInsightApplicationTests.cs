@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             await CreateApplication(_applicationName, _scriptActionName);
             var list = await _applicationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -115,9 +115,12 @@ namespace Azure.ResourceManager.HDInsight.Tests
         private void ValidateApplication(HDInsightApplicationResource application)
         {
             Assert.That(application, Is.Not.Null);
-            Assert.That(application.Data.Properties.CreatedOn, Is.Not.Null);
-            Assert.That(application.Data.Properties.ApplicationType, Is.EqualTo("CustomApplication"));
-            Assert.That(application.Data.Properties.InstallScriptActions.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(application.Data.Properties.CreatedOn, Is.Not.Null);
+                Assert.That(application.Data.Properties.ApplicationType, Is.EqualTo("CustomApplication"));
+                Assert.That(application.Data.Properties.InstallScriptActions, Has.Count.EqualTo(1));
+            });
         }
         [Test]
         // regressation test for issue https://github.com/Azure/azure-sdk-for-net/issues/45709  only for not throwing exception

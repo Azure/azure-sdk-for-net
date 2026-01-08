@@ -42,8 +42,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
             var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryType);
             FirmwareSummary summary = (FirmwareSummary) response.Value.Data.Properties;
-            Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
-            Assert.Greater(summary.FileSize, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
+                Assert.That(summary.FileSize, Is.GreaterThan(0));
+            });
         }
 
         [TestCase]
@@ -57,8 +60,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
             var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryType);
             BinaryHardeningSummary summary = (BinaryHardeningSummary) response.Value.Data.Properties;
-            Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
-            Assert.GreaterOrEqual(summary.NotExecutableStackCount, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
+                Assert.That(summary.NotExecutableStackCount, Is.GreaterThanOrEqualTo(0));
+            });
         }
 
         [TestCase]
@@ -72,8 +78,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
             var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryType);
             CveSummary summary = (CveSummary) response.Value.Data.Properties;
-            Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
-            Assert.GreaterOrEqual(summary.CriticalCveCount, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
+                Assert.That(summary.CriticalCveCount, Is.GreaterThanOrEqualTo(0));
+            });
         }
 
         [TestCase]
@@ -87,8 +96,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
             var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryType);
             CryptoCertificateSummary summary = (CryptoCertificateSummary) response.Value.Data.Properties;
-            Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
-            Assert.GreaterOrEqual(summary.TotalCertificateCount, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
+                Assert.That(summary.TotalCertificateCount, Is.GreaterThanOrEqualTo(0));
+            });
         }
 
         [TestCase]
@@ -102,8 +114,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
             var response = await testFirmware.GetFirmwareAnalysisSummaryAsync(summaryType);
             CryptoKeySummary summary = (CryptoKeySummary) response.Value.Data.Properties;
-            Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
-            Assert.GreaterOrEqual(summary.TotalKeyCount, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(summaryType.ToString(), Is.EqualTo(summary.SummaryType.ToString()));
+                Assert.That(summary.TotalKeyCount, Is.GreaterThanOrEqualTo(0));
+            });
         }
     }
 }

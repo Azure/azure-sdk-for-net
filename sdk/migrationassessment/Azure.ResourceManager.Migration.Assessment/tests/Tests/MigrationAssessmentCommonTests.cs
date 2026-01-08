@@ -41,8 +41,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await assessmentProjectCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentProjName, assessmentProjectData);
             await response.WaitForCompletionAsync();
             assessmentProjectResource = response.Value;
-            Assert.That(response.HasCompleted, Is.True);
-            Assert.That(assessmentProjectResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.HasCompleted, Is.True);
+                Assert.That(assessmentProjectResource, Is.Not.Null);
+            });
         }
 
         [TearDown]
@@ -72,18 +75,24 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             var groupResponse =
                 await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, data);
             var groupResource = groupResponse.Value;
-            Assert.That(groupResponse.HasCompleted, Is.True);
-            Assert.That(groupResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(groupResponse.HasCompleted, Is.True);
+                Assert.That(groupResource, Is.Not.Null);
+            });
 
             // Get Assessment Group
             groupResource = await collection.GetAsync(groupName);
-            Assert.That(groupResource.Data.GroupStatus, Is.EqualTo(MigrationAssessmentGroupStatus.Completed));
-            Assert.That(groupResource.Id, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(groupResource.Data.GroupStatus, Is.EqualTo(MigrationAssessmentGroupStatus.Completed));
+                Assert.That(groupResource.Id, Is.Not.Null);
+            });
 
             // Get All Assessment Groups
             var allGroups = collection.GetAllAsync().ToEnumerableAsync();
             Assert.That(allGroups, Is.Not.Null);
-            Assert.GreaterOrEqual(allGroups.Result.Count, 1);
+            Assert.That(allGroups.Result, Is.Not.Empty);
 
             // Update Machines in Assessment Group
             MigrateGroupUpdateContent content = new MigrateGroupUpdateContent()
@@ -100,8 +109,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             };
             var updateMachinesResponse = await groupResource.UpdateMachinesAsync(WaitUntil.Completed, content);
             var updatedGroupResource = updateMachinesResponse.Value;
-            Assert.That(updateMachinesResponse.HasCompleted, Is.True);
-            Assert.That(updatedGroupResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateMachinesResponse.HasCompleted, Is.True);
+                Assert.That(updatedGroupResource, Is.Not.Null);
+            });
 
             // Delete Assessment Group
             await groupResource.DeleteAsync(WaitUntil.Completed);
@@ -117,13 +129,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessment Options
             var assessmentOptionResponse = await collection.GetAsync(assessmentOptionsName);
             var assessmentOptionsResource = assessmentOptionResponse.Value;
-            Assert.That(assessmentOptionsResource, Is.Not.Null);
-            Assert.That(assessmentOptionsName, Is.EqualTo(assessmentOptionsResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assessmentOptionsResource, Is.Not.Null);
+                Assert.That(assessmentOptionsName, Is.EqualTo(assessmentOptionsResource.Data.Name));
+            });
 
             // Get All Assessment Options
             var allAssessmentOptions = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.That(allAssessmentOptions, Is.Not.Null);
-            Assert.GreaterOrEqual(allAssessmentOptions.Count, 1);
+            Assert.That(allAssessmentOptions, Is.Not.Empty);
         }
     }
 }

@@ -44,10 +44,13 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
 
             // Get
             DeidServiceResource deidServiceResource = (await rg.GetDeidServices().GetAsync(deidServiceName)).Value;
-            Assert.That(deidServiceResource.Data.Properties.ProvisioningState, Is.EqualTo(HealthDataAIServicesProvisioningState.Succeeded));
-            Assert.That(deidServiceResource.Data.Name, Is.EqualTo(deidServiceName));
-            Assert.That(deidServiceResource.Data.Location, Is.EqualTo(Location));
-            Assert.That(deidServiceResource.Data.Properties.ServiceUri.ToString(), Does.Contain("deid"), "ServiceUri should contain 'deid'");
+            Assert.Multiple(() =>
+            {
+                Assert.That(deidServiceResource.Data.Properties.ProvisioningState, Is.EqualTo(HealthDataAIServicesProvisioningState.Succeeded));
+                Assert.That(deidServiceResource.Data.Name, Is.EqualTo(deidServiceName));
+                Assert.That(deidServiceResource.Data.Location, Is.EqualTo(Location));
+                Assert.That(deidServiceResource.Data.Properties.ServiceUri.ToString(), Does.Contain("deid"), "ServiceUri should contain 'deid'");
+            });
 
             // Delete
             ArmOperation operation = await deidService.DeleteAsync(WaitUntil.Completed);

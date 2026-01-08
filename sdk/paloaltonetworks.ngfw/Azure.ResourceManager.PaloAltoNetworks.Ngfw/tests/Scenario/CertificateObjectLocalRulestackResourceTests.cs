@@ -48,8 +48,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackCertificateObjectResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
             LocalRulestackCertificateObjectResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackCertificateObjectResource.ResourceType));
-            Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/certificates/{name}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackCertificateObjectResource.ResourceType));
+                Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/certificates/{name}"));
+            });
             Assert.Throws<ArgumentException>(() => LocalRulestackCertificateObjectResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -57,8 +60,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.That(CertificateObjectLocalRulestackResource.HasData, Is.True);
-            Assert.That(CertificateObjectLocalRulestackResource.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(CertificateObjectLocalRulestackResource.HasData, Is.True);
+                Assert.That(CertificateObjectLocalRulestackResource.Data, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -78,8 +84,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackCertificateObjectResource resource = await LocalRulestackResource.GetLocalRulestackCertificateObjectAsync("dotnetSdkTest-cert");
-            Assert.That(resource, Is.Not.Null);
-            Assert.That(CertificateObjectLocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource, Is.Not.Null);
+                Assert.That(CertificateObjectLocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            });
         }
     }
 }

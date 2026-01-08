@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // List all PECs
             var privateEndpointConnections = await pecCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(privateEndpointConnections, "No Private Endpoint Connections found for the topic.");
+            Assert.That(privateEndpointConnections, Is.Not.Empty, "No Private Endpoint Connections found for the topic.");
 
             // Find the test PEC
             var testPec = privateEndpointConnections
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Verify key fields on the retrieved PEC
             Assert.That(testPec.Data.PrivateEndpoint, Is.Not.Null, "PEC must reference a Private Endpoint.");
-            Assert.IsNotEmpty(testPec.Data.PrivateEndpoint.Id.ToString(), "PEC's PrivateEndpoint.Id should not be empty.");
+            Assert.That(testPec.Data.PrivateEndpoint.Id.ToString(), Is.Not.Empty, "PEC's PrivateEndpoint.Id should not be empty.");
 
             // Retrieve that one PEC directly
             var getSpecificPecResponse = await pecCollection.GetAsync(testPec.Data.Name);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Check its ConnectionState details
             var connectionState = getSpecificPecResponse.Value.Data.ConnectionState;
             Assert.That(connectionState, Is.Not.Null, "ConnectionState should be populated on a PEC.");
-            Assert.IsNotEmpty(connectionState.Status.ToString(), "ConnectionState.Status should not be empty.");
+            Assert.That(connectionState.Status.ToString(), Is.Not.Empty, "ConnectionState.Status should not be empty.");
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // List them
             var allPecs = await pecCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(allPecs, "Expected at least one Private Endpoint Connection.");
+            Assert.That(allPecs, Is.Not.Empty, "Expected at least one Private Endpoint Connection.");
 
             // Pick the one we want to update
             var targetPec = allPecs
@@ -104,17 +104,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Send the update
             var updatePecResponse = await getPecResponse.Value.UpdateAsync(WaitUntil.Completed, approvePayload);
-            Assert.That(updatePecResponse.Value.Data.Name, Is.EqualTo(targetPec.Data.Name), "PEC name changed after update.");
-            Assert.That(
-                updatePecResponse.Value.Data.ConnectionState.Status,
-                Is.EqualTo(EventGridPrivateEndpointPersistedConnectionStatus.Approved),
-                "PEC ConnectionState.Status was not set to Approved."
-            );
-            Assert.That(
-                updatePecResponse.Value.Data.ConnectionState.Description,
-                Is.EqualTo("Re-approved via SDK test"),
-                "PEC ConnectionState.Description did not match."
-            );
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatePecResponse.Value.Data.Name, Is.EqualTo(targetPec.Data.Name), "PEC name changed after update.");
+                Assert.That(
+                    updatePecResponse.Value.Data.ConnectionState.Status,
+                    Is.EqualTo(EventGridPrivateEndpointPersistedConnectionStatus.Approved),
+                    "PEC ConnectionState.Status was not set to Approved."
+                );
+                Assert.That(
+                    updatePecResponse.Value.Data.ConnectionState.Description,
+                    Is.EqualTo("Re-approved via SDK test"),
+                    "PEC ConnectionState.Description did not match."
+                );
+            });
         }
     }
 }

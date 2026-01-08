@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Dynatrace.Tests
             DynatraceMonitorResource monitorResource1 = await CreateMonitorResourceAsync(monitorName);
             DynatraceMonitorResource monitorResource2 = await monitorResource1.GetAsync();
 
-            Assert.That(monitorResource2.Data.Name, Is.EqualTo(monitorResource1.Data.Name));
-            Assert.That(monitorResource2.Data.Id, Is.EqualTo(monitorResource1.Data.Id));
-            Assert.That(monitorResource2.Data.ResourceType, Is.EqualTo(monitorResource1.Data.ResourceType));
-            Assert.That(monitorResource2.Data.Location, Is.EqualTo(monitorResource1.Data.Location));
-            Assert.That(monitorResource2.Data.Tags, Is.EqualTo(monitorResource1.Data.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(monitorResource2.Data.Name, Is.EqualTo(monitorResource1.Data.Name));
+                Assert.That(monitorResource2.Data.Id, Is.EqualTo(monitorResource1.Data.Id));
+                Assert.That(monitorResource2.Data.ResourceType, Is.EqualTo(monitorResource1.Data.ResourceType));
+                Assert.That(monitorResource2.Data.Location, Is.EqualTo(monitorResource1.Data.Location));
+                Assert.That(monitorResource2.Data.Tags, Is.EqualTo(monitorResource1.Data.Tags));
+            });
         }
 
         [TestCase]

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
         public async Task GetAll()
         {
             var list = await _authorizationRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -106,10 +106,13 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             var authoriaztionRule = await CreateAuthorizationRule(authorizationRuleName);
             var key = await authoriaztionRule.GetKeysAsync();
             Assert.That(key, Is.Not.Null);
-            Assert.That(key.Value.PrimaryKey, Is.Not.Null);
-            Assert.That(key.Value.SecondaryKey, Is.Not.Null);
-            Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
-            Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(key.Value.PrimaryKey, Is.Not.Null);
+                Assert.That(key.Value.SecondaryKey, Is.Not.Null);
+                Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
+                Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
+            });
         }
 
         [RecordedTest]
@@ -124,10 +127,13 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             };
             var key = await authoriaztionRule.RegenerateKeysAsync(notificationHubPolicyKey);
             Assert.That(key, Is.Not.Null);
-            Assert.That(key.Value.PrimaryKey, Is.Not.Null);
-            Assert.That(key.Value.SecondaryKey, Is.Not.Null);
-            Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
-            Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(key.Value.PrimaryKey, Is.Not.Null);
+                Assert.That(key.Value.SecondaryKey, Is.Not.Null);
+                Assert.That(key.Value.SecondaryConnectionString, Is.Not.Null);
+                Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
+            });
         }
     }
 }

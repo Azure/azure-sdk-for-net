@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -61,8 +61,11 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             PlanetaryComputerGeoCatalogCollection collection = await GetGeoCatalogCollectionAsync();
             PlanetaryComputerGeoCatalogResource catalog = await collection.GetAsync(ExistingGeoCatalogName);
 
-            Assert.That(catalog.Data.Name, Is.EqualTo(ExistingGeoCatalogName));
-            Assert.That(catalog.Data.Location.ToString().ToLowerInvariant(), Is.EqualTo(Region.ToLowerInvariant()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(catalog.Data.Name, Is.EqualTo(ExistingGeoCatalogName));
+                Assert.That(catalog.Data.Location.ToString().ToLowerInvariant(), Is.EqualTo(Region.ToLowerInvariant()));
+            });
             TestContext.WriteLine($"Catalog URI: {catalog.Data.Properties.CatalogUri}");
         }
 
@@ -92,8 +95,11 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             ArmOperation<PlanetaryComputerGeoCatalogResource> operation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             PlanetaryComputerGeoCatalogResource result = operation.Value;
 
-            Assert.That(result.Data.Name, Is.EqualTo(catalogName));
-            Assert.That(result.Data.Properties.Tier, Is.EqualTo(PlanetaryComputerGeoCatalogTier.Basic));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Data.Name, Is.EqualTo(catalogName));
+                Assert.That(result.Data.Properties.Tier, Is.EqualTo(PlanetaryComputerGeoCatalogTier.Basic));
+            });
             TestContext.WriteLine($"Created GeoCatalog: {result.Id}");
         }
 
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 TestContext.WriteLine($"[Subscription List] GeoCatalog: {item.Data.Name}");
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
         [Test]
         [RecordedTest]

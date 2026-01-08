@@ -62,10 +62,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
             AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
 
-            Assert.That(snapshot.HasData, Is.True);
-            Assert.That(snapshot.Data.Name, Is.EqualTo(snapshotName));
-            Assert.That(snapshot.Data.Filters.FirstOrDefault().Key, Is.EqualTo("key1/*"));
-            Assert.That(snapshot.Data.RetentionPeriod?.Equals((long)3600), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(snapshot.HasData, Is.True);
+                Assert.That(snapshot.Data.Name, Is.EqualTo(snapshotName));
+                Assert.That(snapshot.Data.Filters.FirstOrDefault().Key, Is.EqualTo("key1/*"));
+                Assert.That(snapshot.Data.RetentionPeriod?.Equals((long)3600), Is.True);
+            });
         }
 
         [Test]
@@ -88,10 +91,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
             AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetAppConfigurationSnapshots().GetAsync(snapshotName)).Value;
 
-            Assert.That(snapshotName, Is.EqualTo(snapshot.Data.Name));
-            Assert.That(snapshot.Data.Filters.FirstOrDefault().Key, Is.EqualTo("key1/*"));
-            Assert.That(snapshot.Data.RetentionPeriod?.Equals((long)3600), Is.True);
-            Assert.That(snapshot.Data.Status, Is.EqualTo(AppConfigurationSnapshotStatus.Ready));
+            Assert.Multiple(() =>
+            {
+                Assert.That(snapshotName, Is.EqualTo(snapshot.Data.Name));
+                Assert.That(snapshot.Data.Filters.FirstOrDefault().Key, Is.EqualTo("key1/*"));
+                Assert.That(snapshot.Data.RetentionPeriod?.Equals((long)3600), Is.True);
+                Assert.That(snapshot.Data.Status, Is.EqualTo(AppConfigurationSnapshotStatus.Ready));
+            });
         }
 
         [Test]
@@ -116,8 +122,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
             string nonExistingSnapshotName = "nonExistingSnapshot";
 
-            Assert.That((await snapshots.ExistsAsync(snapshotName)).Value, Is.True);
-            Assert.That((await snapshots.ExistsAsync(nonExistingSnapshotName)).Value, Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((await snapshots.ExistsAsync(snapshotName)).Value, Is.True);
+                Assert.That((await snapshots.ExistsAsync(nonExistingSnapshotName)).Value, Is.False);
+            });
         }
     }
 }

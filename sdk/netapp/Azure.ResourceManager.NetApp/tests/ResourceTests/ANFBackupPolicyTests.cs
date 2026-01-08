@@ -69,22 +69,31 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create backupPolicy
             var backupPolicyName = Recording.GenerateAssetName("backupPolicy-");
             NetAppBackupPolicyResource backupPolicyResource1 = await CreateBackupPolicy(DefaultLocation, backupPolicyName);
-            Assert.That(backupPolicyResource1.Id.Name, Is.EqualTo(backupPolicyName));
-            Assert.That(backupPolicyResource1.Data.DailyBackupsToKeep, Is.EqualTo(_backupPolicy.DailyBackupsToKeep));
-            Assert.That(backupPolicyResource1.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
-            Assert.That(backupPolicyResource1.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
-            Assert.That(backupPolicyResource1.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupPolicyResource1.Id.Name, Is.EqualTo(backupPolicyName));
+                Assert.That(backupPolicyResource1.Data.DailyBackupsToKeep, Is.EqualTo(_backupPolicy.DailyBackupsToKeep));
+                Assert.That(backupPolicyResource1.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
+                Assert.That(backupPolicyResource1.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
+                Assert.That(backupPolicyResource1.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            });
             //validate if created successfully, get from collection
             NetAppBackupPolicyResource backupPolicyResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);
-            Assert.That(backupPolicyResource2.Data.DailyBackupsToKeep, Is.EqualTo(_backupPolicy.DailyBackupsToKeep));
-            Assert.That(backupPolicyResource2.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
-            Assert.That(backupPolicyResource2.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
-            Assert.That(backupPolicyResource2.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupPolicyResource2.Data.DailyBackupsToKeep, Is.EqualTo(_backupPolicy.DailyBackupsToKeep));
+                Assert.That(backupPolicyResource2.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
+                Assert.That(backupPolicyResource2.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
+                Assert.That(backupPolicyResource2.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            });
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupPolicyCollection.GetAsync(backupPolicyName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName), Is.True);
-            Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName), Is.True);
+                Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName + "1"), Is.False);
+            });
 
             //delete backupPolicy
             await backupPolicyResource1.DeleteAsync(WaitUntil.Completed);
@@ -103,11 +112,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             var backupPolicyName2 = Recording.GenerateAssetName("backupPolicy-");
             NetAppBackupPolicyResource backupPolicyResource1 = await CreateBackupPolicy(DefaultLocation, backupPolicyName);
             NetAppBackupPolicyResource backupPolicyResource2 = await CreateBackupPolicy(DefaultLocation, backupPolicyName2);
-            Assert.That(backupPolicyResource1.Id.Name, Is.EqualTo(backupPolicyName));
-            Assert.That(backupPolicyResource1.Data.DailyBackupsToKeep, Is.EqualTo(_backupPolicy.DailyBackupsToKeep));
-            Assert.That(backupPolicyResource1.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
-            Assert.That(backupPolicyResource1.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
-            Assert.That(backupPolicyResource1.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupPolicyResource1.Id.Name, Is.EqualTo(backupPolicyName));
+                Assert.That(backupPolicyResource1.Data.DailyBackupsToKeep, Is.EqualTo(_backupPolicy.DailyBackupsToKeep));
+                Assert.That(backupPolicyResource1.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
+                Assert.That(backupPolicyResource1.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
+                Assert.That(backupPolicyResource1.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            });
 
             //validate if created successfully, get from collection
             NetAppBackupPolicyResource backupPolicyGetResource1 = await _backupPolicyCollection.GetAsync(backupPolicyName);
@@ -128,9 +140,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             backupPolicyResource4.Should().BeEquivalentTo(backupPolicyGetResource2);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupPolicyCollection.GetAsync(backupPolicyName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName), Is.True);
-            Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName), Is.True);
+                Assert.That((bool)await _backupPolicyCollection.ExistsAsync(backupPolicyName + "1"), Is.False);
+            });
         }
 
         [RecordedTest]
@@ -146,11 +161,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             backupPolicyPatch.DailyBackupsToKeep = 2;
             NetAppBackupPolicyResource backupPolicyPatchedResource = (await backupPolicyResource1.UpdateAsync(WaitUntil.Completed, backupPolicyPatch)).Value;
             NetAppBackupPolicyResource backupPolicyPatchedResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);
-            Assert.That(backupPolicyPatchedResource2.Id.Name, Is.EqualTo(backupPolicyName));
-            Assert.That(backupPolicyPatchedResource2.Data.DailyBackupsToKeep, Is.EqualTo(backupPolicyPatch.DailyBackupsToKeep));
-            Assert.That(backupPolicyPatchedResource2.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
-            Assert.That(backupPolicyPatchedResource2.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
-            Assert.That(backupPolicyPatchedResource2.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupPolicyPatchedResource2.Id.Name, Is.EqualTo(backupPolicyName));
+                Assert.That(backupPolicyPatchedResource2.Data.DailyBackupsToKeep, Is.EqualTo(backupPolicyPatch.DailyBackupsToKeep));
+                Assert.That(backupPolicyPatchedResource2.Data.WeeklyBackupsToKeep, Is.EqualTo(_backupPolicy.WeeklyBackupsToKeep));
+                Assert.That(backupPolicyPatchedResource2.Data.MonthlyBackupsToKeep, Is.EqualTo(_backupPolicy.MonthlyBackupsToKeep));
+                Assert.That(backupPolicyPatchedResource2.Data.IsEnabled, Is.EqualTo(_backupPolicy.IsEnabled));
+            });
         }
 
         [RecordedTest]
@@ -183,9 +201,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate if created properly
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId, Is.EqualTo(backupPolicyProperties.BackupPolicyId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId, Is.EqualTo(backupPolicyProperties.BackupPolicyId));
+            });
 
             //Disable backupPolicy to avoid server side issue
             backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false};

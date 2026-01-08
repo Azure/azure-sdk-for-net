@@ -16,9 +16,12 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
     {
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region ArtifactData
@@ -87,9 +90,12 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertTemplateArtifactData(TemplateArtifact data1, TemplateArtifact data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
-            Assert.That(data2.Template, Is.EqualTo(data1.Template));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+                Assert.That(data2.Template, Is.EqualTo(data1.Template));
+            });
         }
         //PolicyAssignmentArtifact
         public static ArtifactData GetPolicyAssignmentArtifactData()
@@ -113,9 +119,12 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertPolicyArtifactData(PolicyAssignmentArtifact data1, PolicyAssignmentArtifact data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
-            Assert.That(data2.PolicyDefinitionId, Is.EqualTo(data1.PolicyDefinitionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+                Assert.That(data2.PolicyDefinitionId, Is.EqualTo(data1.PolicyDefinitionId));
+            });
         }
         //RoleAssignmentArtifact
         public static ArtifactData GetRoleAssignmentData()
@@ -129,9 +138,12 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertRoleAssignmentArtifactData(RoleAssignmentArtifact data1, RoleAssignmentArtifact data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
-            Assert.That(data2.RoleDefinitionId, Is.EqualTo(data1.RoleDefinitionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+                Assert.That(data2.RoleDefinitionId, Is.EqualTo(data1.RoleDefinitionId));
+            });
         }
         #endregion
 
@@ -194,8 +206,11 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertAssignmentData(AssignmentData data1, AssignmentData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            });
         }
         #endregion
 

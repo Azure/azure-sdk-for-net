@@ -71,10 +71,14 @@ namespace Azure.ResourceManager.DataMigration.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exist
-            Assert.That((bool)await collection.ExistsAsync(serviceName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(serviceName + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
+                //4.Exist
+                Assert.That((bool)await collection.ExistsAsync(serviceName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(serviceName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

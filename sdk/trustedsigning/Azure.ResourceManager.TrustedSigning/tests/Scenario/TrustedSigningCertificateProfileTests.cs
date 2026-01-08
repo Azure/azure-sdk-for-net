@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(accountCollection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             TrustedSigningCertificateProfileCollection certProfileCollection = account.GetTrustedSigningCertificateProfiles();
 
             string profileName = Recording.GenerateAssetName("profile-");
             TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
-            Assert.IsNotNull(certProfile);
+            Assert.That(certProfile, Is.Not.Null);
 
             ArmOperation op = await certProfile.DeleteAsync(WaitUntil.Completed);
             Assert.That(op.HasCompleted, Is.True);
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(accountCollection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             TrustedSigningCertificateProfileCollection certProfileCollection = account.GetTrustedSigningCertificateProfiles();
 
             string profileName = Recording.GenerateAssetName("profile-");
             TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
-            Assert.IsNotNull(certProfile);
+            Assert.That(certProfile, Is.Not.Null);
 
             TrustedSigningCertificateProfileResource certProfileResource = Client.GetTrustedSigningCertificateProfileResource(certProfile.Id);
             TrustedSigningCertificateProfileResource result = await certProfileResource.GetAsync();
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         // List certificate profiles under a trusted signing account.
@@ -80,18 +80,18 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(accountCollection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             TrustedSigningCertificateProfileCollection certProfileCollection = account.GetTrustedSigningCertificateProfiles();
 
             string profileName = Recording.GenerateAssetName("profile-");
             TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
-            Assert.IsNotNull(certProfile);
+            Assert.That(certProfile, Is.Not.Null);
 
             bool exist = false;
             await foreach (TrustedSigningCertificateProfileResource item in certProfileCollection.GetAllAsync())
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 if (item.Id == certProfile.Id)
                 {
                     exist = true;
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(accountCollection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             TrustedSigningCertificateProfileCollection certProfileCollection = account.GetTrustedSigningCertificateProfiles();
 
             string profileName = Recording.GenerateAssetName("profile-");
             TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
-            Assert.IsNotNull(certProfile);
+            Assert.That(certProfile, Is.Not.Null);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
 
             // GetAll
             var list = await _exportCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateCostManagementExport(list.FirstOrDefault(item => item.Data.Name == exportName).Data, exportName);
 
             // Delete
@@ -81,8 +81,11 @@ namespace Azure.ResourceManager.CostManagement.Tests
 
         private void ValidateCostManagementExport(CostManagementExportData export, string exportName)
         {
-            Assert.That(export, Is.Not.Null);
-            Assert.IsNotEmpty(export.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(export, Is.Not.Null);
+                Assert.That((string)export.Id, Is.Not.Empty);
+            });
             Assert.That(export.Name, Is.EqualTo(exportName));
             Assert.That(export.Format, Is.EqualTo(ExportFormatType.Csv));
         }

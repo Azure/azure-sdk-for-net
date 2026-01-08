@@ -67,9 +67,12 @@ namespace Azure.ResourceManager.Maps.Tests
             newParameters.Tags.Add("key3", "value3");
             newParameters.Tags.Add("key4", "value4");
             var updatedAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
-            Assert.That(updatedAccount.Data.Tags.Count, Is.EqualTo(2));
-            Assert.That(updatedAccount.Data.Tags["key3"], Is.EqualTo("value3"));
-            Assert.That(updatedAccount.Data.Tags["key4"], Is.EqualTo("value4"));
+            Assert.That(updatedAccount.Data.Tags, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedAccount.Data.Tags["key3"], Is.EqualTo("value3"));
+                Assert.That(updatedAccount.Data.Tags["key4"], Is.EqualTo("value4"));
+            });
         }
 
         [RecordedTest]
@@ -107,7 +110,7 @@ namespace Azure.ResourceManager.Maps.Tests
             await CreateDefaultMapsAccount(mapCollection);
 
             accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(accounts.Count, Is.EqualTo(2));
+            Assert.That(accounts, Has.Count.EqualTo(2));
 
             VerifyAccountProperties(accounts.First().Data, true, MapsSkuName.G2);
             VerifyAccountProperties(accounts.Skip(1).First().Data, true, MapsSkuName.G2);
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.Maps.Tests
 
             var accounts = await DefaultSubscription.GetMapsAccountsAsync().ToEnumerableAsync();
 
-            Assert.GreaterOrEqual(accounts.Count, 2);
+            Assert.That(accounts, Has.Count.GreaterThanOrEqualTo(2));
 
             var account1 = accounts.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName1.Data.Name));
@@ -152,11 +155,14 @@ namespace Azure.ResourceManager.Maps.Tests
             var keys = (await newAccount.GetKeysAsync()).Value;
             Assert.That(keys, Is.Not.Null);
 
-            // Validate Key1
-            Assert.That(keys.PrimaryKey, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                // Validate Key1
+                Assert.That(keys.PrimaryKey, Is.Not.Null);
 
-            // Validate Key2
-            Assert.That(keys.SecondaryKey, Is.Not.Null);
+                // Validate Key2
+                Assert.That(keys.SecondaryKey, Is.Not.Null);
+            });
         }
 
         [RecordedTest]

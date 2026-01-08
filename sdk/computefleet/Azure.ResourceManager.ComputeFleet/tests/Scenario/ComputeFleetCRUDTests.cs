@@ -28,8 +28,11 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
 
             // Create the compute fleet
             var createFleetResult = await computeFleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, computeFleetName, computeFleetData);
-            Assert.That(createFleetResult.Value.Data.Name, Is.EqualTo(computeFleetName));
-            Assert.That(createFleetResult.Value.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createFleetResult.Value.Data.Name, Is.EqualTo(computeFleetName));
+                Assert.That(createFleetResult.Value.Data.Location, Is.EqualTo(DefaultLocation));
+            });
 
             // Get the compute fleet
             var getComputeFleet = await computeFleetCollection.GetAsync(computeFleetName);
@@ -59,8 +62,11 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
 
             // Create the compute fleet
             var createFleetResult = await computeFleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, computeFleetName, computeFleetData);
-            Assert.That(createFleetResult.Value.Data.Name, Is.EqualTo(computeFleetName));
-            Assert.That(createFleetResult.Value.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createFleetResult.Value.Data.Name, Is.EqualTo(computeFleetName));
+                Assert.That(createFleetResult.Value.Data.Location, Is.EqualTo(DefaultLocation));
+            });
 
             // Get the compute fleet
             var getComputeFleet = await computeFleetCollection.GetAsync(computeFleetName);
@@ -74,8 +80,11 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
             var computeFleetName2nd = Recording.GenerateAssetName("testFleetViaSDK-", "multi");
             var computeFleetData2nd = GetBasicComputeFleetData(DefaultLocation, computeFleetName2nd, GetSubnetId(vnet));
             var createFleetResult2nd = await computeFleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, computeFleetName2nd, computeFleetData2nd);
-            Assert.That(createFleetResult2nd.Value.Data.Name, Is.EqualTo(computeFleetName2nd));
-            Assert.That(createFleetResult2nd.Value.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createFleetResult2nd.Value.Data.Name, Is.EqualTo(computeFleetName2nd));
+                Assert.That(createFleetResult2nd.Value.Data.Location, Is.EqualTo(DefaultLocation));
+            });
 
             // Check if 2nd Fleet exists.
             isExists = await computeFleetCollection.ExistsAsync(computeFleetName2nd);

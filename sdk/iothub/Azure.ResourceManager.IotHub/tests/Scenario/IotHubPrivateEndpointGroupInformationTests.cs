@@ -57,8 +57,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string groupId = $"{iothub.Data.Id}/PrivateLinkResources/iotHub";
             var groupIdInfo = await iothub.GetAllIotHubPrivateEndpointGroupInformation().GetAsync("iotHub");
             Assert.That(groupIdInfo, Is.Not.Null);
-            Assert.That(groupIdInfo.Value.Data.Id.ToString(), Is.EqualTo(groupId));
-            Assert.That(groupIdInfo.Value.Data.Name, Is.EqualTo("iotHub"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(groupIdInfo.Value.Data.Id.ToString(), Is.EqualTo(groupId));
+                Assert.That(groupIdInfo.Value.Data.Name, Is.EqualTo("iotHub"));
+            });
         }
 
         [Test]

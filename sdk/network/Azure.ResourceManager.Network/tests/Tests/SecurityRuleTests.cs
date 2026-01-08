@@ -107,19 +107,22 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get the SecurityRule2
             Response<SecurityRuleResource> getSecurityRule2Response = await getNsgResponse.Value.GetSecurityRules().GetAsync(securityRule2);
-            Assert.That(getSecurityRule2Response.Value.Data.Name, Is.EqualTo(securityRule2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getSecurityRule2Response.Value.Data.Name, Is.EqualTo(securityRule2));
 
-            // Verify the security rule
-            Assert.That(getSecurityRule2Response.Value.Data.Access, Is.EqualTo(SecurityRuleAccess.Deny));
-            Assert.That(getSecurityRule2Response.Value.Data.Description, Is.EqualTo("Test outbound security rule"));
-            Assert.That(getSecurityRule2Response.Value.Data.DestinationAddressPrefix, Is.EqualTo("*"));
-            Assert.That(getSecurityRule2Response.Value.Data.DestinationPortRange, Is.EqualTo(destinationPortRange));
-            Assert.That(getSecurityRule2Response.Value.Data.Direction, Is.EqualTo(SecurityRuleDirection.Outbound));
-            Assert.That(getSecurityRule2Response.Value.Data.Priority, Is.EqualTo(501));
-            Assert.That(getSecurityRule2Response.Value.Data.Protocol, Is.EqualTo(SecurityRuleProtocol.Udp));
-            Assert.That(getSecurityRule2Response.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(getSecurityRule2Response.Value.Data.SourceAddressPrefix, Is.EqualTo("*"));
-            Assert.That(getSecurityRule2Response.Value.Data.SourcePortRange, Is.EqualTo("656"));
+                // Verify the security rule
+                Assert.That(getSecurityRule2Response.Value.Data.Access, Is.EqualTo(SecurityRuleAccess.Deny));
+                Assert.That(getSecurityRule2Response.Value.Data.Description, Is.EqualTo("Test outbound security rule"));
+                Assert.That(getSecurityRule2Response.Value.Data.DestinationAddressPrefix, Is.EqualTo("*"));
+                Assert.That(getSecurityRule2Response.Value.Data.DestinationPortRange, Is.EqualTo(destinationPortRange));
+                Assert.That(getSecurityRule2Response.Value.Data.Direction, Is.EqualTo(SecurityRuleDirection.Outbound));
+                Assert.That(getSecurityRule2Response.Value.Data.Priority, Is.EqualTo(501));
+                Assert.That(getSecurityRule2Response.Value.Data.Protocol, Is.EqualTo(SecurityRuleProtocol.Udp));
+                Assert.That(getSecurityRule2Response.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getSecurityRule2Response.Value.Data.SourceAddressPrefix, Is.EqualTo("*"));
+                Assert.That(getSecurityRule2Response.Value.Data.SourcePortRange, Is.EqualTo("656"));
+            });
 
             CompareSecurityRule(getNsgResponse.Value.Data.SecurityRules[1], getSecurityRule2Response.Value.Data);
 
@@ -143,22 +146,25 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG
             AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNsgResponse);
+            Assert.That(listNsgResponse, Is.Empty);
         }
 
         private void CompareSecurityRule(SecurityRuleData rule1, SecurityRuleData rule2)
         {
-            Assert.That(rule2.Name, Is.EqualTo(rule1.Name));
-            Assert.That(rule2.ETag, Is.EqualTo(rule1.ETag));
-            Assert.That(rule2.Access, Is.EqualTo(rule1.Access));
-            Assert.That(rule2.Description, Is.EqualTo(rule1.Description));
-            Assert.That(rule2.DestinationAddressPrefix, Is.EqualTo(rule1.DestinationAddressPrefix));
-            Assert.That(rule2.DestinationPortRange, Is.EqualTo(rule1.DestinationPortRange));
-            Assert.That(rule2.Direction, Is.EqualTo(rule1.Direction));
-            Assert.That(rule2.Protocol, Is.EqualTo(rule1.Protocol));
-            Assert.That(rule2.ProvisioningState, Is.EqualTo(rule1.ProvisioningState));
-            Assert.That(rule2.SourceAddressPrefix, Is.EqualTo(rule1.SourceAddressPrefix));
-            Assert.That(rule2.SourcePortRange, Is.EqualTo(rule1.SourcePortRange));
+            Assert.Multiple(() =>
+            {
+                Assert.That(rule2.Name, Is.EqualTo(rule1.Name));
+                Assert.That(rule2.ETag, Is.EqualTo(rule1.ETag));
+                Assert.That(rule2.Access, Is.EqualTo(rule1.Access));
+                Assert.That(rule2.Description, Is.EqualTo(rule1.Description));
+                Assert.That(rule2.DestinationAddressPrefix, Is.EqualTo(rule1.DestinationAddressPrefix));
+                Assert.That(rule2.DestinationPortRange, Is.EqualTo(rule1.DestinationPortRange));
+                Assert.That(rule2.Direction, Is.EqualTo(rule1.Direction));
+                Assert.That(rule2.Protocol, Is.EqualTo(rule1.Protocol));
+                Assert.That(rule2.ProvisioningState, Is.EqualTo(rule1.ProvisioningState));
+                Assert.That(rule2.SourceAddressPrefix, Is.EqualTo(rule1.SourceAddressPrefix));
+                Assert.That(rule2.SourcePortRange, Is.EqualTo(rule1.SourcePortRange));
+            });
         }
     }
 }

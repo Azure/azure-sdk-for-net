@@ -49,9 +49,12 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             EventGridNamespace = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
 
-            Assert.That(EventGridNamespace, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(EventGridNamespace, Is.Not.Null);
 
-            Assert.That(namespaceName, Is.EqualTo(EventGridNamespace.Data.Name));
+                Assert.That(namespaceName, Is.EqualTo(EventGridNamespace.Data.Name));
+            });
         }
 
         [Test]
@@ -106,11 +109,14 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.That(topicSpaces, Is.Not.Null);
 
-            Assert.GreaterOrEqual(topicSpaces.Count, 2);
+            Assert.That(topicSpaces, Has.Count.GreaterThanOrEqualTo(2));
 
-            Assert.That(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName1), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName1), Is.True);
 
-            Assert.That(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName2), Is.True);
+                Assert.That(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName2), Is.True);
+            });
 
             foreach (var topicSpace in topicSpaces)
                 await topicSpace.DeleteAsync(WaitUntil.Completed);

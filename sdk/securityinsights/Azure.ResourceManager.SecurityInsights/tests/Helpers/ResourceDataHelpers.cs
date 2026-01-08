@@ -31,9 +31,12 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region SecurityInsightsAlertRuleData
@@ -58,8 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertAutomationRuleData(SecurityInsightsAutomationRuleData data1, SecurityInsightsAutomationRuleData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
-            Assert.That(data2.Order, Is.EqualTo(data1.Order));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+                Assert.That(data2.Order, Is.EqualTo(data1.Order));
+            });
         }
         public static SecurityInsightsAutomationRuleData GetAutomationRuleData(string resourcegroup)
         {
@@ -87,10 +93,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertBookmarkData(SecurityInsightsBookmarkData data1, SecurityInsightsBookmarkData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
-            Assert.That(data2.Notes, Is.EqualTo(data1.Notes));
-            Assert.That(data2.Query, Is.EqualTo(data1.Query));
-            Assert.That(data2.QueryResult, Is.EqualTo(data1.QueryResult));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+                Assert.That(data2.Notes, Is.EqualTo(data1.Notes));
+                Assert.That(data2.Query, Is.EqualTo(data1.Query));
+                Assert.That(data2.QueryResult, Is.EqualTo(data1.QueryResult));
+            });
         }
         public static SecurityInsightsBookmarkData GetBookmarkData()
         {
@@ -107,10 +116,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertIncidentData(SecurityInsightsIncidentData data1, SecurityInsightsIncidentData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Title, Is.EqualTo(data1.Title));
-            Assert.That(data2.Classification, Is.EqualTo(data1.Classification));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.ClassificationComment, Is.EqualTo(data1.ClassificationComment));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Title, Is.EqualTo(data1.Title));
+                Assert.That(data2.Classification, Is.EqualTo(data1.Classification));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.ClassificationComment, Is.EqualTo(data1.ClassificationComment));
+            });
         }
         public static SecurityInsightsIncidentData GetIncidentData()
         {
@@ -167,10 +179,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertWatchlistItemData(SecurityInsightsWatchlistItemData data1, SecurityInsightsWatchlistItemData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.IsDeleted, Is.EqualTo(data1.IsDeleted));
-            Assert.That(data2.WatchlistItemId, Is.EqualTo(data1.WatchlistItemId));
-            Assert.That(data2.TenantId, Is.EqualTo(data1.TenantId));
-            Assert.That(data2.WatchlistItemType, Is.EqualTo(data1.WatchlistItemType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.IsDeleted, Is.EqualTo(data1.IsDeleted));
+                Assert.That(data2.WatchlistItemId, Is.EqualTo(data1.WatchlistItemId));
+                Assert.That(data2.TenantId, Is.EqualTo(data1.TenantId));
+                Assert.That(data2.WatchlistItemType, Is.EqualTo(data1.WatchlistItemType));
+            });
         }
         public static SecurityInsightsWatchlistItemData GetWatchlistItemData()
         {
@@ -185,10 +200,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         public static void AssertWatchlistData(SecurityInsightsWatchlistData data1, SecurityInsightsWatchlistData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.IsDeleted, Is.EqualTo(data1.IsDeleted));
-            Assert.That(data2.Source, Is.EqualTo(data1.Source));
-            Assert.That(data2.TenantId, Is.EqualTo(data1.TenantId));
-            Assert.That(data2.Provider, Is.EqualTo(data1.Provider));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.IsDeleted, Is.EqualTo(data1.IsDeleted));
+                Assert.That(data2.Source, Is.EqualTo(data1.Source));
+                Assert.That(data2.TenantId, Is.EqualTo(data1.TenantId));
+                Assert.That(data2.Provider, Is.EqualTo(data1.Provider));
+            });
         }
         public static SecurityInsightsWatchlistData GetWatchlistData()
         {

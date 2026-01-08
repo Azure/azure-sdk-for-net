@@ -57,37 +57,49 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
 
-            Assert.That(createDomainResponse, Is.Not.Null);
-            Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createDomainResponse, Is.Not.Null);
+                Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
+            });
 
             // Get the created domain
             var getDomainResponse = (await DomainCollection.GetAsync(domainName)).Value;
             Assert.That(getDomainResponse, Is.Not.Null);
-            Assert.That(getDomainResponse.Data.ProvisioningState, Is.EqualTo(EventGridDomainProvisioningState.Succeeded));
-            Assert.That(getDomainResponse.Data.Location, Is.EqualTo(location));
-            Assert.That(getDomainResponse.Data.Tags.Keys.Contains(OriginalTag1), Is.True);
-            Assert.That(getDomainResponse.Data.Tags[OriginalTag1], Is.EqualTo(OriginalValue1));
-            Assert.That(getDomainResponse.Data.Tags.Keys.Contains(OriginalTag2), Is.True);
-            Assert.That(getDomainResponse.Data.Tags[OriginalTag2], Is.EqualTo(OriginalValue2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getDomainResponse.Data.ProvisioningState, Is.EqualTo(EventGridDomainProvisioningState.Succeeded));
+                Assert.That(getDomainResponse.Data.Location, Is.EqualTo(location));
+                Assert.That(getDomainResponse.Data.Tags.Keys.Contains(OriginalTag1), Is.True);
+                Assert.That(getDomainResponse.Data.Tags[OriginalTag1], Is.EqualTo(OriginalValue1));
+                Assert.That(getDomainResponse.Data.Tags.Keys.Contains(OriginalTag2), Is.True);
+                Assert.That(getDomainResponse.Data.Tags[OriginalTag2], Is.EqualTo(OriginalValue2));
+            });
             // get private link resource
             var linkResource = await getDomainResponse.GetEventGridDomainPrivateLinkResourceAsync("domain");
             Assert.That(linkResource, Is.Not.Null);
             // list all private link resources
             System.Collections.Generic.List<EventGridDomainPrivateLinkResource> list = await getDomainResponse.GetEventGridDomainPrivateLinkResources().ToEnumerableAsync();
-            Assert.That(list, Is.Not.Null);
-            //// Diable test as identity is not part of GA Version yet.
-            //// Assert.Null(getDomainResponse.Identity);
-            Assert.That(getDomainResponse.Data.InboundIPRules.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list, Is.Not.Null);
+                //// Diable test as identity is not part of GA Version yet.
+                //// Assert.Null(getDomainResponse.Identity);
+                Assert.That(getDomainResponse.Data.InboundIPRules.Count, Is.EqualTo(0));
+            });
 
             // Get all domains created within a resourceGroup
             var domainsInResourceGroup = await DomainCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(domainsInResourceGroup, Is.Not.Null);
-            Assert.GreaterOrEqual(domainsInResourceGroup.Count, 1);
-            Assert.That(domainName, Is.EqualTo(domainsInResourceGroup.FirstOrDefault().Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domainsInResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
+                Assert.That(domainName, Is.EqualTo(domainsInResourceGroup.FirstOrDefault().Data.Name));
+            });
             // Get all domains created within the subscription irrespective of the resourceGroup
             var domainsInAzureSubscription = await DefaultSubscription.GetEventGridDomainsAsync().ToEnumerableAsync();
             Assert.That(domainsInAzureSubscription, Is.Not.Null);
-            Assert.GreaterOrEqual(domainsInAzureSubscription.Count, 1);
+            Assert.That(domainsInAzureSubscription.Count, Is.GreaterThanOrEqualTo(1));
             var falseFlag = false;
             foreach (var item in domainsInAzureSubscription)
             {
@@ -106,12 +118,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Ensure the response is not null
             Assert.That(keysResponse, Is.Not.Null, "Failed to list shared access keys");
 
-            // Ensure the keys object is not null
-            Assert.That(keysResponse.Value, Is.Not.Null, "Shared access keys response is null");
+            Assert.Multiple(() =>
+            {
+                // Ensure the keys object is not null
+                Assert.That(keysResponse.Value, Is.Not.Null, "Shared access keys response is null");
 
-            // Validate that primary and secondary keys exist
-            Assert.That(string.IsNullOrEmpty(keysResponse.Value.Key1), Is.False, "Primary key is missing");
-            Assert.That(string.IsNullOrEmpty(keysResponse.Value.Key2), Is.False, "Secondary key is missing");
+                // Validate that primary and secondary keys exist
+                Assert.That(string.IsNullOrEmpty(keysResponse.Value.Key1), Is.False, "Primary key is missing");
+                Assert.That(string.IsNullOrEmpty(keysResponse.Value.Key2), Is.False, "Secondary key is missing");
+            });
 
             // Regemerate key
             var regenerateKeyContent = new EventGridDomainRegenerateKeyContent("key1");
@@ -119,9 +134,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Validate response and regenerated keys
             Assert.That(response, Is.Not.Null, "Response should not be null");
-            Assert.That(response.Value, Is.Not.Null, "Shared access keys response is null");
-            Assert.That(string.IsNullOrEmpty(response.Value.Key1), Is.False, "Primary key is missing after regeneration");
-            Assert.That(string.IsNullOrEmpty(response.Value.Key2), Is.False, "Secondary key is missing after regeneration");
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value, Is.Not.Null, "Shared access keys response is null");
+                Assert.That(string.IsNullOrEmpty(response.Value.Key1), Is.False, "Primary key is missing after regeneration");
+                Assert.That(string.IsNullOrEmpty(response.Value.Key2), Is.False, "Secondary key is missing after regeneration");
+            });
 
             // Replace the domain
             domain.Tags.Clear();
@@ -129,8 +147,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             domain.Tags.Add("replacedTag2", "replacedValue2");
             var replaceDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
 
-            Assert.That(replaceDomainResponse.Data.Tags.Keys.Contains("replacedTag1"), Is.True);
-            Assert.That(replaceDomainResponse.Data.Tags.Keys.Contains(OriginalTag1), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(replaceDomainResponse.Data.Tags.Keys.Contains("replacedTag1"), Is.True);
+                Assert.That(replaceDomainResponse.Data.Tags.Keys.Contains(OriginalTag1), Is.False);
+            });
 
             // Update the domain with tags & allow traffic from all ips
             var domainUpdateParameters = new EventGridDomainPatch()
@@ -144,18 +165,24 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             await replaceDomainResponse.UpdateAsync(WaitUntil.Completed, domainUpdateParameters);
             var updateDomainResponse = (await DomainCollection.GetAsync(domainName)).Value;
-            Assert.That(updateDomainResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
-            Assert.That(updateDomainResponse.Data.Tags.Keys.Contains("replacedTag1"), Is.False);
-            Assert.That(updateDomainResponse.Data.PublicNetworkAccess, Is.EqualTo(EventGridPublicNetworkAccess.Enabled));
-            Assert.That(updateDomainResponse.Data.InboundIPRules.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateDomainResponse.Data.Tags.Keys.Contains("updatedTag1"), Is.True);
+                Assert.That(updateDomainResponse.Data.Tags.Keys.Contains("replacedTag1"), Is.False);
+                Assert.That(updateDomainResponse.Data.PublicNetworkAccess, Is.EqualTo(EventGridPublicNetworkAccess.Enabled));
+                Assert.That(updateDomainResponse.Data.InboundIPRules.Count, Is.EqualTo(0));
+            });
 
             // Update the Topic with IP filtering feature
             domain.PublicNetworkAccess = EventGridPublicNetworkAccess.Disabled;
             domain.InboundIPRules.Add(new EventGridInboundIPRule() { Action = EventGridIPActionType.Allow, IPMask = "12.35.67.98" });
             domain.InboundIPRules.Add(new EventGridInboundIPRule() { Action = EventGridIPActionType.Allow, IPMask = "12.35.90.100" });
             var updateDomainResponseWithIpFilteringFeature = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
-            Assert.That(updateDomainResponseWithIpFilteringFeature.Data.PublicNetworkAccess == EventGridPublicNetworkAccess.Enabled, Is.False);
-            Assert.That(updateDomainResponseWithIpFilteringFeature.Data.InboundIPRules.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateDomainResponseWithIpFilteringFeature.Data.PublicNetworkAccess == EventGridPublicNetworkAccess.Enabled, Is.False);
+                Assert.That(updateDomainResponseWithIpFilteringFeature.Data.InboundIPRules, Has.Count.EqualTo(2));
+            });
 
             // Validate regenerate keys
             var sharedAccessKeys = (await getDomainResponse.GetSharedAccessKeysAsync()).Value;
@@ -169,13 +196,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Create domain topic manually.
             var domainTopicCollection = updateDomainResponseWithIpFilteringFeature.GetDomainTopics();
-            // Ensure domain topics do not exist before creation
-            Assert.That((await domainTopicCollection.ExistsAsync(domainTopicName1)).Value, Is.False, "Domain topic already exists before creation.");
-            Assert.That((await domainTopicCollection.ExistsAsync(domainTopicName2)).Value, Is.False, "Domain topic already exists before creation.");
+            Assert.Multiple(async () =>
+            {
+                // Ensure domain topics do not exist before creation
+                Assert.That((await domainTopicCollection.ExistsAsync(domainTopicName1)).Value, Is.False, "Domain topic already exists before creation.");
+                Assert.That((await domainTopicCollection.ExistsAsync(domainTopicName2)).Value, Is.False, "Domain topic already exists before creation.");
+            });
             var createDomainTopicResponse = (await domainTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainTopicName1)).Value;
 
-            Assert.That(createDomainTopicResponse, Is.Not.Null);
-            Assert.That(domainTopicName1, Is.EqualTo(createDomainTopicResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createDomainTopicResponse, Is.Not.Null);
+                Assert.That(domainTopicName1, Is.EqualTo(createDomainTopicResponse.Data.Name));
+            });
 
             // Get the created domain Topic
             var getDomainTopicResponse1 = (await domainTopicCollection.GetAsync(domainTopicName1)).Value;
@@ -184,8 +217,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             createDomainTopicResponse = (await domainTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainTopicName2)).Value;
 
-            Assert.That(createDomainTopicResponse, Is.Not.Null);
-            Assert.That(domainTopicName2, Is.EqualTo(createDomainTopicResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createDomainTopicResponse, Is.Not.Null);
+                Assert.That(domainTopicName2, Is.EqualTo(createDomainTopicResponse.Data.Name));
+            });
 
             // Get the created domain Topic
             var getDomainTopicResponse2 = (await domainTopicCollection.GetAsync(domainTopicName2)).Value;
@@ -196,9 +232,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainTopicsInDomainPage = await domainTopicCollection.GetAllAsync().ToEnumerableAsync();
 
             Assert.That(domainTopicsInDomainPage, Is.Not.Null);
-            Assert.That(domainTopicsInDomainPage.Count, Is.EqualTo(2));
-            Assert.That(domainTopicsInDomainPage.FirstOrDefault(x => x.Data.Name.Equals(domainTopicName1)), Is.Not.Null);
-            Assert.That(domainTopicsInDomainPage.FirstOrDefault(x => x.Data.Name.Equals(domainTopicName2)), Is.Not.Null);
+            Assert.That(domainTopicsInDomainPage, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domainTopicsInDomainPage.FirstOrDefault(x => x.Data.Name.Equals(domainTopicName1)), Is.Not.Null);
+                Assert.That(domainTopicsInDomainPage.FirstOrDefault(x => x.Data.Name.Equals(domainTopicName2)), Is.Not.Null);
+            });
 
             // Delete domainTopics
             await getDomainTopicResponse1.DeleteAsync(WaitUntil.Completed);
@@ -238,8 +277,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
 
-            Assert.That(createDomainResponse, Is.Not.Null);
-            Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createDomainResponse, Is.Not.Null);
+                Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
+            });
 
             var NspCollection = createDomainResponse.GetDomainNetworkSecurityPerimeterConfigurations();
             var listNSPConfigs = await NspCollection.GetAllAsync().ToEnumerableAsync();
@@ -276,15 +318,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
-            Assert.That(createDomainResponse, Is.Not.Null);
-            Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createDomainResponse, Is.Not.Null);
+                Assert.That(domainName, Is.EqualTo(createDomainResponse.Data.Name));
+            });
 
             // Get the created domain
             var getDomainResponse = (await DomainCollection.GetAsync(domainName)).Value;
             Assert.That(getDomainResponse, Is.Not.Null);
-            Assert.That(getDomainResponse.Data.IsLocalAuthDisabled, Is.False);
-            Assert.That(getDomainResponse.Data.AutoCreateTopicWithFirstSubscription, Is.False);
-            Assert.That(getDomainResponse.Data.AutoDeleteTopicWithLastSubscription, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getDomainResponse.Data.IsLocalAuthDisabled, Is.False);
+                Assert.That(getDomainResponse.Data.AutoCreateTopicWithFirstSubscription, Is.False);
+                Assert.That(getDomainResponse.Data.AutoDeleteTopicWithLastSubscription, Is.False);
+            });
         }
     }
 }

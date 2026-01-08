@@ -96,10 +96,14 @@ namespace Azure.ResourceManager.AppContainers.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4.Exists
-            Assert.That((bool)await containerAppConnectedEnvironmentCollection.ExistsAsync(envName), Is.True);
-            Assert.That((bool)await containerAppConnectedEnvironmentCollection.ExistsAsync(envName + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4.Exists
+                Assert.That((bool)await containerAppConnectedEnvironmentCollection.ExistsAsync(envName), Is.True);
+                Assert.That((bool)await containerAppConnectedEnvironmentCollection.ExistsAsync(envName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await containerAppConnectedEnvironmentCollection.ExistsAsync(null));
             //Resource

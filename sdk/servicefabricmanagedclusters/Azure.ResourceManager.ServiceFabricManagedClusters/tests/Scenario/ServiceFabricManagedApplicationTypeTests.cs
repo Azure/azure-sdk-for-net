@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // GetAll
             var list = await _appTypeCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateServiceFabricManagedApplicationType(list.FirstOrDefault().Data, appTypeName);
 
             // Delete
@@ -68,10 +68,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // AddTag
             await appType.AddTagAsync("addtagkey", "addtagvalue");
             appType = await _appTypeCollection.GetAsync(appTypeName);
-            Assert.That(appType.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(appType.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = appType.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await appType.RemoveTagAsync("addtagkey");
@@ -81,8 +84,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationTypeData appType, string appTypeName)
         {
-            Assert.IsNotNull(appType);
-            Assert.IsNotEmpty(appType.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(appType, Is.Not.Null);
+                Assert.That((string)appType.Id, Is.Not.Empty);
+            });
             Assert.That(appType.Name, Is.EqualTo(appTypeName));
             Assert.That(appType.Location, Is.EqualTo(DefaultLocation));
             Assert.That(appType.ProvisioningState, Is.EqualTo("Succeeded"));

@@ -57,11 +57,14 @@ namespace Azure.ResourceManager.Network.Tests
             Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(WaitUntil.Completed, connectivityParameters);
             Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
-            //Validation
-            Assert.That(connectivityCheck.Value.NetworkConnectionStatus.ToString(), Is.EqualTo("Reachable"));
-            Assert.That(connectivityCheck.Value.ProbesFailed, Is.EqualTo(0));
-            Assert.That(connectivityCheck.Value.Hops.FirstOrDefault().ConnectivityHopType, Is.EqualTo("Source"));
-            Assert.That(connectivityCheck.Value.Hops.LastOrDefault().ConnectivityHopType, Is.EqualTo("Internet"));
+            Assert.Multiple(() =>
+            {
+                //Validation
+                Assert.That(connectivityCheck.Value.NetworkConnectionStatus.ToString(), Is.EqualTo("Reachable"));
+                Assert.That(connectivityCheck.Value.ProbesFailed, Is.EqualTo(0));
+                Assert.That(connectivityCheck.Value.Hops.FirstOrDefault().ConnectivityHopType, Is.EqualTo("Source"));
+                Assert.That(connectivityCheck.Value.Hops.LastOrDefault().ConnectivityHopType, Is.EqualTo("Internet"));
+            });
         }
     }
 }

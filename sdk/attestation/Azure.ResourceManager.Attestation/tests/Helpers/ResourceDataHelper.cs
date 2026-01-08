@@ -15,18 +15,24 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
     {
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         #region PrivateEndpointConnection
@@ -43,8 +49,11 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         }
         public static void AssetConnectionState(AttestationPrivateLinkServiceConnectionState data1, AttestationPrivateLinkServiceConnectionState data2)
         {
-            Assert.That(data2.Status, Is.EqualTo(data1.Status));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Status, Is.EqualTo(data1.Status));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            });
         }
         public static void AssetPrivateEndpointConnection(AttestationPrivateEndpointConnectionData data1, AttestationPrivateEndpointConnectionData data2)
         {
@@ -73,10 +82,13 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         public static void AssertProvider(AttestationProviderData data1, AttestationProviderData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.That(data2.Status, Is.EqualTo(data1.Status));
-            Assert.That(data2.AttestUri, Is.EqualTo(data1.AttestUri));
-            Assert.That(data2.PublicNetworkAccess, Is.EqualTo(data1.PublicNetworkAccess));
-            Assert.That(data2.TrustModel, Is.EqualTo(data1.TrustModel));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Status, Is.EqualTo(data1.Status));
+                Assert.That(data2.AttestUri, Is.EqualTo(data1.AttestUri));
+                Assert.That(data2.PublicNetworkAccess, Is.EqualTo(data1.PublicNetworkAccess));
+                Assert.That(data2.TrustModel, Is.EqualTo(data1.TrustModel));
+            });
         }
         #endregion
     }

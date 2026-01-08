@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.That(dataFactoryGet.Value.Data.Name, Is.EqualTo(dataFactoryName));
             // GetAll
             var list = await resourceGroup.GetDataFactories().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Delete
             await dataFactory.DeleteAsync(WaitUntil.Completed);
             flag = await resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);

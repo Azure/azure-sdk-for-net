@@ -57,37 +57,58 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidDeploymentOperation(ArmDeploymentOperation model, ArmDeploymentOperation getResult)
         {
-            Assert.That(getResult.Id, Is.EqualTo(model.Id));
-            Assert.That(getResult.OperationId, Is.EqualTo(model.OperationId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Id, Is.EqualTo(model.Id));
+                Assert.That(getResult.OperationId, Is.EqualTo(model.OperationId));
+            });
             if (model.Properties != null || getResult.Properties != null)
             {
-                Assert.That(model.Properties, Is.Not.Null);
-                Assert.That(getResult.Properties, Is.Not.Null);
-                Assert.That(getResult.Properties.ProvisioningState, Is.EqualTo(model.Properties.ProvisioningState));
-                Assert.That(getResult.Properties.ProvisioningOperation, Is.EqualTo(model.Properties.ProvisioningOperation));
-                Assert.That(getResult.Properties.Timestamp, Is.EqualTo(model.Properties.Timestamp));
-                Assert.That(getResult.Properties.Duration, Is.EqualTo(model.Properties.Duration));
-                //Assert.AreEqual(model.Properties.ServiceRequestId, getResult.Properties.ServiceRequestId); // The list item from ArmDeploymentResource.GetDeploymentOperations() no longer has values for ServiceRequestId since version 2022-09-01.
-                Assert.That(getResult.Properties.StatusCode, Is.EqualTo(model.Properties.StatusCode));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Properties, Is.Not.Null);
+                    Assert.That(getResult.Properties, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.Properties.ProvisioningState, Is.EqualTo(model.Properties.ProvisioningState));
+                    Assert.That(getResult.Properties.ProvisioningOperation, Is.EqualTo(model.Properties.ProvisioningOperation));
+                    Assert.That(getResult.Properties.Timestamp, Is.EqualTo(model.Properties.Timestamp));
+                    Assert.That(getResult.Properties.Duration, Is.EqualTo(model.Properties.Duration));
+                    //Assert.AreEqual(model.Properties.ServiceRequestId, getResult.Properties.ServiceRequestId); // The list item from ArmDeploymentResource.GetDeploymentOperations() no longer has values for ServiceRequestId since version 2022-09-01.
+                    Assert.That(getResult.Properties.StatusCode, Is.EqualTo(model.Properties.StatusCode));
+                });
                 //Assert.AreEqual(model.Data.Properties.StatusMessage, getResult.Data.Properties.StatusMessage);
                 if (model.Properties.TargetResource != null || getResult.Properties.TargetResource != null)
                 {
-                    Assert.That(model.Properties.TargetResource, Is.Not.Null);
-                    Assert.That(getResult.Properties.TargetResource, Is.Not.Null);
-                    Assert.That(getResult.Properties.TargetResource.Id, Is.EqualTo(model.Properties.TargetResource.Id));
-                    Assert.That(getResult.Properties.TargetResource.ResourceName, Is.EqualTo(model.Properties.TargetResource.ResourceName));
-                    Assert.That(getResult.Properties.TargetResource.ResourceType, Is.EqualTo(model.Properties.TargetResource.ResourceType));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Properties.TargetResource, Is.Not.Null);
+                        Assert.That(getResult.Properties.TargetResource, Is.Not.Null);
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(getResult.Properties.TargetResource.Id, Is.EqualTo(model.Properties.TargetResource.Id));
+                        Assert.That(getResult.Properties.TargetResource.ResourceName, Is.EqualTo(model.Properties.TargetResource.ResourceName));
+                        Assert.That(getResult.Properties.TargetResource.ResourceType, Is.EqualTo(model.Properties.TargetResource.ResourceType));
+                    });
                 }
                 if (model.Properties.Request != null || getResult.Properties.Request != null)
                 {
-                    Assert.That(model.Properties.Request, Is.Not.Null);
-                    Assert.That(getResult.Properties.Request, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Properties.Request, Is.Not.Null);
+                        Assert.That(getResult.Properties.Request, Is.Not.Null);
+                    });
                     Assert.That(getResult.Properties.Request.Content, Is.EqualTo(model.Properties.Request.Content));
                 }
                 if (model.Properties.Response != null || getResult.Properties.Response != null)
                 {
-                    Assert.That(model.Properties.Response, Is.Not.Null);
-                    Assert.That(getResult.Properties.Response, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Properties.Response, Is.Not.Null);
+                        Assert.That(getResult.Properties.Response, Is.Not.Null);
+                    });
                     Assert.That(getResult.Properties.Response.Content, Is.EqualTo(model.Properties.Response.Content));
                 }
             }

@@ -40,31 +40,43 @@ namespace Azure.ResourceManager.Relay.Tests
                     IsClientAuthorizationRequired = true,
                     UserMetadata = "test metadata"
                 })).Value;
-            Assert.That(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired, Is.True);
-            Assert.That(_relayHybridConnectionResource.Data.UserMetadata, Is.EqualTo("test metadata"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired, Is.True);
+                Assert.That(_relayHybridConnectionResource.Data.UserMetadata, Is.EqualTo("test metadata"));
+            });
 
             _relayHybridConnectionResource.Data.UserMetadata = "second metadata";
 
             //Update Relay namespace
             _relayHybridConnectionResource = (await _relayHybridConnectionResource.UpdateAsync(WaitUntil.Completed, _relayHybridConnectionResource.Data)).Value;
-            Assert.That(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired, Is.True);
-            Assert.That(_relayHybridConnectionResource.Data.UserMetadata, Is.EqualTo("second metadata"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired, Is.True);
+                Assert.That(_relayHybridConnectionResource.Data.UserMetadata, Is.EqualTo("second metadata"));
+            });
 
             //Create another relay namespace
             _relayHybridConnectionResource = (await _relayHybridConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, "h2", new RelayHybridConnectionData()
                 {
                     IsClientAuthorizationRequired = false
                 })).Value;
-            Assert.That(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired, Is.False);
-            Assert.That(_relayHybridConnectionResource.Data.UserMetadata, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired, Is.False);
+                Assert.That(_relayHybridConnectionResource.Data.UserMetadata, Is.Null);
+            });
 
             RelayHybridConnectionResource _relayHybridConnectionResource2 = (await _relayHybridConnectionCollection.GetAsync("h1"))?.Value;
-            Assert.That(_relayHybridConnectionResource2.Data.IsClientAuthorizationRequired, Is.True);
-            Assert.That(_relayHybridConnectionResource2.Data.UserMetadata, Is.EqualTo("second metadata"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_relayHybridConnectionResource2.Data.IsClientAuthorizationRequired, Is.True);
+                Assert.That(_relayHybridConnectionResource2.Data.UserMetadata, Is.EqualTo("second metadata"));
+            });
 
             // List all hybrid connections
             var listOfHybridConnections = await _relayHybridConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(listOfHybridConnections.Count, Is.EqualTo(2));
+            Assert.That(listOfHybridConnections, Has.Count.EqualTo(2));
 
             await _relayHybridConnectionResource2.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayHybridConnectionResource2.GetAsync(); });

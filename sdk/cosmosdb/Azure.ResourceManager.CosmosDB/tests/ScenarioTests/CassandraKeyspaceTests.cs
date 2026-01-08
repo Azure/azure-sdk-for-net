@@ -193,18 +193,21 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyCassandraKeyspaces(CassandraKeyspaceResource expectedValue, CassandraKeyspaceResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
-            Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
-            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
+                Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
+                Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
+                Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
 
-            Assert.That(actualValue.Data.Resource.KeyspaceName, Is.EqualTo(expectedValue.Data.Resource.KeyspaceName));
-            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
-            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
-            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                Assert.That(actualValue.Data.Resource.KeyspaceName, Is.EqualTo(expectedValue.Data.Resource.KeyspaceName));
+                Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+            });
         }
     }
 }

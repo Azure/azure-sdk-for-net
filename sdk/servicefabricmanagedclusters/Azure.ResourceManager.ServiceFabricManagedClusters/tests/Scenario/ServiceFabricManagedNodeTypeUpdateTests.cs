@@ -81,8 +81,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             ServiceFabricManagedNodeTypeResource updateNodetype = updateNodetype_lro.Value;
             var nodeTypeTagsDataValues = updateNodetype.Data.Tags;
-            Assert.That(nodeTypeTagsDataValues["UpdateKey1"], Is.EqualTo("UpdateValue1"));
-            Assert.That(nodeTypeTagsDataValues["UpdateKey2"], Is.EqualTo("UpdateValue2"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nodeTypeTagsDataValues["UpdateKey1"], Is.EqualTo("UpdateValue1"));
+                Assert.That(nodeTypeTagsDataValues["UpdateKey2"], Is.EqualTo("UpdateValue2"));
+            });
         }
 
         [RecordedTest]

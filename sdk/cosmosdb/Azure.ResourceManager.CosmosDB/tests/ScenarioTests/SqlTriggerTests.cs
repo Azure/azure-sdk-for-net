@@ -76,10 +76,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlTriggerCreateAndUpdate()
         {
             var trigger = await CreateSqlTrigger(null);
-            Assert.That(trigger.Data.Resource.TriggerName, Is.EqualTo(_triggerName));
-            Assert.That(trigger.Data.Resource.Body, Contains.Substring("First Hello World"));
-            Assert.That(CosmosDBSqlTriggerOperation.All, Is.EqualTo(trigger.Data.Resource.TriggerOperation));
-            Assert.That(CosmosDBSqlTriggerType.Pre, Is.EqualTo(trigger.Data.Resource.TriggerType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(trigger.Data.Resource.TriggerName, Is.EqualTo(_triggerName));
+                Assert.That(trigger.Data.Resource.Body, Contains.Substring("First Hello World"));
+                Assert.That(CosmosDBSqlTriggerOperation.All, Is.EqualTo(trigger.Data.Resource.TriggerOperation));
+                Assert.That(CosmosDBSqlTriggerType.Pre, Is.EqualTo(trigger.Data.Resource.TriggerType));
+            });
 
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
@@ -103,10 +106,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             });
 
             trigger = (await SqlTriggerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _triggerName, updateOptions)).Value;
-            Assert.That(trigger.Data.Resource.TriggerName, Is.EqualTo(_triggerName));
-            Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
-            Assert.That(CosmosDBSqlTriggerOperation.Create, Is.EqualTo(trigger.Data.Resource.TriggerOperation));
-            Assert.That(CosmosDBSqlTriggerType.Post, Is.EqualTo(trigger.Data.Resource.TriggerType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(trigger.Data.Resource.TriggerName, Is.EqualTo(_triggerName));
+                Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
+                Assert.That(CosmosDBSqlTriggerOperation.Create, Is.EqualTo(trigger.Data.Resource.TriggerOperation));
+                Assert.That(CosmosDBSqlTriggerType.Post, Is.EqualTo(trigger.Data.Resource.TriggerType));
+            });
 
             trigger2 = await SqlTriggerCollection.GetAsync(_triggerName);
             VerifySqlTriggers(trigger, trigger2);
@@ -159,15 +165,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlTriggers(CosmosDBSqlTriggerResource expectedValue, CosmosDBSqlTriggerResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.Resource.TriggerName, Is.EqualTo(expectedValue.Data.Resource.TriggerName));
-            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
-            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
-            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
-            Assert.That(actualValue.Data.Resource.Body, Is.EqualTo(expectedValue.Data.Resource.Body));
-            Assert.That(actualValue.Data.Resource.TriggerType, Is.EqualTo(expectedValue.Data.Resource.TriggerType));
-            Assert.That(actualValue.Data.Resource.TriggerOperation, Is.EqualTo(expectedValue.Data.Resource.TriggerOperation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.Resource.TriggerName, Is.EqualTo(expectedValue.Data.Resource.TriggerName));
+                Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                Assert.That(actualValue.Data.Resource.Body, Is.EqualTo(expectedValue.Data.Resource.Body));
+                Assert.That(actualValue.Data.Resource.TriggerType, Is.EqualTo(expectedValue.Data.Resource.TriggerType));
+                Assert.That(actualValue.Data.Resource.TriggerOperation, Is.EqualTo(expectedValue.Data.Resource.TriggerOperation));
+            });
         }
     }
 }

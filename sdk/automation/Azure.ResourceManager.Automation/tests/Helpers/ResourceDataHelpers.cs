@@ -31,17 +31,23 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region Credential
         public static void AssertCredential(AutomationCredentialData data1, AutomationCredentialData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.UserName, Is.EqualTo(data1.UserName));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.UserName, Is.EqualTo(data1.UserName));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            });
         }
 
         public static AutomationCredentialCreateOrUpdateContent GetCredentialData(string name)
@@ -58,10 +64,13 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertDscConfiguration(DscConfigurationData data1, DscConfigurationData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Location, Is.EqualTo(data1.Location));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.State, Is.EqualTo(data1.State));
-            Assert.That(data2.JobCount, Is.EqualTo(data1.JobCount));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Location, Is.EqualTo(data1.Location));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.State, Is.EqualTo(data1.State));
+                Assert.That(data2.JobCount, Is.EqualTo(data1.JobCount));
+            });
         }
 
         public static DscConfigurationCreateOrUpdateContent GetDscConfigurationData(string name)
@@ -85,9 +94,12 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertDscNodeConfiguration(DscNodeConfigurationData data1, DscNodeConfigurationData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.ConfigurationName, Is.EqualTo(data1.ConfigurationName));
-            Assert.That(data2.Source, Is.EqualTo(data1.Source));
-            Assert.That(data2.NodeCount, Is.EqualTo(data1.NodeCount));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.ConfigurationName, Is.EqualTo(data1.ConfigurationName));
+                Assert.That(data2.Source, Is.EqualTo(data1.Source));
+                Assert.That(data2.NodeCount, Is.EqualTo(data1.NodeCount));
+            });
         }
 
         public static DscNodeConfigurationCreateOrUpdateContent GetDscNodeConfigurationData(string dscconfigurationName)
@@ -123,10 +135,13 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertRunbook(AutomationRunbookData data1, AutomationRunbookData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Location, Is.EqualTo(data1.Location));
-            Assert.That(data2.State, Is.EqualTo(data1.State));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.JobCount, Is.EqualTo(data1.JobCount));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Location, Is.EqualTo(data1.Location));
+                Assert.That(data2.State, Is.EqualTo(data1.State));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.JobCount, Is.EqualTo(data1.JobCount));
+            });
         }
         #endregion
 
@@ -154,10 +169,13 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertSourceControl(AutomationSourceControlData data1, AutomationSourceControlData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.Branch, Is.EqualTo(data1.Branch));
-            Assert.That(data2.RepoUri, Is.EqualTo(data1.RepoUri));
-            Assert.That(data2.FolderPath, Is.EqualTo(data1.FolderPath));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.Branch, Is.EqualTo(data1.Branch));
+                Assert.That(data2.RepoUri, Is.EqualTo(data1.RepoUri));
+                Assert.That(data2.FolderPath, Is.EqualTo(data1.FolderPath));
+            });
         }
         #endregion
 
@@ -175,11 +193,14 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertVariable(AutomationVariableData data1, AutomationVariableData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Value, Is.EqualTo(data1.Value));
-            Assert.That(data2.IsEncrypted, Is.EqualTo(data1.IsEncrypted));
-            Assert.That(data2.CreatedOn, Is.EqualTo(data1.CreatedOn));
-            Assert.That(data2.LastModifiedOn, Is.EqualTo(data1.LastModifiedOn));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Value, Is.EqualTo(data1.Value));
+                Assert.That(data2.IsEncrypted, Is.EqualTo(data1.IsEncrypted));
+                Assert.That(data2.CreatedOn, Is.EqualTo(data1.CreatedOn));
+                Assert.That(data2.LastModifiedOn, Is.EqualTo(data1.LastModifiedOn));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            });
         }
         #endregion
 
@@ -196,8 +217,11 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertSchedule(AutomationScheduleData data1, AutomationScheduleData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Frequency, Is.EqualTo(data1.Frequency));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Frequency, Is.EqualTo(data1.Frequency));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            });
         }
         #endregion
 
@@ -215,8 +239,11 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertAccount(AutomationAccountData data1, AutomationAccountData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Location, Is.EqualTo(data1.Location));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Location, Is.EqualTo(data1.Location));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            });
         }
         #endregion
     }

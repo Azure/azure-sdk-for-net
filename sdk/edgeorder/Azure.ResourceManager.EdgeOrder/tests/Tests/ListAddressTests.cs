@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<EdgeOrderAddressResource> addressesResult = await addresses.ToEnumerableAsync();
 
             Assert.That(addressesResult, Is.Not.Null);
-            Assert.That(addressesResult.Count >= 1, Is.True);
+            Assert.That(addressesResult, Is.Not.Empty);
         }
 
         [TestCase, Order(2)]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<EdgeOrderAddressResource> addressesResult = await addresses.ToEnumerableAsync();
 
             Assert.That(addressesResult, Is.Not.Null);
-            Assert.That(addressesResult.Count >= 1, Is.True);
+            Assert.That(addressesResult, Is.Not.Empty);
         }
     }
 }

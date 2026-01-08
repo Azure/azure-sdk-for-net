@@ -57,10 +57,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -78,9 +81,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -99,9 +105,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -124,17 +133,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account2.Data.Identity.UserAssignedIdentities);
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -159,16 +174,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = identity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -194,16 +215,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = identity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -220,10 +247,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
 
             var noneIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
             StorageAccountPatch parameters = new StorageAccountPatch()
@@ -231,17 +261,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = noneIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.IsEmpty(account2.Data.Identity.UserAssignedIdentities);
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            });
         }
 
         [Test]
@@ -257,10 +293,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
 
             var userManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
@@ -270,16 +309,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = userManagedIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -296,10 +341,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
 
             var systemUserIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
@@ -309,16 +357,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = systemUserIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -337,9 +391,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             var noneIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
@@ -348,17 +405,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = noneIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.IsEmpty(account2.Data.Identity.UserAssignedIdentities);
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            });
         }
 
         [Test]
@@ -376,9 +439,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             var systemIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
@@ -387,17 +453,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = systemIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account2.Data.Identity.UserAssignedIdentities);
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -415,9 +487,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             var systemUserIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
@@ -426,16 +501,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = systemUserIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
 
@@ -455,9 +536,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // With JSON Merge Patch, we only need to put the identity to add in the dictionary for update operation.
@@ -470,16 +554,19 @@ namespace Azure.ResourceManager.Storage.Tests
             };
             account1 = await account1.UpdateAsync(parameters);
             Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(2));
+            Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(2));
             Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity2.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(2));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(2));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity2.Id].PrincipalId, Is.Not.Null);
         }
@@ -500,9 +587,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.Greater(account1.Data.Identity.UserAssignedIdentities.Count, 0);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.GreaterThan(0));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id] = null;
@@ -512,17 +602,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = account1.Data.Identity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(0));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(0));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(0));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(0));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            });
         }
 
         [Test]
@@ -543,9 +639,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(2));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(2));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity1.Id].PrincipalId, Is.Not.Null);
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity2.Id].PrincipalId, Is.Not.Null);
 
@@ -555,17 +654,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = account1.Data.Identity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity1.Id], Is.Null);
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity2.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities.ContainsKey(userAssignedIdentity1.Id), Is.False);
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity2.Id].PrincipalId, Is.Not.Null);
         }
@@ -585,9 +690,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             var noneIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
@@ -596,17 +704,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = noneIdentity
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
-            Assert.IsEmpty(account2.Data.Identity.UserAssignedIdentities);
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Null);
+            });
         }
 
         [Test]
@@ -624,9 +738,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             StorageAccountPatch parameters = new StorageAccountPatch()
@@ -634,17 +751,23 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account1.Data.Identity.UserAssignedIdentities);
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account1.Data.Identity.TenantId, Is.Not.Null);
+            });
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
-            Assert.IsEmpty(account2.Data.Identity.UserAssignedIdentities);
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(account2.Data.Identity.TenantId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Is.Empty);
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(account2.Data.Identity.TenantId, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -662,9 +785,12 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, param)).Value;
             Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyAccountProperties(account1, false);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssignedUserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Not.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             StorageAccountPatch parameters = new StorageAccountPatch()
@@ -672,16 +798,22 @@ namespace Azure.ResourceManager.Storage.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account1.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account1.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account1.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account1.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
-            Assert.That(account2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(1));
-            Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.UserAssigned));
+                Assert.That(account2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(1));
+                Assert.That(account2.Data.Identity.PrincipalId, Is.Null);
+            });
             Assert.That(account2.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId, Is.Not.Null);
         }
     }

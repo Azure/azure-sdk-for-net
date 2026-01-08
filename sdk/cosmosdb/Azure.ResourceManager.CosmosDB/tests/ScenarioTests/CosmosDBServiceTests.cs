@@ -118,16 +118,19 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyCosmosDBService(CosmosDBServiceResource expectedValue, CosmosDBServiceResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.That(actualValue.Data.Properties.InstanceCount, Is.EqualTo(expectedValue.Data.Properties.InstanceCount));
+                Assert.That(actualValue.Data.Properties.InstanceCount, Is.EqualTo(expectedValue.Data.Properties.InstanceCount));
 
-            Assert.That(actualValue.Data.Properties.InstanceSize, Is.EqualTo(expectedValue.Data.Properties.InstanceSize));
-            Assert.That(actualValue.Data.Properties.ServiceType, Is.EqualTo(expectedValue.Data.Properties.ServiceType));
-            Assert.That(actualValue.Data.Properties.Status, Is.EqualTo(expectedValue.Data.Properties.Status));
-            Assert.That(actualValue.Data.Properties.CreatedOn, Is.EqualTo(expectedValue.Data.Properties.CreatedOn));
+                Assert.That(actualValue.Data.Properties.InstanceSize, Is.EqualTo(expectedValue.Data.Properties.InstanceSize));
+                Assert.That(actualValue.Data.Properties.ServiceType, Is.EqualTo(expectedValue.Data.Properties.ServiceType));
+                Assert.That(actualValue.Data.Properties.Status, Is.EqualTo(expectedValue.Data.Properties.Status));
+                Assert.That(actualValue.Data.Properties.CreatedOn, Is.EqualTo(expectedValue.Data.Properties.CreatedOn));
+            });
         }
     }
 }

@@ -39,11 +39,14 @@ namespace Azure.ResourceManager.Dynatrace.Tests
 
             DynatraceMonitorResource monitorResource2 = await collection.GetAsync(monitorName);
 
-            Assert.That(monitorResource2.Data.Name, Is.EqualTo(monitorResource1.Data.Name));
-            Assert.That(monitorResource2.Data.Id, Is.EqualTo(monitorResource1.Data.Id));
-            Assert.That(monitorResource2.Data.ResourceType, Is.EqualTo(monitorResource1.Data.ResourceType));
-            Assert.That(monitorResource2.Data.Location, Is.EqualTo(monitorResource1.Data.Location));
-            Assert.That(monitorResource2.Data.Tags, Is.EqualTo(monitorResource1.Data.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(monitorResource2.Data.Name, Is.EqualTo(monitorResource1.Data.Name));
+                Assert.That(monitorResource2.Data.Id, Is.EqualTo(monitorResource1.Data.Id));
+                Assert.That(monitorResource2.Data.ResourceType, Is.EqualTo(monitorResource1.Data.ResourceType));
+                Assert.That(monitorResource2.Data.Location, Is.EqualTo(monitorResource1.Data.Location));
+                Assert.That(monitorResource2.Data.Tags, Is.EqualTo(monitorResource1.Data.Tags));
+            });
         }
 
         [TestCase]
@@ -57,8 +60,11 @@ namespace Azure.ResourceManager.Dynatrace.Tests
             var input = GetMonitorInput();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, input);
 
-            Assert.That((bool)await collection.ExistsAsync(monitorName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(monitorName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(monitorName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(monitorName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -79,7 +85,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
     }
 }

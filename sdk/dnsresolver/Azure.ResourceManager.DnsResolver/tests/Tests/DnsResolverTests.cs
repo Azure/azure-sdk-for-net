@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsResolver = await createdDnsResolver.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedDnsResolver.Value.Data.Tags);
+            Assert.That(patchedDnsResolver.Value.Data.Tags, Is.EquivalentTo(new Dictionary<string, string> { { newTagKey, newTagValue } }));
         }
 
         [Test]

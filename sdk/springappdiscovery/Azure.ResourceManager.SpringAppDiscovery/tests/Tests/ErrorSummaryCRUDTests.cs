@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 errorSummaryCount++;
             }
-            Assert.That(errorSummaryCount > 0, Is.True);
+            Assert.That(errorSummaryCount, Is.GreaterThan(0));
 
             //get an errorSummary
             Response<SpringBootSiteErrorSummaryResource> getErrorSummaryReponse = await errorSummaryCollection.GetAsync("default", CancellationToken.None);
-            Assert.IsNotNull(getErrorSummaryReponse.Value);
+            Assert.That(getErrorSummaryReponse.Value, Is.Not.Null);
         }
     }
 }

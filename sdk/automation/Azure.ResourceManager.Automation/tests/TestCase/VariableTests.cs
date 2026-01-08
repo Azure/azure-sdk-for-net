@@ -50,10 +50,14 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exists
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
+                //4.Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

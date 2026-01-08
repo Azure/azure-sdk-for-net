@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
 
             Assert.That(catalogResult, Is.Not.Null);
-            Assert.That(catalogResult.Count > 0, Is.True);
+            Assert.That(catalogResult.Count, Is.GreaterThan(0));
             TestGetCatalogResponse(catalogResult, "NetAppStorage", null, true, "westus", "West US");
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         private void TestGetCatalogResponse(List<ReservationCatalog> catalogResult, string resourceTypeName, string alternateResourceTypeName = null, bool hasLocation = false, string location = null, string locationDisplayName = null)
         {
             Assert.That(catalogResult, Is.Not.Null);
-            Assert.That(catalogResult.Count > 0, Is.True);
+            Assert.That(catalogResult.Count, Is.GreaterThan(0));
 
             catalogResult.ForEach(item =>
             {
@@ -316,9 +316,12 @@ namespace Azure.ResourceManager.Reservations.Tests
                 if (hasLocation)
                 {
                     Assert.That(item.Locations, Is.Not.Null);
-                    Assert.That(item.Locations.Count, Is.EqualTo(1));
-                    Assert.That(item.Locations[0].Name, Is.EqualTo(location));
-                    Assert.That(item.Locations[0].DisplayName, Is.EqualTo(locationDisplayName));
+                    Assert.That(item.Locations, Has.Count.EqualTo(1));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(item.Locations[0].Name, Is.EqualTo(location));
+                        Assert.That(item.Locations[0].DisplayName, Is.EqualTo(locationDisplayName));
+                    });
                 }
             });
         }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByKubernetesCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByKubernetesCluster);
+            Assert.That(listByKubernetesCluster, Is.Not.Empty);
 
             // Update
             NetworkCloudAgentPoolPatch patch = new NetworkCloudAgentPoolPatch()

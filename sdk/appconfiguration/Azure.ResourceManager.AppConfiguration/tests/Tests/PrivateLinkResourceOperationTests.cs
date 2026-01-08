@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             IEnumerable<AzureLocation> locations = (await LinkResource.GetAvailableLocationsAsync()).Value;
 
-            Assert.That(locations.Count() >= 0, Is.True);
+            Assert.That(locations.Count(), Is.GreaterThanOrEqualTo(0));
         }
     }
 }

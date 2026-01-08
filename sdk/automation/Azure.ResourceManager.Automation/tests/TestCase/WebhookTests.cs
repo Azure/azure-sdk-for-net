@@ -67,15 +67,18 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
 
             // GetAll
             var list = await _webhookCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateWebhook(list.FirstOrDefault().Data, webhookName);
             Assert.That(list.FirstOrDefault().Data.Uri, Is.Null);
         }
 
         private void ValidateWebhook(AutomationWebhookData webhook, string webhookName)
         {
-            Assert.That(webhook, Is.Not.Null);
-            Assert.IsNotEmpty(webhook.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(webhook, Is.Not.Null);
+                Assert.That((string)webhook.Id, Is.Not.Empty);
+            });
             Assert.That(webhook.Name, Is.EqualTo(webhookName));
             Assert.That(webhook.RunbookName, Is.EqualTo(_runbook.Data.Name));
         }

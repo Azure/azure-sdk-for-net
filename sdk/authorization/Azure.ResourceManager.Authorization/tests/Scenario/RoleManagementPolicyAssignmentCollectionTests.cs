@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var resourceGroup = await CreateResourceGroupAsync();
             var policyAssignmentCollection = resourceGroup.GetRoleManagementPolicyAssignments();
             var policyAssignmentList = await policyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(policyAssignmentList.Count, 0);
+            Assert.That(policyAssignmentList, Has.Count.GreaterThanOrEqualTo(0));
         }
 
         [RecordedTest]

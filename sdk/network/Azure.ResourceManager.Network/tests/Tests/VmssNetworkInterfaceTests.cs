@@ -55,9 +55,12 @@ namespace Azure.ResourceManager.Network.Tests
             var vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
             var firstResult = vmssListAllPageResult.First();
 
-            Assert.That(vmssListAllPageResult, Is.Not.Null);
-            Assert.That(firstResult.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(firstResult.ResourceGuid, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vmssListAllPageResult, Is.Not.Null);
+                Assert.That(firstResult.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(firstResult.ResourceGuid, Is.Not.Null);
+            });
 
             string idItem = firstResult.Id;
             string vmIndex = GetNameById(idItem, "virtualMachines");
@@ -93,13 +96,19 @@ namespace Azure.ResourceManager.Network.Tests
 
         private void VerifyVmssNicProperties(NetworkInterfaceData nic)
         {
-            Assert.That(nic.NetworkSecurityGroup, Is.Not.Null);
-            Assert.That(string.IsNullOrEmpty(nic.NetworkSecurityGroup.Id), Is.False);
-            Assert.That(nic.DnsSettings, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nic.NetworkSecurityGroup, Is.Not.Null);
+                Assert.That(string.IsNullOrEmpty(nic.NetworkSecurityGroup.Id), Is.False);
+                Assert.That(nic.DnsSettings, Is.Not.Null);
+            });
             Assert.That(nic.DnsSettings.DnsServers, Is.Not.Null);
-            Assert.That(nic.DnsSettings.DnsServers.Count, Is.EqualTo(1));
-            Assert.That(nic.IPConfigurations[0].PublicIPAddress, Is.Not.Null);
-            Assert.That(string.IsNullOrEmpty(nic.IPConfigurations[0].PublicIPAddress.Id), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nic.DnsSettings.DnsServers, Has.Count.EqualTo(1));
+                Assert.That(nic.IPConfigurations[0].PublicIPAddress, Is.Not.Null);
+                Assert.That(string.IsNullOrEmpty(nic.IPConfigurations[0].PublicIPAddress.Id), Is.False);
+            });
         }
     }
 }

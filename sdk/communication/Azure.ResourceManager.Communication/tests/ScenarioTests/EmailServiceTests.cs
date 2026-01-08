@@ -68,8 +68,11 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
             var tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.That(tagValue.Key, Is.EqualTo("testkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagValue.Key, Is.EqualTo("testkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            });
         }
 
         [TestCase(null)]
@@ -84,12 +87,15 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
             var tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.That(tagValue.Key, Is.EqualTo("testkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagValue.Key, Is.EqualTo("testkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            });
             await email.RemoveTagAsync("testkey");
             email = await collection.GetAsync(emailServiceName);
             var tag = email.Data.Tags;
-            Assert.That(tag.Count, Is.EqualTo(0));
+            Assert.That(tag, Is.Empty);
         }
 
         [TestCase(null)]
@@ -104,15 +110,21 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
             var tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.That(tagValue.Key, Is.EqualTo("testkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagValue.Key, Is.EqualTo("testkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            });
             var tag = new Dictionary<string, string>() { { "newtestkey", "newtestvalue" } };
             await email.SetTagsAsync(tag);
             email = await collection.GetAsync(emailServiceName);
             tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.That(email.Data.Tags.Count, Is.EqualTo(1));
-            Assert.That(tagValue.Key, Is.EqualTo("newtestkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("newtestvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(email.Data.Tags.Count, Is.EqualTo(1));
+                Assert.That(tagValue.Key, Is.EqualTo("newtestkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("newtestvalue"));
+            });
         }
 
         [Test]
@@ -131,9 +143,12 @@ namespace Azure.ResourceManager.Communication.Tests
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             var emailService = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             Assert.That(emailService, Is.Not.Null);
-            Assert.That(emailService.Data.Name, Is.EqualTo(emailServiceName));
-            Assert.That(emailService.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
-            Assert.That(emailService.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(emailService.Data.Name, Is.EqualTo(emailServiceName));
+                Assert.That(emailService.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
+                Assert.That(emailService.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
+            });
         }
 
         [Test]
@@ -143,8 +158,11 @@ namespace Azure.ResourceManager.Communication.Tests
             var emailService1 = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var patch = new EmailServiceResourcePatch();
             var emailService2 = (await emailService1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.That(emailService2, Is.Not.Null);
-            Assert.That(emailService1.Data.Name, Is.EqualTo(emailService2.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(emailService2, Is.Not.Null);
+                Assert.That(emailService1.Data.Name, Is.EqualTo(emailService2.Data.Name));
+            });
         }
 
         [Test]
@@ -166,9 +184,12 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var emailService = await collection.GetAsync(emailServiceName);
             Assert.That(emailService, Is.Not.Null);
-            Assert.That(emailService.Value.Data.Name, Is.EqualTo(emailServiceName));
-            Assert.That(emailService.Value.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
-            Assert.That(emailService.Value.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(emailService.Value.Data.Name, Is.EqualTo(emailServiceName));
+                Assert.That(emailService.Value.Data.Location.ToString(), Is.EqualTo(_location.ToString()));
+                Assert.That(emailService.Value.Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
+            });
         }
 
         [Test]
@@ -178,9 +199,12 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var list = await _resourceGroup.GetEmailServiceResources().GetAllAsync().ToEnumerableAsync();
             Assert.That(list, Is.Not.Empty);
-            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(emailServiceName));
-            Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo(_location.ToString()));
-            Assert.That(list.FirstOrDefault().Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(emailServiceName));
+                Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo(_location.ToString()));
+                Assert.That(list.FirstOrDefault().Data.DataLocation.ToString(), Is.EqualTo(_dataLocation.ToString()));
+            });
         }
     }
 }

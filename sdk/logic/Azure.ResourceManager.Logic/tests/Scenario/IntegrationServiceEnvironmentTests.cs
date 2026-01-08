@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Tests
 
             // GetAll
             var list = await _integrationServiceEnvironmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // Delete
             await serviceEnviroment.Value.DeleteAsync(WaitUntil.Completed);

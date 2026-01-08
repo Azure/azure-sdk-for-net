@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var app = (await rg.GetWebSites().CreateOrUpdateAsync(WaitUntil.Completed, appName, appData)).Value;
             var getApp = (await app.GetAsync()).Value;
             var result = await getApp.SyncFunctionTriggersAsync();
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
     }
 }

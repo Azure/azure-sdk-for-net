@@ -60,16 +60,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
             await CreatePartnerRegistration(_resourceGroup, partnerRegistrationName);
             var list = await _partnerRegistrationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePartnerRegistration(list.First(item => item.Data.Name == partnerRegistrationName), partnerRegistrationName);
             // Get all registrations created within a resourceGroup
             Assert.That(list, Is.Not.Null);
-            Assert.GreaterOrEqual(list.Count, 1);
-            Assert.That(partnerRegistrationName, Is.EqualTo(list.FirstOrDefault().Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
+                Assert.That(partnerRegistrationName, Is.EqualTo(list.FirstOrDefault().Data.Name));
+            });
             // Get all registrations created within the subscription irrespective of the resourceGroup
             var registrationsInAzureSubscription = await DefaultSubscription.GetPartnerRegistrationsAsync().ToEnumerableAsync();
             Assert.That(registrationsInAzureSubscription, Is.Not.Null);
-            Assert.GreaterOrEqual(registrationsInAzureSubscription.Count, 1);
+            Assert.That(registrationsInAzureSubscription.Count, Is.GreaterThanOrEqualTo(1));
             var falseFlag = false;
             foreach (var item in registrationsInAzureSubscription)
             {
@@ -125,10 +128,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // AddTag
             await registration.AddTagAsync("addtagkey", "addtagvalue");
             registration = await _partnerRegistrationCollection.GetAsync(partnerRegistrationName);
-            Assert.That(registration.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(registration.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = registration.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await registration.RemoveTagAsync("addtagkey");
@@ -139,11 +145,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private void ValidatePartnerRegistration(PartnerRegistrationResource partnerRegistration, string partnerRegistrationName)
         {
             Assert.That(partnerRegistration, Is.Not.Null);
-            Assert.That(partnerRegistration.Data.Id, Is.Not.Null);
-            Assert.That(partnerRegistration.Data.Name, Is.EqualTo(partnerRegistrationName));
-            Assert.That(partnerRegistration.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerRegistrations"));
-            Assert.That(partnerRegistration.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(partnerRegistration.Data.Location.ToString(), Is.EqualTo("Global"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(partnerRegistration.Data.Id, Is.Not.Null);
+                Assert.That(partnerRegistration.Data.Name, Is.EqualTo(partnerRegistrationName));
+                Assert.That(partnerRegistration.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerRegistrations"));
+                Assert.That(partnerRegistration.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(partnerRegistration.Data.Location.ToString(), Is.EqualTo("Global"));
+            });
         }
     }
 }

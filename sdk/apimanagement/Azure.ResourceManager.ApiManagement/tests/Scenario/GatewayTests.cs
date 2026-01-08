@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var gatewayListResponse = await collection.GetAllAsync().ToEnumerableAsync();
 
             Assert.That(gatewayListResponse, Is.Not.Null);
-            Assert.IsEmpty(gatewayListResponse);
+            Assert.That(gatewayListResponse, Is.Empty);
 
             // list all the APIs
             var apisResponse = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
@@ -77,13 +77,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayId, gatewayContract)).Value;
             Assert.That(createResponse, Is.Not.Null);
-            Assert.That(createResponse.Data.Name, Is.EqualTo(gatewayId));
-            Assert.That(createResponse.Data.Description, Is.EqualTo(gatewayContract.Description));
-            Assert.That(createResponse.Data.LocationData, Is.Not.Null);
-            Assert.That(createResponse.Data.LocationData.City, Is.EqualTo(gatewayContract.LocationData.City));
-            Assert.That(createResponse.Data.LocationData.CountryOrRegion, Is.EqualTo(gatewayContract.LocationData.CountryOrRegion));
-            Assert.That(createResponse.Data.LocationData.District, Is.EqualTo(gatewayContract.LocationData.District));
-            Assert.That(createResponse.Data.LocationData.Name, Is.EqualTo(gatewayContract.LocationData.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResponse.Data.Name, Is.EqualTo(gatewayId));
+                Assert.That(createResponse.Data.Description, Is.EqualTo(gatewayContract.Description));
+                Assert.That(createResponse.Data.LocationData, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResponse.Data.LocationData.City, Is.EqualTo(gatewayContract.LocationData.City));
+                Assert.That(createResponse.Data.LocationData.CountryOrRegion, Is.EqualTo(gatewayContract.LocationData.CountryOrRegion));
+                Assert.That(createResponse.Data.LocationData.District, Is.EqualTo(gatewayContract.LocationData.District));
+                Assert.That(createResponse.Data.LocationData.Name, Is.EqualTo(gatewayContract.LocationData.Name));
+            });
 
             // get the gateway to check is was created
             var getResponse = (await collection.GetAsync(gatewayId)).Value;

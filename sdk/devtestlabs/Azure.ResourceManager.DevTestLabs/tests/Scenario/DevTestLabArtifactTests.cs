@@ -46,11 +46,14 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLabArtifact(DevTestLabArtifactData artifact, string artifactName)
         {
-            Assert.That(artifact, Is.Not.Null);
-            Assert.IsNotEmpty(artifact.Id);
-            Assert.IsNotEmpty(artifact.FilePath);
-            Assert.IsNotEmpty(artifact.Icon);
-            Assert.IsNotEmpty(artifact.Publisher);
+            Assert.Multiple(() =>
+            {
+                Assert.That(artifact, Is.Not.Null);
+                Assert.That((string)artifact.Id, Is.Not.Empty);
+            });
+            Assert.That(artifact.FilePath, Is.Not.Empty);
+            Assert.That(artifact.Icon, Is.Not.Empty);
+            Assert.That(artifact.Publisher, Is.Not.Empty);
             Assert.That(artifact.Name, Is.EqualTo(artifactName));
         }
     }

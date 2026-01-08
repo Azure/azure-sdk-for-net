@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             AsyncPageable<NetAppSubscriptionQuotaItem> quotaLimitsResponse = DefaultSubscription.GetNetAppQuotaLimitsAsync(DefaultLocation);
             Assert.That(quotaLimitsResponse, Is.Not.Null);
             List<NetAppSubscriptionQuotaItem> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
-            Assert.IsNotEmpty(qutoaItemlist);
+            Assert.That(qutoaItemlist, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -55,8 +55,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoNetAppResourceAsync(DefaultLocation);
             Assert.That(regionInfo, Is.Not.Null);
-            Assert.That(regionInfo.Value.StorageToNetworkProximity, Is.Not.Null);
-            Assert.That(regionInfo.Value.AvailabilityZoneMappings, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(regionInfo.Value.StorageToNetworkProximity, Is.Not.Null);
+                Assert.That(regionInfo.Value.AvailabilityZoneMappings, Is.Not.Null);
+            });
         }
     }
 }

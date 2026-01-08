@@ -117,11 +117,14 @@ namespace Azure.ResourceManager.TestFramework
             var methodOnExtension = mockingExtensionType.GetMethod(method.Name, parameters.Skip(1).Select(p => p.ParameterType).ToArray());
 
             Assert.That(methodOnExtension, Is.Not.Null, $"The class {mockingExtensionType} must have method {method}");
-            Assert.That(methodOnExtension.IsVirtual, Is.True, $"The method on {mockingExtensionType} must be virtual");
-            Assert.That(methodOnExtension.IsPublic, Is.True, $"The method on {mockingExtensionType} must be public");
+            Assert.Multiple(() =>
+            {
+                Assert.That(methodOnExtension.IsVirtual, Is.True, $"The method on {mockingExtensionType} must be virtual");
+                Assert.That(methodOnExtension.IsPublic, Is.True, $"The method on {mockingExtensionType} must be public");
 
-            // validate they should both have or both not have the EditorBrowsable(Never) attribute
-            Assert.That(method.IsDefined(typeof(EditorBrowsableAttribute)), Is.EqualTo(methodOnExtension.IsDefined(typeof(EditorBrowsableAttribute))), $"The method {method} and {methodOnExtension} should both have or neither have the EditorBrowsableAttribute on them");
+                // validate they should both have or both not have the EditorBrowsable(Never) attribute
+                Assert.That(method.IsDefined(typeof(EditorBrowsableAttribute)), Is.EqualTo(methodOnExtension.IsDefined(typeof(EditorBrowsableAttribute))), $"The method {method} and {methodOnExtension} should both have or neither have the EditorBrowsableAttribute on them");
+            });
 
             ValidateMocking(extendedType, mockingExtensionType, method, methodOnExtension);
         }

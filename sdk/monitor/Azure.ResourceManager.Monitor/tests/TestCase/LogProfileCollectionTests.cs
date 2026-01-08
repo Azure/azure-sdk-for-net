@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicLogProfileData("westus");
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testLogProfile-"), input);
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
         }
     }
 }

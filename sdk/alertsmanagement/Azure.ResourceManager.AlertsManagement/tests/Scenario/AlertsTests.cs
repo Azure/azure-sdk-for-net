@@ -61,10 +61,13 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             AsyncPageable<ServiceAlertResource> alerts = subscription.GetServiceAlerts().GetAllAsync(alertState: new ServiceAlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
             await foreach (ServiceAlertResource alert in alerts)
             {
-                // Verify the state change operation was successful
-                Assert.That(monitorServiceFilter, Is.EqualTo(alert.Data.Properties.Essentials.MonitorService));
-                Assert.That(severityFilter, Is.EqualTo(alert.Data.Properties.Essentials.Severity));
-                Assert.That(alert.Data.Properties.Essentials.AlertState.ToString(), Is.EqualTo("New"));
+                Assert.Multiple(() =>
+                {
+                    // Verify the state change operation was successful
+                    Assert.That(monitorServiceFilter, Is.EqualTo(alert.Data.Properties.Essentials.MonitorService));
+                    Assert.That(severityFilter, Is.EqualTo(alert.Data.Properties.Essentials.Severity));
+                    Assert.That(alert.Data.Properties.Essentials.AlertState.ToString(), Is.EqualTo("New"));
+                });
             }
         }
 
@@ -75,9 +78,12 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             // Get alerts summary grouped by severity and state
             string groupBy = "severity,alertState";
             var summary = await subscription.GetServiceAlertSummaryAsync(groupBy);
-            //summary.GetRawResponse().Content
-            Assert.That(summary.Value.Properties.Total, Is.Not.Null);
-            Assert.That(summary.Value.Properties.GroupedBy, Is.EqualTo("severity"));
+            Assert.Multiple(() =>
+            {
+                //summary.GetRawResponse().Content
+                Assert.That(summary.Value.Properties.Total, Is.Not.Null);
+                Assert.That(summary.Value.Properties.GroupedBy, Is.EqualTo("severity"));
+            });
             IEnumerator<ServiceAlertSummaryGroupItemInfo> enumerator = summary.Value.Properties.Values.GetEnumerator();
             while (enumerator.MoveNext())
             {
@@ -104,8 +110,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             {
                 if (item.ModificationEvent == ServiceAlertModificationEvent.StateChange)
                 {
-                    Assert.That(item.OldValue, Is.EqualTo(ServiceAlertState.New.ToString()));
-                    Assert.That(item.NewValue, Is.EqualTo(ServiceAlertState.Closed.ToString()));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(item.OldValue, Is.EqualTo(ServiceAlertState.New.ToString()));
+                        Assert.That(item.NewValue, Is.EqualTo(ServiceAlertState.Closed.ToString()));
+                    });
                     eventFound = true;
                     break;
                 }
@@ -126,7 +135,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 ServiceAlertState.Closed.ToString()
             };
 
-            Assert.Contains(name, validStates);
+            Assert.That(validStates, Does.Contain(name));
         }
 
         private void IsValidSeverity(string name)
@@ -140,7 +149,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 ServiceAlertSeverity.Sev4.ToString()
             };
 
-            Assert.Contains(name, validSeverity);
+            Assert.That(validSeverity, Does.Contain(name));
         }
     }
 }

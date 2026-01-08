@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 .GetAllAsync(filter: "provisioningState eq 'Failed'", top: top)
                 .ToEnumerableAsync();
 
-            Assert.That(response.All(x => string.Equals(x.Data.ProvisioningState.ToString(), "Failed", StringComparison.OrdinalIgnoreCase)), Is.True);
-            Assert.That(response.Count, Is.EqualTo(top));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.All(x => string.Equals(x.Data.ProvisioningState.ToString(), "Failed", StringComparison.OrdinalIgnoreCase)), Is.True);
+                Assert.That(response, Has.Count.EqualTo(top));
+            });
         }
 
         [TestCase]
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             var response = await Client.GetCurrentQuotaLimitBases(new ResourceIdentifier(Scope)).CreateOrUpdateAsync(WaitUntil.Started, ResourceName, data);
 
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [TestCase]
@@ -135,8 +138,11 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.That(ex.Status, Is.EqualTo(400));
-                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidResourceName"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Status, Is.EqualTo(400));
+                    Assert.That(ex.ErrorCode, Is.EqualTo("InvalidResourceName"));
+                });
                 return;
             }
 

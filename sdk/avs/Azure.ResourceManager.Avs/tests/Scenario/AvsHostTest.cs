@@ -46,9 +46,13 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
                 AvsHostData resourceData = item.Data;
                 hosts.Add(item);
             }
-            Assert.That(hosts.Any(), Is.True);
-            Assert.That(hosts.Any(h => h.Data.Name == HOST_ID), Is.True);
-            Assert.That(hosts.Count, Is.EqualTo(3));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(hosts.Any(), Is.True);
+                Assert.That(hosts.Any(h => h.Data.Name == HOST_ID), Is.True);
+                Assert.That(hosts, Has.Count.EqualTo(3));
+            });
         }
 
         [TestCase, Order(4)]

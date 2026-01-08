@@ -52,17 +52,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainResource = createResponse.Value;
             Assert.That(domainResource, Is.Not.Null);
             Assert.That(domainResource.Data, Is.Not.Null);
-            Assert.That(domainResource.Data.Location.Name, Is.EqualTo(DefaultLocation.Name));
-            Assert.That(string.IsNullOrWhiteSpace(domainName), Is.False);
-            Assert.That(domainName, Does.StartWith("sdk-domain-"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domainResource.Data.Location.Name, Is.EqualTo(DefaultLocation.Name));
+                Assert.That(string.IsNullOrWhiteSpace(domainName), Is.False);
+                Assert.That(domainName, Does.StartWith("sdk-domain-"));
+            });
 
             // Get
             var getResponse = await domainResource.GetAsync();
             Assert.That(getResponse, Is.Not.Null);
             Assert.That(getResponse.Value, Is.Not.Null);
             Assert.That(getResponse.Value.Data, Is.Not.Null);
-            Assert.That(getResponse.Value.Data.Id, Is.Not.Null);
-            Assert.That(getResponse.Value.Data.Name, Is.EqualTo(domainName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.Id, Is.Not.Null);
+                Assert.That(getResponse.Value.Data.Name, Is.EqualTo(domainName));
+            });
 
             // Add Tag
             var addTagResponse = await domainResource.AddTagAsync(TagKeyTest, TagValueTest);
@@ -70,8 +76,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.That(addTagResponse.Value, Is.Not.Null);
             Assert.That(addTagResponse.Value.Data, Is.Not.Null);
             Assert.That(addTagResponse.Value.Data.Tags, Is.Not.Null);
-            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey(TagKeyTest), Is.True);
-            Assert.That(addTagResponse.Value.Data.Tags[TagKeyTest], Is.EqualTo(TagValueTest));
+            Assert.Multiple(() =>
+            {
+                Assert.That(addTagResponse.Value.Data.Tags.ContainsKey(TagKeyTest), Is.True);
+                Assert.That(addTagResponse.Value.Data.Tags[TagKeyTest], Is.EqualTo(TagValueTest));
+            });
 
             // Set Tags
             var domainTags = new Dictionary<string, string>
@@ -80,9 +89,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 { TagKeyOwner, TagValueOwner }
             };
             var setTagsResponse = await domainResource.SetTagsAsync(domainTags);
-            Assert.That(setTagsResponse.Value.Data.Tags.Count, Is.EqualTo(2));
-            Assert.That(setTagsResponse.Value.Data.Tags[TagKeyEnvironment], Is.EqualTo(TagValueEnvironment));
-            Assert.That(setTagsResponse.Value.Data.Tags[TagKeyOwner], Is.EqualTo(TagValueOwner));
+            Assert.That(setTagsResponse.Value.Data.Tags, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(setTagsResponse.Value.Data.Tags[TagKeyEnvironment], Is.EqualTo(TagValueEnvironment));
+                Assert.That(setTagsResponse.Value.Data.Tags[TagKeyOwner], Is.EqualTo(TagValueOwner));
+            });
 
             // Remove Tag
             await domainResource.AddTagAsync(TagKeyToRemove, TagValueToRemove);
@@ -93,8 +105,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Shared Access Keys
             var keys = await domainResource.GetSharedAccessKeysAsync();
-            Assert.That(keys.Value.Key1, Is.Not.Null);
-            Assert.That(keys.Value.Key2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys.Value.Key1, Is.Not.Null);
+                Assert.That(keys.Value.Key2, Is.Not.Null);
+            });
             Assert.That(keys.Value.Key2, Is.Not.EqualTo(keys.Value.Key1));
 
             // Regenerate Key

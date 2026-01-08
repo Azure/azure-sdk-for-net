@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 }
             }
 
-            Assert.IsEmpty(errorList, "DeduplicationCheck failed, the following types should be renamed because of the `lenient-model-deduplication` flag: \n" + string.Join(",", errorList) + "\nThis should be fixed via directives so that we no longer have them as duplicated schemas");
+            Assert.That(errorList, Is.Empty, "DeduplicationCheck failed, the following types should be renamed because of the `lenient-model-deduplication` flag: \n" + string.Join(",", errorList) + "\nThis should be fixed via directives so that we no longer have them as duplicated schemas");
         }
     }
 }

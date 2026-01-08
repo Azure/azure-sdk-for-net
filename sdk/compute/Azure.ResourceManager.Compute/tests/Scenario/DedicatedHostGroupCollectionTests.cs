@@ -56,8 +56,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
             var group = lro.Value;
-            Assert.That((bool)await collection.ExistsAsync(groupName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(groupName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(groupName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(groupName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -98,8 +101,11 @@ namespace Azure.ResourceManager.Compute.Tests
                     group2 = group;
             }
 
-            Assert.That(group1, Is.Not.Null);
-            Assert.That(group2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(group1, Is.Not.Null);
+                Assert.That(group2, Is.Not.Null);
+            });
         }
     }
 }

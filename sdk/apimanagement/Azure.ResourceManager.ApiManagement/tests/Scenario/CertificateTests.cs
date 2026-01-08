@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list certificates: there should be none
             var listResponse = await certCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listResponse, Is.Not.Null);
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Empty);
 
             // create new certificate
             string certificateId = Recording.GenerateAssetName("certificateId");
@@ -82,13 +82,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(getResponse.Data.Name, Is.EqualTo(certificateId));
             if (Mode == RecordedTestMode.Playback)
             {
-                Assert.That(getResponse.Data.Subject.ToLower(), Is.EqualTo("cn=contoso.com"));
-                Assert.That(getResponse.Data.Thumbprint.ToLower(), Is.EqualTo("10ad178a8c73d33cde4e7ad638dc56de2671043d"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResponse.Data.Subject.ToLower(), Is.EqualTo("cn=contoso.com"));
+                    Assert.That(getResponse.Data.Thumbprint.ToLower(), Is.EqualTo("10ad178a8c73d33cde4e7ad638dc56de2671043d"));
+                });
             }
             else
             {
-                Assert.That(getResponse.Data.Subject.ToLower(), Is.EqualTo(cert.Subject.ToLower()));
-                Assert.That(getResponse.Data.Thumbprint.ToLower(), Is.EqualTo(cert.Thumbprint.ToLower()));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResponse.Data.Subject.ToLower(), Is.EqualTo(cert.Subject.ToLower()));
+                    Assert.That(getResponse.Data.Thumbprint.ToLower(), Is.EqualTo(cert.Thumbprint.ToLower()));
+                });
             }
             //create key vault certificate
             //string kvcertificateId = Recording.GenerateAssetName("kvcertificateId");

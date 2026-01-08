@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                     count++;
                 }
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
     }
 }

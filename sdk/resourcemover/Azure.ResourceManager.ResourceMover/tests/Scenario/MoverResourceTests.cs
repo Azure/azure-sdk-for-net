@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
 
         [TestCase]
@@ -80,18 +80,27 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         private void AssertValidMoverResource(MoverResource model, MoverResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            });
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
-                Assert.That(model.Data.Properties, Is.Not.Null);
-                Assert.That(getResult.Data.Properties, Is.Not.Null);
-                Assert.That(getResult.Data.Properties.ProvisioningState, Is.EqualTo(model.Data.Properties.ProvisioningState));
-                Assert.That(getResult.Data.Properties.SourceId, Is.EqualTo(model.Data.Properties.SourceId));
-                Assert.That(getResult.Data.Properties.TargetId, Is.EqualTo(model.Data.Properties.TargetId));
-                Assert.That(getResult.Data.Properties.ExistingTargetId, Is.EqualTo(model.Data.Properties.ExistingTargetId));
-                Assert.That(getResult.Data.Properties.IsResolveRequired, Is.EqualTo(model.Data.Properties.IsResolveRequired));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Properties, Is.Not.Null);
+                    Assert.That(getResult.Data.Properties, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.Data.Properties.ProvisioningState, Is.EqualTo(model.Data.Properties.ProvisioningState));
+                    Assert.That(getResult.Data.Properties.SourceId, Is.EqualTo(model.Data.Properties.SourceId));
+                    Assert.That(getResult.Data.Properties.TargetId, Is.EqualTo(model.Data.Properties.TargetId));
+                    Assert.That(getResult.Data.Properties.ExistingTargetId, Is.EqualTo(model.Data.Properties.ExistingTargetId));
+                    Assert.That(getResult.Data.Properties.IsResolveRequired, Is.EqualTo(model.Data.Properties.IsResolveRequired));
+                });
             }
         }
     }

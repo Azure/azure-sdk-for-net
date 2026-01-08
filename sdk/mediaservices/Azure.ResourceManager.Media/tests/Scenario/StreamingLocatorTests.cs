@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             var list = await streamingLocatorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

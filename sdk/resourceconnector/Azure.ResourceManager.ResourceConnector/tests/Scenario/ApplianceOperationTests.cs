@@ -44,10 +44,13 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 
-            Assert.That(resourceName, Is.EqualTo(appliance.Data.Name));
-            Assert.That(appliance.Data.ProvisioningState, Is.EqualTo("Succeeded"));
-            Assert.That(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()), Is.False);
-            Assert.That(ManagedServiceIdentityType.SystemAssigned, Is.EqualTo(appliance.Data.Identity.ManagedServiceIdentityType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceName, Is.EqualTo(appliance.Data.Name));
+                Assert.That(appliance.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+                Assert.That(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()), Is.False);
+                Assert.That(ManagedServiceIdentityType.SystemAssigned, Is.EqualTo(appliance.Data.Identity.ManagedServiceIdentityType));
+            });
 
             // GET ON CREATED APPLIANCE
             appliance = await LocationCollection.GetAsync(resourceName);
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
 
             // // LIST BY RESOURCE GROUP
             var listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(listResult.Count, Is.EqualTo(1));
+            Assert.That(listResult, Has.Count.EqualTo(1));
             foreach (ResourceConnectorApplianceResource item in listResult)
             {
                 Assert.That(resourceName, Is.EqualTo(item.Data.Name));

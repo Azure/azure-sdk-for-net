@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricNeighborGroupResource> lroPatch = await networkFabricNeighborGroup.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricNeighborGroupResource resultPatch = lroPatch.Value;
             NetworkFabricNeighborGroupData resourcePatchData = resultPatch.Data;
-            Assert.That(resourcePatchData.Destination.IPv6Addresses.Count, Is.EqualTo(2));
+            Assert.That(resourcePatchData.Destination.IPv6Addresses, Has.Count.EqualTo(2));
             TestContext.Out.WriteLine($"PATCH - test completed.");
 
             NetworkFabricNeighborGroupResource ntpResource = Client.GetNetworkFabricNeighborGroupResource(neighborGroupResourceId);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             //List by subscription
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);

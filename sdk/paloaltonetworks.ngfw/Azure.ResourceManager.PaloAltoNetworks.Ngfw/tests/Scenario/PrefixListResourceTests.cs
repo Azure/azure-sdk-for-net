@@ -48,8 +48,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackPrefixResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
             LocalRulestackPrefixResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackPrefixResource.ResourceType));
-            Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/prefixlists/{name}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackPrefixResource.ResourceType));
+                Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/prefixlists/{name}"));
+            });
             Assert.Throws<ArgumentException>(() => LocalRulestackPrefixResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -57,8 +60,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.That(PrefixListResource.HasData, Is.True);
-            Assert.That(PrefixListResource.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(PrefixListResource.HasData, Is.True);
+                Assert.That(PrefixListResource.Data, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -78,8 +84,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackPrefixResource resource = await LocalRulestackResource.GetLocalRulestackPrefixAsync("dotnetSdkTest0-prefixList");
-            Assert.That(resource, Is.Not.Null);
-            Assert.That(PrefixListResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource, Is.Not.Null);
+                Assert.That(PrefixListResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            });
         }
     }
 }

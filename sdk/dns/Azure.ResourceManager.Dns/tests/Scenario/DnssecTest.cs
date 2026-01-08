@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             var dnssecConfigId = DnssecConfigResource.CreateResourceIdentifier(_dnsZone.Id.SubscriptionId, _dnsZone.Id.ResourceGroupName, _dnsZone.Id.Name);
             var dnssecConfig = await Client.GetDnssecConfigResource(dnssecConfigId).CreateOrUpdateAsync(WaitUntil.Completed);
             Assert.That(dnssecConfig, Is.Not.Null);
-            Assert.That(dnssecConfig.Value.Data.Name, Is.EqualTo("default"));
-            Assert.That(dnssecConfig.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dnssecConfig.Value.Data.Name, Is.EqualTo("default"));
+                Assert.That(dnssecConfig.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            });
         }
 
         [RecordedTest]
@@ -44,8 +47,11 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             var dnssecConfigId = DnssecConfigResource.CreateResourceIdentifier(_dnsZone.Id.SubscriptionId, _dnsZone.Id.ResourceGroupName, _dnsZone.Id.Name);
             var dnssecConfig = await Client.GetDnssecConfigResource(dnssecConfigId).CreateOrUpdateAsync(WaitUntil.Completed);
             Assert.That(dnssecConfig, Is.Not.Null);
-            Assert.That(dnssecConfig.Value.Data.Name, Is.EqualTo("default"));
-            Assert.That(dnssecConfig.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dnssecConfig.Value.Data.Name, Is.EqualTo("default"));
+                Assert.That(dnssecConfig.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            });
 
             await Client.GetDnssecConfigResource(dnssecConfigId).DeleteAsync(WaitUntil.Completed);
             Assert.ThrowsAsync(typeof(RequestFailedException), async () => await Client.GetDnssecConfigResource(dnssecConfigId).GetAsync());
@@ -57,13 +63,19 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             var dnssecConfigId = DnssecConfigResource.CreateResourceIdentifier(_dnsZone.Id.SubscriptionId, _dnsZone.Id.ResourceGroupName, _dnsZone.Id.Name);
             var dnssecConfig = await Client.GetDnssecConfigResource(dnssecConfigId).CreateOrUpdateAsync(WaitUntil.Completed);
             Assert.That(dnssecConfig, Is.Not.Null);
-            Assert.That(dnssecConfig.Value.Data.Name, Is.EqualTo("default"));
-            Assert.That(dnssecConfig.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dnssecConfig.Value.Data.Name, Is.EqualTo("default"));
+                Assert.That(dnssecConfig.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            });
 
             var dnssecConfigGet = await Client.GetDnssecConfigResource(dnssecConfigId).GetAsync();
             Assert.That(dnssecConfigGet, Is.Not.Null);
-            Assert.That(dnssecConfigGet.Value.Data.Name, Is.EqualTo("default"));
-            Assert.That(dnssecConfigGet.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dnssecConfigGet.Value.Data.Name, Is.EqualTo("default"));
+                Assert.That(dnssecConfigGet.Value.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            });
         }
     }
 }

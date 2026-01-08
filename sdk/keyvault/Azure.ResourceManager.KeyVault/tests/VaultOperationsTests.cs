@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Assert.That(resourceIds.Remove(v.Id), Is.True);
             }
 
-            Assert.That(resourceIds.Count, Is.EqualTo(0));
+            Assert.That(resourceIds, Is.Empty);
 
             AsyncPageable<KeyVaultResource> allVaults = VaultCollection.GetAllAsync(top);
             Assert.That(vaults, Is.Not.Null);
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
             }
 
-            Assert.That(resourceIds.Count, Is.EqualTo(0));
+            Assert.That(resourceIds, Is.Empty);
         }
 
         private void ValidateVault(
@@ -340,16 +340,19 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
 
-            Assert.That(vaultData.Id.ToString(), Is.EqualTo(expectedResourceId));
-            Assert.That(vaultData.Location, Is.EqualTo(expectedLocation));
-            Assert.That(vaultData.Properties.TenantId, Is.EqualTo(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty));
-            Assert.That(vaultData.Properties.Sku.Name, Is.EqualTo(expectedSku));
-            Assert.That(vaultData.Name, Is.EqualTo(expectedVaultName));
-            Assert.That(vaultData.Properties.EnabledForDeployment, Is.EqualTo(expectedEnabledForDeployment));
-            Assert.That(vaultData.Properties.EnabledForTemplateDeployment, Is.EqualTo(expectedEnabledForTemplateDeployment));
-            Assert.That(vaultData.Properties.EnabledForDiskEncryption, Is.EqualTo(expectedEnabledForDiskEncryption));
-            Assert.That(vaultData.Properties.EnableSoftDelete, Is.EqualTo(expectedEnableSoftDelete));
-            Assert.That(expectedTags.DictionaryEqual(vaultData.Tags), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vaultData.Id.ToString(), Is.EqualTo(expectedResourceId));
+                Assert.That(vaultData.Location, Is.EqualTo(expectedLocation));
+                Assert.That(vaultData.Properties.TenantId, Is.EqualTo(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty));
+                Assert.That(vaultData.Properties.Sku.Name, Is.EqualTo(expectedSku));
+                Assert.That(vaultData.Name, Is.EqualTo(expectedVaultName));
+                Assert.That(vaultData.Properties.EnabledForDeployment, Is.EqualTo(expectedEnabledForDeployment));
+                Assert.That(vaultData.Properties.EnabledForTemplateDeployment, Is.EqualTo(expectedEnabledForTemplateDeployment));
+                Assert.That(vaultData.Properties.EnabledForDiskEncryption, Is.EqualTo(expectedEnabledForDiskEncryption));
+                Assert.That(vaultData.Properties.EnableSoftDelete, Is.EqualTo(expectedEnableSoftDelete));
+                Assert.That(expectedTags.DictionaryEqual(vaultData.Tags), Is.True);
+            });
             if (Mode == RecordedTestMode.Live)
             {
                 Assert.That(expectedPolicies.IsEqual(vaultData.Properties.AccessPolicies), Is.True);
@@ -390,11 +393,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 expectedTags);
 
             Assert.That(vaultData.Properties.NetworkRuleSet, Is.Not.Null);
-            Assert.That(vaultData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(networkRuleSet.DefaultAction));
-            Assert.That(vaultData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(networkRuleSet.Bypass));
-            Assert.That(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2, Is.True);
-            Assert.That(vaultData.Properties.NetworkRuleSet.IPRules[0].AddressRange, Is.EqualTo(networkRuleSet.IPRules[0].AddressRange));
-            Assert.That(vaultData.Properties.NetworkRuleSet.IPRules[1].AddressRange, Is.EqualTo(networkRuleSet.IPRules[1].AddressRange));
+            Assert.Multiple(() =>
+            {
+                Assert.That(vaultData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(networkRuleSet.DefaultAction));
+                Assert.That(vaultData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(networkRuleSet.Bypass));
+                Assert.That(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2, Is.True);
+                Assert.That(vaultData.Properties.NetworkRuleSet.IPRules[0].AddressRange, Is.EqualTo(networkRuleSet.IPRules[0].AddressRange));
+                Assert.That(vaultData.Properties.NetworkRuleSet.IPRules[1].AddressRange, Is.EqualTo(networkRuleSet.IPRules[1].AddressRange));
+            });
         }
     }
 }

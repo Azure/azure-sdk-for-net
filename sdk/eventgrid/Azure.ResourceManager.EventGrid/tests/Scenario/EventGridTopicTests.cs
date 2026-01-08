@@ -46,11 +46,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             Assert.That(topic, Is.Not.Null);
             Assert.That(topic.Data, Is.Not.Null);
-            Assert.That(topic.Data.Id, Is.Not.Null);
-            Assert.That(topic.Data.Name, Is.EqualTo(expectedName));
-            Assert.That(topic.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/topics"));
-            Assert.That(topic.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(topic.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(topic.Data.Id, Is.Not.Null);
+                Assert.That(topic.Data.Name, Is.EqualTo(expectedName));
+                Assert.That(topic.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/topics"));
+                Assert.That(topic.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(topic.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));
+            });
         }
 
         [Test]
@@ -77,16 +80,22 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var addTagResult = await topic.AddTagAsync(StickerTagKey, StickerTagValue);
             Assert.That(addTagResult, Is.Not.Null);
             Assert.That(addTagResult.Value, Is.Not.Null);
-            Assert.That(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
-            Assert.That(addTagResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
+            Assert.Multiple(() =>
+            {
+                Assert.That(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
+                Assert.That(addTagResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
+            });
 
             // SetTags
             var tags = new Dictionary<string, string> { { EnvTag, TestTag }, { TeamTagKey, TeamTagValue }, { StickerTagKey, StickerTagValue } };
             var setTagsResult = await topic.SetTagsAsync(tags);
             Assert.That(setTagsResult, Is.Not.Null);
             Assert.That(setTagsResult.Value, Is.Not.Null);
-            Assert.That(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
-            Assert.That(setTagsResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
+            Assert.Multiple(() =>
+            {
+                Assert.That(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
+                Assert.That(setTagsResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
+            });
 
             // RemoveTag
             await topic.AddTagAsync(RemoveStickerTagKey, RemoveStickerTagValue);

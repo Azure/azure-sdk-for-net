@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task GetAll()
         {
             var list = await mediaPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(3));
         }
     }
 }

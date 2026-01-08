@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // GetAll test
             var list = await scheduleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
             AssertSchedule(scheduleData, list[0].Data);
 
             // Delete test
@@ -136,13 +136,16 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertSchedule(LabServicesScheduleData expected, LabServicesScheduleData actual)
         {
-            Assert.That(actual.StartOn, Is.EqualTo(expected.StartOn));
-            Assert.That(actual.StopOn, Is.EqualTo(expected.StopOn));
-            Assert.That(actual.RecurrencePattern.Frequency, Is.EqualTo(expected.RecurrencePattern.Frequency));
-            Assert.That(actual.RecurrencePattern.ExpireOn, Is.EqualTo(expected.RecurrencePattern.ExpireOn));
-            Assert.That(actual.RecurrencePattern.Interval, Is.EqualTo(expected.RecurrencePattern.Interval));
-            Assert.That(actual.TimeZoneId, Is.EqualTo(expected.TimeZoneId));
-            Assert.That(actual.Notes.ToString(), Is.EqualTo(expected.Notes.ToString()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.StartOn, Is.EqualTo(expected.StartOn));
+                Assert.That(actual.StopOn, Is.EqualTo(expected.StopOn));
+                Assert.That(actual.RecurrencePattern.Frequency, Is.EqualTo(expected.RecurrencePattern.Frequency));
+                Assert.That(actual.RecurrencePattern.ExpireOn, Is.EqualTo(expected.RecurrencePattern.ExpireOn));
+                Assert.That(actual.RecurrencePattern.Interval, Is.EqualTo(expected.RecurrencePattern.Interval));
+                Assert.That(actual.TimeZoneId, Is.EqualTo(expected.TimeZoneId));
+                Assert.That(actual.Notes.ToString(), Is.EqualTo(expected.Notes.ToString()));
+            });
         }
     }
 }

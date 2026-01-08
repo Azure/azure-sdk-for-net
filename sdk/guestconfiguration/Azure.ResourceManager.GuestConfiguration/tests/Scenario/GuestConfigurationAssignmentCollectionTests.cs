@@ -41,8 +41,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // Create a new guest configuration assignment
             ArmOperation<GuestConfigurationVmAssignmentResource> createAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await createAssignmentOperation.WaitForCompletionAsync();
-            Assert.That(createAssignmentOperation.HasCompleted, Is.True);
-            Assert.That(createAssignmentOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createAssignmentOperation.HasCompleted, Is.True);
+                Assert.That(createAssignmentOperation.HasValue, Is.True);
+            });
 
             // Get created guest configuration assignment
             Response<GuestConfigurationVmAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
@@ -55,8 +58,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             gcAssignmentData.Properties.Context = updatedContext;
             ArmOperation<GuestConfigurationVmAssignmentResource> updateAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await updateAssignmentOperation.WaitForCompletionAsync();
-            Assert.That(updateAssignmentOperation.HasCompleted, Is.True);
-            Assert.That(updateAssignmentOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateAssignmentOperation.HasCompleted, Is.True);
+                Assert.That(updateAssignmentOperation.HasValue, Is.True);
+            });
             GuestConfigurationVmAssignmentResource updatedGuestAssignmentResourceRetrieved = updateAssignmentOperation.Value;
             Assert.That(updatedGuestAssignmentResourceRetrieved.Data.Properties.Context, Is.EqualTo(updatedContext));
         }

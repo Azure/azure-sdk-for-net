@@ -82,21 +82,31 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidTemplateSpecVersion(TemplateSpecVersionResource model, TemplateSpecVersionResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
-            Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
-            Assert.That(getResult.Data.Tags, Is.EqualTo(model.Data.Tags));
-            Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
-            Assert.That(getResult.Data.LinkedTemplates.Count, Is.EqualTo(model.Data.LinkedTemplates.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+                Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
+                Assert.That(getResult.Data.Tags, Is.EqualTo(model.Data.Tags));
+                Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
+                Assert.That(getResult.Data.LinkedTemplates, Has.Count.EqualTo(model.Data.LinkedTemplates.Count));
+            });
             for (int i = 0; i < model.Data.LinkedTemplates.Count; ++i)
             {
-                Assert.That(getResult.Data.LinkedTemplates[i].Path, Is.EqualTo(model.Data.LinkedTemplates[i].Path));
-                Assert.That(getResult.Data.LinkedTemplates[i].Template, Is.EqualTo(model.Data.LinkedTemplates[i].Template));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.Data.LinkedTemplates[i].Path, Is.EqualTo(model.Data.LinkedTemplates[i].Path));
+                    Assert.That(getResult.Data.LinkedTemplates[i].Template, Is.EqualTo(model.Data.LinkedTemplates[i].Template));
+                });
             }
-            Assert.That(getResult.Data.Metadata, Is.EqualTo(model.Data.Metadata));
-            Assert.That(getResult.Data.MainTemplate.ToArray(), Is.EqualTo(model.Data.MainTemplate.ToArray()));
-            Assert.That(getResult.Data.UiFormDefinition, Is.EqualTo(model.Data.UiFormDefinition));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Metadata, Is.EqualTo(model.Data.Metadata));
+                Assert.That(getResult.Data.MainTemplate.ToArray(), Is.EqualTo(model.Data.MainTemplate.ToArray()));
+                Assert.That(getResult.Data.UiFormDefinition, Is.EqualTo(model.Data.UiFormDefinition));
+            });
         }
     }
 }

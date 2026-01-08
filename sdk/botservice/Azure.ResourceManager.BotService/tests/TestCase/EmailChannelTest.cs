@@ -49,10 +49,14 @@ namespace Azure.ResourceManager.BotService.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4.Exist
-            Assert.That((bool)await collection.ExistsAsync(channelName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(channelName + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4.Exist
+                Assert.That((bool)await collection.ExistsAsync(channelName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(channelName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

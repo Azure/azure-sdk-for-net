@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DefenderEasm.Tests.Tests
             EasmWorkspacePatch workspaceResourcePatch = new EasmWorkspacePatch();
             workspaceResourcePatch.Tags.Add(new KeyValuePair<string, string>("testkey", "testvalue"));
             EasmWorkspaceResource updateWorkspaceOperation = await getWorkspaceOperation.UpdateAsync(workspaceResourcePatch);
-            Assert.That(updateWorkspaceOperation.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(updateWorkspaceOperation.Data.Tags, Has.Count.EqualTo(1));
 
             // delete
             EasmWorkspaceResource w = await workspaces.GetAsync(workspaceName);

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             string dpsName = Recording.GenerateAssetName("dps");
             await CreateDefaultDps(_resourceGroup, dpsName);
             var list = await _dpsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDeviceProvisioningServices(list.FirstOrDefault().Data, dpsName);
         }
 
@@ -90,10 +90,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             // AddTag
             await dps.AddTagAsync("addtagkey", "addtagvalue");
             dps = await _dpsCollection.GetAsync(dpsName);
-            Assert.That(dps.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(dps.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = dps.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await dps.RemoveTagAsync("addtagkey");
@@ -104,10 +107,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
         private void ValidateDeviceProvisioningServices(DeviceProvisioningServiceData dpsData, string dpsName)
         {
             Assert.That(dpsData, Is.Not.Null);
-            Assert.That(dpsData.Name, Is.EqualTo(dpsName));
-            Assert.That(dpsData.Properties.IsDataResidencyEnabled, Is.EqualTo(false));
-            Assert.That(dpsData.Sku.Name.ToString(), Is.EqualTo("S1"));
-            Assert.That(dpsData.Sku.Capacity, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dpsData.Name, Is.EqualTo(dpsName));
+                Assert.That(dpsData.Properties.IsDataResidencyEnabled, Is.EqualTo(false));
+                Assert.That(dpsData.Sku.Name.ToString(), Is.EqualTo("S1"));
+                Assert.That(dpsData.Sku.Capacity, Is.EqualTo(1));
+            });
         }
     }
 }

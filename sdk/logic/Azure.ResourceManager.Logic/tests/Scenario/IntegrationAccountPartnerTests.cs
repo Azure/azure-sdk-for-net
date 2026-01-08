@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string partnerName = Recording.GenerateAssetName("partner");
             await CreatePartner(partnerName);
             var list = await _partnerCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

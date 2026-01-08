@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             writer.Flush();
 
             string output = Encoding.UTF8.GetString(memoryStream.ToArray());
-            StringAssert.DoesNotContain("\"url\"", output);
+            Assert.That(output, Does.Not.Contain("\"url\""));
         }
     }
 }

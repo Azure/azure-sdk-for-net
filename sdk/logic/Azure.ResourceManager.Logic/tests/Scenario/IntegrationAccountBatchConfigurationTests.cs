@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string batchConfigurationName = SessionRecording.GenerateAssetName("batch");
             await CreateBatchConfiguration(batchConfigurationName);
             var list = await _batchConfigurationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

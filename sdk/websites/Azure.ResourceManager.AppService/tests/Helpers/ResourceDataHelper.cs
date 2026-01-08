@@ -29,11 +29,14 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         #region AppServicePlan
@@ -199,10 +202,13 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #region SiteSourceControlData(SiteSlotSourcecontrol)
         public static void AssertSiteSourceControlData(SiteSourceControlData sscd1, SiteSourceControlData sscd2)
         {
-            Assert.That(sscd2.Name, Is.EqualTo(sscd1.Name));
-            Assert.That(sscd2.Id, Is.EqualTo(sscd1.Id));
-            Assert.That(sscd2.ResourceType, Is.EqualTo(sscd1.ResourceType));
-            Assert.That(sscd2.Branch, Is.EqualTo(sscd1.Branch));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sscd2.Name, Is.EqualTo(sscd1.Name));
+                Assert.That(sscd2.Id, Is.EqualTo(sscd1.Id));
+                Assert.That(sscd2.ResourceType, Is.EqualTo(sscd1.ResourceType));
+                Assert.That(sscd2.Branch, Is.EqualTo(sscd1.Branch));
+            });
         }
 
         public static SiteSourceControlData GetBasicSiteSourceControlData()
@@ -222,9 +228,12 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         public static void AssertStaticSiteARMResourceData(StaticSiteData ssrd1, StaticSiteData ssrd2)
         {
             AssertTrackedResource(ssrd1, ssrd2);
-            Assert.That(ssrd2.Branch, Is.EqualTo(ssrd1.Branch));
-            Assert.That(ssrd2.RepositoryUri, Is.EqualTo(ssrd1.RepositoryUri));
-            Assert.That(ssrd2.Kind, Is.EqualTo(ssrd1.Kind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ssrd2.Branch, Is.EqualTo(ssrd1.Branch));
+                Assert.That(ssrd2.RepositoryUri, Is.EqualTo(ssrd1.RepositoryUri));
+                Assert.That(ssrd2.Kind, Is.EqualTo(ssrd1.Kind));
+            });
         }
 
         public static StaticSiteData GetBasicStaticSiteARMResourceData(AzureLocation location)

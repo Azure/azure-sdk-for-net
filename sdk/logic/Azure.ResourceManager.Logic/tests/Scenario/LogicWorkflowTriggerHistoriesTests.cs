@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateHistory(LogicWorkflowTriggerHistoryResource actual)
         {
-            Assert.IsNotEmpty(actual.Data.Correlation.ClientTrackingId);
-            Assert.That(actual.Data.IsFired, Is.True);
-            Assert.That(actual.Data.Id, Is.Not.Null);
-            Assert.That(actual.Data.Run.Name, Is.Not.Null);
-            Assert.That(actual.Data.StartOn, Is.Not.Null);
-            Assert.That(actual.Data.EndOn, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Data.Correlation.ClientTrackingId, Is.Not.Empty);
+                Assert.That(actual.Data.IsFired, Is.True);
+                Assert.That(actual.Data.Id, Is.Not.Null);
+                Assert.That(actual.Data.Run.Name, Is.Not.Null);
+                Assert.That(actual.Data.StartOn, Is.Not.Null);
+                Assert.That(actual.Data.EndOn, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             _ = await _trigger.RunAsync();
             var list = await _TriggerCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHistory(list.FirstOrDefault());
         }
     }

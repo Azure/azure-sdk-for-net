@@ -37,10 +37,13 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             // Create Account Resource
             var createAccountOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, accountResourceData);
 
-            Assert.That(createAccountOperation.HasCompleted, Is.True);
-            Assert.That(createAccountOperation.HasValue, Is.True);
-            Assert.That(createAccountOperation.Value.Data.Name, Is.EqualTo(resourceName));
-            Assert.That(createAccountOperation.Value.Data.Properties.AppId, Is.EqualTo(appId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createAccountOperation.HasCompleted, Is.True);
+                Assert.That(createAccountOperation.HasValue, Is.True);
+                Assert.That(createAccountOperation.Value.Data.Name, Is.EqualTo(resourceName));
+                Assert.That(createAccountOperation.Value.Data.Properties.AppId, Is.EqualTo(appId));
+            });
 
             // Get
             Response<GraphServicesAccountResource> getAccountResponse = await collection.GetAsync(resourceName);

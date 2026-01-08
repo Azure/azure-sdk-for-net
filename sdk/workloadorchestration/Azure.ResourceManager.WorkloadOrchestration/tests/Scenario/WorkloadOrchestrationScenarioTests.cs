@@ -53,11 +53,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
       // Get the schema and verify
       EdgeSchemaResource retrievedSchema = await collection.GetAsync(schemaName);
             Assert.That(retrievedSchema, Is.Not.Null, "Retrieved schema should not be null");
-      Assert.That(retrievedSchema.Data.Name, Is.EqualTo(schemaName));
-      Assert.That(retrievedSchema.Data.Id, Is.EqualTo(createdSchema.Data.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(retrievedSchema.Data.Name, Is.EqualTo(schemaName));
+                Assert.That(retrievedSchema.Data.Id, Is.EqualTo(createdSchema.Data.Id));
+            });
 
-      // Now create a version for this schema
-      EdgeSchemaVersionCollection versionCollection = retrievedSchema.GetEdgeSchemaVersions();
+            // Now create a version for this schema
+            EdgeSchemaVersionCollection versionCollection = retrievedSchema.GetEdgeSchemaVersions();
 
       EdgeSchemaVersionData versionData = new EdgeSchemaVersionData
       {

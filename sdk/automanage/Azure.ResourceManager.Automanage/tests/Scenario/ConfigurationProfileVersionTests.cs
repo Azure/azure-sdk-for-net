@@ -110,11 +110,14 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
             var assignment = await CreateAssignment(vmId, version.Value.Id);
 
-            // assert
-            Assert.That(assignment.HasData, Is.True);
-            Assert.That(assignment.Data.Name, Is.Not.Null);
-            Assert.That(assignment.Data.Id, Is.Not.Null);
-            Assert.That(assignment.Data.Properties.TargetId, Is.EqualTo(vmId));
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(assignment.HasData, Is.True);
+                Assert.That(assignment.Data.Name, Is.Not.Null);
+                Assert.That(assignment.Data.Id, Is.Not.Null);
+                Assert.That(assignment.Data.Properties.TargetId, Is.EqualTo(vmId));
+            });
         }
 
         [TestCase]
@@ -143,9 +146,12 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             await foreach (var v in versionCollection)
                 count++;
 
-            // assert
-            Assert.That(count, Is.EqualTo(0));
-            Assert.That(statusCode, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(count, Is.EqualTo(0));
+                Assert.That(statusCode, Is.EqualTo(200));
+            });
         }
     }
 }

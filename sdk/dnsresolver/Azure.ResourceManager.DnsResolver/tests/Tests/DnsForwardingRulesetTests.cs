@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsForwardingRuleset = await createdDnsForwardingRuleset.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedDnsForwardingRuleset.Value.Data.Tags);
+            Assert.That(patchedDnsForwardingRuleset.Value.Data.Tags, Is.EquivalentTo(new Dictionary<string, string> { { newTagKey, newTagValue } }));
         }
 
         [Test]

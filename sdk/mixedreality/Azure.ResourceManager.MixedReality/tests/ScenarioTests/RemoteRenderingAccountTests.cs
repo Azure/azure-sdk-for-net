@@ -42,8 +42,11 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("remoteRenderingAccoount");
             var remoteRenderingAccountResource = await CreateRemoteRenderingAccount(resourceName);
             Assert.That(remoteRenderingAccountResource, Is.Not.Null);
-            Assert.That(remoteRenderingAccountResource.Data.Location, Is.EqualTo(_location));
-            Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(resourceName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(remoteRenderingAccountResource.Data.Location, Is.EqualTo(_location));
+                Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(resourceName));
+            });
         }
 
         [Test]
@@ -63,8 +66,11 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("remoteRenderingAccoount");
             var remoteRenderingAccountResource = await CreateRemoteRenderingAccount(resourceName);
             RemoteRenderingAccountResource getData = await _accountcollection.GetAsync(remoteRenderingAccountResource.Data.Name);
-            Assert.IsNotEmpty(getData.Data.Id);
-            Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(getData.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)getData.Data.Id, Is.Not.Empty);
+                Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(getData.Data.Name));
+            });
         }
 
         [Test]
@@ -76,10 +82,13 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var remoteRenderingAccountResource2 = await CreateRemoteRenderingAccount(resourceName2);
             var collection = _resourceGroup.GetRemoteRenderingAccounts();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count >= 2, Is.True);
-            Assert.That(list.Exists(item => item.Data.Name == remoteRenderingAccountResource1.Data.Name), Is.True);
-            Assert.That(list.Exists(item => item.Data.Name == remoteRenderingAccountResource2.Data.Name), Is.True);
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.GreaterThanOrEqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Exists(item => item.Data.Name == remoteRenderingAccountResource1.Data.Name), Is.True);
+                Assert.That(list.Exists(item => item.Data.Name == remoteRenderingAccountResource2.Data.Name), Is.True);
+            });
         }
 
         [Test]
@@ -88,8 +97,11 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("remoteRenderingAccoount");
             var remoteRenderingAccountResource = await CreateRemoteRenderingAccount(resourceName);
             RemoteRenderingAccountResource result = await remoteRenderingAccountResource.GetAsync();
-            Assert.IsNotEmpty(result.Data.Id);
-            Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)result.Data.Id, Is.Not.Empty);
+                Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(result.Data.Name));
+            });
         }
 
         [Test]
@@ -110,10 +122,13 @@ namespace Azure.ResourceManager.MixedReality.Tests
                 StorageAccountName = storage.Data.Name
             };
             RemoteRenderingAccountResource result = await remoteRenderingAccountResource.UpdateAsync(data);
-            Assert.IsNotEmpty(result.Data.Tags);
-            Assert.That(result.Data.StorageAccountName, Is.Not.Null);
-            Assert.That(data.Tags, Is.EqualTo(result.Data.Tags));
-            Assert.That(data.StorageAccountName, Is.EqualTo(result.Data.StorageAccountName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Data.Tags, Is.Not.Empty);
+                Assert.That(result.Data.StorageAccountName, Is.Not.Null);
+                Assert.That(data.Tags, Is.EqualTo(result.Data.Tags));
+                Assert.That(data.StorageAccountName, Is.EqualTo(result.Data.StorageAccountName));
+            });
         }
 
         [Test]
@@ -122,8 +137,11 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("remoteRenderingAccoount");
             var remoteRenderingAccountResource = await CreateRemoteRenderingAccount(resourceName);
             MixedRealityAccountKeys result = await remoteRenderingAccountResource.GetKeysAsync();
-            Assert.IsNotEmpty(result.PrimaryKey);
-            Assert.IsNotEmpty(result.SecondaryKey);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.PrimaryKey, Is.Not.Empty);
+                Assert.That(result.SecondaryKey, Is.Not.Empty);
+            });
             var regeneratePrm = new MixedRealityAccountKeyRegenerateContent()
             {
                 Serial = MixedRealityAccountKeySerial.Primary
@@ -144,8 +162,11 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("remoteRenderingAccoount");
             var remoteRenderingAccountResource = await CreateRemoteRenderingAccount(resourceName);
             RemoteRenderingAccountResource addTags = await remoteRenderingAccountResource.AddTagAsync("key1", "AddTags");
-            Assert.That(addTags.Data.Tags.ContainsKey("key1"), Is.True);
-            Assert.IsNotEmpty(addTags.Data.Tags);
+            Assert.Multiple(() =>
+            {
+                Assert.That(addTags.Data.Tags.ContainsKey("key1"), Is.True);
+                Assert.That(addTags.Data.Tags, Is.Not.Empty);
+            });
             var setTags = new Dictionary<string, string>()
             {
                 ["key1"] = "RemoteRendertest",
@@ -157,7 +178,7 @@ namespace Azure.ResourceManager.MixedReality.Tests
             Assert.That(Set.Data.Tags["key1"], Is.Not.EqualTo("AddTags"));
             string removekey = "key3";
             RemoteRenderingAccountResource Remove = await remoteRenderingAccountResource.RemoveTagAsync(removekey);
-            Assert.IsNotEmpty(Remove.Data.Tags);
+            Assert.That(Remove.Data.Tags, Is.Not.Empty);
             var verifyDic = new Dictionary<string, string>();
             foreach (var item in Remove.Data.Tags)
             {
@@ -174,9 +195,12 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var remoteRenderingAccountResourceId = RemoteRenderingAccountResource.CreateResourceIdentifier(_subscription.Id.SubscriptionId, _resourceGroup.Data.Name, remoteRenderingAccountResource.Data.Name);
             var remoteRenderingAccount = Client.GetRemoteRenderingAccountResource(remoteRenderingAccountResourceId);
             RemoteRenderingAccountResource result = await remoteRenderingAccount.GetAsync();
-            Assert.IsNotEmpty(result.Data.Id);
-            Assert.That(remoteRenderingAccountResource.Data.Id, Is.EqualTo(result.Data.Id));
-            Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)result.Data.Id, Is.Not.Empty);
+                Assert.That(remoteRenderingAccountResource.Data.Id, Is.EqualTo(result.Data.Id));
+                Assert.That(remoteRenderingAccountResource.Data.Name, Is.EqualTo(result.Data.Name));
+            });
         }
 
         [Test]

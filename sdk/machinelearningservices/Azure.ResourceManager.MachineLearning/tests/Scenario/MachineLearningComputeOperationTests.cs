@@ -45,18 +45,21 @@ namespace Azure.ResourceManager.MachineLearning.Tests
 
         private void CompareAllButTags(MachineLearningComputeResource mlCompute, MachineLearningComputeResource mlCompute2)
         {
-            Assert.That(mlCompute2.Data.Name, Is.EqualTo(mlCompute.Data.Name));
-            Assert.That(mlCompute2.Data.Id, Is.EqualTo(mlCompute.Data.Id));
-            Assert.That(mlCompute2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(mlCompute.Data.Identity.ManagedServiceIdentityType));
-            Assert.That(mlCompute2.Data.Identity.PrincipalId, Is.EqualTo(mlCompute.Data.Identity.PrincipalId));
-            Assert.That(mlCompute2.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(mlCompute.Data.Identity.UserAssignedIdentities.Count));
-            Assert.That(mlCompute2.Data.Location, Is.EqualTo(mlCompute.Data.Location));
-            Assert.That(mlCompute2.Data.ResourceType, Is.EqualTo(mlCompute.Data.ResourceType));
-            Assert.That(mlCompute2.Data.Sku.Name, Is.EqualTo(mlCompute.Data.Sku.Name));
-            Assert.That(mlCompute2.Data.Sku.Family, Is.EqualTo(mlCompute.Data.Sku.Family));
-            Assert.That(mlCompute2.Data.Sku.Capacity, Is.EqualTo(mlCompute.Data.Sku.Capacity));
-            Assert.That(mlCompute2.Data.Sku.Size, Is.EqualTo(mlCompute.Data.Sku.Size));
-            Assert.That(mlCompute2.Data.Sku.Tier, Is.EqualTo(mlCompute.Data.Sku.Tier));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mlCompute2.Data.Name, Is.EqualTo(mlCompute.Data.Name));
+                Assert.That(mlCompute2.Data.Id, Is.EqualTo(mlCompute.Data.Id));
+                Assert.That(mlCompute2.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(mlCompute.Data.Identity.ManagedServiceIdentityType));
+                Assert.That(mlCompute2.Data.Identity.PrincipalId, Is.EqualTo(mlCompute.Data.Identity.PrincipalId));
+                Assert.That(mlCompute2.Data.Identity.UserAssignedIdentities, Has.Count.EqualTo(mlCompute.Data.Identity.UserAssignedIdentities.Count));
+                Assert.That(mlCompute2.Data.Location, Is.EqualTo(mlCompute.Data.Location));
+                Assert.That(mlCompute2.Data.ResourceType, Is.EqualTo(mlCompute.Data.ResourceType));
+                Assert.That(mlCompute2.Data.Sku.Name, Is.EqualTo(mlCompute.Data.Sku.Name));
+                Assert.That(mlCompute2.Data.Sku.Family, Is.EqualTo(mlCompute.Data.Sku.Family));
+                Assert.That(mlCompute2.Data.Sku.Capacity, Is.EqualTo(mlCompute.Data.Sku.Capacity));
+                Assert.That(mlCompute2.Data.Sku.Size, Is.EqualTo(mlCompute.Data.Sku.Size));
+                Assert.That(mlCompute2.Data.Sku.Tier, Is.EqualTo(mlCompute.Data.Sku.Tier));
+            });
         }
 
         private async Task<MachineLearningComputeResource> CreateMachineLearningComputeAsync()

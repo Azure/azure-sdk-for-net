@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task GetAll()
         {
             var list = await _versionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(1));
         }
     }
 }

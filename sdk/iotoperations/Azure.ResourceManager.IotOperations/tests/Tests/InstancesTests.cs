@@ -38,8 +38,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
 
             Assert.That(instanceResource, Is.Not.Null);
-            Assert.That(instanceResource.Data, Is.Not.Null);
-            Assert.That(InstanceName, Is.EqualTo(instanceResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(instanceResource.Data, Is.Not.Null);
+                Assert.That(InstanceName, Is.EqualTo(instanceResource.Data.Name));
+            });
 
             // Update Instance
             Random random = new Random();
@@ -59,11 +62,14 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.That(updatedInstance, Is.Not.Null);
             Assert.That(updatedInstance.Data, Is.Not.Null);
             Assert.That(updatedInstance.Data.Properties, Is.Not.Null);
-            Assert.That(updatedInstance.Data.Properties.Description, Is.Not.Null);
-            Assert.That(
-                "Updated Description: " + random.ToString(),
-                Is.EqualTo(updatedInstance.Data.Properties.Description)
-            );
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedInstance.Data.Properties.Description, Is.Not.Null);
+                Assert.That(
+                    "Updated Description: " + random.ToString(),
+                    Is.EqualTo(updatedInstance.Data.Properties.Description)
+                );
+            });
         }
 
         private IotOperationsInstanceData CreateInstanceData(

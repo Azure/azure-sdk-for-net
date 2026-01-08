@@ -40,8 +40,11 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
         private void ValidateDevTestLabArtifactSource(DevTestLabArtifactSourceData artifactSource, string artifactSourceName)
         {
-            Assert.That(artifactSource, Is.Not.Null);
-            Assert.IsNotEmpty(artifactSource.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(artifactSource, Is.Not.Null);
+                Assert.That((string)artifactSource.Id, Is.Not.Empty);
+            });
             Assert.That(artifactSource.Name, Is.EqualTo(artifactSourceName));
             Assert.That(artifactSource.SourceType, Is.EqualTo(DevTestLabSourceControlType.GitHub));
             Assert.That(artifactSource.Status, Is.EqualTo(DevTestLabEnableStatus.Enabled));

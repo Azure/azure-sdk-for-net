@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateRunData(LogicWorkflowRunResource actual)
         {
-            Assert.That(actual.Data.Name, Is.Not.Null);
-            Assert.That(actual.Data.EndOn, Is.Not.Null);
-            Assert.That(actual.Data.Status.ToString(), Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Data.Name, Is.Not.Null);
+                Assert.That(actual.Data.EndOn, Is.Not.Null);
+                Assert.That(actual.Data.Status.ToString(), Is.EqualTo("Succeeded"));
+            });
         }
 
         [RecordedTest]
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             await _trigger.RunAsync();
             var list = await _runCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRunData(list.FirstOrDefault());
         }
     }

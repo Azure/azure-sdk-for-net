@@ -69,8 +69,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             });
             PostgreSqlServerResource serverFromUpdate = lro.Value;
-            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
-            Assert.That(serverFromUpdate.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+                Assert.That(serverFromUpdate.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            });
             // Get
             PostgreSqlServerResource serverFromGet = await serverFromUpdate.GetAsync();
             Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));

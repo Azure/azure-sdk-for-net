@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // GetAll test
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
             AssertLabPlanData(data, list[0].Data);
 
             // Delete test
@@ -110,21 +110,24 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertLabPlanData(LabPlanData expected, LabPlanData actual)
         {
-            Assert.That(actual.DefaultConnectionProfile.WebSshAccess, Is.EqualTo(expected.DefaultConnectionProfile.WebSshAccess));
-            Assert.That(actual.DefaultConnectionProfile.WebRdpAccess, Is.EqualTo(expected.DefaultConnectionProfile.WebRdpAccess));
-            Assert.That(actual.DefaultConnectionProfile.ClientSshAccess, Is.EqualTo(expected.DefaultConnectionProfile.ClientSshAccess));
-            Assert.That(actual.DefaultConnectionProfile.ClientRdpAccess, Is.EqualTo(expected.DefaultConnectionProfile.ClientRdpAccess));
-            Assert.That(actual.DefaultAutoShutdownProfile.ShutdownOnDisconnect, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownOnDisconnect));
-            Assert.That(actual.DefaultAutoShutdownProfile.ShutdownWhenNotConnected, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownWhenNotConnected));
-            Assert.That(actual.DefaultAutoShutdownProfile.ShutdownOnIdle, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownOnIdle));
-            Assert.That(actual.DefaultAutoShutdownProfile.DisconnectDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.DisconnectDelay));
-            Assert.That(actual.DefaultAutoShutdownProfile.NoConnectDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.NoConnectDelay));
-            Assert.That(actual.DefaultAutoShutdownProfile.IdleDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.IdleDelay));
-            Assert.That(actual.SupportInfo.Uri, Is.EqualTo(expected.SupportInfo.Uri));
-            Assert.That(actual.SupportInfo.Email, Is.EqualTo(expected.SupportInfo.Email));
-            Assert.That(actual.SupportInfo.Phone, Is.EqualTo(expected.SupportInfo.Phone));
-            Assert.That(actual.SupportInfo.Instructions, Is.EqualTo(expected.SupportInfo.Instructions));
-            Assert.That(expected.AllowedRegions.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.DefaultConnectionProfile.WebSshAccess, Is.EqualTo(expected.DefaultConnectionProfile.WebSshAccess));
+                Assert.That(actual.DefaultConnectionProfile.WebRdpAccess, Is.EqualTo(expected.DefaultConnectionProfile.WebRdpAccess));
+                Assert.That(actual.DefaultConnectionProfile.ClientSshAccess, Is.EqualTo(expected.DefaultConnectionProfile.ClientSshAccess));
+                Assert.That(actual.DefaultConnectionProfile.ClientRdpAccess, Is.EqualTo(expected.DefaultConnectionProfile.ClientRdpAccess));
+                Assert.That(actual.DefaultAutoShutdownProfile.ShutdownOnDisconnect, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownOnDisconnect));
+                Assert.That(actual.DefaultAutoShutdownProfile.ShutdownWhenNotConnected, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownWhenNotConnected));
+                Assert.That(actual.DefaultAutoShutdownProfile.ShutdownOnIdle, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownOnIdle));
+                Assert.That(actual.DefaultAutoShutdownProfile.DisconnectDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.DisconnectDelay));
+                Assert.That(actual.DefaultAutoShutdownProfile.NoConnectDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.NoConnectDelay));
+                Assert.That(actual.DefaultAutoShutdownProfile.IdleDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.IdleDelay));
+                Assert.That(actual.SupportInfo.Uri, Is.EqualTo(expected.SupportInfo.Uri));
+                Assert.That(actual.SupportInfo.Email, Is.EqualTo(expected.SupportInfo.Email));
+                Assert.That(actual.SupportInfo.Phone, Is.EqualTo(expected.SupportInfo.Phone));
+                Assert.That(actual.SupportInfo.Instructions, Is.EqualTo(expected.SupportInfo.Instructions));
+                Assert.That(expected.AllowedRegions, Has.Count.EqualTo(2));
+            });
         }
     }
 }

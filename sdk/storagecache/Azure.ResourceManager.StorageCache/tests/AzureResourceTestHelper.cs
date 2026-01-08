@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             T res = await createFunc();
 
             T gotBeforeDelete = await getFunc(res);
-            Assert.IsNotNull(gotBeforeDelete);
+            Assert.That(gotBeforeDelete, Is.Not.Null);
 
             var operation = await deleteFunc(res);
             Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);

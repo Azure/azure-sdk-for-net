@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // GetAll test
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
             AssertLabData(data, list[0].Data);
 
             // Delete test
@@ -118,27 +118,30 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertLabData(LabData expected, LabData actual)
         {
-            Assert.That(actual.Title, Is.EqualTo(expected.Title));
-            Assert.That(actual.Location, Is.EqualTo(expected.Location));
-            Assert.That(actual.AutoShutdownProfile.ShutdownOnDisconnect, Is.EqualTo(expected.AutoShutdownProfile.ShutdownOnDisconnect));
-            Assert.That(actual.AutoShutdownProfile.ShutdownOnIdle, Is.EqualTo(expected.AutoShutdownProfile.ShutdownOnIdle));
-            Assert.That(actual.AutoShutdownProfile.ShutdownWhenNotConnected, Is.EqualTo(expected.AutoShutdownProfile.ShutdownWhenNotConnected));
-            Assert.That(actual.AutoShutdownProfile.IdleDelay, Is.EqualTo(expected.AutoShutdownProfile.IdleDelay));
-            Assert.That(actual.ConnectionProfile.ClientRdpAccess, Is.EqualTo(expected.ConnectionProfile.ClientRdpAccess));
-            Assert.That(actual.ConnectionProfile.ClientSshAccess, Is.EqualTo(expected.ConnectionProfile.ClientSshAccess));
-            Assert.That(actual.ConnectionProfile.WebRdpAccess, Is.EqualTo(expected.ConnectionProfile.WebRdpAccess));
-            Assert.That(actual.ConnectionProfile.WebSshAccess, Is.EqualTo(expected.ConnectionProfile.WebSshAccess));
-            Assert.That(actual.VirtualMachineProfile.CreateOption, Is.EqualTo(expected.VirtualMachineProfile.CreateOption));
-            Assert.That(actual.VirtualMachineProfile.AdminUser.Username, Is.EqualTo(expected.VirtualMachineProfile.AdminUser.Username));
-            Assert.That(actual.VirtualMachineProfile.ImageReference.Sku, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Sku));
-            Assert.That(actual.VirtualMachineProfile.ImageReference.Offer, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Offer));
-            Assert.That(actual.VirtualMachineProfile.ImageReference.Publisher, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Publisher));
-            Assert.That(actual.VirtualMachineProfile.ImageReference.Version, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Version));
-            Assert.That(actual.VirtualMachineProfile.Sku.Name, Is.EqualTo(expected.VirtualMachineProfile.Sku.Name));
-            Assert.That(actual.VirtualMachineProfile.Sku.Capacity, Is.EqualTo(expected.VirtualMachineProfile.Sku.Capacity));
-            Assert.That(actual.VirtualMachineProfile.UsageQuota, Is.EqualTo(expected.VirtualMachineProfile.UsageQuota));
-            Assert.That(actual.VirtualMachineProfile.UseSharedPassword, Is.EqualTo(expected.VirtualMachineProfile.UseSharedPassword));
-            Assert.That(actual.SecurityProfile.OpenAccess, Is.EqualTo(expected.SecurityProfile.OpenAccess));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Title, Is.EqualTo(expected.Title));
+                Assert.That(actual.Location, Is.EqualTo(expected.Location));
+                Assert.That(actual.AutoShutdownProfile.ShutdownOnDisconnect, Is.EqualTo(expected.AutoShutdownProfile.ShutdownOnDisconnect));
+                Assert.That(actual.AutoShutdownProfile.ShutdownOnIdle, Is.EqualTo(expected.AutoShutdownProfile.ShutdownOnIdle));
+                Assert.That(actual.AutoShutdownProfile.ShutdownWhenNotConnected, Is.EqualTo(expected.AutoShutdownProfile.ShutdownWhenNotConnected));
+                Assert.That(actual.AutoShutdownProfile.IdleDelay, Is.EqualTo(expected.AutoShutdownProfile.IdleDelay));
+                Assert.That(actual.ConnectionProfile.ClientRdpAccess, Is.EqualTo(expected.ConnectionProfile.ClientRdpAccess));
+                Assert.That(actual.ConnectionProfile.ClientSshAccess, Is.EqualTo(expected.ConnectionProfile.ClientSshAccess));
+                Assert.That(actual.ConnectionProfile.WebRdpAccess, Is.EqualTo(expected.ConnectionProfile.WebRdpAccess));
+                Assert.That(actual.ConnectionProfile.WebSshAccess, Is.EqualTo(expected.ConnectionProfile.WebSshAccess));
+                Assert.That(actual.VirtualMachineProfile.CreateOption, Is.EqualTo(expected.VirtualMachineProfile.CreateOption));
+                Assert.That(actual.VirtualMachineProfile.AdminUser.Username, Is.EqualTo(expected.VirtualMachineProfile.AdminUser.Username));
+                Assert.That(actual.VirtualMachineProfile.ImageReference.Sku, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Sku));
+                Assert.That(actual.VirtualMachineProfile.ImageReference.Offer, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Offer));
+                Assert.That(actual.VirtualMachineProfile.ImageReference.Publisher, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Publisher));
+                Assert.That(actual.VirtualMachineProfile.ImageReference.Version, Is.EqualTo(expected.VirtualMachineProfile.ImageReference.Version));
+                Assert.That(actual.VirtualMachineProfile.Sku.Name, Is.EqualTo(expected.VirtualMachineProfile.Sku.Name));
+                Assert.That(actual.VirtualMachineProfile.Sku.Capacity, Is.EqualTo(expected.VirtualMachineProfile.Sku.Capacity));
+                Assert.That(actual.VirtualMachineProfile.UsageQuota, Is.EqualTo(expected.VirtualMachineProfile.UsageQuota));
+                Assert.That(actual.VirtualMachineProfile.UseSharedPassword, Is.EqualTo(expected.VirtualMachineProfile.UseSharedPassword));
+                Assert.That(actual.SecurityProfile.OpenAccess, Is.EqualTo(expected.SecurityProfile.OpenAccess));
+            });
         }
     }
 }

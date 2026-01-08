@@ -255,37 +255,47 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.That(actual, Is.Not.Null);
             if (expected.Name != null)
                 Assert.That(actual.Name, Is.EqualTo(expected.Name));
-            Assert.That(actual.Location, Is.EqualTo(expected.Location));
-            Assert.That(actual.OSType, Is.EqualTo(expected.OSType));
-            Assert.That(actual.RestartPolicy, Is.EqualTo(expected.RestartPolicy));
-            Assert.That(actual.Identity?.ManagedServiceIdentityType, Is.EqualTo(expected.Identity?.ManagedServiceIdentityType));
-            Assert.That(actual.Sku, Is.EqualTo(expected.Sku));
-            Assert.That(actual.Diagnostics?.LogAnalytics.WorkspaceId, Is.EqualTo(expected.Diagnostics?.LogAnalytics.WorkspaceId));
-            Assert.That(actual.Containers, Is.Not.Null);
-            Assert.That(actual.Containers.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Location, Is.EqualTo(expected.Location));
+                Assert.That(actual.OSType, Is.EqualTo(expected.OSType));
+                Assert.That(actual.RestartPolicy, Is.EqualTo(expected.RestartPolicy));
+                Assert.That(actual.Identity?.ManagedServiceIdentityType, Is.EqualTo(expected.Identity?.ManagedServiceIdentityType));
+                Assert.That(actual.Sku, Is.EqualTo(expected.Sku));
+                Assert.That(actual.Diagnostics?.LogAnalytics.WorkspaceId, Is.EqualTo(expected.Diagnostics?.LogAnalytics.WorkspaceId));
+                Assert.That(actual.Containers, Is.Not.Null);
+            });
+            Assert.That(actual.Containers, Has.Count.EqualTo(1));
             if (expected.Priority != ContainerGroupPriority.Spot)
             {
                 Assert.That(actual.IPAddress, Is.Not.Null);
                 Assert.That(actual.IPAddress.IP, Is.Not.Null);
             }
-            Assert.That(actual.EncryptionProperties?.KeyName, Is.EqualTo(expected.EncryptionProperties?.KeyName));
-            Assert.That(actual.EncryptionProperties?.KeyVersion, Is.EqualTo(expected.EncryptionProperties?.KeyVersion));
-            Assert.That(actual.EncryptionProperties?.VaultBaseUri, Is.EqualTo(expected.EncryptionProperties?.VaultBaseUri));
-            Assert.That(actual.IPAddress?.DnsNameLabel, Is.EqualTo(expected.IPAddress?.DnsNameLabel));
-            Assert.That(actual.Containers[0].Name, Is.EqualTo(expected.Containers[0].Name));
-            Assert.That(actual.Containers[0].Image, Is.EqualTo(expected.Containers[0].Image));
-            Assert.That(actual.Containers[0].LivenessProbe?.PeriodInSeconds, Is.EqualTo(expected.Containers[0].LivenessProbe?.PeriodInSeconds));
-            Assert.That(actual.Containers[0].EnvironmentVariables[0].Name, Is.EqualTo(expected.Containers[0].EnvironmentVariables[0].Name));
-            Assert.That(actual.Containers[0].Resources.Requests.Cpu, Is.EqualTo(expected.Containers[0].Resources.Requests.Cpu));
-            Assert.That(actual.Containers[0].Resources.Requests.MemoryInGB, Is.EqualTo(expected.Containers[0].Resources.Requests.MemoryInGB));
-            Assert.That(actual.InitContainers[0].Name, Is.EqualTo(expected.InitContainers[0].Name));
-            Assert.That(actual.InitContainers[0].Image, Is.EqualTo(expected.InitContainers[0].Image));
-            Assert.That(actual.Priority, Is.EqualTo(expected.Priority));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.EncryptionProperties?.KeyName, Is.EqualTo(expected.EncryptionProperties?.KeyName));
+                Assert.That(actual.EncryptionProperties?.KeyVersion, Is.EqualTo(expected.EncryptionProperties?.KeyVersion));
+                Assert.That(actual.EncryptionProperties?.VaultBaseUri, Is.EqualTo(expected.EncryptionProperties?.VaultBaseUri));
+                Assert.That(actual.IPAddress?.DnsNameLabel, Is.EqualTo(expected.IPAddress?.DnsNameLabel));
+                Assert.That(actual.Containers[0].Name, Is.EqualTo(expected.Containers[0].Name));
+                Assert.That(actual.Containers[0].Image, Is.EqualTo(expected.Containers[0].Image));
+                Assert.That(actual.Containers[0].LivenessProbe?.PeriodInSeconds, Is.EqualTo(expected.Containers[0].LivenessProbe?.PeriodInSeconds));
+                Assert.That(actual.Containers[0].EnvironmentVariables[0].Name, Is.EqualTo(expected.Containers[0].EnvironmentVariables[0].Name));
+                Assert.That(actual.Containers[0].Resources.Requests.Cpu, Is.EqualTo(expected.Containers[0].Resources.Requests.Cpu));
+                Assert.That(actual.Containers[0].Resources.Requests.MemoryInGB, Is.EqualTo(expected.Containers[0].Resources.Requests.MemoryInGB));
+                Assert.That(actual.InitContainers[0].Name, Is.EqualTo(expected.InitContainers[0].Name));
+                Assert.That(actual.InitContainers[0].Image, Is.EqualTo(expected.InitContainers[0].Image));
+                Assert.That(actual.Priority, Is.EqualTo(expected.Priority));
+            });
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
-                Assert.That(actual.ConfidentialComputeProperties?.CcePolicy, Is.Not.Null);
-                Assert.That(actual.Containers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.Containers[0].SecurityContext?.IsPrivileged));
-                Assert.That(actual.InitContainers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.InitContainers[0].SecurityContext?.IsPrivileged));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actual.ConfidentialComputeProperties?.CcePolicy, Is.Not.Null);
+                    Assert.That(actual.Containers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.Containers[0].SecurityContext?.IsPrivileged));
+                    Assert.That(actual.InitContainers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.InitContainers[0].SecurityContext?.IsPrivileged));
+                });
             }
         }
 
@@ -559,34 +569,44 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.That(actual, Is.Not.Null);
             if (expected.Name != null)
                 Assert.That(actual.Name, Is.EqualTo(expected.Name));
-            Assert.That(actual.Location, Is.EqualTo(expected.Location));
-            Assert.That(actual.OSType, Is.EqualTo(expected.OSType));
-            Assert.That(actual.RestartPolicy, Is.EqualTo(expected.RestartPolicy));
-            Assert.That(actual.Sku, Is.EqualTo(expected.Sku));
-            Assert.That(actual.Diagnostics?.LogAnalytics.WorkspaceId, Is.EqualTo(expected.Diagnostics?.LogAnalytics.WorkspaceId));
-            Assert.That(actual.Containers, Is.Not.Null);
-            Assert.That(actual.Containers.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Location, Is.EqualTo(expected.Location));
+                Assert.That(actual.OSType, Is.EqualTo(expected.OSType));
+                Assert.That(actual.RestartPolicy, Is.EqualTo(expected.RestartPolicy));
+                Assert.That(actual.Sku, Is.EqualTo(expected.Sku));
+                Assert.That(actual.Diagnostics?.LogAnalytics.WorkspaceId, Is.EqualTo(expected.Diagnostics?.LogAnalytics.WorkspaceId));
+                Assert.That(actual.Containers, Is.Not.Null);
+            });
+            Assert.That(actual.Containers, Has.Count.EqualTo(1));
             if (expected.Priority != ContainerGroupPriority.Spot)
             {
                 Assert.That(actual.IPAddress, Is.Not.Null);
             }
-            Assert.That(actual.EncryptionProperties?.KeyName, Is.EqualTo(expected.EncryptionProperties?.KeyName));
-            Assert.That(actual.EncryptionProperties?.KeyVersion, Is.EqualTo(expected.EncryptionProperties?.KeyVersion));
-            Assert.That(actual.EncryptionProperties?.VaultBaseUri, Is.EqualTo(expected.EncryptionProperties?.VaultBaseUri));
-            Assert.That(actual.Containers[0].Name, Is.EqualTo(expected.Containers[0].Name));
-            Assert.That(actual.Containers[0].Image, Is.EqualTo(expected.Containers[0].Image));
-            Assert.That(actual.Containers[0].LivenessProbe?.PeriodInSeconds, Is.EqualTo(expected.Containers[0].LivenessProbe?.PeriodInSeconds));
-            Assert.That(actual.Containers[0].EnvironmentVariables[0].Name, Is.EqualTo(expected.Containers[0].EnvironmentVariables[0].Name));
-            Assert.That(actual.Containers[0].Resources.Requests.Cpu, Is.EqualTo(expected.Containers[0].Resources.Requests.Cpu));
-            Assert.That(actual.Containers[0].Resources.Requests.MemoryInGB, Is.EqualTo(expected.Containers[0].Resources.Requests.MemoryInGB));
-            Assert.That(actual.InitContainers[0].Name, Is.EqualTo(expected.InitContainers[0].Name));
-            Assert.That(actual.InitContainers[0].Image, Is.EqualTo(expected.InitContainers[0].Image));
-            Assert.That(actual.Priority, Is.EqualTo(expected.Priority));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.EncryptionProperties?.KeyName, Is.EqualTo(expected.EncryptionProperties?.KeyName));
+                Assert.That(actual.EncryptionProperties?.KeyVersion, Is.EqualTo(expected.EncryptionProperties?.KeyVersion));
+                Assert.That(actual.EncryptionProperties?.VaultBaseUri, Is.EqualTo(expected.EncryptionProperties?.VaultBaseUri));
+                Assert.That(actual.Containers[0].Name, Is.EqualTo(expected.Containers[0].Name));
+                Assert.That(actual.Containers[0].Image, Is.EqualTo(expected.Containers[0].Image));
+                Assert.That(actual.Containers[0].LivenessProbe?.PeriodInSeconds, Is.EqualTo(expected.Containers[0].LivenessProbe?.PeriodInSeconds));
+                Assert.That(actual.Containers[0].EnvironmentVariables[0].Name, Is.EqualTo(expected.Containers[0].EnvironmentVariables[0].Name));
+                Assert.That(actual.Containers[0].Resources.Requests.Cpu, Is.EqualTo(expected.Containers[0].Resources.Requests.Cpu));
+                Assert.That(actual.Containers[0].Resources.Requests.MemoryInGB, Is.EqualTo(expected.Containers[0].Resources.Requests.MemoryInGB));
+                Assert.That(actual.InitContainers[0].Name, Is.EqualTo(expected.InitContainers[0].Name));
+                Assert.That(actual.InitContainers[0].Image, Is.EqualTo(expected.InitContainers[0].Image));
+                Assert.That(actual.Priority, Is.EqualTo(expected.Priority));
+            });
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
-                Assert.That(actual.ConfidentialComputeProperties?.CcePolicy, Is.Not.Null);
-                Assert.That(actual.Containers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.Containers[0].SecurityContext?.IsPrivileged));
-                Assert.That(actual.InitContainers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.InitContainers[0].SecurityContext?.IsPrivileged));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actual.ConfidentialComputeProperties?.CcePolicy, Is.Not.Null);
+                    Assert.That(actual.Containers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.Containers[0].SecurityContext?.IsPrivileged));
+                    Assert.That(actual.InitContainers[0].SecurityContext?.IsPrivileged, Is.EqualTo(expected.InitContainers[0].SecurityContext?.IsPrivileged));
+                });
             }
         }
 

@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
-            Assert.GreaterOrEqual(buckets.Count, 1);
+            Assert.That(buckets, Is.Not.Empty);
             Assert.That(buckets.Any(r => r.Data.Name.Split('/').Last() == bucketName), Is.True);
         }
 

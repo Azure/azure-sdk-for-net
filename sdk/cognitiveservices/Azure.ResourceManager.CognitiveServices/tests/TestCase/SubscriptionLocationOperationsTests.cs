@@ -35,8 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             await foreach (CognitiveServicesModel item in DefaultSubscription.GetModelsAsync(AzureLocation.EastUS))
             {
                 hasValue = true;
-                Assert.That(item.SkuName, Is.Not.Null);
-                Assert.That(item.Model, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(item.SkuName, Is.Not.Null);
+                    Assert.That(item.Model, Is.Not.Null);
+                });
             }
             Assert.That(hasValue, Is.True);
         }
@@ -48,8 +51,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             await foreach (ServiceAccountUsage item in DefaultSubscription.GetUsagesAsync(AzureLocation.EastUS))
             {
                 hasValue = true;
-                Assert.That(item.Name, Is.Not.Null);
-                Assert.That(item.CurrentValue, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(item.Name, Is.Not.Null);
+                    Assert.That(item.CurrentValue, Is.Not.Null);
+                });
             }
             Assert.That(hasValue, Is.True);
         }

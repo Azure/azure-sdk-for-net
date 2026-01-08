@@ -95,8 +95,11 @@ namespace Azure.ResourceManager.MySql.Tests
 
             var lroBackupAndExport = await server1.CreateBackupAndExportAsync(Azure.WaitUntil.Completed, backupAndExportContent);
             MySqlFlexibleServerBackupAndExportResult resultBackupAndExport = lroBackupAndExport.Value;
-            Assert.That(resultBackupAndExport.Status.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(resultBackupAndExport.PercentComplete.ToString(), Is.EqualTo("100"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultBackupAndExport.Status.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(resultBackupAndExport.PercentComplete.ToString(), Is.EqualTo("100"));
+            });
         }
     }
 }

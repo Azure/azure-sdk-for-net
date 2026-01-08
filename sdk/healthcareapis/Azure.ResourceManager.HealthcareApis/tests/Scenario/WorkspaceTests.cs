@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var list = await _workspaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHealthcareApisWorkspace(list.FirstOrDefault().Data, workspaceName);
         }
 
@@ -91,10 +91,13 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await workspace.AddTagAsync("addtagkey", "addtagvalue");
             workspace = await _workspaceCollection.GetAsync(workspaceName);
-            Assert.That(workspace.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(workspace.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = workspace.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await workspace.RemoveTagAsync("addtagkey");
@@ -105,11 +108,14 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         private void ValidateHealthcareApisWorkspace(HealthcareApisWorkspaceData workspace, string workspaceName)
         {
             Assert.That(workspace, Is.Not.Null);
-            Assert.That(workspace.Id, Is.Not.Null);
-            Assert.That(workspace.ETag, Is.Not.Null);
-            Assert.That(workspace.Name, Is.EqualTo(workspaceName));
-            Assert.That(workspace.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces"));
-            Assert.That(workspace.Location, Is.EqualTo(DefaultLocation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(workspace.Id, Is.Not.Null);
+                Assert.That(workspace.ETag, Is.Not.Null);
+                Assert.That(workspace.Name, Is.EqualTo(workspaceName));
+                Assert.That(workspace.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces"));
+                Assert.That(workspace.Location, Is.EqualTo(DefaultLocation));
+            });
         }
     }
 }

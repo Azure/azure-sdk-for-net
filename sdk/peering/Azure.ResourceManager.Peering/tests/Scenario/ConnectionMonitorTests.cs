@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering.Tests
 
             // GetAll
             var list = await _connectionMonitorTestCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
             Assert.That(list.First(item => item.Data.Name == connectionMonitorTestName), Is.Not.Null);
 
             // Delete

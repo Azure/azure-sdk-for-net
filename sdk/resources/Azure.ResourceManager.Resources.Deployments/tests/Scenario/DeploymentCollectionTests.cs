@@ -119,59 +119,92 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
 
         private static void AssertValidDeployment(ArmDeploymentResource model, ArmDeploymentResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
-            Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+                Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
+            });
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
-                Assert.That(model.Data.Properties, Is.Not.Null);
-                Assert.That(getResult.Data.Properties, Is.Not.Null);
-                Assert.That(getResult.Data.Properties.ProvisioningState, Is.EqualTo(model.Data.Properties.ProvisioningState));
-                Assert.That(getResult.Data.Properties.CorrelationId, Is.EqualTo(model.Data.Properties.CorrelationId));
-                Assert.That(getResult.Data.Properties.Timestamp, Is.EqualTo(model.Data.Properties.Timestamp));
-                Assert.That(getResult.Data.Properties.Duration, Is.EqualTo(model.Data.Properties.Duration));
-                Assert.That(getResult.Data.Properties.Outputs.ToArray(), Is.EqualTo(model.Data.Properties.Outputs.ToArray()));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Properties, Is.Not.Null);
+                    Assert.That(getResult.Data.Properties, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.Data.Properties.ProvisioningState, Is.EqualTo(model.Data.Properties.ProvisioningState));
+                    Assert.That(getResult.Data.Properties.CorrelationId, Is.EqualTo(model.Data.Properties.CorrelationId));
+                    Assert.That(getResult.Data.Properties.Timestamp, Is.EqualTo(model.Data.Properties.Timestamp));
+                    Assert.That(getResult.Data.Properties.Duration, Is.EqualTo(model.Data.Properties.Duration));
+                    Assert.That(getResult.Data.Properties.Outputs.ToArray(), Is.EqualTo(model.Data.Properties.Outputs.ToArray()));
+                });
                 //Assert.AreEqual(model.Data.Properties.Providers, getResult.Data.Properties.Providers);
                 //Assert.AreEqual(model.Data.Properties.Dependencies, getResult.Data.Properties.Dependencies);
                 if (model.Data.Properties.TemplateLink != null || getResult.Data.Properties.TemplateLink != null)
                 {
-                    Assert.That(model.Data.Properties.TemplateLink, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.TemplateLink, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.TemplateLink.Uri, Is.EqualTo(model.Data.Properties.TemplateLink.Uri));
-                    Assert.That(getResult.Data.Properties.TemplateLink.ContentVersion, Is.EqualTo(model.Data.Properties.TemplateLink.ContentVersion));
-                    Assert.That(getResult.Data.Properties.TemplateLink.QueryString, Is.EqualTo(model.Data.Properties.TemplateLink.QueryString));
-                    Assert.That(getResult.Data.Properties.TemplateLink.RelativePath, Is.EqualTo(model.Data.Properties.TemplateLink.RelativePath));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.Properties.TemplateLink, Is.Not.Null);
+                        Assert.That(getResult.Data.Properties.TemplateLink, Is.Not.Null);
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(getResult.Data.Properties.TemplateLink.Uri, Is.EqualTo(model.Data.Properties.TemplateLink.Uri));
+                        Assert.That(getResult.Data.Properties.TemplateLink.ContentVersion, Is.EqualTo(model.Data.Properties.TemplateLink.ContentVersion));
+                        Assert.That(getResult.Data.Properties.TemplateLink.QueryString, Is.EqualTo(model.Data.Properties.TemplateLink.QueryString));
+                        Assert.That(getResult.Data.Properties.TemplateLink.RelativePath, Is.EqualTo(model.Data.Properties.TemplateLink.RelativePath));
+                    });
                 }
                 Assert.That(getResult.Data.Properties.Parameters.ToArray(), Is.EqualTo(model.Data.Properties.Parameters.ToArray()));
                 if (model.Data.Properties.ParametersLink != null || getResult.Data.Properties.ParametersLink != null)
                 {
-                    Assert.That(model.Data.Properties.ParametersLink, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.ParametersLink, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.ParametersLink.Uri, Is.EqualTo(model.Data.Properties.ParametersLink.Uri));
-                    Assert.That(getResult.Data.Properties.ParametersLink.ContentVersion, Is.EqualTo(model.Data.Properties.ParametersLink.ContentVersion));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.Properties.ParametersLink, Is.Not.Null);
+                        Assert.That(getResult.Data.Properties.ParametersLink, Is.Not.Null);
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(getResult.Data.Properties.ParametersLink.Uri, Is.EqualTo(model.Data.Properties.ParametersLink.Uri));
+                        Assert.That(getResult.Data.Properties.ParametersLink.ContentVersion, Is.EqualTo(model.Data.Properties.ParametersLink.ContentVersion));
+                    });
                 }
                 Assert.That(getResult.Data.Properties.Mode, Is.EqualTo(model.Data.Properties.Mode));
                 if (model.Data.Properties.DebugSetting != null || getResult.Data.Properties.DebugSetting != null)
                 {
-                    Assert.That(model.Data.Properties.DebugSetting, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.DebugSetting, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.Properties.DebugSetting, Is.Not.Null);
+                        Assert.That(getResult.Data.Properties.DebugSetting, Is.Not.Null);
+                    });
                     Assert.That(getResult.Data.Properties.DebugSetting.DetailLevel, Is.EqualTo(model.Data.Properties.DebugSetting.DetailLevel));
                 }
                 if (model.Data.Properties.ErrorDeployment != null || getResult.Data.Properties.ErrorDeployment != null)
                 {
-                    Assert.That(model.Data.Properties.ErrorDeployment, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.ErrorDeployment, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.ErrorDeployment.DeploymentName, Is.EqualTo(model.Data.Properties.ErrorDeployment.DeploymentName));
-                    Assert.That(getResult.Data.Properties.ErrorDeployment.ProvisioningState, Is.EqualTo(model.Data.Properties.ErrorDeployment.ProvisioningState));
-                    Assert.That(getResult.Data.Properties.ErrorDeployment.DeploymentType, Is.EqualTo(model.Data.Properties.ErrorDeployment.DeploymentType));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.Properties.ErrorDeployment, Is.Not.Null);
+                        Assert.That(getResult.Data.Properties.ErrorDeployment, Is.Not.Null);
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(getResult.Data.Properties.ErrorDeployment.DeploymentName, Is.EqualTo(model.Data.Properties.ErrorDeployment.DeploymentName));
+                        Assert.That(getResult.Data.Properties.ErrorDeployment.ProvisioningState, Is.EqualTo(model.Data.Properties.ErrorDeployment.ProvisioningState));
+                        Assert.That(getResult.Data.Properties.ErrorDeployment.DeploymentType, Is.EqualTo(model.Data.Properties.ErrorDeployment.DeploymentType));
+                    });
                 }
                 Assert.That(getResult.Data.Properties.TemplateHash, Is.EqualTo(model.Data.Properties.TemplateHash));
                 if (model.Data.Properties.OutputResources != null || getResult.Data.Properties.OutputResources != null)
                 {
-                    Assert.That(model.Data.Properties.OutputResources, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.OutputResources, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.OutputResources.Count, Is.EqualTo(model.Data.Properties.OutputResources.Count));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.Properties.OutputResources, Is.Not.Null);
+                        Assert.That(getResult.Data.Properties.OutputResources, Is.Not.Null);
+                    });
+                    Assert.That(getResult.Data.Properties.OutputResources, Has.Count.EqualTo(model.Data.Properties.OutputResources.Count));
                     for (int i = 0; i < model.Data.Properties.OutputResources.Count; ++i)
                     {
                         Assert.That(getResult.Data.Properties.OutputResources[i].Id, Is.EqualTo(model.Data.Properties.OutputResources[i].Id));
@@ -179,9 +212,12 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
                 }
                 if (model.Data.Properties.ValidatedResources != null || getResult.Data.Properties.ValidatedResources != null)
                 {
-                    Assert.That(model.Data.Properties.ValidatedResources, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.ValidatedResources, Is.Not.Null);
-                    Assert.That(getResult.Data.Properties.ValidatedResources.Count, Is.EqualTo(model.Data.Properties.ValidatedResources.Count));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.Properties.ValidatedResources, Is.Not.Null);
+                        Assert.That(getResult.Data.Properties.ValidatedResources, Is.Not.Null);
+                    });
+                    Assert.That(getResult.Data.Properties.ValidatedResources, Has.Count.EqualTo(model.Data.Properties.ValidatedResources.Count));
                     for (int i = 0; i < model.Data.Properties.ValidatedResources.Count; ++i)
                     {
                         Assert.That(getResult.Data.Properties.ValidatedResources[i].Id, Is.EqualTo(model.Data.Properties.ValidatedResources[i].Id));

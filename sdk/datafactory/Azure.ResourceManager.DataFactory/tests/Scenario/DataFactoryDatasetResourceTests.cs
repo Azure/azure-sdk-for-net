@@ -58,12 +58,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.That(flag, Is.True);
             // Get
             var datasetGet = await dataFactory.GetDataFactoryDatasets().GetAsync(datasetName);
-            Assert.That(dataset, Is.Not.Null);
-            Assert.That(datasetGet.Value.Data.Name, Is.EqualTo(datasetName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataset, Is.Not.Null);
+                Assert.That(datasetGet.Value.Data.Name, Is.EqualTo(datasetName));
+            });
             // GetAll
             var list = await dataFactory.GetDataFactoryDatasets().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(1));
             // Delete
             await dataset.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             List<StandbyVirtualMachinePoolResource> standbyVirtualMachinePoolResults = await standbyVirtualMachinePools.ToEnumerableAsync();
 
             Assert.That(standbyVirtualMachinePoolResults, Is.Not.Null);
-            Assert.That(standbyVirtualMachinePoolResults.Count > 0, Is.True);
+            Assert.That(standbyVirtualMachinePoolResults, Is.Not.Empty);
         }
 
         [TestCase]

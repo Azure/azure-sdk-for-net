@@ -42,10 +42,14 @@ namespace Azure.ResourceManager.Attestation.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exist
-            Assert.That((bool)await providrerCollection.ExistsAsync(providerName), Is.True);
-            Assert.That((bool)await providrerCollection.ExistsAsync(providerName + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
+                //4.Exist
+                Assert.That((bool)await providrerCollection.ExistsAsync(providerName), Is.True);
+                Assert.That((bool)await providrerCollection.ExistsAsync(providerName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await providrerCollection.ExistsAsync(null));
             //Resouece operation
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Attestation.Tests
                 AttestationServicePatchSpecificParamsPublicNetworkAccess = PublicNetworkAccessType.Disabled
             };
             var providerResource4 =(await providerResource3.UpdateAsync(patch)).Value;
-            Assert.That(providerResource4.Data.Tags.Count, Is.EqualTo(patch.Tags.Count));
+            Assert.That(providerResource4.Data.Tags, Has.Count.EqualTo(patch.Tags.Count));
             //3. Delete
             await providerResource4.DeleteAsync(WaitUntil.Completed);
         }

@@ -44,23 +44,29 @@ namespace Azure.Management.ResourceGraph.Tests
             };
 
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
-            Assert.IsNotNull(resultResponse);
+            Assert.That(resultResponse, Is.Not.Null);
             //top response
             Assert.That(resultResponse.Count, Is.EqualTo(2));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.That(resultResponse.SkipToken, Is.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
+                Assert.That(resultResponse.SkipToken, Is.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
-            Assert.That(list.Count, Is.EqualTo(2));
-            Assert.That(list[0].Count, Is.EqualTo(3));
-            Assert.That(list[1].Count, Is.EqualTo(3));
-            Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
-            Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
-            Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(list, Is.Not.Null);
+            Assert.That(list, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Has.Count.EqualTo(3));
+                Assert.That(list[1], Has.Count.EqualTo(3));
+                Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+                Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            });
         }
 
         [Test]
@@ -76,14 +82,17 @@ namespace Azure.Management.ResourceGraph.Tests
             };
 
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
-            Assert.IsNotNull(resultResponse);
+            Assert.That(resultResponse, Is.Not.Null);
             //top response
             Assert.That(resultResponse.Count, Is.EqualTo(2));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.That(resultResponse.SkipToken, Is.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
+                Assert.That(resultResponse.SkipToken, Is.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
 
             //data columns
             StreamReader reader = new StreamReader(resultResponse.Data.ToStream());
@@ -95,20 +104,26 @@ namespace Azure.Management.ResourceGraph.Tests
             var table = JsonSerializer.Deserialize<Table>(content, options);
             //Data columns
             Assert.That(table.Columns, Is.Not.Null);
-            Assert.That(table.Columns.Count, Is.EqualTo(3));
-            Assert.That(table.Columns[0].Name, Is.Not.Null);
-            Assert.That(table.Columns[1].Name, Is.Not.Null);
-            Assert.That(table.Columns[2].Name, Is.Not.Null);
-            Assert.That(table.Columns[0].Type, Is.EqualTo(ColumnDataType.String));
-            Assert.That(table.Columns[1].Type, Is.EqualTo(ColumnDataType.Object));
-            Assert.That(table.Columns[2].Type, Is.EqualTo(ColumnDataType.Object));
-            //Data rows
-            Assert.That(table.Rows, Is.Not.Null);
-            Assert.That(table.Rows.Count, Is.EqualTo(2));
-            Assert.That(table.Rows[0].Count, Is.EqualTo(3));
-            Assert.That(((JsonElement)table.Rows[0][0]).ValueKind, Is.EqualTo(JsonValueKind.String));
-            Assert.That(((JsonElement)table.Rows[0][1]).ValueKind, Is.EqualTo(JsonValueKind.Object));
-            Assert.That(((JsonElement)table.Rows[0][2]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(table.Columns, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(table.Columns[0].Name, Is.Not.Null);
+                Assert.That(table.Columns[1].Name, Is.Not.Null);
+                Assert.That(table.Columns[2].Name, Is.Not.Null);
+                Assert.That(table.Columns[0].Type, Is.EqualTo(ColumnDataType.String));
+                Assert.That(table.Columns[1].Type, Is.EqualTo(ColumnDataType.Object));
+                Assert.That(table.Columns[2].Type, Is.EqualTo(ColumnDataType.Object));
+                //Data rows
+                Assert.That(table.Rows, Is.Not.Null);
+            });
+            Assert.That(table.Rows, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(table.Rows[0], Has.Count.EqualTo(3));
+                Assert.That(((JsonElement)table.Rows[0][0]).ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(((JsonElement)table.Rows[0][1]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+                Assert.That(((JsonElement)table.Rows[0][2]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            });
         }
 
         [Test]
@@ -126,20 +141,26 @@ namespace Azure.Management.ResourceGraph.Tests
             };
 
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
-            Assert.IsNotNull(resultResponse);
+            Assert.That(resultResponse, Is.Not.Null);
             //top response
             Assert.That(resultResponse.Count, Is.EqualTo(6));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(161));
-            Assert.That(resultResponse.SkipToken, Is.Not.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(161));
+                Assert.That(resultResponse.SkipToken, Is.Not.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
-            Assert.That(list.Count, Is.EqualTo(6));
-            Assert.That(list[0].Count, Is.EqualTo(1));
-            Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(list, Is.Not.Null);
+            Assert.That(list, Has.Count.EqualTo(6));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Has.Count.EqualTo(1));
+                Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+            });
         }
 
         [Test]
@@ -174,36 +195,51 @@ namespace Azure.Management.ResourceGraph.Tests
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             //top-level
             Assert.That(resultResponse.Count, Is.EqualTo(8));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(8));
-            Assert.That(resultResponse.SkipToken, Is.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
-            Assert.That(resultResponse.Facets.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(8));
+                Assert.That(resultResponse.SkipToken, Is.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
+            Assert.That(resultResponse.Facets, Has.Count.EqualTo(2));
 
             //Valid facet fields
             var result = (FacetResult)resultResponse.Facets[0];
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(2));
-            Assert.That(result.TotalRecords, Is.EqualTo(4));
-            Assert.That(result.Expression, Is.EqualTo(validExpression));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.TotalRecords, Is.EqualTo(4));
+                Assert.That(result.Expression, Is.EqualTo(validExpression));
+            });
 
             // Valid facet data
             var result_data = result.Data.ToObjectFromJson<IList<IDictionary<string, object>>>();
-            Assert.IsNotNull(result_data);
-            Assert.That(result_data.Count, Is.EqualTo(2));
-            Assert.That(result_data[0].Count, Is.EqualTo(2));
-            Assert.That(((JsonElement)result_data[0]["location"]).ValueKind, Is.EqualTo(JsonValueKind.String));
-            Assert.That(((JsonElement)result_data[0]["count"]).ValueKind, Is.EqualTo(JsonValueKind.Number));
+            Assert.That(result_data, Is.Not.Null);
+            Assert.That(result_data, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result_data[0], Has.Count.EqualTo(2));
+                Assert.That(((JsonElement)result_data[0]["location"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(((JsonElement)result_data[0]["count"]).ValueKind, Is.EqualTo(JsonValueKind.Number));
+            });
 
             //invalid facet
             FacetError error = (FacetError)resultResponse.Facets[1];
-            Assert.IsNotNull(error);
-            Assert.That(error.Expression, Is.EqualTo(invalidExpression));
-            Assert.That(error.Errors, Is.Not.Null);
-            Assert.That(error.Errors.Count >= 1 && error.Errors.Count <= int.MaxValue, Is.True);
-            Assert.That(error.Errors[0].Code, Is.Not.Null);
-            Assert.That(error.Errors[1].Code, Is.Not.Null);
+            Assert.That(error, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(error.Expression, Is.EqualTo(invalidExpression));
+                Assert.That(error.Errors, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(error.Errors.Count >= 1 && error.Errors.Count <= int.MaxValue, Is.True);
+                Assert.That(error.Errors[0].Code, Is.Not.Null);
+                Assert.That(error.Errors[1].Code, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -214,7 +250,7 @@ namespace Azure.Management.ResourceGraph.Tests
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await tenant.GetResourcesAsync(queryContent); });
-            Assert.IsNotNull(exception);
+            Assert.That(exception, Is.Not.Null);
             return Task.CompletedTask;
         }
 
@@ -226,20 +262,26 @@ namespace Azure.Management.ResourceGraph.Tests
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             // Top-level response fields
             Assert.That(resultResponse.Count, Is.EqualTo(2));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.That(resultResponse.SkipToken, Is.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
+                Assert.That(resultResponse.SkipToken, Is.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
 
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
-            Assert.That(list.Count, Is.EqualTo(2));
-            Assert.That(list[0].Count, Is.EqualTo(3));
-            Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
-            Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
-            Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(list, Is.Not.Null);
+            Assert.That(list, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Has.Count.EqualTo(3));
+                Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+                Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            });
         }
 
         [Test]
@@ -253,20 +295,26 @@ namespace Azure.Management.ResourceGraph.Tests
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             // Top-level response fields
             Assert.That(resultResponse.Count, Is.EqualTo(2));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.That(resultResponse.SkipToken, Is.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
+                Assert.That(resultResponse.SkipToken, Is.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
 
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
-            Assert.That(list.Count, Is.EqualTo(2));
-            Assert.That(list[0].Count, Is.EqualTo(3));
-            Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
-            Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
-            Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(list, Is.Not.Null);
+            Assert.That(list, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Has.Count.EqualTo(3));
+                Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+                Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            });
         }
 
         [Test]
@@ -280,20 +328,26 @@ namespace Azure.Management.ResourceGraph.Tests
             var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             // Top-level response fields
             Assert.That(resultResponse.Count, Is.EqualTo(2));
-            Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
-            Assert.That(resultResponse.SkipToken, Is.Null);
-            Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
-            Assert.That(resultResponse.Data, Is.Not.Null);
-            Assert.That(resultResponse.Facets, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultResponse.TotalRecords, Is.EqualTo(2));
+                Assert.That(resultResponse.SkipToken, Is.Null);
+                Assert.That(resultResponse.ResultTruncated, Is.EqualTo(ResultTruncated.False));
+                Assert.That(resultResponse.Data, Is.Not.Null);
+                Assert.That(resultResponse.Facets, Is.Not.Null);
+            });
 
             //Data
             var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
-            Assert.IsNotNull(list);
-            Assert.That(list.Count, Is.EqualTo(2));
-            Assert.That(list[0].Count, Is.EqualTo(3));
-            Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
-            Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
-            Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(list, Is.Not.Null);
+            Assert.That(list, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Has.Count.EqualTo(3));
+                Assert.That(((JsonElement)list[0]["id"]).ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(((JsonElement)list[0]["tags"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+                Assert.That(((JsonElement)list[0]["properties"]).ValueKind, Is.EqualTo(JsonValueKind.Object));
+            });
         }
     }
 }

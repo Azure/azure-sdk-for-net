@@ -59,10 +59,14 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
-            //4.Exists
-            Assert.That((bool)await nodeCollection.ExistsAsync("SampleConfiguration.localhost"), Is.True);
-            Assert.That((bool)await nodeCollection.ExistsAsync("SampleConfiguration.localhost" + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(1));
+                //4.Exists
+                Assert.That((bool)await nodeCollection.ExistsAsync("SampleConfiguration.localhost"), Is.True);
+                Assert.That((bool)await nodeCollection.ExistsAsync("SampleConfiguration.localhost" + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nodeCollection.ExistsAsync(null));
             //Resource

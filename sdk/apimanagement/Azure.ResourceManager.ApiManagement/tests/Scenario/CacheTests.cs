@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list caches: there should be none
             var cacheListResponse = await cacheCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(cacheListResponse, Is.Not.Null);
-            Assert.IsEmpty(cacheListResponse);
+            Assert.That(cacheListResponse, Is.Empty);
 
             // create new cache
             string cacheid = AzureLocation.WestUS2;
@@ -63,8 +63,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var createResponse = (await cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheid, cacheContract)).Value;
 
             Assert.That(createResponse, Is.Not.Null);
-            Assert.That(createResponse.Data.Name, Is.EqualTo(cacheid));
-            Assert.That(createResponse.Data.Description, Is.EqualTo(cacheContract.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResponse.Data.Name, Is.EqualTo(cacheid));
+                Assert.That(createResponse.Data.Description, Is.EqualTo(cacheContract.Description));
+            });
 
             // get the certificate to check is was created
             var getResponse = (await cacheCollection.GetAsync(cacheid)).Value;

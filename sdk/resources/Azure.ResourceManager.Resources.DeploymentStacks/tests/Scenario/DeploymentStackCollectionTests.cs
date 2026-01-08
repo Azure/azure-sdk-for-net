@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
             await getStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Detach, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Detach, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Detach);
 
             // There are more stacks in the sub than just the one created for the test:
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
 
         /* MG Scoped Deployment Stack Tests */
@@ -194,26 +194,29 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             await getStack.DeleteAsync(WaitUntil.Completed);
         }
 
         private static void AssertValidDeploymentStack(DeploymentStackResource model, DeploymentStackResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
-            Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
-            Assert.That(getResult.Data.Tags, Is.EqualTo(model.Data.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+                Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
+                Assert.That(getResult.Data.Tags, Is.EqualTo(model.Data.Tags));
 
-            Assert.That(getResult.Data.ActionOnUnmanage.Resources, Is.EqualTo(model.Data.ActionOnUnmanage.Resources));
-            Assert.That(getResult.Data.ActionOnUnmanage.ResourceGroups, Is.EqualTo(model.Data.ActionOnUnmanage.ResourceGroups));
-            Assert.That(getResult.Data.ActionOnUnmanage.ManagementGroups, Is.EqualTo(model.Data.ActionOnUnmanage.ManagementGroups));
-            Assert.That(getResult.Data.DenySettings.Mode, Is.EqualTo(model.Data.DenySettings.Mode));
-            Assert.That(getResult.Data.DenySettings.ApplyToChildScopes, Is.EqualTo(model.Data.DenySettings.ApplyToChildScopes));
-            Assert.That(getResult.Data.DenySettings.ExcludedPrincipals, Is.EqualTo(model.Data.DenySettings.ExcludedPrincipals));
-            Assert.That(getResult.Data.DenySettings.ExcludedActions, Is.EqualTo(model.Data.DenySettings.ExcludedActions));
-            Assert.That(getResult.Data.BypassStackOutOfSyncError, Is.EqualTo(model.Data.BypassStackOutOfSyncError));
+                Assert.That(getResult.Data.ActionOnUnmanage.Resources, Is.EqualTo(model.Data.ActionOnUnmanage.Resources));
+                Assert.That(getResult.Data.ActionOnUnmanage.ResourceGroups, Is.EqualTo(model.Data.ActionOnUnmanage.ResourceGroups));
+                Assert.That(getResult.Data.ActionOnUnmanage.ManagementGroups, Is.EqualTo(model.Data.ActionOnUnmanage.ManagementGroups));
+                Assert.That(getResult.Data.DenySettings.Mode, Is.EqualTo(model.Data.DenySettings.Mode));
+                Assert.That(getResult.Data.DenySettings.ApplyToChildScopes, Is.EqualTo(model.Data.DenySettings.ApplyToChildScopes));
+                Assert.That(getResult.Data.DenySettings.ExcludedPrincipals, Is.EqualTo(model.Data.DenySettings.ExcludedPrincipals));
+                Assert.That(getResult.Data.DenySettings.ExcludedActions, Is.EqualTo(model.Data.DenySettings.ExcludedActions));
+                Assert.That(getResult.Data.BypassStackOutOfSyncError, Is.EqualTo(model.Data.BypassStackOutOfSyncError));
+            });
         }
     }
 }

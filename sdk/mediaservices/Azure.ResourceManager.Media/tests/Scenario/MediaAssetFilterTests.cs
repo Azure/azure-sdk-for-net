@@ -51,11 +51,14 @@ namespace Azure.ResourceManager.Media.Tests
             Assert.That(flag, Is.True);
             // Get
             var result = await assetFilterCollection.GetAsync(filterName);
-            Assert.That(filter, Is.Not.Null);
-            Assert.That(result.Value.Data.Name, Is.EqualTo(filterName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(filter, Is.Not.Null);
+                Assert.That(result.Value.Data.Name, Is.EqualTo(filterName));
+            });
             // List
             var list = await assetFilterCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Delete
             await filter.DeleteAsync(WaitUntil.Completed);
             flag = await assetFilterCollection.ExistsAsync(filterName);

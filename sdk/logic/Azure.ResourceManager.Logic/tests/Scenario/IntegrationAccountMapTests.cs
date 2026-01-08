@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string mapName = Recording.GenerateAssetName("map");
             await CreateMap(mapName);
             var list = await _mapCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

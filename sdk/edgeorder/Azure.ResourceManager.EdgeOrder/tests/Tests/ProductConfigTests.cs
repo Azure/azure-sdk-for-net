@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<ProductFamiliesMetadata> productFamiliesMetadataResult = await productFamiliesMetadata.ToEnumerableAsync();
 
             Assert.That(productFamiliesMetadataResult, Is.Not.Null);
-            Assert.That(productFamiliesMetadataResult.Count >= 1, Is.True);
+            Assert.That(productFamiliesMetadataResult, Is.Not.Empty);
         }
 
         [TestCase]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<ProductFamily> productFamiliesResult = await productFamilies.ToEnumerableAsync();
 
             Assert.That(productFamiliesResult, Is.Not.Null);
-            Assert.That(productFamiliesResult.Count >= 1, Is.True);
+            Assert.That(productFamiliesResult, Is.Not.Empty);
         }
 
         [TestCase]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<ProductConfiguration> configurationsResult = await configurations.ToEnumerableAsync();
 
             Assert.That(configurationsResult, Is.Not.Null);
-            Assert.That(configurationsResult.Count >= 1, Is.True);
+            Assert.That(configurationsResult, Is.Not.Empty);
         }
     }
 }

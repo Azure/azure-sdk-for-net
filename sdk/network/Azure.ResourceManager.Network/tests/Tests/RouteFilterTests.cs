@@ -51,14 +51,20 @@ namespace Azure.ResourceManager.Network.Tests
 
             RouteFilterResource filter = await CreateDefaultRouteFilter(filterCollection,
                 filterName);
-            Assert.That(filter.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(filter.Data.Name, Is.EqualTo(filterName));
-            Assert.IsEmpty(filter.Data.Rules);
+            Assert.Multiple(() =>
+            {
+                Assert.That(filter.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(filter.Data.Name, Is.EqualTo(filterName));
+                Assert.That(filter.Data.Rules, Is.Empty);
+            });
 
             var filters = await filterCollection.GetAllAsync().ToEnumerableAsync();
             Has.One.Equals(filters);
-            Assert.That(filters[0].Data.Name, Is.EqualTo(filterName));
-            Assert.IsEmpty(filters[0].Data.Rules);
+            Assert.Multiple(() =>
+            {
+                Assert.That(filters[0].Data.Name, Is.EqualTo(filterName));
+                Assert.That(filters[0].Data.Rules, Is.Empty);
+            });
 
             var allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             // there could be other filters in the current subscription
@@ -66,8 +72,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Crete route filter rule
             RouteFilterRuleResource filterRule = await CreateDefaultRouteFilterRule(filter, ruleName);
-            Assert.That(filterRule.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(filterRule.Data.Name, Is.EqualTo(ruleName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(filterRule.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(filterRule.Data.Name, Is.EqualTo(ruleName));
+            });
 
             Response<RouteFilterResource> getFilterResponse = await filterCollection.GetAsync(filterName);
             Assert.That(getFilterResponse.Value.Data.Name, Is.EqualTo(filterName));
@@ -84,8 +93,11 @@ namespace Azure.ResourceManager.Network.Tests
             filterRule.Data.Access = NetworkAccess.Deny;
             var operation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, filterRule.Data));
             await operation.WaitForCompletionAsync();
-            Assert.That(filterRule.Data.Name, Is.EqualTo(ruleName));
-            Assert.That(filterRule.Data.Access, Is.EqualTo(NetworkAccess.Deny));
+            Assert.Multiple(() =>
+            {
+                Assert.That(filterRule.Data.Name, Is.EqualTo(ruleName));
+                Assert.That(filterRule.Data.Access, Is.EqualTo(NetworkAccess.Deny));
+            });
 
             // Add filter rule, this will fail due to the limitation of maximum 1 rule per filter
             Assert.ThrowsAsync<RequestFailedException>(async () => await CreateDefaultRouteFilterRule(filter, Recording.GenerateAssetName("rule2")));
@@ -98,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests
             await filterRule.DeleteAsync(WaitUntil.Completed);
 
             var rules = await filter.GetRouteFilterRules().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(rules);
+            Assert.That(rules, Is.Empty);
 
             // Delete filter
             await filter.DeleteAsync(WaitUntil.Completed);

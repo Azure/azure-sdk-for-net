@@ -41,21 +41,24 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var response = await Collection.GetAsync(Guid.Parse(ReservationOrderId));
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Data);
-            Assert.IsNotNull(response.Value.Data.Reservations);
-            Assert.That(response.Value.Data.Reservations.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value, Is.Not.Null);
+            });
+            Assert.That(response.Value.Data, Is.Not.Null);
+            Assert.That(response.Value.Data.Reservations, Is.Not.Null);
+            Assert.That(response.Value.Data.Reservations, Has.Count.EqualTo(1));
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
             var reservationId = fullyQualifiedId.Substring(fullyQualifiedId.LastIndexOf("/") + 1);
             var reservationResponse = await response.Value.GetReservationDetails().GetAsync(Guid.Parse(reservationId));
             var reservation = reservationResponse.Value;
 
-            Assert.IsNotNull(reservation.Data);
-            Assert.IsNotNull(reservation.Data.Properties);
-            Assert.IsNotNull(reservation.Data.Properties.Quantity);
-            Assert.Greater(reservation.Data.Properties.Quantity, 1);
+            Assert.That(reservation.Data, Is.Not.Null);
+            Assert.That(reservation.Data.Properties, Is.Not.Null);
+            Assert.That(reservation.Data.Properties.Quantity, Is.Not.Null);
+            Assert.That(reservation.Data.Properties.Quantity, Is.GreaterThan(1));
 
             var splitContent = new SplitContent
             {
@@ -66,14 +69,17 @@ namespace Azure.ResourceManager.Reservations.Tests
 
             var splitResponse = await response.Value.SplitReservationAsync(WaitUntil.Completed, splitContent);
 
-            Assert.IsNotNull(splitResponse.Value);
-            Assert.That(splitResponse.Value.Count, Is.EqualTo(3));
-            Assert.That(splitResponse.Value[0].Properties.Quantity, Is.EqualTo(1));
-            Assert.That(splitResponse.Value[0].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
-            Assert.That(splitResponse.Value[1].Properties.Quantity, Is.EqualTo((int)reservation.Data.Properties.Quantity - 1));
-            Assert.That(splitResponse.Value[1].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
-            Assert.That(splitResponse.Value[2].Properties.Quantity, Is.EqualTo((int)reservation.Data.Properties.Quantity));
-            Assert.That(splitResponse.Value[2].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
+            Assert.That(splitResponse.Value, Is.Not.Null);
+            Assert.That(splitResponse.Value, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(splitResponse.Value[0].Properties.Quantity, Is.EqualTo(1));
+                Assert.That(splitResponse.Value[0].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
+                Assert.That(splitResponse.Value[1].Properties.Quantity, Is.EqualTo((int)reservation.Data.Properties.Quantity - 1));
+                Assert.That(splitResponse.Value[1].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
+                Assert.That(splitResponse.Value[2].Properties.Quantity, Is.EqualTo((int)reservation.Data.Properties.Quantity));
+                Assert.That(splitResponse.Value[2].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
+            });
         }
 
         [TestCase]
@@ -82,17 +88,20 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var response = await Collection.GetAsync(Guid.Parse(ReservationOrderId));
 
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.Data);
-            Assert.IsNotNull(response.Value.Data.Reservations);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value, Is.Not.Null);
+            });
+            Assert.That(response.Value.Data, Is.Not.Null);
+            Assert.That(response.Value.Data.Reservations, Is.Not.Null);
 
             var fullyQualifiedId1 = response.Value.Data.Reservations[0].Id.ToString();
 
             AsyncPageable<ReservationDetailResource> reservationResponse = response.Value.GetReservationDetails().GetAllAsync();
             List<ReservationDetailResource> reservationResources = await reservationResponse.ToEnumerableAsync();
 
-            Assert.That(reservationResources.Count, Is.EqualTo(3));
+            Assert.That(reservationResources, Has.Count.EqualTo(3));
 
             // Find the two sub RIs
             List<ReservationDetailResource> subRIs = reservationResources.FindAll(i => i.Data.Properties.ProvisioningState == ReservationProvisioningState.Succeeded);
@@ -103,12 +112,15 @@ namespace Azure.ResourceManager.Reservations.Tests
             }
             var mergeResponse = await response.Value.MergeReservationAsync(WaitUntil.Completed, mergeContent);
 
-            Assert.IsNotNull(mergeResponse.Value);
-            Assert.That(mergeResponse.Value.Count, Is.EqualTo(3));
-            Assert.That(mergeResponse.Value[0].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
-            Assert.That(mergeResponse.Value[1].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
-            Assert.That(mergeResponse.Value[2].Properties.Quantity, Is.EqualTo(mergeResponse.Value[1].Properties.Quantity + mergeResponse.Value[0].Properties.Quantity));
-            Assert.That(mergeResponse.Value[2].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
+            Assert.That(mergeResponse.Value, Is.Not.Null);
+            Assert.That(mergeResponse.Value, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mergeResponse.Value[0].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
+                Assert.That(mergeResponse.Value[1].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Cancelled));
+                Assert.That(mergeResponse.Value[2].Properties.Quantity, Is.EqualTo(mergeResponse.Value[1].Properties.Quantity + mergeResponse.Value[0].Properties.Quantity));
+                Assert.That(mergeResponse.Value[2].Properties.ProvisioningState, Is.EqualTo(ReservationProvisioningState.Succeeded));
+            });
         }
     }
 }

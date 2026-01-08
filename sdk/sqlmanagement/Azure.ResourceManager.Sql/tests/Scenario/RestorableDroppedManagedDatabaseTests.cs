@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetRestorableDroppedManagedDatabases();
             var list = collection.GetAllAsync().ToEnumerableAsync().Result;
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
 
         [Test]
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetRestorableDroppedManagedDatabases();
 
             // 1.GetAll
             var list = collection.GetAllAsync().ToEnumerableAsync().Result;
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             string databaseId = list.FirstOrDefault().Data.Id.ToString();
 
             // 2.CheckIfExist
@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseId);
-            Assert.IsNotNull(getDatabase);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(getDatabase, Is.Not.Null);
 
-            // 4.GetIfExist
-            Assert.That((bool)await collection.ExistsAsync(databaseId), Is.True);
+                // 4.GetIfExist
+                Assert.That((bool)await collection.ExistsAsync(databaseId), Is.True);
+            });
         }
     }
 }

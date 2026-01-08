@@ -51,8 +51,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             var createAdbsOperation = await _adbsCollection.CreateOrUpdateAsync(WaitUntil.Completed,
             _adbsName, GetDefaultAdbsData());
             await createAdbsOperation.WaitForCompletionAsync();
-            Assert.That(createAdbsOperation.HasCompleted, Is.True);
-            Assert.That(createAdbsOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createAdbsOperation.HasCompleted, Is.True);
+                Assert.That(createAdbsOperation.HasValue, Is.True);
+            });
 
             // Get
             Response<AutonomousDatabaseResource> getAdbsResponse = await _adbsCollection.GetAsync(_adbsName);

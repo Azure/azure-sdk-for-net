@@ -55,8 +55,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 agData);
 
             Assert.That(opApplicationGroupCreate, Is.Not.Null);
-            Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
-            Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
+                Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
+            });
 
             Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);
@@ -133,8 +136,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 agData);
 
             Assert.That(op, Is.Not.Null);
-            Assert.That(op.HasCompleted, Is.True);
-            Assert.That(applicationGroupName, Is.EqualTo(op.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(op.HasCompleted, Is.True);
+                Assert.That(applicationGroupName, Is.EqualTo(op.Value.Data.Name));
+            });
 
             Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);
@@ -249,11 +255,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             var b = await pageEnumerator.MoveNextAsync();
 
-            Assert.That(b, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(b, Is.True);
 
-            Assert.That(pageEnumerator.Current.Values.Count, Is.EqualTo(1));
+                Assert.That(pageEnumerator.Current.Values, Has.Count.EqualTo(1));
 
-            Assert.That(pageEnumerator.Current.ContinuationToken, Is.EqualTo(null));
+                Assert.That(pageEnumerator.Current.ContinuationToken, Is.EqualTo(null));
+            });
 
             await pageEnumerator.Current.Values[0].DeleteAsync(WaitUntil.Completed);
 
@@ -321,8 +330,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var pageEnumerator = f.GetAsyncEnumerator();
 
             await pageEnumerator.MoveNextAsync();
-            Assert.That(pageEnumerator.Current.ContinuationToken, Is.Null);
-            Assert.That(pageEnumerator.Current.Values.Count, Is.EqualTo(numberOfApplicationGroups));
+            Assert.Multiple(() =>
+            {
+                Assert.That(pageEnumerator.Current.ContinuationToken, Is.Null);
+                Assert.That(pageEnumerator.Current.Values, Has.Count.EqualTo(numberOfApplicationGroups));
+            });
         }
     }
 }

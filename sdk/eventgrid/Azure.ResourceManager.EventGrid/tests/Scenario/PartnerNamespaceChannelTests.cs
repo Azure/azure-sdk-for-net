@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // GetAll
             var list = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // Get Full URL
             var fullUrlResponse = await getResponse.Value.GetFullUriAsync();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // List By Partner Namespace
             var listByNamespace = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(listByNamespace);
+            Assert.That(listByNamespace, Is.Not.Empty);
 
             var updateData = new PartnerNamespaceChannelPatch()
             {

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedInboundEndpoint = await createdInboundEndpoint.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedInboundEndpoint.Value.Data.Tags);
+            Assert.That(patchedInboundEndpoint.Value.Data.Tags, Is.EquivalentTo(new Dictionary<string, string> { { newTagKey, newTagValue } }));
         }
 
         [Test]

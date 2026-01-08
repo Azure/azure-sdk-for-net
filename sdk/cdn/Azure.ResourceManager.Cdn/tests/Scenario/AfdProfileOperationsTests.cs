@@ -59,8 +59,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempUsage in afdProfile.GetFrontDoorProfileResourceUsagesAsync())
             {
                 count++;
-                Assert.That(FrontDoorUsageUnit.Count, Is.EqualTo(tempUsage.Unit));
-                Assert.That(tempUsage.CurrentValue, Is.EqualTo(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(FrontDoorUsageUnit.Count, Is.EqualTo(tempUsage.Unit));
+                    Assert.That(tempUsage.CurrentValue, Is.EqualTo(0));
+                });
             }
             Assert.That(count, Is.EqualTo(7));
         }
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             ContinentsResponse continentsResponse = await afdProfile.GetLogAnalyticsLocationsAsync();
-            Assert.That(continentsResponse.Continents.Count, Is.EqualTo(7));
+            Assert.That(continentsResponse.Continents, Has.Count.EqualTo(7));
         }
 
         [TestCase]
@@ -90,8 +93,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             List<string> customDomain = new List<string>() { "azuretest.azuretest.net" };
             List<string> protocols = new List<string>() { "https" };
             MetricsResponse mtricsResponse = await afdProfile.GetLogAnalyticsMetricsAsync(metric, dateTimeBegin, dateTimeEnd, LogMetricsGranularity.PT5M, customDomain, protocols);
-            Assert.That(MetricsResponseGranularity.PT5M, Is.EqualTo(mtricsResponse.Granularity));
-            Assert.That(mtricsResponse.Series.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(MetricsResponseGranularity.PT5M, Is.EqualTo(mtricsResponse.Granularity));
+                Assert.That(mtricsResponse.Series.Count, Is.EqualTo(0));
+            });
         }
 
         [TestCase]
@@ -107,9 +113,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
             RankingsResponse rankingsResponse = await afdProfile.GetLogAnalyticsRankingsAsync(rankings, metric, maxRankings, dateTimeBegin, dateTimeEnd);
-            Assert.That(rankingsResponse.Tables.Count, Is.EqualTo(1));
-            Assert.That(LogRanking.Uri.ToString(), Is.EqualTo(rankingsResponse.Tables[0].Ranking));
-            Assert.That(rankingsResponse.Tables[0].Data.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(rankingsResponse.Tables, Has.Count.EqualTo(1));
+                Assert.That(LogRanking.Uri.ToString(), Is.EqualTo(rankingsResponse.Tables[0].Ranking));
+                Assert.That(rankingsResponse.Tables[0].Data.Count, Is.EqualTo(0));
+            });
         }
 
         [TestCase]
@@ -120,8 +129,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("azure_cli_test");
             ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             ResourcesResponse resourcesResponse = await afdProfile.GetLogAnalyticsResourcesAsync();
-            Assert.That(resourcesResponse.CustomDomains.Count, Is.EqualTo(1));
-            Assert.That(resourcesResponse.Endpoints.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourcesResponse.CustomDomains, Has.Count.EqualTo(1));
+                Assert.That(resourcesResponse.Endpoints, Has.Count.EqualTo(1));
+            });
         }
 
         [TestCase]
@@ -135,10 +147,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
             WafMetricsResponse wafMtricsResponse = await afdProfile.GetWafLogAnalyticsMetricsAsync(metric, dateTimeBegin, dateTimeEnd, WafGranularity.PT5M);
-            Assert.That(WafMetricsResponseGranularity.PT5M, Is.EqualTo(wafMtricsResponse.Granularity));
-            Assert.That(wafMtricsResponse.Series.Count, Is.EqualTo(1));
-            Assert.That(WafMetric.ClientRequestCount.ToString(), Is.EqualTo(wafMtricsResponse.Series[0].Metric));
-            Assert.That(WafMetricsResponseSeriesItemUnit.Count, Is.EqualTo(wafMtricsResponse.Series[0].Unit));
+            Assert.Multiple(() =>
+            {
+                Assert.That(WafMetricsResponseGranularity.PT5M, Is.EqualTo(wafMtricsResponse.Granularity));
+                Assert.That(wafMtricsResponse.Series, Has.Count.EqualTo(1));
+                Assert.That(WafMetric.ClientRequestCount.ToString(), Is.EqualTo(wafMtricsResponse.Series[0].Metric));
+                Assert.That(WafMetricsResponseSeriesItemUnit.Count, Is.EqualTo(wafMtricsResponse.Series[0].Unit));
+            });
             Assert.That(wafMtricsResponse.Series[0].Data.Count, Is.EqualTo(0));
         }
 
@@ -155,9 +170,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             int maxRankings = 5;
             List<WafRankingType> rankings = new List<WafRankingType>() { WafRankingType.UserAgent };
             WafRankingsResponse wafRankingsResponse = await afdProfile.GetWafLogAnalyticsRankingsAsync(metric, dateTimeBegin, dateTimeEnd, maxRankings, rankings);
-            Assert.That(wafRankingsResponse.Groups.Count, Is.EqualTo(1));
-            Assert.That(WafRankingType.UserAgent.ToString(), Is.EqualTo(wafRankingsResponse.Groups[0]));
-            Assert.That(wafRankingsResponse.Data.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(wafRankingsResponse.Groups, Has.Count.EqualTo(1));
+                Assert.That(WafRankingType.UserAgent.ToString(), Is.EqualTo(wafRankingsResponse.Groups[0]));
+                Assert.That(wafRankingsResponse.Data.Count, Is.EqualTo(0));
+            });
         }
 
         [TestCase]

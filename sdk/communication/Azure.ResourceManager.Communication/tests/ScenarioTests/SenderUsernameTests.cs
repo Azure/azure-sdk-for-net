@@ -89,8 +89,11 @@ namespace Azure.ResourceManager.Communication.Tests
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             Assert.That(senderUsername, Is.Not.Null);
-            Assert.That(senderUsername.Data.Username, Is.EqualTo(username));
-            Assert.That(senderUsername.Data.DisplayName, Is.EqualTo(displayName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(senderUsername.Data.Username, Is.EqualTo(username));
+                Assert.That(senderUsername.Data.DisplayName, Is.EqualTo(displayName));
+            });
         }
 
         // todo: follow up on update bug. Updating a record with the same name results in 400 error a username already exists.
@@ -141,8 +144,11 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var actualSenderUsername = await collection.GetAsync(username);
             Assert.That(actualSenderUsername, Is.Not.Null);
-            Assert.That(actualSenderUsername.Value.Data.Username, Is.EqualTo(username));
-            Assert.That(actualSenderUsername.Value.Data.DisplayName, Is.EqualTo(displayName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualSenderUsername.Value.Data.Username, Is.EqualTo(username));
+                Assert.That(actualSenderUsername.Value.Data.DisplayName, Is.EqualTo(displayName));
+            });
         }
 
         [Test]
@@ -155,8 +161,11 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var list = await _domainResource.GetSenderUsernameResources().GetAllAsync().ToEnumerableAsync();
             Assert.That(list, Is.Not.Empty);
-            Assert.That(list.Any(s => s.HasData && s.Data.Username == username), Is.True);
-            Assert.That(list.Any(s => s.HasData && s.Data.DisplayName == displayName), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Any(s => s.HasData && s.Data.Username == username), Is.True);
+                Assert.That(list.Any(s => s.HasData && s.Data.DisplayName == displayName), Is.True);
+            });
         }
     }
 }

@@ -184,11 +184,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
 
             RestorableCosmosDBAccountResource restorableDBA = restorableAccounts.Where(account => account.Data.AccountName == expectedRestorableDatabaseAccountName).Single();
-            Assert.That(CosmosDBApiType.Sql, Is.EqualTo(restorableDBA.Data.ApiType));
-            Assert.That(restorableDBA.Data.CreatedOn, Is.Not.Null);
-            Assert.That(restorableDBA.Data.DeletedOn, Is.Null, $"Actual DeletedOn: {restorableDBA.Data.DeletedOn}");
-            Assert.That(restorableDBA.Data.OldestRestorableOn, Is.Not.Null);
-            Assert.That(restorableDBA.Data.RestorableLocations, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(CosmosDBApiType.Sql, Is.EqualTo(restorableDBA.Data.ApiType));
+                Assert.That(restorableDBA.Data.CreatedOn, Is.Not.Null);
+                Assert.That(restorableDBA.Data.DeletedOn, Is.Null, $"Actual DeletedOn: {restorableDBA.Data.DeletedOn}");
+                Assert.That(restorableDBA.Data.OldestRestorableOn, Is.Not.Null);
+                Assert.That(restorableDBA.Data.RestorableLocations, Is.Not.Null);
+            });
         }
 
         private async Task<CosmosDBAccountResource> RestoreAndVerifyRestoredAccount(AccountType accountType, RestorableCosmosDBAccountResource restorableAccount, CosmosDBAccountRestoreParameters restoreParameters, AzureLocation location, AzureLocation armLocation, bool IsFreeTierEnabled = false)
@@ -214,14 +217,20 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
             Assert.That(restoredDatabaseAccount, Is.Not.Null);
-            Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
-            Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(restoredDatabaseAccount.Data.RestoreParameters, Is.Not.Null);
+                Assert.That(restorableAccount.Id.ToString().ToLower(), Is.EqualTo(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower()));
+            });
             Assert.That(restoredDatabaseAccount.Data.RestoreParameters.IsRestoreWithTtlDisabled, Is.True);
             Assert.That(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy, Is.True);
 
             ContinuousModeBackupPolicy policy = restoredDatabaseAccount.Data.BackupPolicy as ContinuousModeBackupPolicy;
-            Assert.That(policy.BackupPolicyType, Is.EqualTo(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType));
-            Assert.That(restoredDatabaseAccount.Data.IsFreeTierEnabled, Is.EqualTo(IsFreeTierEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.BackupPolicyType, Is.EqualTo(_restorableDatabaseAccount.Data.BackupPolicy.BackupPolicyType));
+                Assert.That(restoredDatabaseAccount.Data.IsFreeTierEnabled, Is.EqualTo(IsFreeTierEnabled));
+            });
 
             return restoredDatabaseAccount;
         }

@@ -51,8 +51,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource vm = lro.Value;
-            Assert.That((bool)await collection.ExistsAsync(vmName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(vmName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(vmName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(vmName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -101,8 +104,11 @@ namespace Azure.ResourceManager.Compute.Tests
                     vm2 = vm;
             }
 
-            Assert.That(vm1, Is.Not.Null);
-            Assert.That(vm2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vm1, Is.Not.Null);
+                Assert.That(vm2, Is.Not.Null);
+            });
         }
     }
 }

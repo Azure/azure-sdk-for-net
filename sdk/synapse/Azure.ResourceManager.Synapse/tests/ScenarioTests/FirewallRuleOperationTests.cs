@@ -37,20 +37,29 @@ namespace Azure.ResourceManager.Synapse.Tests
             var firewallRuleCreateParams = CommonData.PrepareFirewallRuleParams(CommonData.StartIpAddress, CommonData.EndIpAddress);
             SynapseIPFirewallRuleInfoCollection firewallRuleCollection = WorkspaceResource.GetSynapseIPFirewallRuleInfos();
             var firewallRuleCreate = (await firewallRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, firewallRuleCreateParams)).Value;
-            Assert.That(firewallRuleCreate.Data.StartIPAddress, Is.EqualTo(CommonData.StartIpAddress));
-            Assert.That(firewallRuleCreate.Data.EndIPAddress, Is.EqualTo(CommonData.EndIpAddress));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firewallRuleCreate.Data.StartIPAddress, Is.EqualTo(CommonData.StartIpAddress));
+                Assert.That(firewallRuleCreate.Data.EndIPAddress, Is.EqualTo(CommonData.EndIpAddress));
+            });
 
             // get firewall rule
             var firewallRuleGet = (await firewallRuleCollection.GetAsync(firewallRuleName)).Value;
-            Assert.That(firewallRuleGet.Data.ProvisioningState, Is.EqualTo(SynapseProvisioningState.Succeeded));
-            Assert.That(firewallRuleCreate.Data.StartIPAddress, Is.EqualTo(CommonData.StartIpAddress));
-            Assert.That(firewallRuleCreate.Data.EndIPAddress, Is.EqualTo(CommonData.EndIpAddress));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firewallRuleGet.Data.ProvisioningState, Is.EqualTo(SynapseProvisioningState.Succeeded));
+                Assert.That(firewallRuleCreate.Data.StartIPAddress, Is.EqualTo(CommonData.StartIpAddress));
+                Assert.That(firewallRuleCreate.Data.EndIPAddress, Is.EqualTo(CommonData.EndIpAddress));
+            });
 
             // update firewall rule
             var firewallRuleUpdateParams = CommonData.PrepareFirewallRuleParams(CommonData.UpdatedStartIpAddress, CommonData.UpdatedEndIpAddress);
             var firewallRuleUpdate = (await firewallRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, firewallRuleUpdateParams)).Value;
-            Assert.That(firewallRuleUpdate.Data.StartIPAddress, Is.EqualTo(CommonData.UpdatedStartIpAddress));
-            Assert.That(firewallRuleUpdate.Data.EndIPAddress, Is.EqualTo(CommonData.UpdatedEndIpAddress));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firewallRuleUpdate.Data.StartIPAddress, Is.EqualTo(CommonData.UpdatedStartIpAddress));
+                Assert.That(firewallRuleUpdate.Data.EndIPAddress, Is.EqualTo(CommonData.UpdatedEndIpAddress));
+            });
 
             // list firewall rules from workspace
             var firewallRuleFromWorkspace = firewallRuleCollection.GetAllAsync();
@@ -63,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             // delete firewall rule
             await firewallRule.DeleteAsync(WaitUntil.Completed);
             firewallRuleList = await firewallRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(firewallRuleList.Count, Is.EqualTo(firewallRuleCount - 1));
+            Assert.That(firewallRuleList, Has.Count.EqualTo(firewallRuleCount - 1));
         }
     }
 }

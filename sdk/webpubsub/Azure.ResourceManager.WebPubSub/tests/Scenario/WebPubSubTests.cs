@@ -72,8 +72,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
             await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
-            Assert.That((bool)await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName), Is.True);
-            Assert.That((bool)await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName), Is.True);
+                Assert.That((bool)await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName + "1"), Is.False);
+            });
         }
 
         [Test]
@@ -108,8 +111,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         private void ValidateWebPubSub(WebPubSubData webPubSub, string webPubSubName)
         {
-            Assert.IsNotNull(webPubSub);
-            Assert.IsNotEmpty(webPubSub.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(webPubSub, Is.Not.Null);
+                Assert.That((string)webPubSub.Id, Is.Not.Empty);
+            });
             Assert.That(webPubSub.Name, Is.EqualTo(webPubSubName));
             Assert.That(webPubSub.Location, Is.EqualTo(AzureLocation.WestUS2));
         }

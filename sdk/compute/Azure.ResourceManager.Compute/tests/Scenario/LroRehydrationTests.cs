@@ -56,11 +56,14 @@ namespace Azure.ResourceManager.Compute.Tests.Scenario
             VirtualMachineScaleSetResource rehydratedResult = resourceRehydratedLro.Value;
             await originalLro.UpdateStatusAsync();
             VirtualMachineScaleSetResource originalResult = originalLro.Value;
-            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Sku), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Sku)));
-            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Plan), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Plan)));
-            Assert.That(rehydratedResult.Data.Identity, Is.EqualTo(originalResult.Data.Identity));
-            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Location), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Location)));
-            Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Properties), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Properties)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Sku), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Sku)));
+                Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Plan), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Plan)));
+                Assert.That(rehydratedResult.Data.Identity, Is.EqualTo(originalResult.Data.Identity));
+                Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Location), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Location)));
+                Assert.That(JsonSerializer.Serialize(rehydratedResult.Data.Properties), Is.EqualTo(JsonSerializer.Serialize(originalResult.Data.Properties)));
+            });
 
             var originalResponse = originalLro.GetRawResponse();
             var rehydratedResponse = resourceRehydratedLro.GetRawResponse();

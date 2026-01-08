@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _supportTicketFileCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSupportTicketFileData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketFileName).Data, _existSupportTicketFileName);
         }
 
@@ -73,17 +73,23 @@ namespace Azure.ResourceManager.Support.Tests
             var uploadFile = new UploadFileContent() { ChunkIndex = 0, Content = "VGVzdA==" };
             await supportTicketFile.Value.UploadAsync(uploadFile);
             supportTicketFile = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileName);
-            Assert.IsNotNull(supportTicketFile);
-            Assert.IsNotEmpty(supportTicketFile.Value.Data.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicketFile, Is.Not.Null);
+                Assert.That((string)supportTicketFile.Value.Data.Id, Is.Not.Empty);
+            });
             Assert.That(supportTicketFile.Value.Data.Name, Is.EqualTo(_existSupportTicketFileName));
-            Assert.Greater(supportTicketFile.Value.Data.FileSize, fileSize);
+            Assert.That(supportTicketFile.Value.Data.FileSize, Is.GreaterThan(fileSize));
         }
 
         private void ValidateSupportTicketFileData(SupportFileDetailData supportTicketFile, string fileName)
         {
-            Assert.IsNotNull(supportTicketFile);
-            Assert.IsNotEmpty(supportTicketFile.Id);
-            Assert.That(fileName, Is.EqualTo(supportTicketFile.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicketFile, Is.Not.Null);
+                Assert.That((string)supportTicketFile.Id, Is.Not.Empty);
+                Assert.That(fileName, Is.EqualTo(supportTicketFile.Name));
+            });
         }
     }
 }

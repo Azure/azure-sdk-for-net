@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             {
                 ++cnt;
             }
-            Assert.GreaterOrEqual(cnt, 0);
+            Assert.That(cnt, Is.GreaterThanOrEqualTo(0));
         }
     }
 }

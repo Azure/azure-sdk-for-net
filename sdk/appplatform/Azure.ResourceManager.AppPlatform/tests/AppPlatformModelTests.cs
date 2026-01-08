@@ -18,8 +18,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var jsonElement = JsonDocument.Parse($"{{\"serviceId\":\"{rawId}\"}}").RootElement;
             var properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(jsonElement);
 
-            Assert.That(properties.ServiceId, Is.EqualTo(new Guid(guid)));
-            Assert.That(properties.ServiceInstanceId, Is.EqualTo(rawId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.ServiceId, Is.EqualTo(new Guid(guid)));
+                Assert.That(properties.ServiceInstanceId, Is.EqualTo(rawId));
+            });
         }
 
         [Test]
@@ -29,8 +32,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var jsonElement = JsonDocument.Parse("{}").RootElement;
             var properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(jsonElement);
 
-            Assert.That(properties.ServiceId, Is.Null);
-            Assert.That(properties.ServiceInstanceId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.ServiceId, Is.Null);
+                Assert.That(properties.ServiceInstanceId, Is.Null);
+            });
         }
 
         [Test]
@@ -40,8 +46,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var jsonElement = JsonDocument.Parse("{\"serviceId\":null}").RootElement;
             var properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(jsonElement);
 
-            Assert.That(properties.ServiceId, Is.Null);
-            Assert.That(properties.ServiceInstanceId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.ServiceId, Is.Null);
+                Assert.That(properties.ServiceInstanceId, Is.Null);
+            });
         }
 
         [Test]

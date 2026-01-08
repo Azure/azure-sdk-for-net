@@ -46,13 +46,16 @@ namespace Azure.ResourceManager.Attestation.Tests
             Assert.That(privateEndpointConnectionData.ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
             //3.GetAll
             var list = await endpointCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
-            //4.CheckIfExist
-            Assert.That((bool)await endpointCollection.ExistsAsync(list[0].Data.Name), Is.True);
-            Assert.That((bool)await endpointCollection.ExistsAsync(list[0].Data.Name + "01"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(list, Has.Count.EqualTo(1));
+                //4.CheckIfExist
+                Assert.That((bool)await endpointCollection.ExistsAsync(list[0].Data.Name), Is.True);
+                Assert.That((bool)await endpointCollection.ExistsAsync(list[0].Data.Name + "01"), Is.False);
+            });
             //Resouece operation
             //Delete
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
             foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);

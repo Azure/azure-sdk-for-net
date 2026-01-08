@@ -31,9 +31,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             TrafficManagerEndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
 
-            Assert.IsNotNull(endpointResource);
-            Assert.That(endpointResource.HasData, Is.True);
-            Assert.IsNotNull(endpointResource.Data);
+            Assert.That(endpointResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpointResource.HasData, Is.True);
+                Assert.That(endpointResource.Data, Is.Not.Null);
+            });
             Assert.That(endpointResource.Data.Name, Is.EqualTo(EndpointName1));
         }
 
@@ -60,9 +63,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             endpointResource = await DefaultEndpointResource.GetAsync();
 
-            Assert.IsNotNull(endpointResource);
-            Assert.That(endpointResource.HasData, Is.True);
-            Assert.IsNotNull(endpointResource.Data);
+            Assert.That(endpointResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpointResource.HasData, Is.True);
+                Assert.That(endpointResource.Data, Is.Not.Null);
+            });
             Assert.That(endpointResource.Data.Target, Is.EqualTo(NewEndpointTarget));
         }
 
@@ -86,12 +92,18 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             TrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeName, NewEndpointName);
 
-            Assert.IsNotNull(endpointResource);
-            Assert.That(endpointResource.HasData, Is.True);
-            Assert.IsNotNull(endpointResource.Data);
-            Assert.That(endpointResource.Data.Name, Is.EqualTo(NewEndpointName));
-            Assert.That(endpointResource.Data.Weight, Is.EqualTo(NewEndpointWeight));
-            Assert.That(endpointResource.Data.Target, Is.EqualTo(NewEndpointTarget));
+            Assert.That(endpointResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpointResource.HasData, Is.True);
+                Assert.That(endpointResource.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpointResource.Data.Name, Is.EqualTo(NewEndpointName));
+                Assert.That(endpointResource.Data.Weight, Is.EqualTo(NewEndpointWeight));
+                Assert.That(endpointResource.Data.Target, Is.EqualTo(NewEndpointTarget));
+            });
         }
 
         [RecordedTest]
@@ -118,9 +130,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             TrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeName, EndpointName1);
 
-            Assert.IsNotNull(endpointResource);
-            Assert.That(endpointResource.HasData, Is.True);
-            Assert.IsNotNull(endpointResource.Data);
+            Assert.That(endpointResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(endpointResource.HasData, Is.True);
+                Assert.That(endpointResource.Data, Is.Not.Null);
+            });
             Assert.That(endpointResource.Data.Name, Is.EqualTo(EndpointName1));
         }
 

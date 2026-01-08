@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.Redis.Tests.SerializationTests
 
             RedisCommonConfiguration redisCommonConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(jsonDocument.RootElement);
 
-            Assert.That(redisCommonConfiguration.IsAofBackupEnabled, Is.True);
-            Assert.That(redisCommonConfiguration.IsRdbBackupEnabled, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(redisCommonConfiguration.IsAofBackupEnabled, Is.True);
+                Assert.That(redisCommonConfiguration.IsRdbBackupEnabled, Is.True);
+            });
         }
     }
 }

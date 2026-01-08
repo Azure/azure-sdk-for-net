@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Relay.Tests
             Assert.That(_relayNamespace.Data.Sku.Name, Is.EqualTo(RelaySkuName.Standard));
 
             var listOfRelayNamespaces = await _relayNamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(listOfRelayNamespaces.Count, Is.EqualTo(1));
+            Assert.That(listOfRelayNamespaces, Has.Count.EqualTo(1));
 
             /*await _relayNamespace.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayNamespace.GetAsync(); });

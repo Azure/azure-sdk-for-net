@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreatePrivateZone(_resourceGroup, privateZoneName);
             var list = await _privateZoneResource.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePrivateZone(list.First(item => item.Data.Name == privateZoneName), privateZoneName);
         }
 
@@ -147,10 +147,13 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             }
 
             var recordSets = await privateZone.GetRecordsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(recordSets);
-            Assert.IsNotNull(recordSets[0].PrivateDnsSoaRecordInfo);
+            Assert.That(recordSets, Is.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordSets[0].PrivateDnsSoaRecordInfo, Is.Not.Null);
 
-            Assert.That(recordSets[1].AaaaRecords.Count, Is.EqualTo(2));
+                Assert.That(recordSets[1].AaaaRecords, Has.Count.EqualTo(2));
+            });
             Assert.That(recordSets[1].AaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55"));
             Assert.AreEqual(1, recordSets[2].AaaaRecords.Count);
             Assert.That(recordSets[2].AaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57"));
@@ -174,10 +177,13 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 Thread.Sleep(30000);
             }
             privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-            Assert.That(privateZone.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(privateZone.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = privateZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await privateZone.RemoveTagAsync("addtagkey");
@@ -223,9 +229,12 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
         private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)
         {
-            Assert.IsNotNull(privateZone);
-            Assert.IsNotNull(privateZone.Data.Id);
-            Assert.That(privateZone.Data.Name, Is.EqualTo(privateZoneName));
+            Assert.That(privateZone, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(privateZone.Data.Id, Is.Not.Null);
+                Assert.That(privateZone.Data.Name, Is.EqualTo(privateZoneName));
+            });
         }
     }
 }

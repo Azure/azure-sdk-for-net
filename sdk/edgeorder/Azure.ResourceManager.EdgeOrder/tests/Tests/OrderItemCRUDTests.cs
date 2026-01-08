@@ -56,8 +56,11 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Create
             var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, orderItemName, orderItemResourceData);
             await createOrderItemOperation.WaitForCompletionAsync();
-            Assert.That(createOrderItemOperation.HasCompleted, Is.True);
-            Assert.That(createOrderItemOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createOrderItemOperation.HasCompleted, Is.True);
+                Assert.That(createOrderItemOperation.HasValue, Is.True);
+            });
 
             // Get
             Response<EdgeOrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);
@@ -72,8 +75,11 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             };
             var updateOrderItemOperation = await orderItemResource.UpdateAsync(WaitUntil.Completed, orderItemUpdateParameter);
             await updateOrderItemOperation.WaitForCompletionAsync();
-            Assert.That(updateOrderItemOperation.HasCompleted, Is.True);
-            Assert.That(updateOrderItemOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateOrderItemOperation.HasCompleted, Is.True);
+                Assert.That(updateOrderItemOperation.HasValue, Is.True);
+            });
 
             // Get
             getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(orderItemName);

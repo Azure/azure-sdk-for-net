@@ -52,10 +52,13 @@ namespace Azure.ResourceManager.Hci.Tests
             Assert.That(clusterFromUpdate.Data.DesiredProperties.DiagnosticLevel, Is.EqualTo(HciClusterDiagnosticLevel.Enhanced));
 
             HciClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();
-            Assert.That(clusterName, Is.EqualTo(clusterFromGet.Data.Name));
-            Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromGet.Data.AadClientId));
-            Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromGet.Data.AadTenantId));
-            Assert.That(clusterFromGet.Data.DesiredProperties.DiagnosticLevel, Is.EqualTo(HciClusterDiagnosticLevel.Enhanced));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterName, Is.EqualTo(clusterFromGet.Data.Name));
+                Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromGet.Data.AadClientId));
+                Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromGet.Data.AadTenantId));
+                Assert.That(clusterFromGet.Data.DesiredProperties.DiagnosticLevel, Is.EqualTo(HciClusterDiagnosticLevel.Enhanced));
+            });
 
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);
         }

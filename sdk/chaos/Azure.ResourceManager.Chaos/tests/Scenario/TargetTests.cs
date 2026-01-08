@@ -52,8 +52,11 @@ namespace Azure.ResourceManager.Chaos.Tests
                 TestConstants.VmssResourceName,
                 this.VmssName,
                 TestConstants.VmssTargetName).ConfigureAwait(false);
-            Assert.That(targetResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssTargetName));
-            Assert.That(targetResponse.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssTargetName));
+                Assert.That(targetResponse.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
 
         [TestCase]

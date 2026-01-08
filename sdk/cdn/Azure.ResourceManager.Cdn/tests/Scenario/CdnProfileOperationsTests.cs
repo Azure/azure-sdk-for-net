@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             SupportedOptimizationTypesListResult optimizationTypesList = await cdnProfile.GetSupportedOptimizationTypesAsync();
             Assert.That(optimizationTypesList, Is.Not.Null);
             Assert.That(optimizationTypesList.SupportedOptimizationTypes, Is.Not.Null);
-            Assert.Greater(optimizationTypesList.SupportedOptimizationTypes.Count, 0);
+            Assert.That(optimizationTypesList.SupportedOptimizationTypes.Count, Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -84,10 +84,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempResourceUsage in cdnProfile.GetResourceUsagesAsync())
             {
                 count++;
-                Assert.That(tempResourceUsage.ResourceType, Is.EqualTo("endpoint"));
-                Assert.That(CdnUsageUnit.Count, Is.EqualTo(tempResourceUsage.Unit));
-                Assert.That(tempResourceUsage.CurrentValue, Is.EqualTo(0));
-                Assert.That(tempResourceUsage.Limit, Is.EqualTo(25));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(tempResourceUsage.ResourceType, Is.EqualTo("endpoint"));
+                    Assert.That(CdnUsageUnit.Count, Is.EqualTo(tempResourceUsage.Unit));
+                    Assert.That(tempResourceUsage.CurrentValue, Is.EqualTo(0));
+                    Assert.That(tempResourceUsage.Limit, Is.EqualTo(25));
+                });
             }
             Assert.That(count, Is.EqualTo(1));
         }

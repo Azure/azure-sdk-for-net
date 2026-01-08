@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             // Delete SQL VM group
             await sqlVmGroupFromGet.DeleteAsync(WaitUntil.Completed);
             // List SQL VM group
@@ -91,13 +91,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                     { key, value }
                 }
             })).Value;
-            Assert.That(sqlVmGroupFromUpdate.Data.Tags.Keys.Count, Is.EqualTo(1));
-            Assert.That(sqlVmGroupFromUpdate.Data.Tags[key], Is.EqualTo(value));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sqlVmGroupFromUpdate.Data.Tags.Keys, Has.Count.EqualTo(1));
+                Assert.That(sqlVmGroupFromUpdate.Data.Tags[key], Is.EqualTo(value));
+            });
             // Get SQL VM group
             SqlVmGroupResource sqlVmGroupFromGet = await sqlVmGroupFromUpdate.GetAsync();
-            Assert.That(sqlVmGroupFromGet.Data.Name, Is.EqualTo(_sqlVmGroupName));
-            Assert.That(sqlVmGroupFromGet.Data.Tags.Keys.Count, Is.EqualTo(1));
-            Assert.That(sqlVmGroupFromGet.Data.Tags[key], Is.EqualTo(value));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sqlVmGroupFromGet.Data.Name, Is.EqualTo(_sqlVmGroupName));
+                Assert.That(sqlVmGroupFromGet.Data.Tags.Keys, Has.Count.EqualTo(1));
+                Assert.That(sqlVmGroupFromGet.Data.Tags[key], Is.EqualTo(value));
+            });
         }
 
         [TestCase(null)]

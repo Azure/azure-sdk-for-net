@@ -45,22 +45,28 @@ namespace Azure.ResourceManager.Redis.Tests
             };
             var response = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(response.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(response.Data.RedisConfiguration.MaxMemoryDelta, Is.EqualTo("642"));
-            Assert.That(response.Data.RedisConfiguration.MaxMemoryReserved, Is.EqualTo("642"));
-            Assert.That(response.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(response.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
-            Assert.That(response.Data.MinimumTlsVersion, Is.EqualTo(RedisTlsVersion.Tls1_2));
-            Assert.That(response.Data.ReplicasPerMaster, Is.EqualTo(2));
-            Assert.That(response.Data.RedisVersion.Split('.')[0], Is.EqualTo("6"));// 6 is the current 'latest' version. Will change in the future.
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(response.Data.RedisConfiguration.MaxMemoryDelta, Is.EqualTo("642"));
+                Assert.That(response.Data.RedisConfiguration.MaxMemoryReserved, Is.EqualTo("642"));
+                Assert.That(response.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(response.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+                Assert.That(response.Data.MinimumTlsVersion, Is.EqualTo(RedisTlsVersion.Tls1_2));
+                Assert.That(response.Data.ReplicasPerMaster, Is.EqualTo(2));
+                Assert.That(response.Data.RedisVersion.Split('.')[0], Is.EqualTo("6"));// 6 is the current 'latest' version. Will change in the future.
 
-            Assert.That(response.Data.Instances.Count, Is.EqualTo(3));
+                Assert.That(response.Data.Instances, Has.Count.EqualTo(3));
+            });
             for (int i = 0; i < response.Data.Instances.Count; i++)
             {
-                Assert.That(response.Data.Instances[i].SslPort, Is.EqualTo(15000 + i));
-                Assert.That(response.Data.Instances[i].NonSslPort, Is.Null);
-                Assert.That(response.Data.Instances[i].ShardId, Is.EqualTo(0));
-                Assert.That(response.Data.Instances[i].Zone, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.Data.Instances[i].SslPort, Is.EqualTo(15000 + i));
+                    Assert.That(response.Data.Instances[i].NonSslPort, Is.Null);
+                    Assert.That(response.Data.Instances[i].ShardId, Is.EqualTo(0));
+                    Assert.That(response.Data.Instances[i].Zone, Is.Null);
+                });
             }
 
             await response.DeleteAsync(WaitUntil.Completed);

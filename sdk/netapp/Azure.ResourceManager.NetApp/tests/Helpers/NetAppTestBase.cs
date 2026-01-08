@@ -188,16 +188,25 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             Assert.That(account, Is.Not.Null);
             Assert.That(account.Id, Is.Not.Null);
-            Assert.That(account.Id.Name, Is.Not.Null);
-            Assert.That(account.Data, Is.Not.Null);
-            Assert.That(account.Data.Location, Is.Not.Null);
-            Assert.That(account.Data.SystemData, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account.Id.Name, Is.Not.Null);
+                Assert.That(account.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(account.Data.Location, Is.Not.Null);
+                Assert.That(account.Data.SystemData, Is.Not.Null);
+            });
 
             if (useDefaults)
             {
-                Assert.That(account.Data.Location.ToString(), Is.EqualTo(location));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(account.Data.Location.ToString(), Is.EqualTo(location));
 
-                Assert.That(account.Data.Tags, Is.Not.Null);
+                    Assert.That(account.Data.Tags, Is.Not.Null);
+                });
                 foreach (var tag in DefaultTags)
                 {
                     Assert.That(tag.Value, Is.EqualTo(account.Data.Tags[tag.Key]));
@@ -209,52 +218,75 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         {
             Assert.That(volume, Is.Not.Null);
             Assert.That(volume.Id, Is.Not.Null);
-            Assert.That(volume.Id.Name, Is.Not.Null);
-            Assert.That(volume.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(volume.Id.Name, Is.Not.Null);
+                Assert.That(volume.Data, Is.Not.Null);
+            });
             Assert.That(volume.Data.Location, Is.Not.Null);
 
             if (useDefaults)
             {
-                Assert.That(volume.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(volume.Data.Location, Is.EqualTo(DefaultLocation));
 
-                Assert.That(volume.Data.Tags, Is.Not.Null);
+                    Assert.That(volume.Data.Tags, Is.Not.Null);
+                });
                 //we cannot assert on count as a policy might add addional tags
                 //Assert.AreEqual(DefaultTags.Count, volume.Data.Tags.Count);
                 foreach (KeyValuePair<string, string> tag in DefaultTags)
                 {
                     Assert.That(volume.Data.Tags, new DictionaryContainsKeyValuePairConstraint(tag.Key, tag.Value));
                 }
-                Assert.That(volume.Data.UsageThreshold, Is.EqualTo(_defaultUsageThreshold));
-                Assert.That(volume.Data.SubnetId, Is.EqualTo(DefaultSubnetId));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(volume.Data.UsageThreshold, Is.EqualTo(_defaultUsageThreshold));
+                    Assert.That(volume.Data.SubnetId, Is.EqualTo(DefaultSubnetId));
+                });
             }
         }
 
         public static void AssertNetAppAccountEqual(NetAppAccountResource account1, NetAppAccountResource account2)
         {
-            Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
-            Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
+                Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
+            });
         }
 
         public static void VerifyCapacityPoolProperties(CapacityPoolResource pool, bool useDefaults)
         {
             Assert.That(pool, Is.Not.Null);
             Assert.That(pool.Id, Is.Not.Null);
-            Assert.That(pool.Id.Name, Is.Not.Null);
-            Assert.That(pool.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pool.Id.Name, Is.Not.Null);
+                Assert.That(pool.Data, Is.Not.Null);
+            });
             Assert.That(pool.Data.Location, Is.Not.Null);
             //Assert.NotNull(pool.Data.SystemData);
 
             if (useDefaults)
             {
-                Assert.That(pool.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(pool.Data.Location, Is.EqualTo(DefaultLocation));
 
-                Assert.That(pool.Data.Tags, Is.Not.Null);
+                    Assert.That(pool.Data.Tags, Is.Not.Null);
+                });
                 foreach (var tag in DefaultTags)
                 {
                     Assert.That(tag.Value, Is.EqualTo(pool.Data.Tags[tag.Key]));
                 }
-                Assert.That(pool.Data.ServiceLevel, Is.EqualTo(NetAppFileServiceLevel.Premium));
-                Assert.That(pool.Data.Size, Is.EqualTo(_poolSize));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(pool.Data.ServiceLevel, Is.EqualTo(NetAppFileServiceLevel.Premium));
+                    Assert.That(pool.Data.Size, Is.EqualTo(_poolSize));
+                });
             }
         }
 

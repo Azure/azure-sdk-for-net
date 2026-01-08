@@ -41,19 +41,25 @@ namespace Azure.ResourceManager.Relay.Tests
                 IsTransportSecurityRequired = false,
                 RelayType = Models.RelayType.NetTcp
             })).Value;
-            Assert.That(_wcfRelayResource.Data.IsClientAuthorizationRequired, Is.True);
-            Assert.That(_wcfRelayResource.Data.IsTransportSecurityRequired, Is.False);
-            Assert.That(_wcfRelayResource.Data.UserMetadata, Is.EqualTo("test metadata"));
-            Assert.That(_wcfRelayResource.Data.RelayType, Is.EqualTo(Models.RelayType.NetTcp));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_wcfRelayResource.Data.IsClientAuthorizationRequired, Is.True);
+                Assert.That(_wcfRelayResource.Data.IsTransportSecurityRequired, Is.False);
+                Assert.That(_wcfRelayResource.Data.UserMetadata, Is.EqualTo("test metadata"));
+                Assert.That(_wcfRelayResource.Data.RelayType, Is.EqualTo(Models.RelayType.NetTcp));
+            });
 
             _wcfRelayResource.Data.UserMetadata = "second metadata";
 
             //Update Relay namespace
             _wcfRelayResource = (await _wcfRelayResource.UpdateAsync(WaitUntil.Completed, _wcfRelayResource.Data)).Value;
-            Assert.That(_wcfRelayResource.Data.IsClientAuthorizationRequired, Is.True);
-            Assert.That(_wcfRelayResource.Data.IsTransportSecurityRequired, Is.False);
-            Assert.That(_wcfRelayResource.Data.UserMetadata, Is.EqualTo("second metadata"));
-            Assert.That(_wcfRelayResource.Data.RelayType, Is.EqualTo(Models.RelayType.NetTcp));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_wcfRelayResource.Data.IsClientAuthorizationRequired, Is.True);
+                Assert.That(_wcfRelayResource.Data.IsTransportSecurityRequired, Is.False);
+                Assert.That(_wcfRelayResource.Data.UserMetadata, Is.EqualTo("second metadata"));
+                Assert.That(_wcfRelayResource.Data.RelayType, Is.EqualTo(Models.RelayType.NetTcp));
+            });
 
             //Create another relay namespace
             _wcfRelayResource = (await _wcfRelayCollection.CreateOrUpdateAsync(WaitUntil.Completed, "h2", new WcfRelayData()
@@ -80,14 +86,17 @@ namespace Azure.ResourceManager.Relay.Tests
             Assert.That(_wcfRelayResource.Data.RelayType, Is.EqualTo(Models.RelayType.Http));
 
             WcfRelayResource _wcfRelayResource2 = (await _wcfRelayCollection.GetAsync("h1"))?.Value;
-            Assert.That(_wcfRelayResource2.Data.IsClientAuthorizationRequired, Is.True);
-            Assert.That(_wcfRelayResource2.Data.IsTransportSecurityRequired, Is.False);
-            Assert.That(_wcfRelayResource2.Data.UserMetadata, Is.EqualTo("second metadata"));
-            Assert.That(_wcfRelayResource2.Data.RelayType, Is.EqualTo(Models.RelayType.NetTcp));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_wcfRelayResource2.Data.IsClientAuthorizationRequired, Is.True);
+                Assert.That(_wcfRelayResource2.Data.IsTransportSecurityRequired, Is.False);
+                Assert.That(_wcfRelayResource2.Data.UserMetadata, Is.EqualTo("second metadata"));
+                Assert.That(_wcfRelayResource2.Data.RelayType, Is.EqualTo(Models.RelayType.NetTcp));
+            });
 
             // List all hybrid connections
             var listOfWcfRelay = await _wcfRelayCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(listOfWcfRelay.Count, Is.EqualTo(3));
+            Assert.That(listOfWcfRelay, Has.Count.EqualTo(3));
 
             await _wcfRelayResource2.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _wcfRelayResource2.GetAsync(); });

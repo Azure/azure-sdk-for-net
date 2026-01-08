@@ -41,24 +41,27 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             string elasticSanName = Recording.GenerateAssetName("testsan-");
             ElasticSanResource elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data)).Value;
-            Assert.That(elasticSan1.Id.Name, Is.EqualTo(elasticSanName));
-            Assert.That(elasticSan1.Data.BaseSizeTiB, Is.EqualTo(1));
-            Assert.That(elasticSan1.Data.ExtendedCapacitySizeTiB, Is.EqualTo(6));
-            Assert.That(elasticSan1.Data.Tags.ContainsKey("tag1"), Is.True);
-            Assert.That(elasticSan1.Data.Tags["tag1"], Is.EqualTo("value1"));
-            Assert.That(elasticSan1.Data.PublicNetworkAccess.Value.ToString(), Is.EqualTo("Enabled"));
-            Assert.That(Models.AutoScalePolicyEnforcement.Disabled, Is.EqualTo(elasticSan1.Data.ScaleUpProperties.AutoScalePolicyEnforcement));
-            Assert.That(elasticSan1.Data.ScaleUpProperties.IncreaseCapacityUnitByTiB, Is.EqualTo(1));
-            Assert.That(elasticSan1.Data.ScaleUpProperties.CapacityUnitScaleUpLimitTiB, Is.EqualTo(24));
-            Assert.That(elasticSan1.Data.ScaleUpProperties.UnusedSizeTiB, Is.EqualTo(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(elasticSan1.Id.Name, Is.EqualTo(elasticSanName));
+                Assert.That(elasticSan1.Data.BaseSizeTiB, Is.EqualTo(1));
+                Assert.That(elasticSan1.Data.ExtendedCapacitySizeTiB, Is.EqualTo(6));
+                Assert.That(elasticSan1.Data.Tags.ContainsKey("tag1"), Is.True);
+                Assert.That(elasticSan1.Data.Tags["tag1"], Is.EqualTo("value1"));
+                Assert.That(elasticSan1.Data.PublicNetworkAccess.Value.ToString(), Is.EqualTo("Enabled"));
+                Assert.That(Models.AutoScalePolicyEnforcement.Disabled, Is.EqualTo(elasticSan1.Data.ScaleUpProperties.AutoScalePolicyEnforcement));
+                Assert.That(elasticSan1.Data.ScaleUpProperties.IncreaseCapacityUnitByTiB, Is.EqualTo(1));
+                Assert.That(elasticSan1.Data.ScaleUpProperties.CapacityUnitScaleUpLimitTiB, Is.EqualTo(24));
+                Assert.That(elasticSan1.Data.ScaleUpProperties.UnusedSizeTiB, Is.EqualTo(5));
+            });
             // Skip the validation for AvailabilityZone as the server won't return the property
 
             elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, GetDefaultElasticSanParameters(TestLocation, 2, 7))).Value;
             Assert.That(elasticSan1.Id.Name, Is.EqualTo(elasticSanName));
             Assert.That(elasticSan1.Data.BaseSizeTiB, Is.EqualTo(2));
             Assert.That(elasticSan1.Data.ExtendedCapacitySizeTiB, Is.EqualTo(7));
-            Assert.IsEmpty(elasticSan1.Data.Tags);
-            Assert.IsEmpty(elasticSan1.Data.AvailabilityZones);
+            Assert.That(elasticSan1.Data.Tags, Is.Empty);
+            Assert.That(elasticSan1.Data.AvailabilityZones, Is.Empty);
             Assert.That(elasticSan1.Data.PublicNetworkAccess, Is.EqualTo(null));
             Assert.That(elasticSan1.Data.ScaleUpProperties, Is.Null);
 
@@ -71,21 +74,27 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
         {
             ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
             ElasticSanResource elasticSan1 = (await elasticSanCollection.GetAsync(ElasticSanName)).Value;
-            Assert.That(elasticSan1.Id.Name, Is.EqualTo(ElasticSanName));
-            Assert.That(elasticSan1.Data.BaseSizeTiB, Is.EqualTo(1));
-            Assert.That(elasticSan1.Data.ExtendedCapacitySizeTiB, Is.EqualTo(6));
+            Assert.Multiple(() =>
+            {
+                Assert.That(elasticSan1.Id.Name, Is.EqualTo(ElasticSanName));
+                Assert.That(elasticSan1.Data.BaseSizeTiB, Is.EqualTo(1));
+                Assert.That(elasticSan1.Data.ExtendedCapacitySizeTiB, Is.EqualTo(6));
 
-            // Test for ElasticSan PE properties
-            Assert.That(elasticSan1.Data.PrivateEndpointConnections.Count, Is.EqualTo(3));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].Name);
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].PrivateEndpointId);
-            Assert.That(elasticSan1.Data.PrivateEndpointConnections[0].ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[1].Name);
-            Assert.That(elasticSan1.Data.PrivateEndpointConnections[1].ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[1].PrivateEndpointId);
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[2].Name);
-            Assert.That(elasticSan1.Data.PrivateEndpointConnections[2].ConnectionState.Status.ToString(), Is.EqualTo("Pending"));
-            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[2].PrivateEndpointId);
+                // Test for ElasticSan PE properties
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections.Count, Is.EqualTo(3));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections[0].Name, Is.Not.Empty);
+                Assert.That((string)elasticSan1.Data.PrivateEndpointConnections[0].PrivateEndpointId, Is.Not.Empty);
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections[0].ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections[1].Name, Is.Not.Empty);
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections[1].ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
+                Assert.That((string)elasticSan1.Data.PrivateEndpointConnections[1].PrivateEndpointId, Is.Not.Empty);
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections[2].Name, Is.Not.Empty);
+                Assert.That(elasticSan1.Data.PrivateEndpointConnections[2].ConnectionState.Status.ToString(), Is.EqualTo("Pending"));
+                Assert.That((string)elasticSan1.Data.PrivateEndpointConnections[2].PrivateEndpointId, Is.Not.Empty);
+            });
         }
 
         [Test]
@@ -98,7 +107,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -107,8 +116,11 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
         {
             ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
 
-            Assert.That((bool)await elasticSanCollection.ExistsAsync(ElasticSanName), Is.True);
-            Assert.That((bool)await elasticSanCollection.ExistsAsync(ElasticSanName + "111"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await elasticSanCollection.ExistsAsync(ElasticSanName), Is.True);
+                Assert.That((bool)await elasticSanCollection.ExistsAsync(ElasticSanName + "111"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await elasticSanCollection.ExistsAsync(null));
         }
     }

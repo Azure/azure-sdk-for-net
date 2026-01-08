@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, "MyHub", new DurableTaskHubData());
 
             DurableTaskHubResource hub = await scheduler.GetDurableTaskHubAsync("MyHub");
-            Assert.That(hub.HasData, Is.True);
-            Assert.That(hub.Data.Properties.DashboardUri.Host.ToLower(), Does.Contain("durabletask.io"));
-            Assert.That(hub.Data.Name, Is.EqualTo("MyHub"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hub.HasData, Is.True);
+                Assert.That(hub.Data.Properties.DashboardUri.Host.ToLower(), Does.Contain("durabletask.io"));
+                Assert.That(hub.Data.Name, Is.EqualTo("MyHub"));
+            });
 
             // The list endpoint should also return the newly created hub
             DurableTaskHubResource listHub = await collection.GetAllAsync().FirstOrDefaultAsync(t => t.Data.Name == "MyHub");

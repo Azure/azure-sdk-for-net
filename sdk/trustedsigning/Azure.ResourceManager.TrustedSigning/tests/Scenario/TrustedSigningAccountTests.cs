@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             TrustedSigningAccountResource accountResource = Client.GetTrustedSigningAccountResource(account.Id);
             TrustedSigningAccountResource result = await accountResource.GetAsync();
-            Assert.IsNotNull(result);
-            Assert.That(accountName, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.Not.Null);
+                Assert.That(accountName, Is.EqualTo(result.Data.Name));
+            });
         }
 
         // Update a trusted signing account.
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             // invoke the operation
             TrustedSigningAccountPatch patch = new TrustedSigningAccountPatch()
@@ -69,8 +72,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             TrustedSigningAccountResource result = lro.Value;
 
             TrustedSigningAccountData resourceData = result.Data;
-            Assert.IsNotNull(resourceData.Id);
-            Assert.That(patch.Tags["key1"], Is.EqualTo(resourceData.Tags["key1"]));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceData.Id, Is.Not.Null);
+                Assert.That(patch.Tags["key1"], Is.EqualTo(resourceData.Tags["key1"]));
+            });
         }
 
         // Delete a trusted signing account.
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             ArmOperation op = await account.DeleteAsync(WaitUntil.Completed);
             Assert.That(op.HasCompleted, Is.True);
@@ -96,12 +102,12 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             bool exist = false;
             await foreach (TrustedSigningAccountResource item in collection.GetAllAsync())
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 if (item.Id == account.Id)
                 {
                     exist = true;
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             Assert.That(exist, Is.False);
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             exist = await collection.ExistsAsync(accountName);
             Assert.That(exist, Is.True);
@@ -139,11 +145,14 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             Assert.That(response.HasValue, Is.False);
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
 
             response = await collection.GetIfExistsAsync(accountName);
-            Assert.That(response.HasValue, Is.True);
-            Assert.IsNotNull(response.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.HasValue, Is.True);
+                Assert.That(response.Value, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -155,7 +164,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             string accountName = Recording.GenerateAssetName("account-");
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
-            Assert.IsNotNull(account);
+            Assert.That(account, Is.Not.Null);
         }
     }
 }

@@ -211,41 +211,50 @@ public static class SapDiscoveryTestsHelpers
         Assert.That(status, Is.Not.Null);
         if (status.ToString() == ImportOperationState.Succeeded.ToString())
         {
-            Assert.That(
-                opProperties?["errorExcelSasUri"].ToString(),
-                Is.Null,
-                "Error excel SAS Uri exists for successfull import");
-            Assert.That(
-                (int)opProperties?["rowsImported"],
-                Is.EqualTo(expectedRowsImported),
-                "Imported rows check");
-            Assert.That(
-                (int)opProperties?["totalRows"],
-                Is.EqualTo(expectedTotalRows),
-                "total rows check");
-            Assert.That(
-                (int)opProperties?["totalRows"],
-                Is.EqualTo((int)opProperties?["rowsImported"]),
-                "Total rows are not equal to rows imported for success case.");
-            Assert.That(operationStatusObj?["error"], Is.Null, "Error exists for success case.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                            opProperties?["errorExcelSasUri"].ToString(),
+                            Is.Null,
+                            "Error excel SAS Uri exists for successfull import");
+                Assert.That(
+                    (int)opProperties?["rowsImported"],
+                    Is.EqualTo(expectedRowsImported),
+                    "Imported rows check");
+                Assert.That(
+                    (int)opProperties?["totalRows"],
+                    Is.EqualTo(expectedTotalRows),
+                    "total rows check");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                            (int)opProperties?["totalRows"],
+                            Is.EqualTo((int)opProperties?["rowsImported"]),
+                            "Total rows are not equal to rows imported for success case.");
+                Assert.That(operationStatusObj?["error"], Is.Null, "Error exists for success case.");
+            });
 
             return true;
         }
         else if (status.ToString() == ImportOperationState.PartiallySucceeded.ToString())
         {
-            Assert.That(
-                opProperties?["errorExcelSasUri"].ToString(),
-                Is.Not.Null,
-                "Error excel SAS Uri does not exists for partial successfull import");
-            Assert.That(
-                (int)opProperties?["rowsImported"],
-                Is.EqualTo(expectedRowsImported),
-                "Imported rows check");
-            Assert.That(
-                (int)opProperties?["totalRows"],
-                Is.EqualTo(expectedTotalRows),
-                "total rows check");
-            Assert.That(operationStatusObj?["error"], Is.Not.Null, "Error check.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                            opProperties?["errorExcelSasUri"].ToString(),
+                            Is.Not.Null,
+                            "Error excel SAS Uri does not exists for partial successfull import");
+                Assert.That(
+                    (int)opProperties?["rowsImported"],
+                    Is.EqualTo(expectedRowsImported),
+                    "Imported rows check");
+                Assert.That(
+                    (int)opProperties?["totalRows"],
+                    Is.EqualTo(expectedTotalRows),
+                    "total rows check");
+                Assert.That(operationStatusObj?["error"], Is.Not.Null, "Error check.");
+            });
             return true;
         }
         else if (status.ToString() == ImportOperationState.Failed.ToString() ||

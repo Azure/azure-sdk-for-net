@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             //1.GetAll
             var container = await GetCognitiveServicesPrivateEndpointConnectionCollectionAsync();
             var list = await container.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list, Has.Count.GreaterThanOrEqualTo(0));
             //4Exists
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

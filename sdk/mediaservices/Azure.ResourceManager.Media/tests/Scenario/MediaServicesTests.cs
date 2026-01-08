@@ -28,8 +28,11 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaServiceName = Recording.GenerateAssetName("mediabasictest");
             var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
             Assert.That(mediaService, Is.Not.Null);
-            Assert.That(mediaService.Data.Name, Is.EqualTo(mediaServiceName));
-            Assert.That(mediaService.Data.StorageAccounts.FirstOrDefault().Id, Is.EqualTo(GetStorageAccountId()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mediaService.Data.Name, Is.EqualTo(mediaServiceName));
+                Assert.That(mediaService.Data.StorageAccounts.FirstOrDefault().Id, Is.EqualTo(GetStorageAccountId()));
+            });
             // Check exists
             bool flag = await mediaServiceCollection.ExistsAsync(mediaServiceName);
             Assert.That(flag, Is.True);
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Media.Tests
             Assert.That(result.Value.Data.Name, Is.EqualTo(mediaServiceName));
             // Get all
             var list = await mediaServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Delete
             await mediaService.DeleteAsync(WaitUntil.Completed);
             flag = await mediaServiceCollection.ExistsAsync(mediaServiceName);

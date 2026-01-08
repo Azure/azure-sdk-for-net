@@ -58,9 +58,12 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ACT
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
-            // ASSERT
-            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(dnsResolverDomainList.Value.Data.ProvisioningState));
-            Assert.That(dnsResolverDomainList.Value.Data.Domains.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                // ASSERT
+                Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(dnsResolverDomainList.Value.Data.ProvisioningState));
+                Assert.That(dnsResolverDomainList.Value.Data.Domains.Count, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsResolverDomainList = await createdDnsResolverDomainList.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedDnsResolverDomainList.Value.Data.Tags);
+            Assert.That(patchedDnsResolverDomainList.Value.Data.Tags, Is.EquivalentTo(new Dictionary<string, string> { { newTagKey, newTagValue } }));
         }
 
         [Test]

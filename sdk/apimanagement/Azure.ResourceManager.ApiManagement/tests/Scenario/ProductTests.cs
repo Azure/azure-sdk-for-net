@@ -80,13 +80,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 createParameters)).Value;
 
             Assert.That(createResponse, Is.Not.Null);
-            Assert.That(createResponse.Data.DisplayName, Is.EqualTo(productName));
-            Assert.That(createResponse.Data.IsApprovalRequired, Is.EqualTo(productApprovalRequired));
-            Assert.That(createResponse.Data.Description, Is.EqualTo(productDescription));
-            Assert.That(createResponse.Data.State, Is.EqualTo(productState));
-            Assert.That(createResponse.Data.IsSubscriptionRequired, Is.EqualTo(productSubscriptionRequired));
-            Assert.That(createResponse.Data.SubscriptionsLimit, Is.EqualTo(productSubscriptionsLimit));
-            Assert.That(createResponse.Data.Terms, Is.EqualTo(productTerms));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResponse.Data.DisplayName, Is.EqualTo(productName));
+                Assert.That(createResponse.Data.IsApprovalRequired, Is.EqualTo(productApprovalRequired));
+                Assert.That(createResponse.Data.Description, Is.EqualTo(productDescription));
+                Assert.That(createResponse.Data.State, Is.EqualTo(productState));
+                Assert.That(createResponse.Data.IsSubscriptionRequired, Is.EqualTo(productSubscriptionRequired));
+                Assert.That(createResponse.Data.SubscriptionsLimit, Is.EqualTo(productSubscriptionsLimit));
+                Assert.That(createResponse.Data.Terms, Is.EqualTo(productTerms));
+            });
 
             // update product
             string patchedName = Recording.GenerateAssetName("productName");
@@ -105,13 +108,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             Assert.That(getUpdatedResponse, Is.Not.Null);
 
-            Assert.That(getUpdatedResponse.Data.DisplayName, Is.EqualTo(patchedName));
-            Assert.That(getUpdatedResponse.Data.IsApprovalRequired, Is.EqualTo(productApprovalRequired));
-            Assert.That(getUpdatedResponse.Data.Description, Is.EqualTo(patchedDescription));
-            Assert.That(getUpdatedResponse.Data.State, Is.EqualTo(productState));
-            Assert.That(getUpdatedResponse.Data.IsSubscriptionRequired, Is.EqualTo(productSubscriptionRequired));
-            Assert.That(getUpdatedResponse.Data.SubscriptionsLimit, Is.EqualTo(productSubscriptionsLimit));
-            Assert.That(getUpdatedResponse.Data.Terms, Is.EqualTo(patchedTerms));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getUpdatedResponse.Data.DisplayName, Is.EqualTo(patchedName));
+                Assert.That(getUpdatedResponse.Data.IsApprovalRequired, Is.EqualTo(productApprovalRequired));
+                Assert.That(getUpdatedResponse.Data.Description, Is.EqualTo(patchedDescription));
+                Assert.That(getUpdatedResponse.Data.State, Is.EqualTo(productState));
+                Assert.That(getUpdatedResponse.Data.IsSubscriptionRequired, Is.EqualTo(productSubscriptionRequired));
+                Assert.That(getUpdatedResponse.Data.SubscriptionsLimit, Is.EqualTo(productSubscriptionsLimit));
+                Assert.That(getUpdatedResponse.Data.Terms, Is.EqualTo(patchedTerms));
+            });
 
             // delete the product
             await getUpdatedResponse.DeleteAsync(WaitUntil.Completed, ETag.All, true);
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list to check it was removed
             listApisResponse = await product.GetProductApisAsync().ToEnumerableAsync();
 
-            Assert.IsEmpty(listApisResponse);
+            Assert.That(listApisResponse, Is.Empty);
 
             // add the api to product
             var addResponse = product.CreateOrUpdateProductApiAsync(getResponse.Name);

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             var list = await _integrationAccountCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

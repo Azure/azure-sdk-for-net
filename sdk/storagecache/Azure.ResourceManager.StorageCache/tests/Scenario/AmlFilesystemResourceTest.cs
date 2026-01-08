@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 waitUntil: WaitUntil.Completed,
                 patch: amlFilesystemPatch);
 
-            Assert.That(amlFilesystemPatch.MaintenanceWindow.DayOfWeek, Is.EqualTo(lro.Value.Data.MaintenanceWindow.DayOfWeek));
-            Assert.That(amlFilesystemPatch.MaintenanceWindow.TimeOfDayUTC, Is.EqualTo(lro.Value.Data.MaintenanceWindow.TimeOfDayUTC));
+            Assert.Multiple(() =>
+            {
+                Assert.That(amlFilesystemPatch.MaintenanceWindow.DayOfWeek, Is.EqualTo(lro.Value.Data.MaintenanceWindow.DayOfWeek));
+                Assert.That(amlFilesystemPatch.MaintenanceWindow.TimeOfDayUTC, Is.EqualTo(lro.Value.Data.MaintenanceWindow.TimeOfDayUTC));
+            });
         }
 
         [TestCase]

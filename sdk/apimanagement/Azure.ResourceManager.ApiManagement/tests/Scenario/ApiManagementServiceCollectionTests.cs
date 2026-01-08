@@ -45,24 +45,33 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // TagOperation
             await apiManagementService.AddTagAsync("testkey", "testvalue");
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.That(apiManagementService.Data.Tags.ContainsKey("testkey"), Is.True);
-            Assert.That(apiManagementService.Data.Tags["testkey"], Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(apiManagementService.Data.Tags.ContainsKey("testkey"), Is.True);
+                Assert.That(apiManagementService.Data.Tags["testkey"], Is.EqualTo("testvalue"));
+            });
 
             var tags = new Dictionary<string, string>() { { "newkey", "newvalue" } };
             await apiManagementService.SetTagsAsync(tags);
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.That(apiManagementService.Data.Tags.ContainsKey("newkey"), Is.True);
-            Assert.That(apiManagementService.Data.Tags["newkey"], Is.EqualTo("newvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(apiManagementService.Data.Tags.ContainsKey("newkey"), Is.True);
+                Assert.That(apiManagementService.Data.Tags["newkey"], Is.EqualTo("newvalue"));
+            });
 
             await apiManagementService.RemoveTagAsync("newkey");
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.That(apiManagementService.Data.Tags.Count, Is.EqualTo(0));
+            Assert.That(apiManagementService.Data.Tags, Is.Empty);
 
             // Update
             var patch = new ApiManagementServicePatch() { Tags = { { "newkey", "newvalue" } } };
             var updated = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.That(updated.Value.Data.Tags.ContainsKey("newkey"), Is.True);
-            Assert.That(updated.Value.Data.Tags["newkey"], Is.EqualTo("newvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updated.Value.Data.Tags.ContainsKey("newkey"), Is.True);
+                Assert.That(updated.Value.Data.Tags["newkey"], Is.EqualTo("newvalue"));
+            });
 
             // Delete
             await apiManagementService.DeleteAsync(WaitUntil.Completed);
@@ -96,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             var apiManagementServices = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(apiManagementServices.Count, 1);
+            Assert.That(apiManagementServices.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -113,8 +122,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             var apiManagementServiceTrue = await collection.ExistsAsync(apiName);
             var apiManagementServiceFalse = await collection.ExistsAsync("foo");
-            Assert.That((bool)apiManagementServiceTrue, Is.True);
-            Assert.That((bool)apiManagementServiceFalse, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That((bool)apiManagementServiceTrue, Is.True);
+                Assert.That((bool)apiManagementServiceFalse, Is.False);
+            });
         }
     }
 }

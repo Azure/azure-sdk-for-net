@@ -85,9 +85,12 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             };
             var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
-            // Assert
-            Assert.That(result?.Value, Is.Not.Null);
-            Assert.That(result.Value.IsNameAvailable, Is.False);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result?.Value, Is.Not.Null);
+                Assert.That(result.Value.IsNameAvailable, Is.False);
+            });
         }
 
         [TestCase]
@@ -102,9 +105,12 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             };
             var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
-            // Assert
-            Assert.That(result?.Value, Is.Not.Null);
-            Assert.That(result.Value.IsNameAvailable, Is.True);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result?.Value, Is.Not.Null);
+                Assert.That(result.Value.IsNameAvailable, Is.True);
+            });
         }
 
         [TestCase]
@@ -157,13 +163,16 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var skus = Subscription.GetSkusFabricCapacitiesAsync();
             var result = await skus.ToEnumerableAsync();
 
-            // Assert
-            Assert.That(result.Any(sku => sku.Name.Equals("F2")), Is.True);
-            Assert.That(result.Any(sku => sku.Name.Equals("F8")), Is.True);
-            Assert.That(result.Any(sku => sku.Name.Equals("F64")), Is.True);
-            Assert.That(result.Any(sku => sku.Name.Equals("F128")), Is.True);
-            Assert.That(result.Any(sku => sku.Name.Equals("F512")), Is.True);
-            Assert.That(result.All(sku => sku.ResourceType == "Capacities"), Is.True);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result.Any(sku => sku.Name.Equals("F2")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F8")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F64")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F128")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F512")), Is.True);
+                Assert.That(result.All(sku => sku.ResourceType == "Capacities"), Is.True);
+            });
         }
 
         [TestCase]
@@ -178,14 +187,17 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var skus = fabricCapacity.GetSkusForCapacityAsync();
             var result = await skus.ToEnumerableAsync();
 
-            // Assert
-            Assert.That(result.Any(sku => sku.Sku.Name.Equals("F2")), Is.True);
-            Assert.That(result.Any(sku => sku.Sku.Name.Equals("F8")), Is.True);
-            Assert.That(result.Any(sku => sku.Sku.Name.Equals("F64")), Is.True);
-            Assert.That(result.Any(sku => sku.Sku.Name.Equals("F128")), Is.True);
-            Assert.That(result.Any(sku => sku.Sku.Name.Equals("F512")), Is.True);
-            Assert.That(result.All(sku => sku.ResourceType == ResourceType), Is.True);
-            Assert.That(result.All(sku => sku.Sku.Tier == FabricSkuTier.Fabric), Is.True);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F2")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F8")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F64")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F128")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F512")), Is.True);
+                Assert.That(result.All(sku => sku.ResourceType == ResourceType), Is.True);
+                Assert.That(result.All(sku => sku.Sku.Tier == FabricSkuTier.Fabric), Is.True);
+            });
         }
 
         [TestCase]
@@ -241,19 +253,25 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         private void AssertFabricCapacity(FabricCapacityData data)
         {
-            Assert.That(TestEnvironment.CapacityName, Is.EqualTo(data.Name));
-            Assert.That(TestEnvironment.CapacityId, Is.EqualTo(data.Id));
-            Assert.That(TestEnvironment.CapacityLocation, Is.EqualTo(data.Location.Name));
-            Assert.That(ResourceType, Is.EqualTo(data.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(TestEnvironment.CapacityName, Is.EqualTo(data.Name));
+                Assert.That(TestEnvironment.CapacityId, Is.EqualTo(data.Id));
+                Assert.That(TestEnvironment.CapacityLocation, Is.EqualTo(data.Location.Name));
+                Assert.That(ResourceType, Is.EqualTo(data.ResourceType));
+            });
         }
     }
 }

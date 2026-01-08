@@ -55,8 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.That(flag, Is.True);
             // Get
             var integrationRuntimeGet = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
-            Assert.That(integrationRuntime, Is.Not.Null);
-            Assert.That(integrationRuntimeGet.Value.Data.Name, Is.EqualTo(integrationRuntimeName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(integrationRuntime, Is.Not.Null);
+                Assert.That(integrationRuntimeGet.Value.Data.Name, Is.EqualTo(integrationRuntimeName));
+            });
             // GetAll
             var list = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
             Assert.That(list, Is.Not.Null);

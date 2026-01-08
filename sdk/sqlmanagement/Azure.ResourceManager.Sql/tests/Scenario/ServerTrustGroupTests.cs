@@ -90,20 +90,23 @@ namespace Azure.ResourceManager.Sql.Tests
             string locationName = AzureLocation.WestUS2.ToString();
             string serverTrustGroupName = Recording.GenerateAssetName("trust-group-");
             var serverTrustGroup = await CreateServerTrustGroup(locationName, serverTrustGroupName);
-            Assert.IsNotNull(serverTrustGroup.Data);
-            Assert.That(serverTrustGroup.Data.Name, Is.EqualTo(serverTrustGroupName));
+            Assert.That(serverTrustGroup.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serverTrustGroup.Data.Name, Is.EqualTo(serverTrustGroupName));
 
-            // 2.CheckIfExist
-            Assert.That((bool)_resourceGroup.GetSqlServerTrustGroups(locationName).Exists(serverTrustGroupName), Is.True);
+                // 2.CheckIfExist
+                Assert.That((bool)_resourceGroup.GetSqlServerTrustGroups(locationName).Exists(serverTrustGroupName), Is.True);
+            });
 
             // 3.Get
             var getServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
-            Assert.IsNotNull(getServerTrustGroup.Value.Data);
+            Assert.That(getServerTrustGroup.Value.Data, Is.Not.Null);
             Assert.That(getServerTrustGroup.Value.Data.Name, Is.EqualTo(serverTrustGroupName));
 
             // 4.GetAll
             var list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
 
             // 5.Delete
             //var deleteServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
@@ -119,14 +122,14 @@ namespace Azure.ResourceManager.Sql.Tests
             string locationName = AzureLocation.WestUS2.ToString();
             string serverTrustGroupName = Recording.GenerateAssetName("trust-group-");
             var serverTrustGroup = await CreateServerTrustGroup(locationName, serverTrustGroupName);
-            Assert.IsNotNull(serverTrustGroup.Data);
+            Assert.That(serverTrustGroup.Data, Is.Not.Null);
 
             var list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             var deleteServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
             await deleteServerTrustGroup.Value.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

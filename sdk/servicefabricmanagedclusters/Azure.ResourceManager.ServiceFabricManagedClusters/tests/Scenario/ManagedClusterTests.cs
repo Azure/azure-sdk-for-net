@@ -122,23 +122,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     mostRecentSimulationId = simulation.SimulationId;
                 }
 
-                Assert.That(faultSimulationCount, Is.EqualTo(1));
-                Assert.That(mostRecentSimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(faultSimulationCount, Is.EqualTo(1));
+                    Assert.That(mostRecentSimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                });
 
                 // Get Fault Simulation
                 FaultSimulationIdContent faultSimulationIdContent = new FaultSimulationIdContent(startFaultSimulationResult.SimulationId);
                 var getFaultSimulationResult = (await serviceFabricManagedCluster.GetFaultSimulationAsync(faultSimulationIdContent)).Value;
 
-                Assert.That(getFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
-                Assert.That(getFaultSimulationResult.Details.ClusterId, Is.EqualTo(startFaultSimulationResult.Details.ClusterId));
-                Assert.That(getFaultSimulationResult.StartOn, Is.EqualTo(startFaultSimulationResult.StartOn));
-                Assert.That(getFaultSimulationResult.EndOn, Is.EqualTo(startFaultSimulationResult.EndOn));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                    Assert.That(getFaultSimulationResult.Details.ClusterId, Is.EqualTo(startFaultSimulationResult.Details.ClusterId));
+                    Assert.That(getFaultSimulationResult.StartOn, Is.EqualTo(startFaultSimulationResult.StartOn));
+                    Assert.That(getFaultSimulationResult.EndOn, Is.EqualTo(startFaultSimulationResult.EndOn));
+                });
 
                 // Stop Fault Simulation
                 var stopFaultSimulationResult = (await serviceFabricManagedCluster.StopFaultSimulationAsync(WaitUntil.Completed, faultSimulationIdContent)).Value;
 
-                Assert.That(stopFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
-                Assert.That(FaultSimulationStatus.Done, Is.EqualTo(stopFaultSimulationResult.Status));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(stopFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                    Assert.That(FaultSimulationStatus.Done, Is.EqualTo(stopFaultSimulationResult.Status));
+                });
             }
             catch (Exception ex)
             {

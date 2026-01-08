@@ -62,17 +62,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var groupContract = (await groupCollection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters)).Value;
             Assert.That(groupContract, Is.Not.Null);
-            Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
-            Assert.That(groupContract.Data.IsBuiltIn, Is.False);
-            Assert.That(groupContract.Data.Description, Is.Not.Null);
-            Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            Assert.Multiple(() =>
+            {
+                Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
+                Assert.That(groupContract.Data.IsBuiltIn, Is.False);
+                Assert.That(groupContract.Data.Description, Is.Not.Null);
+                Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            });
 
             var userId = Recording.GenerateAssetName("sdkUserId");
             var collection = ApiServiceResource.GetApiManagementUsers();
 
             // list all group users
             var listResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Empty);
 
             // create a new user and add to the group
             var createParameters = new ApiManagementUserCreateOrUpdateContent()
@@ -89,8 +92,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // add user to group
             var addUserContract = (await groupContract.CreateGroupUserAsync(userId)).Value;
             Assert.That(addUserContract, Is.Not.Null);
-            Assert.That(addUserContract.Email, Is.EqualTo(userContract.Data.Email));
-            Assert.That(addUserContract.FirstName, Is.EqualTo(userContract.Data.FirstName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(addUserContract.Email, Is.EqualTo(userContract.Data.Email));
+                Assert.That(addUserContract.FirstName, Is.EqualTo(userContract.Data.FirstName));
+            });
 
             // list group user
             var listgroupResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();

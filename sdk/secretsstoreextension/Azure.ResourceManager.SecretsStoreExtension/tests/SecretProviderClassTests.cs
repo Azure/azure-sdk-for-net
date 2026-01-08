@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             Assert.That(shouldExist, Is.EqualTo(spcs.Any()));
             if (shouldExist)
             {
-                Assert.That(spcs.Count, Is.EqualTo(1));
+                Assert.That(spcs, Has.Count.EqualTo(1));
                 CheckContents(spcs[0]);
             }
         }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // SecretsStoreExtensionExtensions.GetAzureKeyVaultSecretProviderClassesAsync (extends SubscriptionResource).
             List<KeyVaultSecretProviderClassResource> spcsAsync = await subscription.GetKeyVaultSecretProviderClassesAsync().ToEnumerableAsync();
-            Assert.That(spcsAsync.Count, Is.EqualTo(1));
+            Assert.That(spcsAsync, Has.Count.EqualTo(1));
             CheckContents(spcsAsync[0]);
         }
 
@@ -205,11 +205,14 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             string expectedSecretName1 = null, string expectedSecretName2 = null,
             Dictionary<string, string> expectedTags = null)
         {
-            Assert.That(spc.Data.Name, Is.EqualTo(SpcName));
-            Assert.That(spc.Data.Properties.KeyvaultName, Is.EqualTo(te.SpcKeyVaultName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(spc.Data.Name, Is.EqualTo(SpcName));
+                Assert.That(spc.Data.Properties.KeyvaultName, Is.EqualTo(te.SpcKeyVaultName));
 
-            Assert.That(spc.Data.Properties.ClientId, Is.EqualTo(te.SpcClientId));
-            Assert.That(spc.Data.Properties.TenantId, Is.EqualTo(te.SpcTenantId));
+                Assert.That(spc.Data.Properties.ClientId, Is.EqualTo(te.SpcClientId));
+                Assert.That(spc.Data.Properties.TenantId, Is.EqualTo(te.SpcTenantId));
+            });
 
             // Ensure the supplied object has the expected secret name.
             if (expectedSecretName1 is not null && expectedSecretName2 is not null)
@@ -221,11 +224,14 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             // Ensure the supplied object has the expected tags.
             if (expectedTags is not null)
             {
-                Assert.That(spc.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
+                Assert.That(spc.Data.Tags, Has.Count.EqualTo(expectedTags.Count));
                 foreach (KeyValuePair<string, string> kv in spc.Data.Tags)
                 {
-                    Assert.That(expectedTags.ContainsKey(kv.Key), Is.True);
-                    Assert.That(kv.Value, Is.EqualTo(expectedTags[kv.Key]));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(expectedTags.ContainsKey(kv.Key), Is.True);
+                        Assert.That(kv.Value, Is.EqualTo(expectedTags[kv.Key]));
+                    });
                 }
             }
         }

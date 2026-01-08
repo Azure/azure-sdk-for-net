@@ -53,19 +53,22 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
             //2.Get
             DataShareSynchronizationSettingResource hronization2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertSynchronizationData(hronization1.Data, hronization2.Data);
-            //3.GetAll
-            /*_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
-            int count = 0;
-            await foreach (var num in collection.GetAllAsync())
+            Assert.Multiple(async () =>
             {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 3);*/
-            //4Exists
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+                //3.GetAll
+                /*_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+                _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
+                _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
+                int count = 0;
+                await foreach (var num in collection.GetAllAsync())
+                {
+                    count++;
+                }
+                Assert.GreaterOrEqual(count, 3);*/
+                //4Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //ResourceTests

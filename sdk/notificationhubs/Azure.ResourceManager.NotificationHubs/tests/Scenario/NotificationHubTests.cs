@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             var list = await _notificationHubCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

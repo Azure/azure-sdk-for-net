@@ -54,23 +54,29 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetEndpointProfileCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
-            Assert.That(assetEndpointProfileCreateOrUpdateResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.TargetAddress));
-            Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.EndpointProfileType));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.Method, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.Method));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetEndpointProfileCreateOrUpdateResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.TargetAddress));
+                Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.EndpointProfileType));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.Method, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.Method));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, Is.EqualTo(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName));
+            });
 
             // Read DeviceRegistry AssetEndpointProfile
             var assetEndpointProfileReadResponse = await assetEndpointProfilesCollection.GetAsync(assetEndpointProfileName, CancellationToken.None);
-            Assert.That(assetEndpointProfileReadResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(assetEndpointProfileReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.TargetAddress));
-            Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.EndpointProfileType));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.Method, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.Method));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetEndpointProfileReadResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(assetEndpointProfileReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.TargetAddress));
+                Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.EndpointProfileType));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.Method, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.Method));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, Is.EqualTo(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName));
+            });
 
             // List DeviceRegistry AssetEndpointProfile by Resource Group
             var assetEndpointProfileResourcesListByResourceGroup = new List<DeviceRegistryAssetEndpointProfileResource>();
@@ -80,8 +86,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 assetEndpointProfileResourcesListByResourceGroup.AddRange(assetEndpointProfileEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(assetEndpointProfileResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(assetEndpointProfileResourcesListByResourceGroup.Count, 1);
+            Assert.That(assetEndpointProfileResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(assetEndpointProfileResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // List DeviceRegistry AssetEndpointProfile by Subscription
             var assetEndpointProfileResourcesListBySubscription = new List<DeviceRegistryAssetEndpointProfileResource>();
@@ -91,8 +97,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 assetEndpointProfileResourcesListBySubscription.AddRange(assetEndpointProfileEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(assetEndpointProfileResourcesListBySubscription);
-            Assert.GreaterOrEqual(assetEndpointProfileResourcesListBySubscription.Count, 1);
+            Assert.That(assetEndpointProfileResourcesListBySubscription, Is.Not.Empty);
+            Assert.That(assetEndpointProfileResourcesListBySubscription.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry AssetEndpointProfile
             var assetEndpointProfile = assetEndpointProfileReadResponse.Value;
@@ -104,14 +110,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetEndpointProfileUpdateResponse = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, assetEndpointProfilePatchData, CancellationToken.None);
-            Assert.That(assetEndpointProfileUpdateResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(assetEndpointProfileUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.TargetAddress));
-            Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.EndpointProfileType));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.Method, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.Method));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName));
-            Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName));
-            Assert.That(assetEndpointProfilePatchData.Properties.AdditionalConfiguration, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.AdditionalConfiguration));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetEndpointProfileUpdateResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(assetEndpointProfileUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(assetEndpointProfileData.Properties.TargetAddress, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.TargetAddress));
+                Assert.That(assetEndpointProfileData.Properties.EndpointProfileType, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.EndpointProfileType));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.Method, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.Method));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName));
+                Assert.That(assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName));
+                Assert.That(assetEndpointProfilePatchData.Properties.AdditionalConfiguration, Is.EqualTo(assetEndpointProfileUpdateResponse.Value.Data.Properties.AdditionalConfiguration));
+            });
 
             // Delete DeviceRegistry AssetEndpointProfile
             await assetEndpointProfile.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

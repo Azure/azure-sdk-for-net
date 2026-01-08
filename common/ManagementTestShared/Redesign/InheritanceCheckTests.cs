@@ -69,8 +69,11 @@ namespace Azure.ResourceManager.TestFramework
                 }
             }
 
-            Assert.That(exceptionList, Is.Empty, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
-            Assert.That(errorList, Is.Empty, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+            Assert.Multiple(() =>
+            {
+                Assert.That(exceptionList, Is.Empty, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
+                Assert.That(errorList, Is.Empty, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+            });
         }
     }
 }

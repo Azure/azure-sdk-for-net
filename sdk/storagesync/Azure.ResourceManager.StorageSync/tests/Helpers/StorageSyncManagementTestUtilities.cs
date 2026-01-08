@@ -26,19 +26,28 @@ namespace Azure.ResourceManager.StorageSync.Tests
         public static void VerifyStorageSyncServiceProperties(StorageSyncServiceResource resource, bool useDefaults)
         {
             Assert.That(resource, Is.Not.Null);
-            Assert.That(resource.Id, Is.Not.Null);
-            Assert.That(resource.Data.Location, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource.Id, Is.Not.Null);
+                Assert.That(resource.Data.Location, Is.Not.Null);
+            });
             Assert.That(resource.Id.Name, Is.Not.Null);
 
             VerifySystemDataProperties(resource.Data);
 
             if (useDefaults)
             {
-                Assert.That(resource.Data.Location.ToString(), Is.EqualTo(DefaultLocation));
-                Assert.That(resource.Data.Tags, Is.Not.Null);
-                Assert.That(resource.Data.Tags.Count, Is.EqualTo(2));
-                Assert.That(resource.Data.Tags["key1"], Is.EqualTo("value1"));
-                Assert.That(resource.Data.Tags["key2"], Is.EqualTo("value2"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(resource.Data.Location.ToString(), Is.EqualTo(DefaultLocation));
+                    Assert.That(resource.Data.Tags, Is.Not.Null);
+                });
+                Assert.That(resource.Data.Tags, Has.Count.EqualTo(2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(resource.Data.Tags["key1"], Is.EqualTo("value1"));
+                    Assert.That(resource.Data.Tags["key2"], Is.EqualTo("value2"));
+                });
             }
         }
 
@@ -85,10 +94,13 @@ namespace Azure.ResourceManager.StorageSync.Tests
             if (useDefaults)
             {
                 var defaults = GetDefaultServerEndpointParameters(resource.Data.ServerResourceId);
-                Assert.That(defaults.ServerResourceId, Is.EqualTo(resource.Data.ServerResourceId));
-                Assert.That(defaults.ServerLocalPath, Is.EqualTo(resource.Data.ServerLocalPath));
-                Assert.That(defaults.CloudTiering, Is.EqualTo(resource.Data.CloudTiering));
-                Assert.That(defaults.VolumeFreeSpacePercent, Is.EqualTo(resource.Data.VolumeFreeSpacePercent));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(defaults.ServerResourceId, Is.EqualTo(resource.Data.ServerResourceId));
+                    Assert.That(defaults.ServerLocalPath, Is.EqualTo(resource.Data.ServerLocalPath));
+                    Assert.That(defaults.CloudTiering, Is.EqualTo(resource.Data.CloudTiering));
+                    Assert.That(defaults.VolumeFreeSpacePercent, Is.EqualTo(resource.Data.VolumeFreeSpacePercent));
+                });
             }
         }
 
@@ -99,8 +111,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
             if (useDefaults)
             {
                 var defaults = GetDefaultServerEndpointUpdateParameters(resource.Id);
-                Assert.That(defaults.CloudTiering, Is.EqualTo(resource.Data.CloudTiering));
-                Assert.That(defaults.VolumeFreeSpacePercent, Is.EqualTo(resource.Data.VolumeFreeSpacePercent));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(defaults.CloudTiering, Is.EqualTo(resource.Data.CloudTiering));
+                    Assert.That(defaults.VolumeFreeSpacePercent, Is.EqualTo(resource.Data.VolumeFreeSpacePercent));
+                });
             }
         }
 
@@ -119,13 +134,19 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             Assert.That(resource.SystemData, Is.Not.Null);
             Assert.That(resource.SystemData.CreatedOn, Is.Not.Null);
-            Assert.That(resource.SystemData.CreatedOn.Value, Is.Not.EqualTo(default(DateTime)));
-            Assert.That(resource.SystemData.CreatedBy, Is.Not.Null);
-            Assert.That(resource.SystemData.CreatedByType, Is.Not.Null);
-            Assert.That(resource.SystemData.LastModifiedOn, Is.Not.Null);
-            Assert.That(resource.SystemData.LastModifiedOn.Value, Is.Not.EqualTo(default(DateTime)));
-            Assert.That(resource.SystemData.LastModifiedBy, Is.Not.Null);
-            Assert.That(resource.SystemData.LastModifiedByType, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource.SystemData.CreatedOn.Value, Is.Not.EqualTo(default(DateTime)));
+                Assert.That(resource.SystemData.CreatedBy, Is.Not.Null);
+                Assert.That(resource.SystemData.CreatedByType, Is.Not.Null);
+                Assert.That(resource.SystemData.LastModifiedOn, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource.SystemData.LastModifiedOn.Value, Is.Not.EqualTo(default(DateTime)));
+                Assert.That(resource.SystemData.LastModifiedBy, Is.Not.Null);
+                Assert.That(resource.SystemData.LastModifiedByType, Is.Not.Null);
+            });
         }
 
         public static StorageSyncServiceCreateOrUpdateContent GetDefaultStorageSyncServiceParameters()

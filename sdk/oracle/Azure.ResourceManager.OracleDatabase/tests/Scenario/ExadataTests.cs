@@ -71,8 +71,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             var createExaInfraOperation = await _exaInfraCollection.CreateOrUpdateAsync(WaitUntil.Completed,
             _exadataInfraName, GetDefaultExaInfraData(_exadataInfraName));
             await createExaInfraOperation.WaitForCompletionAsync();
-            Assert.That(createExaInfraOperation.HasCompleted, Is.True);
-            Assert.That(createExaInfraOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createExaInfraOperation.HasCompleted, Is.True);
+                Assert.That(createExaInfraOperation.HasValue, Is.True);
+            });
 
             // Get
             Response<CloudExadataInfrastructureResource> getExaInfraResponse = await _exaInfraCollection.GetAsync(_exadataInfraName);

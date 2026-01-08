@@ -75,21 +75,27 @@ namespace Azure.ResourceManager.Sql.Tests
             string instancePoolName = Recording.GenerateAssetName("instance-pool-");
             var collection = _resourceGroup.GetInstancePools();
             var instancePool = await CreateInstancePool(instancePoolName);
-            Assert.IsNotNull(instancePool);
-            Assert.That(instancePool.Data.Name, Is.EqualTo(instancePoolName));
-            Assert.That(instancePool.Data.VCores, Is.EqualTo(8));
+            Assert.That(instancePool, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(instancePool.Data.Name, Is.EqualTo(instancePoolName));
+                Assert.That(instancePool.Data.VCores, Is.EqualTo(8));
 
-            // 2.CheckIfExist
-            Assert.That((bool)collection.Exists(instancePoolName), Is.True);
+                // 2.CheckIfExist
+                Assert.That((bool)collection.Exists(instancePoolName), Is.True);
+            });
 
             // 3.Get
             var getInstancePool = await collection.GetAsync(instancePoolName);
-            Assert.That(getInstancePool.Value.Data.Name, Is.EqualTo(instancePoolName));
-            Assert.That(getInstancePool.Value.Data.VCores, Is.EqualTo(8));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getInstancePool.Value.Data.Name, Is.EqualTo(instancePoolName));
+                Assert.That(getInstancePool.Value.Data.VCores, Is.EqualTo(8));
+            });
 
             // 4.GetAll
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
 
             //// 5.Delete
             //var deleteInstancePool = await collection.GetAsync(instancePoolName);
@@ -107,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Tests
             var collection = _resourceGroup.GetInstancePools();
             InstancePoolResource instancePool = await CreateInstancePool(instancePoolName);
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
 
             await instancePool.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();

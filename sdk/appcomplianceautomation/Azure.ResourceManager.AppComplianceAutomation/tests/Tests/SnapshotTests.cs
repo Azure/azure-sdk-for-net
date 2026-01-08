@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
                     latestSnapshotName = resource.Data.Name;
                 }
             }
-            Assert.Greater(count, 0);
+            Assert.That(count, Is.GreaterThan(0));
 
             // Get snapshot
             AppComplianceReportSnapshotResource snapshot = await snapshots.GetAsync(latestSnapshotName);

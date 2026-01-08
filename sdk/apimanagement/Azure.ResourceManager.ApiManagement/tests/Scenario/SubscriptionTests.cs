@@ -61,18 +61,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getResponse = (await collection.GetAsync(firstSubscription.Data.Name)).Value;
 
             Assert.That(getResponse, Is.Not.Null);
-            Assert.That(getResponse.Data.Name, Is.EqualTo(firstSubscription.Data.Name));
-            Assert.That(getResponse.Data.NotifiesOn, Is.EqualTo(firstSubscription.Data.NotifiesOn));
-            Assert.That(getResponse.Data.PrimaryKey, Is.EqualTo(firstSubscription.Data.PrimaryKey));
-            Assert.That(getResponse.Data.Scope, Is.EqualTo(firstSubscription.Data.Scope));
-            Assert.That(getResponse.Data.SecondaryKey, Is.EqualTo(firstSubscription.Data.SecondaryKey));
-            Assert.That(getResponse.Data.StartOn, Is.EqualTo(firstSubscription.Data.StartOn));
-            Assert.That(getResponse.Data.State, Is.EqualTo(firstSubscription.Data.State));
-            Assert.That(getResponse.Data.StateComment, Is.EqualTo(firstSubscription.Data.StateComment));
-            Assert.That(getResponse.Data.OwnerId, Is.EqualTo(firstSubscription.Data.OwnerId));
-            Assert.That(getResponse.Data.CreatedOn, Is.EqualTo(firstSubscription.Data.CreatedOn));
-            Assert.That(getResponse.Data.EndOn, Is.EqualTo(firstSubscription.Data.EndOn));
-            Assert.That(getResponse.Data.ExpireOn, Is.EqualTo(firstSubscription.Data.ExpireOn));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Data.Name, Is.EqualTo(firstSubscription.Data.Name));
+                Assert.That(getResponse.Data.NotifiesOn, Is.EqualTo(firstSubscription.Data.NotifiesOn));
+                Assert.That(getResponse.Data.PrimaryKey, Is.EqualTo(firstSubscription.Data.PrimaryKey));
+                Assert.That(getResponse.Data.Scope, Is.EqualTo(firstSubscription.Data.Scope));
+                Assert.That(getResponse.Data.SecondaryKey, Is.EqualTo(firstSubscription.Data.SecondaryKey));
+                Assert.That(getResponse.Data.StartOn, Is.EqualTo(firstSubscription.Data.StartOn));
+                Assert.That(getResponse.Data.State, Is.EqualTo(firstSubscription.Data.State));
+                Assert.That(getResponse.Data.StateComment, Is.EqualTo(firstSubscription.Data.StateComment));
+                Assert.That(getResponse.Data.OwnerId, Is.EqualTo(firstSubscription.Data.OwnerId));
+                Assert.That(getResponse.Data.CreatedOn, Is.EqualTo(firstSubscription.Data.CreatedOn));
+                Assert.That(getResponse.Data.EndOn, Is.EqualTo(firstSubscription.Data.EndOn));
+                Assert.That(getResponse.Data.ExpireOn, Is.EqualTo(firstSubscription.Data.ExpireOn));
+            });
 
             // update product to accept unlimited number or subscriptions
             var product = (await ApiServiceResource.GetApiManagementProducts().GetAsync("starter")).Value;
@@ -107,10 +110,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 newSubscriptionCreate)).Value;
 
             Assert.That(subscriptionContract, Is.Not.Null);
-            Assert.That(subscriptionContract.Data.Scope, Is.EqualTo(firstSubscription.Data.Scope));
-            Assert.That(subscriptionContract.Data.OwnerId, Is.EqualTo(firstSubscription.Data.OwnerId));
-            Assert.That(subscriptionContract.Data.State, Is.EqualTo(newSubscriptionState));
-            Assert.That(subscriptionContract.Data.DisplayName, Is.EqualTo(newSubscriptionName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(subscriptionContract.Data.Scope, Is.EqualTo(firstSubscription.Data.Scope));
+                Assert.That(subscriptionContract.Data.OwnerId, Is.EqualTo(firstSubscription.Data.OwnerId));
+                Assert.That(subscriptionContract.Data.State, Is.EqualTo(newSubscriptionState));
+                Assert.That(subscriptionContract.Data.DisplayName, Is.EqualTo(newSubscriptionName));
+            });
 
             var subscriptionResponse = (await collection.GetAsync(newSubscriptionId)).Value;
 
@@ -142,11 +148,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             getResponse = (await collection.GetAsync(newSubscriptionId)).Value;
 
             Assert.That(getResponse, Is.Not.Null);
-            Assert.That(getResponse.Data.Name, Is.EqualTo(newSubscriptionId));
-            Assert.That(getResponse.Data.DisplayName, Is.EqualTo(patchedName));
-            Assert.That(getResponse.Data.PrimaryKey, Is.Null);
-            Assert.That(getResponse.Data.SecondaryKey, Is.Null);
-            Assert.That(getResponse.Data.State, Is.EqualTo(newSubscriptionState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Data.Name, Is.EqualTo(newSubscriptionId));
+                Assert.That(getResponse.Data.DisplayName, Is.EqualTo(patchedName));
+                Assert.That(getResponse.Data.PrimaryKey, Is.Null);
+                Assert.That(getResponse.Data.SecondaryKey, Is.Null);
+                Assert.That(getResponse.Data.State, Is.EqualTo(newSubscriptionState));
+            });
 
             // regenerate primary key
             await getResponse.RegeneratePrimaryKeyAsync();
@@ -164,8 +173,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var keysHttpResponse = (await getResponse.GetAsync()).Value;
 
             Assert.That(keysHttpResponse, Is.Not.Null);
-            Assert.That(keysHttpResponse.Data.PrimaryKey, Is.Not.EqualTo(patchedPk));
-            Assert.That(keysHttpResponse.Data.SecondaryKey, Is.Not.EqualTo(patchedSk));
+            Assert.Multiple(() =>
+            {
+                Assert.That(keysHttpResponse.Data.PrimaryKey, Is.Not.EqualTo(patchedPk));
+                Assert.That(keysHttpResponse.Data.SecondaryKey, Is.Not.EqualTo(patchedSk));
+            });
 
             // delete the subscription
             await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
@@ -183,11 +195,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     DisplayName = globalSubscriptionDisplayName
                 })).Value;
             Assert.That(globalSubscriptionCreateResponse, Is.Not.Null);
-            Assert.That(globalSubscriptionCreateResponse.Data.OwnerId, Is.Null);
-            Assert.That(globalSubscriptionCreateResponse.Data.State, Is.EqualTo(SubscriptionState.Active));
-            Assert.That(globalSubscriptionCreateResponse.Data.SecondaryKey, Is.Not.Null);
-            Assert.That(globalSubscriptionCreateResponse.Data.PrimaryKey, Is.Not.Null);
-            Assert.That(globalSubscriptionCreateResponse.Data.DisplayName, Is.EqualTo(globalSubscriptionDisplayName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(globalSubscriptionCreateResponse.Data.OwnerId, Is.Null);
+                Assert.That(globalSubscriptionCreateResponse.Data.State, Is.EqualTo(SubscriptionState.Active));
+                Assert.That(globalSubscriptionCreateResponse.Data.SecondaryKey, Is.Not.Null);
+                Assert.That(globalSubscriptionCreateResponse.Data.PrimaryKey, Is.Not.Null);
+                Assert.That(globalSubscriptionCreateResponse.Data.DisplayName, Is.EqualTo(globalSubscriptionDisplayName));
+            });
 
             // delete the global subscription
             await globalSubscriptionCreateResponse.DeleteAsync(WaitUntil.Completed, ETag.All);

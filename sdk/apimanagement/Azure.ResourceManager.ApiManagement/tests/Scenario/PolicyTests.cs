@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var apiPolicyCollection = api.GetApiPolicies();
             var listResult = await apiPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(listResult);
+            Assert.That(listResult, Is.Empty);
 
             // set policy
             policyDoc = XDocument.Parse(ApiValid);
@@ -183,8 +183,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getApiPolicyRawXml = (await apiPolicyCollection.GetAsync("policy", PolicyExportFormat.RawXml)).Value;
 
             Assert.That(getApiPolicyRawXml, Is.Not.Null);
-            Assert.That(getApiPolicyRawXml.Data.Format, Is.EqualTo(PolicyContentFormat.RawXml));
-            Assert.That(getApiPolicyRawXml.Data.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getApiPolicyRawXml.Data.Format, Is.EqualTo(PolicyContentFormat.RawXml));
+                Assert.That(getApiPolicyRawXml.Data.Value, Is.Not.Null);
+            });
 
             // remove policy
             await getApiPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
@@ -198,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var operationPolicyCollection = operation.GetApiOperationPolicies();
             var listResult2 = await operationPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(listResult2);
+            Assert.That(listResult2, Is.Empty);
 
             // set policy
             policyDoc = XDocument.Parse(OperationValid);
@@ -229,8 +232,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getOperationPolicy = (await operationPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
             Assert.That(getOperationPolicy, Is.Not.Null);
-            Assert.That(getOperationPolicy.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
-            Assert.That(getOperationPolicy.Data.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getOperationPolicy.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
+                Assert.That(getOperationPolicy.Data.Value, Is.Not.Null);
+            });
 
             // remove policy
             await getOperationPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
@@ -248,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get product policy
             var listResult3 = await productPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(listResult3);
+            Assert.That(listResult3, Is.Empty);
 
             // set policy
             policyDoc = XDocument.Parse(ProductValid);
@@ -285,8 +291,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getProductPolicyXml = (await productPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
             Assert.That(getProductPolicyXml, Is.Not.Null);
-            Assert.That(getProductPolicyXml.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
-            Assert.That(getProductPolicyXml.Data.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getProductPolicyXml.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
+                Assert.That(getProductPolicyXml.Data.Value, Is.Not.Null);
+            });
 
             // remove policy
             await getProductPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);

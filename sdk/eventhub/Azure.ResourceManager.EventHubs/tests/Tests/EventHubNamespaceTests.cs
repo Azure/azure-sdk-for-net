@@ -49,8 +49,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            });
         }
 
         [Test]
@@ -71,9 +74,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(WaitUntil.Completed, updateNamespaceParameter);
 
             //validate
-            Assert.That(eventHubNamespace2.Value.Data.Tags.Count, Is.EqualTo(2));
-            Assert.That(eventHubNamespace2.Value.Data.Tags["key1"], Is.EqualTo("value1"));
-            Assert.That(eventHubNamespace2.Value.Data.Tags["key2"], Is.EqualTo("value2"));
+            Assert.That(eventHubNamespace2.Value.Data.Tags, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubNamespace2.Value.Data.Tags["key1"], Is.EqualTo("value1"));
+                Assert.That(eventHubNamespace2.Value.Data.Tags["key2"], Is.EqualTo("value2"));
+            });
 
             //wait until provision state is succeeded
             await GetSucceededNamespace(eventHubNamespace);
@@ -137,8 +143,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             }
             VerifyNamespaceProperties(namespace1, true);
             VerifyNamespaceProperties(namespace2, true);
-            Assert.That(_resourceGroup.Id.Name, Is.EqualTo(namespace1.Id.ResourceGroupName));
-            Assert.That(resourceGroup.Id.Name, Is.EqualTo(namespace2.Id.ResourceGroupName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_resourceGroup.Id.Name, Is.EqualTo(namespace1.Id.ResourceGroupName));
+                Assert.That(resourceGroup.Id.Name, Is.EqualTo(namespace2.Id.ResourceGroupName));
+            });
 
             await namespace2.DeleteAsync(WaitUntil.Completed);
         }
@@ -161,14 +170,20 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
-            Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //get all authorization rules
             List<EventHubsNamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
@@ -188,14 +203,21 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     isContainDefaultRuleName = true;
                 }
             }
-            Assert.That(isContainDefaultRuleName, Is.True);
-            Assert.That(isContainAuthorizationRuleName, Is.True);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isContainDefaultRuleName, Is.True);
+                Assert.That(isContainAuthorizationRuleName, Is.True);
+            });
 
             //update authorization rule
             parameter.Rights.Add(EventHubsAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //delete authorization rule
             await authorizationRule.DeleteAsync(WaitUntil.Completed);
@@ -203,7 +225,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate if deleted
             Assert.That((bool)await ruleCollection.ExistsAsync(ruleName), Is.False);
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(rules.Count, Is.EqualTo(1));
+            Assert.That(rules, Has.Count.EqualTo(1));
             Assert.That(rules[0].Id.Name, Is.EqualTo(DefaultNamespaceAuthorizationRule));
         }
 
@@ -242,26 +264,38 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             EventHubsAccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.That(keys1, Is.Not.Null);
-            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
-            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+                Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
+            });
 
             EventHubsAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
-                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                    Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
+                });
             }
 
             EventHubsAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
-                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                    Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
+                });
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -273,8 +307,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
-                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                    Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
+                });
             }
 
             currentKeys = keys4;
@@ -285,8 +322,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
-                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                    Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
+                });
             }
         }
 
@@ -318,8 +358,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            });
         }
 
         [Test]
@@ -335,16 +378,22 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 ZoneRedundant = true
             })).Value;
 
-            Assert.That(eventHubNamespace.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(eventHubNamespace.Data.ZoneRedundant, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(eventHubNamespace.Data.ZoneRedundant, Is.True);
+            });
 
             //delete namespace
             await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            });
         }
 
         [Test]
@@ -370,8 +419,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await namespaceCollection.ExistsAsync(namespaceName), Is.False);
+            });
         }
 
         [Test]
@@ -402,9 +454,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             ArmOperation<EventHubsNamespaceResource> eventHubsNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false));
 
-            Assert.That(eventHubsNamespace.Value.Data.Name, Is.EqualTo(namespaceName));
-            Assert.That(eventHubsNamespace.Value.Data.Sku.Name, Is.EqualTo(EventHubsSkuName.Premium));
-            Assert.That(eventHubsNamespace.Value.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubsNamespace.Value.Data.Name, Is.EqualTo(namespaceName));
+                Assert.That(eventHubsNamespace.Value.Data.Sku.Name, Is.EqualTo(EventHubsSkuName.Premium));
+                Assert.That(eventHubsNamespace.Value.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            });
 
             namespaceData = eventHubsNamespace.Value.Data;
 
@@ -517,35 +572,44 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             if (SkuName == EventHubsSkuName.Standard)
             {
-                Assert.That(namespaceData.Sku.Name, Is.EqualTo(EventHubsSkuName.Standard));
-                Assert.That(namespaceData.Sku.Capacity, Is.EqualTo(1));
-                Assert.That(namespaceData.ZoneRedundant, Is.True);
-                Assert.That(namespaceData.DisableLocalAuth, Is.False);
-                Assert.That(namespaceData.IsAutoInflateEnabled, Is.False);
-                Assert.That(namespaceData.MaximumThroughputUnits, Is.EqualTo(0));
-                Assert.That(namespaceData.KafkaEnabled, Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(namespaceData.Sku.Name, Is.EqualTo(EventHubsSkuName.Standard));
+                    Assert.That(namespaceData.Sku.Capacity, Is.EqualTo(1));
+                    Assert.That(namespaceData.ZoneRedundant, Is.True);
+                    Assert.That(namespaceData.DisableLocalAuth, Is.False);
+                    Assert.That(namespaceData.IsAutoInflateEnabled, Is.False);
+                    Assert.That(namespaceData.MaximumThroughputUnits, Is.EqualTo(0));
+                    Assert.That(namespaceData.KafkaEnabled, Is.True);
+                });
             }
             else
             {
-                Assert.That(namespaceData.Sku.Name, Is.EqualTo(EventHubsSkuName.Premium));
-                Assert.That(namespaceData.Sku.Capacity, Is.EqualTo(1));
-                Assert.That(namespaceData.ZoneRedundant, Is.True);
-                Assert.That(namespaceData.DisableLocalAuth, Is.False);
-                Assert.That(namespaceData.IsAutoInflateEnabled, Is.False);
-                Assert.That(namespaceData.MaximumThroughputUnits, Is.EqualTo(0));
-                Assert.That(namespaceData.KafkaEnabled, Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(namespaceData.Sku.Name, Is.EqualTo(EventHubsSkuName.Premium));
+                    Assert.That(namespaceData.Sku.Capacity, Is.EqualTo(1));
+                    Assert.That(namespaceData.ZoneRedundant, Is.True);
+                    Assert.That(namespaceData.DisableLocalAuth, Is.False);
+                    Assert.That(namespaceData.IsAutoInflateEnabled, Is.False);
+                    Assert.That(namespaceData.MaximumThroughputUnits, Is.EqualTo(0));
+                    Assert.That(namespaceData.KafkaEnabled, Is.True);
+                });
             }
         }
 
         public void AssertNamespacePropertiesOnUpdate(EventHubsNamespaceData expectedNamespace, EventHubsNamespaceData actualNamespace)
         {
-            Assert.That(actualNamespace.Sku.Name, Is.EqualTo(expectedNamespace.Sku.Name));
-            Assert.That(actualNamespace.Sku.Capacity, Is.EqualTo(expectedNamespace.Sku.Capacity));
-            Assert.That(actualNamespace.ZoneRedundant, Is.EqualTo(expectedNamespace.ZoneRedundant));
-            Assert.That(actualNamespace.DisableLocalAuth, Is.EqualTo(expectedNamespace.DisableLocalAuth));
-            Assert.That(actualNamespace.IsAutoInflateEnabled, Is.EqualTo(expectedNamespace.IsAutoInflateEnabled));
-            Assert.That(actualNamespace.MaximumThroughputUnits, Is.EqualTo(expectedNamespace.MaximumThroughputUnits));
-            Assert.That(actualNamespace.KafkaEnabled, Is.EqualTo(expectedNamespace.KafkaEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualNamespace.Sku.Name, Is.EqualTo(expectedNamespace.Sku.Name));
+                Assert.That(actualNamespace.Sku.Capacity, Is.EqualTo(expectedNamespace.Sku.Capacity));
+                Assert.That(actualNamespace.ZoneRedundant, Is.EqualTo(expectedNamespace.ZoneRedundant));
+                Assert.That(actualNamespace.DisableLocalAuth, Is.EqualTo(expectedNamespace.DisableLocalAuth));
+                Assert.That(actualNamespace.IsAutoInflateEnabled, Is.EqualTo(expectedNamespace.IsAutoInflateEnabled));
+                Assert.That(actualNamespace.MaximumThroughputUnits, Is.EqualTo(expectedNamespace.MaximumThroughputUnits));
+                Assert.That(actualNamespace.KafkaEnabled, Is.EqualTo(expectedNamespace.KafkaEnabled));
+            });
         }
 
         public void AssertNamespaceMSIOnUpdates(EventHubsNamespaceData expectedNamespace, EventHubsNamespaceData actualNamespace)
@@ -553,14 +617,17 @@ namespace Azure.ResourceManager.EventHubs.Tests
             if (expectedNamespace.Identity != null)
             {
                 Assert.That(actualNamespace.Identity, Is.Not.Null);
-                Assert.That(actualNamespace.Identity.ManagedServiceIdentityType, Is.EqualTo(expectedNamespace.Identity.ManagedServiceIdentityType));
-                Assert.That(actualNamespace.Identity.PrincipalId, Is.EqualTo(expectedNamespace.Identity.PrincipalId));
-                Assert.That(actualNamespace.Identity.TenantId, Is.EqualTo(expectedNamespace.Identity.TenantId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualNamespace.Identity.ManagedServiceIdentityType, Is.EqualTo(expectedNamespace.Identity.ManagedServiceIdentityType));
+                    Assert.That(actualNamespace.Identity.PrincipalId, Is.EqualTo(expectedNamespace.Identity.PrincipalId));
+                    Assert.That(actualNamespace.Identity.TenantId, Is.EqualTo(expectedNamespace.Identity.TenantId));
+                });
 
                 if (expectedNamespace.Identity.UserAssignedIdentities != null)
                 {
                     Assert.That(actualNamespace.Identity.UserAssignedIdentities, Is.Not.Null);
-                    Assert.That(actualNamespace.Identity.UserAssignedIdentities.Count, Is.EqualTo(expectedNamespace.Identity.UserAssignedIdentities.Count));
+                    Assert.That(actualNamespace.Identity.UserAssignedIdentities, Has.Count.EqualTo(expectedNamespace.Identity.UserAssignedIdentities.Count));
                 }
                 else
                 {
@@ -570,7 +637,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 if (expectedNamespace.Encryption != null)
                 {
                     Assert.That(actualNamespace.Encryption, Is.Not.Null);
-                    Assert.That(actualNamespace.Encryption.KeyVaultProperties.Count, Is.EqualTo(expectedNamespace.Encryption.KeyVaultProperties.Count));
+                    Assert.That(actualNamespace.Encryption.KeyVaultProperties, Has.Count.EqualTo(expectedNamespace.Encryption.KeyVaultProperties.Count));
                 }
                 else
                 {
@@ -651,10 +718,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //get the network rule set
             EventHubsNetworkRuleSetResource networkRuleSet = await eventHubNamespace.GetEventHubsNetworkRuleSet().GetAsync();
             Assert.That(networkRuleSet, Is.Not.Null);
-            Assert.That(networkRuleSet.Data.IPRules, Is.Not.Null);
-            Assert.That(networkRuleSet.Data.VirtualNetworkRules, Is.Not.Null);
-            Assert.That(networkRuleSet.Data.VirtualNetworkRules.Count, Is.EqualTo(3));
-            Assert.That(networkRuleSet.Data.IPRules.Count, Is.EqualTo(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(networkRuleSet.Data.IPRules, Is.Not.Null);
+                Assert.That(networkRuleSet.Data.VirtualNetworkRules, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(networkRuleSet.Data.VirtualNetworkRules, Has.Count.EqualTo(3));
+                Assert.That(networkRuleSet.Data.IPRules, Has.Count.EqualTo(5));
+            });
 
             //delete virtual network
             await virtualNetwork.DeleteAsync(WaitUntil.Completed);
@@ -674,7 +747,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //add a tag
             eventHubNamespace = await eventHubNamespace.AddTagAsync("key1", "value1");
-            Assert.That(eventHubNamespace.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(eventHubNamespace.Data.Tags, Has.Count.EqualTo(1));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.That(eventHubNamespace.Data.Tags["key1"], Is.EqualTo("value1"));
@@ -683,12 +756,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //set the tag
             eventHubNamespace.Data.Tags.Add("key2", "value2");
             eventHubNamespace = await eventHubNamespace.SetTagsAsync(eventHubNamespace.Data.Tags);
-            Assert.That(eventHubNamespace.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(eventHubNamespace.Data.Tags, Has.Count.EqualTo(2));
             Assert.That(eventHubNamespace.Data.Tags["key2"], Is.EqualTo("value2"));
 
             //remove a tag
             eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key1");
-            Assert.That(eventHubNamespace.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(eventHubNamespace.Data.Tags, Has.Count.EqualTo(1));
 
             //wait until provision state is succeeded
             await GetSucceededNamespace(eventHubNamespace);

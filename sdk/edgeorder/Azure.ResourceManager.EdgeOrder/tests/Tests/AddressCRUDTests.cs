@@ -50,8 +50,11 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             // Create
             var createAddressOperation = await addressResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, addressName, addressResourceData);
             await createAddressOperation.WaitForCompletionAsync();
-            Assert.That(createAddressOperation.HasCompleted, Is.True);
-            Assert.That(createAddressOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createAddressOperation.HasCompleted, Is.True);
+                Assert.That(createAddressOperation.HasValue, Is.True);
+            });
 
             // Get
             Response<EdgeOrderAddressResource> getAddressResponse = await addressResourceCollection.GetAsync(addressName);
@@ -66,14 +69,20 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
                 ContactDetails = contactDetails
             };
             var updateAddressOperation = await addressResource.UpdateAsync(WaitUntil.Completed, addressUpdateParameter);
-            Assert.That(updateAddressOperation.HasCompleted, Is.True);
-            Assert.That(updateAddressOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateAddressOperation.HasCompleted, Is.True);
+                Assert.That(updateAddressOperation.HasValue, Is.True);
+            });
 
             // Get
             getAddressResponse = await addressResourceCollection.GetAsync(addressName);
             addressResource = getAddressResponse.Value;
-            Assert.That(addressResource, Is.Not.Null);
-            Assert.That(string.Equals(addressResource.Data.ContactDetails.ContactName, "Updated contact name"), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(addressResource, Is.Not.Null);
+                Assert.That(string.Equals(addressResource.Data.ContactDetails.ContactName, "Updated contact name"), Is.True);
+            });
 
             // Delete
             var deleteAddressOperation = await addressResource.DeleteAsync(WaitUntil.Completed);

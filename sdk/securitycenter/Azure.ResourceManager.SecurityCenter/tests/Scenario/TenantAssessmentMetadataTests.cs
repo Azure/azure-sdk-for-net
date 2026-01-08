@@ -50,20 +50,23 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _tenantAssessmentMetadataCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateTenantAssessmentMetadata(list.First(item => item.Data.Name == _existAssessmentMetadataName));
         }
 
         private void ValidateTenantAssessmentMetadata(TenantAssessmentMetadataResource tenantAssessmentMetadataResource, string assessmentMetadataName = _existAssessmentMetadataName)
         {
-            Assert.IsNotNull(tenantAssessmentMetadataResource);
-            Assert.IsNotNull(tenantAssessmentMetadataResource.Data.Id);
-            Assert.That(tenantAssessmentMetadataResource.Data.Name, Is.EqualTo(assessmentMetadataName));
-            Assert.That(tenantAssessmentMetadataResource.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/assessmentMetadata"));
-            Assert.That(tenantAssessmentMetadataResource.Data.DisplayName, Is.EqualTo("Endpoint protection should be installed on machines"));
-            Assert.That(tenantAssessmentMetadataResource.Data.Severity, Is.EqualTo(SecurityAssessmentSeverity.High));
-            Assert.That(tenantAssessmentMetadataResource.Data.UserImpact, Is.EqualTo(SecurityAssessmentUserImpact.Low));
-            Assert.That(tenantAssessmentMetadataResource.Data.ImplementationEffort, Is.EqualTo(ImplementationEffort.Low));
+            Assert.That(tenantAssessmentMetadataResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tenantAssessmentMetadataResource.Data.Id, Is.Not.Null);
+                Assert.That(tenantAssessmentMetadataResource.Data.Name, Is.EqualTo(assessmentMetadataName));
+                Assert.That(tenantAssessmentMetadataResource.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/assessmentMetadata"));
+                Assert.That(tenantAssessmentMetadataResource.Data.DisplayName, Is.EqualTo("Endpoint protection should be installed on machines"));
+                Assert.That(tenantAssessmentMetadataResource.Data.Severity, Is.EqualTo(SecurityAssessmentSeverity.High));
+                Assert.That(tenantAssessmentMetadataResource.Data.UserImpact, Is.EqualTo(SecurityAssessmentUserImpact.Low));
+                Assert.That(tenantAssessmentMetadataResource.Data.ImplementationEffort, Is.EqualTo(ImplementationEffort.Low));
+            });
         }
     }
 }

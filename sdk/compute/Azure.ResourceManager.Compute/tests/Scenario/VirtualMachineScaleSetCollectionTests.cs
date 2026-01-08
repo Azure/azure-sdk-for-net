@@ -90,8 +90,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
             VirtualMachineScaleSetResource vmss = lro.Value;
-            Assert.That((bool)await collection.ExistsAsync(vmssName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(vmssName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(vmssName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(vmssName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -114,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -140,8 +143,11 @@ namespace Azure.ResourceManager.Compute.Tests
                     vmss2 = vmss;
             }
 
-            Assert.That(vmss1, Is.Not.Null);
-            Assert.That(vmss2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vmss1, Is.Not.Null);
+                Assert.That(vmss2, Is.Not.Null);
+            });
         }
     }
 }

@@ -89,8 +89,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             };
             lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, updatedData);
             CosmosDBForPostgreSqlClusterResource clusterFromUpdate = lro.Value;
-            Assert.That(clusterFromUpdate.Data.Name, Is.EqualTo(clusterName));
-            Assert.That(clusterFromUpdate.Data.IsHAEnabled, Is.EqualTo(true));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterFromUpdate.Data.Name, Is.EqualTo(clusterName));
+                Assert.That(clusterFromUpdate.Data.IsHAEnabled, Is.EqualTo(true));
+            });
 
             // Get
             CosmosDBForPostgreSqlClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             List<StandbyContainerGroupPoolResource> standbyContainerGroupPoolResults = await standbyContainerGroupPools.ToEnumerableAsync();
 
             Assert.That(standbyContainerGroupPoolResults, Is.Not.Null);
-            Assert.That(standbyContainerGroupPoolResults.Count > 0, Is.True);
+            Assert.That(standbyContainerGroupPoolResults, Is.Not.Empty);
         }
 
         [TestCase]

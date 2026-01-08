@@ -32,14 +32,20 @@ namespace Azure.ResourceManager.Advisor.Tests
 
             await DefaultSubscription.CreateConfigurationAsync(configName, configData);
             var data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
-            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold, Is.EqualTo(TestThreshold));
-            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold, Is.EqualTo(TestThreshold));
+                Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
+            });
 
             configData.LowCpuThreshold = DefaultThreshold;
             await DefaultSubscription.CreateConfigurationAsync(configName, configData);
             data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
-            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold, Is.EqualTo(DefaultThreshold));
-            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold, Is.EqualTo(DefaultThreshold));
+                Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
+            });
         }
 
         [Test]

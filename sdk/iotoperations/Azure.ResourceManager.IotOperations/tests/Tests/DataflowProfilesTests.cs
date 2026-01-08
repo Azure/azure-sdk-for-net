@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 await dataflowProfileResourceCollection.GetAsync(DataflowEndpointsName);
 
             Assert.That(dataflowProfileResource, Is.Not.Null);
-            Assert.That(dataflowProfileResource.Data, Is.Not.Null);
-            Assert.That(DataflowEndpointsName, Is.EqualTo(dataflowProfileResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataflowProfileResource.Data, Is.Not.Null);
+                Assert.That(DataflowEndpointsName, Is.EqualTo(dataflowProfileResource.Data.Name));
+            });
 
             // Create new DataflowProfile
             IotOperationsDataflowProfileData dataflowProfileResourceData =

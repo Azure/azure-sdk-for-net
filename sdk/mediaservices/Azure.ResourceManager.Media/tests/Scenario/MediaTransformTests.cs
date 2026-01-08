@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Media.Tests
             string mediaTransformName = Recording.GenerateAssetName("randomtransfer");
             var mediaTransfer = await CreateMediaTransfer(_mediaService, mediaTransformName);
             var list = await mediaTransformCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

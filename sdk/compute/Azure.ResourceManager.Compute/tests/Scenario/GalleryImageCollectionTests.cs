@@ -75,8 +75,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
             GalleryImageResource image = lro.Value;
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

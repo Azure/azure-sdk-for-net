@@ -44,13 +44,16 @@ namespace Azure.ResourceManager.Search.Tests
                 HostingMode = SearchServiceHostingMode.Default
             };
             var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
-            Assert.IsNotNull(result);
-            Assert.That(result.Data.Name, Is.EqualTo(name));
-            Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
-            Assert.That(result.Data.PartitionCount, Is.EqualTo(1));
-            Assert.That(result.Data.ReplicaCount, Is.EqualTo(1));
-            Assert.That(result.Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
+            Assert.That(result, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Data.Name, Is.EqualTo(name));
+                Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
+                Assert.That(result.Data.PartitionCount, Is.EqualTo(1));
+                Assert.That(result.Data.ReplicaCount, Is.EqualTo(1));
+                Assert.That(result.Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
+            });
         }
 
         [Test]
@@ -69,13 +72,16 @@ namespace Azure.ResourceManager.Search.Tests
             var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
 
             result = (await SearchCollection.GetAsync(name)).Value;
-            Assert.IsNotNull(result);
-            Assert.That(result.Data.Name, Is.EqualTo(name));
-            Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
-            Assert.That(result.Data.PartitionCount, Is.EqualTo(1));
-            Assert.That(result.Data.ReplicaCount, Is.EqualTo(1));
-            Assert.That(result.Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
+            Assert.That(result, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Data.Name, Is.EqualTo(name));
+                Assert.That(result.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(result.Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
+                Assert.That(result.Data.PartitionCount, Is.EqualTo(1));
+                Assert.That(result.Data.ReplicaCount, Is.EqualTo(1));
+                Assert.That(result.Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
+            });
         }
 
         [Test]
@@ -104,11 +110,14 @@ namespace Azure.ResourceManager.Search.Tests
             await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name2, data2);
 
             List<SearchServiceResource> searchServices = await SearchCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(searchServices.Count, Is.EqualTo(2));
-            Assert.That(searchServices.First(x => x.Data.Name == name1).Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
-            Assert.That(searchServices.First(x => x.Data.Name == name1).Data.PartitionCount, Is.EqualTo(1));
-            Assert.That(searchServices.First(x => x.Data.Name == name1).Data.ReplicaCount, Is.EqualTo(1));
-            Assert.That(searchServices.First(x => x.Data.Name == name1).Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
+            Assert.That(searchServices, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(searchServices.First(x => x.Data.Name == name1).Data.SearchSkuName, Is.EqualTo(SearchServiceSkuName.Standard));
+                Assert.That(searchServices.First(x => x.Data.Name == name1).Data.PartitionCount, Is.EqualTo(1));
+                Assert.That(searchServices.First(x => x.Data.Name == name1).Data.ReplicaCount, Is.EqualTo(1));
+                Assert.That(searchServices.First(x => x.Data.Name == name1).Data.HostingMode, Is.EqualTo(SearchServiceHostingMode.Default));
+            });
         }
         [Test]
         public async Task ExistsAsync()

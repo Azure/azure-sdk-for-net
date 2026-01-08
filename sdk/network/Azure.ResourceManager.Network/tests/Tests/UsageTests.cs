@@ -58,10 +58,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             foreach (NetworkUsage usage in usagesResponse)
             {
-                Assert.That(usage.Limit > 0, Is.True);
-                Assert.That(usage.Name, Is.Not.Null);
-                Assert.That(!string.IsNullOrEmpty(usage.Name.LocalizedValue), Is.True);
-                Assert.That(!string.IsNullOrEmpty(usage.Name.Value), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(usage.Limit, Is.GreaterThan(0));
+                    Assert.That(usage.Name, Is.Not.Null);
+                    Assert.That(!string.IsNullOrEmpty(usage.Name.LocalizedValue), Is.True);
+                    Assert.That(!string.IsNullOrEmpty(usage.Name.Value), Is.True);
+                });
             }
         }
     }

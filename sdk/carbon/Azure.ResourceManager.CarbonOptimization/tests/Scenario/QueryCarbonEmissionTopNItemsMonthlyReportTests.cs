@@ -47,22 +47,28 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             Assert.That(result.Value, Is.Not.Null);
 
             var firstItem = (ResourceCarbonEmissionTopItemMonthlySummary)result.Value.First();
-            Assert.That(firstItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(firstItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData));
-            Assert.That(firstItem.ItemName, Is.Not.Null);
-            Assert.That(firstItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.Resource));
-            Assert.That(firstItem.ResourceGroup, Is.Not.Null);
-            Assert.That(firstItem.SubscriptionId, Is.Not.Null);
-            Assert.That(firstItem.Date, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(firstItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData));
+                Assert.That(firstItem.ItemName, Is.Not.Null);
+                Assert.That(firstItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.Resource));
+                Assert.That(firstItem.ResourceGroup, Is.Not.Null);
+                Assert.That(firstItem.SubscriptionId, Is.Not.Null);
+                Assert.That(firstItem.Date, Is.Not.Null);
+            });
 
             var lastItem = (ResourceCarbonEmissionTopItemMonthlySummary)result.Value.Last();
-            Assert.That(lastItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(lastItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData));
-            Assert.That(lastItem.ItemName, Is.Not.Null);
-            Assert.That(lastItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.Resource));
-            Assert.That(lastItem.ResourceGroup, Is.Not.Null);
-            Assert.That(lastItem.SubscriptionId, Is.Not.Null);
-            Assert.That(lastItem.Date, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lastItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(lastItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData));
+                Assert.That(lastItem.ItemName, Is.Not.Null);
+                Assert.That(lastItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.Resource));
+                Assert.That(lastItem.ResourceGroup, Is.Not.Null);
+                Assert.That(lastItem.SubscriptionId, Is.Not.Null);
+                Assert.That(lastItem.Date, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -80,20 +86,26 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             Assert.That(result.Value, Is.Not.Null);
 
             var firstItem = (ResourceGroupCarbonEmissionTopItemMonthlySummary)result.Value.First();
-            Assert.That(firstItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(firstItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData));
-            Assert.That(firstItem.ItemName, Is.Not.Null);
-            Assert.That(firstItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.ResourceGroup));
-            Assert.That(firstItem.ResourceGroupId, Is.Not.Null);
-            Assert.That(firstItem.Date, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(firstItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData));
+                Assert.That(firstItem.ItemName, Is.Not.Null);
+                Assert.That(firstItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.ResourceGroup));
+                Assert.That(firstItem.ResourceGroupId, Is.Not.Null);
+                Assert.That(firstItem.Date, Is.Not.Null);
+            });
 
             var lastItem = (ResourceGroupCarbonEmissionTopItemMonthlySummary)result.Value.Last();
-            Assert.That(lastItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(lastItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData));
-            Assert.That(lastItem.ItemName, Is.Not.Null);
-            Assert.That(lastItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.ResourceGroup));
-            Assert.That(lastItem.ResourceGroupId, Is.Not.Null);
-            Assert.That(lastItem.Date, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lastItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(lastItem.DataType, Is.EqualTo(CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData));
+                Assert.That(lastItem.ItemName, Is.Not.Null);
+                Assert.That(lastItem.CategoryType, Is.EqualTo(CarbonEmissionCategoryType.ResourceGroup));
+                Assert.That(lastItem.ResourceGroupId, Is.Not.Null);
+                Assert.That(lastItem.Date, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -167,18 +179,24 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             Assert.That(result.Value, Is.Not.Null);
 
             var firstItem = (CarbonEmissionTopItemMonthlySummary) result.Value.First();
-            Assert.That(firstItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(firstItem.DataType, Is.EqualTo(CarbonEmissionDataType.TopItemsMonthlySummaryData));
-            Assert.That(firstItem.ItemName, Is.Not.Null);
-            Assert.That(firstItem.CategoryType, Is.EqualTo(categoryType));
-            Assert.That(firstItem.Date, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(firstItem.DataType, Is.EqualTo(CarbonEmissionDataType.TopItemsMonthlySummaryData));
+                Assert.That(firstItem.ItemName, Is.Not.Null);
+                Assert.That(firstItem.CategoryType, Is.EqualTo(categoryType));
+                Assert.That(firstItem.Date, Is.Not.Null);
+            });
 
             var lastItem = (CarbonEmissionTopItemMonthlySummary) result.Value.Last();
-            Assert.That(lastItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(lastItem.DataType, Is.EqualTo(CarbonEmissionDataType.TopItemsMonthlySummaryData));
-            Assert.That(lastItem.ItemName, Is.Not.Null);
-            Assert.That(lastItem.CategoryType, Is.EqualTo(categoryType));
-            Assert.That(lastItem.Date, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lastItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(lastItem.DataType, Is.EqualTo(CarbonEmissionDataType.TopItemsMonthlySummaryData));
+                Assert.That(lastItem.ItemName, Is.Not.Null);
+                Assert.That(lastItem.CategoryType, Is.EqualTo(categoryType));
+                Assert.That(lastItem.Date, Is.Not.Null);
+            });
         }
     }
 }

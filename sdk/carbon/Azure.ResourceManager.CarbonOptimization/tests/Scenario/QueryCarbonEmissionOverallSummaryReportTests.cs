@@ -61,8 +61,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             Assert.That(result.Value, Is.Not.Null);
 
             var resultItem = (CarbonEmissionOverallSummary)result.Value[0];
-            Assert.That(resultItem.LatestMonthEmissions, Is.Not.Null);
-            Assert.That(resultItem.DataType, Is.EqualTo(CarbonEmissionDataType.OverallSummaryData));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultItem.LatestMonthEmissions, Is.Not.Null);
+                Assert.That(resultItem.DataType, Is.EqualTo(CarbonEmissionDataType.OverallSummaryData));
+            });
         }
     }
 }

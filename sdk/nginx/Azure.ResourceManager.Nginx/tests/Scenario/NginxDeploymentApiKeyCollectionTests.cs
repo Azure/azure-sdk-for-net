@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             _ = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName2);
 
             nginxDeploymentApiKeys = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(nginxDeploymentApiKeys.Count, Is.EqualTo(2));
+            Assert.That(nginxDeploymentApiKeys, Has.Count.EqualTo(2));
         }
 
         [TestCase]
@@ -94,8 +94,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentApiKeyName = Recording.GenerateAssetName("testDeploymentApiKey-");
             _ = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
 
-            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName + "1"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 

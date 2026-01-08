@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             Assert.That(partnerConfigurationsInSubscription, Is.Not.Null);
 
-            Assert.GreaterOrEqual(partnerConfigurationsInSubscription.Count, 1);
+            Assert.That(partnerConfigurationsInSubscription.Count, Is.GreaterThanOrEqualTo(1));
 
             // Delete
             await configuration.DeleteAsync(WaitUntil.Completed);

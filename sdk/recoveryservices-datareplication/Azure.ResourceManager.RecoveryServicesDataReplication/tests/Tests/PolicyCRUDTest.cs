@@ -51,14 +51,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 policyName,
                 policyModelData);
 
-            Assert.That(createPolicyOperation.HasCompleted, Is.True);
-            Assert.That(createPolicyOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createPolicyOperation.HasCompleted, Is.True);
+                Assert.That(createPolicyOperation.HasValue, Is.True);
+            });
 
             // Get
             var getPolicyOperation = await vault.GetDataReplicationPolicies().GetAsync(policyName);
             var policyModelResource = getPolicyOperation.Value;
 
-            Assert.IsNotNull(policyModelResource);
+            Assert.That(policyModelResource, Is.Not.Null);
 
             // Delete
             var deletePolicyOperation = await policyModelResource.DeleteAsync(WaitUntil.Completed);

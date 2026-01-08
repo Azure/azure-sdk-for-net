@@ -61,9 +61,12 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             // Assert
             Assert.That(deserialized, Is.Not.Null);
-            Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
-            Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
-            Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
+                Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
+                Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
+            });
 
             // Verify all URIs are absolute
             Assert.That(deserialized.ElasticsearchServiceUri.IsAbsoluteUri, Is.True);
@@ -117,9 +120,12 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             // Assert
             Assert.That(deserialized, Is.Not.Null);
-            Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
-            Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
-            Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
+            Assert.Multiple(() =>
+            {
+                Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
+                Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
+                Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
+            });
 
             // Verify all URIs are relative
             Assert.That(deserialized.ElasticsearchServiceUri.IsAbsoluteUri, Is.False);

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string logicWorkflowName = Recording.GenerateAssetName("workflow");
             await CreateLogicWorkflow(_resourceGroup, _integrationAccountIdentifier, logicWorkflowName);
             var list = await _logicWorkflowCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Tests
             var lro = await logicWorkflow.UpdateAsync(WaitUntil.Completed, input);
             var updatedLogicWorkflow = lro.Value;
 
-            Assert.That(updatedLogicWorkflow.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(updatedLogicWorkflow.Data.Tags, Has.Count.EqualTo(1));
         }
     }
 }

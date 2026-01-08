@@ -31,8 +31,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
-            Assert.That(topic, Is.Not.Null);
-            Assert.That(topicName, Is.EqualTo(topic.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(topic, Is.Not.Null);
+                Assert.That(topicName, Is.EqualTo(topic.Id.Name));
+            });
 
             //create a subscription
             ServiceBusSubscriptionCollection serviceBusSubscriptionCollection = topic.GetServiceBusSubscriptions();
@@ -49,24 +52,33 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 DeadLetteringOnFilterEvaluationExceptions = true
             };
             ServiceBusSubscriptionResource serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, parameters)).Value;
-            Assert.That(serviceBusSubscription, Is.Not.Null);
-            Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceBusSubscription, Is.Not.Null);
+                Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
+            });
 
             //get created subscription
             serviceBusSubscription = await serviceBusSubscriptionCollection.GetAsync(subscriptionName);
-            Assert.That(serviceBusSubscription, Is.Not.Null);
-            Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceBusSubscription, Is.Not.Null);
+                Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
+            });
             Assert.That(serviceBusSubscription.Data.Status, Is.EqualTo(ServiceBusMessagingEntityStatus.Active));
 
             //get all subscriptions
             List<ServiceBusSubscriptionResource> serviceBusSubscriptions = await serviceBusSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(serviceBusSubscriptions.Count, Is.EqualTo(1));
+            Assert.That(serviceBusSubscriptions, Has.Count.EqualTo(1));
 
             //create a topic for autoforward
             string topicName1 = Recording.GenerateAssetName("topic");
             ServiceBusTopicResource topic1 = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName1, new ServiceBusTopicData() { EnablePartitioning = true})).Value;
-            Assert.That(topic1, Is.Not.Null);
-            Assert.That(topicName1, Is.EqualTo(topic1.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(topic1, Is.Not.Null);
+                Assert.That(topicName1, Is.EqualTo(topic1.Id.Name));
+            });
 
             //update subscription and validate
             ServiceBusSubscriptionData updateParameters = new ServiceBusSubscriptionData()
@@ -77,8 +89,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 ForwardTo = topicName1
             };
             serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, updateParameters)).Value;
-            Assert.That(serviceBusSubscription, Is.Not.Null);
-            Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceBusSubscription, Is.Not.Null);
+                Assert.That(subscriptionName, Is.EqualTo(serviceBusSubscription.Id.Name));
+            });
             Assert.That(serviceBusSubscription.Data.Status, Is.EqualTo(ServiceBusMessagingEntityStatus.Active));
             Assert.That(serviceBusSubscription.Data.EnableBatchedOperations, Is.True);
             Assert.That(topicName1, Is.EqualTo(serviceBusSubscription.Data.ForwardTo));

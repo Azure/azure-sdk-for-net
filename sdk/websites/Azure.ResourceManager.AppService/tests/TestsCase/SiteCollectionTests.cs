@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -73,8 +73,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, siteName, input);
             WebSiteResource site = lro.Value;
-            Assert.That((bool)await container.ExistsAsync(siteName), Is.True);
-            Assert.That((bool)await container.ExistsAsync(siteName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await container.ExistsAsync(siteName), Is.True);
+                Assert.That((bool)await container.ExistsAsync(siteName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

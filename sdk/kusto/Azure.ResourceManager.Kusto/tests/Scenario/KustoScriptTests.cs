@@ -73,8 +73,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             AssertEquality(expectedScriptData.ForceUpdateTag, actualScriptData.ForceUpdateTag);
             AssertEquality(expectedFullScriptName, actualScriptData.Name);
-            Assert.That(actualScriptData.ScriptContent, Is.Null);
-            Assert.That(actualScriptData.ScriptUriSasToken, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualScriptData.ScriptContent, Is.Null);
+                Assert.That(actualScriptData.ScriptUriSasToken, Is.Null);
+            });
             AssertEquality(expectedScriptData.ShouldContinueOnErrors ?? false, actualScriptData.ShouldContinueOnErrors);
             AssertEquality(expectedScriptData.ScriptLevel, actualScriptData.ScriptLevel);
             AssertEquality(expectedScriptData.PrincipalPermissionsAction, actualScriptData.PrincipalPermissionsAction);

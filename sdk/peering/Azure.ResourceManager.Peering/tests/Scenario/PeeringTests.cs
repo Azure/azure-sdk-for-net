@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Peering.Tests
 
             // GetAll
             var list = await _peeringCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.First(item => item.Data.Name == peeringName), Is.Not.Null);
 
             // Delete

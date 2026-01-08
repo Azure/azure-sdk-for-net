@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
                 Top = 3, //The restricted parameter does not work, still return 8500+ items
             };
             var list = await _metadataCollection.GetAllAsync(query).ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -42,11 +42,14 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         {
             string metadataName = "CIS_Azure_1.3.0_7.1";
             var metadata = await _metadataCollection.GetAsync(metadataName);
-            Assert.IsNotNull(metadata);
-            Assert.That(metadata.Value.Data.Name, Is.EqualTo(metadataName));
-            Assert.That(metadata.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.PolicyInsights/policyMetadata"));
-            Assert.That(metadata.Value.Data.Owner, Is.EqualTo("Shared"));
-            Assert.IsNotNull(metadata.Value.Data.AdditionalContentUri);
+            Assert.That(metadata, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metadata.Value.Data.Name, Is.EqualTo(metadataName));
+                Assert.That(metadata.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.PolicyInsights/policyMetadata"));
+                Assert.That(metadata.Value.Data.Owner, Is.EqualTo("Shared"));
+                Assert.That(metadata.Value.Data.AdditionalContentUri, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -55,8 +58,11 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         {
             string metadataName = "NZISM_Security_Benchmark_v1.1_SS-2";
             var metadata = await _metadataCollection.GetAsync(metadataName);
-            Assert.IsNotNull(metadata);
-            Assert.IsNotEmpty(metadata.Value.Data.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metadata, Is.Not.Null);
+                Assert.That((string)metadata.Value.Data.Id, Is.Not.Empty);
+            });
             Assert.That(metadata.Value.Data.Name, Is.EqualTo(metadataName));
             Assert.That(metadata.Value.Data.AdditionalContentUri, Is.EqualTo("7"));
         }

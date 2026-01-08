@@ -107,8 +107,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete CloudEndpoint before its created.
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncGroupResource.GetCloudEndpointAsync(_cloudEndpointName)).Value?.Delete(WaitUntil.Completed));
-            Assert.That(deleteException.Status, Is.EqualTo(404));
-            Assert.That((await cloundEndpointCollection.ExistsAsync(_cloudEndpointName)).Value, Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(deleteException.Status, Is.EqualTo(404));
+                Assert.That((await cloundEndpointCollection.ExistsAsync(_cloudEndpointName)).Value, Is.False);
+            });
 
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await cloundEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;

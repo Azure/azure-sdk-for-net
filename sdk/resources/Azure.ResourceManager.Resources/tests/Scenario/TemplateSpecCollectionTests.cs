@@ -96,22 +96,28 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidTemplateSpec(TemplateSpecResource model, TemplateSpecResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
-            Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
-            Assert.That(getResult.Data.Tags, Is.EqualTo(model.Data.Tags));
-            Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
-            Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
-            Assert.That(getResult.Data.Metadata, Is.EqualTo(model.Data.Metadata));
-            Assert.That(getResult.Data.Versions.Count, Is.EqualTo(model.Data.Versions.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+                Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
+                Assert.That(getResult.Data.Tags, Is.EqualTo(model.Data.Tags));
+                Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
+                Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
+                Assert.That(getResult.Data.Metadata, Is.EqualTo(model.Data.Metadata));
+                Assert.That(getResult.Data.Versions, Has.Count.EqualTo(model.Data.Versions.Count));
+            });
             foreach (var kv in model.Data.Versions)
             {
                 var getTemplateSpecVersionInfo = getResult.Data.Versions[kv.Key];
-                Assert.That(getTemplateSpecVersionInfo, Is.Not.Null);
-                Assert.That(getResult.Data.Versions[kv.Key].Description, Is.EqualTo(model.Data.Versions[kv.Key].Description));
-                Assert.That(getResult.Data.Versions[kv.Key].TimeCreated, Is.EqualTo(model.Data.Versions[kv.Key].TimeCreated));
-                Assert.That(getResult.Data.Versions[kv.Key].TimeModified, Is.EqualTo(model.Data.Versions[kv.Key].TimeModified));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getTemplateSpecVersionInfo, Is.Not.Null);
+                    Assert.That(getResult.Data.Versions[kv.Key].Description, Is.EqualTo(model.Data.Versions[kv.Key].Description));
+                    Assert.That(getResult.Data.Versions[kv.Key].TimeCreated, Is.EqualTo(model.Data.Versions[kv.Key].TimeCreated));
+                    Assert.That(getResult.Data.Versions[kv.Key].TimeModified, Is.EqualTo(model.Data.Versions[kv.Key].TimeModified));
+                });
             }
         }
     }

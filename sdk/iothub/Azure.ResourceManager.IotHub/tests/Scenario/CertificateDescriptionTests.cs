@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             var list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
 
             await CreateDefaultCertification(iothub, certName);
             list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(certName));
         }
 

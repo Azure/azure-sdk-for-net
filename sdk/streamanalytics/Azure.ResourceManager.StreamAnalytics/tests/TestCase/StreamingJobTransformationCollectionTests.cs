@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             //2.Get
             StreamingJobTransformationResource transform2 = await container.GetAsync(name);
             ResourceDataHelpers.AssertTransformation(transform1.Data, transform2.Data);
-            //3.Exists
-            Assert.That((bool)await container.ExistsAsync(name), Is.True);
-            Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                //3.Exists
+                Assert.That((bool)await container.ExistsAsync(name), Is.True);
+                Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

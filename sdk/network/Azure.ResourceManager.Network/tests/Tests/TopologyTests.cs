@@ -63,15 +63,18 @@ namespace Azure.ResourceManager.Network.Tests
             //Getting infromation about VM from topology
             TopologyResourceInfo vmResource = getTopology.Value.Resources[0];
 
-            //Verify that topology contain right number of resources (9 resources from template)
-            Assert.That(getTopology.Value.Resources.Count, Is.EqualTo(9));
+            Assert.Multiple(() =>
+            {
+                //Verify that topology contain right number of resources (9 resources from template)
+                Assert.That(getTopology.Value.Resources, Has.Count.EqualTo(9));
 
-            //Verify that topology contain information about acreated VM
-            Assert.That(vmResource.Name, Is.EqualTo(virtualMachineName));
-            Assert.That(vmResource.Id, Is.EqualTo(vm.Id));
-            Assert.That(vmResource.Associations.FirstOrDefault().Name, Is.EqualTo(networkInterfaceName));
-            //Assert.AreEqual(vm.Data.NetworkProfile.NetworkInterfaces.FirstOrDefault().Id, vmResource.Associations.FirstOrDefault().ResourceId);
-            Assert.That(vmResource.Associations.FirstOrDefault().AssociationType.ToString(), Is.EqualTo("Contains"));
+                //Verify that topology contain information about acreated VM
+                Assert.That(vmResource.Name, Is.EqualTo(virtualMachineName));
+                Assert.That(vmResource.Id, Is.EqualTo(vm.Id));
+                Assert.That(vmResource.Associations.FirstOrDefault().Name, Is.EqualTo(networkInterfaceName));
+                //Assert.AreEqual(vm.Data.NetworkProfile.NetworkInterfaces.FirstOrDefault().Id, vmResource.Associations.FirstOrDefault().ResourceId);
+                Assert.That(vmResource.Associations.FirstOrDefault().AssociationType.ToString(), Is.EqualTo("Contains"));
+            });
         }
     }
 }

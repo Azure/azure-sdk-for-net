@@ -70,23 +70,29 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var discoveredAssetCreateOrUpdateResponse = await discoveredAssetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredAssetName, discoveredAssetData, CancellationToken.None);
-            Assert.That(discoveredAssetCreateOrUpdateResponse.Value, Is.Not.Null);
-            Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.DeviceName));
-            Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName));
-            Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
-            Assert.That(discoveredAssetData.Properties.Description, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.Description));
-            Assert.That(discoveredAssetData.Properties.DiscoveryId, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DiscoveryId));
-            Assert.That(discoveredAssetData.Properties.Version, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.Version));
+            Assert.Multiple(() =>
+            {
+                Assert.That(discoveredAssetCreateOrUpdateResponse.Value, Is.Not.Null);
+                Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.DeviceName));
+                Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName));
+                Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
+                Assert.That(discoveredAssetData.Properties.Description, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.Description));
+                Assert.That(discoveredAssetData.Properties.DiscoveryId, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.DiscoveryId));
+                Assert.That(discoveredAssetData.Properties.Version, Is.EqualTo(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.Version));
+            });
 
             // Read DeviceRegistry DiscoveredAsset
             var discoveredAssetReadResponse = await discoveredAssetsCollection.GetAsync(discoveredAssetName, CancellationToken.None);
-            Assert.That(discoveredAssetReadResponse.Value, Is.Not.Null);
-            Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DeviceRef.DeviceName));
-            Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DeviceRef.EndpointName));
-            Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DisplayName));
-            Assert.That(discoveredAssetData.Properties.Description, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.Description));
-            Assert.That(discoveredAssetData.Properties.DiscoveryId, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DiscoveryId));
-            Assert.That(discoveredAssetData.Properties.Version, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.Version));
+            Assert.Multiple(() =>
+            {
+                Assert.That(discoveredAssetReadResponse.Value, Is.Not.Null);
+                Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DeviceRef.DeviceName));
+                Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DeviceRef.EndpointName));
+                Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DisplayName));
+                Assert.That(discoveredAssetData.Properties.Description, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.Description));
+                Assert.That(discoveredAssetData.Properties.DiscoveryId, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.DiscoveryId));
+                Assert.That(discoveredAssetData.Properties.Version, Is.EqualTo(discoveredAssetReadResponse.Value.Data.Properties.Version));
+            });
 
             // List DeviceRegistry DiscoveredAsset by Resource Group
             var discoveredAssetResourcesListByResourceGroup = new List<DeviceRegistryNamespaceDiscoveredAssetResource>();
@@ -96,8 +102,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 discoveredAssetResourcesListByResourceGroup.AddRange(discoveredAssetEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(discoveredAssetResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(discoveredAssetResourcesListByResourceGroup.Count, 1);
+            Assert.That(discoveredAssetResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(discoveredAssetResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry Asset
             var discoveredAsset = discoveredAssetReadResponse.Value;
@@ -109,13 +115,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var discoveredAssetUpdateResponse = await discoveredAsset.UpdateAsync(WaitUntil.Completed, discoveredAssetPatchData, CancellationToken.None);
-            Assert.That(discoveredAssetUpdateResponse.Value, Is.Not.Null);
-            Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DeviceRef.DeviceName));
-            Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName));
-            Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DisplayName));
-            Assert.That(discoveredAssetPatchData.Properties.Description, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.Description));
-            Assert.That(discoveredAssetData.Properties.DiscoveryId, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DiscoveryId));
-            Assert.That(discoveredAssetData.Properties.Version, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.Version));
+            Assert.Multiple(() =>
+            {
+                Assert.That(discoveredAssetUpdateResponse.Value, Is.Not.Null);
+                Assert.That(discoveredAssetData.Properties.DeviceRef.DeviceName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DeviceRef.DeviceName));
+                Assert.That(discoveredAssetData.Properties.DeviceRef.EndpointName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName));
+                Assert.That(discoveredAssetData.Properties.DisplayName, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DisplayName));
+                Assert.That(discoveredAssetPatchData.Properties.Description, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.Description));
+                Assert.That(discoveredAssetData.Properties.DiscoveryId, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.DiscoveryId));
+                Assert.That(discoveredAssetData.Properties.Version, Is.EqualTo(discoveredAssetUpdateResponse.Value.Data.Properties.Version));
+            });
 
             // Delete DeviceRegistry Asset
             await discoveredAsset.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

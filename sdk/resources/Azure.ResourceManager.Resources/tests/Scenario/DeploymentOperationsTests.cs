@@ -50,8 +50,11 @@ namespace Azure.ResourceManager.Resources.Tests
                 Parameters = CreateDeploymentPropertiesUsingJsonElement().Parameters
             });
             WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
-            Assert.That(whatIfOperationResult.Status, Is.EqualTo("Succeeded"));
-            Assert.That(whatIfOperationResult.Changes.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(whatIfOperationResult.Status, Is.EqualTo("Succeeded"));
+                Assert.That(whatIfOperationResult.Changes, Has.Count.EqualTo(1));
+            });
             Assert.That(whatIfOperationResult.Changes[0].ChangeType, Is.EqualTo(WhatIfChangeType.Create));
         }
     }

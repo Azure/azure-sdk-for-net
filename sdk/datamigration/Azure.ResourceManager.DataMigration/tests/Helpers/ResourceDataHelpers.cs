@@ -19,18 +19,24 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
     {
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region DataMigrationService
@@ -51,9 +57,12 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
         public static void AssertServiceData(DataMigrationServiceData data1, DataMigrationServiceData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.That(data2.VirtualSubnetId, Is.EqualTo(data1.VirtualSubnetId));
-            Assert.That(data2.Sku.Name, Is.EqualTo(data1.Sku.Name));
-            Assert.That(data2.Sku.Tier, Is.EqualTo(data1.Sku.Tier));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.VirtualSubnetId, Is.EqualTo(data1.VirtualSubnetId));
+                Assert.That(data2.Sku.Name, Is.EqualTo(data1.Sku.Name));
+                Assert.That(data2.Sku.Tier, Is.EqualTo(data1.Sku.Tier));
+            });
         }
         #endregion
 
@@ -71,8 +80,11 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
         public static void AssertProjectData(DataMigrationProjectData data1, DataMigrationProjectData data2)
         {
             AssertTrackedResource(data1 as DataMigrationProjectData, data2);
-            Assert.That(data2.SourcePlatform, Is.EqualTo(data1.SourcePlatform));
-            Assert.That(data2.TargetPlatform, Is.EqualTo(data1.TargetPlatform));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.SourcePlatform, Is.EqualTo(data1.SourcePlatform));
+                Assert.That(data2.TargetPlatform, Is.EqualTo(data1.TargetPlatform));
+            });
         }
         #endregion
 

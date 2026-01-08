@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // GetAll
             var list = await _clusterCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePurviewAccount(list.FirstOrDefault().Data, clusterName);
 
             // Delete
@@ -69,10 +69,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // AddTag
             await cluster.AddTagAsync("addtagkey", "addtagvalue");
             cluster = await _clusterCollection.GetAsync(clusterName);
-            Assert.That(cluster.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(cluster.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = cluster.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await cluster.RemoveTagAsync("addtagkey");
@@ -82,8 +85,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidatePurviewAccount(ServiceFabricManagedClusterData cluster, string clusterName)
         {
-            Assert.IsNotNull(cluster);
-            Assert.IsNotEmpty(cluster.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cluster, Is.Not.Null);
+                Assert.That((string)cluster.Id, Is.Not.Empty);
+            });
             Assert.That(cluster.Name, Is.EqualTo(clusterName));
             Assert.That(cluster.Location, Is.EqualTo(DefaultLocation));
             Assert.That(cluster.ClientConnectionPort, Is.EqualTo(19000));

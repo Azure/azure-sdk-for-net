@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroupResult.Add(kubernetesClusterResource);
             }
-            Assert.IsNotEmpty(listByResourceGroupResult);
+            Assert.That(listByResourceGroupResult, Is.Not.Empty);
 
             // Get KubernetesClusters by Subscription
             var listBySubscriptionResult = new List<NetworkCloudKubernetesClusterResource>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscriptionResult.Add(kubernetesClusterResource);
             }
-            Assert.IsNotEmpty(listBySubscriptionResult);
+            Assert.That(listBySubscriptionResult, Is.Not.Empty);
 
             // Delete KubernetesCluster
             var deleteResult = await kubernetesCluster.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

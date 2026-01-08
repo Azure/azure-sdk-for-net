@@ -38,8 +38,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource = await CreateAzureTrafficCollector(accountName);
             Assert.That(azureTrafficCollectorResource, Is.Not.Null);
-            Assert.That(azureTrafficCollectorResource.Data.Location, Is.EqualTo(_location));
-            Assert.That(azureTrafficCollectorResource.Data.Name, Is.EqualTo(accountName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(azureTrafficCollectorResource.Data.Location, Is.EqualTo(_location));
+                Assert.That(azureTrafficCollectorResource.Data.Name, Is.EqualTo(accountName));
+            });
         }
 
         [Test]
@@ -58,8 +61,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource = await CreateAzureTrafficCollector(accountName);
             AzureTrafficCollectorResource result = await _collection.GetAsync(azureTrafficCollectorResource.Data.Name);
-            Assert.IsNotEmpty(result.Data.Id);
-            Assert.That(azureTrafficCollectorResource.Data.Name, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)result.Data.Id, Is.Not.Empty);
+                Assert.That(azureTrafficCollectorResource.Data.Name, Is.EqualTo(result.Data.Name));
+            });
         }
 
         [Test]
@@ -70,10 +76,13 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var accountName2 = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource2 = await CreateAzureTrafficCollector(accountName2);
             var list = await _collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count >= 2, Is.True);
-            Assert.That(list.Exists(item => item.Data.Name == azureTrafficCollectorResource1.Data.Name), Is.True);
-            Assert.That(list.Exists(item => item.Data.Name == azureTrafficCollectorResource2.Data.Name), Is.True);
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.GreaterThanOrEqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Exists(item => item.Data.Name == azureTrafficCollectorResource1.Data.Name), Is.True);
+                Assert.That(list.Exists(item => item.Data.Name == azureTrafficCollectorResource2.Data.Name), Is.True);
+            });
         }
 
         [Test]
@@ -84,9 +93,12 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var resourceId = AzureTrafficCollectorResource.CreateResourceIdentifier(_subscription.Id.SubscriptionId,_resourceGroup.Data.Name,accountName);
             var azureTrafficCollectorAccount = Client.GetAzureTrafficCollectorResource(resourceId);
             AzureTrafficCollectorResource result =await azureTrafficCollectorAccount.GetAsync();
-            Assert.IsNotEmpty(result.Data.Id);
-            Assert.That(azureTrafficCollectorResource.Data.Id, Is.EqualTo(result.Data.Id));
-            Assert.That(azureTrafficCollectorResource.Data.Name, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)result.Data.Id, Is.Not.Empty);
+                Assert.That(azureTrafficCollectorResource.Data.Id, Is.EqualTo(result.Data.Id));
+                Assert.That(azureTrafficCollectorResource.Data.Name, Is.EqualTo(result.Data.Name));
+            });
         }
 
         [Test]
@@ -95,8 +107,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource = await CreateAzureTrafficCollector(accountName);
             AzureTrafficCollectorResource getResult = await azureTrafficCollectorResource.GetAsync();
-            Assert.IsNotEmpty(getResult.Data.Id);
-            Assert.That(getResult.Data.Name, Is.EqualTo(accountName));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)getResult.Data.Id, Is.Not.Empty);
+                Assert.That(getResult.Data.Name, Is.EqualTo(accountName));
+            });
         }
 
         [Test]
@@ -113,8 +128,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
                 }
             };
             AzureTrafficCollectorResource result = await azureTrafficCollectorResource.UpdateAsync(data);
-            Assert.IsNotEmpty(result.Data.Tags);
-            Assert.That(data.Tags, Is.EqualTo(result.Data.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Data.Tags, Is.Not.Empty);
+                Assert.That(data.Tags, Is.EqualTo(result.Data.Tags));
+            });
         }
 
         [Test]
@@ -127,10 +145,13 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collectorPolicyName = Recording.GenerateAssetName("collectorPolicy");
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollectorResource,collectorPolicyName, ingestionResourceId);
             CollectorPolicyResource getPolicy = await azureTrafficCollectorResource.GetCollectorPolicyAsync(collectorPolicy.Data.Name);
-            Assert.IsNotEmpty(getPolicy.Data.Id);
-            Assert.That(getPolicy.Data.Id, Is.EqualTo(collectorPolicy.Data.Id));
-            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
-            Assert.That(getPolicy.Data.Name, Is.EqualTo(collectorPolicy.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)getPolicy.Data.Id, Is.Not.Empty);
+                Assert.That(getPolicy.Data.Id, Is.EqualTo(collectorPolicy.Data.Id));
+                Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
+                Assert.That(getPolicy.Data.Name, Is.EqualTo(collectorPolicy.Data.Name));
+            });
         }
 
         [Test]
@@ -148,12 +169,18 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             };
             AzureTrafficCollectorResource setTags = await azureTrafficCollectorResource.SetTagsAsync(SetDic);
             Assert.That(setTags.Data.Tags["key1"], Is.EqualTo(SetDic["key1"]));
-            Assert.That(setTags.Data.Tags["key1"], Is.Not.EqualTo("value1"));
-            Assert.That(setTags.Data.Tags["key2"], Is.Not.EqualTo("AddTags"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(setTags.Data.Tags["key1"], Is.Not.EqualTo("value1"));
+                Assert.That(setTags.Data.Tags["key2"], Is.Not.EqualTo("AddTags"));
+            });
             string removekey = "key3";
             AzureTrafficCollectorResource removeTags = await azureTrafficCollectorResource.RemoveTagAsync(removekey);
-            Assert.IsNotEmpty(removeTags.Data.Tags);
-            Assert.That(!removeTags.Data.Tags.ContainsKey(removekey), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(removeTags.Data.Tags, Is.Not.Empty);
+                Assert.That(!removeTags.Data.Tags.ContainsKey(removekey), Is.True);
+            });
         }
 
         [Test]

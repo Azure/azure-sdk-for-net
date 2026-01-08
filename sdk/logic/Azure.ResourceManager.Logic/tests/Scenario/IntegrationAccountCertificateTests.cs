@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string certificateName = Recording.GenerateAssetName("cert");
             await CreateCertificate(certificateName);
             var list = await _certificateCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

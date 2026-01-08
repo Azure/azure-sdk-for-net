@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetManagedInstanceOperations();
 
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
 
             // 2.CheckIfExist
@@ -59,10 +59,13 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getOperation = await collection.GetAsync(operationName);
-            Assert.That(getOperation.Value.Data.Name, Is.EqualTo(operationName.ToString()));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(getOperation.Value.Data.Name, Is.EqualTo(operationName.ToString()));
 
-            // 4.GetIfExist
-            Assert.That((bool)await collection.ExistsAsync(operationName), Is.True);
+                // 4.GetIfExist
+                Assert.That((bool)await collection.ExistsAsync(operationName), Is.True);
+            });
         }
     }
 }

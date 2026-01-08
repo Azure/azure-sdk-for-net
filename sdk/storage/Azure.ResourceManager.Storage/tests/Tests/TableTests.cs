@@ -74,15 +74,21 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             };
             TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, data)).Value;
-            Assert.IsNotNull(table1);
-            Assert.That(tableName, Is.EqualTo(table1.Id.Name));
-            Assert.That(table1.Data.SignedIdentifiers.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(table1, Is.Not.Null);
+                Assert.That(tableName, Is.EqualTo(table1.Id.Name));
+            });
+            Assert.That(table1.Data.SignedIdentifiers, Has.Count.EqualTo(2));
 
             //validate if created successfully
             TableResource table2 = await _tableCollection.GetAsync(tableName);
             AssertTableEqual(table1, table2);
-            Assert.That((bool)await _tableCollection.ExistsAsync(tableName), Is.True);
-            Assert.That((bool)await _tableCollection.ExistsAsync(tableName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await _tableCollection.ExistsAsync(tableName), Is.True);
+                Assert.That((bool)await _tableCollection.ExistsAsync(tableName + "1"), Is.False);
+            });
 
             //delete table
             await table1.DeleteAsync(WaitUntil.Completed);
@@ -119,9 +125,13 @@ namespace Azure.ResourceManager.Storage.Tests
                     table4 = table;
                 }
             }
-            Assert.That(count, Is.EqualTo(2));
-            Assert.IsNotNull(table3);
-            Assert.IsNotNull(table4);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(count, Is.EqualTo(2));
+                Assert.That(table3, Is.Not.Null);
+                Assert.That(table4, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -153,17 +163,20 @@ namespace Azure.ResourceManager.Storage.Tests
             _tableService = (await _tableService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
-            Assert.That(_tableService.Data.Cors.CorsRules.Count, Is.EqualTo(parameter.Cors.CorsRules.Count));
+            Assert.That(_tableService.Data.Cors.CorsRules, Has.Count.EqualTo(parameter.Cors.CorsRules.Count));
             for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
             {
                 StorageCorsRule getRule = _tableService.Data.Cors.CorsRules[i];
                 StorageCorsRule putRule = parameter.Cors.CorsRules[i];
 
-                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
-                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
-                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
-                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
-                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                    Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                    Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                    Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                    Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                });
             }
 
             // Get the result ASAP will not have rule
@@ -174,17 +187,20 @@ namespace Azure.ResourceManager.Storage.Tests
             _tableService = (await _tableService.GetAsync()).Value;
 
             //Validate CORS Rules
-            Assert.That(_tableService.Data.Cors.CorsRules.Count, Is.EqualTo(parameter.Cors.CorsRules.Count));
+            Assert.That(_tableService.Data.Cors.CorsRules, Has.Count.EqualTo(parameter.Cors.CorsRules.Count));
             for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
             {
                 StorageCorsRule getRule = _tableService.Data.Cors.CorsRules[i];
                 StorageCorsRule putRule = parameter.Cors.CorsRules[i];
 
-                Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
-                Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
-                Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
-                Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
-                Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getRule.AllowedHeaders, Is.EqualTo(putRule.AllowedHeaders));
+                    Assert.That(getRule.AllowedMethods, Is.EqualTo(putRule.AllowedMethods));
+                    Assert.That(getRule.AllowedOrigins, Is.EqualTo(putRule.AllowedOrigins));
+                    Assert.That(getRule.ExposedHeaders, Is.EqualTo(putRule.ExposedHeaders));
+                    Assert.That(getRule.MaxAgeInSeconds, Is.EqualTo(putRule.MaxAgeInSeconds));
+                });
             }
         }
     }

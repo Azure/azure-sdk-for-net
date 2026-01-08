@@ -167,8 +167,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Assert.That(contract.Data.Value, Is.EqualTo(propertyValue));
             }
-            Assert.That(contract.Data.IsSecret, Is.EqualTo(isSecret));
-            Assert.That(contract.Data.Name, Is.EqualTo(propertyId));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(contract.Data.IsSecret, Is.EqualTo(isSecret));
+                Assert.That(contract.Data.Name, Is.EqualTo(propertyId));
+            });
             if (tags != null)
             {
                 Assert.That(contract.Data.Tags, Is.Not.Null);

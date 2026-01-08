@@ -63,8 +63,11 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<PublisherResource> getPublisherResponse = await publisher.GetAsync();
             PublisherResource publisherResourceRetrieved = getPublisherResponse.Value;
             Assert.That(publisherResourceRetrieved, Is.Not.Null);
-            Assert.That(publisherResourceRetrieved.Data.Location, Is.EqualTo(publisher.Data.Location));
-            Assert.That(publisherResourceRetrieved.Data.Properties.Scope, Is.EqualTo(PublisherScope.Private));
+            Assert.Multiple(() =>
+            {
+                Assert.That(publisherResourceRetrieved.Data.Location, Is.EqualTo(publisher.Data.Location));
+                Assert.That(publisherResourceRetrieved.Data.Properties.Scope, Is.EqualTo(PublisherScope.Private));
+            });
         }
 
         [TestCase]
@@ -82,9 +85,12 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<SiteResource> getSiteResponse = await site.GetAsync();
             SiteResource siteResourceRetrieved = getSiteResponse.Value;
             Assert.That(siteResourceRetrieved, Is.Not.Null);
-            Assert.That(siteResourceRetrieved.Data.Location, Is.EqualTo(site.Data.Location));
-            Assert.That(siteResourceRetrieved.Data.Properties.Nfvis[0].Name, Is.EqualTo(NfviName));
-            Assert.That(siteResourceRetrieved.Data.Properties.Nfvis[0].NfviType, Is.EqualTo(NfviType.AzureCore));
+            Assert.Multiple(() =>
+            {
+                Assert.That(siteResourceRetrieved.Data.Location, Is.EqualTo(site.Data.Location));
+                Assert.That(siteResourceRetrieved.Data.Properties.Nfvis[0].Name, Is.EqualTo(NfviName));
+                Assert.That(siteResourceRetrieved.Data.Properties.Nfvis[0].NfviType, Is.EqualTo(NfviType.AzureCore));
+            });
         }
 
         [TestCase]
@@ -105,8 +111,11 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             ConfigurationGroupSchemaData retrievedData = cgSchemaResourceRetrieved.Data;
             Assert.That(cgSchemaResourceRetrieved, Is.Not.Null);
             var schema = ReadJsonFile(CGSchemaFileName).ToString(Newtonsoft.Json.Formatting.None);
-            Assert.That(retrievedData.Location, Is.EqualTo(cgSchema.Data.Location));
-            Assert.That(retrievedData.Properties.SchemaDefinition, Is.EqualTo(schema));
+            Assert.Multiple(() =>
+            {
+                Assert.That(retrievedData.Location, Is.EqualTo(cgSchema.Data.Location));
+                Assert.That(retrievedData.Properties.SchemaDefinition, Is.EqualTo(schema));
+            });
         }
 
         [TestCase]
@@ -125,10 +134,13 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<ArtifactStoreResource> getArtifactStoreResponse = await artifactStore.GetAsync();
             ArtifactStoreResource artifactStoreResourceRetrieved = getArtifactStoreResponse.Value;
             ArtifactStoreData retrievedData = artifactStoreResourceRetrieved.Data;
-            Assert.That(artifactStoreResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(artifactStore.Data.Location));
-            Assert.That(retrievedData.Properties.StoreType, Is.EqualTo(ArtifactStoreType.AzureContainerRegistry));
-            Assert.That(retrievedData.Properties.ReplicationStrategy, Is.EqualTo(ArtifactReplicationStrategy.SingleReplication));
+            Assert.Multiple(() =>
+            {
+                Assert.That(artifactStoreResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(artifactStore.Data.Location));
+                Assert.That(retrievedData.Properties.StoreType, Is.EqualTo(ArtifactStoreType.AzureContainerRegistry));
+                Assert.That(retrievedData.Properties.ReplicationStrategy, Is.EqualTo(ArtifactReplicationStrategy.SingleReplication));
+            });
         }
 
         [TestCase]
@@ -147,9 +159,12 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<NetworkFunctionDefinitionGroupResource> getNfdgResponse = await nfdg.GetAsync();
             NetworkFunctionDefinitionGroupResource nfdgResourceRetrieved = getNfdgResponse.Value;
             NetworkFunctionDefinitionGroupData retrievedData = nfdgResourceRetrieved.Data;
-            Assert.That(nfdgResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(nfdg.Data.Location));
-            Assert.That(retrievedData.Properties.Description, Is.EqualTo("NFD for .NET SDK UTs."));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nfdgResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(nfdg.Data.Location));
+                Assert.That(retrievedData.Properties.Description, Is.EqualTo("NFD for .NET SDK UTs."));
+            });
         }
 
         [TestCase]
@@ -168,9 +183,12 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<NetworkServiceDesignGroupResource> getNsdgResponse = await nsdg.GetAsync();
             NetworkServiceDesignGroupResource nsdgResourceRetrieved = getNsdgResponse.Value;
             NetworkServiceDesignGroupData retrievedData = nsdgResourceRetrieved.Data;
-            Assert.That(nsdgResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(nsdg.Data.Location));
-            Assert.That(retrievedData.Properties.Description, Is.EqualTo("NSD for .NET SDK UTs."));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nsdgResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(nsdg.Data.Location));
+                Assert.That(retrievedData.Properties.Description, Is.EqualTo("NSD for .NET SDK UTs."));
+            });
         }
 
         [TestCase]
@@ -196,14 +214,17 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<ArtifactManifestResource> getArtifactManifestResponse = await artifactManifest.GetAsync();
             ArtifactManifestResource artifactManifestResourceRetrieved = getArtifactManifestResponse.Value;
             ArtifactManifestData retrievedData = artifactManifestResourceRetrieved.Data;
-            Assert.That(artifactManifestResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(artifactManifest.Data.Location));
-            Assert.That(retrievedData.Properties.Artifacts[0].ArtifactName, Is.EqualTo(VnetArmTemplateArtifactName));
-            Assert.That(retrievedData.Properties.Artifacts[0].ArtifactType, Is.EqualTo(ArtifactType.OCIArtifact));
-            Assert.That(retrievedData.Properties.Artifacts[0].ArtifactVersion, Is.EqualTo("1.0.0"));
-            Assert.That(retrievedData.Properties.Artifacts[1].ArtifactName, Is.EqualTo(NfArmTemplateArtifactName));
-            Assert.That(retrievedData.Properties.Artifacts[1].ArtifactType, Is.EqualTo(ArtifactType.OCIArtifact));
-            Assert.That(retrievedData.Properties.Artifacts[1].ArtifactVersion, Is.EqualTo("1.0.0"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(artifactManifestResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(artifactManifest.Data.Location));
+                Assert.That(retrievedData.Properties.Artifacts[0].ArtifactName, Is.EqualTo(VnetArmTemplateArtifactName));
+                Assert.That(retrievedData.Properties.Artifacts[0].ArtifactType, Is.EqualTo(ArtifactType.OCIArtifact));
+                Assert.That(retrievedData.Properties.Artifacts[0].ArtifactVersion, Is.EqualTo("1.0.0"));
+                Assert.That(retrievedData.Properties.Artifacts[1].ArtifactName, Is.EqualTo(NfArmTemplateArtifactName));
+                Assert.That(retrievedData.Properties.Artifacts[1].ArtifactType, Is.EqualTo(ArtifactType.OCIArtifact));
+                Assert.That(retrievedData.Properties.Artifacts[1].ArtifactVersion, Is.EqualTo("1.0.0"));
+            });
         }
 
         [TestCase]
@@ -224,8 +245,11 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             NetworkFunctionDefinitionVersionResource nfdvResourceRetrieved = getNfdvResponse.Value;
             NetworkFunctionDefinitionVersionData retrievedData = nfdvResourceRetrieved.Data;
             VirtualNetworkFunctionDefinitionVersion properties = (VirtualNetworkFunctionDefinitionVersion)retrievedData.Properties;
-            Assert.That(nfdvResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(nfdv.Data.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nfdvResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(nfdv.Data.Location));
+            });
             var deployParams = ReadJsonFile(DeployParametersFileName).ToString(Newtonsoft.Json.Formatting.None);
             Assert.That(properties.DeployParameters, Is.EqualTo(deployParams));
             var nfTemplate = (AzureCoreNetworkFunctionTemplate)properties.NetworkFunctionTemplate;
@@ -251,9 +275,12 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<NetworkServiceDesignVersionResource> getNsdvResponse = await nsdv.GetAsync();
             NetworkServiceDesignVersionResource nsdvResourceRetrieved = getNsdvResponse.Value;
             NetworkServiceDesignVersionData retrievedData = nsdvResourceRetrieved.Data;
-            Assert.That(nsdvResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(nsdv.Data.Location));
-            Assert.That(retrievedData.Properties.ConfigurationGroupSchemaReferences["vnet_ConfigGroupSchema"].Id, Is.EqualTo(CGSchemaId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nsdvResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(nsdv.Data.Location));
+                Assert.That(retrievedData.Properties.ConfigurationGroupSchemaReferences["vnet_ConfigGroupSchema"].Id, Is.EqualTo(CGSchemaId));
+            });
             var ret = (NetworkFunctionDefinitionResourceElementTemplateDetails)retrievedData.Properties.ResourceElementTemplates[0];
             Assert.That(ret.Configuration.ArtifactProfile.ArtifactStoreReferenceId, Is.EqualTo(ArtifactStoreId));
         }
@@ -275,9 +302,12 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             ConfigurationGroupValueResource cgvResourceRetrieved = getCgvResponse.Value;
             ConfigurationGroupValueData retrievedData = cgvResourceRetrieved.Data;
             ConfigurationValueWithoutSecrets properties = (ConfigurationValueWithoutSecrets)retrievedData.Properties;
-            Assert.That(cgvResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(cgValues.Data.Location));
-            Assert.That(properties.ConfigurationType, Is.EqualTo(ConfigurationGroupValueConfigurationType.Open));
+            Assert.Multiple(() =>
+            {
+                Assert.That(cgvResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(cgValues.Data.Location));
+                Assert.That(properties.ConfigurationType, Is.EqualTo(ConfigurationGroupValueConfigurationType.Open));
+            });
             var cgSchemaRef = (OpenDeploymentResourceReference)properties.ConfigurationGroupSchemaResourceReference;
             Assert.That(cgSchemaRef.Id, Is.EqualTo(CGSchemaId));
             var values = ReadJsonFile(DeployValuesFileName);
@@ -302,10 +332,13 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Response<SiteNetworkServiceResource> getSnsResponse = await sns.GetAsync();
             SiteNetworkServiceResource snsResourceRetrieved = getSnsResponse.Value;
             SiteNetworkServiceData retrievedData = snsResourceRetrieved.Data;
-            Assert.That(snsResourceRetrieved, Is.Not.Null);
-            Assert.That(retrievedData.Location, Is.EqualTo(sns.Data.Location));
-            Assert.That(retrievedData.Properties.SiteReferenceId, Is.EqualTo(SiteId));
-            Assert.That(retrievedData.Properties.DesiredStateConfigurationGroupValueReferences["vnet_ConfigGroupSchema"].Id, Is.EqualTo(CGValueId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(snsResourceRetrieved, Is.Not.Null);
+                Assert.That(retrievedData.Location, Is.EqualTo(sns.Data.Location));
+                Assert.That(retrievedData.Properties.SiteReferenceId, Is.EqualTo(SiteId));
+                Assert.That(retrievedData.Properties.DesiredStateConfigurationGroupValueReferences["vnet_ConfigGroupSchema"].Id, Is.EqualTo(CGValueId));
+            });
             var nsdvRef = (OpenDeploymentResourceReference)retrievedData.Properties.NetworkServiceDesignVersionResourceReference;
             Assert.That(nsdvRef.Id, Is.EqualTo(NSDVId));
         }

@@ -51,45 +51,57 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get NSG
             Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
-            Assert.That(getNsgResponse.Value.Data.Name, Is.EqualTo(networkSecurityGroupName));
-            Assert.That(getNsgResponse.Value.Data.ResourceGuid, Is.Not.Null);
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules.Count, Is.EqualTo(6));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNsgResponse.Value.Data.Name, Is.EqualTo(networkSecurityGroupName));
+                Assert.That(getNsgResponse.Value.Data.ResourceGuid, Is.Not.Null);
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules, Has.Count.EqualTo(6));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
 
-            // Verify a default security rule
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Access, Is.EqualTo(SecurityRuleAccess.Allow));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Description, Is.EqualTo("Allow inbound traffic from all VMs in VNET"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].DestinationAddressPrefix, Is.EqualTo("VirtualNetwork"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].DestinationPortRange, Is.EqualTo("*"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Direction, Is.EqualTo(SecurityRuleDirection.Inbound));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Priority, Is.EqualTo(65000));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Protocol, Is.EqualTo(SecurityRuleProtocol.Asterisk));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].SourceAddressPrefix, Is.EqualTo("VirtualNetwork"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].SourcePortRange, Is.EqualTo("*"));
+                // Verify a default security rule
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Access, Is.EqualTo(SecurityRuleAccess.Allow));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Description, Is.EqualTo("Allow inbound traffic from all VMs in VNET"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].DestinationAddressPrefix, Is.EqualTo("VirtualNetwork"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].DestinationPortRange, Is.EqualTo("*"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Direction, Is.EqualTo(SecurityRuleDirection.Inbound));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Priority, Is.EqualTo(65000));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Protocol, Is.EqualTo(SecurityRuleProtocol.Asterisk));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].SourceAddressPrefix, Is.EqualTo("VirtualNetwork"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].SourcePortRange, Is.EqualTo("*"));
+            });
 
             // List NSG
             AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.That(listNsgResponse.First().Data.Name, Is.EqualTo(networkSecurityGroupName));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules.Count, Is.EqualTo(6));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
-            Assert.That(listNsgResponse.First().Data.ETag, Is.EqualTo(getNsgResponse.Value.Data.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listNsgResponse.First().Data.Name, Is.EqualTo(networkSecurityGroupName));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules, Has.Count.EqualTo(6));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
+                Assert.That(listNsgResponse.First().Data.ETag, Is.EqualTo(getNsgResponse.Value.Data.ETag));
+            });
 
             // List NSG in a subscription
             AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
             List<NetworkSecurityGroupResource> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNsgSubsciptionResponse);
+            Assert.That(listNsgSubsciptionResponse, Is.Not.Empty);
 
             // Delete NSG
             await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -97,7 +109,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNsgResponse);
+            Assert.That(listNsgResponse, Is.Empty);
         }
 
         [Test]
@@ -144,45 +156,57 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get NSG
             Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
-            Assert.That(getNsgResponse.Value.Data.Name, Is.EqualTo(networkSecurityGroupName));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules.Count, Is.EqualTo(6));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
-            Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNsgResponse.Value.Data.Name, Is.EqualTo(networkSecurityGroupName));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules, Has.Count.EqualTo(6));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
+                Assert.That(getNsgResponse.Value.Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
 
-            // Verify the security rule
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Access, Is.EqualTo(SecurityRuleAccess.Allow));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Description, Is.EqualTo("Test security rule"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].DestinationAddressPrefix, Is.EqualTo("*"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].DestinationPortRange, Is.EqualTo(destinationPortRange));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Direction, Is.EqualTo(SecurityRuleDirection.Inbound));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Priority, Is.EqualTo(500));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Protocol, Is.EqualTo(SecurityRuleProtocol.Tcp));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].SourceAddressPrefix, Is.EqualTo("*"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[0].SourcePortRange, Is.EqualTo("655"));
+                // Verify the security rule
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Access, Is.EqualTo(SecurityRuleAccess.Allow));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Description, Is.EqualTo("Test security rule"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].DestinationAddressPrefix, Is.EqualTo("*"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].DestinationPortRange, Is.EqualTo(destinationPortRange));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Direction, Is.EqualTo(SecurityRuleDirection.Inbound));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Priority, Is.EqualTo(500));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].Protocol, Is.EqualTo(SecurityRuleProtocol.Tcp));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].SourceAddressPrefix, Is.EqualTo("*"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[0].SourcePortRange, Is.EqualTo("655"));
+            });
 
             // List NSG
             AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(listNsgResponse);
-            Assert.That(listNsgResponse.First().Data.Name, Is.EqualTo(networkSecurityGroupName));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules.Count, Is.EqualTo(6));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
-            Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
-            Assert.That(listNsgResponse.First().Data.ETag, Is.EqualTo(getNsgResponse.Value.Data.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listNsgResponse.First().Data.Name, Is.EqualTo(networkSecurityGroupName));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules, Has.Count.EqualTo(6));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[0].Name, Is.EqualTo("AllowVnetInBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[1].Name, Is.EqualTo("AllowAzureLoadBalancerInBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[2].Name, Is.EqualTo("DenyAllInBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[3].Name, Is.EqualTo("AllowVnetOutBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[4].Name, Is.EqualTo("AllowInternetOutBound"));
+                Assert.That(listNsgResponse.First().Data.DefaultSecurityRules[5].Name, Is.EqualTo("DenyAllOutBound"));
+                Assert.That(listNsgResponse.First().Data.ETag, Is.EqualTo(getNsgResponse.Value.Data.ETag));
+            });
 
             // List NSG in a subscription
             AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
             List<NetworkSecurityGroupResource> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listNsgSubsciptionResponse);
+            Assert.That(listNsgSubsciptionResponse, Is.Not.Empty);
 
             // Add a new security rule
             var securityRule = new SecurityRuleData()
@@ -206,22 +230,25 @@ namespace Azure.ResourceManager.Network.Tests
             // Get NSG
             getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
-            // Verify the security rule
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Access, Is.EqualTo(SecurityRuleAccess.Deny));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Description, Is.EqualTo("Test outbound security rule"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].DestinationAddressPrefix, Is.EqualTo("*"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].DestinationPortRange, Is.EqualTo(destinationPortRange));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Direction, Is.EqualTo(SecurityRuleDirection.Outbound));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Priority, Is.EqualTo(501));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Protocol, Is.EqualTo(SecurityRuleProtocol.Udp));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].SourceAddressPrefix, Is.EqualTo("*"));
-            Assert.That(getNsgResponse.Value.Data.SecurityRules[1].SourcePortRange, Is.EqualTo("656"));
+            Assert.Multiple(() =>
+            {
+                // Verify the security rule
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Access, Is.EqualTo(SecurityRuleAccess.Deny));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Description, Is.EqualTo("Test outbound security rule"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].DestinationAddressPrefix, Is.EqualTo("*"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].DestinationPortRange, Is.EqualTo(destinationPortRange));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Direction, Is.EqualTo(SecurityRuleDirection.Outbound));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Priority, Is.EqualTo(501));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].Protocol, Is.EqualTo(SecurityRuleProtocol.Udp));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].SourceAddressPrefix, Is.EqualTo("*"));
+                Assert.That(getNsgResponse.Value.Data.SecurityRules[1].SourcePortRange, Is.EqualTo("656"));
+            });
 
             // List Default Security Groups
             AsyncPageable<DefaultSecurityRuleResource> listDefaultSecurityGroupsAP = getNsgResponse.Value.GetDefaultSecurityRules().GetAllAsync();
             List<DefaultSecurityRuleResource> listDefaultSecurityGroups = await listDefaultSecurityGroupsAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(listDefaultSecurityGroups);
+            Assert.That(listDefaultSecurityGroups, Is.Not.Empty);
 
             // Get Defaul Security Group
             // TODO: ADO 5975
@@ -234,7 +261,7 @@ namespace Azure.ResourceManager.Network.Tests
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
             listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
-            Assert.IsEmpty(listNsgResponse);
+            Assert.That(listNsgResponse, Is.Empty);
         }
     }
 }

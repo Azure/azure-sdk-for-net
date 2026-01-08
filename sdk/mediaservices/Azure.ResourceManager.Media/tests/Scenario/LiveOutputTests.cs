@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Tests
             Assert.That(result.Value.Data.Name, Is.EqualTo(liveOutPutName));
             // Get all
             var list = await liveOutputCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Delete
             await liveoutput.DeleteAsync(WaitUntil.Completed);
             flag = await liveOutputCollection.ExistsAsync(liveOutPutName);

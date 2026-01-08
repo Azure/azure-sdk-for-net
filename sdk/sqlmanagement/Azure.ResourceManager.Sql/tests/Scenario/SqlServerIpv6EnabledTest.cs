@@ -62,11 +62,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             };
             var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
-            // Check if the server is exist
-            Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));
+            Assert.Multiple(() =>
+            {
+                // Check if the server is exist
+                Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));
 
-            // Verify IPv6 is enabled
-            Assert.IsNotNull(SqlServer.Value);
+                // Verify IPv6 is enabled
+                Assert.That(SqlServer.Value, Is.Not.Null);
+            });
             Assert.That(SqlServer.Value.Data.IsIPv6Enabled.ToString(), Is.EqualTo("Enabled"));
 
             // 2. Disable IPv6

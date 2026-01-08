@@ -66,28 +66,37 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get Vnet
             Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
-            Assert.That(getVnetResponse.Value.Data.Name, Is.EqualTo(vnetName));
-            Assert.That(getVnetResponse.Value.Data.ResourceGuid, Is.Not.Null);
-            Assert.That(getVnetResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(getVnetResponse.Value.Data.DhcpOptions.DnsServers[0], Is.EqualTo("10.1.1.1"));
-            Assert.That(getVnetResponse.Value.Data.DhcpOptions.DnsServers[1], Is.EqualTo("10.1.2.4"));
-            Assert.That(getVnetResponse.Value.Data.AddressSpace.AddressPrefixes[0], Is.EqualTo("10.0.0.0/16"));
-            Assert.That(getVnetResponse.Value.Data.Subnets[0].Name, Is.EqualTo(subnet1Name));
-            Assert.That(getVnetResponse.Value.Data.Subnets[1].Name, Is.EqualTo(subnet2Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getVnetResponse.Value.Data.Name, Is.EqualTo(vnetName));
+                Assert.That(getVnetResponse.Value.Data.ResourceGuid, Is.Not.Null);
+                Assert.That(getVnetResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(getVnetResponse.Value.Data.DhcpOptions.DnsServers[0], Is.EqualTo("10.1.1.1"));
+                Assert.That(getVnetResponse.Value.Data.DhcpOptions.DnsServers[1], Is.EqualTo("10.1.2.4"));
+                Assert.That(getVnetResponse.Value.Data.AddressSpace.AddressPrefixes[0], Is.EqualTo("10.0.0.0/16"));
+                Assert.That(getVnetResponse.Value.Data.Subnets[0].Name, Is.EqualTo(subnet1Name));
+                Assert.That(getVnetResponse.Value.Data.Subnets[1].Name, Is.EqualTo(subnet2Name));
+            });
 
             // Get all Vnets
             AsyncPageable<VirtualNetworkResource> getAllVnetsAP = virtualNetworkCollection.GetAllAsync();
             List<VirtualNetworkResource> getAllVnets = await getAllVnetsAP.ToEnumerableAsync();
-            Assert.That(getAllVnets.ElementAt(0).Data.Name, Is.EqualTo(vnetName));
-            Assert.That(getAllVnets.ElementAt(0).Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getAllVnets.ElementAt(0).Data.Name, Is.EqualTo(vnetName));
+                Assert.That(getAllVnets.ElementAt(0).Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            });
             Assert.AreEqual("10.0.0.0/16", getAllVnets.ElementAt(0).Data.AddressSpace.AddressPrefixes[0]);
-            Assert.That(getAllVnets.ElementAt(0).Data.Subnets[0].Name, Is.EqualTo(subnet1Name));
-            Assert.That(getAllVnets.ElementAt(0).Data.Subnets[1].Name, Is.EqualTo(subnet2Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getAllVnets.ElementAt(0).Data.Subnets[0].Name, Is.EqualTo(subnet1Name));
+                Assert.That(getAllVnets.ElementAt(0).Data.Subnets[1].Name, Is.EqualTo(subnet2Name));
+            });
 
             // Get all Vnets in a subscription
             AsyncPageable<VirtualNetworkResource> getAllVnetInSubscriptionAP = _subscription.GetVirtualNetworksAsync();
             List<VirtualNetworkResource> getAllVnetInSubscription = await getAllVnetInSubscriptionAP.ToEnumerableAsync();
-            Assert.IsNotEmpty(getAllVnetInSubscription);
+            Assert.That(getAllVnetInSubscription, Is.Not.Empty);
 
             // Delete Vnet
             var deleteOperation = await getVnetResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -96,7 +105,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get all Vnets
             getAllVnetsAP = virtualNetworkCollection.GetAllAsync();
             getAllVnets = await getAllVnetsAP.ToEnumerableAsync();
-            Assert.IsEmpty(getAllVnets);
+            Assert.That(getAllVnets, Is.Empty);
         }
 
         [Test]
@@ -161,13 +170,19 @@ namespace Azure.ResourceManager.Network.Tests
             // Check Ip Address availability API
             Response<IPAddressAvailabilityResult> responseAvailable = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.10");
 
-            Assert.That(responseAvailable.Value.Available, Is.True);
-            Assert.IsEmpty(responseAvailable.Value.AvailableIPAddresses);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseAvailable.Value.Available, Is.True);
+                Assert.That(responseAvailable.Value.AvailableIPAddresses, Is.Empty);
+            });
 
             Response<IPAddressAvailabilityResult> responseTaken = await putVnetResponse.Value.CheckIPAddressAvailabilityAsync("10.0.1.9");
 
-            Assert.That(responseTaken.Value.Available, Is.False);
-            Assert.That(responseTaken.Value.AvailableIPAddresses.Count, Is.EqualTo(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseTaken.Value.Available, Is.False);
+                Assert.That(responseTaken.Value.AvailableIPAddresses, Has.Count.EqualTo(5));
+            });
 
             await putNicResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
             await putVnetResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -209,9 +224,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get Vnet
             Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnet1Name);
-            Assert.That(getVnetResponse.Value.Data.Name, Is.EqualTo(vnet1Name));
-            Assert.That(getVnetResponse.Value.Data.ResourceGuid, Is.Not.Null);
-            Assert.That(getVnetResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getVnetResponse.Value.Data.Name, Is.EqualTo(vnet1Name));
+                Assert.That(getVnetResponse.Value.Data.ResourceGuid, Is.Not.Null);
+                Assert.That(getVnetResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            });
 
             // Create vnet2
             var vnet2 = new VirtualNetworkData()
@@ -242,33 +260,42 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get Peering
             VirtualNetworkPeeringResource getPeer = await virtualNetworkPeeringCollection.GetAsync("peer1");
-            Assert.That(getPeer.Data.Name, Is.EqualTo("peer1"));
-            Assert.That(getPeer.Data.AllowForwardedTraffic, Is.True);
-            Assert.That(getPeer.Data.AllowVirtualNetworkAccess, Is.True);
-            Assert.That(getPeer.Data.AllowGatewayTransit, Is.False);
-            Assert.That(getPeer.Data.RemoteVirtualNetwork, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getPeer.Data.Name, Is.EqualTo("peer1"));
+                Assert.That(getPeer.Data.AllowForwardedTraffic, Is.True);
+                Assert.That(getPeer.Data.AllowVirtualNetworkAccess, Is.True);
+                Assert.That(getPeer.Data.AllowGatewayTransit, Is.False);
+                Assert.That(getPeer.Data.RemoteVirtualNetwork, Is.Not.Null);
+            });
             Assert.That(getPeer.Data.RemoteVirtualNetwork.Id, Is.EqualTo(putVnet2.Value.Id));
 
             // List Peering
             AsyncPageable<VirtualNetworkPeeringResource> listPeerAP = virtualNetworkPeeringCollection.GetAllAsync();
             List<VirtualNetworkPeeringResource> listPeer = await listPeerAP.ToEnumerableAsync();
             Has.One.EqualTo(listPeer);
-            Assert.That(listPeer[0].Data.Name, Is.EqualTo("peer1"));
-            Assert.That(listPeer[0].Data.AllowForwardedTraffic, Is.True);
-            Assert.That(listPeer[0].Data.AllowVirtualNetworkAccess, Is.True);
-            Assert.That(listPeer[0].Data.AllowGatewayTransit, Is.False);
-            Assert.That(listPeer[0].Data.RemoteVirtualNetwork, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(listPeer[0].Data.Name, Is.EqualTo("peer1"));
+                Assert.That(listPeer[0].Data.AllowForwardedTraffic, Is.True);
+                Assert.That(listPeer[0].Data.AllowVirtualNetworkAccess, Is.True);
+                Assert.That(listPeer[0].Data.AllowGatewayTransit, Is.False);
+                Assert.That(listPeer[0].Data.RemoteVirtualNetwork, Is.Not.Null);
+            });
             Assert.That(listPeer[0].Data.RemoteVirtualNetwork.Id, Is.EqualTo(putVnet2.Value.Id));
 
             // Get peering from GET vnet
             VirtualNetworkResource peeringVnet = await virtualNetworkCollection.GetAsync(vnet1Name);
             Assert.That(peeringVnet.Data.Name, Is.EqualTo(vnet1Name));
             Has.One.EqualTo(peeringVnet.Data.VirtualNetworkPeerings);
-            Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].Name, Is.EqualTo("peer1"));
-            Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowForwardedTraffic, Is.True);
-            Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess, Is.True);
-            Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowGatewayTransit, Is.False);
-            Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].Name, Is.EqualTo("peer1"));
+                Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowForwardedTraffic, Is.True);
+                Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess, Is.True);
+                Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].AllowGatewayTransit, Is.False);
+                Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork, Is.Not.Null);
+            });
             Assert.That(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id, Is.EqualTo(putVnet2.Value.Id));
 
             // Delete Peering
@@ -277,11 +304,14 @@ namespace Azure.ResourceManager.Network.Tests
 
             listPeerAP = virtualNetworkPeeringCollection.GetAllAsync();
             listPeer = await listPeerAP.ToEnumerableAsync();
-            Assert.IsEmpty(listPeer);
+            Assert.That(listPeer, Is.Empty);
 
             peeringVnet = await virtualNetworkCollection.GetAsync(vnet1Name);
-            Assert.That(peeringVnet.Data.Name, Is.EqualTo(vnet1Name));
-            Assert.IsEmpty(peeringVnet.Data.VirtualNetworkPeerings);
+            Assert.Multiple(() =>
+            {
+                Assert.That(peeringVnet.Data.Name, Is.EqualTo(vnet1Name));
+                Assert.That(peeringVnet.Data.VirtualNetworkPeerings, Is.Empty);
+            });
 
             // Delete Vnets
             await putVnet2.Value.DeleteAsync(WaitUntil.Completed);

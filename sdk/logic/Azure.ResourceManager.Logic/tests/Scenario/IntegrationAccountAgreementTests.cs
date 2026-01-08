@@ -80,8 +80,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName);
             Assert.That(agreement, Is.Not.Null);
-            Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
-            Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("AS2"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
+                Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("AS2"));
+            });
         }
 
         [RecordedTest]
@@ -90,8 +93,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName, "Edifact");
             Assert.That(agreement, Is.Not.Null);
-            Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
-            Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("Edifact"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
+                Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("Edifact"));
+            });
         }
 
         [RecordedTest]
@@ -100,8 +106,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await CreateAgreement(agreementName, "X12");
             Assert.That(agreement, Is.Not.Null);
-            Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
-            Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("X12"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(agreement.Data.Name, Is.EqualTo(agreementName));
+                Assert.That(agreement.Data.AgreementType.ToString(), Is.EqualTo("X12"));
+            });
         }
 
         [RecordedTest]
@@ -129,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await CreateAgreement(agreementName);
             var list = await _agreementCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

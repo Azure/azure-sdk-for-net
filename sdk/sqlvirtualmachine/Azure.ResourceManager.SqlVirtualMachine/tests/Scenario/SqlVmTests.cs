@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 }
             })).Value;
             ValidateSqlVirtualMachine(sqlVmFromUpdate.Data, sqlVm.Data, sameTags: false);
-            Assert.That(sqlVmFromUpdate.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(sqlVmFromUpdate.Data.Tags, Has.Count.EqualTo(1));
             Assert.That(sqlVmFromUpdate.Data.Tags[key], Is.EqualTo(value));
             // List
             var count = 0;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 Assert.That(sqlVmFromList.Data, Is.Not.Null);
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             // List by subscription
             count = 0;
             await foreach (var sqlVmFromList in Subscription.GetSqlVmsAsync())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 Assert.That(sqlVmFromList.Data, Is.Not.Null);
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
             // Delete
             await sqlVmFromUpdate.DeleteAsync(WaitUntil.Completed);
         }
@@ -115,10 +115,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 
         private static void ValidateSqlVirtualMachine(SqlVmData sqlVM1, SqlVmData sqlVM2, bool sameTags = true)
         {
-            Assert.That(sqlVM2.Id, Is.EqualTo(sqlVM1.Id));
-            Assert.That(sqlVM2.Name, Is.EqualTo(sqlVM1.Name));
-            Assert.That(sqlVM2.Location, Is.EqualTo(sqlVM1.Location));
-            Assert.That(sqlVM2.SqlManagement, Is.EqualTo(sqlVM1.SqlManagement));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sqlVM2.Id, Is.EqualTo(sqlVM1.Id));
+                Assert.That(sqlVM2.Name, Is.EqualTo(sqlVM1.Name));
+                Assert.That(sqlVM2.Location, Is.EqualTo(sqlVM1.Location));
+                Assert.That(sqlVM2.SqlManagement, Is.EqualTo(sqlVM1.SqlManagement));
+            });
             if (sameTags)
             {
                 Assert.That(ValidateTags(sqlVM1, sqlVM2), Is.True);

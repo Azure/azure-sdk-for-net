@@ -52,9 +52,12 @@ namespace Azure.ResourceManager.Support.Tests
 
         private void ValidateSupportTicketFileWorkspaceData(FileWorkspaceDetailData supportTicketFileWorkspace, string fileWorkspaceName)
         {
-            Assert.IsNotNull(supportTicketFileWorkspace);
-            Assert.IsNotEmpty(supportTicketFileWorkspace.Id);
-            Assert.That(fileWorkspaceName, Is.EqualTo(supportTicketFileWorkspace.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicketFileWorkspace, Is.Not.Null);
+                Assert.That((string)supportTicketFileWorkspace.Id, Is.Not.Empty);
+                Assert.That(fileWorkspaceName, Is.EqualTo(supportTicketFileWorkspace.Name));
+            });
         }
     }
 }

@@ -97,10 +97,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // AddTag
             await application.AddTagAsync("addtagkey", "addtagvalue");
             application = await _appCollection.GetAsync(applicationName);
-            Assert.That(application.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(application.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = application.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await application.RemoveTagAsync("addtagkey");
@@ -110,8 +113,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationData application, string appTypeName)
         {
-            Assert.IsNotNull(application);
-            Assert.IsNotEmpty(application.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(application, Is.Not.Null);
+                Assert.That((string)application.Id, Is.Not.Empty);
+            });
             Assert.That(application.Name, Is.EqualTo(appTypeName));
             Assert.That(application.Location, Is.EqualTo(DefaultLocation));
             Assert.That(application.ResourceType.ToString(), Is.EqualTo("Microsoft.ServiceFabric/managedclusters/applications"));

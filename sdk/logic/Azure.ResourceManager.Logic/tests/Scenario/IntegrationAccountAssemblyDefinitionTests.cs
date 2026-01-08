@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             await CreateAssemblyDefinition(assemblyDefinitionName);
             var list = await _assemblyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedVirtualNetworkLink = await createdVirtualNetworkLink.Value.UpdateAsync(WaitUntil.Completed, patchableVirtualNetworkLinkData);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedVirtualNetworkLink.Value.Data.Metadata, patchableVirtualNetworkLinkData.Metadata);
+            Assert.That(patchableVirtualNetworkLinkData.Metadata, Is.EquivalentTo(patchedVirtualNetworkLink.Value.Data.Metadata));
         }
 
         [Test]

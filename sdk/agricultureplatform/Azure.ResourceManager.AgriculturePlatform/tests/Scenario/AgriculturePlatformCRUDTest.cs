@@ -44,8 +44,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
             resourceGroup = rg.Data.Name.ToString();
             resourceName = Recording.GenerateAssetName("agmobo");
             var createResourceOperation = await rg.GetAgricultureServices().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetAgriServiceResourceData());
-            Assert.That(createResourceOperation.HasCompleted, Is.True);
-            Assert.That(createResourceOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResourceOperation.HasCompleted, Is.True);
+                Assert.That(createResourceOperation.HasValue, Is.True);
+            });
         }
 
         [TestCase]
@@ -54,8 +57,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var rg = await GetResourceGroup(subscription, resourceGroup);
             var agMoboResource = await rg.GetAgricultureServices().GetAsync(resourceName);
-            Assert.That(agMoboResource.HasValue, Is.True);
-            Assert.That(agMoboResource.Value.Data.Name, Is.EqualTo(resourceName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(agMoboResource.HasValue, Is.True);
+                Assert.That(agMoboResource.Value.Data.Name, Is.EqualTo(resourceName));
+            });
         }
 
         private AgricultureServiceData GetAgriServiceResourceData()

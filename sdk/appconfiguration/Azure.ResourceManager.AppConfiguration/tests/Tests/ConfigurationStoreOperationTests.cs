@@ -46,8 +46,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             AppConfigurationStoreResource configurationStore = await ConfigStore.GetAsync();
 
-            Assert.That(ConfigurationStoreName, Is.EqualTo(configurationStore.Data.Name));
-            Assert.That(configurationStore.Data.PublicNetworkAccess, Is.EqualTo(AppConfigurationPublicNetworkAccess.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ConfigurationStoreName, Is.EqualTo(configurationStore.Data.Name));
+                Assert.That(configurationStore.Data.PublicNetworkAccess, Is.EqualTo(AppConfigurationPublicNetworkAccess.Disabled));
+            });
         }
 
         [Test]
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             IEnumerable<AzureLocation> locations = (await ConfigStore.GetAvailableLocationsAsync()).Value;
 
-            Assert.That(locations.Count() >= 0, Is.True);
+            Assert.That(locations.Count(), Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -76,8 +79,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
             KeyValuePair<string, string> tag = configurationStore.Data.Tags.FirstOrDefault();
 
-            Assert.That("key1", Is.EqualTo(tag.Key));
-            Assert.That("value1", Is.EqualTo(tag.Value));
+            Assert.Multiple(() =>
+            {
+                Assert.That("key1", Is.EqualTo(tag.Key));
+                Assert.That("value1", Is.EqualTo(tag.Value));
+            });
         }
 
         [TestCase(true)]
@@ -89,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ConfigStore.SetTagsAsync(tags);
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
 
-            Assert.That(configurationStore.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(configurationStore.Data.Tags, Has.Count.EqualTo(2));
         }
 
         [TestCase(true)]
@@ -102,8 +108,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ConfigStore.RemoveTagAsync("key1");
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
 
-            Assert.That(configurationStore.Data.Tags.ContainsKey("key1"), Is.False);
-            Assert.That(configurationStore.Data.Tags.ContainsKey("key2"), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(configurationStore.Data.Tags.ContainsKey("key1"), Is.False);
+                Assert.That(configurationStore.Data.Tags.ContainsKey("key2"), Is.True);
+            });
         }
 
         [Test]
@@ -132,7 +141,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             List<AppConfigurationStoreApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
-            Assert.That(keys.Count >= 1, Is.True);
+            Assert.That(keys.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]

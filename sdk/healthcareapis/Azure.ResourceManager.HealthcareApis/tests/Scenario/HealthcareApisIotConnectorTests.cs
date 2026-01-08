@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _iotConnectorCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHealthcareApisIotConnector(list.FirstOrDefault().Data, iotConnectorName);
 
             // Delete
@@ -72,10 +72,13 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await iotConnector.AddTagAsync("addtagkey", "addtagvalue");
             iotConnector = await _iotConnectorCollection.GetAsync(iotConnectorName);
-            Assert.That(iotConnector.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(iotConnector.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = iotConnector.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await iotConnector.RemoveTagAsync("addtagkey");
@@ -86,12 +89,15 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         private void ValidateHealthcareApisIotConnector(HealthcareApisIotConnectorData iotConnector, string iotConnectorName)
         {
             Assert.That(iotConnector, Is.Not.Null);
-            Assert.That(iotConnector.ETag, Is.Not.Null);
-            Assert.That(iotConnector.DeviceMappingContent, Is.Not.Null);
-            Assert.That(iotConnector.Id.Name, Is.EqualTo(iotConnectorName));
-            Assert.That(iotConnector.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(iotConnector.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/iotconnectors"));
-            Assert.That(iotConnector.IngestionEndpointConfiguration.ConsumerGroup, Is.EqualTo("$Default"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(iotConnector.ETag, Is.Not.Null);
+                Assert.That(iotConnector.DeviceMappingContent, Is.Not.Null);
+                Assert.That(iotConnector.Id.Name, Is.EqualTo(iotConnectorName));
+                Assert.That(iotConnector.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(iotConnector.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/iotconnectors"));
+                Assert.That(iotConnector.IngestionEndpointConfiguration.ConsumerGroup, Is.EqualTo("$Default"));
+            });
         }
     }
 }

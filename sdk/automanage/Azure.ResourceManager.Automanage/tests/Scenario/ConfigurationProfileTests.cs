@@ -29,12 +29,21 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             Assert.That(profile, Is.Not.Null);
-            Assert.That(profile.HasData, Is.True);
-            Assert.That(profile.Id, Is.Not.Null);
-            Assert.That(profile.Id.Name, Is.Not.Null);
-            Assert.That(profile.Data, Is.Not.Null);
-            Assert.That(profile.Data.Configuration, Is.Not.Null);
-            Assert.That(profile.Data.Location, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(profile.HasData, Is.True);
+                Assert.That(profile.Id, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(profile.Id.Name, Is.Not.Null);
+                Assert.That(profile.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(profile.Data.Configuration, Is.Not.Null);
+                Assert.That(profile.Data.Location, Is.Not.Null);
+            });
         }
 
         [TestCase]

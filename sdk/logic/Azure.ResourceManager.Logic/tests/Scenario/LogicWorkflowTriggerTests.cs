@@ -39,11 +39,14 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateTrigger(LogicWorkflowTriggerResource actual)
         {
-            Assert.That(actual.Data.Name, Is.EqualTo(DefaultTriggerName));
-            Assert.That(actual.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(actual.Data.State.ToString(), Is.EqualTo("Enabled"));
-            Assert.That(actual.Data.CreatedOn, Is.Not.Null);
-            Assert.That(actual.Data.ChangedOn, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Data.Name, Is.EqualTo(DefaultTriggerName));
+                Assert.That(actual.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(actual.Data.State.ToString(), Is.EqualTo("Enabled"));
+                Assert.That(actual.Data.CreatedOn, Is.Not.Null);
+                Assert.That(actual.Data.ChangedOn, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task GetAll()
         {
             var list = await _triggerCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateTrigger(list.FirstOrDefault());
         }
     }

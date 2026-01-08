@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Tests
             //}
 
             getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
-            Assert.That(getSubnetResponse.Value.Data.ResourceNavigationLinks.Count, Is.EqualTo(1));
+            Assert.That(getSubnetResponse.Value.Data.ResourceNavigationLinks, Has.Count.EqualTo(1));
         }
 
         private bool AreSubnetsEqual(SubnetData subnet1, SubnetData subnet2)
@@ -194,10 +194,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             foreach (NetworkIPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
             {
-                Assert.That(ipconfig.Id, Is.Not.Null);
-                //Assert.NotNull(ipconfig.Name);
-                //Assert.NotNull(ipconfig.Etag);
-                Assert.That(ipconfig.PrivateIPAddress, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ipconfig.Id, Is.Not.Null);
+                    //Assert.NotNull(ipconfig.Name);
+                    //Assert.NotNull(ipconfig.Etag);
+                    Assert.That(ipconfig.PrivateIPAddress, Is.Not.Null);
+                });
             }
         }
     }

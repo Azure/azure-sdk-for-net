@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetSqlAgentConfiguration();
 
@@ -52,21 +52,27 @@ namespace Azure.ResourceManager.Sql.Tests
             {
             };
             var agentConfig = await collection.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            Assert.IsNotNull(agentConfig);
-            Assert.That(agentConfig.Value.Data.Name, Is.EqualTo("current"));
-            Assert.That(agentConfig.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
-            Assert.That(agentConfig.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/sqlAgent"));
+            Assert.That(agentConfig, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(agentConfig.Value.Data.Name, Is.EqualTo("current"));
+                Assert.That(agentConfig.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
+                Assert.That(agentConfig.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/sqlAgent"));
+            });
 
             // 3.Get
             var getAgentConfig = await collection.GetAsync();
-            Assert.IsNotNull(getAgentConfig);
-            Assert.That(getAgentConfig.Value.Data.Name, Is.EqualTo("current"));
-            Assert.That(getAgentConfig.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
-            Assert.That(getAgentConfig.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/sqlAgent"));
+            Assert.That(getAgentConfig, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getAgentConfig.Value.Data.Name, Is.EqualTo("current"));
+                Assert.That(getAgentConfig.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
+                Assert.That(getAgentConfig.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/sqlAgent"));
+            });
 
             // 4.GetAvailableLocations
             var getAvailableLocationsAgentConf = await collection.GetAvailableLocationsAsync();
-            Assert.IsNotNull(getAvailableLocationsAgentConf);
+            Assert.That(getAvailableLocationsAgentConf, Is.Not.Null);
         }
     }
 }

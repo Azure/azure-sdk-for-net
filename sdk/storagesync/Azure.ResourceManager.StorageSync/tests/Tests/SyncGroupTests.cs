@@ -99,8 +99,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete SyncGroup before it's created
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncServiceResource.GetStorageSyncGroupAsync(_syncGroupName)).Value?.Delete(WaitUntil.Completed));
-            Assert.That(deleteException.Status, Is.EqualTo(404));
-            Assert.That((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value, Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(deleteException.Status, Is.EqualTo(404));
+                Assert.That((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value, Is.False);
+            });
 
             // Create StorageSyncGroup
             StorageSyncGroupResource syncGroupResource = (await syncGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;

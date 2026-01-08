@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // there is no api-version-set initially
             var versionSetlistResponse = await versionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(versionSetlistResponse, Is.Not.Null);
-            Assert.That(versionSetlistResponse.Count, Is.EqualTo(0));
+            Assert.That(versionSetlistResponse, Is.Empty);
 
             string newversionsetid = Recording.GenerateAssetName("apiversionsetid");
             const string paramName = "x-ms-sdk-version";
@@ -64,11 +64,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await versionCollection.CreateOrUpdateAsync(WaitUntil.Completed, newversionsetid, createVersionSetContract);
             var versionSetContract = (await versionCollection.GetAsync(newversionsetid)).Value;
             Assert.That(versionSetContract, Is.Not.Null);
-            Assert.That(versionSetContract.Data.DisplayName, Is.EqualTo(createVersionSetContract.DisplayName));
-            Assert.That(versionSetContract.Data.Description, Is.EqualTo(createVersionSetContract.Description));
-            Assert.That(VersioningScheme.Header, Is.EqualTo(versionSetContract.Data.VersioningScheme));
-            Assert.That(versionSetContract.Data.VersionHeaderName, Is.EqualTo(createVersionSetContract.VersionHeaderName));
-            Assert.That(versionSetContract.Data.VersionQueryName, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(versionSetContract.Data.DisplayName, Is.EqualTo(createVersionSetContract.DisplayName));
+                Assert.That(versionSetContract.Data.Description, Is.EqualTo(createVersionSetContract.Description));
+                Assert.That(VersioningScheme.Header, Is.EqualTo(versionSetContract.Data.VersioningScheme));
+                Assert.That(versionSetContract.Data.VersionHeaderName, Is.EqualTo(createVersionSetContract.VersionHeaderName));
+                Assert.That(versionSetContract.Data.VersionQueryName, Is.Null);
+            });
 
             // update the version set contract to change versioning scheme
             var versionSetUpdateParams = new ApiVersionSetPatch()

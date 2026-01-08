@@ -210,16 +210,22 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // Get new api to check it was added
             var apiGetResponse = (await apiCollection.GetAsync(newApiId)).Value;
             Assert.That(apiGetResponse, Is.Not.Null);
-            Assert.That(apiGetResponse.Data.Name, Is.EqualTo(newApiId));
-            Assert.That(apiGetResponse.Data.DisplayName, Is.EqualTo(newApiName));
-            Assert.That(apiGetResponse.Data.Description, Is.EqualTo(newApiDescription));
-            Assert.That(apiGetResponse.Data.Path, Is.EqualTo(newApiPath));
-            Assert.That(apiGetResponse.Data.ServiceLink, Is.EqualTo(newApiServiceUrl));
-            Assert.That(apiGetResponse.Data.SubscriptionKeyParameterNames.Header, Is.EqualTo(subscriptionKeyParametersHeader));
-            Assert.That(apiGetResponse.Data.SubscriptionKeyParameterNames.Query, Is.EqualTo(subscriptionKeyQueryStringParamName));
-            Assert.That(apiGetResponse.Data.Protocols.Count, Is.EqualTo(2));
-            Assert.That(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Http), Is.True);
-            Assert.That(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Https), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(apiGetResponse.Data.Name, Is.EqualTo(newApiId));
+                Assert.That(apiGetResponse.Data.DisplayName, Is.EqualTo(newApiName));
+                Assert.That(apiGetResponse.Data.Description, Is.EqualTo(newApiDescription));
+                Assert.That(apiGetResponse.Data.Path, Is.EqualTo(newApiPath));
+                Assert.That(apiGetResponse.Data.ServiceLink, Is.EqualTo(newApiServiceUrl));
+                Assert.That(apiGetResponse.Data.SubscriptionKeyParameterNames.Header, Is.EqualTo(subscriptionKeyParametersHeader));
+                Assert.That(apiGetResponse.Data.SubscriptionKeyParameterNames.Query, Is.EqualTo(subscriptionKeyQueryStringParamName));
+                Assert.That(apiGetResponse.Data.Protocols.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Http), Is.True);
+                Assert.That(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Https), Is.True);
+            });
 
             var schemaCollection = apiGetResponse.GetApiSchemas();
             ApiSchemaData schemaData = null;
@@ -241,9 +247,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             }
             var schemaContract = (await schemaCollection.CreateOrUpdateAsync(WaitUntil.Completed, newSchemaId, schemaData)).Value;
             Assert.That(schemaContract, Is.Not.Null);
-            Assert.That(schemaContract.Data.ContentType, Is.EqualTo(schemaData.ContentType));
-            Assert.That(schemaContract.Data.Definitions, Is.Not.Null);
-            Assert.That(schemaContract.Data.Value, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaContract.Data.ContentType, Is.EqualTo(schemaData.ContentType));
+                Assert.That(schemaContract.Data.Definitions, Is.Not.Null);
+                Assert.That(schemaContract.Data.Value, Is.Null);
+            });
 
             // list the schemas attached to the api
             var schemasList = await schemaCollection.GetAllAsync().ToEnumerableAsync();

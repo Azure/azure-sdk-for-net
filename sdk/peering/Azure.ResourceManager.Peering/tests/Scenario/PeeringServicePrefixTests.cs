@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Peering.Tests
 
             // GetAll
             var list = await _peeringServicePrefixCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.First(item => item.Data.Name == prefixName), Is.Not.Null);
 
             // Delete

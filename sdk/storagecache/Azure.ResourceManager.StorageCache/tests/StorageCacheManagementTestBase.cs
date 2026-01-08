@@ -126,10 +126,13 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
         public void VerifyStorageTarget(StorageTargetResource actual, StorageTargetData expected)
         {
-            Assert.That(expected.TargetType, Is.EqualTo(actual.Data.TargetType));
-            Assert.That(expected.Nfs3.Target, Is.EqualTo(actual.Data.Nfs3.Target));
-            Assert.That(expected.Nfs3.UsageModel, Is.EqualTo(actual.Data.Nfs3.UsageModel));
-            Assert.That(expected.Nfs3.VerificationDelayInSeconds, Is.EqualTo(actual.Data.Nfs3.VerificationDelayInSeconds));
+            Assert.Multiple(() =>
+            {
+                Assert.That(expected.TargetType, Is.EqualTo(actual.Data.TargetType));
+                Assert.That(expected.Nfs3.Target, Is.EqualTo(actual.Data.Nfs3.Target));
+                Assert.That(expected.Nfs3.UsageModel, Is.EqualTo(actual.Data.Nfs3.UsageModel));
+                Assert.That(expected.Nfs3.VerificationDelayInSeconds, Is.EqualTo(actual.Data.Nfs3.VerificationDelayInSeconds));
+            });
         }
 
         protected async Task<StorageCacheResource> CreateOrUpdateStorageCache(string name = null, string zone = "1", bool verifyResult = false)
@@ -161,10 +164,13 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
         protected void VerifyStorageCache(StorageCacheResource actual, StorageCacheData expected)
         {
-            Assert.That(expected.CacheSizeGB, Is.EqualTo(actual.Data.CacheSizeGB));
-            Assert.That(expected.SkuName, Is.EqualTo(actual.Data.SkuName));
-            Assert.That(expected.Subnet, Is.EqualTo(actual.Data.Subnet));
-            Assert.That(expected.Zones.Count, Is.EqualTo(actual.Data.Zones.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(expected.CacheSizeGB, Is.EqualTo(actual.Data.CacheSizeGB));
+                Assert.That(expected.SkuName, Is.EqualTo(actual.Data.SkuName));
+                Assert.That(expected.Subnet, Is.EqualTo(actual.Data.Subnet));
+                Assert.That(expected.Zones, Has.Count.EqualTo(actual.Data.Zones.Count));
+            });
             for (int i = 0; i < actual.Data.Zones.Count; i++)
                 Assert.That(expected.Zones[i], Is.EqualTo(actual.Data.Zones[i]));
         }
@@ -212,14 +218,17 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
         protected void VerifyAmlFileSystem(AmlFileSystemResource actual, AmlFileSystemData expected)
         {
-            Assert.That(expected.Sku.Name, Is.EqualTo(actual.Data.Sku.Name));
-            Assert.That(expected.StorageCapacityTiB, Is.EqualTo(actual.Data.StorageCapacityTiB));
-            Assert.That(expected.FilesystemSubnet, Is.EqualTo(actual.Data.FilesystemSubnet));
-            Assert.That(expected.Zones.Count, Is.EqualTo(actual.Data.Zones.Count));
-            Assert.That(expected.MaintenanceWindow.DayOfWeek, Is.EqualTo(actual.Data.MaintenanceWindow.DayOfWeek));
-            Assert.That(expected.MaintenanceWindow.TimeOfDayUTC, Is.EqualTo(actual.Data.MaintenanceWindow.TimeOfDayUTC));
-            Assert.That(expected.Hsm.Settings.Container, Is.EqualTo(actual.Data.Hsm.Settings.Container));
-            Assert.That(expected.Hsm.Settings.LoggingContainer, Is.EqualTo(actual.Data.Hsm.Settings.LoggingContainer));
+            Assert.Multiple(() =>
+            {
+                Assert.That(expected.Sku.Name, Is.EqualTo(actual.Data.Sku.Name));
+                Assert.That(expected.StorageCapacityTiB, Is.EqualTo(actual.Data.StorageCapacityTiB));
+                Assert.That(expected.FilesystemSubnet, Is.EqualTo(actual.Data.FilesystemSubnet));
+                Assert.That(expected.Zones, Has.Count.EqualTo(actual.Data.Zones.Count));
+                Assert.That(expected.MaintenanceWindow.DayOfWeek, Is.EqualTo(actual.Data.MaintenanceWindow.DayOfWeek));
+                Assert.That(expected.MaintenanceWindow.TimeOfDayUTC, Is.EqualTo(actual.Data.MaintenanceWindow.TimeOfDayUTC));
+                Assert.That(expected.Hsm.Settings.Container, Is.EqualTo(actual.Data.Hsm.Settings.Container));
+                Assert.That(expected.Hsm.Settings.LoggingContainer, Is.EqualTo(actual.Data.Hsm.Settings.LoggingContainer));
+            });
             for (int i = 0; i < actual.Data.Zones.Count; i++)
                 Assert.That(expected.Zones[i], Is.EqualTo(actual.Data.Zones[i]));
         }
@@ -250,8 +259,11 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             for (int i = 0; i < actual.Data.ImportPrefixes.Count; i++)
                 Assert.That(expected.ImportPrefixes[i], Is.EqualTo(actual.Data.ImportPrefixes[i]));
-            Assert.That(expected.ConflictResolutionMode, Is.EqualTo(actual.Data.ConflictResolutionMode));
-            Assert.That(expected.MaximumErrors, Is.EqualTo(actual.Data.MaximumErrors));
+            Assert.Multiple(() =>
+            {
+                Assert.That(expected.ConflictResolutionMode, Is.EqualTo(actual.Data.ConflictResolutionMode));
+                Assert.That(expected.MaximumErrors, Is.EqualTo(actual.Data.MaximumErrors));
+            });
         }
 
         protected async Task<AutoExportJobResource> CreateOrUpdateAutoExportJob(AmlFileSystemResource amlFS, string name, AutoExportJobData dataVar, bool verifyResult = false)
@@ -299,9 +311,12 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             for (int i = 0; i < actual.Data.AutoImportPrefixes.Count; i++)
                 Assert.That(expected.AutoImportPrefixes[i], Is.EqualTo(actual.Data.AutoImportPrefixes[i]));
-            Assert.That(expected.ConflictResolutionMode, Is.EqualTo(actual.Data.ConflictResolutionMode));
-            Assert.That(expected.MaximumErrors, Is.EqualTo(actual.Data.MaximumErrors));
-            Assert.That(expected.AdminStatus, Is.EqualTo(actual.Data.AdminStatus));
+            Assert.Multiple(() =>
+            {
+                Assert.That(expected.ConflictResolutionMode, Is.EqualTo(actual.Data.ConflictResolutionMode));
+                Assert.That(expected.MaximumErrors, Is.EqualTo(actual.Data.MaximumErrors));
+                Assert.That(expected.AdminStatus, Is.EqualTo(actual.Data.AdminStatus));
+            });
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()

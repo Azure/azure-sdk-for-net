@@ -32,9 +32,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region policy
@@ -127,8 +130,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         public static void AssertpolicyData(DataProtectionBackupPolicyData data1, DataProtectionBackupPolicyData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Properties.DataSourceTypes, Is.EqualTo(data1.Properties.DataSourceTypes));
-            Assert.That(data2.Properties.ObjectType, Is.EqualTo(data1.Properties.ObjectType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Properties.DataSourceTypes, Is.EqualTo(data1.Properties.DataSourceTypes));
+                Assert.That(data2.Properties.ObjectType, Is.EqualTo(data1.Properties.ObjectType));
+            });
         }
         #endregion
 
@@ -174,10 +180,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         public static void AssertInstanceData(DataProtectionBackupInstanceData data1, DataProtectionBackupInstanceData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Properties.ProtectionErrorDetails, Is.EqualTo(data1.Properties.ProtectionErrorDetails));
-            Assert.That(data2.Properties.ObjectType, Is.EqualTo(data1.Properties.ObjectType));
-            Assert.That(data2.Properties.ValidationType, Is.EqualTo(data1.Properties.ValidationType));
-            Assert.That(data2.Properties.ProtectionStatus, Is.EqualTo(data1.Properties.ProtectionStatus));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Properties.ProtectionErrorDetails, Is.EqualTo(data1.Properties.ProtectionErrorDetails));
+                Assert.That(data2.Properties.ObjectType, Is.EqualTo(data1.Properties.ObjectType));
+                Assert.That(data2.Properties.ValidationType, Is.EqualTo(data1.Properties.ValidationType));
+                Assert.That(data2.Properties.ProtectionStatus, Is.EqualTo(data1.Properties.ProtectionStatus));
+            });
         }
         #endregion
 
@@ -205,8 +214,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         public static void AssertVaultData(DataProtectionBackupVaultData data1, DataProtectionBackupVaultData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.Properties.ProvisioningState, Is.EqualTo(data1.Properties.ProvisioningState));
-            Assert.That(data2.Properties.FeatureSettings, Is.EqualTo(data1.Properties.FeatureSettings));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Properties.ProvisioningState, Is.EqualTo(data1.Properties.ProvisioningState));
+                Assert.That(data2.Properties.FeatureSettings, Is.EqualTo(data1.Properties.FeatureSettings));
+            });
             Assert.That(data2.Properties.ProvisioningState, Is.EqualTo(data1.Properties.ProvisioningState));
         }
         #endregion

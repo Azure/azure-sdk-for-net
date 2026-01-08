@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<BgpServiceCommunity> communitiesAsync = subscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
-            Assert.IsNotEmpty(communities);
+            Assert.That(communities, Is.Not.Empty);
             Assert.That(communities.Any(c => c.BgpCommunities.Any(b => b.IsAuthorizedToUse.HasValue ? b.IsAuthorizedToUse.Value : false)));
         }
 
@@ -71,14 +71,20 @@ namespace Azure.ResourceManager.Network.Tests
 
             ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
-            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
-            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
+            Assert.Multiple(() =>
+            {
+                Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+                Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
+            });
 
             circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroup,circuitName);
 
-            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
-            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
-            Assert.That(circuit.Data.Peerings, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+                Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
+                Assert.That(circuit.Data.Peerings, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -95,15 +101,21 @@ namespace Azure.ResourceManager.Network.Tests
 
             ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
-            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
-            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
+            Assert.Multiple(() =>
+            {
+                Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+                Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
+            });
 
             circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroup,
                 circuitName);
 
-            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
-            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
-            Assert.That(circuit.Data.Peerings, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+                Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
+                Assert.That(circuit.Data.Peerings, Is.Not.Null);
+            });
         }
     }
 }

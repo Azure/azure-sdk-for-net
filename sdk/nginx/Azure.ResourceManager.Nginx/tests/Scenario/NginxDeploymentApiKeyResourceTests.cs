@@ -56,14 +56,23 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
             ResourceIdentifier nginxDeploymentApiKeyResourceIdentifier = NginxDeploymentApiKeyResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxDeploymentApiKeyName);
 
-            Assert.That(nginxDeploymentApiKey.HasData, Is.True);
-            Assert.That(nginxDeploymentApiKey.Data, Is.Not.Null);
-            Assert.That(nginxDeploymentApiKey.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase), Is.True);
-            Assert.That(nginxDeploymentApiKey.Data.Id, Is.EqualTo(nginxDeploymentApiKeyResourceIdentifier));
-            Assert.That(nginxDeploymentApiKey.Data.Id.ResourceType, Is.EqualTo(NginxDeploymentApiKeyResource.ResourceType));
-            Assert.That(nginxDeploymentApiKey.Data.SystemData, Is.Null);
-            Assert.That(nginxDeploymentApiKey.Data.Properties.Hint, Is.Not.Null);
-            Assert.That(nginxDeploymentApiKey.Data.Properties.EndOn, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeploymentApiKey.HasData, Is.True);
+                Assert.That(nginxDeploymentApiKey.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeploymentApiKey.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase), Is.True);
+                Assert.That(nginxDeploymentApiKey.Data.Id, Is.EqualTo(nginxDeploymentApiKeyResourceIdentifier));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeploymentApiKey.Data.Id.ResourceType, Is.EqualTo(NginxDeploymentApiKeyResource.ResourceType));
+                Assert.That(nginxDeploymentApiKey.Data.SystemData, Is.Null);
+                Assert.That(nginxDeploymentApiKey.Data.Properties.Hint, Is.Not.Null);
+                Assert.That(nginxDeploymentApiKey.Data.Properties.EndOn, Is.Not.Null);
+            });
         }
 
         [TestCase]

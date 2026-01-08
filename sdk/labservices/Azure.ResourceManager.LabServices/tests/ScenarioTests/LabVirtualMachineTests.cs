@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LabServices.Tests
             // GetAll test
             var vmCollection = lab.GetLabVirtualMachines();
             var list = await vmCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.That(list, Has.Count.EqualTo(3));
             var vmName = list[0].Data.Name;
 
             // Exists test
@@ -63,8 +63,11 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // Get test - 2
             vm = await vm.GetAsync();
-            Assert.That(vmName, Is.EqualTo(vm.Data.Name));
-            Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Running));
+            Assert.Multiple(() =>
+            {
+                Assert.That(vmName, Is.EqualTo(vm.Data.Name));
+                Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Running));
+            });
 
             // Reset password test
             // Set the password if not in playback mode

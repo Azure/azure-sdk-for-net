@@ -44,19 +44,25 @@ namespace Azure.ResourceManager.Redis.Tests
             var parameter = new RedisCreateOrUpdateContent(AzureLocation.NorthCentralUS, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1));
             var ncResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName1, parameter)).Value;
 
-            Assert.That(ncResponse.Data.Name, Is.EqualTo(redisCacheName1));
-            Assert.That(ncResponse.Data.Location, Is.EqualTo(AzureLocation.NorthCentralUS));
-            Assert.That(ncResponse.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(ncResponse.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ncResponse.Data.Name, Is.EqualTo(redisCacheName1));
+                Assert.That(ncResponse.Data.Location, Is.EqualTo(AzureLocation.NorthCentralUS));
+                Assert.That(ncResponse.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(ncResponse.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+            });
 
             // Create cache in scus
             parameter = new RedisCreateOrUpdateContent(AzureLocation.SouthCentralUS, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1));
             var scResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName2, parameter)).Value;
 
-            Assert.That(scResponse.Data.Name, Is.EqualTo(redisCacheName2));
-            Assert.That(scResponse.Data.Location, Is.EqualTo(AzureLocation.SouthCentralUS));
-            Assert.That(scResponse.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(scResponse.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+            Assert.Multiple(() =>
+            {
+                Assert.That(scResponse.Data.Name, Is.EqualTo(redisCacheName2));
+                Assert.That(scResponse.Data.Location, Is.EqualTo(AzureLocation.SouthCentralUS));
+                Assert.That(scResponse.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(scResponse.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+            });
 
             // Set up replication link
             var linkCollection = ncResponse.GetRedisLinkedServerWithProperties();
@@ -72,24 +78,30 @@ namespace Azure.ResourceManager.Redis.Tests
 
             // test get response from primary
             var primaryLinkProperties = (await linkCollection.GetAsync(redisCacheName2)).Value;
-            Assert.That(primaryLinkProperties.Data.LinkedRedisCacheId, Is.EqualTo(scResponse.Id));
-            Assert.That(primaryLinkProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.SouthCentralUS));
-            Assert.That(primaryLinkProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Secondary));
+            Assert.Multiple(() =>
+            {
+                Assert.That(primaryLinkProperties.Data.LinkedRedisCacheId, Is.EqualTo(scResponse.Id));
+                Assert.That(primaryLinkProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.SouthCentralUS));
+                Assert.That(primaryLinkProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Secondary));
+            });
 
             // test list response from primary
             var allPrimaryLinkProperties = await linkCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(allPrimaryLinkProperties.Count, Is.EqualTo(1));
+            Assert.That(allPrimaryLinkProperties, Has.Count.EqualTo(1));
 
             // test get response from secondary
             var linkCollection2 = scResponse.GetRedisLinkedServerWithProperties();
             var secondaryLinkProperties = (await linkCollection2.GetAsync(redisCacheName1)).Value;
-            Assert.That(secondaryLinkProperties.Data.LinkedRedisCacheId, Is.EqualTo(ncResponse.Id));
-            Assert.That(secondaryLinkProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.NorthCentralUS));
-            Assert.That(secondaryLinkProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Primary));
+            Assert.Multiple(() =>
+            {
+                Assert.That(secondaryLinkProperties.Data.LinkedRedisCacheId, Is.EqualTo(ncResponse.Id));
+                Assert.That(secondaryLinkProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.NorthCentralUS));
+                Assert.That(secondaryLinkProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Primary));
+            });
 
             // test list response from secondary
             allPrimaryLinkProperties = await linkCollection2.GetAllAsync().ToEnumerableAsync();
-            Assert.That(allPrimaryLinkProperties.Count, Is.EqualTo(1));
+            Assert.That(allPrimaryLinkProperties, Has.Count.EqualTo(1));
 
             // Delete link on primary
             await primaryLinkProperties.DeleteAsync(WaitUntil.Completed);

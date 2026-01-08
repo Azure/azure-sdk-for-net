@@ -71,8 +71,11 @@ namespace Azure.ResourceManager.MySql.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             });
             MySqlServerResource serverFromUpdate = lro.Value;
-            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
-            Assert.That(serverFromUpdate.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+                Assert.That(serverFromUpdate.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            });
             // Get
             MySqlServerResource serverFromGet = await serverFromUpdate.GetAsync();
             Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));

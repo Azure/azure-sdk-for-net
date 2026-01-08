@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters);
             var groupContract = (await collection.GetAsync(newGroupId)).Value;
             Assert.That(groupContract, Is.Not.Null);
-            Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
-            Assert.That(groupContract.Data.IsBuiltIn, Is.False);
-            Assert.That(groupContract.Data.Description, Is.Not.Null);
-            Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            Assert.Multiple(() =>
+            {
+                Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
+                Assert.That(groupContract.Data.IsBuiltIn, Is.False);
+                Assert.That(groupContract.Data.Description, Is.Not.Null);
+                Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            });
 
             // update the group
             var updateParameters = new ApiManagementGroupPatch
@@ -82,11 +85,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the updatedGroup
             var updatedResponse = (await groupContract.GetAsync()).Value;
             Assert.That(updatedResponse, Is.Not.Null);
-            Assert.That(updatedResponse.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
-            Assert.That(updatedResponse.Data.IsBuiltIn, Is.False);
-            Assert.That(updatedResponse.Data.Description, Is.Not.Null);
-            Assert.That(updatedResponse.Data.Description, Is.EqualTo(updateParameters.Description));
-            Assert.That(updatedResponse.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedResponse.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
+                Assert.That(updatedResponse.Data.IsBuiltIn, Is.False);
+                Assert.That(updatedResponse.Data.Description, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedResponse.Data.Description, Is.EqualTo(updateParameters.Description));
+                Assert.That(updatedResponse.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            });
 
             // delete the group
             await updatedResponse.DeleteAsync(WaitUntil.Completed, ETag.All);

@@ -228,29 +228,35 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyGremlinGraphCreation(GremlinGraphResource graph, GremlinGraphCreateOrUpdateContent gremlinGraphCreateUpdateOptions)
         {
-            Assert.That(gremlinGraphCreateUpdateOptions.Resource.GraphName, Is.EqualTo(graph.Data.Resource.GraphName));
-            Assert.That(gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), Is.EqualTo(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower()));
-            Assert.That(gremlinGraphCreateUpdateOptions.Resource.PartitionKey.Kind, Is.EqualTo(graph.Data.Resource.PartitionKey.Kind));
-            Assert.That(gremlinGraphCreateUpdateOptions.Resource.PartitionKey.Paths, Is.EqualTo(graph.Data.Resource.PartitionKey.Paths));
-            Assert.That(gremlinGraphCreateUpdateOptions.Resource.DefaultTtl, Is.EqualTo(graph.Data.Resource.DefaultTtl));
+            Assert.Multiple(() =>
+            {
+                Assert.That(gremlinGraphCreateUpdateOptions.Resource.GraphName, Is.EqualTo(graph.Data.Resource.GraphName));
+                Assert.That(gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), Is.EqualTo(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower()));
+                Assert.That(gremlinGraphCreateUpdateOptions.Resource.PartitionKey.Kind, Is.EqualTo(graph.Data.Resource.PartitionKey.Kind));
+                Assert.That(gremlinGraphCreateUpdateOptions.Resource.PartitionKey.Paths, Is.EqualTo(graph.Data.Resource.PartitionKey.Paths));
+                Assert.That(gremlinGraphCreateUpdateOptions.Resource.DefaultTtl, Is.EqualTo(graph.Data.Resource.DefaultTtl));
+            });
         }
 
         private void VerifyGremlinGraphs(GremlinGraphResource expectedValue, GremlinGraphResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
-            Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
-            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
+                Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
+                Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
+                Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
 
-            Assert.That(actualValue.Data.Resource.GraphName, Is.EqualTo(expectedValue.Data.Resource.GraphName));
-            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
-            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
-            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                Assert.That(actualValue.Data.Resource.GraphName, Is.EqualTo(expectedValue.Data.Resource.GraphName));
+                Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
 
-            Assert.That(actualValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath, Is.EqualTo(expectedValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath));
+                Assert.That(actualValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath, Is.EqualTo(expectedValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath));
+            });
             Assert.That(actualValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath, Is.EqualTo(expectedValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath));
             Assert.That(actualValue.Data.Resource.ConflictResolutionPolicy.Mode, Is.EqualTo(expectedValue.Data.Resource.ConflictResolutionPolicy.Mode));
 
@@ -258,36 +264,51 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.That(actualValue.Data.Resource.IndexingPolicy.IsAutomatic, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IsAutomatic));
 
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.IncludedPaths.Count, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths.Count));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Path));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Indexes, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Indexes));
+            Assert.That(actualValue.Data.Resource.IndexingPolicy.IncludedPaths, Has.Count.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Indexes, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Indexes));
 
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.ExcludedPaths.Count, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.ExcludedPaths.Count));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.ExcludedPaths[0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.ExcludedPaths[0].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.ExcludedPaths, Has.Count.EqualTo(expectedValue.Data.Resource.IndexingPolicy.ExcludedPaths.Count));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.ExcludedPaths[0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.ExcludedPaths[0].Path));
 
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes.Count, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes.Count));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0].Count, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0].Count));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Path));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Order));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Path));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Order));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1].Count, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1].Count));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Path));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Order));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Path));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Order));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes, Has.Count.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes.Count));
+            });
+            Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0], Has.Count.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0].Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][0].Order));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[0][1].Order));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1], Has.Count.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1].Count));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][0].Order));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Order, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.CompositeIndexes[1][1].Order));
 
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.IndexingMode, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IndexingMode));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.IndexingMode, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.IndexingMode));
 
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.SpatialIndexes.Count, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.SpatialIndexes.Count));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Path));
-            Assert.That(actualValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Types, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Types));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.SpatialIndexes, Has.Count.EqualTo(expectedValue.Data.Resource.IndexingPolicy.SpatialIndexes.Count));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Path, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Path));
+                Assert.That(actualValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Types, Is.EqualTo(expectedValue.Data.Resource.IndexingPolicy.SpatialIndexes[0].Types));
 
-            Assert.That(actualValue.Data.Resource.PartitionKey.Kind, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Kind));
-            Assert.That(actualValue.Data.Resource.PartitionKey.Paths, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Paths));
-            Assert.That(actualValue.Data.Resource.PartitionKey.Version, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Version));
+                Assert.That(actualValue.Data.Resource.PartitionKey.Kind, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Kind));
+                Assert.That(actualValue.Data.Resource.PartitionKey.Paths, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Paths));
+                Assert.That(actualValue.Data.Resource.PartitionKey.Version, Is.EqualTo(expectedValue.Data.Resource.PartitionKey.Version));
 
-            Assert.That(actualValue.Data.Resource.UniqueKeyPolicy.UniqueKeys.Count, Is.EqualTo(expectedValue.Data.Resource.UniqueKeyPolicy.UniqueKeys.Count));
+                Assert.That(actualValue.Data.Resource.UniqueKeyPolicy.UniqueKeys, Has.Count.EqualTo(expectedValue.Data.Resource.UniqueKeyPolicy.UniqueKeys.Count));
+            });
             Assert.That(actualValue.Data.Resource.UniqueKeyPolicy.UniqueKeys[0].Paths, Is.EqualTo(expectedValue.Data.Resource.UniqueKeyPolicy.UniqueKeys[0].Paths));
         }
     }

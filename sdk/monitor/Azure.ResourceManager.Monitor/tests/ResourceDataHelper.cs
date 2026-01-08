@@ -32,11 +32,14 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
         #region ActionGroup
         public static void AssertActionGroup(ActionGroupData group1, ActionGroupData group2)
@@ -217,9 +220,12 @@ namespace Azure.ResourceManager.Monitor.Tests
         #region DiagnosticSettings
         public static void AssertDiagnosticSetting(DiagnosticSettingData data1, DiagnosticSettingData data2)
         {
-            //AssertTrackedResource(data1, data2);
-            Assert.That(data2.Id, Is.EqualTo(data1.Id));
-            Assert.That(data2.Name, Is.EqualTo(data1.Name));
+            Assert.Multiple(() =>
+            {
+                //AssertTrackedResource(data1, data2);
+                Assert.That(data2.Id, Is.EqualTo(data1.Id));
+                Assert.That(data2.Name, Is.EqualTo(data1.Name));
+            });
         }
 
         public static DiagnosticSettingData GetBasicDiagnosticSettingsData()

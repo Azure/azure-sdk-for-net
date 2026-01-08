@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
             var jitNetworkAccessPolicy = await CreateJitNetworkAccessPolicy(jitNetworkAccessPolicyName);
             var list = await _jitNetworkAccessPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateJitNetworkAccessPolicyResource(list.First(item => item.Data.Name == jitNetworkAccessPolicyName), jitNetworkAccessPolicyName);
         }
 
@@ -103,14 +103,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateJitNetworkAccessPolicyResource(JitNetworkAccessPolicyResource jitNetworkAccessPolicy, string jitNetworkAccessPolicyName)
         {
-            Assert.IsNotNull(jitNetworkAccessPolicy);
-            Assert.IsNotNull(jitNetworkAccessPolicy.Data.Id);
-            Assert.That(jitNetworkAccessPolicy.Data.Name, Is.EqualTo(jitNetworkAccessPolicyName));
-            Assert.That(jitNetworkAccessPolicy.Data.Kind, Is.EqualTo("Basic"));
-            Assert.That(jitNetworkAccessPolicy.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.Count, Is.EqualTo(1));
-            Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number, Is.EqualTo(8080));
-            Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Protocol.ToString(), Is.EqualTo("TCP"));
+            Assert.That(jitNetworkAccessPolicy, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(jitNetworkAccessPolicy.Data.Id, Is.Not.Null);
+                Assert.That(jitNetworkAccessPolicy.Data.Name, Is.EqualTo(jitNetworkAccessPolicyName));
+                Assert.That(jitNetworkAccessPolicy.Data.Kind, Is.EqualTo("Basic"));
+                Assert.That(jitNetworkAccessPolicy.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number, Is.EqualTo(8080));
+                Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Protocol.ToString(), Is.EqualTo("TCP"));
+            });
             Assert.AreEqual(8080, jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number);
         }
     }

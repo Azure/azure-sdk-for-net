@@ -114,19 +114,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 },
             };
             var result = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, "applicationinsights", data)).Value;
-            Assert.That(result.Data.Name, Is.EqualTo("applicationinsights"));
-            Assert.That(result.Data.Frontend.Response.Headers.FirstOrDefault(), Is.EqualTo("Content-type"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Data.Name, Is.EqualTo("applicationinsights"));
+                Assert.That(result.Data.Frontend.Response.Headers.FirstOrDefault(), Is.EqualTo("Content-type"));
+            });
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
 
             result = await collection.GetAsync("applicationinsights");
             Assert.That(result.Data, Is.Not.Null);
 
             var resultTrue = (await collection.ExistsAsync("applicationinsights")).Value;
             var resultFalse = (await collection.ExistsAsync("foo")).Value;
-            Assert.That(resultTrue, Is.True);
-            Assert.That(resultFalse, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultTrue, Is.True);
+                Assert.That(resultFalse, Is.False);
+            });
 
             var resultNew = await result.GetAsync();
             Assert.That(resultNew.Value.Data, Is.Not.Null);

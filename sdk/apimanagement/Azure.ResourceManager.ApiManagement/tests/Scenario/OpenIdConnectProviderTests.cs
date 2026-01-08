@@ -64,18 +64,24 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, openIdNoSecret,openIdConnectCreateParameters)).Value;
 
             Assert.That(createResponse, Is.Not.Null);
-            Assert.That(createResponse.Data.DisplayName, Is.EqualTo(openIdProviderName));
-            Assert.That(createResponse.Data.Name, Is.EqualTo(openIdNoSecret));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResponse.Data.DisplayName, Is.EqualTo(openIdProviderName));
+                Assert.That(createResponse.Data.Name, Is.EqualTo(openIdNoSecret));
+            });
 
             // get to check it was created
             var openIdConnectProviderContract = (await collection.GetAsync(openIdNoSecret)).Value;
 
             Assert.That(openIdConnectProviderContract, Is.Not.Null);
-            Assert.That(openIdConnectProviderContract.Data.DisplayName, Is.EqualTo(openIdProviderName));
-            Assert.That(openIdConnectProviderContract.Data.MetadataEndpoint, Is.EqualTo(metadataEndpoint));
-            Assert.That(openIdConnectProviderContract.Data.Name, Is.EqualTo(openIdNoSecret));
-            Assert.That(openIdConnectProviderContract.Data.ClientSecret, Is.Null);
-            Assert.That(openIdConnectProviderContract.Data.Description, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(openIdConnectProviderContract.Data.DisplayName, Is.EqualTo(openIdProviderName));
+                Assert.That(openIdConnectProviderContract.Data.MetadataEndpoint, Is.EqualTo(metadataEndpoint));
+                Assert.That(openIdConnectProviderContract.Data.Name, Is.EqualTo(openIdNoSecret));
+                Assert.That(openIdConnectProviderContract.Data.ClientSecret, Is.Null);
+                Assert.That(openIdConnectProviderContract.Data.Description, Is.Null);
+            });
 
             // create a Secret property
             string openIdProviderName2 = Recording.GenerateAssetName("openIdName");
@@ -94,18 +100,24 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var createResponse2 = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, openId2, openIdConnectCreateParameters2)).Value;
 
             Assert.That(createResponse2, Is.Not.Null);
-            Assert.That(createResponse2.Data.DisplayName, Is.EqualTo(openIdProviderName2));
-            Assert.That(createResponse2.Data.Name, Is.EqualTo(openId2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createResponse2.Data.DisplayName, Is.EqualTo(openIdProviderName2));
+                Assert.That(createResponse2.Data.Name, Is.EqualTo(openId2));
+            });
 
             // get to check it was created
             var getResponse2 = (await collection.GetAsync(openId2)).Value;
 
             Assert.That(getResponse2, Is.Not.Null);
-            Assert.That(getResponse2.Data.DisplayName, Is.EqualTo(openIdProviderName2));
-            Assert.That(getResponse2.Data.MetadataEndpoint, Is.EqualTo(metadataEndpoint2));
-            Assert.That(getResponse2.Data.ClientSecret, Is.Null);
-            Assert.That(getResponse2.Data.Description, Is.Not.Null);
-            Assert.That(getResponse2.Data.Name, Is.EqualTo(openId2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse2.Data.DisplayName, Is.EqualTo(openIdProviderName2));
+                Assert.That(getResponse2.Data.MetadataEndpoint, Is.EqualTo(metadataEndpoint2));
+                Assert.That(getResponse2.Data.ClientSecret, Is.Null);
+                Assert.That(getResponse2.Data.Description, Is.Not.Null);
+                Assert.That(getResponse2.Data.Name, Is.EqualTo(openId2));
+            });
 
             var secretResponse = (await getResponse2.GetSecretsAsync()).Value;
 
@@ -115,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(listResponse, Is.Not.Null);
 
             // there should be atleast 2 openId connect Providers.
-            Assert.GreaterOrEqual(listResponse.Count, 2);
+            Assert.That(listResponse.Count, Is.GreaterThanOrEqualTo(2));
 
             // delete a OpenId Connect Provider
             await openIdConnectProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);
@@ -138,10 +150,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getResponseOpendId2 = (await getResponse2.GetAsync()).Value;
 
             Assert.That(getResponseOpendId2, Is.Not.Null);
-            Assert.That(getResponseOpendId2.Data.Name, Is.EqualTo(openId2));
-            Assert.That(getResponseOpendId2.Data.MetadataEndpoint, Is.EqualTo(updateMetadataEndpoint));
-            Assert.That(getResponseOpendId2.Data.ClientSecret, Is.Null);
-            Assert.That(getResponseOpendId2.Data.Description, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponseOpendId2.Data.Name, Is.EqualTo(openId2));
+                Assert.That(getResponseOpendId2.Data.MetadataEndpoint, Is.EqualTo(updateMetadataEndpoint));
+                Assert.That(getResponseOpendId2.Data.ClientSecret, Is.Null);
+                Assert.That(getResponseOpendId2.Data.Description, Is.Not.Null);
+            });
 
             var secretsResponse = (await getResponseOpendId2.GetSecretsAsync()).Value;
 

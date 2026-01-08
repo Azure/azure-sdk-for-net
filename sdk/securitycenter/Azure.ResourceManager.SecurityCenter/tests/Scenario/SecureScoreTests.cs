@@ -45,17 +45,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _secureScoreItemCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSecureScoreItem(list.First(item => item.Data.Name == _existSecureScoreItemName));
         }
 
         private void ValidateSecureScoreItem(SecureScoreResource secureScoreItem)
         {
-            Assert.IsNotNull(secureScoreItem);
-            Assert.IsNotNull(secureScoreItem.Data.Id);
-            Assert.That(secureScoreItem.Data.Name, Is.EqualTo(_existSecureScoreItemName));
-            Assert.That(secureScoreItem.Data.DisplayName, Is.EqualTo("ASC score"));
-            Assert.That(secureScoreItem.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/secureScores"));
+            Assert.That(secureScoreItem, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(secureScoreItem.Data.Id, Is.Not.Null);
+                Assert.That(secureScoreItem.Data.Name, Is.EqualTo(_existSecureScoreItemName));
+                Assert.That(secureScoreItem.Data.DisplayName, Is.EqualTo("ASC score"));
+                Assert.That(secureScoreItem.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/secureScores"));
+            });
         }
     }
 }

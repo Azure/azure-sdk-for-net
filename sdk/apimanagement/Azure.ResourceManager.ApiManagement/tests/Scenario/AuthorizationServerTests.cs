@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var listResponse = await authCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listResponse, Is.Not.Null);
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Empty);
 
             // create server
             string authsid = Recording.GenerateAssetName("authsid");
@@ -77,17 +77,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get to check is was created
             var getResponse = (await authCollection.GetAsync(authsid)).Value;
             Assert.That(getResponse, Is.Not.Null);
-            Assert.That(getResponse.Data.Name, Is.EqualTo(authsid));
-            Assert.That(getResponse.Data.DisplayName, Is.EqualTo(authorizationServerContract.DisplayName));
-            Assert.That(getResponse.Data.Description, Is.EqualTo(authorizationServerContract.Description));
-            Assert.That(getResponse.Data.DefaultScope, Is.EqualTo(authorizationServerContract.DefaultScope));
-            Assert.That(getResponse.Data.AuthorizationEndpoint, Is.EqualTo(authorizationServerContract.AuthorizationEndpoint));
-            Assert.That(getResponse.Data.TokenEndpoint, Is.EqualTo(authorizationServerContract.TokenEndpoint));
-            Assert.That(getResponse.Data.ClientRegistrationEndpoint, Is.EqualTo(authorizationServerContract.ClientRegistrationEndpoint));
-            Assert.That(getResponse.Data.ClientSecret, Is.Null);
-            Assert.That(getResponse.Data.ResourceOwnerPassword, Is.Null);
-            Assert.That(getResponse.Data.ResourceOwnerUsername, Is.Null);
-            Assert.That(getResponse.Data.GrantTypes.Count, Is.EqualTo(authorizationServerContract.GrantTypes.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Data.Name, Is.EqualTo(authsid));
+                Assert.That(getResponse.Data.DisplayName, Is.EqualTo(authorizationServerContract.DisplayName));
+                Assert.That(getResponse.Data.Description, Is.EqualTo(authorizationServerContract.Description));
+                Assert.That(getResponse.Data.DefaultScope, Is.EqualTo(authorizationServerContract.DefaultScope));
+                Assert.That(getResponse.Data.AuthorizationEndpoint, Is.EqualTo(authorizationServerContract.AuthorizationEndpoint));
+                Assert.That(getResponse.Data.TokenEndpoint, Is.EqualTo(authorizationServerContract.TokenEndpoint));
+                Assert.That(getResponse.Data.ClientRegistrationEndpoint, Is.EqualTo(authorizationServerContract.ClientRegistrationEndpoint));
+                Assert.That(getResponse.Data.ClientSecret, Is.Null);
+                Assert.That(getResponse.Data.ResourceOwnerPassword, Is.Null);
+                Assert.That(getResponse.Data.ResourceOwnerUsername, Is.Null);
+                Assert.That(getResponse.Data.GrantTypes.Count, Is.EqualTo(authorizationServerContract.GrantTypes.Count));
+            });
             Assert.That(getResponse.Data.GrantTypes.All(gt => authorizationServerContract.GrantTypes.Contains(gt)), Is.True);
             Assert.That(getResponse.Data.AuthorizationMethods.Count, Is.EqualTo(authorizationServerContract.AuthorizationMethods.Count));
             Assert.That(getResponse.Data.AuthorizationMethods.All(gt => authorizationServerContract.AuthorizationMethods.Contains(gt)), Is.True);
@@ -98,8 +101,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(getResponse.Data.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))), Is.True);
 
             var secretsResponse = (await getResponse.GetSecretsAsync()).Value;
-            Assert.That(secretsResponse.ResourceOwnerUsername, Is.EqualTo(authorizationServerContract.ResourceOwnerUsername));
-            Assert.That(secretsResponse.ResourceOwnerPassword, Is.EqualTo(authorizationServerContract.ResourceOwnerPassword));
+            Assert.Multiple(() =>
+            {
+                Assert.That(secretsResponse.ResourceOwnerUsername, Is.EqualTo(authorizationServerContract.ResourceOwnerUsername));
+                Assert.That(secretsResponse.ResourceOwnerPassword, Is.EqualTo(authorizationServerContract.ResourceOwnerPassword));
+            });
 
             // list again
             listResponse = await authCollection.GetAllAsync().ToEnumerableAsync();
@@ -116,17 +122,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get to check is was updated
             getResponse = await getResponse.GetAsync();
-            Assert.That(getResponse.Data.Name, Is.EqualTo(authsid));
-            Assert.That(getResponse.Data.DisplayName, Is.EqualTo(authorizationServerContract.DisplayName));
-            Assert.That(getResponse.Data.Description, Is.EqualTo(authorizationServerContract.Description));
-            Assert.That(getResponse.Data.DefaultScope, Is.EqualTo(authorizationServerContract.DefaultScope));
-            Assert.That(getResponse.Data.AuthorizationEndpoint, Is.EqualTo(authorizationServerContract.AuthorizationEndpoint));
-            Assert.That(getResponse.Data.TokenEndpoint, Is.EqualTo(authorizationServerContract.TokenEndpoint));
-            Assert.That(getResponse.Data.ClientRegistrationEndpoint, Is.EqualTo(authorizationServerContract.ClientRegistrationEndpoint));
-            Assert.That(getResponse.Data.ClientSecret, Is.Null);
-            Assert.That(getResponse.Data.ResourceOwnerPassword, Is.Null);
-            Assert.That(getResponse.Data.ResourceOwnerUsername, Is.Null);
-            Assert.That(getResponse.Data.GrantTypes.Count, Is.EqualTo(updateParameters.GrantTypes.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Data.Name, Is.EqualTo(authsid));
+                Assert.That(getResponse.Data.DisplayName, Is.EqualTo(authorizationServerContract.DisplayName));
+                Assert.That(getResponse.Data.Description, Is.EqualTo(authorizationServerContract.Description));
+                Assert.That(getResponse.Data.DefaultScope, Is.EqualTo(authorizationServerContract.DefaultScope));
+                Assert.That(getResponse.Data.AuthorizationEndpoint, Is.EqualTo(authorizationServerContract.AuthorizationEndpoint));
+                Assert.That(getResponse.Data.TokenEndpoint, Is.EqualTo(authorizationServerContract.TokenEndpoint));
+                Assert.That(getResponse.Data.ClientRegistrationEndpoint, Is.EqualTo(authorizationServerContract.ClientRegistrationEndpoint));
+                Assert.That(getResponse.Data.ClientSecret, Is.Null);
+                Assert.That(getResponse.Data.ResourceOwnerPassword, Is.Null);
+                Assert.That(getResponse.Data.ResourceOwnerUsername, Is.Null);
+                Assert.That(getResponse.Data.GrantTypes.Count, Is.EqualTo(updateParameters.GrantTypes.Count));
+            });
             Assert.That(getResponse.Data.GrantTypes.All(gt => updateParameters.GrantTypes.Contains(gt)), Is.True);
             Assert.That(getResponse.Data.AuthorizationMethods.Count, Is.EqualTo(authorizationServerContract.AuthorizationMethods.Count));
             Assert.That(getResponse.Data.AuthorizationMethods.All(gt => authorizationServerContract.AuthorizationMethods.Contains(gt)), Is.True);

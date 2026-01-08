@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string schemaName = Recording.GenerateAssetName("schema");
             await CreateSchema(schemaName);
             var list = await _schemaCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

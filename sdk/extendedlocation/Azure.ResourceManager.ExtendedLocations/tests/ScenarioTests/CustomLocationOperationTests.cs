@@ -57,10 +57,13 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             };
             var customLocation = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 
-            Assert.That(resourceName, Is.EqualTo(customLocation.Data.DisplayName));
-            Assert.That(customLocation.Data.ProvisioningState, Is.EqualTo("Succeeded"));
-            Assert.That(String.IsNullOrEmpty(customLocation.Data.Identity.PrincipalId.ToString()), Is.False);
-            Assert.That(ManagedServiceIdentityType.SystemAssigned, Is.EqualTo(customLocation.Data.Identity.ManagedServiceIdentityType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceName, Is.EqualTo(customLocation.Data.DisplayName));
+                Assert.That(customLocation.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+                Assert.That(String.IsNullOrEmpty(customLocation.Data.Identity.PrincipalId.ToString()), Is.False);
+                Assert.That(ManagedServiceIdentityType.SystemAssigned, Is.EqualTo(customLocation.Data.Identity.ManagedServiceIdentityType));
+            });
 
             // GET ON CREATED CL
             customLocation = await LocationCollection.GetAsync(resourceName);
@@ -73,16 +76,19 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             };
             customLocation = await customLocation.UpdateAsync(patchData);
             customLocation = await customLocation.GetAsync();
-            Assert.That(customLocation.Data.ClusterExtensionIds[0].ToString(), Is.EqualTo(CassandraTest));
-            Assert.That(customLocation.Data.ClusterExtensionIds[1].ToString(), Is.EqualTo(AnsibleTest));
+            Assert.Multiple(() =>
+            {
+                Assert.That(customLocation.Data.ClusterExtensionIds[0].ToString(), Is.EqualTo(CassandraTest));
+                Assert.That(customLocation.Data.ClusterExtensionIds[1].ToString(), Is.EqualTo(AnsibleTest));
+            });
 
             // LIST BY SUBSCRIPTION
             var listResult = await DefaultSubscription.GetCustomLocationsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listResult.Count, 1);
+            Assert.That(listResult, Is.Not.Empty);
 
             // LIST BY RESOURCE GROUP
             listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listResult.Count, 1);
+            Assert.That(listResult, Is.Not.Empty);
 
             // DELETE CREATED CL
             await customLocation.DeleteAsync(WaitUntil.Completed);

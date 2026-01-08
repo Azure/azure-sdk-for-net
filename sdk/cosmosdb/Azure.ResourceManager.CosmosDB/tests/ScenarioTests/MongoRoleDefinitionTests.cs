@@ -71,9 +71,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             string databaseName = _mongoDBDatabaseId.Name;
             var definition = await CreateMongoRoleDefinition(databaseName, MongoRoleDefinitionCollection);
-            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
-            Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
-            Assert.That(definition.Data.Privileges, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
+                Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
+                Assert.That(definition.Data.Privileges, Has.Count.EqualTo(1));
+            });
             Assert.That(definition.Data.Privileges[0].Actions, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Privileges[0].Actions[0], Is.EqualTo(PrivilegeActionInsert));
 
@@ -105,9 +108,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             definition = await (await MongoRoleDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, this._roleDefinitionId, updateParameters)).WaitForCompletionAsync();
             Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
-            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
-            Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
-            Assert.That(definition.Data.Privileges, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
+                Assert.That(databaseName, Is.EqualTo(definition.Data.DatabaseName));
+                Assert.That(definition.Data.Privileges, Has.Count.EqualTo(1));
+            });
             Assert.That(definition.Data.Privileges[0].Actions, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Privileges[0].Actions[0], Is.EqualTo(PrivilegeActionFind));
 
@@ -187,19 +193,22 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyMongoRoleDefinitions(MongoDBRoleDefinitionResource expectedValue, MongoDBRoleDefinitionResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.That(actualValue.Data.RoleName, Is.EqualTo(expectedValue.Data.RoleName));
+                Assert.That(actualValue.Data.RoleName, Is.EqualTo(expectedValue.Data.RoleName));
 
-            Assert.That(actualValue.Data.DatabaseName, Is.EqualTo(expectedValue.Data.DatabaseName));
+                Assert.That(actualValue.Data.DatabaseName, Is.EqualTo(expectedValue.Data.DatabaseName));
+            });
             VerifyPrivileges(expectedValue.Data.Privileges, actualValue.Data.Privileges);
         }
 
         private void VerifyPrivileges(IList<MongoDBPrivilege> expected, IList<MongoDBPrivilege> actualValue)
         {
-            Assert.That(actualValue.Count, Is.EqualTo(expected.Count));
+            Assert.That(actualValue, Has.Count.EqualTo(expected.Count));
             for (int i = 0; i < expected.Count; i++)
             {
                 Assert.That(actualValue[i].Actions[0], Is.EqualTo(expected[i].Actions[0]));
@@ -209,8 +218,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyPrivilegeResource(MongoDBPrivilegeResourceInfo expected, MongoDBPrivilegeResourceInfo actualValue)
         {
-            Assert.That(actualValue.DBName, Is.EqualTo(expected.DBName));
-            Assert.That(actualValue.Collection, Is.EqualTo(expected.Collection));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.DBName, Is.EqualTo(expected.DBName));
+                Assert.That(actualValue.Collection, Is.EqualTo(expected.Collection));
+            });
         }
     }
 }

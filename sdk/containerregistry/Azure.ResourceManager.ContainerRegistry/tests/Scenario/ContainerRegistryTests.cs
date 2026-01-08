@@ -30,17 +30,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             string registryName = Recording.GenerateAssetName("acrregistry");
             ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent(registryName);
             ContainerRegistryNameAvailableResult result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
-            Assert.That(result.IsNameAvailable, Is.True);
-            Assert.That(result.Reason, Is.Null);
-            Assert.That(result.Message, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.IsNameAvailable, Is.True);
+                Assert.That(result.Reason, Is.Null);
+                Assert.That(result.Message, Is.Null);
+            });
 
             // Check disallowed name
             registryName = "Microsoft";
             content = new ContainerRegistryNameAvailabilityContent(registryName);
             result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
-            Assert.That(result.IsNameAvailable, Is.False);
-            Assert.That(result.Reason, Is.EqualTo("Invalid"));
-            Assert.That(result.Message, Is.EqualTo("The specified resource name is disallowed."));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.IsNameAvailable, Is.False);
+                Assert.That(result.Reason, Is.EqualTo("Invalid"));
+                Assert.That(result.Message, Is.EqualTo("The specified resource name is disallowed."));
+            });
 
             // Check name of container registry that already exists
             registryName = Recording.GenerateAssetName("acrregistry");
@@ -64,13 +70,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             var registryData = registry.Data;
             ValidateResourceDefaultTags(registryData);
             Assert.That(registryData.Sku, Is.Not.Null);
-            Assert.That(registryData.Sku.Name, Is.EqualTo(ContainerRegistrySkuName.Premium));
-            Assert.That(registryData.Sku.Tier, Is.EqualTo(ContainerRegistrySkuTier.Premium));
+            Assert.Multiple(() =>
+            {
+                Assert.That(registryData.Sku.Name, Is.EqualTo(ContainerRegistrySkuName.Premium));
+                Assert.That(registryData.Sku.Tier, Is.EqualTo(ContainerRegistrySkuTier.Premium));
 
-            Assert.That(registryData.LoginServer, Is.Not.Null);
-            Assert.That(registryData.CreatedOn, Is.Not.Null);
-            Assert.That(registryData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.That(registryData.IsAdminUserEnabled, Is.False);
+                Assert.That(registryData.LoginServer, Is.Not.Null);
+                Assert.That(registryData.CreatedOn, Is.Not.Null);
+                Assert.That(registryData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                Assert.That(registryData.IsAdminUserEnabled, Is.False);
+            });
 
             // List container registries by resource group
             var registryPages = registryCollection.GetAllAsync();
@@ -104,24 +113,33 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             ValidateResourceDefaultNewTags(registryFromUpdate.Data);
             registryData = registryFromUpdate.Data;
             Assert.That(registryData.Sku, Is.Not.Null);
-            Assert.That(registryData.Sku.Name, Is.EqualTo(ContainerRegistrySkuName.Basic));
-            Assert.That(registryData.Sku.Tier, Is.EqualTo(ContainerRegistrySkuTier.Basic));
+            Assert.Multiple(() =>
+            {
+                Assert.That(registryData.Sku.Name, Is.EqualTo(ContainerRegistrySkuName.Basic));
+                Assert.That(registryData.Sku.Tier, Is.EqualTo(ContainerRegistrySkuTier.Basic));
 
-            Assert.That(registryData.LoginServer, Is.Not.Null);
-            Assert.That(registryData.CreatedOn, Is.Not.Null);
-            Assert.That(registryData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.That(registryData.IsAdminUserEnabled, Is.True);
+                Assert.That(registryData.LoginServer, Is.Not.Null);
+                Assert.That(registryData.CreatedOn, Is.Not.Null);
+                Assert.That(registryData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                Assert.That(registryData.IsAdminUserEnabled, Is.True);
+            });
 
             // List credentials
             ContainerRegistryListCredentialsResult credentials = await registryFromUpdate.GetCredentialsAsync();
             // Validate username and password
             Assert.That(credentials, Is.Not.Null);
-            Assert.That(credentials.Username, Is.Not.Null);
-            Assert.That(credentials.Passwords.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(credentials.Username, Is.Not.Null);
+                Assert.That(credentials.Passwords, Has.Count.EqualTo(2));
+            });
             var password1 = credentials.Passwords[0].Value;
             var password2 = credentials.Passwords[1].Value;
-            Assert.That(password1, Is.Not.Null);
-            Assert.That(password2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(password1, Is.Not.Null);
+                Assert.That(password2, Is.Not.Null);
+            });
 
             // Regenerate credential
             ContainerRegistryCredentialRegenerateContent credentialContent = new ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName.Password);
@@ -151,11 +169,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Validate the created webhook
             var webhookData = webhook.Data;
             ValidateResourceDefaultTags(webhookData);
-            Assert.That(webhookData.Status, Is.EqualTo(ContainerRegistryWebhookStatus.Enabled));
-            Assert.That(string.IsNullOrEmpty(webhookData.Scope), Is.True);
-            Assert.That(webhookData.Actions.Count, Is.EqualTo(1));
-            Assert.That(webhookData.Actions.Contains(ContainerRegistryWebhookAction.Push), Is.True);
-            Assert.That(webhookData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(webhookData.Status, Is.EqualTo(ContainerRegistryWebhookStatus.Enabled));
+                Assert.That(string.IsNullOrEmpty(webhookData.Scope), Is.True);
+                Assert.That(webhookData.Actions, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(webhookData.Actions.Contains(ContainerRegistryWebhookAction.Push), Is.True);
+                Assert.That(webhookData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+            });
 
             // List webhooks by container registry
             var webhooks = registry.GetContainerRegistryWebhooks();
@@ -193,18 +217,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Validate the updated webhook
             var webhookDataFromUpdate = webhookFromUpdate.Data;
             ValidateResourceDefaultNewTags(webhookDataFromUpdate);
-            Assert.That(webhookDataFromUpdate.Status, Is.EqualTo(ContainerRegistryWebhookStatus.Disabled));
-            Assert.That(webhookDataFromUpdate.Scope, Is.EqualTo(DefaultWebhookScope));
-            Assert.That(webhookDataFromUpdate.Actions.Count, Is.EqualTo(2));
-            Assert.That(webhookDataFromUpdate.Actions.Contains(ContainerRegistryWebhookAction.Push), Is.True);
-            Assert.That(webhookDataFromUpdate.Actions.Contains(ContainerRegistryWebhookAction.Delete), Is.True);
-            Assert.That(webhookDataFromUpdate.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(webhookDataFromUpdate.Status, Is.EqualTo(ContainerRegistryWebhookStatus.Disabled));
+                Assert.That(webhookDataFromUpdate.Scope, Is.EqualTo(DefaultWebhookScope));
+                Assert.That(webhookDataFromUpdate.Actions, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(webhookDataFromUpdate.Actions.Contains(ContainerRegistryWebhookAction.Push), Is.True);
+                Assert.That(webhookDataFromUpdate.Actions.Contains(ContainerRegistryWebhookAction.Delete), Is.True);
+                Assert.That(webhookDataFromUpdate.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+            });
 
             // Get the webhook call back config
             ContainerRegistryWebhookCallbackConfig webhookConfig = await webhookFromUpdate.GetCallbackConfigAsync();
             Assert.That(webhookConfig, Is.Not.Null);
-            Assert.That(webhookConfig.ServiceUri, Is.EqualTo(DefaultWebhookServiceUri));
-            Assert.That(webhookConfig.CustomHeaders.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(webhookConfig.ServiceUri, Is.EqualTo(DefaultWebhookServiceUri));
+                Assert.That(webhookConfig.CustomHeaders, Has.Count.EqualTo(1));
+            });
             Assert.That(webhookConfig.CustomHeaders["key"], Is.EqualTo("value"));
 
             // Ping the webhook
@@ -250,8 +283,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Validate the created replication
             var replicationData = replication.Data;
             ValidateResourceDefaultTags(replicationData);
-            Assert.That(replicationData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.That(replicationData.Status, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(replicationData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                Assert.That(replicationData.Status, Is.Not.Null);
+            });
             Assert.That(replicationData.Status.DisplayStatus, Is.Not.Null);
             // List replications by container registry
             var replicationPages = replicationCollection.GetAllAsync();
@@ -261,8 +297,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
                 if (replicationFromList.Data.Name.Equals(replicationName, StringComparison.Ordinal))
                 {
                     ValidateResourceDefaultTags(replicationFromList.Data);
-                    Assert.That(replicationFromList.Data.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-                    Assert.That(replicationFromList.Data.Status, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(replicationFromList.Data.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                        Assert.That(replicationFromList.Data.Status, Is.Not.Null);
+                    });
                     Assert.That(replicationFromList.Data.Status.DisplayStatus, Is.Not.Null);
                 }
                 replicationCount++;
@@ -285,8 +324,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Validate the updated replication
             var replicationDataFromUpdate = replicationFromUpdate.Data;
             ValidateResourceDefaultNewTags(replicationDataFromUpdate);
-            Assert.That(replicationDataFromUpdate.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.That(replicationDataFromUpdate.Status, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(replicationDataFromUpdate.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                Assert.That(replicationDataFromUpdate.Status, Is.Not.Null);
+            });
             Assert.That(replicationDataFromUpdate.Status.DisplayStatus, Is.Not.Null);
             // Delete the replication
             await replicationFromUpdate.DeleteAsync(WaitUntil.Completed);
@@ -332,9 +374,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             var lro = await taskCollection.CreateOrUpdateAsync(WaitUntil.Completed, taskName, data);
             ContainerRegistryTaskResource task = lro.Value;
             Assert.That(task, Is.Not.Null);
-            Assert.That(task.Data.Name, Is.EqualTo(taskName));
-            Assert.That(task.Data.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.That(task.Data.Status, Is.EqualTo(ContainerRegistryTaskStatus.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(task.Data.Name, Is.EqualTo(taskName));
+                Assert.That(task.Data.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                Assert.That(task.Data.Status, Is.EqualTo(ContainerRegistryTaskStatus.Enabled));
+            });
             // List tasks
             var taskCount = 0;
             await foreach (var taskInList in taskCollection)
@@ -448,10 +493,16 @@ key2: value2
                 OS = ContainerRegistryOS.Linux
             });
             ContainerRegistryAgentPoolResource agentPool = lro.Value;
-            Assert.That(agentPool.Data.Name, Is.EqualTo(agentPoolName));
-            Assert.That(agentPool.Data.Count, Is.EqualTo(1));
-            Assert.That(agentPool.Data.Tier, Is.EqualTo("S2"));
-            Assert.That(agentPool.Data.OS, Is.EqualTo(ContainerRegistryOS.Linux));
+            Assert.Multiple(() =>
+            {
+                Assert.That(agentPool.Data.Name, Is.EqualTo(agentPoolName));
+                Assert.That(agentPool.Data.Count, Is.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(agentPool.Data.Tier, Is.EqualTo("S2"));
+                Assert.That(agentPool.Data.OS, Is.EqualTo(ContainerRegistryOS.Linux));
+            });
             // List agentpools
             await foreach (var agentPoolFromList in agentPoolCollection)
             {
@@ -539,8 +590,11 @@ steps:
                 }
             });
             ContainerRegistryTaskRunResource taskRun = lro.Value;
-            Assert.That(taskRun.Data.Name, Is.EqualTo(taskRunName));
-            Assert.That(taskRun.Data.RunResult.RunId, Is.EqualTo("ca1"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(taskRun.Data.Name, Is.EqualTo(taskRunName));
+                Assert.That(taskRun.Data.RunResult.RunId, Is.EqualTo("ca1"));
+            });
             // List taskruns
             await foreach (var taskRunFromList in taskRunCollection)
             {
@@ -571,7 +625,7 @@ steps:
                 privateLinkName = privateLinkFromList.Data.Name;
                 privateLinkCount++;
             }
-            Assert.Greater(privateLinkCount, 0);
+            Assert.That(privateLinkCount, Is.GreaterThan(0));
             // Validate get private link resource operation
             ContainerRegistryPrivateLinkResource privateLink = await privateLinkCollection.GetAsync(privateLinkName);
             Assert.That(privateLink.Data.Name, Is.EqualTo(privateLinkName));
@@ -598,14 +652,17 @@ steps:
             ContainerRegistryResource registryFromUpdate = lro.Value;
             // Validate updated registry system data properties
             ValidateSystemData(registryFromUpdate.Data.SystemData);
-            // Validate system data create properties
-            Assert.That(registryFromUpdate.Data.SystemData.CreatedOn, Is.EqualTo(cachedSystemData.CreatedOn));
-            Assert.That(registryFromUpdate.Data.SystemData.CreatedBy, Is.EqualTo(cachedSystemData.CreatedBy));
-            Assert.That(registryFromUpdate.Data.SystemData.CreatedByType, Is.EqualTo(cachedSystemData.CreatedByType));
-            // Validate system data update properties
-            Assert.That(registryFromUpdate.Data.SystemData.LastModifiedOn, Is.Not.EqualTo(cachedSystemData.LastModifiedOn));
-            Assert.That(registryFromUpdate.Data.SystemData.LastModifiedBy, Is.EqualTo(cachedSystemData.LastModifiedBy));
-            Assert.That(registryFromUpdate.Data.SystemData.LastModifiedByType, Is.EqualTo(cachedSystemData.LastModifiedByType));
+            Assert.Multiple(() =>
+            {
+                // Validate system data create properties
+                Assert.That(registryFromUpdate.Data.SystemData.CreatedOn, Is.EqualTo(cachedSystemData.CreatedOn));
+                Assert.That(registryFromUpdate.Data.SystemData.CreatedBy, Is.EqualTo(cachedSystemData.CreatedBy));
+                Assert.That(registryFromUpdate.Data.SystemData.CreatedByType, Is.EqualTo(cachedSystemData.CreatedByType));
+                // Validate system data update properties
+                Assert.That(registryFromUpdate.Data.SystemData.LastModifiedOn, Is.Not.EqualTo(cachedSystemData.LastModifiedOn));
+                Assert.That(registryFromUpdate.Data.SystemData.LastModifiedBy, Is.EqualTo(cachedSystemData.LastModifiedBy));
+                Assert.That(registryFromUpdate.Data.SystemData.LastModifiedByType, Is.EqualTo(cachedSystemData.LastModifiedByType));
+            });
         }
 
         // [TestCase]
@@ -744,13 +801,16 @@ steps:
             var lro = await scopeMapCollection.CreateOrUpdateAsync(WaitUntil.Completed, scopeMapName, data);
             ScopeMapResource scopeMap = lro.Value;
             var scopeMapData = scopeMap.Data;
-            Assert.That(scopeMap, Is.Not.Null);
-            Assert.IsNotEmpty(scopeMap.Id);
-            Assert.That(scopeMapData.Actions.Count, Is.EqualTo(5));
-            Assert.That(scopeMapData.Description, Is.Null);
-            Assert.That(scopeMapData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
-            Assert.That(scopeMapData.ScopeMapType, Is.EqualTo("UserDefined"));
-            Assert.That(scopeMapData.Name, Is.EqualTo(scopeMapName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(scopeMap, Is.Not.Null);
+                Assert.That((string)scopeMap.Id, Is.Not.Empty);
+                Assert.That(scopeMapData.Actions, Has.Count.EqualTo(5));
+                Assert.That(scopeMapData.Description, Is.Null);
+                Assert.That(scopeMapData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+                Assert.That(scopeMapData.ScopeMapType, Is.EqualTo("UserDefined"));
+                Assert.That(scopeMapData.Name, Is.EqualTo(scopeMapName));
+            });
             // List scope maps by container registry
             var systemDefinedScopeMapCount = 0;
             var userDefinedScopeMapCount = 0;
@@ -777,8 +837,11 @@ steps:
                 Actions = { $"repositories/{defaultScopeMapRepository}/content/read" }
             });
             ScopeMapResource scopeMapFromUpdate = lro.Value;
-            Assert.IsNotEmpty(scopeMapFromUpdate.Data.Description);
-            Assert.That(scopeMapFromUpdate.Data.Actions.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(scopeMapFromUpdate.Data.Description, Is.Not.Empty);
+                Assert.That(scopeMapFromUpdate.Data.Actions, Has.Count.EqualTo(1));
+            });
             // Delete the scope map
             await scopeMapFromUpdate.DeleteAsync(WaitUntil.Completed);
             // Delete the container registry
@@ -806,10 +869,13 @@ steps:
             ContainerRegistryTokenResource token = lro.Value;
             Assert.That(token, Is.Not.Null);
             var tokenData = token.Data;
-            Assert.IsNotEmpty(token.Id);
-            Assert.IsNotEmpty(tokenData.ScopeMapId);
-            Assert.That(tokenData.Status, Is.EqualTo(ContainerRegistryTokenStatus.Enabled));
-            Assert.That(tokenData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)token.Id, Is.Not.Empty);
+                Assert.That((string)tokenData.ScopeMapId, Is.Not.Empty);
+                Assert.That(tokenData.Status, Is.EqualTo(ContainerRegistryTokenStatus.Enabled));
+                Assert.That(tokenData.ProvisioningState, Is.EqualTo(ContainerRegistryProvisioningState.Succeeded));
+            });
             // List tokens
             await foreach (var tokenFromList in tokenCollection)
             {
@@ -832,8 +898,11 @@ steps:
                 TokenId = tokenFromUpdate.Id
             });
             ContainerRegistryGenerateCredentialsResult credential = credentialLro.Value;
-            Assert.IsNotEmpty(credential.Passwords);
-            Assert.IsNotEmpty(credential.Username);
+            Assert.Multiple(() =>
+            {
+                Assert.That(credential.Passwords, Is.Not.Empty);
+                Assert.That(credential.Username, Is.Not.Empty);
+            });
             // Delete the token
             await tokenFromUpdate.DeleteAsync(WaitUntil.Completed);
             // Delete the container registry
@@ -941,40 +1010,52 @@ steps:
         private static void ValidateSystemData(SystemData systemData)
         {
             Assert.That(systemData, Is.Not.Null);
-            Assert.That(systemData.CreatedOn, Is.Not.Null);
-            Assert.That(systemData.CreatedBy, Is.Not.Null);
-            Assert.That(systemData.CreatedByType, Is.Not.Null);
-            Assert.That(systemData.LastModifiedOn, Is.Not.Null);
-            Assert.That(systemData.LastModifiedBy, Is.Not.Null);
-            Assert.That(systemData.LastModifiedByType, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(systemData.CreatedOn, Is.Not.Null);
+                Assert.That(systemData.CreatedBy, Is.Not.Null);
+                Assert.That(systemData.CreatedByType, Is.Not.Null);
+                Assert.That(systemData.LastModifiedOn, Is.Not.Null);
+                Assert.That(systemData.LastModifiedBy, Is.Not.Null);
+                Assert.That(systemData.LastModifiedByType, Is.Not.Null);
+            });
         }
 
         private static void ValidateResourceDefaultTags(TrackedResourceData resourceData)
         {
             ValidateResourceData(resourceData);
             Assert.That(resourceData.Tags, Is.Not.Null);
-            Assert.That(resourceData.Tags.Count, Is.EqualTo(2));
-            Assert.That(resourceData.Tags["key1"], Is.EqualTo("value1"));
-            Assert.That(resourceData.Tags["key2"], Is.EqualTo("value2"));
+            Assert.That(resourceData.Tags, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceData.Tags["key1"], Is.EqualTo("value1"));
+                Assert.That(resourceData.Tags["key2"], Is.EqualTo("value2"));
+            });
         }
 
         private static void ValidateResourceDefaultNewTags(TrackedResourceData resourceData)
         {
             ValidateResourceData(resourceData);
             Assert.That(resourceData.Tags, Is.Not.Null);
-            Assert.That(resourceData.Tags.Count, Is.EqualTo(3));
-            Assert.That(resourceData.Tags["key2"], Is.EqualTo("value2"));
-            Assert.That(resourceData.Tags["key3"], Is.EqualTo("value3"));
-            Assert.That(resourceData.Tags["key4"], Is.EqualTo("value4"));
+            Assert.That(resourceData.Tags, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceData.Tags["key2"], Is.EqualTo("value2"));
+                Assert.That(resourceData.Tags["key3"], Is.EqualTo("value3"));
+                Assert.That(resourceData.Tags["key4"], Is.EqualTo("value4"));
+            });
         }
 
         private static void ValidateResourceData(TrackedResourceData resourceData)
         {
             Assert.That(resourceData, Is.Not.Null);
-            Assert.That(resourceData.Id, Is.Not.Null);
-            Assert.That(resourceData.Name, Is.Not.Null);
-            Assert.That(resourceData.ResourceType, Is.Not.Null);
-            Assert.That(resourceData.Location, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceData.Id, Is.Not.Null);
+                Assert.That(resourceData.Name, Is.Not.Null);
+                Assert.That(resourceData.ResourceType, Is.Not.Null);
+                Assert.That(resourceData.Location, Is.Not.Null);
+            });
         }
     }
 }

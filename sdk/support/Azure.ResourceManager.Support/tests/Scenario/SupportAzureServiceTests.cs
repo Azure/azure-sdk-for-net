@@ -38,15 +38,18 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _supportAzureServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSupportAzureService(list.FirstOrDefault(item => item.Data.Name == _existAzureSupportServiceName).Data, _existAzureSupportServiceName);
         }
 
         private void ValidateSupportAzureService(SupportAzureServiceData supportAzureService, string supportAzureServiceName)
         {
-            Assert.IsNotNull(supportAzureService);
-            Assert.IsNotEmpty(supportAzureService.DisplayName);
-            Assert.That(supportAzureServiceName, Is.EqualTo(supportAzureService.Name));
+            Assert.That(supportAzureService, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportAzureService.DisplayName, Is.Not.Empty);
+                Assert.That(supportAzureServiceName, Is.EqualTo(supportAzureService.Name));
+            });
         }
     }
 }

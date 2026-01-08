@@ -78,10 +78,13 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
             // AddTag
             await lab.AddTagAsync("addtagkey", "addtagvalue");
             lab = await _devTestLabCollections.GetAsync(_labName);
-            Assert.That(lab.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(lab.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = lab.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await lab.RemoveTagAsync("addtagkey");
@@ -92,11 +95,14 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         private void ValidateDevTestLab(DevTestLabData lab, string labName)
         {
             Assert.That(lab, Is.Not.Null);
-            Assert.That(lab.CreatedOn, Is.Not.Null);
-            Assert.IsNotEmpty(lab.Id);
-            Assert.That(lab.Name, Is.EqualTo(labName));
-            Assert.That(lab.PremiumDataDisks, Is.EqualTo(DevTestLabPremiumDataDisk.Disabled));
-            Assert.That(lab.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(lab.CreatedOn, Is.Not.Null);
+                Assert.That((string)lab.Id, Is.Not.Empty);
+                Assert.That(lab.Name, Is.EqualTo(labName));
+                Assert.That(lab.PremiumDataDisks, Is.EqualTo(DevTestLabPremiumDataDisk.Disabled));
+                Assert.That(lab.ProvisioningState, Is.EqualTo("Succeeded"));
+            });
         }
     }
 }

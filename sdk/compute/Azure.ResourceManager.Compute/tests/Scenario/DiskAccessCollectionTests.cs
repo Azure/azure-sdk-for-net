@@ -56,8 +56,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DiskAccessResource access = lro.Value;
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -98,8 +101,11 @@ namespace Azure.ResourceManager.Compute.Tests
                     access2 = access;
             }
 
-            Assert.That(access1, Is.Not.Null);
-            Assert.That(access2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(access1, Is.Not.Null);
+                Assert.That(access2, Is.Not.Null);
+            });
         }
     }
 }

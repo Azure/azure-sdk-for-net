@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             await CreateSecurityContact();
             var list = await _SecurityContactCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSecurityContactResource(list.First(item => item.Data.Name == _securityContactName));
         }
 
@@ -89,10 +89,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private void ValidateSecurityContactResource(SecurityContactResource securityContact, string securityContactName = _securityContactName)
         {
-            Assert.IsNotNull(securityContact);
-            Assert.IsNotNull(securityContact.Data.Id);
-            Assert.That(securityContact.Data.Name, Is.EqualTo(securityContactName));
-            Assert.That(securityContact.Data.Phone, Is.EqualTo("18800001111"));
+            Assert.That(securityContact, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(securityContact.Data.Id, Is.Not.Null);
+                Assert.That(securityContact.Data.Name, Is.EqualTo(securityContactName));
+                Assert.That(securityContact.Data.Phone, Is.EqualTo("18800001111"));
+            });
         }
     }
 }

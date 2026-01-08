@@ -104,26 +104,41 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             Assert.That(account, Is.Not.Null);
             Assert.That(account.Id, Is.Not.Null);
-            Assert.That(account.Id.Name, Is.Not.Null);
-            Assert.That(account.Data.Location, Is.Not.Null);
-            Assert.That(account.Data, Is.Not.Null);
-            Assert.That(account.Data.CreatedOn, Is.Not.Null);
-            Assert.That(account.Data.Sku, Is.Not.Null);
-            Assert.That(account.Data.Sku.Name, Is.Not.Null);
-            Assert.That(account.Data.Sku.Tier, Is.Not.Null);
-            Assert.That(account.Data.PrimaryEndpoints, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(account.Id.Name, Is.Not.Null);
+                Assert.That(account.Data.Location, Is.Not.Null);
+                Assert.That(account.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(account.Data.CreatedOn, Is.Not.Null);
+                Assert.That(account.Data.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(account.Data.Sku.Name, Is.Not.Null);
+                Assert.That(account.Data.Sku.Tier, Is.Not.Null);
+                Assert.That(account.Data.PrimaryEndpoints, Is.Not.Null);
+            });
 
             if (useDefaults)
             {
-                Assert.That(account.Data.Location, Is.EqualTo(DefaultLocation));
-                Assert.That(account.Data.Sku.Name, Is.EqualTo(DefaultSkuNameStandardGRS.Name));
-                Assert.That(account.Data.Sku.Tier, Is.EqualTo(StorageSkuTier.Standard));
-                Assert.That(account.Data.Kind, Is.EqualTo(DefaultKindStorage));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(account.Data.Location, Is.EqualTo(DefaultLocation));
+                    Assert.That(account.Data.Sku.Name, Is.EqualTo(DefaultSkuNameStandardGRS.Name));
+                    Assert.That(account.Data.Sku.Tier, Is.EqualTo(StorageSkuTier.Standard));
+                    Assert.That(account.Data.Kind, Is.EqualTo(DefaultKindStorage));
 
-                Assert.That(account.Data.Tags, Is.Not.Null);
-                Assert.That(account.Data.Tags.Count, Is.EqualTo(2));
-                Assert.That(account.Data.Tags["key1"], Is.EqualTo("value1"));
-                Assert.That(account.Data.Tags["key2"], Is.EqualTo("value2"));
+                    Assert.That(account.Data.Tags, Is.Not.Null);
+                });
+                Assert.That(account.Data.Tags, Has.Count.EqualTo(2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(account.Data.Tags["key1"], Is.EqualTo("value1"));
+                    Assert.That(account.Data.Tags["key2"], Is.EqualTo("value2"));
+                });
             }
         }
 
@@ -254,32 +269,47 @@ namespace Azure.ResourceManager.Storage.Tests
 
         public static void AssertStorageAccountEqual(StorageAccountResource account1, StorageAccountResource account2)
         {
-            Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
-            Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
+                Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
+            });
         }
 
         public static void AssertBlobContainerEqual(BlobContainerResource blobContainer1, BlobContainerResource blobContainer2)
         {
-            Assert.That(blobContainer2.Id.Name, Is.EqualTo(blobContainer1.Id.Name));
-            Assert.That(blobContainer2.Id.Location, Is.EqualTo(blobContainer1.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(blobContainer2.Id.Name, Is.EqualTo(blobContainer1.Id.Name));
+                Assert.That(blobContainer2.Id.Location, Is.EqualTo(blobContainer1.Id.Location));
+            });
         }
 
         public static void AssertFileShareEqual(FileShareResource fileShare1, FileShareResource fileShare2)
         {
-            Assert.That(fileShare2.Id.Name, Is.EqualTo(fileShare1.Id.Name));
-            Assert.That(fileShare2.Id.Location, Is.EqualTo(fileShare1.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fileShare2.Id.Name, Is.EqualTo(fileShare1.Id.Name));
+                Assert.That(fileShare2.Id.Location, Is.EqualTo(fileShare1.Id.Location));
+            });
         }
 
         public static void AssertStorageQueueEqual(StorageQueueResource storageQueue1, StorageQueueResource storageQueue2)
         {
-            Assert.That(storageQueue2.Id.Name, Is.EqualTo(storageQueue1.Id.Name));
-            Assert.That(storageQueue2.Id.Location, Is.EqualTo(storageQueue1.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(storageQueue2.Id.Name, Is.EqualTo(storageQueue1.Id.Name));
+                Assert.That(storageQueue2.Id.Location, Is.EqualTo(storageQueue1.Id.Location));
+            });
         }
 
         public static void AssertTableEqual(TableResource table1, TableResource table2)
         {
-            Assert.That(table2.Id.Name, Is.EqualTo(table1.Id.Name));
-            Assert.That(table2.Id.Location, Is.EqualTo(table1.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(table2.Id.Name, Is.EqualTo(table1.Id.Name));
+                Assert.That(table2.Id.Location, Is.EqualTo(table1.Id.Location));
+            });
         }
     }
 }

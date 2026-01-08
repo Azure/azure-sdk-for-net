@@ -48,8 +48,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackFqdnResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
             LocalRulestackFqdnResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackFqdnResource.ResourceType));
-            Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/fqdnlists/{name}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackFqdnResource.ResourceType));
+                Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/fqdnlists/{name}"));
+            });
             Assert.Throws<ArgumentException>(() => LocalRulestackFqdnResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -57,8 +60,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.That(LocalRulestackFqdnListResource.HasData, Is.True);
-            Assert.That(LocalRulestackFqdnListResource.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(LocalRulestackFqdnListResource.HasData, Is.True);
+                Assert.That(LocalRulestackFqdnListResource.Data, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -78,8 +84,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackFqdnResource resource = await LocalRulestackResource.GetLocalRulestackFqdnAsync("dotnetSdkTest-fqdnList");
-            Assert.That(resource, Is.Not.Null);
-            Assert.That(LocalRulestackFqdnListResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource, Is.Not.Null);
+                Assert.That(LocalRulestackFqdnListResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            });
         }
     }
 }

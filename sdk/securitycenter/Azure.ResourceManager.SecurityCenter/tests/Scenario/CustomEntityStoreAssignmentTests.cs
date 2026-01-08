@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 Principal = "aaduser=f3923a3e-ad57-4752-b1a9-fbf3c8e5e082;72f988bf-86f1-41af-91ab-2d7cd011db47",
             };
             var customAssessmentAutomation = await _customEntityStoreAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, customEntityStoreAssignmentName, data);
-            Assert.IsNotNull(customAssessmentAutomation);
+            Assert.That(customAssessmentAutomation, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var list = await _customEntityStoreAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

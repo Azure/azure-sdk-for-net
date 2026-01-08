@@ -93,8 +93,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Tags = {{"key", "value"}}
             });
             PostgreSqlFlexibleServerResource serverFromUpdate = lro.Value;
-            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
-            Assert.That(serverFromUpdate.Data.Tags["key"], Is.EqualTo("value"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+                Assert.That(serverFromUpdate.Data.Tags["key"], Is.EqualTo("value"));
+            });
             // Get
             PostgreSqlFlexibleServerResource serverFromGet = await serverFromUpdate.GetAsync();
             Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
@@ -127,8 +130,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
             PostgreSqlFlexibleServerResource server = lro.Value;
-            Assert.That(server.Data.Name, Is.EqualTo(serverName));
-            Assert.That(server.Data.Storage.StorageType, Is.EqualTo(PostgreSqlFlexibleServersStorageType.PremiumV2LRS));
+            Assert.Multiple(() =>
+            {
+                Assert.That(server.Data.Name, Is.EqualTo(serverName));
+                Assert.That(server.Data.Storage.StorageType, Is.EqualTo(PostgreSqlFlexibleServersStorageType.PremiumV2LRS));
+            });
             // Update
             var newStorageSize = 256;
             var newIops = 3500;
@@ -145,10 +151,13 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update
             });
             PostgreSqlFlexibleServerResource serverFromUpdate = lro.Value;
-            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
-            Assert.That(serverFromUpdate.Data.Storage.StorageSizeInGB, Is.EqualTo(newStorageSize));
-            Assert.That(serverFromUpdate.Data.Storage.Throughput, Is.EqualTo(newThroughput));
-            Assert.That(serverFromUpdate.Data.Storage.Iops, Is.EqualTo(newIops));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+                Assert.That(serverFromUpdate.Data.Storage.StorageSizeInGB, Is.EqualTo(newStorageSize));
+                Assert.That(serverFromUpdate.Data.Storage.Throughput, Is.EqualTo(newThroughput));
+                Assert.That(serverFromUpdate.Data.Storage.Iops, Is.EqualTo(newIops));
+            });
             // Get
             PostgreSqlFlexibleServerResource serverFromGet = await serverFromUpdate.GetAsync();
             Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
@@ -185,8 +194,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
 
-            Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
-            Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
+                Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            });
 
             if (Recording.Mode != RecordedTestMode.Playback)
             {
@@ -204,8 +216,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var targetPublicServer = targetPublicServerOperation.Value;
 
-            Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
-            Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
+                Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            });
 
             // Create vnet and subnet
             var (vnetID, subnetID) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
@@ -230,8 +245,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var sourcePrivateServer = sourcePrivateServerOperation.Value;
 
-            Assert.That(sourcePrivateServer.Data.Name, Is.EqualTo(sourcePrivateServerName));
-            Assert.That(sourcePrivateServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourcePrivateServer.Data.Name, Is.EqualTo(sourcePrivateServerName));
+                Assert.That(sourcePrivateServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled));
+            });
 
             if (Recording.Mode != RecordedTestMode.Playback)
             {
@@ -254,10 +272,13 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var targetPrivateServer = targetPrivateServerOperation.Value;
 
-            Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
-            Assert.That(targetPrivateServer.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(subnetID));
-            Assert.That(targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(sourcePrivateDnsZone.Id));
-            Assert.That(targetPrivateServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
+                Assert.That(targetPrivateServer.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(subnetID));
+                Assert.That(targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(sourcePrivateDnsZone.Id));
+                Assert.That(targetPrivateServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled));
+            });
 
             // Restore private server in different vnet
             var (targetVnetID, targetSubnetID) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, rg.Data.Location);
@@ -315,9 +336,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
 
-            Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
-            Assert.That(sourcePublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled));
-            Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
+                Assert.That(sourcePublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled));
+                Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            });
 
             // Geo-restore public server to paired region
             PostgreSqlFlexibleServerResource targetPublicServer = null;
@@ -349,11 +373,14 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPublicServer, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
+            Assert.That(targetPublicServer, Is.Not.Null, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
 
-            Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
-            Assert.That(targetPublicServer.Data.Location, Is.EqualTo(targetLocation));
-            Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
+                Assert.That(targetPublicServer.Data.Location, Is.EqualTo(targetLocation));
+                Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            });
 
             // Create source vnet and subnet
             var (sourceVnetID, sourceSubnetID) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
@@ -426,13 +453,16 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPrivateServer, $"GeoBackups not available for server {sourcePrivateServerName} after 2 hours.");
+            Assert.That(targetPrivateServer, Is.Not.Null, $"GeoBackups not available for server {sourcePrivateServerName} after 2 hours.");
 
-            Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
-            Assert.That(targetPrivateServer.Data.Location, Is.EqualTo(targetLocation));
-            Assert.That(targetPrivateServer.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(targetSubnetID));
-            Assert.That(targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(targetPrivateDnsZone.Id));
-            Assert.That(targetPrivateServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
+                Assert.That(targetPrivateServer.Data.Location, Is.EqualTo(targetLocation));
+                Assert.That(targetPrivateServer.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(targetSubnetID));
+                Assert.That(targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(targetPrivateDnsZone.Id));
+                Assert.That(targetPrivateServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled));
+            });
         }
 
         [TestCase(true)]
@@ -539,8 +569,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var sourceServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourceServerName, sourceServerData);
             var sourceServer = sourceServerOperation.Value;
 
-            Assert.That(sourceServer.Data.Name, Is.EqualTo(sourceServerName));
-            Assert.That(sourceServer.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.Primary));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourceServer.Data.Name, Is.EqualTo(sourceServerName));
+                Assert.That(sourceServer.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.Primary));
+            });
             if (vnetEnabled)
             {
                 Assert.That(sourceServer.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(subnetID));
@@ -574,8 +607,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.That(replica0Server.Data.ReplicaCapacity, Is.EqualTo(0));
             if (vnetEnabled)
             {
-                Assert.That(replica0Server.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(replicaSubnetID[0]));
-                Assert.That(replica0Server.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(replicaPrivateDnsZone[0].Id));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(replica0Server.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(replicaSubnetID[0]));
+                    Assert.That(replica0Server.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(replicaPrivateDnsZone[0].Id));
+                });
             }
 
             // Create replica 1
@@ -596,13 +632,16 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var replica1ServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaServerName[1], replica1ServerData);
             var replica1Server = replica1ServerOperation.Value;
 
-            Assert.That(replica1Server.Data.Name, Is.EqualTo(replicaServerName[1]));
-            Assert.That(replica1Server.Data.AvailabilityZone, Is.EqualTo("2"));
-            Assert.That(replica1Server.Data.Sku.Name, Is.EqualTo(sourceServer.Data.Sku.Name));
-            Assert.That(replica1Server.Data.Sku.Tier, Is.EqualTo(sourceServer.Data.Sku.Tier));
-            Assert.That(replica1Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.AsyncReplica));
-            Assert.That(replica1Server.Data.SourceServerResourceId, Is.EqualTo(sourceServer.Id));
-            Assert.That(replica1Server.Data.ReplicaCapacity, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(replica1Server.Data.Name, Is.EqualTo(replicaServerName[1]));
+                Assert.That(replica1Server.Data.AvailabilityZone, Is.EqualTo("2"));
+                Assert.That(replica1Server.Data.Sku.Name, Is.EqualTo(sourceServer.Data.Sku.Name));
+                Assert.That(replica1Server.Data.Sku.Tier, Is.EqualTo(sourceServer.Data.Sku.Tier));
+                Assert.That(replica1Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.AsyncReplica));
+                Assert.That(replica1Server.Data.SourceServerResourceId, Is.EqualTo(sourceServer.Id));
+                Assert.That(replica1Server.Data.ReplicaCapacity, Is.EqualTo(0));
+            });
             if (vnetEnabled)
             {
                 Assert.That(replica1Server.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(replicaSubnetID[1]));
@@ -610,7 +649,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             }
 
             var replicaList = await serverCollection.GetReplicasAsync(sourceServerName).ToEnumerableAsync();
-            Assert.That(replicaList.Count, Is.EqualTo(2));
+            Assert.That(replicaList, Has.Count.EqualTo(2));
 
             // Stop replication on replica 0
             var replica0ServerUpdate = await replica0Server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
@@ -641,21 +680,27 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var replica2ServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaServerName[2], replica2ServerData);
             var replica2Server = replica2ServerOperation.Value;
 
-            Assert.That(replica2Server.Data.Name, Is.EqualTo(replicaServerName[2]));
-            Assert.That(replica2Server.Data.AvailabilityZone, Is.EqualTo("2"));
-            Assert.That(replica2Server.Data.Sku.Name, Is.EqualTo(sourceServer.Data.Sku.Name));
-            Assert.That(replica2Server.Data.Sku.Tier, Is.EqualTo(sourceServer.Data.Sku.Tier));
-            Assert.That(replica2Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.AsyncReplica));
-            Assert.That(replica2Server.Data.SourceServerResourceId, Is.EqualTo(sourceServer.Id));
-            Assert.That(replica2Server.Data.ReplicaCapacity, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(replica2Server.Data.Name, Is.EqualTo(replicaServerName[2]));
+                Assert.That(replica2Server.Data.AvailabilityZone, Is.EqualTo("2"));
+                Assert.That(replica2Server.Data.Sku.Name, Is.EqualTo(sourceServer.Data.Sku.Name));
+                Assert.That(replica2Server.Data.Sku.Tier, Is.EqualTo(sourceServer.Data.Sku.Tier));
+                Assert.That(replica2Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.AsyncReplica));
+                Assert.That(replica2Server.Data.SourceServerResourceId, Is.EqualTo(sourceServer.Id));
+                Assert.That(replica2Server.Data.ReplicaCapacity, Is.EqualTo(0));
+            });
             if (vnetEnabled)
             {
-                Assert.That(replica2Server.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(replicaSubnetID[2]));
-                Assert.That(replica2Server.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(replicaPrivateDnsZone[2].Id));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(replica2Server.Data.Network.DelegatedSubnetResourceId, Is.EqualTo(replicaSubnetID[2]));
+                    Assert.That(replica2Server.Data.Network.PrivateDnsZoneArmResourceId, Is.EqualTo(replicaPrivateDnsZone[2].Id));
+                });
             }
 
             replicaList = await serverCollection.GetReplicasAsync(sourceServerName).ToEnumerableAsync();
-            Assert.That(replicaList.Count, Is.EqualTo(2));
+            Assert.That(replicaList, Has.Count.EqualTo(2));
 
             // Create Virtual Endpoint
             VirtualEndpointResourceCollection virtualEndpointSourceCollection = sourceServer.GetVirtualEndpointResources();
@@ -694,9 +739,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             replica2Server = replica2ServerUpdate.Value;
 
-            Assert.That(replica2Server.Data.Name, Is.EqualTo(replicaServerName[2]));
-            Assert.That(replica2Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.Primary));
-            Assert.That(replica2Server.Data.SourceServerResourceId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(replica2Server.Data.Name, Is.EqualTo(replicaServerName[2]));
+                Assert.That(replica2Server.Data.ReplicationRole, Is.EqualTo(PostgreSqlFlexibleServerReplicationRole.Primary));
+                Assert.That(replica2Server.Data.SourceServerResourceId, Is.Null);
+            });
 
             // Delete Section
             await virtualEndpointResource.DeleteAsync(WaitUntil.Completed);
@@ -804,12 +852,15 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     await Task.Delay(TimeSpan.FromMinutes(1));
                 }
             }
-            Assert.That(backups.Count, Is.EqualTo(1));
+            Assert.That(backups, Has.Count.EqualTo(1));
 
             var automaticBackup = (await server.GetPostgreSqlFlexibleServerBackupAsync(backups[0].Data.Name)).Value;
-            Assert.That(backups[0].Data.Name, Is.EqualTo(automaticBackup.Data.Name));
-            Assert.That(backups[0].Data.BackupType, Is.EqualTo(automaticBackup.Data.BackupType));
-            Assert.That(backups[0].Data.CompletedOn, Is.EqualTo(automaticBackup.Data.CompletedOn));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backups[0].Data.Name, Is.EqualTo(automaticBackup.Data.Name));
+                Assert.That(backups[0].Data.BackupType, Is.EqualTo(automaticBackup.Data.BackupType));
+                Assert.That(backups[0].Data.CompletedOn, Is.EqualTo(automaticBackup.Data.CompletedOn));
+            });
 
             // on demand backup section
             PostgreSqlFlexibleServerBackupCollection collection = server.GetPostgreSqlFlexibleServerBackups();
@@ -864,9 +915,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var server = serverOperation.Value;
 
-            Assert.That(server.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
-            Assert.That(server.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
-            Assert.That(server.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(server.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
+                Assert.That(server.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
+                Assert.That(server.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            });
 
             // Create replica with same key and identity
             var replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName, new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -887,9 +941,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var replica = replicaOperation.Value;
 
-            Assert.That(replica.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
-            Assert.That(replica.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
-            Assert.That(replica.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(replica.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
+                Assert.That(replica.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
+                Assert.That(replica.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            });
 
             // Update different key and identity in primary server
             var updateOperation = await server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
@@ -907,9 +964,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             server = updateOperation.Value;
 
-            Assert.That(server.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(keyUpdate.Id));
-            Assert.That(server.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identityUpdate.Id));
-            Assert.That(server.Data.Identity.UserAssignedIdentities.ContainsKey(identityUpdate.Id), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(server.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(keyUpdate.Id));
+                Assert.That(server.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identityUpdate.Id));
+                Assert.That(server.Data.Identity.UserAssignedIdentities.ContainsKey(identityUpdate.Id), Is.True);
+            });
 
             // Restore backup with data encryption
             if (Recording.Mode != RecordedTestMode.Playback)
@@ -937,9 +997,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var restore = restoreOperation.Value;
 
-            Assert.That(restore.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
-            Assert.That(restore.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
-            Assert.That(restore.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(restore.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
+                Assert.That(restore.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
+                Assert.That(restore.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            });
         }
 
         [TestCase]
@@ -982,8 +1045,11 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var server = serverOperation.Value;
 
-            Assert.That(server.Data.AuthConfig.ActiveDirectoryAuth, Is.EqualTo(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled));
-            Assert.That(server.Data.AuthConfig.PasswordAuth, Is.EqualTo(PostgreSqlFlexibleServerPasswordAuthEnum.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(server.Data.AuthConfig.ActiveDirectoryAuth, Is.EqualTo(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled));
+                Assert.That(server.Data.AuthConfig.PasswordAuth, Is.EqualTo(PostgreSqlFlexibleServerPasswordAuthEnum.Enabled));
+            });
 
             // Create first replica server
             var replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName[0], new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -1015,9 +1081,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             foreach (var s in new PostgreSqlFlexibleServerResource[] { server, firstReplica, secondReplica })
             {
                 var admin = (await s.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(servicePrincipal.Id)).Value;
-                Assert.That(admin.Data.PrincipalType, Is.EqualTo(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal));
-                Assert.That(admin.Data.PrincipalName, Is.EqualTo(servicePrincipal.DisplayName));
-                Assert.That(admin.Data.ObjectId.ToString(), Is.EqualTo(servicePrincipal.Id));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(admin.Data.PrincipalType, Is.EqualTo(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal));
+                    Assert.That(admin.Data.PrincipalName, Is.EqualTo(servicePrincipal.DisplayName));
+                    Assert.That(admin.Data.ObjectId.ToString(), Is.EqualTo(servicePrincipal.Id));
+                });
             }
         }
 
@@ -1104,19 +1173,22 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
 
-            Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
-            Assert.That(sourcePublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled));
-            Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
+                Assert.That(sourcePublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled));
+                Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
 
-            Assert.That(sourcePublicServer.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
-            Assert.That(sourcePublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
-            Assert.That(sourcePublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
-            Assert.That(sourcePublicServer.Data.DataEncryption.GeoBackupKeyUri, Is.EqualTo(geoKey.Id));
-            Assert.That(sourcePublicServer.Data.DataEncryption.GeoBackupUserAssignedIdentityId, Is.EqualTo(geoIdentity.Id));
-            Assert.That(sourcePublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id), Is.True);
+                Assert.That(sourcePublicServer.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
+                Assert.That(sourcePublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
+                Assert.That(sourcePublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+                Assert.That(sourcePublicServer.Data.DataEncryption.GeoBackupKeyUri, Is.EqualTo(geoKey.Id));
+                Assert.That(sourcePublicServer.Data.DataEncryption.GeoBackupUserAssignedIdentityId, Is.EqualTo(geoIdentity.Id));
+                Assert.That(sourcePublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id), Is.True);
 
-            Assert.That(sourcePublicServer.Data.AuthConfig.ActiveDirectoryAuth, Is.EqualTo(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled));
-            Assert.That(sourcePublicServer.Data.AuthConfig.PasswordAuth, Is.EqualTo(PostgreSqlFlexibleServerPasswordAuthEnum.Disabled));
+                Assert.That(sourcePublicServer.Data.AuthConfig.ActiveDirectoryAuth, Is.EqualTo(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled));
+                Assert.That(sourcePublicServer.Data.AuthConfig.PasswordAuth, Is.EqualTo(PostgreSqlFlexibleServerPasswordAuthEnum.Disabled));
+            });
             #endregion
 
             #region Create first replica server with Data Encryption enabled, using same primary key and identity.
@@ -1142,9 +1214,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var firstReplica = replicaOperation.Value;
 
-            Assert.That(firstReplica.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
-            Assert.That(firstReplica.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
-            Assert.That(firstReplica.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstReplica.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(key.Id));
+                Assert.That(firstReplica.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(identity.Id));
+                Assert.That(firstReplica.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+            });
             #endregion
 
             //Add AAD admin to main server
@@ -1164,18 +1239,24 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var secondReplica = replicaOperation.Value;
 
-            // Since CMK is not explicitly enabled, identity will be null for this replica server.
-            Assert.That(secondReplica.Data.Identity, Is.Null);
-            Assert.That(AzureLocation.WestUS.Name, Is.EqualTo(secondReplica.Data.Location.Name));
+            Assert.Multiple(() =>
+            {
+                // Since CMK is not explicitly enabled, identity will be null for this replica server.
+                Assert.That(secondReplica.Data.Identity, Is.Null);
+                Assert.That(AzureLocation.WestUS.Name, Is.EqualTo(secondReplica.Data.Location.Name));
+            });
             #endregion
 
             // Main server and both replicas should have AAD
             foreach (var s in new PostgreSqlFlexibleServerResource[] { sourcePublicServer, firstReplica, secondReplica })
             {
                 var admin = (await s.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(servicePrincipal.Id)).Value;
-                Assert.That(admin.Data.PrincipalType, Is.EqualTo(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal));
-                Assert.That(admin.Data.PrincipalName, Is.EqualTo(servicePrincipal.DisplayName));
-                Assert.That(admin.Data.ObjectId.ToString(), Is.EqualTo(servicePrincipal.Id));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(admin.Data.PrincipalType, Is.EqualTo(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal));
+                    Assert.That(admin.Data.PrincipalName, Is.EqualTo(servicePrincipal.DisplayName));
+                    Assert.That(admin.Data.ObjectId.ToString(), Is.EqualTo(servicePrincipal.Id));
+                });
             }
 
             #region Geo-restore geo-backup enabled, data encryption and AAD enabled server
@@ -1232,28 +1313,34 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPublicServer, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
+            Assert.That(targetPublicServer, Is.Not.Null, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
 
-            Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
-            Assert.That(targetPublicServer.Data.Location, Is.EqualTo(targetLocation));
-            Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
+                Assert.That(targetPublicServer.Data.Location, Is.EqualTo(targetLocation));
+                Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
 
-            Assert.That(targetPublicServer.Data.DataEncryption.GeoBackupKeyUri, Is.EqualTo(key.Id));
-            Assert.That(targetPublicServer.Data.DataEncryption.GeoBackupUserAssignedIdentityId, Is.EqualTo(identity.Id));
-            Assert.That(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
-            Assert.That(targetPublicServer.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(geoKey.Id));
-            Assert.That(targetPublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(geoIdentity.Id));
-            Assert.That(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id), Is.True);
-            Assert.That(PostgreSqlKeyStatus.Valid, Is.EqualTo(targetPublicServer.Data.DataEncryption.PrimaryEncryptionKeyStatus.Value));
+                Assert.That(targetPublicServer.Data.DataEncryption.GeoBackupKeyUri, Is.EqualTo(key.Id));
+                Assert.That(targetPublicServer.Data.DataEncryption.GeoBackupUserAssignedIdentityId, Is.EqualTo(identity.Id));
+                Assert.That(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id), Is.True);
+                Assert.That(targetPublicServer.Data.DataEncryption.PrimaryKeyUri, Is.EqualTo(geoKey.Id));
+                Assert.That(targetPublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId, Is.EqualTo(geoIdentity.Id));
+                Assert.That(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id), Is.True);
+                Assert.That(PostgreSqlKeyStatus.Valid, Is.EqualTo(targetPublicServer.Data.DataEncryption.PrimaryEncryptionKeyStatus.Value));
+            });
             Assert.That(PostgreSqlKeyStatus.Valid, Is.EqualTo(targetPublicServer.Data.DataEncryption.GeoBackupEncryptionKeyStatus.Value));
 
             Assert.That(sourcePublicServer.Data.AuthConfig.ActiveDirectoryAuth, Is.EqualTo(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled));
             Assert.That(sourcePublicServer.Data.AuthConfig.PasswordAuth, Is.EqualTo(PostgreSqlFlexibleServerPasswordAuthEnum.Disabled));
 
             var geoServerAdmin = (await targetPublicServer.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(servicePrincipal.Id)).Value;
-            Assert.That(geoServerAdmin.Data.PrincipalType, Is.EqualTo(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal));
-            Assert.That(geoServerAdmin.Data.PrincipalName, Is.EqualTo(servicePrincipal.DisplayName));
-            Assert.That(geoServerAdmin.Data.ObjectId.ToString(), Is.EqualTo(servicePrincipal.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(geoServerAdmin.Data.PrincipalType, Is.EqualTo(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal));
+                Assert.That(geoServerAdmin.Data.PrincipalName, Is.EqualTo(servicePrincipal.DisplayName));
+                Assert.That(geoServerAdmin.Data.ObjectId.ToString(), Is.EqualTo(servicePrincipal.Id));
+            });
             #endregion
 
             #region Cleanup
@@ -1315,9 +1402,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
 
-            Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
-            Assert.That(sourcePublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled));
-            Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourcePublicServer.Data.Name, Is.EqualTo(sourcePublicServerName));
+                Assert.That(sourcePublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled));
+                Assert.That(sourcePublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+            });
             #endregion
 
             #region Create private access server
@@ -1393,13 +1483,16 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPublicServer, $"Revive Dropped server {sourcePublicServerName} not available after 30 min.");
+            Assert.That(targetPublicServer, Is.Not.Null, $"Revive Dropped server {sourcePublicServerName} not available after 30 min.");
 
-            Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
-            Assert.That(targetPublicServer.Data.Location.Name, Is.EqualTo(AzureLocation.EastUS.Name));
-            Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
-            // By default for Revive dropped, Geo backup is not enabled. Need to explicitly set Geo-backup as Enabled if you want revive dropped server to have Geo-backup as Enabled
-            Assert.That(targetPublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetPublicServer.Data.Name, Is.EqualTo(targetPublicServerName));
+                Assert.That(targetPublicServer.Data.Location.Name, Is.EqualTo(AzureLocation.EastUS.Name));
+                Assert.That(targetPublicServer.Data.Network.PublicNetworkAccess, Is.EqualTo(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled));
+                // By default for Revive dropped, Geo backup is not enabled. Need to explicitly set Geo-backup as Enabled if you want revive dropped server to have Geo-backup as Enabled
+                Assert.That(targetPublicServer.Data.Backup.GeoRedundantBackup, Is.EqualTo(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled));
+            });
             #endregion
 
             #region Revive-dropped private access server
@@ -1444,7 +1537,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                 }
             }
-            Assert.IsNotNull(targetPrivateServer, $"Revive-dropped not available for server {sourcePrivateServerName} after 30 min. Failed to create server {targetPrivateServerName}");
+            Assert.That(targetPrivateServer, Is.Not.Null, $"Revive-dropped not available for server {sourcePrivateServerName} after 30 min. Failed to create server {targetPrivateServerName}");
 
             Assert.That(targetPrivateServer.Data.Name, Is.EqualTo(targetPrivateServerName));
             Assert.That(targetPrivateServer.Data.Location.Name, Is.EqualTo(AzureLocation.EastUS.Name));

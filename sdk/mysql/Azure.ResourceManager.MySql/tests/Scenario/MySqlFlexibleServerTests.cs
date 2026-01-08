@@ -90,8 +90,11 @@ namespace Azure.ResourceManager.MySql.Tests
                 Tags = {{"key", "value"}}
             });
             MySqlFlexibleServerResource serverFromUpdate = lro.Value;
-            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
-            Assert.That(serverFromUpdate.Data.Tags["key"], Is.EqualTo("value"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+                Assert.That(serverFromUpdate.Data.Tags["key"], Is.EqualTo("value"));
+            });
             // Get
             MySqlFlexibleServerResource serverFromGet = await serverFromUpdate.GetAsync();
             Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));

@@ -45,14 +45,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
-            Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
+                Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            });
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
-            Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
+                Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            });
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -69,16 +75,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
-            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
-            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
-            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+            Assert.Multiple(() =>
+            {
+                Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+                Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+                Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+                Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+            });
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
-            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
-            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
-            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
-            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+            Assert.Multiple(() =>
+            {
+                Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+                Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+                Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+                Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+            });
 
             // Create custom access policy assignment
             AccessPolicyAssignmentCollection accessPolicyAssignmentCollection = databaseResponse.GetAccessPolicyAssignments();
@@ -89,13 +101,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
                 UserObjectId = new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"),
             };
             var accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
-            Assert.That(accessPolicyAssignment.Data.AccessPolicyName, Is.EqualTo("default"));
-            Assert.That(accessPolicyAssignment.Data.UserObjectId, Is.EqualTo(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427")));
-            Assert.That(accessPolicyAssignment.Data.Name, Is.EqualTo("accessPolicyAssignmentName1"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessPolicyAssignment.Data.AccessPolicyName, Is.EqualTo("default"));
+                Assert.That(accessPolicyAssignment.Data.UserObjectId, Is.EqualTo(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427")));
+                Assert.That(accessPolicyAssignment.Data.Name, Is.EqualTo("accessPolicyAssignmentName1"));
+            });
 
             // List access policy assignments
             var accessPolicyAssignmentList = await accessPolicyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(accessPolicyAssignmentList.Count, Is.EqualTo(1));
+            Assert.That(accessPolicyAssignmentList, Has.Count.EqualTo(1));
 
             // Delete access policy assignment
             await accessPolicyAssignment.DeleteAsync(WaitUntil.Completed);
@@ -134,14 +149,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
-            Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
+                Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            });
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
-            Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
+                Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB1));
+            });
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -159,18 +180,24 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
-            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
-            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
-            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
-            Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+                Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+                Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+                Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+                Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Disabled));
+            });
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
-            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
-            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
-            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
-            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
-            Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Disabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+                Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+                Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+                Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+                Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Disabled));
+            });
 
             //Enabling access keys authentication
             databaseData.AccessKeysAuthentication = AccessKeysAuthentication.Enabled;
@@ -183,11 +210,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Enabled));
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
-            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
-            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
-            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
-            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
-            Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Enabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+                Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+                Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+                Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
+                Assert.That(databaseResponse.Data.AccessKeysAuthentication, Is.EqualTo(AccessKeysAuthentication.Enabled));
+            });
 
             // Delete database and cluster
             await databaseResponse.DeleteAsync(WaitUntil.Completed);

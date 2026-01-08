@@ -29,15 +29,18 @@ namespace Azure.ResourceManager.Network.Tests
             var data = ManagedRuleSetRuleGroup.DeserializeManagedRuleSetRuleGroup(jsonContent.RootElement);
 
             Assert.That(data.Rules, Is.Not.Null);
-            Assert.That(data.Rules.Count, Is.EqualTo(6));
+            Assert.That(data.Rules, Has.Count.EqualTo(6));
 
-            // Verify that both string and numeric rule IDs are properly converted to strings
-            Assert.That(data.Rules[0], Is.EqualTo("920100")); // Originally string
-            Assert.That(data.Rules[1], Is.EqualTo("920110")); // Originally number
-            Assert.That(data.Rules[2], Is.EqualTo("920120")); // Originally string
-            Assert.That(data.Rules[3], Is.EqualTo("920130")); // Originally number
-            Assert.That(data.Rules[4], Is.EqualTo("920140")); // Originally string
-            Assert.That(data.Rules[5], Is.EqualTo("920150")); // Originally number
+            Assert.Multiple(() =>
+            {
+                // Verify that both string and numeric rule IDs are properly converted to strings
+                Assert.That(data.Rules[0], Is.EqualTo("920100")); // Originally string
+                Assert.That(data.Rules[1], Is.EqualTo("920110")); // Originally number
+                Assert.That(data.Rules[2], Is.EqualTo("920120")); // Originally string
+                Assert.That(data.Rules[3], Is.EqualTo("920130")); // Originally number
+                Assert.That(data.Rules[4], Is.EqualTo("920140")); // Originally string
+                Assert.That(data.Rules[5], Is.EqualTo("920150")); // Originally number
+            });
         }
     }
 }

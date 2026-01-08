@@ -31,23 +31,32 @@ namespace Azure.ResourceManager.Hci.Tests
             var clusterName = Recording.GenerateAssetName("hci-cluster");
             var cluster = await CreateHciClusterAsync(resourceGroup, clusterName);
             var clusterData = cluster.Data;
-            Assert.That(clusterName, Is.EqualTo(clusterData.Name));
-            Assert.That(location, Is.EqualTo(clusterData.Location));
-            Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterData.AadClientId));
-            Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterData.AadTenantId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterName, Is.EqualTo(clusterData.Name));
+                Assert.That(location, Is.EqualTo(clusterData.Location));
+                Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterData.AadClientId));
+                Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterData.AadTenantId));
+            });
 
             HciClusterResource clusterFromGet = await clusterCollection.GetAsync(clusterName);
-            Assert.That(clusterName, Is.EqualTo(clusterFromGet.Data.Name));
-            Assert.That(location, Is.EqualTo(clusterFromGet.Data.Location));
-            Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromGet.Data.AadClientId));
-            Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromGet.Data.AadTenantId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(clusterName, Is.EqualTo(clusterFromGet.Data.Name));
+                Assert.That(location, Is.EqualTo(clusterFromGet.Data.Location));
+                Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromGet.Data.AadClientId));
+                Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromGet.Data.AadTenantId));
+            });
 
             await foreach (HciClusterResource clusterFromList in clusterCollection)
             {
-                Assert.That(clusterName, Is.EqualTo(clusterFromList.Data.Name));
-                Assert.That(location, Is.EqualTo(clusterFromList.Data.Location));
-                Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromList.Data.AadClientId));
-                Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromList.Data.AadTenantId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(clusterName, Is.EqualTo(clusterFromList.Data.Name));
+                    Assert.That(location, Is.EqualTo(clusterFromList.Data.Location));
+                    Assert.That(new Guid(TestEnvironment.ClientId), Is.EqualTo(clusterFromList.Data.AadClientId));
+                    Assert.That(new Guid(TestEnvironment.TenantId), Is.EqualTo(clusterFromList.Data.AadTenantId));
+                });
             }
         }
     }

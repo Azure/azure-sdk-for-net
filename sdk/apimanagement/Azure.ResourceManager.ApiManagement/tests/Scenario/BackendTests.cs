@@ -75,12 +75,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var backendContract = (await backendResponse.GetAsync()).Value;
 
             Assert.That(backendContract, Is.Not.Null);
-            Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
-            Assert.That(backendContract.Data.Description, Is.Not.Null);
-            Assert.That(backendContract.Data.Credentials.Authorization, Is.Not.Null);
-            Assert.That(backendContract.Data.Credentials.Query, Is.Not.Null);
-            Assert.That(backendContract.Data.Credentials.Header, Is.Not.Null);
-            Assert.That(backendContract.Data.Protocol, Is.EqualTo(BackendProtocol.Http));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
+                Assert.That(backendContract.Data.Description, Is.Not.Null);
+                Assert.That(backendContract.Data.Credentials.Authorization, Is.Not.Null);
+                Assert.That(backendContract.Data.Credentials.Query, Is.Not.Null);
+                Assert.That(backendContract.Data.Credentials.Header, Is.Not.Null);
+                Assert.That(backendContract.Data.Protocol, Is.EqualTo(BackendProtocol.Http));
+            });
             Assert.That(backendContract.Data.Credentials.Query.Keys.Count, Is.EqualTo(1));
             Assert.That(backendContract.Data.Credentials.Header.Keys.Count, Is.EqualTo(1));
             Assert.That(backendContract.Data.Credentials.Authorization, Is.Not.Null);
@@ -91,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(listBackends, Is.Not.Null);
 
             // there should be one user
-            Assert.GreaterOrEqual(listBackends.Count, 1);
+            Assert.That(listBackends.Count, Is.GreaterThanOrEqualTo(1));
 
             // patch backend
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
@@ -104,8 +107,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get to check it was patched
             backendContract = await backendCollection.GetAsync(backendId);
             Assert.That(backendContract, Is.Not.Null);
-            Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
-            Assert.That(backendContract.Data.Description, Is.EqualTo(patchedDescription));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
+                Assert.That(backendContract.Data.Description, Is.EqualTo(patchedDescription));
+            });
 
             // delete the backend
             await backendContract.DeleteAsync(WaitUntil.Completed, ETag.All);

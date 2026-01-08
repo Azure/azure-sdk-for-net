@@ -56,8 +56,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackPrefixCollection collection = LocalRulestack.GetLocalRulestackPrefixes();
             LocalRulestackPrefixResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
-            Assert.That(listsResource, Is.Not.Null);
-            Assert.That(DefaultResource1.Data.Name, Is.EqualTo(listsResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listsResource, Is.Not.Null);
+                Assert.That(DefaultResource1.Data.Name, Is.EqualTo(listsResource.Data.Name));
+            });
         }
 
         [TestCase]
@@ -65,8 +68,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackPrefixCollection collection = LocalRulestack.GetLocalRulestackPrefixes();
-            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync("invalidName"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync("invalidName"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 

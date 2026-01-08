@@ -46,16 +46,19 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _complianceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateCompliance(list.First(item => item.Data.Name == _existComplianceName), _existComplianceName);
         }
 
         private void ValidateCompliance(SecurityComplianceResource compliance, string complianceName)
         {
-            Assert.IsNotNull(compliance);
-            Assert.IsNotNull(compliance.Data.Id);
-            Assert.That(compliance.Data.Name, Is.EqualTo(_existComplianceName));
-            Assert.That(compliance.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/compliances"));
+            Assert.That(compliance, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(compliance.Data.Id, Is.Not.Null);
+                Assert.That(compliance.Data.Name, Is.EqualTo(_existComplianceName));
+                Assert.That(compliance.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/compliances"));
+            });
         }
     }
 }

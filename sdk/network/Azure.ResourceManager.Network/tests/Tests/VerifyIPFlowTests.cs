@@ -80,9 +80,12 @@ namespace Azure.ResourceManager.Network.Tests
             //Verify IP flow from a VM to a location given the configured  rule
             var verifyIpFlowOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.VerifyIPFlowAsync(WaitUntil.Completed, ipFlowProperties);
             Response<VerificationIPFlowResult> verifyIpFlow = await verifyIpFlowOperation.WaitForCompletionAsync();;
-            //Verify validity of the result
-            Assert.That(verifyIpFlow.Value.Access.ToString(), Is.EqualTo("Deny"));
-            Assert.That(verifyIpFlow.Value.RuleName, Is.EqualTo("securityRules/" + securityRule1));
+            Assert.Multiple(() =>
+            {
+                //Verify validity of the result
+                Assert.That(verifyIpFlow.Value.Access.ToString(), Is.EqualTo("Deny"));
+                Assert.That(verifyIpFlow.Value.RuleName, Is.EqualTo("securityRules/" + securityRule1));
+            });
         }
     }
 }

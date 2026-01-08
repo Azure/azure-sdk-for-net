@@ -67,8 +67,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
             DedicatedHostResource host = lro.Value;
-            Assert.That((bool)await collection.ExistsAsync(hostName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(hostName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(hostName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(hostName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -86,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
     }
 }

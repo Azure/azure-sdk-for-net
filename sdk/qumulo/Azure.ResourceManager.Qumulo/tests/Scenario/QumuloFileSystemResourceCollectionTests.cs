@@ -68,8 +68,11 @@ namespace Azure.ResourceManager.Qumulo.Tests
             string qumuloFileSystemName = Recording.GenerateAssetName("testResource-");
             QumuloFileSystemResource qumuloFileSystem = await CreateQumuloFileSystemResource(ResGroup, Location, qumuloFileSystemName);
 
-            Assert.That((bool)await collection.ExistsAsync(qumuloFileSystemName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(qumuloFileSystemName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(qumuloFileSystemName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(qumuloFileSystemName + "1"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -97,16 +100,19 @@ namespace Azure.ResourceManager.Qumulo.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
     }
 }

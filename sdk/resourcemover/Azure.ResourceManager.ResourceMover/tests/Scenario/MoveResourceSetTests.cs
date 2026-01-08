@@ -98,8 +98,11 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 Identity = moverResourceSet.Data.Identity
             };
             MoverResourceSetResource updatedMoverResourceSet = await moverResourceSet.UpdateAsync(updateOptions);
-            Assert.That(updatedMoverResourceSet.Data.Tags, Is.EqualTo(updateOptions.Tags));
-            Assert.That(updatedMoverResourceSet.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(updateOptions.Identity.ManagedServiceIdentityType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMoverResourceSet.Data.Tags, Is.EqualTo(updateOptions.Tags));
+                Assert.That(updatedMoverResourceSet.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(updateOptions.Identity.ManagedServiceIdentityType));
+            });
         }
 
         [TestCase]
@@ -191,8 +194,11 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
             var moverResourceSet = await AddTag();
 
-            Assert.That(moverResourceSet.Data.Tags.TryGetValue(ExpectedKey, out string value), Is.True);
-            Assert.That(value, Is.EqualTo(ExpectedValue));
+            Assert.Multiple(() =>
+            {
+                Assert.That(moverResourceSet.Data.Tags.TryGetValue(ExpectedKey, out string value), Is.True);
+                Assert.That(value, Is.EqualTo(ExpectedValue));
+            });
         }
 
         [TestCase(null)]
@@ -213,12 +219,15 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
             moverResourceSet = await moverResourceSet.SetTagsAsync(expectedTags);
 
-            Assert.That(moverResourceSet.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
+            Assert.That(moverResourceSet.Data.Tags, Has.Count.EqualTo(expectedTags.Count));
 
             foreach (var item in expectedTags)
             {
-                Assert.That(moverResourceSet.Data.Tags.TryGetValue(item.Key, out string value), Is.True);
-                Assert.That(value, Is.EqualTo(item.Value));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(moverResourceSet.Data.Tags.TryGetValue(item.Key, out string value), Is.True);
+                    Assert.That(value, Is.EqualTo(item.Value));
+                });
             }
         }
 
@@ -250,22 +259,34 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         private void AssertValidMoverResourceSet(MoverResourceSetResource model, MoverResourceSetResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
-            Assert.That(getResult.Data.ETag, Is.EqualTo(model.Data.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+                Assert.That(getResult.Data.ETag, Is.EqualTo(model.Data.ETag));
+            });
             if (model.Data.Identity != null || getResult.Data.Identity != null)
             {
-                Assert.That(model.Data.Identity, Is.Not.Null);
-                Assert.That(getResult.Data.Identity, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Identity, Is.Not.Null);
+                    Assert.That(getResult.Data.Identity, Is.Not.Null);
+                });
                 Assert.That(getResult.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(model.Data.Identity.ManagedServiceIdentityType));
             }
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
-                Assert.That(model.Data.Properties, Is.Not.Null);
-                Assert.That(getResult.Data.Properties, Is.Not.Null);
-                Assert.That(getResult.Data.Properties.SourceRegion, Is.EqualTo(model.Data.Properties.SourceRegion));
-                Assert.That(getResult.Data.Properties.TargetRegion, Is.EqualTo(model.Data.Properties.TargetRegion));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Properties, Is.Not.Null);
+                    Assert.That(getResult.Data.Properties, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getResult.Data.Properties.SourceRegion, Is.EqualTo(model.Data.Properties.SourceRegion));
+                    Assert.That(getResult.Data.Properties.TargetRegion, Is.EqualTo(model.Data.Properties.TargetRegion));
+                });
             }
         }
     }

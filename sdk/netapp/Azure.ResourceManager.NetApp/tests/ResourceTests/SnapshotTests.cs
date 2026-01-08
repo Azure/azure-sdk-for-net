@@ -93,9 +93,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(snapshotResource1.Id.Name, Is.EqualTo(snapshotName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName), Is.True);
-            Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName), Is.True);
+                Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName + "1"), Is.False);
+            });
 
             //Delete snapshot
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
@@ -177,9 +180,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(newVolumeResource2.Id.Name.Split('/').Last(), Is.EqualTo(newVolumeName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName), Is.True);
-            Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName), Is.True);
+                Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName + "1"), Is.False);
+            });
             await LiveDelay(10000);
         }
 
@@ -209,9 +215,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(newVolumeResource2.Id.Name.Split('/').Last(), Is.EqualTo(newVolumeName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName), Is.True);
-            Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName), Is.True);
+                Assert.That((bool)await _snapshotCollection.ExistsAsync(snapshotName + "1"), Is.False);
+            });
 
             // invoke the SplitCloneFromParentAsync operation
             await newVolumeResource2.SplitCloneFromParentAsync(WaitUntil.Completed);

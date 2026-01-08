@@ -59,26 +59,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             };
             var schemaRegistryCreateOrUpdateResponse = await schemaRegistriesCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaRegistryName, schemaRegistryData, CancellationToken.None);
             Assert.That(schemaRegistryCreateOrUpdateResponse.Value, Is.Not.Null);
-            Assert.That(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.TenantId, Is.Not.Null);
-            Assert.That(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(SystemAssignedManagedIdentityType.SystemAssigned, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.Type));
-            Assert.That(Guid.TryParse(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistryData.Properties.Namespace, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Namespace));
-            Assert.That(schemaRegistryData.Properties.Description, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Description));
-            Assert.That(schemaRegistryData.Properties.DisplayName, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
-            Assert.That(schemaRegistryData.Properties.StorageAccountContainerUri, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.StorageAccountContainerUri));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.TenantId, Is.Not.Null);
+                Assert.That(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(SystemAssignedManagedIdentityType.SystemAssigned, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.Type));
+                Assert.That(Guid.TryParse(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistryData.Properties.Namespace, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Namespace));
+                Assert.That(schemaRegistryData.Properties.Description, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Description));
+                Assert.That(schemaRegistryData.Properties.DisplayName, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
+                Assert.That(schemaRegistryData.Properties.StorageAccountContainerUri, Is.EqualTo(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.StorageAccountContainerUri));
+            });
 
             // Read DeviceRegistry SchemaRegistry
             var schemaRegistryReadResponse = await schemaRegistriesCollection.GetAsync(schemaRegistryName, CancellationToken.None);
             Assert.That(schemaRegistryReadResponse.Value, Is.Not.Null);
-            Assert.That(schemaRegistryReadResponse.Value.Data.Identity.TenantId, Is.Not.Null);
-            Assert.That(schemaRegistryReadResponse.Value.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(SystemAssignedManagedIdentityType.SystemAssigned, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Identity.Type));
-            Assert.That(Guid.TryParse(schemaRegistryReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistryData.Properties.Namespace, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.Namespace));
-            Assert.That(schemaRegistryData.Properties.Description, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.Description));
-            Assert.That(schemaRegistryData.Properties.DisplayName, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.DisplayName));
-            Assert.That(schemaRegistryData.Properties.StorageAccountContainerUri, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.StorageAccountContainerUri));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistryReadResponse.Value.Data.Identity.TenantId, Is.Not.Null);
+                Assert.That(schemaRegistryReadResponse.Value.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(SystemAssignedManagedIdentityType.SystemAssigned, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Identity.Type));
+                Assert.That(Guid.TryParse(schemaRegistryReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistryData.Properties.Namespace, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.Namespace));
+                Assert.That(schemaRegistryData.Properties.Description, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.Description));
+                Assert.That(schemaRegistryData.Properties.DisplayName, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.DisplayName));
+                Assert.That(schemaRegistryData.Properties.StorageAccountContainerUri, Is.EqualTo(schemaRegistryReadResponse.Value.Data.Properties.StorageAccountContainerUri));
+            });
 
             // List DeviceRegistry SchemaRegistry by Resource Group
             var schemaRegistryResourcesListByResourceGroup = new List<DeviceRegistrySchemaRegistryResource>();
@@ -87,8 +93,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 schemaRegistryResourcesListByResourceGroup.AddRange(schemaRegistryEntryPage.Values);
             }
-            Assert.IsNotEmpty(schemaRegistryResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(schemaRegistryResourcesListByResourceGroup.Count, 1);
+            Assert.That(schemaRegistryResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(schemaRegistryResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // List DeviceRegistry SchemaRegistry by Subscription
             var schemaRegistryResourcesListBySubscription = new List<DeviceRegistrySchemaRegistryResource>();
@@ -97,8 +103,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 schemaRegistryResourcesListBySubscription.AddRange(schemaRegistryEntryPage.Values);
             }
-            Assert.IsNotEmpty(schemaRegistryResourcesListBySubscription);
-            Assert.GreaterOrEqual(schemaRegistryResourcesListBySubscription.Count, 1);
+            Assert.That(schemaRegistryResourcesListBySubscription, Is.Not.Empty);
+            Assert.That(schemaRegistryResourcesListBySubscription.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry SchemaRegistry
             var schemaRegistry = schemaRegistryReadResponse.Value;
@@ -111,14 +117,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             };
             var schemaRegistryUpdateResponse = await schemaRegistry.UpdateAsync(WaitUntil.Completed, schemaRegistryPatchData, CancellationToken.None);
             Assert.That(schemaRegistryUpdateResponse.Value, Is.Not.Null);
-            Assert.That(schemaRegistryUpdateResponse.Value.Data.Identity.TenantId, Is.Not.Null);
-            Assert.That(schemaRegistryUpdateResponse.Value.Data.Identity.PrincipalId, Is.Not.Null);
-            Assert.That(SystemAssignedManagedIdentityType.SystemAssigned, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Identity.Type));
-            Assert.That(Guid.TryParse(schemaRegistryUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistryData.Properties.Namespace, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.Namespace));
-            Assert.That(schemaRegistryPatchData.Properties.Description, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.Description));
-            Assert.That(schemaRegistryData.Properties.DisplayName, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.DisplayName));
-            Assert.That(schemaRegistryData.Properties.StorageAccountContainerUri, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.StorageAccountContainerUri));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistryUpdateResponse.Value.Data.Identity.TenantId, Is.Not.Null);
+                Assert.That(schemaRegistryUpdateResponse.Value.Data.Identity.PrincipalId, Is.Not.Null);
+                Assert.That(SystemAssignedManagedIdentityType.SystemAssigned, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Identity.Type));
+                Assert.That(Guid.TryParse(schemaRegistryUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistryData.Properties.Namespace, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.Namespace));
+                Assert.That(schemaRegistryPatchData.Properties.Description, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.Description));
+                Assert.That(schemaRegistryData.Properties.DisplayName, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.DisplayName));
+                Assert.That(schemaRegistryData.Properties.StorageAccountContainerUri, Is.EqualTo(schemaRegistryUpdateResponse.Value.Data.Properties.StorageAccountContainerUri));
+            });
 
             #endregion
 
@@ -139,21 +148,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var schemaRegistrySchemaCreateOrUpdateResponse = await schemaRegistriesSchemasCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaRegistrySchemaName, schemaRegistrySchemaData, CancellationToken.None);
-            Assert.That(schemaRegistrySchemaCreateOrUpdateResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistrySchemaData.Properties.SchemaType, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.SchemaType));
-            Assert.That(schemaRegistrySchemaData.Properties.Format, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.Format));
-            Assert.That(schemaRegistrySchemaData.Properties.Description, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.Description));
-            Assert.That(schemaRegistrySchemaData.Properties.DisplayName, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistrySchemaCreateOrUpdateResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistrySchemaData.Properties.SchemaType, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.SchemaType));
+                Assert.That(schemaRegistrySchemaData.Properties.Format, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.Format));
+                Assert.That(schemaRegistrySchemaData.Properties.Description, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.Description));
+                Assert.That(schemaRegistrySchemaData.Properties.DisplayName, Is.EqualTo(schemaRegistrySchemaCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
+            });
 
             // Read DeviceRegistry SchemaRegistry Schema
             var schemaRegistrySchemaReadResponse = await schemaRegistriesSchemasCollection.GetAsync(schemaRegistrySchemaName, CancellationToken.None);
-            Assert.That(schemaRegistrySchemaReadResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(schemaRegistrySchemaReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistrySchemaData.Properties.SchemaType, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.SchemaType));
-            Assert.That(schemaRegistrySchemaData.Properties.Format, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.Format));
-            Assert.That(schemaRegistrySchemaData.Properties.Description, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.Description));
-            Assert.That(schemaRegistrySchemaData.Properties.DisplayName, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.DisplayName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistrySchemaReadResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(schemaRegistrySchemaReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistrySchemaData.Properties.SchemaType, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.SchemaType));
+                Assert.That(schemaRegistrySchemaData.Properties.Format, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.Format));
+                Assert.That(schemaRegistrySchemaData.Properties.Description, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.Description));
+                Assert.That(schemaRegistrySchemaData.Properties.DisplayName, Is.EqualTo(schemaRegistrySchemaReadResponse.Value.Data.Properties.DisplayName));
+            });
 
             // List DeviceRegistry SchemaRegistry Schema by SchemaRegistry
             var schemaResourcesListBySchemaRegistry = new List<DeviceRegistrySchemaResource>();
@@ -162,13 +177,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 schemaResourcesListBySchemaRegistry.Add(schemaEntry);
             }
-            Assert.IsNotEmpty(schemaResourcesListBySchemaRegistry);
-            Assert.That(schemaResourcesListBySchemaRegistry.Count, Is.EqualTo(1));
-            Assert.That(Guid.TryParse(schemaResourcesListBySchemaRegistry[0].Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistrySchemaData.Properties.SchemaType, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.SchemaType));
-            Assert.That(schemaRegistrySchemaData.Properties.Format, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.Format));
-            Assert.That(schemaRegistrySchemaData.Properties.Description, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.Description));
-            Assert.That(schemaRegistrySchemaData.Properties.DisplayName, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.DisplayName));
+            Assert.That(schemaResourcesListBySchemaRegistry, Is.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaResourcesListBySchemaRegistry, Has.Count.EqualTo(1));
+                Assert.That(Guid.TryParse(schemaResourcesListBySchemaRegistry[0].Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistrySchemaData.Properties.SchemaType, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.SchemaType));
+                Assert.That(schemaRegistrySchemaData.Properties.Format, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.Format));
+                Assert.That(schemaRegistrySchemaData.Properties.Description, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.Description));
+                Assert.That(schemaRegistrySchemaData.Properties.DisplayName, Is.EqualTo(schemaResourcesListBySchemaRegistry[0].Data.Properties.DisplayName));
+            });
 
             var schemaRegistrySchema = schemaRegistrySchemaReadResponse.Value;
 
@@ -197,17 +215,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var schemaRegistrySchemaVersionCreateOrUpdateResponse = await schemaRegistriesSchemaVersionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaRegistrySchemaVersionName, schemaRegistrySchemaVersionData, CancellationToken.None);
-            Assert.That(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistrySchemaVersionData.Properties.SchemaContent, Is.EqualTo(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value.Data.Properties.SchemaContent));
-            Assert.That(schemaRegistrySchemaVersionData.Properties.Description, Is.EqualTo(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value.Data.Properties.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistrySchemaVersionData.Properties.SchemaContent, Is.EqualTo(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value.Data.Properties.SchemaContent));
+                Assert.That(schemaRegistrySchemaVersionData.Properties.Description, Is.EqualTo(schemaRegistrySchemaVersionCreateOrUpdateResponse.Value.Data.Properties.Description));
+            });
 
             // Read DeviceRegistry SchemaRegistry Schema Version
             var schemaRegistrySchemaVersionReadResponse = await schemaRegistriesSchemaVersionsCollection.GetAsync(schemaRegistrySchemaVersionName, CancellationToken.None);
-            Assert.That(schemaRegistrySchemaVersionReadResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
-            Assert.That(schemaRegistrySchemaVersionData.Properties.SchemaContent, Is.EqualTo(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.SchemaContent));
-            Assert.That(schemaRegistrySchemaVersionData.Properties.Description, Is.EqualTo(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schemaRegistrySchemaVersionReadResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
+                Assert.That(schemaRegistrySchemaVersionData.Properties.SchemaContent, Is.EqualTo(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.SchemaContent));
+                Assert.That(schemaRegistrySchemaVersionData.Properties.Description, Is.EqualTo(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.Description));
+            });
 
             var schemaRegistrySchemaVersion = schemaRegistrySchemaVersionReadResponse.Value;
 

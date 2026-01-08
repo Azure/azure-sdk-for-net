@@ -48,8 +48,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackRuleResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, priority);
             LocalRulestackRuleResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackRuleResource.ResourceType));
-            Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/localrules/{priority}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackRuleResource.ResourceType));
+                Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/localrules/{priority}"));
+            });
             Assert.Throws<ArgumentException>(() => LocalRulestackRuleResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -57,8 +60,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.That(LocalRulesResource.HasData, Is.True);
-            Assert.That(LocalRulesResource.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(LocalRulesResource.HasData, Is.True);
+                Assert.That(LocalRulesResource.Data, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -78,9 +84,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task GetCounters()
         {
             FirewallRuleCounter counter = (await LocalRulesResource.GetCountersAsync()).Value;
-            Assert.That(counter, Is.Not.Null);
-            Assert.That(LocalRulesResource.Data.RuleName, Is.EqualTo(counter.RuleName));
-            Assert.That(LocalRulestackResource.Data.Name, Is.EqualTo(counter.RuleStackName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(counter, Is.Not.Null);
+                Assert.That(LocalRulesResource.Data.RuleName, Is.EqualTo(counter.RuleName));
+                Assert.That(LocalRulestackResource.Data.Name, Is.EqualTo(counter.RuleStackName));
+            });
         }
 
         [TestCase]
@@ -88,8 +97,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackRuleResource resource = await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000");
-            Assert.That(resource, Is.Not.Null);
-            Assert.That(LocalRulesResource.Data.RuleName, Is.EqualTo(resource.Data.RuleName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource, Is.Not.Null);
+                Assert.That(LocalRulesResource.Data.RuleName, Is.EqualTo(resource.Data.RuleName));
+            });
         }
     }
 }

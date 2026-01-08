@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task GetAll()
         {
             var list = await _tenantPolicyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             var list = await _tenantPolicyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
             string policyName = list.FirstOrDefault().Data.Name;
             var policy = await _tenantPolicyDefinitionCollection.GetAsync(policyName);
-            Assert.IsNotNull(policy);
+            Assert.That(policy, Is.Not.Null);
             Assert.That(policy.Value.Data.Name, Is.EqualTo(policyName));
         }
     }

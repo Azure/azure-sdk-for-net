@@ -57,7 +57,7 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
             {
                 listByKubernetesCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByKubernetesCluster);
+            Assert.That(listByKubernetesCluster, Is.Not.Empty);
 
             // Update
             NetworkCloudKubernetesClusterFeaturePatch patch = new NetworkCloudKubernetesClusterFeaturePatch()

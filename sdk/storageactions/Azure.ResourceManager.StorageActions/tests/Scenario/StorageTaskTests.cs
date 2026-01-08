@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -305,13 +305,16 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 0);
+            Assert.That(count, Is.GreaterThanOrEqualTo(0));
         }
 
         internal void CompareStorageTaskData(StorageTaskData expected, StorageTaskData actual)
         {
-            Assert.That(actual.Location, Is.EqualTo(expected.Location));
-            Assert.That(actual.Identity.ManagedServiceIdentityType, Is.EqualTo(expected.Identity.ManagedServiceIdentityType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Location, Is.EqualTo(expected.Location));
+                Assert.That(actual.Identity.ManagedServiceIdentityType, Is.EqualTo(expected.Identity.ManagedServiceIdentityType));
+            });
             // skip for server issue
             // Assert.AreEqual(expected.Tags, actual.Tags);
             CompareStorageTaskProperties(expected.Properties, actual.Properties);
@@ -327,10 +330,13 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskProperties(StorageTaskProperties expected, StorageTaskProperties actual)
         {
-            Assert.That(actual.IsEnabled, Is.EqualTo(expected.IsEnabled));
-            Assert.That(actual.Description, Is.EqualTo(expected.Description));
-            Assert.That(actual.Action.If.Condition, Is.EqualTo(expected.Action.If.Condition));
-            Assert.That(actual.Action.If.Operations.Count, Is.EqualTo(expected.Action.If.Operations.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.IsEnabled, Is.EqualTo(expected.IsEnabled));
+                Assert.That(actual.Description, Is.EqualTo(expected.Description));
+                Assert.That(actual.Action.If.Condition, Is.EqualTo(expected.Action.If.Condition));
+                Assert.That(actual.Action.If.Operations, Has.Count.EqualTo(expected.Action.If.Operations.Count));
+            });
             for (int i = 0; i < expected.Action.If.Operations.Count; i++)
             {
                 CompareStorageTaskOperation(expected.Action.If.Operations[i], actual.Action.If.Operations[i]);
@@ -342,7 +348,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             }
             else
             {
-                Assert.That(actual.Action.Else.Operations.Count, Is.EqualTo(expected.Action.Else.Operations.Count));
+                Assert.That(actual.Action.Else.Operations, Has.Count.EqualTo(expected.Action.Else.Operations.Count));
                 for (int i = 0; i < expected.Action.Else.Operations.Count; i++)
                 {
                     CompareStorageTaskOperation(expected.Action.Else.Operations[i], actual.Action.Else.Operations[i]);
@@ -352,10 +358,13 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskProperties(StorageTaskProperties expected, StorageTaskUpdateProperties actual)
         {
-            Assert.That(actual.Enabled, Is.EqualTo(expected.IsEnabled));
-            Assert.That(actual.Description, Is.EqualTo(expected.Description));
-            Assert.That(actual.Action.If.Condition, Is.EqualTo(expected.Action.If.Condition));
-            Assert.That(actual.Action.If.Operations.Count, Is.EqualTo(expected.Action.If.Operations.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Enabled, Is.EqualTo(expected.IsEnabled));
+                Assert.That(actual.Description, Is.EqualTo(expected.Description));
+                Assert.That(actual.Action.If.Condition, Is.EqualTo(expected.Action.If.Condition));
+                Assert.That(actual.Action.If.Operations, Has.Count.EqualTo(expected.Action.If.Operations.Count));
+            });
             for (int i = 0; i < expected.Action.If.Operations.Count; i++)
             {
                 CompareStorageTaskOperation(expected.Action.If.Operations[i], actual.Action.If.Operations[i]);
@@ -367,7 +376,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             }
             else
             {
-                Assert.That(actual.Action.Else.Operations.Count, Is.EqualTo(expected.Action.Else.Operations.Count));
+                Assert.That(actual.Action.Else.Operations, Has.Count.EqualTo(expected.Action.Else.Operations.Count));
                 for (int i = 0; i < expected.Action.Else.Operations.Count; i++)
                 {
                     CompareStorageTaskOperation(expected.Action.Else.Operations[i], actual.Action.Else.Operations[i]);
@@ -377,10 +386,13 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
 
         internal void CompareStorageTaskOperation(StorageTaskOperationInfo expected, StorageTaskOperationInfo actual)
         {
-            Assert.That(actual.OnSuccess, Is.EqualTo(expected.OnSuccess));
-            Assert.That(actual.OnFailure, Is.EqualTo(expected.OnFailure));
-            Assert.That(actual.Name, Is.EqualTo(expected.Name));
-            Assert.That(actual.Parameters.Count, Is.EqualTo(expected.Parameters.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.OnSuccess, Is.EqualTo(expected.OnSuccess));
+                Assert.That(actual.OnFailure, Is.EqualTo(expected.OnFailure));
+                Assert.That(actual.Name, Is.EqualTo(expected.Name));
+                Assert.That(actual.Parameters, Has.Count.EqualTo(expected.Parameters.Count));
+            });
             foreach (var parameter in actual.Parameters)
             {
                 {

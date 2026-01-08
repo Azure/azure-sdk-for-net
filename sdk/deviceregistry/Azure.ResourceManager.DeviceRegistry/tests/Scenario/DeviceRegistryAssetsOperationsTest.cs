@@ -44,8 +44,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetCreateOrUpdateResponse = await assetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, assetData, CancellationToken.None);
-            Assert.That(assetCreateOrUpdateResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(assetCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetCreateOrUpdateResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(assetCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+            });
             Assert.That(assetCreateOrUpdateResponse.Value.Data.Properties.Uuid, Is.EqualTo(assetCreateOrUpdateResponse.Value.Data.Properties.ExternalAssetId));
             Assert.That(assetData.Properties.AssetEndpointProfileRef, Is.EqualTo(assetCreateOrUpdateResponse.Value.Data.Properties.AssetEndpointProfileRef));
             Assert.That(assetCreateOrUpdateResponse.Value.Data.Name, Is.EqualTo(assetCreateOrUpdateResponse.Value.Data.Properties.DisplayName));
@@ -55,8 +58,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Read DeviceRegistry Asset
             var assetReadResponse = await assetsCollection.GetAsync(assetName, CancellationToken.None);
-            Assert.That(assetReadResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(assetReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetReadResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(assetReadResponse.Value.Data.Properties.Uuid, out _), Is.True);
+            });
             Assert.That(assetReadResponse.Value.Data.Properties.Uuid, Is.EqualTo(assetReadResponse.Value.Data.Properties.ExternalAssetId));
             Assert.That(assetData.Properties.AssetEndpointProfileRef, Is.EqualTo(assetReadResponse.Value.Data.Properties.AssetEndpointProfileRef));
             Assert.That(assetReadResponse.Value.Data.Name, Is.EqualTo(assetReadResponse.Value.Data.Properties.DisplayName));
@@ -71,8 +77,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 assetResourcesListByResourceGroup.AddRange(assetEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(assetResourcesListByResourceGroup);
-            Assert.GreaterOrEqual(assetResourcesListByResourceGroup.Count, 1);
+            Assert.That(assetResourcesListByResourceGroup, Is.Not.Empty);
+            Assert.That(assetResourcesListByResourceGroup.Count, Is.GreaterThanOrEqualTo(1));
 
             // List DeviceRegistry Asset by Subscription
             var assetResourcesListBySubscription = new List<DeviceRegistryAssetResource>();
@@ -82,8 +88,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 assetResourcesListBySubscription.AddRange(assetEntryPage.Values);
                 break; // limit to the the first page of results
             }
-            Assert.IsNotEmpty(assetResourcesListBySubscription);
-            Assert.GreaterOrEqual(assetResourcesListBySubscription.Count, 1);
+            Assert.That(assetResourcesListBySubscription, Is.Not.Empty);
+            Assert.That(assetResourcesListBySubscription.Count, Is.GreaterThanOrEqualTo(1));
 
             // Update DeviceRegistry Asset
             var asset = assetReadResponse.Value;
@@ -95,8 +101,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             var assetUpdateResponse = await asset.UpdateAsync(WaitUntil.Completed, assetPatchData, CancellationToken.None);
-            Assert.That(assetUpdateResponse.Value, Is.Not.Null);
-            Assert.That(Guid.TryParse(assetUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(assetUpdateResponse.Value, Is.Not.Null);
+                Assert.That(Guid.TryParse(assetUpdateResponse.Value.Data.Properties.Uuid, out _), Is.True);
+            });
             Assert.That(assetUpdateResponse.Value.Data.Properties.Uuid, Is.EqualTo(assetUpdateResponse.Value.Data.Properties.ExternalAssetId));
             Assert.That(assetData.Properties.AssetEndpointProfileRef, Is.EqualTo(assetUpdateResponse.Value.Data.Properties.AssetEndpointProfileRef));
             Assert.That(assetUpdateResponse.Value.Data.Name, Is.EqualTo(assetUpdateResponse.Value.Data.Properties.DisplayName));

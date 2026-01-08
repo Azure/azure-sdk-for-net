@@ -65,21 +65,27 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
 
             // list service linker
             var linkerResources = await linkers.GetAllAsync().ToEnumerableAsync();
-            Assert.That(linkerResources.Count, Is.EqualTo(1));
+            Assert.That(linkerResources, Has.Count.EqualTo(1));
             Assert.That(linkerResources[0].Data.Name, Is.EqualTo(linkerName));
 
             // get service linker
             LinkerResource linker = await linkers.GetAsync(linkerName);
-            Assert.That(linker.Id.ToString().StartsWith(webapp.Id.ToString(), StringComparison.InvariantCultureIgnoreCase), Is.True);
-            Assert.That((linker.Data.TargetService as AzureResourceInfo).Id, Is.EqualTo(vault.Id));
-            Assert.That(linker.Data.AuthInfo.AuthType, Is.EqualTo(LinkerAuthType.SystemAssignedIdentity));
+            Assert.Multiple(() =>
+            {
+                Assert.That(linker.Id.ToString().StartsWith(webapp.Id.ToString(), StringComparison.InvariantCultureIgnoreCase), Is.True);
+                Assert.That((linker.Data.TargetService as AzureResourceInfo).Id, Is.EqualTo(vault.Id));
+                Assert.That(linker.Data.AuthInfo.AuthType, Is.EqualTo(LinkerAuthType.SystemAssignedIdentity));
+            });
 
             // get service linker configurations
             SourceConfigurationResult configurations = await linker.GetConfigurationsAsync();
             foreach (var configuration in configurations.Configurations)
             {
-                Assert.IsNotNull(configuration.Name);
-                Assert.IsNotNull(configuration.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(configuration.Name, Is.Not.Null);
+                    Assert.That(configuration.Value, Is.Not.Null);
+                });
             }
 
             // delete service linker

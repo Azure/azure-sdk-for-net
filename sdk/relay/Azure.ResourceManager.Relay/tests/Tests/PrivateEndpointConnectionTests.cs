@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Relay.Tests
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-            Assert.That(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, Is.EqualTo(1));
+            Assert.That(privateEndpoint.Data.ManualPrivateLinkServiceConnections, Has.Count.EqualTo(1));
 
             List<RelayPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(privateEndpointConnections.Count, Is.EqualTo(1));
+            Assert.That(privateEndpointConnections, Has.Count.EqualTo(1));
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Relay.Tests
             var id = _privateEndpointConnectionCollection.Id;
             id = RelayPrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
             RelayPrivateEndpointConnectionResource privateEndpointConnection = Client.GetRelayPrivateEndpointConnectionResource(id);
-            Assert.IsNotNull(privateEndpointConnection);
+            Assert.That(privateEndpointConnection, Is.Not.Null);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _privateEndpointConnectionCollection.GetAsync(name); });
@@ -135,11 +135,14 @@ namespace Azure.ResourceManager.Relay.Tests
 
         private void VerifyPrivateEndpointConnections(NetworkPrivateLinkServiceConnection expectedValue, RelayPrivateEndpointConnectionResource actualValue)
         {
-            // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
-            //Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.That(actualValue.Data.ConnectionState.Status.ToString(), Is.EqualTo(expectedValue.ConnectionState.Status));
-            Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
+            Assert.Multiple(() =>
+            {
+                // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
+                //Assert.AreEqual(expectedValue.Id, actualValue.Id);
+                //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
+                Assert.That(actualValue.Data.ConnectionState.Status.ToString(), Is.EqualTo(expectedValue.ConnectionState.Status));
+                Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
+            });
         }
     }
 }

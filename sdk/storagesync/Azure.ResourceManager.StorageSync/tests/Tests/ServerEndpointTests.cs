@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             RecallActionContent recallActionParameters = StorageSyncManagementTestUtilities.GetDefaultRecallActionParameters();
             ArmOperation serverEndpointsRecallOperation = await serverEndpointResource.RecallActionAsync(WaitUntil.Completed, recallActionParameters);
             Assert.That(serverEndpointsRecallOperation, Is.Not.Null);
-            Assert.IsNotEmpty(serverEndpointsRecallOperation.GetRawResponse().ClientRequestId); // Request Id
+            Assert.That(serverEndpointsRecallOperation.GetRawResponse().ClientRequestId, Is.Not.Empty); // Request Id
             // Assert.IsNotEmpty(serverEndpointsRecallOperation.Id); // Getting serverEndpointsRecallOperation id throws not implemented exception
 
             // Note: Currently updating a ServerEndpoint is blocked by design. API enforces that PUT on an existing resource has to be

@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task GetLocationsSubscriptions()
         {
             var list = await _subscription.GetLocationsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Name == "eastus"));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.Name == "eastus"), Is.Not.Null);
         }
 
         [RecordedTest]
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.Subscription.Tests
             // CreateOrUpdate
             string tagName = "testEmptyTag";
             var predefinedTag = await _subscription.CreateOrUpdatePredefinedTagAsync(tagName);
-            Assert.IsNotNull(predefinedTag);
+            Assert.That(predefinedTag, Is.Not.Null);
             Assert.That(predefinedTag.Value.TagName, Is.EqualTo(tagName));
 
             // GetAll
             var list = await _subscription.GetAllPredefinedTagsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.TagName == tagName));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.TagName == tagName), Is.Not.Null);
 
             // Delete
             var deleteResponse = await _subscription.DeletePredefinedTagAsync(tagName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             // Add a TagValue
             string tagValue = "preTestValue";
             var predefinedTagValue = await _subscription.CreateOrUpdatePredefinedTagValueAsync(tagName, tagValue);
-            Assert.IsNotNull(predefinedTagValue);
+            Assert.That(predefinedTagValue, Is.Not.Null);
             Assert.That(predefinedTagValue.Value.TagValue, Is.EqualTo(tagValue));
 
             // Delete a TagValue
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task GetFeatures()
         {
             var list  = await _subscription.GetFeaturesAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

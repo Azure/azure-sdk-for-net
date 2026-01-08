@@ -91,14 +91,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 WaitUntil.Completed,
                 DataReplicationTestUtilities.DefaultProtectedItemName,
                 protectedItemData);
-            Assert.That(createProtectedItemOperation.HasCompleted, Is.True);
-            Assert.That(createProtectedItemOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createProtectedItemOperation.HasCompleted, Is.True);
+                Assert.That(createProtectedItemOperation.HasValue, Is.True);
+            });
 
             // Get
             var getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
                 DataReplicationTestUtilities.DefaultProtectedItemName);
             var protecteItemModelResource = getProtectedItemOperation.Value;
-            Assert.IsNotNull(protecteItemModelResource);
+            Assert.That(protecteItemModelResource, Is.Not.Null);
 
             bool canDelete = protecteItemModelResource.Data.Properties.AllowedJobs.Contains("DisableProtection");
             for (int i = 0; i < DataReplicationTestUtilities.RetryCount; i++)

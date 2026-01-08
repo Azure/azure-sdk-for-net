@@ -77,8 +77,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             var createExadbVmClusterOperation = await _exadbVmClusterCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                 _exadbVmClusterName, GetDefaultExadbVmClusterData(_exadbVmClusterName));
             await createExadbVmClusterOperation.WaitForCompletionAsync();
-            Assert.That(createExadbVmClusterOperation.HasCompleted, Is.True);
-            Assert.That(createExadbVmClusterOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createExadbVmClusterOperation.HasCompleted, Is.True);
+                Assert.That(createExadbVmClusterOperation.HasValue, Is.True);
+            });
 
             // Get
             Response<ExadbVmClusterResource> getExadbVmClusterResponse = await _exadbVmClusterCollection.GetAsync(_exadbVmClusterName);

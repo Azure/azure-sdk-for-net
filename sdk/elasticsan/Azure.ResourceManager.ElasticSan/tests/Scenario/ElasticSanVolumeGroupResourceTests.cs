@@ -47,11 +47,14 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             string volumeGroupName = Recording.GenerateAssetName("testvolgroup-");
             ElasticSanVolumeGroupResource volumeGroup = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, new ElasticSanVolumeGroupData())).Value;
             ElasticSanVolumeGroupResource volumeGroup1 = (await volumeGroup.GetAsync()).Value;
-            Assert.That(volumeGroup1.Id.Name, Is.EqualTo(volumeGroupName));
-            Assert.IsEmpty(volumeGroup1.Data.VirtualNetworkRules);
-            Assert.That(volumeGroup1.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
-            Assert.That(volumeGroup1.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
-            Assert.That(volumeGroup1.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(true));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volumeGroup1.Id.Name, Is.EqualTo(volumeGroupName));
+                Assert.That(volumeGroup1.Data.VirtualNetworkRules, Is.Empty);
+                Assert.That(volumeGroup1.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
+                Assert.That(volumeGroup1.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
+                Assert.That(volumeGroup1.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(true));
+            });
 
             ElasticSanVolumeGroupPatch patch = new()
             {
@@ -64,19 +67,25 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             patch.VirtualNetworkRules.Add(new ElasticSanVirtualNetworkRule(vnetResourceId));
 
             ElasticSanVolumeGroupResource volGroup1 = (await volumeGroup.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.That(volGroup1.Id.Name, Is.EqualTo(volumeGroupName));
-            Assert.That(volGroup1.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
-            Assert.That(volGroup1.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
-            Assert.That(volGroup1.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(false));
-            Assert.That(volGroup1.Data.VirtualNetworkRules[0].VirtualNetworkResourceId, Is.EqualTo(vnetResourceId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volGroup1.Id.Name, Is.EqualTo(volumeGroupName));
+                Assert.That(volGroup1.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
+                Assert.That(volGroup1.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
+                Assert.That(volGroup1.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(false));
+                Assert.That(volGroup1.Data.VirtualNetworkRules[0].VirtualNetworkResourceId, Is.EqualTo(vnetResourceId));
+            });
 
             ElasticSanVolumeGroupPatch patch2 = new ElasticSanVolumeGroupPatch
             {
                 EnforceDataIntegrityCheckForIscsi = true,
             };
             ElasticSanVolumeGroupResource volGroup2 = (await volGroup1.UpdateAsync(WaitUntil.Completed, patch2)).Value;
-            Assert.That(volGroup2.Id.Name, Is.EqualTo(volumeGroupName));
-            Assert.That(volGroup2.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(true));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volGroup2.Id.Name, Is.EqualTo(volumeGroupName));
+                Assert.That(volGroup2.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(true));
+            });
 
             await volumeGroup.DeleteAsync(WaitUntil.Completed);
             Assert.That((bool)await _collection.ExistsAsync(volumeGroupName), Is.False);
@@ -91,16 +100,19 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 }
             };
             ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
-            Assert.That(volumeGroupSoftDeleteName, Is.EqualTo(volumeGroupSoftDelete.Id.Name));
-            Assert.That(ElasticSanDeleteRetentionPolicyState.Enabled, Is.EqualTo(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState));
-            Assert.That(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volumeGroupSoftDeleteName, Is.EqualTo(volumeGroupSoftDelete.Id.Name));
+                Assert.That(ElasticSanDeleteRetentionPolicyState.Enabled, Is.EqualTo(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState));
+                Assert.That(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, Is.EqualTo(1));
+            });
             await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
             int count = 0;
             await foreach (ElasticSanVolumeGroupResource _ in _collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.That(count, Is.GreaterThanOrEqualTo(1));
         }
         [Test]
         [RecordedTest]

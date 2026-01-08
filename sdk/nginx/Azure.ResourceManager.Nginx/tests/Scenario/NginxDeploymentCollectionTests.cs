@@ -63,8 +63,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             _ = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(nginxDeploymentName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(nginxDeploymentName + "1"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -131,8 +134,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                     nginxDeployment2 = nginxDeployment;
             }
 
-            Assert.That(nginxDeployment1, Is.Not.Null);
-            Assert.That(nginxDeployment2, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeployment1, Is.Not.Null);
+                Assert.That(nginxDeployment2, Is.Not.Null);
+            });
         }
     }
 }

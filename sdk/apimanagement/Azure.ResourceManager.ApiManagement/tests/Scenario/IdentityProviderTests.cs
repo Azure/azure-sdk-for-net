@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list
             var listIdentityProviders = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listIdentityProviders.Count, 1);
+            Assert.That(listIdentityProviders.Count, Is.GreaterThanOrEqualTo(1));
 
             // patch identity provider
             string patchedSecret = Recording.GenerateAssetName("clientSecret");
@@ -72,8 +72,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get to check it was patched
             identityProviderContract = await collection.GetAsync(IdentityProviderType.Facebook);
-            Assert.That(identityProviderContract.Data.IdentityProviderType, Is.EqualTo(IdentityProviderType.Facebook));
-            Assert.That(identityProviderContract.Data.ClientSecret, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(identityProviderContract.Data.IdentityProviderType, Is.EqualTo(IdentityProviderType.Facebook));
+                Assert.That(identityProviderContract.Data.ClientSecret, Is.Null);
+            });
 
             var secret = (await identityProviderContract.GetSecretsAsync()).Value;
 

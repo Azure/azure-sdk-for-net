@@ -90,9 +90,12 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
             await CreateStreamingEndpoint(streamingEndpointName);
             var list = await _mediaService.GetStreamingEndpoints().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Exists(item => item.Data.Name == "default"), Is.True);
-            Assert.That(list.Exists(item => item.Data.Name == streamingEndpointName), Is.True);
+            Assert.That(list, Is.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Exists(item => item.Data.Name == "default"), Is.True);
+                Assert.That(list.Exists(item => item.Data.Name == streamingEndpointName), Is.True);
+            });
         }
 
         [Test]

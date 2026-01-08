@@ -28,10 +28,13 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             string jobDefinitionName = Recording.GenerateAssetName("jobdef-");
             JobDefinitionData jobDefinitionData = new JobDefinitionData(Models.StorageMoverCopyMode.Additive, NfsEndpointName, ContainerEndpointName);
             JobDefinitionResource jobDefinition = (await jobDefinitions.CreateOrUpdateAsync(WaitUntil.Completed, jobDefinitionName, jobDefinitionData)).Value;
-            Assert.That(jobDefinition.Data.Name, Is.EqualTo(jobDefinitionName));
-            Assert.That(jobDefinition.Data.TargetName, Is.EqualTo(ContainerEndpointName));
-            Assert.That(jobDefinition.Data.SourceName, Is.EqualTo(NfsEndpointName));
-            Assert.That(jobDefinition.Data.CopyMode.ToString(), Is.EqualTo("Additive"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(jobDefinition.Data.Name, Is.EqualTo(jobDefinitionName));
+                Assert.That(jobDefinition.Data.TargetName, Is.EqualTo(ContainerEndpointName));
+                Assert.That(jobDefinition.Data.SourceName, Is.EqualTo(NfsEndpointName));
+                Assert.That(jobDefinition.Data.CopyMode.ToString(), Is.EqualTo("Additive"));
+            });
 
             jobDefinition = (await jobDefinitions.GetAsync(JobDefinitionName)).Value;
 
@@ -40,18 +43,25 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             {
                 counter++;
             }
-            Assert.GreaterOrEqual(counter, 1);
 
-            Assert.That((await jobDefinitions.ExistsAsync(JobDefinitionName)).Value, Is.True);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(counter, Is.GreaterThanOrEqualTo(1));
+
+                Assert.That((await jobDefinitions.ExistsAsync(JobDefinitionName)).Value, Is.True);
+            });
 
             JobDefinitionResource jobDefinition2 = (await jobDefinition.GetAsync()).Value;
-            Assert.That(jobDefinition2.Id.Name, Is.EqualTo(jobDefinition.Id.Name));
-            Assert.That(jobDefinition2.Id.Location, Is.EqualTo(jobDefinition.Id.Location));
-            Assert.That(jobDefinition2.Data.Name, Is.EqualTo(jobDefinition.Data.Name));
-            Assert.That(jobDefinition2.Data.TargetName, Is.EqualTo(jobDefinition.Data.TargetName));
-            Assert.That(jobDefinition2.Data.AgentName, Is.EqualTo(jobDefinition.Data.AgentName));
-            Assert.That(jobDefinition2.Data.SourceName, Is.EqualTo(jobDefinition.Data.SourceName));
-            Assert.That(jobDefinition2.Data.Id, Is.EqualTo(jobDefinition.Data.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(jobDefinition2.Id.Name, Is.EqualTo(jobDefinition.Id.Name));
+                Assert.That(jobDefinition2.Id.Location, Is.EqualTo(jobDefinition.Id.Location));
+                Assert.That(jobDefinition2.Data.Name, Is.EqualTo(jobDefinition.Data.Name));
+                Assert.That(jobDefinition2.Data.TargetName, Is.EqualTo(jobDefinition.Data.TargetName));
+                Assert.That(jobDefinition2.Data.AgentName, Is.EqualTo(jobDefinition.Data.AgentName));
+                Assert.That(jobDefinition2.Data.SourceName, Is.EqualTo(jobDefinition.Data.SourceName));
+                Assert.That(jobDefinition2.Data.Id, Is.EqualTo(jobDefinition.Data.Id));
+            });
 
             JobRunResourceId jobRunResourceId = (await jobDefinition.StartJobAsync()).Value;
 

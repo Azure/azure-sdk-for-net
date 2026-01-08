@@ -58,11 +58,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var firstNotification = notifications.FirstOrDefault();
             Assert.That(firstNotification, Is.Not.Null);
-            Assert.That(firstNotification.Data.Title, Is.Not.Null);
-            Assert.That(firstNotification.Data.Recipients, Is.Not.Null);
-            Assert.IsEmpty(firstNotification.Data.Recipients.Emails);
-            Assert.IsEmpty(firstNotification.Data.Recipients.Users);
-            Assert.That(firstNotification.Data.Description, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstNotification.Data.Title, Is.Not.Null);
+                Assert.That(firstNotification.Data.Recipients, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstNotification.Data.Recipients.Emails, Is.Empty);
+                Assert.That(firstNotification.Data.Recipients.Users, Is.Empty);
+                Assert.That(firstNotification.Data.Description, Is.Not.Null);
+            });
 
             // add a recipient to the notification
             string userEmail = "contoso@microsoft.com";
@@ -75,8 +81,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var notificationContract = (await collection.GetAsync(firstNotification.Data.Name)).Value;
             Assert.That(notificationContract, Is.Not.Null);
             Assert.That(notificationContract.Data.Recipients, Is.Not.Null);
-            Assert.IsEmpty(notificationContract.Data.Recipients.Users);
-            Assert.That(notificationContract.Data.Recipients.Emails.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(notificationContract.Data.Recipients.Users, Is.Empty);
+                Assert.That(notificationContract.Data.Recipients.Emails.Count, Is.EqualTo(1));
+            });
 
             // delete the recipient email
             await notificationContract.DeleteNotificationRecipientEmailAsync(userEmail);

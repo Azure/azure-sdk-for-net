@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 await brokerAuthenticationResourceCollection.GetAsync(BrokersAuthenticationsName);
 
             Assert.That(brokerAuthenticationResource, Is.Not.Null);
-            Assert.That(brokerAuthenticationResource.Data, Is.Not.Null);
-            Assert.That(BrokersAuthenticationsName, Is.EqualTo(brokerAuthenticationResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(brokerAuthenticationResource.Data, Is.Not.Null);
+                Assert.That(BrokersAuthenticationsName, Is.EqualTo(brokerAuthenticationResource.Data.Name));
+            });
 
             // Create BrokerAuthentication
             IotOperationsBrokerAuthenticationData brokerAuthenticationResourceData =

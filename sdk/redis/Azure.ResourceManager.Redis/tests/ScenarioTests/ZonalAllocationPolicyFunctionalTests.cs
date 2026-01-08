@@ -39,13 +39,16 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Standard));
-            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.BasicOrStandard));
-            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(0));
-            Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.Automatic));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Standard));
+                Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.BasicOrStandard));
+                Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(0));
+                Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.Automatic));
+                Assert.That(responseCreate.Data.Zones, Is.Empty);
+            });
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -65,13 +68,16 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
-            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
-            Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.Automatic));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+                Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
+                Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.Automatic));
+                Assert.That(responseCreate.Data.Zones, Is.Empty);
+            });
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -91,13 +97,16 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
-            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
-            Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.NoZones));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+                Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
+                Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.NoZones));
+                Assert.That(responseCreate.Data.Zones, Is.Empty);
+            });
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -118,13 +127,16 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
-            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
-            Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.UserDefined));
-            Assert.That(responseCreate.Data.Zones, Is.EqualTo(new List<string> { "1", "2" }));
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+                Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
+                Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.UserDefined));
+                Assert.That(responseCreate.Data.Zones, Is.EqualTo(new List<string> { "1", "2" }));
+            });
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -144,13 +156,16 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
-            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
-            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
-            Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.NoZones));
-            Assert.IsEmpty(responseCreate.Data.Zones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+                Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
+                Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(1));
+                Assert.That(responseCreate.Data.ZonalAllocationPolicy, Is.EqualTo(ZonalAllocationPolicy.NoZones));
+                Assert.That(responseCreate.Data.Zones, Is.Empty);
+            });
 
             var patch = new RedisPatch()
             {

@@ -32,26 +32,35 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region Account
         public static void AssertAccount(DataShareAccountData account1, DataShareAccountData account2)
         {
             AssertTrackedResource(account1, account2);
-            Assert.That(account2.CreatedOn, Is.EqualTo(account1.CreatedOn));
-            Assert.That(account2.ProvisioningState, Is.EqualTo(account1.ProvisioningState));
-            Assert.That(account2.UserName, Is.EqualTo(account1.UserName));
-            Assert.That(account2.UserEmail, Is.EqualTo(account1.UserEmail));
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.CreatedOn, Is.EqualTo(account1.CreatedOn));
+                Assert.That(account2.ProvisioningState, Is.EqualTo(account1.ProvisioningState));
+                Assert.That(account2.UserName, Is.EqualTo(account1.UserName));
+                Assert.That(account2.UserEmail, Is.EqualTo(account1.UserEmail));
+            });
         }
         public static DataShareAccountData GetAccount()
         {
@@ -96,11 +105,14 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
         public static void AssertInvitationData(DataShareInvitationData data1, DataShareInvitationData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.TargetObjectId, Is.EqualTo(data1.TargetObjectId));
-            Assert.That(data2.TargetActiveDirectoryId, Is.EqualTo(data1.TargetActiveDirectoryId));
-            Assert.That(data2.TargetEmail, Is.EqualTo(data1.TargetEmail));
-            Assert.That(data2.InvitationStatus, Is.EqualTo(data1.InvitationStatus));
-            Assert.That(data2.InvitationId, Is.EqualTo(data1.InvitationId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.TargetObjectId, Is.EqualTo(data1.TargetObjectId));
+                Assert.That(data2.TargetActiveDirectoryId, Is.EqualTo(data1.TargetActiveDirectoryId));
+                Assert.That(data2.TargetEmail, Is.EqualTo(data1.TargetEmail));
+                Assert.That(data2.InvitationStatus, Is.EqualTo(data1.InvitationStatus));
+                Assert.That(data2.InvitationId, Is.EqualTo(data1.InvitationId));
+            });
         }
         public static DataShareInvitationData GetInvitationData()
         {
@@ -117,11 +129,14 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
         public static void AssertSubscriptionData(ShareSubscriptionData data1, ShareSubscriptionData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.ShareSubscriptionStatus, Is.EqualTo(data1.ShareSubscriptionStatus));
-            Assert.That(data2.SourceShareLocation, Is.EqualTo(data1.SourceShareLocation));
-            Assert.That(data2.ShareName, Is.EqualTo(data1.ShareName));
-            Assert.That(data2.ShareDescription, Is.EqualTo(data1.ShareDescription));
-            Assert.That(data2.InvitationId, Is.EqualTo(data1.InvitationId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.ShareSubscriptionStatus, Is.EqualTo(data1.ShareSubscriptionStatus));
+                Assert.That(data2.SourceShareLocation, Is.EqualTo(data1.SourceShareLocation));
+                Assert.That(data2.ShareName, Is.EqualTo(data1.ShareName));
+                Assert.That(data2.ShareDescription, Is.EqualTo(data1.ShareDescription));
+                Assert.That(data2.InvitationId, Is.EqualTo(data1.InvitationId));
+            });
         }
         public static ShareSubscriptionData GetSubscriptionData(Guid invitationId)
         {
@@ -151,11 +166,14 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
         public static void AssertShareData(DataShareData data1, DataShareData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.UserName, Is.EqualTo(data1.UserName));
-            Assert.That(data2.ShareKind, Is.EqualTo(data1.ShareKind));
-            Assert.That(data2.Description, Is.EqualTo(data1.Description));
-            Assert.That(data2.ProvisioningState, Is.EqualTo(data1.ProvisioningState));
-            Assert.That(data2.UserEmail, Is.EqualTo(data1.UserEmail));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.UserName, Is.EqualTo(data1.UserName));
+                Assert.That(data2.ShareKind, Is.EqualTo(data1.ShareKind));
+                Assert.That(data2.Description, Is.EqualTo(data1.Description));
+                Assert.That(data2.ProvisioningState, Is.EqualTo(data1.ProvisioningState));
+                Assert.That(data2.UserEmail, Is.EqualTo(data1.UserEmail));
+            });
         }
         public static DataShareData GetShareData()
         {

@@ -118,9 +118,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(_backupVaultResource.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(_backupVaultResource.Id));
+            });
 
             //create Backup
             NetAppBackupData backupData = new NetAppBackupData(volumeResource1.Id)
@@ -139,16 +142,22 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(backupResource2.Id.Name, Is.EqualTo(backupName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupCollection.GetAsync(backupName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName), Is.True);
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName), Is.True);
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            });
             await LiveDelay(5000);
 
             //Check status again
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetBackupStatusAsync()).Value;
             Assert.That(backupStatus, Is.Not.Null);
-            Assert.That(backupStatus.RelationshipStatus, Is.EqualTo(NetAppRelationshipStatus.Idle));
-            Assert.That(backupStatus.MirrorState, Is.EqualTo(NetAppMirrorState.Mirrored));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupStatus.RelationshipStatus, Is.EqualTo(NetAppRelationshipStatus.Idle));
+                Assert.That(backupStatus.MirrorState, Is.EqualTo(NetAppMirrorState.Mirrored));
+            });
             await LiveDelay(120000);
 
             //Delete backup
@@ -201,9 +210,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(backupConfiguration.BackupVaultId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(backupConfiguration.BackupVaultId));
+            });
 
             //create Backup
             NetAppBackupData backupData = new(volumeResource1.Id)
@@ -220,9 +232,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(backupResource2.Id.Name, Is.EqualTo(backupName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupCollection.GetAsync(backupName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupResource2.Id.Name), Is.True);
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupResource2.Id.Name), Is.True);
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            });
 
             //Update backup
             NetAppBackupVaultBackupPatch backupPatch = new()
@@ -260,8 +275,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+            });
 
             //create Backup
             NetAppBackupData backupData = new(volumeResource1.Id)
@@ -282,8 +300,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppBackupVaultBackupResource backup2Resource1 = (await _backupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName2, backupData2)).Value;
             Assert.That(backup2Resource1, Is.Not.Null);
-            Assert.That(backup2Resource1.Id.Name, Is.EqualTo(backupName2));
-            Assert.That(backup2Resource1.Data.Label, Is.EqualTo(backupData2.Label));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backup2Resource1.Id.Name, Is.EqualTo(backupName2));
+                Assert.That(backup2Resource1.Data.Label, Is.EqualTo(backupData2.Label));
+            });
             await LiveDelay(60000);
             await WaitForBackupSucceeded(_backupCollection, backupName2);
             NetAppBackupVaultBackupResource backup2Resource2 = await _backupCollection.GetAsync(backupName2);
@@ -325,9 +346,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(backupConfiguration.BackupVaultId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(backupConfiguration.BackupVaultId));
+            });
 
             //create Backup
             NetAppBackupData backupData = new(volumeResource1.Id)
@@ -344,16 +368,22 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(backupResource2.Id.Name, Is.EqualTo(backupName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupCollection.GetAsync(backupName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName), Is.True);
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName), Is.True);
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            });
 
             //Get backup status
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusBackupAsync()).Value;
             Assert.That(backupStatus, Is.Not.Null);
-            //we need creation to finish else we cannot cleanup
-            Assert.That(backupStatus.RelationshipStatus, Is.EqualTo(NetAppRelationshipStatus.Idle));
-            Assert.That(backupStatus.MirrorState, Is.EqualTo(NetAppMirrorState.Mirrored));
+            Assert.Multiple(() =>
+            {
+                //we need creation to finish else we cannot cleanup
+                Assert.That(backupStatus.RelationshipStatus, Is.EqualTo(NetAppRelationshipStatus.Idle));
+                Assert.That(backupStatus.MirrorState, Is.EqualTo(NetAppMirrorState.Mirrored));
+            });
         }
 
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
@@ -380,9 +410,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(backupPolicyProperties.BackupVaultId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(backupPolicyProperties.BackupVaultId));
+            });
 
             //create Backup
             NetAppBackupData backupData = new(volumeResource1.Id)
@@ -400,9 +433,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(backupResource2.Id.Name, Is.EqualTo(backupName));
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupCollection.GetAsync(backupName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName), Is.True);
-            Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName), Is.True);
+                Assert.That((bool)await _backupCollection.ExistsAsync(backupName + "1"), Is.False);
+            });
 
             //Restore backup
             //You can restore a backup only to a new volume. You cannot overwrite the existing volume with the backup
@@ -410,8 +446,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             await LiveDelay(40000);
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.That(newVolumeResource2, Is.Not.Null);
-            Assert.That(newVolumeResource2.Id.Name, Is.EqualTo(newVolumeName));
-            Assert.That(newVolumeResource2.Data.OriginatingResourceId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(newVolumeResource2.Id.Name, Is.EqualTo(newVolumeName));
+                Assert.That(newVolumeResource2.Data.OriginatingResourceId, Is.Not.Null);
+            });
             Assert.That(newVolumeResource2.Data.OriginatingResourceId, Is.EqualTo(backupResource2.Id));
 
             await WaitForVolumeSucceeded(_volumeCollection, _restoredVolumeResource);
@@ -450,10 +489,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             NetAppVolumeResource backupVolume2Resource = await _volumeCollection.GetAsync(volume2Resource.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(_backupVaultResource.Id));
-            Assert.That(backupVolume2Resource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(_backupVaultResource.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(_backupVaultResource.Id));
+                Assert.That(backupVolume2Resource.Data.DataProtection.Backup.BackupVaultId, Is.EqualTo(_backupVaultResource.Id));
+            });
 
             //create Backup
             NetAppBackupData backupData = new(volumeResourceId: volumeResource1.Id)
@@ -494,15 +536,21 @@ namespace Azure.ResourceManager.NetApp.Tests
                 Console.WriteLine($"BackupListFiltered for Backup {backup.Id}, volumeResourceId: {backup.Data.VolumeResourceId}");
             }
             backupListFiltered.Should().HaveCount(1);
-            Assert.That(backupListFiltered[0].Id.Name, Is.EqualTo(backupName));
-            Assert.That(backupListFiltered[0].Data.VolumeResourceId, Is.EqualTo(_volumeResource.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupListFiltered[0].Id.Name, Is.EqualTo(backupName));
+                Assert.That(backupListFiltered[0].Data.VolumeResourceId, Is.EqualTo(_volumeResource.Id));
+            });
 
             //Validate filtering for volume2
             List<NetAppBackupVaultBackupResource> backupListFilteredVol2 = await _backupCollection.GetAllAsync(filter: volume2Resource.Id).ToEnumerableAsync();
             Assert.That(backupListFiltered, Is.Not.Null);
             backupListFilteredVol2.Should().HaveCount(1);
-            Assert.That(backupListFilteredVol2[0].Id.Name, Is.EqualTo(vol2backupName));
-            Assert.That(backupListFilteredVol2[0].Data.VolumeResourceId, Is.EqualTo(volume2Resource.Id));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupListFilteredVol2[0].Id.Name, Is.EqualTo(vol2backupName));
+                Assert.That(backupListFilteredVol2[0].Data.VolumeResourceId, Is.EqualTo(volume2Resource.Id));
+            });
 
             await LiveDelay(30000);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);

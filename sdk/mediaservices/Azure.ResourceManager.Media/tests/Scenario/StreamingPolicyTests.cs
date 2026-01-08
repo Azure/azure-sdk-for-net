@@ -69,8 +69,11 @@ namespace Azure.ResourceManager.Media.Tests
             string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             var streamingPolicy = await streamingPolicyCollection.GetAsync(policyName);
-            Assert.That(policyName, Is.Not.Null);
-            Assert.That(streamingPolicy.Value.Data.Name, Is.EqualTo(policyName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policyName, Is.Not.Null);
+                Assert.That(streamingPolicy.Value.Data.Name, Is.EqualTo(policyName));
+            });
         }
 
         [Test]
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Media.Tests
             string policyName = Recording.GenerateAssetName("streamingPolicy");
             await CreateStreamingPolicy(policyName);
             var list = await streamingPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.Exists(item => item.Data.Name == "Predefined_ClearKey"), Is.True);
         }
 

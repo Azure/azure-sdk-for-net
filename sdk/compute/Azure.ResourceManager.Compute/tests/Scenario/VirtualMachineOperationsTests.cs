@@ -100,15 +100,21 @@ namespace Azure.ResourceManager.Compute.Tests
             virtualMachine2 = (await virtualMachine2.UpdateAsync(WaitUntil.Completed, updateOptions2)).Value;
             var newBootDiag = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics;
             var newEnabled = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics?.Enabled;
-            Assert.That(newBootDiag is null, Is.EqualTo(originalBootDiag is null));
-            Assert.That(newEnabled, Is.EqualTo(originalEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(newBootDiag is null, Is.EqualTo(originalBootDiag is null));
+                Assert.That(newEnabled, Is.EqualTo(originalEnabled));
+            });
 
             updateOptions2.DiagnosticsProfile = null;
             virtualMachine2 = (await virtualMachine2.UpdateAsync(WaitUntil.Completed, updateOptions2)).Value;
             newBootDiag = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics;
             newEnabled = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics?.Enabled;
-            Assert.That(newBootDiag is null, Is.EqualTo(originalBootDiag is null));
-            Assert.That(newEnabled, Is.EqualTo(originalEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(newBootDiag is null, Is.EqualTo(originalBootDiag is null));
+                Assert.That(newEnabled, Is.EqualTo(originalEnabled));
+            });
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // GetAll test
             var list = await userCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
             AssertUserData(userData, list[0].Data);
 
             // Delete test
@@ -133,8 +133,11 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertUserData(LabUserData expected, LabUserData actual)
         {
-            Assert.That(actual.Email, Is.EqualTo(expected.Email));
-            Assert.That(actual.AdditionalUsageQuota, Is.EqualTo(expected.AdditionalUsageQuota));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Email, Is.EqualTo(expected.Email));
+                Assert.That(actual.AdditionalUsageQuota, Is.EqualTo(expected.AdditionalUsageQuota));
+            });
         }
     }
 }

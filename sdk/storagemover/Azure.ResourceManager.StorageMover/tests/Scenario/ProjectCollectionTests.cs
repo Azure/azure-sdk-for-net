@@ -35,9 +35,12 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             string projectName = Recording.GenerateAssetName("project-");
             StorageMoverProjectData projectData = new StorageMoverProjectData();
             StorageMoverProjectResource project = (await projects.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
-            Assert.That(project.Data.Name, Is.EqualTo(projectName));
-            Assert.That(project.Data.Description, Is.EqualTo(null));
-            Assert.That(project.Data.ResourceType.ToString(), Is.EqualTo("microsoft.storagemover/storagemovers/projects"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(project.Data.Name, Is.EqualTo(projectName));
+                Assert.That(project.Data.Description, Is.EqualTo(null));
+                Assert.That(project.Data.ResourceType.ToString(), Is.EqualTo("microsoft.storagemover/storagemovers/projects"));
+            });
 
             project = (await projects.GetAsync(projectName)).Value;
             Assert.That(project.Data.Name, Is.EqualTo(projectName));

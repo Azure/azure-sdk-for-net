@@ -43,11 +43,14 @@ namespace Azure.ResourceManager.Media.Tests
             Assert.That(flag, Is.True);
             // Get
             var result = await liveEventCollection.GetAsync(liveEventName);
-            Assert.That(liveEvent, Is.Not.Null);
-            Assert.That(result.Value.Data.Name, Is.EqualTo(liveEventName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(liveEvent, Is.Not.Null);
+                Assert.That(result.Value.Data.Name, Is.EqualTo(liveEventName));
+            });
             // List
             var list = await liveEventCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Delete
             await liveEvent.DeleteAsync(WaitUntil.Completed);
             flag = await liveEventCollection.ExistsAsync(liveEventName);

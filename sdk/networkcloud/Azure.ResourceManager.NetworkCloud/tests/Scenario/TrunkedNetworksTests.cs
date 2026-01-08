@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // List by Subscription
             var listBySubscription = new List<NetworkCloudTrunkedNetworkResource>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             // Delete
             var deleteResult = await trunkedNetwork.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

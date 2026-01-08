@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByCluster);
+            Assert.That(listByCluster, Is.Not.Empty);
 
             // Update
             NetworkCloudBmcKeySetPatch patch = new NetworkCloudBmcKeySetPatch()

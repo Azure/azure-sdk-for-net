@@ -101,15 +101,21 @@ namespace Azure.ResourceManager.NetApp.Tests
             //validate
             NetAppVolumeGroupResource volumeGroupDetailsResource2 = await _volumeGroupCollection.GetAsync(volumeGroupName);
             Assert.That(volumeGroupDetailsResource2, Is.Not.Null);
-            Assert.That(volumeGroupDetailsResource2.Data.Name, Is.EqualTo(volumeGroupDetailsResource1.Data.Name));
-            Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.DeploymentSpecId, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.DeploymentSpecId));
-            Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.GroupDescription, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.GroupDescription));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volumeGroupDetailsResource2.Data.Name, Is.EqualTo(volumeGroupDetailsResource1.Data.Name));
+                Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.DeploymentSpecId, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.DeploymentSpecId));
+                Assert.That(volumeGroupDetailsResource2.Data.GroupMetaData.GroupDescription, Is.EqualTo(volumeGroupDetailsResource1.Data.GroupMetaData.GroupDescription));
+            });
 
             //check non existance and exitance
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _volumeCollection.GetAsync(volumeGroupName + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _volumeGroupCollection.ExistsAsync(volumeGroupName), Is.True);
-            Assert.That((bool)await _volumeGroupCollection.ExistsAsync(volumeGroupName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _volumeGroupCollection.ExistsAsync(volumeGroupName), Is.True);
+                Assert.That((bool)await _volumeGroupCollection.ExistsAsync(volumeGroupName + "1"), Is.False);
+            });
 
             //Before deleting the volumeGroup, delete all volumes under it and pool
             await ClearVolumeGroupVolumesAndPool();

@@ -26,21 +26,24 @@ namespace Azure.ResourceManager.Advisor.Tests
             // get recommendations, we should get a non-empty list
             var collection = Client.GetResourceRecommendationBases(DefaultSubscription.Id);
             var recs = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(recs.Count, 1);
+            Assert.That(recs, Is.Not.Empty);
 
             ResourceRecommendationBaseResource recommendation = null;
 
             // standard properties must all be populated
             foreach (var rec in recs)
             {
-                Assert.That(string.IsNullOrWhiteSpace(rec.Data.Id), Is.False);
-                Assert.That(string.IsNullOrWhiteSpace(rec.Data.Name), Is.False);
-                Assert.That(string.IsNullOrWhiteSpace(rec.Data.RecommendationTypeId), Is.False);
-                Assert.That(rec.Data.Category, Is.Not.Null);
-                Assert.That(rec.Data.Impact, Is.Not.Null);
-                Assert.That(rec.Data.ShortDescription, Is.Not.Null);
-                Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Problem), Is.False);
-                Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Solution), Is.False);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(string.IsNullOrWhiteSpace(rec.Data.Id), Is.False);
+                    Assert.That(string.IsNullOrWhiteSpace(rec.Data.Name), Is.False);
+                    Assert.That(string.IsNullOrWhiteSpace(rec.Data.RecommendationTypeId), Is.False);
+                    Assert.That(rec.Data.Category, Is.Not.Null);
+                    Assert.That(rec.Data.Impact, Is.Not.Null);
+                    Assert.That(rec.Data.ShortDescription, Is.Not.Null);
+                    Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Problem), Is.False);
+                    Assert.That(string.IsNullOrWhiteSpace(rec.Data.ShortDescription.Solution), Is.False);
+                });
                 if (!string.IsNullOrWhiteSpace(rec.Data.ImpactedValue))
                 {
                     recommendation = rec;
@@ -52,8 +55,11 @@ namespace Azure.ResourceManager.Advisor.Tests
 
             // we should be able to fetch the recommendation by name
             var output = (await collection.GetAsync(recommendation.Data.Name)).Value;
-            Assert.That(output.Id, Is.EqualTo(recommendation.Id));
-            Assert.That(output.Data.Name, Is.EqualTo(recommendation.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(output.Id, Is.EqualTo(recommendation.Id));
+                Assert.That(output.Data.Name, Is.EqualTo(recommendation.Data.Name));
+            });
 
             // we should be able to create a suppression with a specific TTL
             var suppressionCollection = recommendation.GetSuppressionContracts();

@@ -76,8 +76,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlUserDefinedFunctionCreateAndUpdate()
         {
             var userDefinedFunction = await CreateSqlUserDefinedFunction(null);
-            Assert.That(userDefinedFunction.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
-            Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("First Hello World"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(userDefinedFunction.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
+                Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("First Hello World"));
+            });
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
@@ -98,8 +101,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             });
 
             userDefinedFunction = (await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(WaitUntil.Completed, _userDefinedFunctionName, updateOptions)).Value;
-            Assert.That(userDefinedFunction.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
-            Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(userDefinedFunction.Data.Resource.FunctionName, Is.EqualTo(_userDefinedFunctionName));
+                Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
+            });
 
             userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
@@ -150,13 +156,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlUserDefinedFunctions(CosmosDBSqlUserDefinedFunctionResource expectedValue, CosmosDBSqlUserDefinedFunctionResource actualValue)
         {
-            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
-            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
-            Assert.That(actualValue.Data.Resource.FunctionName, Is.EqualTo(expectedValue.Data.Resource.FunctionName));
-            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
-            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
-            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
-            Assert.That(actualValue.Data.Resource.Body, Is.EqualTo(expectedValue.Data.Resource.Body));
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+                Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+                Assert.That(actualValue.Data.Resource.FunctionName, Is.EqualTo(expectedValue.Data.Resource.FunctionName));
+                Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                Assert.That(actualValue.Data.Resource.Body, Is.EqualTo(expectedValue.Data.Resource.Body));
+            });
         }
     }
 }

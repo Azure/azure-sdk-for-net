@@ -47,11 +47,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.That(flag, Is.True);
             // Get
             var globalParametersGet = await dataFactory.GetDataFactoryGlobalParameters().GetAsync(globalParameterName);
-            Assert.That(globalParameters, Is.Not.Null);
-            Assert.That(globalParametersGet.Value.Data.Name, Is.EqualTo(globalParameterName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(globalParameters, Is.Not.Null);
+                Assert.That(globalParametersGet.Value.Data.Name, Is.EqualTo(globalParameterName));
+            });
             // GetAll
             var list = await dataFactory.GetDataFactoryGlobalParameters().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(globalParameterName));
             // Delete
             await globalParameters.DeleteAsync(WaitUntil.Completed);

@@ -29,11 +29,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         #region Cluster
@@ -61,10 +64,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         #region PrivateEndPoint
         public static void AssertEndPoint(StreamAnalyticsPrivateEndpointData point1, StreamAnalyticsPrivateEndpointData point2)
         {
-            Assert.That(point2.Name, Is.EqualTo(point1.Name));
-            Assert.That(point2.Id, Is.EqualTo(point1.Id));
-            Assert.That(point2.ResourceType, Is.EqualTo(point1.ResourceType));
-            Assert.That(point2.ETag, Is.EqualTo(point1.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(point2.Name, Is.EqualTo(point1.Name));
+                Assert.That(point2.Id, Is.EqualTo(point1.Id));
+                Assert.That(point2.ResourceType, Is.EqualTo(point1.ResourceType));
+                Assert.That(point2.ETag, Is.EqualTo(point1.ETag));
+            });
         }
         public static StreamAnalyticsPrivateEndpointData GetEndPointData()
         {
@@ -117,9 +123,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         #region StreamingJobInput
         public static void AssertInput(StreamingJobInputData input1, StreamingJobInputData  input2)
         {
-            Assert.That(input2.Name, Is.EqualTo(input1.Name));
-            Assert.That(input2.Id, Is.EqualTo(input1.Id));
-            Assert.That(input2.ResourceType, Is.EqualTo(input1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(input2.Name, Is.EqualTo(input1.Name));
+                Assert.That(input2.Id, Is.EqualTo(input1.Id));
+                Assert.That(input2.ResourceType, Is.EqualTo(input1.ResourceType));
+            });
         }
         public static StreamingJobInputData GetStreamingJobInputData()
         {
@@ -157,9 +166,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         #region JobOutput
         public static void AssertOutput(StreamingJobOutputData output1, StreamingJobOutputData output2)
         {
-            Assert.That(output2.Name, Is.EqualTo(output1.Name));
-            Assert.That(output2.Id, Is.EqualTo(output1.Id));
-            Assert.That(output2.ResourceType, Is.EqualTo(output1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(output2.Name, Is.EqualTo(output1.Name));
+                Assert.That(output2.Id, Is.EqualTo(output1.Id));
+                Assert.That(output2.ResourceType, Is.EqualTo(output1.ResourceType));
+            });
         }
         public static StreamingJobOutputData GetStreamingJobOutputData()
         {
@@ -192,9 +204,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         #region Function
         public static void AssertFunction(StreamingJobFunctionData function1, StreamingJobFunctionData function2)
         {
-            Assert.That(function2.Name, Is.EqualTo(function1.Name));
-            Assert.That(function2.Id, Is.EqualTo(function1.Id));
-            Assert.That(function2.ResourceType, Is.EqualTo(function1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(function2.Name, Is.EqualTo(function1.Name));
+                Assert.That(function2.Id, Is.EqualTo(function1.Id));
+                Assert.That(function2.ResourceType, Is.EqualTo(function1.ResourceType));
+            });
         }
         public static StreamingJobFunctionData GetStreamingJobFunctionData()
         {
@@ -226,9 +241,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         #region Transformation
         public static void AssertTransformation(StreamingJobTransformationData transform1, StreamingJobTransformationData transform2)
         {
-            Assert.That(transform2.Name, Is.EqualTo(transform1.Name));
-            Assert.That(transform2.Id, Is.EqualTo(transform1.Id));
-            Assert.That(transform2.ResourceType, Is.EqualTo(transform1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(transform2.Name, Is.EqualTo(transform1.Name));
+                Assert.That(transform2.Id, Is.EqualTo(transform1.Id));
+                Assert.That(transform2.ResourceType, Is.EqualTo(transform1.ResourceType));
+            });
         }
         public static StreamingJobTransformationData GetStreamingJobTransformation()
         {

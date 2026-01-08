@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             await CreateIpGroup(_iPGroupName);
             var iPGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
-            Assert.That(iPGroupList.Count, Is.EqualTo(1));
+            Assert.That(iPGroupList, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests
             var ipGroup  = await CreateIpGroup(_iPGroupName);
             await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
             var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(ipGroupList);
+            Assert.That(ipGroupList, Is.Empty);
         }
     }
 }

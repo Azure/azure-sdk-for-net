@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Tests
             string assetName = Recording.GenerateAssetName("asset");
             await mediaAssetCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, new MediaAssetData());
             var list = await mediaAssetCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

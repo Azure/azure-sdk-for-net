@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // there should be now issues initially
             var issuesList = await issueCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(issuesList);
+            Assert.That(issuesList, Is.Empty);
 
             string newissueId = Recording.GenerateAssetName("newIssue");
             string newcommentId = Recording.GenerateAssetName("newComment");
@@ -90,13 +90,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiIssueContract = (await issueCollection.CreateOrUpdateAsync(WaitUntil.Completed, newissueId, issueContract)).Value;
 
             Assert.That(apiIssueContract, Is.Not.Null);
-            Assert.That(apiIssueContract.Data.ApiId, Is.EqualTo(echoApi.Id));
-            Assert.That(apiIssueContract.Data.State, Is.EqualTo(IssueState.Proposed));
-            Assert.That(apiIssueContract.Data.Title, Is.EqualTo(issueContract.Title));
+            Assert.Multiple(() =>
+            {
+                Assert.That(apiIssueContract.Data.ApiId, Is.EqualTo(echoApi.Id));
+                Assert.That(apiIssueContract.Data.State, Is.EqualTo(IssueState.Proposed));
+                Assert.That(apiIssueContract.Data.Title, Is.EqualTo(issueContract.Title));
+            });
             // get the issue
             var issueData = (await issueCollection.GetAsync(newissueId)).Value;
-            Assert.That(issueData, Is.Not.Null);
-            Assert.That(newissueId, Is.EqualTo(issueData.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(issueData, Is.Not.Null);
+                Assert.That(newissueId, Is.EqualTo(issueData.Data.Name));
+            });
             Assert.That(issueData.Data.UserId, Is.EqualTo(adminUser.Id));
 
             // update the issue
@@ -113,8 +119,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get the issue
             issueData = await issueData.GetAsync();
-            Assert.That(issueData, Is.Not.Null);
-            Assert.That(newissueId, Is.EqualTo(issueData.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(issueData, Is.Not.Null);
+                Assert.That(newissueId, Is.EqualTo(issueData.Data.Name));
+            });
             Assert.That(issueData.Data.UserId, Is.EqualTo(adminUser.Id));
             Assert.That(issueData.Data.Title, Is.EqualTo(updateTitle));
             Assert.That(issueData.Data.Description, Is.EqualTo(updateDescription));
@@ -123,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var commentCollection = issueData.GetApiIssueComments();
             var emptyCommentList = await commentCollection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsEmpty(emptyCommentList);
+            Assert.That(emptyCommentList, Is.Empty);
 
             // add a comment
             var issueCommentParameters = new ApiIssueCommentData()
@@ -133,8 +142,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 CreatedOn = DateTime.Parse("2018-02-01T22:21:20.467Z")
             };
             var addedComment = (await commentCollection.CreateOrUpdateAsync(WaitUntil.Completed, newcommentId, issueCommentParameters)).Value;
-            Assert.That(addedComment, Is.Not.Null);
-            Assert.That(newcommentId, Is.EqualTo(addedComment.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(addedComment, Is.Not.Null);
+                Assert.That(newcommentId, Is.EqualTo(addedComment.Data.Name));
+            });
             // https://msazure.visualstudio.com/DefaultCollection/One/_workitems/edit/4402087
             //Assert.Equal(addedComment.UserId, adminUser.Id); //Bug userId is not getting populated
             Assert.That(addedComment.Data.CreatedOn, Is.Not.Null);
@@ -147,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the issue attachments
             var attachmentsCollection = issueData.GetApiIssueAttachments();
             var apiIssueAttachments = await attachmentsCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(apiIssueAttachments);
+            Assert.That(apiIssueAttachments, Is.Empty);
 
             // add an attachment to the issue
             FileInfo fileInfo = new FileInfo(attachmentPath);
@@ -174,9 +186,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var issueAttachment = (await attachmentsCollection.CreateOrUpdateAsync(WaitUntil.Completed, newattachmentId, issueAttachmentContract)).Value;
             Assert.That(issueAttachment, Is.Not.Null);
-            Assert.That(issueAttachment.Data.Name, Is.EqualTo(newattachmentId));
-            Assert.That(issueAttachment.Data.ContentFormat, Is.EqualTo("link"));
-            Assert.That(issueAttachment.Data.Content, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(issueAttachment.Data.Name, Is.EqualTo(newattachmentId));
+                Assert.That(issueAttachment.Data.ContentFormat, Is.EqualTo("link"));
+                Assert.That(issueAttachment.Data.Content, Is.Not.Null);
+            });
 
             // delete the attachment
             await issueAttachment.DeleteAsync(WaitUntil.Completed, ETag.All);

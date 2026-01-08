@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.Chaos.Tests
         public async Task Get()
         {
             var targetTypeResponse = await this.TargetTypeCollection.GetAsync(TestConstants.VmssTargetName).ConfigureAwait(false);
-            Assert.That(targetTypeResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssTargetName));
-            Assert.That(targetTypeResponse.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                Assert.That(targetTypeResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssTargetName));
+                Assert.That(targetTypeResponse.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
     }
 }

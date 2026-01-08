@@ -39,9 +39,12 @@ namespace Azure.ResourceManager.Synapse.Tests
             var createSqlpoolParams = CommonData.PrepareSqlpoolCreateParams();
             SynapseSqlPoolCollection sqlPoolCollection = WorkspaceResource.GetSynapseSqlPools();
             var sqlpoolCreate =(await sqlPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlpoolName, createSqlpoolParams)).Value;
-            Assert.That(sqlpoolCreate.Data.ResourceType, Is.EqualTo(CommonTestFixture.SqlpoolType));
-            Assert.That(sqlpoolCreate.Data.Name, Is.EqualTo(sqlpoolName));
-            Assert.That(sqlpoolCreate.Data.Location, Is.EqualTo(CommonData.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sqlpoolCreate.Data.ResourceType, Is.EqualTo(CommonTestFixture.SqlpoolType));
+                Assert.That(sqlpoolCreate.Data.Name, Is.EqualTo(sqlpoolName));
+                Assert.That(sqlpoolCreate.Data.Location, Is.EqualTo(CommonData.Location));
+            });
 
             // get sqlpool
             for (int i = 0; i < 60; i++)
@@ -49,14 +52,17 @@ namespace Azure.ResourceManager.Synapse.Tests
                 var sqlpoolGet = (await sqlPoolCollection.GetAsync(sqlpoolName)).Value;
                 if (sqlpoolGet.Data.ProvisioningState.Equals("Succeeded"))
                 {
-                    Assert.That(sqlpoolCreate.Data.ResourceType, Is.EqualTo(CommonTestFixture.SqlpoolType));
-                    Assert.That(sqlpoolCreate.Data.Name, Is.EqualTo(sqlpoolName));
-                    Assert.That(sqlpoolCreate.Data.Location, Is.EqualTo(CommonData.Location));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sqlpoolCreate.Data.ResourceType, Is.EqualTo(CommonTestFixture.SqlpoolType));
+                        Assert.That(sqlpoolCreate.Data.Name, Is.EqualTo(sqlpoolName));
+                        Assert.That(sqlpoolCreate.Data.Location, Is.EqualTo(CommonData.Location));
+                    });
                     break;
                 }
 
                 Thread.Sleep(30000);
-                Assert.That(i < 60, Is.True, "Synapse SqlPool is not in succeeded state even after 30 min.");
+                Assert.That(i, Is.LessThan(60), "Synapse SqlPool is not in succeeded state even after 30 min.");
             }
 
             // update sqlpool
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             // delete sqlpool
             await sqlpool.DeleteAsync(WaitUntil.Completed);
             var sqlPoolList = await sqlPoolCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(sqlPoolList.Count, Is.EqualTo(sqlpoolCount - 1));
+            Assert.That(sqlPoolList, Has.Count.EqualTo(sqlpoolCount - 1));
         }
     }
 }

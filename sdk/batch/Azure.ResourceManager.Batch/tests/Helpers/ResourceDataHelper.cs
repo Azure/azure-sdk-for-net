@@ -33,9 +33,12 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
 
         public static void AssertResourceData(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         #region BatchAccountCertificate
@@ -54,11 +57,14 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         public static void AssertCertificate(BatchAccountCertificateData certificateData1, BatchAccountCertificateData certificateData2)
         {
             AssertResourceData(certificateData1, certificateData2);
-            Assert.That(certificateData2.ETag, Is.EqualTo(certificateData1.ETag));
-            Assert.That(certificateData2.PublicData, Is.EqualTo(certificateData1.PublicData));
-            Assert.That(certificateData2.ThumbprintAlgorithm, Is.EqualTo(certificateData1.ThumbprintAlgorithm));
-            Assert.That(certificateData2.Format, Is.EqualTo(certificateData1.Format));
-            Assert.That(certificateData2.PreviousProvisioningState, Is.EqualTo(certificateData1.PreviousProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(certificateData2.ETag, Is.EqualTo(certificateData1.ETag));
+                Assert.That(certificateData2.PublicData, Is.EqualTo(certificateData1.PublicData));
+                Assert.That(certificateData2.ThumbprintAlgorithm, Is.EqualTo(certificateData1.ThumbprintAlgorithm));
+                Assert.That(certificateData2.Format, Is.EqualTo(certificateData1.Format));
+                Assert.That(certificateData2.PreviousProvisioningState, Is.EqualTo(certificateData1.PreviousProvisioningState));
+            });
         }
         #endregion
 
@@ -73,14 +79,17 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         }
         public static void AssertAccount(BatchAccountData account1, BatchAccountData account2)
         {
-            Assert.That(account2.Tags, Is.EqualTo(account1.Tags));
-            Assert.That(account2.Location, Is.EqualTo(account1.Location));
-            Assert.That(account2.AccountEndpoint, Is.EqualTo(account1.AccountEndpoint));
-            Assert.That(account2.Name, Is.EqualTo(account1.Name));
-            Assert.That(account2.NodeManagementEndpoint, Is.EqualTo(account1.NodeManagementEndpoint));
-            Assert.That(account2.DedicatedCoreQuota, Is.EqualTo(account1.DedicatedCoreQuota));
-            Assert.That(account2.LowPriorityCoreQuota, Is.EqualTo(account1.LowPriorityCoreQuota));
-            Assert.That(account2.IsDedicatedCoreQuotaPerVmFamilyEnforced, Is.EqualTo(account1.IsDedicatedCoreQuotaPerVmFamilyEnforced));
+            Assert.Multiple(() =>
+            {
+                Assert.That(account2.Tags, Is.EqualTo(account1.Tags));
+                Assert.That(account2.Location, Is.EqualTo(account1.Location));
+                Assert.That(account2.AccountEndpoint, Is.EqualTo(account1.AccountEndpoint));
+                Assert.That(account2.Name, Is.EqualTo(account1.Name));
+                Assert.That(account2.NodeManagementEndpoint, Is.EqualTo(account1.NodeManagementEndpoint));
+                Assert.That(account2.DedicatedCoreQuota, Is.EqualTo(account1.DedicatedCoreQuota));
+                Assert.That(account2.LowPriorityCoreQuota, Is.EqualTo(account1.LowPriorityCoreQuota));
+                Assert.That(account2.IsDedicatedCoreQuotaPerVmFamilyEnforced, Is.EqualTo(account1.IsDedicatedCoreQuotaPerVmFamilyEnforced));
+            });
         }
         #endregion
 
@@ -187,11 +196,14 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         public static void AssertPoolData(BatchAccountPoolData poolData1, BatchAccountPoolData poolData2)
         {
             AssertResourceData(poolData1, poolData2);
-            Assert.That(poolData2.ETag, Is.EqualTo(poolData1.ETag));
-            //Assert.AreEqual(poolData1.AllocationState, poolData2.AllocationState);
-            Assert.That(poolData2.DisplayName, Is.EqualTo(poolData1.DisplayName));
-            Assert.That(poolData2.VmSize, Is.EqualTo(poolData1.VmSize));
-            Assert.That(poolData2.ProvisioningState, Is.EqualTo(poolData1.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(poolData2.ETag, Is.EqualTo(poolData1.ETag));
+                //Assert.AreEqual(poolData1.AllocationState, poolData2.AllocationState);
+                Assert.That(poolData2.DisplayName, Is.EqualTo(poolData1.DisplayName));
+                Assert.That(poolData2.VmSize, Is.EqualTo(poolData1.VmSize));
+                Assert.That(poolData2.ProvisioningState, Is.EqualTo(poolData1.ProvisioningState));
+            });
         }
         #endregion
 
@@ -208,10 +220,13 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         public static void AssertApplicationData(BatchApplicationData applicationData1, BatchApplicationData applicationData2)
         {
             AssertResourceData(applicationData1, applicationData2);
-            Assert.That(applicationData2.ETag, Is.EqualTo(applicationData1.ETag));
-            Assert.That(applicationData2.DisplayName, Is.EqualTo(applicationData1.DisplayName));
-            Assert.That(applicationData2.DefaultVersion, Is.EqualTo(applicationData1.DefaultVersion));
-            Assert.That(applicationData2.AllowUpdates, Is.EqualTo(applicationData1.AllowUpdates));
+            Assert.Multiple(() =>
+            {
+                Assert.That(applicationData2.ETag, Is.EqualTo(applicationData1.ETag));
+                Assert.That(applicationData2.DisplayName, Is.EqualTo(applicationData1.DisplayName));
+                Assert.That(applicationData2.DefaultVersion, Is.EqualTo(applicationData1.DefaultVersion));
+                Assert.That(applicationData2.AllowUpdates, Is.EqualTo(applicationData1.AllowUpdates));
+            });
         }
         #endregion
 
@@ -226,10 +241,13 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         public static void AssertApplicationPckageData(BatchApplicationPackageData packageData1, BatchApplicationPackageData packageData2)
         {
             AssertResourceData(packageData1, packageData2);
-            Assert.That(packageData2.ETag, Is.EqualTo(packageData1.ETag));
-            Assert.That(packageData2.State, Is.EqualTo(packageData1.State));
-            Assert.That(packageData2.Format, Is.EqualTo(packageData1.Format));
-            Assert.That(packageData2.LastActivatedOn, Is.EqualTo(packageData1.LastActivatedOn));
+            Assert.Multiple(() =>
+            {
+                Assert.That(packageData2.ETag, Is.EqualTo(packageData1.ETag));
+                Assert.That(packageData2.State, Is.EqualTo(packageData1.State));
+                Assert.That(packageData2.Format, Is.EqualTo(packageData1.Format));
+                Assert.That(packageData2.LastActivatedOn, Is.EqualTo(packageData1.LastActivatedOn));
+            });
             //Because StorageUriExpireOn is a DateTimeOffset type, and Uri ends with a timestamp, the value is always different, so it is commented out
             //Assert.AreEqual(packageData1.StorageUriExpireOn, packageData2.StorageUriExpireOn);
             //Assert.AreEqual(packageData1.StorageUri, packageData2.StorageUri);

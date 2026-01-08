@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.Resources.Tests
             DataBoundaryResource dataBoundary = Client.GetDataBoundaryResource(resourceId);
             DataBoundaryResource result = await dataBoundary.GetAsync(name);
             DataBoundaryData resourceData = result.Data;
-            Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.Global));
-            Assert.That(resourceData.Properties.ProvisioningState, Is.EqualTo(DataBoundaryProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.Global));
+                Assert.That(resourceData.Properties.ProvisioningState, Is.EqualTo(DataBoundaryProvisioningState.Succeeded));
+            });
         }
 
         [TestCase]
@@ -60,8 +63,11 @@ namespace Azure.ResourceManager.Resources.Tests
 
             DataBoundaryData resourceData = result.Data;
 
-            Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.Global));
-            Assert.That(resourceData.Properties.ProvisioningState, Is.EqualTo(DataBoundaryProvisioningState.Succeeded));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resourceData.Properties.DataBoundary, Is.EqualTo(DataBoundaryRegion.Global));
+                Assert.That(resourceData.Properties.ProvisioningState, Is.EqualTo(DataBoundaryProvisioningState.Succeeded));
+            });
         }
 
         [TestCase]

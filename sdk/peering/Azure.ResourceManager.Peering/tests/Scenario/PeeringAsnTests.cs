@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string peerAsnName = Recording.GenerateAssetName("peerAsn");
             await CreatePeerAsn(peerAsnName);
             var list = await _peerAsnCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePeeringService(list.First(item => item.Data.Name == peerAsnName), peerAsnName);
         }
 
@@ -83,14 +83,17 @@ namespace Azure.ResourceManager.Peering.Tests
         private void ValidatePeeringService(PeerAsnResource peerAsn, string peerAsnName)
         {
             Assert.That(peerAsn, Is.Not.Null);
-            Assert.That(peerAsn.Data.Name, Is.EqualTo(peerAsnName));
-            Assert.That(peerAsn.Data.PeerName, Is.EqualTo(peerAsnName));
-            Assert.That(peerAsn.Data.PeerAsn >= 1, Is.True);
-            Assert.That(peerAsn.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Peering/peerAsns"));
-            Assert.That(peerAsn.Data.ValidationState.ToString(), Is.EqualTo("Pending"));
-            Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Email, Is.EqualTo("noc65003@contoso.com"));
-            Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Phone, Is.EqualTo("8888988888"));
-            Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Role.ToString(), Is.EqualTo("Noc"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(peerAsn.Data.Name, Is.EqualTo(peerAsnName));
+                Assert.That(peerAsn.Data.PeerName, Is.EqualTo(peerAsnName));
+                Assert.That(peerAsn.Data.PeerAsn, Is.GreaterThanOrEqualTo(1));
+                Assert.That(peerAsn.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Peering/peerAsns"));
+                Assert.That(peerAsn.Data.ValidationState.ToString(), Is.EqualTo("Pending"));
+                Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Email, Is.EqualTo("noc65003@contoso.com"));
+                Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Phone, Is.EqualTo("8888988888"));
+                Assert.That(peerAsn.Data.PeerContactDetail.FirstOrDefault().Role.ToString(), Is.EqualTo("Noc"));
+            });
         }
     }
 }

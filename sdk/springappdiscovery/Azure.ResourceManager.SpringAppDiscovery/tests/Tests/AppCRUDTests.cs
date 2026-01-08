@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 appCount++;
             }
-            Assert.That(appCount > 0, Is.True);
+            Assert.That(appCount, Is.GreaterThan(0));
 
             //get an app
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
             SpringBootAppResource appModelResource = appResponse.Value;
-            Assert.IsNotNull(appModelResource);
+            Assert.That(appModelResource, Is.Not.Null);
             SpringBootAppData appModelData = appModelResource.Data;
-            Assert.IsNotNull(appModelData);
+            Assert.That(appModelData, Is.Not.Null);
 
             //patch an app
             KeyValuePair<string, string> myKeyValuePair = new KeyValuePair<string, string>("appKey", "appValue");
@@ -63,17 +63,20 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             var updateOperataion = await appModelResource.UpdateAsync(WaitUntil.Completed, appPatch);
             await updateOperataion.WaitForCompletionAsync();
-            Assert.That(updateOperataion.HasCompleted, Is.True);
-            Assert.That(await ContainsTag(appsColletion, appName, myKeyValuePair), Is.True);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(updateOperataion.HasCompleted, Is.True);
+                Assert.That(await ContainsTag(appsColletion, appName, myKeyValuePair), Is.True);
+            });
         }
 
         private async Task<bool> ContainsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair)
         {
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
             SpringBootAppResource appModelResource = appResponse.Value;
-            Assert.IsNotNull(appModelResource);
+            Assert.That(appModelResource, Is.Not.Null);
             SpringBootAppData appModelData = appModelResource.Data;
-            Assert.IsNotNull(appModelData);
+            Assert.That(appModelData, Is.Not.Null);
             IDictionary<string, string> tags = appModelData.Tags;
             return tags.Contains(myKeyValuePair);
         }

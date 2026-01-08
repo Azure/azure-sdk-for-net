@@ -51,10 +51,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
-            //4Exists
-            Assert.That((bool)await container.ExistsAsync(name), Is.True);
-            Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(1));
+                //4Exists
+                Assert.That((bool)await container.ExistsAsync(name), Is.True);
+                Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

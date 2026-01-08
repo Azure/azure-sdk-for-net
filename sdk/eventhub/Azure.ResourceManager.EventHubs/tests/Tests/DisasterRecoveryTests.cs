@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await eHNamespace1.GetEventHubsNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(ruleParameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(ruleParameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //create a disaster recovery
             string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
@@ -53,9 +56,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 PartnerNamespace = eHNamespace2.Id
             };
             EventHubsDisasterRecoveryResource armDisasterRecovery = (await eHNamespace1.GetEventHubsDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
-            Assert.That(armDisasterRecovery, Is.Not.Null);
-            Assert.That(disasterRecoveryName, Is.EqualTo(armDisasterRecovery.Id.Name));
-            Assert.That(eHNamespace2.Id.ToString(), Is.EqualTo(armDisasterRecovery.Data.PartnerNamespace));
+            Assert.Multiple(() =>
+            {
+                Assert.That(armDisasterRecovery, Is.Not.Null);
+                Assert.That(disasterRecoveryName, Is.EqualTo(armDisasterRecovery.Id.Name));
+                Assert.That(eHNamespace2.Id.ToString(), Is.EqualTo(armDisasterRecovery.Data.PartnerNamespace));
+            });
 
             //get the disaster recovery - primary
             armDisasterRecovery = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //get all disaster recoveries for a name space
             List<EventHubsDisasterRecoveryResource> disasterRcoveries = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
-            Assert.That(disasterRcoveries.Count >= 1, Is.True);
+            Assert.That(disasterRcoveries.Count, Is.GreaterThanOrEqualTo(1));
 
             //delete disaster recovery;
             await armDisasterRecovery.DeleteAsync(WaitUntil.Completed);

@@ -37,10 +37,13 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             StorageMoverProjectData projectData = new StorageMoverProjectData();
             StorageMoverProjectResource project = (await projects.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
             StorageMoverProjectResource project2 = (await project.GetAsync()).Value;
-            Assert.That(project2.Data.Name, Is.EqualTo(project.Data.Name));
-            Assert.That(project2.Data.Description, Is.EqualTo(project.Data.Description));
-            Assert.That(project2.Id.Name, Is.EqualTo(project.Id.Name));
-            Assert.That(project2.Id.Location, Is.EqualTo(project.Id.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(project2.Data.Name, Is.EqualTo(project.Data.Name));
+                Assert.That(project2.Data.Description, Is.EqualTo(project.Data.Description));
+                Assert.That(project2.Id.Name, Is.EqualTo(project.Id.Name));
+                Assert.That(project2.Id.Location, Is.EqualTo(project.Id.Location));
+            });
 
             StorageMoverProjectPatch patch = new StorageMoverProjectPatch
             {

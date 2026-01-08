@@ -68,8 +68,11 @@ namespace Azure.ResourceManager.Communication.Tests
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
             var tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.That(tagValue.Key, Is.EqualTo("testkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagValue.Key, Is.EqualTo("testkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            });
         }
 
         [TestCase(null)]
@@ -84,12 +87,15 @@ namespace Azure.ResourceManager.Communication.Tests
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
             var tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.That(tagValue.Key, Is.EqualTo("testkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagValue.Key, Is.EqualTo("testkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            });
             await domain.RemoveTagAsync("testkey");
             domain = await collection.GetAsync(domainName);
             var tag = domain.Data.Tags;
-            Assert.That(tag.Count, Is.EqualTo(0));
+            Assert.That(tag, Is.Empty);
         }
 
         [TestCase(null)]
@@ -104,15 +110,21 @@ namespace Azure.ResourceManager.Communication.Tests
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
             var tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.That(tagValue.Key, Is.EqualTo("testkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tagValue.Key, Is.EqualTo("testkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("testvalue"));
+            });
             var tag = new Dictionary<string, string>() { { "newtestkey", "newtestvalue" } };
             await domain.SetTagsAsync(tag);
             domain = await collection.GetAsync(domainName);
             tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.That(domain.Data.Tags.Count, Is.EqualTo(1));
-            Assert.That(tagValue.Key, Is.EqualTo("newtestkey"));
-            Assert.That(tagValue.Value, Is.EqualTo("newtestvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domain.Data.Tags.Count, Is.EqualTo(1));
+                Assert.That(tagValue.Key, Is.EqualTo("newtestkey"));
+                Assert.That(tagValue.Value, Is.EqualTo("newtestvalue"));
+            });
         }
 
         [Test]
@@ -131,9 +143,12 @@ namespace Azure.ResourceManager.Communication.Tests
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var domain = await CreateDefaultDomain(domainName, _emailService);
             Assert.That(domain, Is.Not.Null);
-            Assert.That(domain.Data.Name, Is.EqualTo(domainName));
-            Assert.That(domain.Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
-            Assert.That(domain.Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domain.Data.Name, Is.EqualTo(domainName));
+                Assert.That(domain.Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
+                Assert.That(domain.Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
+            });
         }
 
         [Test]
@@ -146,8 +161,11 @@ namespace Azure.ResourceManager.Communication.Tests
                 UserEngagementTracking = UserEngagementTracking.Enabled
             };
             var domain2 = (await domain1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.That(domain2, Is.Not.Null);
-            Assert.That(domain1.Data.Name, Is.EqualTo(domain2.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domain2, Is.Not.Null);
+                Assert.That(domain1.Data.Name, Is.EqualTo(domain2.Data.Name));
+            });
         }
 
         [Test]
@@ -169,9 +187,12 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultDomain(domainName, _emailService);
             var domain = await collection.GetAsync(domainName);
             Assert.That(domain, Is.Not.Null);
-            Assert.That(domain.Value.Data.Name, Is.EqualTo(domainName));
-            Assert.That(domain.Value.Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
-            Assert.That(domain.Value.Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(domain.Value.Data.Name, Is.EqualTo(domainName));
+                Assert.That(domain.Value.Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
+                Assert.That(domain.Value.Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
+            });
         }
 
         [Test]
@@ -181,9 +202,12 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultDomain(domainName, _emailService);
             var list = await _emailService.GetCommunicationDomainResources().GetAllAsync().ToEnumerableAsync();
             Assert.That(list, Is.Not.Empty);
-            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(domainName));
-            Assert.That(list.FirstOrDefault().Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
-            Assert.That(list.FirstOrDefault().Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(domainName));
+                Assert.That(list.FirstOrDefault().Data.Location.ToString().ToLower(), Is.EqualTo(_location.ToString().ToLower()));
+                Assert.That(list.FirstOrDefault().Data.DataLocation.ToString().ToLower(), Is.EqualTo(_dataLocation.ToString().ToLower()));
+            });
         }
 
         [Test]

@@ -79,11 +79,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var portalDelegationSettings = (await delegationCollection.CreateOrUpdateAsync(WaitUntil.Completed, portalDelegationSettingsParams)).Value;
             Assert.That(portalDelegationSettings, Is.Not.Null);
-            Assert.That(portalDelegationSettings.Data.Uri.ToString(), Is.EqualTo(urlParameter));
-            //validation key is generated brand new on playback mode and hence validation fails
-            Assert.That(portalDelegationSettings.Data.ValidationKey, Is.EqualTo(portalDelegationSettingsParams.ValidationKey));
-            Assert.That(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled, Is.True);
-            Assert.That(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(portalDelegationSettings.Data.Uri.ToString(), Is.EqualTo(urlParameter));
+                //validation key is generated brand new on playback mode and hence validation fails
+                Assert.That(portalDelegationSettings.Data.ValidationKey, Is.EqualTo(portalDelegationSettingsParams.ValidationKey));
+                Assert.That(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled, Is.True);
+                Assert.That(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled, Is.True);
+            });
 
             // update the delegation settings
             var data = portalDelegationSettings.Data;

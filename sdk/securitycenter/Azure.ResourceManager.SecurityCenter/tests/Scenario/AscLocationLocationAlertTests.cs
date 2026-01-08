@@ -48,19 +48,22 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _subscriptionSecurityAlertCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAscLocationLocationAlert(list.First(item => item.Data.Name == _existAlertName));
         }
 
         private void ValidateAscLocationLocationAlert(SubscriptionSecurityAlertResource alert)
         {
-            Assert.IsNotNull(alert);
-            Assert.IsNotNull(alert.Data.Id);
-            Assert.IsNotNull(alert.Data.AlertDisplayName);
-            Assert.IsNotNull(alert.Data.AlertType);
-            Assert.IsNotNull(alert.Data.AlertUri);
-            Assert.That(alert.Data.Name, Is.EqualTo(_existAlertName));
-            Assert.That(alert.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/Locations/alerts"));
+            Assert.That(alert, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(alert.Data.Id, Is.Not.Null);
+                Assert.That(alert.Data.AlertDisplayName, Is.Not.Null);
+                Assert.That(alert.Data.AlertType, Is.Not.Null);
+                Assert.That(alert.Data.AlertUri, Is.Not.Null);
+                Assert.That(alert.Data.Name, Is.EqualTo(_existAlertName));
+                Assert.That(alert.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/Locations/alerts"));
+            });
         }
     }
 }

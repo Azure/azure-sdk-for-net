@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             else
             {
                 Assert.That(actual, Is.Not.Null);
-                Assert.That(actual.Count, Is.EqualTo(expected.Count), "Lists do not have the same number of elements.");
+                Assert.That(actual, Has.Count.EqualTo(expected.Count), "Lists do not have the same number of elements.");
 
                 foreach (var expectedPolicy in expected)
                 {

@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.That(linkedServiceGet.Value.Data.Name, Is.EqualTo(linkedServiceName));
             //Get All
             var list = await dataFactory.GetDataFactoryLinkedServices().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(1));
             //Delete
             await linkedService.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(linkedServiceName);

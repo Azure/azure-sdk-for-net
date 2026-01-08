@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get All Machines
             var allMachines = await machineCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(allMachines, Is.Not.Null);
-            Assert.GreaterOrEqual(allMachines.Count, 1);
+            Assert.That(allMachines, Is.Not.Empty);
 
             // Get Machine
             var machineResponse = await machineCollection.GetAsync(allMachines.First().Data.Name);
@@ -99,19 +99,25 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             var assessmentResponse = await assessmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentName, asmData);
             var assessmentResource = assessmentResponse.Value;
-            Assert.That(assessmentResponse.HasCompleted, Is.True);
-            Assert.That(assessmentResource, Is.Not.Null);
-            Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assessmentResponse.HasCompleted, Is.True);
+                Assert.That(assessmentResource, Is.Not.Null);
+                Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            });
 
             // Get Assessment
             assessmentResource = await assessmentCollection.GetAsync(assessmentName);
-            Assert.That(assessmentResource, Is.Not.Null);
-            Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(assessmentResource, Is.Not.Null);
+                Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
+            });
 
             // Get All Assessments
             var allAssessments = await assessmentCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(allAssessments, Is.Not.Null);
-            Assert.GreaterOrEqual(allAssessments.Count, 1);
+            Assert.That(allAssessments, Is.Not.Empty);
 
             // Download Assessment Report
             BinaryData body = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
@@ -123,7 +129,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             // Get Assessed Machines
             var assessedMachines = await assessmentResource.GetMigrationAssessedMachines().ToEnumerableAsync();
             Assert.That(assessedMachines, Is.Not.Null);
-            Assert.GreaterOrEqual(assessedMachines.Count, 1);
+            Assert.That(assessedMachines, Is.Not.Empty);
 
             // Get an Assessed Machine
             var assessedMachine = await assessmentResource.GetMigrationAssessedMachineAsync(assessedMachines.First().Data.Name);

@@ -57,22 +57,28 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath, protectedVirtualPath);
             ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxConfigurationName);
 
-            Assert.That(nginxConfiguration.HasData, Is.True);
-            Assert.That(nginxConfiguration.Data, Is.Not.Null);
-            Assert.That(nginxConfiguration.Data.Name, Is.EqualTo(nginxConfigurationName));
-            Assert.That(nginxConfiguration.Data.Id, Is.EqualTo(nginxConfigurationResourceIdentifier));
-            Assert.That(nginxConfiguration.Data.ResourceType, Is.EqualTo(NginxConfigurationResource.ResourceType));
-            Assert.That(nginxConfiguration.Data.SystemData, Is.Null);
-            Assert.That(nginxConfiguration.Data.Properties.ProvisioningState, Is.Not.Null);
-            Assert.That(nginxConfiguration.Data.Properties.RootFile, Is.EqualTo(virtualPath));
-            Assert.That(nginxConfiguration.Data.Properties.Files.Count != 0, Is.True);
-            Assert.That(nginxConfiguration.Data.Properties.Files[0].VirtualPath, Is.EqualTo(virtualPath));
-            Assert.That(nginxConfiguration.Data.Properties.Files[0].Content, Is.EqualTo(NginxConfigurationContent));
-            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0, Is.True);
-            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath, Is.EqualTo(protectedVirtualPath));
-            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash, Is.Not.Null);
-            Assert.That(nginxConfiguration.Data.Properties.Package.Data, Is.Null);
-            Assert.That(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxConfiguration.HasData, Is.True);
+                Assert.That(nginxConfiguration.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxConfiguration.Data.Name, Is.EqualTo(nginxConfigurationName));
+                Assert.That(nginxConfiguration.Data.Id, Is.EqualTo(nginxConfigurationResourceIdentifier));
+                Assert.That(nginxConfiguration.Data.ResourceType, Is.EqualTo(NginxConfigurationResource.ResourceType));
+                Assert.That(nginxConfiguration.Data.SystemData, Is.Null);
+                Assert.That(nginxConfiguration.Data.Properties.ProvisioningState, Is.Not.Null);
+                Assert.That(nginxConfiguration.Data.Properties.RootFile, Is.EqualTo(virtualPath));
+                Assert.That(nginxConfiguration.Data.Properties.Files.Count != 0, Is.True);
+                Assert.That(nginxConfiguration.Data.Properties.Files[0].VirtualPath, Is.EqualTo(virtualPath));
+                Assert.That(nginxConfiguration.Data.Properties.Files[0].Content, Is.EqualTo(NginxConfigurationContent));
+                Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0, Is.True);
+                Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath, Is.EqualTo(protectedVirtualPath));
+                Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash, Is.Not.Null);
+                Assert.That(nginxConfiguration.Data.Properties.Package.Data, Is.Null);
+                Assert.That(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count, Is.EqualTo(0));
+            });
         }
 
         [TestCase]
@@ -174,9 +180,12 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxAnalysisResult analysisResult = await nginxConfiguration.AnalysisAsync(nginxAnalysisContent);
 
             Assert.That(analysisResult, Is.Not.Null);
-            Assert.That(analysisResult.Status, Is.Not.Null);
-            Assert.That(analysisResult.Data.Errors, Is.Not.Null);
-            Assert.That(analysisResult.Data.Diagnostics, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(analysisResult.Status, Is.Not.Null);
+                Assert.That(analysisResult.Data.Errors, Is.Not.Null);
+                Assert.That(analysisResult.Data.Diagnostics, Is.Not.Null);
+            });
         }
     }
 }

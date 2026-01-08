@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             string keyName = "ServiceManaged";
             var collection = managedInstance.GetManagedInstanceKeys();
@@ -63,15 +63,18 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 3.Get
             var getKey =await collection.GetAsync(keyName);
-            Assert.IsNotNull(getKey.Value.Data);
-            Assert.That(getKey.Value.Data.Name, Is.EqualTo(keyName));
-            Assert.That(getKey.Value.Data.Kind, Is.EqualTo("servicemanaged"));
-            Assert.That(getKey.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
+            Assert.That(getKey.Value.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getKey.Value.Data.Name, Is.EqualTo(keyName));
+                Assert.That(getKey.Value.Data.Kind, Is.EqualTo("servicemanaged"));
+                Assert.That(getKey.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
+            });
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(1));
             Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(keyName));
 
             // 5.Delete - Ignore("The operation could not be completed.")

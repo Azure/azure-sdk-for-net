@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             IEnumerable<AzureLocation> locations = (await Connection.GetAvailableLocationsAsync()).Value;
 
-            Assert.IsNotEmpty(locations);
+            Assert.That(locations, Is.Not.Empty);
         }
     }
 }

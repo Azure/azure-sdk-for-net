@@ -135,11 +135,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.That(flag, Is.True);
             // Get
             var triggerGet = await dataFactory.GetDataFactoryTriggers().GetAsync(triggerName);
-            Assert.That(trigger, Is.Not.Null);
-            Assert.That(triggerGet.Value.Data.Name, Is.EqualTo(triggerName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(trigger, Is.Not.Null);
+                Assert.That(triggerGet.Value.Data.Name, Is.EqualTo(triggerName));
+            });
             // GetAll
             var list = await dataFactory.GetDataFactoryTriggers().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Delete
             await trigger.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);

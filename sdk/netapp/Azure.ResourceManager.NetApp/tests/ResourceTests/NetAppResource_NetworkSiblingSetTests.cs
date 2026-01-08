@@ -74,8 +74,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             QueryNetworkSiblingSetContent queryNetworkSiblingSetContent = new QueryNetworkSiblingSetContent(_volumeResource.Data.NetworkSiblingSetId.ToString(), DefaultSubnetId);
             Response<NetworkSiblingSet> networkSiblingSet = await DefaultSubscription.QueryNetworkSiblingSetNetAppResourceAsync(DefaultLocation, queryNetworkSiblingSetContent);
             Assert.That(networkSiblingSet, Is.Not.Null);
-            Assert.That(networkSiblingSet.Value.NetworkSiblingSetId, Is.Not.Null);
-            Assert.That(networkSiblingSet.Value.SubnetId, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(networkSiblingSet.Value.NetworkSiblingSetId, Is.Not.Null);
+                Assert.That(networkSiblingSet.Value.SubnetId, Is.Not.Null);
+            });
         }
 
         [RecordedTest]

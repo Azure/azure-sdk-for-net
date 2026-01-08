@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var vm = client.GetVirtualMachineResource(vmId);
             var set = client.GetAvailabilitySetResource(availablitySetId);
 
-            Assert.That(vm.Id, Is.EqualTo(vmId));
-            Assert.That(set.Id, Is.EqualTo(availablitySetId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(vm.Id, Is.EqualTo(vmId));
+                Assert.That(set.Id, Is.EqualTo(availablitySetId));
+            });
         }
 
         [Test]
@@ -98,10 +101,13 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var vmLro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, vmData, default);
             var vmResource = vmLro.Value;
 
-            Assert.That(setResource.Id, Is.EqualTo(setId));
-            Assert.That(setResource.Data, Is.EqualTo(setData));
-            Assert.That(vmResource.Id, Is.EqualTo(vmId));
-            Assert.That(vmResource.Data, Is.EqualTo(vmData));
+            Assert.Multiple(() =>
+            {
+                Assert.That(setResource.Id, Is.EqualTo(setId));
+                Assert.That(setResource.Data, Is.EqualTo(setData));
+                Assert.That(vmResource.Id, Is.EqualTo(vmId));
+                Assert.That(vmResource.Data, Is.EqualTo(vmData));
+            });
         }
 
         [Test]
@@ -131,8 +137,11 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var rg = rgMock.Object;
             AvailabilitySetResource setResource = await rg.GetAvailabilitySetAsync(setName);
 
-            Assert.That(setResource.Id, Is.EqualTo(setId));
-            Assert.That(setResource.Data, Is.EqualTo(setData));
+            Assert.Multiple(() =>
+            {
+                Assert.That(setResource.Id, Is.EqualTo(setId));
+                Assert.That(setResource.Data, Is.EqualTo(setData));
+            });
         }
 
         [Test]

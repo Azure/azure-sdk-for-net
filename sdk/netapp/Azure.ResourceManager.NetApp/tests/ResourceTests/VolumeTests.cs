@@ -149,9 +149,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource3.Data.Tags.Should().Contain(keyValue);
             KeyValuePair<string, string> keyValuePair = new("key1", DefaultTags["key1"]);
             volumeResource3.Data.Tags.Should().Contain(keyValuePair);
-            Assert.That(volumeResource3.Data.IsSnapshotDirectoryVisible, Is.False);
-            //usageThreshold should not change
-            Assert.That(volumeResource3.Data.UsageThreshold, Is.EqualTo(volumeResource3.Data.UsageThreshold));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volumeResource3.Data.IsSnapshotDirectoryVisible, Is.False);
+                //usageThreshold should not change
+                Assert.That(volumeResource3.Data.UsageThreshold, Is.EqualTo(volumeResource3.Data.UsageThreshold));
+            });
         }
 
         [RecordedTest]
@@ -170,9 +173,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource2.Data.Name.Should().BeEquivalentTo(volumeResource1.Data.Name);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _volumeCollection.GetAsync(volumeResource1.Id.Name + "1"); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _volumeCollection.ExistsAsync(volumeResource1.Id.Name), Is.True);
-            Assert.That((bool)await _volumeCollection.ExistsAsync(volumeResource1.Id.Name + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _volumeCollection.ExistsAsync(volumeResource1.Id.Name), Is.True);
+                Assert.That((bool)await _volumeCollection.ExistsAsync(volumeResource1.Id.Name + "1"), Is.False);
+            });
 
             //delete Volume
             await volumeResource2.DeleteAsync(WaitUntil.Completed);
@@ -212,12 +218,15 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource2.Data.ProtocolTypes.Should().Equal(_defaultProtocolTypes);
             Assert.That(volumeResource2.Data.ExportPolicy, Is.Not.Null);
             volumeResource2.Data.ExportPolicy.Rules.Should().NotBeEmpty();
-            Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].RuleIndex, Is.EqualTo(_defaultExportPolicyRule.RuleIndex));
-            Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].IsUnixReadOnly, Is.EqualTo(_defaultExportPolicyRule.IsUnixReadOnly));
-            Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowCifsProtocol, Is.EqualTo(_defaultExportPolicyRule.AllowCifsProtocol));
-            Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowNfsV3Protocol, Is.EqualTo(_defaultExportPolicyRule.AllowNfsV3Protocol));
-            Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowNfsV41Protocol, Is.EqualTo(_defaultExportPolicyRule.AllowNfsV41Protocol));
-            Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowedClients, Is.EqualTo(_defaultExportPolicyRule.AllowedClients));
+            Assert.Multiple(() =>
+            {
+                Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].RuleIndex, Is.EqualTo(_defaultExportPolicyRule.RuleIndex));
+                Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].IsUnixReadOnly, Is.EqualTo(_defaultExportPolicyRule.IsUnixReadOnly));
+                Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowCifsProtocol, Is.EqualTo(_defaultExportPolicyRule.AllowCifsProtocol));
+                Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowNfsV3Protocol, Is.EqualTo(_defaultExportPolicyRule.AllowNfsV3Protocol));
+                Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowNfsV41Protocol, Is.EqualTo(_defaultExportPolicyRule.AllowNfsV41Protocol));
+                Assert.That(volumeResource2.Data.ExportPolicy.Rules[0].AllowedClients, Is.EqualTo(_defaultExportPolicyRule.AllowedClients));
+            });
             volumeResource2.Data.ProtocolTypes.Should().BeEquivalentTo(_defaultProtocolTypes);
 
             //delete Volume
@@ -445,11 +454,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(remoteVolumeResource.Data.Location, Is.EqualTo(RemoteLocation));
             remoteVolumeResource.Should().BeEquivalentTo(remoteVolume);
             Assert.That(remoteVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(remoteVolumeResource.Data.DataProtection.Backup, Is.Null);
-            Assert.That(remoteVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeResourceId, Is.EqualTo(replication.RemoteVolumeResourceId));
-            Assert.That(remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeRegion, Is.EqualTo(replication.RemoteVolumeRegion));
-            Assert.That(remoteVolumeResource.Data.DataProtection.Replication.ReplicationSchedule, Is.EqualTo(replication.ReplicationSchedule));
+            Assert.Multiple(() =>
+            {
+                Assert.That(remoteVolumeResource.Data.DataProtection.Backup, Is.Null);
+                Assert.That(remoteVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeResourceId, Is.EqualTo(replication.RemoteVolumeResourceId));
+                Assert.That(remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeRegion, Is.EqualTo(replication.RemoteVolumeRegion));
+                Assert.That(remoteVolumeResource.Data.DataProtection.Replication.ReplicationSchedule, Is.EqualTo(replication.ReplicationSchedule));
+            });
 
             //Authorize Replication on the source volume
             NetAppVolumeAuthorizeReplicationContent authorize = new()
@@ -725,8 +737,12 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await LiveDelay(5000);
                 } while (replicationStatus.IsHealthy.Value && attempts < 10);
             }
-            Assert.That(replicationStatus.IsHealthy, Is.True);
-            Assert.That(replicationStatus.MirrorState, Is.EqualTo(mirrorState));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(replicationStatus.IsHealthy, Is.True);
+                Assert.That(replicationStatus.MirrorState, Is.EqualTo(mirrorState));
+            });
         }
     }
 }

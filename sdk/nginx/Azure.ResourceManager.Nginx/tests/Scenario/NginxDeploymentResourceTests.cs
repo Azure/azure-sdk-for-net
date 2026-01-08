@@ -42,8 +42,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxResourceIdentifier = NginxDeploymentResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName);
             NginxDeploymentResource.ValidateResourceId(nginxResourceIdentifier);
 
-            Assert.That(nginxResourceIdentifier.ResourceType, Is.EqualTo(NginxDeploymentResource.ResourceType));
-            Assert.That(nginxResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{NginxDeploymentResource.ResourceType}/{nginxDeploymentName}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxResourceIdentifier.ResourceType, Is.EqualTo(NginxDeploymentResource.ResourceType));
+                Assert.That(nginxResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{NginxDeploymentResource.ResourceType}/{nginxDeploymentName}"));
+            });
         }
 
         [TestCase]
@@ -54,33 +57,39 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxResourceIdentifier = NginxDeploymentResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName);
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            Assert.That(nginxDeployment.HasData, Is.True);
-            Assert.That(nginxDeployment.Data, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Name, Is.EqualTo(nginxDeploymentName));
-            Assert.That(nginxDeployment.Data.Id, Is.EqualTo(nginxResourceIdentifier));
-            Assert.That(nginxDeployment.Data.ResourceType, Is.EqualTo(NginxDeploymentResource.ResourceType));
-            Assert.That(nginxDeployment.Data.Location, Is.EqualTo(Location));
-            Assert.That(nginxDeployment.Data.SystemData, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Tags, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Identity, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Sku, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.SkuName, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.ProvisioningState, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.NginxVersion, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration.PublicIPAddresses, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration.PrivateIPAddresses, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceConfiguration.SubnetId, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceSubnetId, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.IPAddress, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.EnableDiagnosticsSupport, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.Logging, Is.Null);
-            Assert.That(nginxDeployment.Data.Properties.LoggingStorageAccount, Is.Null);
-            Assert.That(nginxDeployment.Data.Properties.ScalingProperties.Capacity, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.AutoUpgradeProfile.UpgradeChannel, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.UserProfile.PreferredEmail, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.UserPreferredEmail, Is.Not.Null);
-            Assert.That(nginxDeployment.Data.Properties.NginxAppProtect, Is.Null);
-            Assert.That(nginxDeployment.Data.Properties.DataplaneApiEndpoint, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeployment.HasData, Is.True);
+                Assert.That(nginxDeployment.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeployment.Data.Name, Is.EqualTo(nginxDeploymentName));
+                Assert.That(nginxDeployment.Data.Id, Is.EqualTo(nginxResourceIdentifier));
+                Assert.That(nginxDeployment.Data.ResourceType, Is.EqualTo(NginxDeploymentResource.ResourceType));
+                Assert.That(nginxDeployment.Data.Location, Is.EqualTo(Location));
+                Assert.That(nginxDeployment.Data.SystemData, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Tags, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Identity, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Sku, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.SkuName, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.ProvisioningState, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.NginxVersion, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration.PublicIPAddresses, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration.PrivateIPAddresses, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceConfiguration.SubnetId, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceSubnetId, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.IPAddress, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.EnableDiagnosticsSupport, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.Logging, Is.Null);
+                Assert.That(nginxDeployment.Data.Properties.LoggingStorageAccount, Is.Null);
+                Assert.That(nginxDeployment.Data.Properties.ScalingProperties.Capacity, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.AutoUpgradeProfile.UpgradeChannel, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.UserProfile.PreferredEmail, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.UserPreferredEmail, Is.Not.Null);
+                Assert.That(nginxDeployment.Data.Properties.NginxAppProtect, Is.Null);
+                Assert.That(nginxDeployment.Data.Properties.DataplaneApiEndpoint, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -105,8 +114,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             _ = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await nginxDeployment.GetNginxDeploymentApiKeyAsync(nginxDeploymentApiKeyName);
 
-            Assert.That(nginxDeploymentApiKey, Is.Not.Null);
-            Assert.That(nginxDeploymentApiKeyName.Equals(nginxDeploymentApiKey.Data.Name, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeploymentApiKey, Is.Not.Null);
+                Assert.That(nginxDeploymentApiKeyName.Equals(nginxDeploymentApiKey.Data.Name, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            });
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await nginxDeployment.GetNginxDeploymentApiKeyAsync(nginxDeploymentApiKeyName + "1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nginxDeployment.GetNginxDeploymentApiKeyAsync(null));
         }
@@ -135,8 +147,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             _ = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
             NginxCertificateResource nginxCertificate = await nginxDeployment.GetNginxCertificateAsync(nginxCertificateName);
 
-            Assert.That(nginxCertificate, Is.Not.Null);
-            Assert.That(nginxCertificateName.Equals(nginxCertificate.Data.Name, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxCertificate, Is.Not.Null);
+                Assert.That(nginxCertificateName.Equals(nginxCertificate.Data.Name, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            });
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await nginxDeployment.GetNginxCertificateAsync(nginxCertificateName + "1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nginxDeployment.GetNginxCertificateAsync(null));
         }
@@ -164,8 +179,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             _ = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
             NginxConfigurationResource nginxConfiguration = await nginxDeployment.GetNginxConfigurationAsync(nginxConfigurationName);
 
-            Assert.That(nginxConfiguration, Is.Not.Null);
-            Assert.That(nginxConfigurationName.Equals(nginxConfiguration.Data.Name, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxConfiguration, Is.Not.Null);
+                Assert.That(nginxConfigurationName.Equals(nginxConfiguration.Data.Name, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nginxDeployment.GetNginxConfigurationAsync(null));
         }
 
@@ -228,7 +246,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
-            Assert.That(nginxDeployment2.Data.Properties.ScalingProperties.Profiles.Count, Is.EqualTo(1));
+            Assert.That(nginxDeployment2.Data.Properties.ScalingProperties.Profiles, Has.Count.EqualTo(1));
         }
 
         [TestCase]
@@ -300,9 +318,12 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             deploymentPatch.Properties.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled;
             NginxDeploymentResource updatedNginxDeployment = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
-            Assert.That(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, Is.Not.Null);
-            Assert.That(WebApplicationFirewallActivationState.Enabled, Is.EqualTo(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState));
-            Assert.That(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, Is.Not.Null);
+                Assert.That(WebApplicationFirewallActivationState.Enabled, Is.EqualTo(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState));
+                Assert.That(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState, Is.Not.Null);
+            });
             Assert.That(WebApplicationFirewallActivationState.Enabled, Is.EqualTo(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState));
             Assert.That(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.AttackSignaturesPackage, Is.Not.Null);
             Assert.That(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.BotSignaturesPackage, Is.Not.Null);

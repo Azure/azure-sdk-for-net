@@ -72,18 +72,24 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidApplicationDefinition(ArmApplicationDefinitionResource model, ArmApplicationDefinitionResource getResult)
         {
-            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
-            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
-            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
-            Assert.That(getResult.Data.LockLevel, Is.EqualTo(model.Data.LockLevel));
-            Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
-            Assert.That(getResult.Data.IsEnabled, Is.EqualTo(model.Data.IsEnabled));
-            Assert.That(getResult.Data.Authorizations, Is.EqualTo(model.Data.Authorizations));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+                Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+                Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+                Assert.That(getResult.Data.LockLevel, Is.EqualTo(model.Data.LockLevel));
+                Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
+                Assert.That(getResult.Data.IsEnabled, Is.EqualTo(model.Data.IsEnabled));
+                Assert.That(getResult.Data.Authorizations, Is.EqualTo(model.Data.Authorizations));
+            });
             if (model.Data.Authorizations != null || getResult.Data.Authorizations != null)
             {
-                Assert.That(model.Data.Authorizations, Is.Not.Null);
-                Assert.That(getResult.Data.Authorizations, Is.Not.Null);
-                Assert.That(getResult.Data.Authorizations.Count, Is.EqualTo(model.Data.Authorizations.Count));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Authorizations, Is.Not.Null);
+                    Assert.That(getResult.Data.Authorizations, Is.Not.Null);
+                });
+                Assert.That(getResult.Data.Authorizations, Has.Count.EqualTo(model.Data.Authorizations.Count));
                 for (int i = 0; i < model.Data.Authorizations.Count; ++i)
                 {
                     ArmApplicationAuthorization modelAuthorizations = model.Data.Authorizations[i], getResultAuthorizations = getResult.Data.Authorizations[i];
@@ -92,28 +98,41 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.Artifacts != null || getResult.Data.Artifacts != null)
             {
-                Assert.That(model.Data.Artifacts, Is.Not.Null);
-                Assert.That(getResult.Data.Artifacts, Is.Not.Null);
-                Assert.That(getResult.Data.Artifacts.Count, Is.EqualTo(model.Data.Artifacts.Count));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Artifacts, Is.Not.Null);
+                    Assert.That(getResult.Data.Artifacts, Is.Not.Null);
+                });
+                Assert.That(getResult.Data.Artifacts, Has.Count.EqualTo(model.Data.Artifacts.Count));
                 for (int i = 0; i < model.Data.Artifacts.Count; ++i)
                 {
                     ArmApplicationDefinitionArtifact modelArtifacts = model.Data.Artifacts[i], getResultArtifacts = getResult.Data.Artifacts[i];
                     AssertValidArtifacts(modelArtifacts, getResultArtifacts);
                 }
             }
-            Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
-            Assert.That(getResult.Data.PackageFileUri, Is.EqualTo(model.Data.PackageFileUri));
-            Assert.That(getResult.Data.MainTemplate, Is.EqualTo(model.Data.MainTemplate));
-            Assert.That(getResult.Data.CreateUiDefinition, Is.EqualTo(model.Data.CreateUiDefinition));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
+                Assert.That(getResult.Data.PackageFileUri, Is.EqualTo(model.Data.PackageFileUri));
+                Assert.That(getResult.Data.MainTemplate, Is.EqualTo(model.Data.MainTemplate));
+                Assert.That(getResult.Data.CreateUiDefinition, Is.EqualTo(model.Data.CreateUiDefinition));
+            });
             if (model.Data.NotificationPolicy != null || getResult.Data.NotificationPolicy != null)
             {
-                Assert.That(model.Data.NotificationPolicy, Is.Not.Null);
-                Assert.That(getResult.Data.NotificationPolicy, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.NotificationPolicy, Is.Not.Null);
+                    Assert.That(getResult.Data.NotificationPolicy, Is.Not.Null);
+                });
                 if (model.Data.NotificationPolicy.NotificationEndpoints != null || getResult.Data.NotificationPolicy.NotificationEndpoints != null)
                 {
-                    Assert.That(model.Data.NotificationPolicy.NotificationEndpoints, Is.Not.Null);
-                    Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints, Is.Not.Null);
-                    Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints.Count, Is.EqualTo(model.Data.NotificationPolicy.NotificationEndpoints.Count));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.NotificationPolicy.NotificationEndpoints, Is.Not.Null);
+                        Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints, Is.Not.Null);
+                    });
+                    Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints, Has.Count.EqualTo(model.Data.NotificationPolicy.NotificationEndpoints.Count));
                     for (int i = 0; i < model.Data.NotificationPolicy.NotificationEndpoints.Count; ++i)
                     {
                         Assert.That(getResult.Data.NotificationPolicy.NotificationEndpoints[i].Uri, Is.EqualTo(model.Data.NotificationPolicy.NotificationEndpoints[i].Uri));
@@ -122,13 +141,19 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.LockingPolicy != null || getResult.Data.LockingPolicy != null)
             {
-                Assert.That(model.Data.LockingPolicy, Is.Not.Null);
-                Assert.That(getResult.Data.LockingPolicy, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.LockingPolicy, Is.Not.Null);
+                    Assert.That(getResult.Data.LockingPolicy, Is.Not.Null);
+                });
                 if (model.Data.LockingPolicy.AllowedActions != null || getResult.Data.LockingPolicy.AllowedActions != null)
                 {
-                    Assert.That(model.Data.LockingPolicy.AllowedActions, Is.Not.Null);
-                    Assert.That(getResult.Data.LockingPolicy.AllowedActions, Is.Not.Null);
-                    Assert.That(getResult.Data.LockingPolicy.AllowedActions.Count, Is.EqualTo(model.Data.LockingPolicy.AllowedActions.Count));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(model.Data.LockingPolicy.AllowedActions, Is.Not.Null);
+                        Assert.That(getResult.Data.LockingPolicy.AllowedActions, Is.Not.Null);
+                    });
+                    Assert.That(getResult.Data.LockingPolicy.AllowedActions, Has.Count.EqualTo(model.Data.LockingPolicy.AllowedActions.Count));
                     for (int i = 0; i < model.Data.LockingPolicy.AllowedActions.Count; ++i)
                     {
                         Assert.That(getResult.Data.LockingPolicy.AllowedActions[i], Is.EqualTo(model.Data.LockingPolicy.AllowedActions[i]));
@@ -137,21 +162,30 @@ namespace Azure.ResourceManager.Resources.Tests
             }
             if (model.Data.DeploymentPolicy != null || getResult.Data.DeploymentPolicy != null)
             {
-                Assert.That(model.Data.DeploymentPolicy, Is.Not.Null);
-                Assert.That(getResult.Data.DeploymentPolicy, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.DeploymentPolicy, Is.Not.Null);
+                    Assert.That(getResult.Data.DeploymentPolicy, Is.Not.Null);
+                });
                 Assert.That(getResult.Data.DeploymentPolicy.DeploymentMode, Is.EqualTo(model.Data.DeploymentPolicy.DeploymentMode));
             }
             if (model.Data.ManagementPolicy != null || getResult.Data.ManagementPolicy != null)
             {
-                Assert.That(model.Data.ManagementPolicy, Is.Not.Null);
-                Assert.That(getResult.Data.ManagementPolicy, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.ManagementPolicy, Is.Not.Null);
+                    Assert.That(getResult.Data.ManagementPolicy, Is.Not.Null);
+                });
                 Assert.That(getResult.Data.ManagementPolicy.Mode, Is.EqualTo(model.Data.ManagementPolicy.Mode));
             }
             if (model.Data.Policies != null || getResult.Data.Policies != null)
             {
-                Assert.That(model.Data.Policies, Is.Not.Null);
-                Assert.That(getResult.Data.Policies, Is.Not.Null);
-                Assert.That(getResult.Data.Policies.Count, Is.EqualTo(model.Data.Policies.Count));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Data.Policies, Is.Not.Null);
+                    Assert.That(getResult.Data.Policies, Is.Not.Null);
+                });
+                Assert.That(getResult.Data.Policies, Has.Count.EqualTo(model.Data.Policies.Count));
                 for (int i = 0; i < model.Data.Policies.Count; ++i)
                 {
                     ArmApplicationPolicy policy = model.Data.Policies[i], getPolicy = getResult.Data.Policies[i];
@@ -162,22 +196,31 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidAuthorizations(ArmApplicationAuthorization model, ArmApplicationAuthorization getResult)
         {
-            Assert.That(getResult.PrincipalId, Is.EqualTo(model.PrincipalId));
-            Assert.That(getResult.RoleDefinitionId, Is.EqualTo(model.RoleDefinitionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.PrincipalId, Is.EqualTo(model.PrincipalId));
+                Assert.That(getResult.RoleDefinitionId, Is.EqualTo(model.RoleDefinitionId));
+            });
         }
 
         private static void AssertValidArtifacts(ArmApplicationDefinitionArtifact model, ArmApplicationDefinitionArtifact getResult)
         {
-            Assert.That(getResult.Name, Is.EqualTo(model.Name));
-            Assert.That(getResult.Uri, Is.EqualTo(model.Uri));
-            Assert.That(getResult.ArtifactType, Is.EqualTo(model.ArtifactType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Name, Is.EqualTo(model.Name));
+                Assert.That(getResult.Uri, Is.EqualTo(model.Uri));
+                Assert.That(getResult.ArtifactType, Is.EqualTo(model.ArtifactType));
+            });
         }
 
         private static void AssertValidPolicy(ArmApplicationPolicy model, ArmApplicationPolicy getResult)
         {
-            Assert.That(getResult.Name, Is.EqualTo(model.Name));
-            Assert.That(getResult.Parameters, Is.EqualTo(model.Parameters));
-            Assert.That(getResult.PolicyDefinitionId, Is.EqualTo(model.PolicyDefinitionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResult.Name, Is.EqualTo(model.Name));
+                Assert.That(getResult.Parameters, Is.EqualTo(model.Parameters));
+                Assert.That(getResult.PolicyDefinitionId, Is.EqualTo(model.PolicyDefinitionId));
+            });
         }
     }
 }

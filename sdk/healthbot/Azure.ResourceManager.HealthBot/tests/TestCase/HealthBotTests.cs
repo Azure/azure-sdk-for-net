@@ -33,9 +33,12 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
         }
         public static void AssertData(HealthBotData data1, HealthBotData data2)
         {
-            Assert.That(data2.Name, Is.EqualTo(data1.Name));
-            Assert.That(data2.Id, Is.EqualTo(data1.Id));
-            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Name, Is.EqualTo(data1.Name));
+                Assert.That(data2.Id, Is.EqualTo(data1.Id));
+                Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            });
         }
 
         [RecordedTest]
@@ -63,16 +66,20 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.That(count, Is.GreaterThanOrEqualTo(3));
             //.ListBotsBySubscription
             await foreach (var num in DefaultSubscription.GetHealthBotsAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 6);
-            //4Exists
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(6));
+                //4Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

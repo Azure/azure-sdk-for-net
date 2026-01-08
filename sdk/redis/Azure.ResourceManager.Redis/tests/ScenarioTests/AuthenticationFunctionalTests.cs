@@ -41,14 +41,17 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             };
             RedisResource redisResource = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, redisCreationParameters)).Value;
 
-            // Verify cache is aad enabled and access keys authentication disabled
-            Assert.That(string.Equals(redisResource.Data.RedisConfiguration.IsAadEnabled, "true", StringComparison.OrdinalIgnoreCase), Is.True);
-            Assert.That(redisResource.Data.IsAccessKeyAuthenticationDisabled, Is.True);
+            Assert.Multiple(() =>
+            {
+                // Verify cache is aad enabled and access keys authentication disabled
+                Assert.That(string.Equals(redisResource.Data.RedisConfiguration.IsAadEnabled, "true", StringComparison.OrdinalIgnoreCase), Is.True);
+                Assert.That(redisResource.Data.IsAccessKeyAuthenticationDisabled, Is.True);
+            });
 
             // List access polices
             RedisCacheAccessPolicyCollection accessPolicyCollection = redisResource.GetRedisCacheAccessPolicies();
             var accessPolicyList = await accessPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(accessPolicyList.Count, Is.EqualTo(3));
+            Assert.That(accessPolicyList, Has.Count.EqualTo(3));
 
             // Create custom access policy
             string accessPolicyName = "accessPolicy1";
@@ -57,12 +60,15 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
                 Permissions = "+get +hget",
             };
             var accessPolicy = (await accessPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyName, accessPolicyData)).Value;
-            Assert.That(accessPolicy.Data.Name, Is.EqualTo("accessPolicy1"));
-            Assert.That(accessPolicy.Data.Permissions, Is.EqualTo("+get +hget allkeys"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessPolicy.Data.Name, Is.EqualTo("accessPolicy1"));
+                Assert.That(accessPolicy.Data.Permissions, Is.EqualTo("+get +hget allkeys"));
+            });
 
             // List access polices
             accessPolicyList = await accessPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(accessPolicyList.Count, Is.EqualTo(4));
+            Assert.That(accessPolicyList, Has.Count.EqualTo(4));
 
             // Update access policy
             accessPolicyData = new RedisCacheAccessPolicyData()
@@ -70,13 +76,19 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
                 Permissions = "+get",
             };
             accessPolicy = (await accessPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyName, accessPolicyData)).Value;
-            Assert.That(accessPolicy.Data.Name, Is.EqualTo("accessPolicy1"));
-            Assert.That(accessPolicy.Data.Permissions, Is.EqualTo("+get allkeys"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessPolicy.Data.Name, Is.EqualTo("accessPolicy1"));
+                Assert.That(accessPolicy.Data.Permissions, Is.EqualTo("+get allkeys"));
+            });
 
             // Get access policy
             accessPolicy = await accessPolicyCollection.GetAsync(accessPolicyName);
-            Assert.That(accessPolicy.Data.Name, Is.EqualTo("accessPolicy1"));
-            Assert.That(accessPolicy.Data.Permissions, Is.EqualTo("+get allkeys"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessPolicy.Data.Name, Is.EqualTo("accessPolicy1"));
+                Assert.That(accessPolicy.Data.Permissions, Is.EqualTo("+get allkeys"));
+            });
 
             // Create custom access policy assignment
             RedisCacheAccessPolicyAssignmentCollection accessPolicyAssignmentCollection = redisResource.GetRedisCacheAccessPolicyAssignments();
@@ -88,14 +100,17 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
                 AccessPolicyName = "accessPolicy1"
             };
             var accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
-            Assert.That(accessPolicyAssignment.Data.Name, Is.EqualTo("accessPolicyAssignmentName1"));
-            Assert.That(accessPolicyAssignment.Data.AccessPolicyName, Is.EqualTo("accessPolicy1"));
-            Assert.That(accessPolicyAssignment.Data.ObjectId, Is.EqualTo(new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a")));
-            Assert.That(accessPolicyAssignment.Data.ObjectIdAlias, Is.EqualTo("kj-aad-testing"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessPolicyAssignment.Data.Name, Is.EqualTo("accessPolicyAssignmentName1"));
+                Assert.That(accessPolicyAssignment.Data.AccessPolicyName, Is.EqualTo("accessPolicy1"));
+                Assert.That(accessPolicyAssignment.Data.ObjectId, Is.EqualTo(new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a")));
+                Assert.That(accessPolicyAssignment.Data.ObjectIdAlias, Is.EqualTo("kj-aad-testing"));
+            });
 
             // List access policy assignments
             var accessPolicyAssignmentList = await accessPolicyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(accessPolicyAssignmentList.Count, Is.EqualTo(1));
+            Assert.That(accessPolicyAssignmentList, Has.Count.EqualTo(1));
 
             // Update access policy assignment
             accessPolicyAssignmentData = new RedisCacheAccessPolicyAssignmentData()
@@ -109,10 +124,13 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
 
             // Get access policy assignment
             accessPolicyAssignment = await accessPolicyAssignmentCollection.GetAsync(accessPolicyAssignmentName);
-            Assert.That(accessPolicyAssignment.Data.Name, Is.EqualTo("accessPolicyAssignmentName1"));
-            Assert.That(accessPolicyAssignment.Data.AccessPolicyName, Is.EqualTo("accessPolicy1"));
-            Assert.That(accessPolicyAssignment.Data.ObjectId, Is.EqualTo(new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a")));
-            Assert.That(accessPolicyAssignment.Data.ObjectIdAlias, Is.EqualTo("aad testing app"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(accessPolicyAssignment.Data.Name, Is.EqualTo("accessPolicyAssignmentName1"));
+                Assert.That(accessPolicyAssignment.Data.AccessPolicyName, Is.EqualTo("accessPolicy1"));
+                Assert.That(accessPolicyAssignment.Data.ObjectId, Is.EqualTo(new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a")));
+                Assert.That(accessPolicyAssignment.Data.ObjectIdAlias, Is.EqualTo("aad testing app"));
+            });
 
             // Delete access policy assignment
             await accessPolicyAssignment.DeleteAsync(WaitUntil.Completed);
@@ -130,7 +148,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
 
             // List access polices
             accessPolicyList = await accessPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(accessPolicyList.Count, Is.EqualTo(3));
+            Assert.That(accessPolicyList, Has.Count.EqualTo(3));
 
             // Enable access keys authentication on cache
             redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))

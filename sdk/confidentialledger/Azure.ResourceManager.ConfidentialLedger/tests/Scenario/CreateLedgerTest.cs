@@ -36,8 +36,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerName);
 
             Assert.That(ledgerResource, Is.Not.Null);
-            Assert.That(ledgerResource.Data.Properties.LedgerName, Is.EqualTo(LedgerName));
-            Assert.That(ledgerResource.Data.Properties.LedgerUri, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ledgerResource.Data.Properties.LedgerName, Is.EqualTo(LedgerName));
+                Assert.That(ledgerResource.Data.Properties.LedgerUri, Is.Not.Null);
+            });
         }
 
         [Test, Order(3)]

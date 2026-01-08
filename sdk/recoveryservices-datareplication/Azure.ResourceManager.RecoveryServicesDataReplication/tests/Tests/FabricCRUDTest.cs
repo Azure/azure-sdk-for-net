@@ -50,8 +50,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 fabricName,
                 fabricData);
 
-            Assert.That(fabricCreateOperation.HasCompleted, Is.True);
-            Assert.That(fabricCreateOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fabricCreateOperation.HasCompleted, Is.True);
+                Assert.That(fabricCreateOperation.HasValue, Is.True);
+            });
 
             // Get
             DataReplicationFabricResource resource = await rg.GetDataReplicationFabrics().GetAsync(fabricName);

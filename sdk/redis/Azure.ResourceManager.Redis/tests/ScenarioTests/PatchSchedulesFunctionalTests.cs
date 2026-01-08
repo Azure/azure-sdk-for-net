@@ -61,19 +61,28 @@ namespace Azure.ResourceManager.Redis.Tests
 
         private void ValidateResponseForSchedulePatch(RedisPatchScheduleResource schedulesSet, string redisName)
         {
-            Assert.That(schedulesSet.Data.ScheduleEntries.Count, Is.EqualTo(2));
-            Assert.That(schedulesSet.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(schedulesSet.Data.ScheduleEntries, Has.Count.EqualTo(2));
+                Assert.That(schedulesSet.Data.Location, Is.EqualTo(DefaultLocation));
+            });
             foreach (var schedule in schedulesSet.Data.ScheduleEntries)
             {
                 if (schedule.DayOfWeek.Equals(RedisDayOfWeek.Monday))
                 {
-                    Assert.That(schedule.StartHourUtc, Is.EqualTo(10));
-                    Assert.That(schedule.MaintenanceWindow, Is.EqualTo(TimeSpan.FromHours(10)));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(schedule.StartHourUtc, Is.EqualTo(10));
+                        Assert.That(schedule.MaintenanceWindow, Is.EqualTo(TimeSpan.FromHours(10)));
+                    });
                 }
                 else if (schedule.DayOfWeek.Equals(RedisDayOfWeek.Tuesday))
                 {
-                    Assert.That(schedule.StartHourUtc, Is.EqualTo(11));
-                    Assert.That(schedule.MaintenanceWindow, Is.EqualTo(TimeSpan.FromHours(11)));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(schedule.StartHourUtc, Is.EqualTo(11));
+                        Assert.That(schedule.MaintenanceWindow, Is.EqualTo(TimeSpan.FromHours(11)));
+                    });
                 }
                 else
                 {

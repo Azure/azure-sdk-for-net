@@ -160,13 +160,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             string expectedResourceId = string.Format(resourceIdFormat, expecrtedSubId, expecrtedRgName, expectedResourceName);
 
             Assert.That(dedicatedHsmData, Is.Not.Null);
-            Assert.That(dedicatedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
-            Assert.That(dedicatedHsmData.Location.Name, Is.EqualTo(expectedResourceLocation));
-            Assert.That(dedicatedHsmData.Name, Is.EqualTo(expectedResourceName));
-            Assert.That(dedicatedHsmData.Sku, Is.Not.Null);
-            Assert.That(dedicatedHsmData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
-            Assert.That(dedicatedHsmData.Tags, Is.Not.Null);
-            Assert.That(expectedTags.Count == dedicatedHsmData.Tags.Count && !expectedTags.Except(dedicatedHsmData.Tags).Any(), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dedicatedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
+                Assert.That(dedicatedHsmData.Location.Name, Is.EqualTo(expectedResourceLocation));
+                Assert.That(dedicatedHsmData.Name, Is.EqualTo(expectedResourceName));
+                Assert.That(dedicatedHsmData.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dedicatedHsmData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
+                Assert.That(dedicatedHsmData.Tags, Is.Not.Null);
+                Assert.That(expectedTags.Count == dedicatedHsmData.Tags.Count && !expectedTags.Except(dedicatedHsmData.Tags).Any(), Is.True);
+            });
         }
     }
 }

@@ -41,8 +41,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var azureTrafficCollector = await CreateAzureTrafficCollector();
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             Assert.That(collectorPolicy, Is.Not.Null);
-            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
-            Assert.That(collectorPolicy.Data.Location, Is.EqualTo(_location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
+                Assert.That(collectorPolicy.Data.Location, Is.EqualTo(_location));
+            });
         }
 
         [Test]
@@ -53,8 +56,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             var collection = azureTrafficCollector.GetCollectorPolicies();
             var exist = await collection.ExistsAsync(collectorPolicy.Data.Name);
-            Assert.That(exist, Is.Not.Null);
-            Assert.That((bool)exist, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(exist, Is.Not.Null);
+                Assert.That((bool)exist, Is.True);
+            });
         }
 
         [Test]
@@ -65,8 +71,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             var collection = azureTrafficCollector.GetCollectorPolicies();
             CollectorPolicyResource result = await collection.GetAsync(collectorPolicy.Data.Name);
-            Assert.That(result, Is.Not.Null);
-            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.Not.Null);
+                Assert.That(collectorPolicy.Data.Name, Is.EqualTo(result.Data.Name));
+            });
         }
 
         [Test]
@@ -83,10 +92,13 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var list1 = await collection.GetAllAsync().ToEnumerableAsync();
             var list2 = await collection2.GetAllAsync().ToEnumerableAsync();
             var listre = list1.Concat(list2).ToList();
-            Assert.IsNotEmpty(listre);
-            Assert.That(listre.Count >= 2, Is.True);
-            Assert.That(listre.Exists(item => item.Data.Name == collectorPolicy1.Data.Name), Is.True);
-            Assert.That(listre.Exists(item => item.Data.Name == collectorPolicy2.Data.Name), Is.True);
+            Assert.That(listre, Is.Not.Empty);
+            Assert.That(listre, Has.Count.GreaterThanOrEqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listre.Exists(item => item.Data.Name == collectorPolicy1.Data.Name), Is.True);
+                Assert.That(listre.Exists(item => item.Data.Name == collectorPolicy2.Data.Name), Is.True);
+            });
         }
 
         [Test]
@@ -98,9 +110,12 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collectorPolicyresourceId = CollectorPolicyResource.CreateResourceIdentifier(_subscription.Data.SubscriptionId, _resourceGroup.Data.Name, azureTrafficCollector.Data.Name, collectorPolicy.Data.Name);
             var collectorPolicyAccount = Client.GetCollectorPolicyResource(collectorPolicyresourceId);
             CollectorPolicyResource result = await collectorPolicyAccount.GetAsync();
-            Assert.That(result, Is.Not.Null);
-            Assert.That(collectorPolicy.Data.Id, Is.EqualTo(result.Data.Id));
-            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(result.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.Not.Null);
+                Assert.That(collectorPolicy.Data.Id, Is.EqualTo(result.Data.Id));
+                Assert.That(collectorPolicy.Data.Name, Is.EqualTo(result.Data.Name));
+            });
         }
 
         [Test]
@@ -110,8 +125,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var azureTrafficCollector = await CreateAzureTrafficCollector();
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             CollectorPolicyResource getResult = await collectorPolicy.GetAsync();
-            Assert.IsNotEmpty(getResult.Data.Id);
-            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
+            Assert.Multiple(() =>
+            {
+                Assert.That((string)getResult.Data.Id, Is.Not.Empty);
+                Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
+            });
         }
 
         [Test]
@@ -130,7 +148,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
                 }
             };
             CollectorPolicyResource result = await collectorPolicy.UpdateAsync(tagsObject);
-            Assert.IsNotEmpty(result.Data.Tags);
+            Assert.That(result.Data.Tags, Is.Not.Empty);
             Assert.That(result.Data.Tags, Is.EqualTo(tagsObject.Tags));
         }
 
@@ -154,8 +172,11 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             Assert.That(setTags.Data.Tags["key1"], Is.Not.EqualTo("AddTags"));
             string removekey = "key3";
             CollectorPolicyResource removeTags = await collectorPolicy.RemoveTagAsync(removekey);
-            Assert.IsNotEmpty(removeTags.Data.Tags);
-            Assert.That(!removeTags.Data.Tags.ContainsKey(removekey), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(removeTags.Data.Tags, Is.Not.Empty);
+                Assert.That(!removeTags.Data.Tags.ContainsKey(removekey), Is.True);
+            });
         }
 
         [Test]

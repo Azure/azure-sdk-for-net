@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task CreateOrUpdate()
         {
             var sharedPrivateLink = await CreateSharedPrivateLink(_linkName);
-            Assert.IsNotNull(sharedPrivateLink);
+            Assert.That(sharedPrivateLink, Is.Not.Null);
             Assert.That(sharedPrivateLink.Data.Status, Is.EqualTo("Approved"));
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             _webPubSub = await CreateDefaultWebPubSub(_webPubSubName, DefaultLocation, _resourceGroup);
             var list = await _webPubSub.GetWebPubSubSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
         }
     }
 }

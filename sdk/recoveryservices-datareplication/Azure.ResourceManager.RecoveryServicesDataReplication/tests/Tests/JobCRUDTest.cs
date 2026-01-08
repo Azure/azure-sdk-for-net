@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 DataReplicationTestUtilities.DefaultJobName);
 
             var jobModelResource = getJobOperation.Value;
-            Assert.IsNotNull(jobModelResource);
+            Assert.That(jobModelResource, Is.Not.Null);
         }
     }
 }

@@ -66,21 +66,27 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             };
             applicationgroupData.Policies.Add(new EventHubsThrottlingPolicy("Throttlingpolicy3", 3451, "IncomingBytes"));
             EventHubsApplicationGroupResource applicationgroup = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName,applicationgroupData)).Value;
-            Assert.That(applicationgroup, Is.Not.Null);
-            Assert.That(applicationGroupName, Is.EqualTo(applicationgroup.Id.Name));
-            Assert.That(applicationgroupData.IsEnabled, Is.EqualTo(applicationgroup.Data.IsEnabled));
-            Assert.That(applicationgroupData.ClientAppGroupIdentifier, Is.EqualTo(applicationgroup.Data.ClientAppGroupIdentifier));
-            Assert.That((bool)await _applicationGroupCollection.ExistsAsync(applicationGroupName), Is.True);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(applicationgroup, Is.Not.Null);
+                Assert.That(applicationGroupName, Is.EqualTo(applicationgroup.Id.Name));
+                Assert.That(applicationgroupData.IsEnabled, Is.EqualTo(applicationgroup.Data.IsEnabled));
+                Assert.That(applicationgroupData.ClientAppGroupIdentifier, Is.EqualTo(applicationgroup.Data.ClientAppGroupIdentifier));
+                Assert.That((bool)await _applicationGroupCollection.ExistsAsync(applicationGroupName), Is.True);
+            });
             List<EventHubsThrottlingPolicy> policy = new List<EventHubsThrottlingPolicy>();
 
             policy = applicationgroupData.Policies.Select(x => x as EventHubsThrottlingPolicy).ToList();
-            // List<ThrottlingPolicy> lp = applicationgroupData.Policies.ConvertAll(new Converter<ApplicationGroupPolicy,ThrottlingPolicy>(ApplicationGroupPolicyToThrottling));
-            Assert.That(policy[0].Name, Is.EqualTo("Throttlingpolicy1"));
-            Assert.That(policy[0].RateLimitThreshold, Is.EqualTo(3452));
-            Assert.That(policy[0].MetricId, Is.EqualTo(EventHubsMetricId.IncomingMessages));
-            Assert.That(policy[1].Name, Is.EqualTo("Throttlingpolicy3"));
-            Assert.That(policy[1].RateLimitThreshold, Is.EqualTo(3451));
-            Assert.That(policy[1].MetricId, Is.EqualTo(EventHubsMetricId.IncomingBytes));
+            Assert.Multiple(() =>
+            {
+                // List<ThrottlingPolicy> lp = applicationgroupData.Policies.ConvertAll(new Converter<ApplicationGroupPolicy,ThrottlingPolicy>(ApplicationGroupPolicyToThrottling));
+                Assert.That(policy[0].Name, Is.EqualTo("Throttlingpolicy1"));
+                Assert.That(policy[0].RateLimitThreshold, Is.EqualTo(3452));
+                Assert.That(policy[0].MetricId, Is.EqualTo(EventHubsMetricId.IncomingMessages));
+                Assert.That(policy[1].Name, Is.EqualTo("Throttlingpolicy3"));
+                Assert.That(policy[1].RateLimitThreshold, Is.EqualTo(3451));
+                Assert.That(policy[1].MetricId, Is.EqualTo(EventHubsMetricId.IncomingBytes));
+            });
             applicationgroup = await _applicationGroupCollection.GetAsync(applicationGroupName);
 
             //delete applicationGroup

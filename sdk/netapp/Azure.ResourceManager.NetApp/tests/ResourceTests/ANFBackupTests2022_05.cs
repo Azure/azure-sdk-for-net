@@ -149,19 +149,28 @@ namespace Azure.ResourceManager.NetApp.Tests
             TestContext.WriteLine($"GET 2022-05-01 volume: elapsed time {watch.ElapsedMilliseconds} ms {watch.Elapsed}");
 
             Assert.That(getVolumeResource2022_05.Data.DataProtection, Is.Not.Null);
-            Assert.That(getVolumeResource2022_05.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(getVolumeResource2022_05.Data.DataProtection.Replication, Is.Null);
-            // Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
-            Assert.That(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled, Is.EqualTo(backupConfiguration.IsBackupEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getVolumeResource2022_05.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(getVolumeResource2022_05.Data.DataProtection.Replication, Is.Null);
+                // Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
+                Assert.That(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled, Is.EqualTo(backupConfiguration.IsBackupEnabled));
+            });
 
             //Validate volume is backup enabled, api-version 2022-09-01
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.That(backupVolumeResource.Data.DataProtection, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.VaultId, Is.Not.Null);
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.VaultId, Is.EqualTo(_vault.Id));
-            Assert.That(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled, Is.EqualTo(backupConfiguration.IsBackupEnabled));
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Snapshot, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.VaultId, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.VaultId, Is.EqualTo(_vault.Id));
+                Assert.That(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled, Is.EqualTo(backupConfiguration.IsBackupEnabled));
+            });
 
             //Disable the backup
             backupConfiguration.IsBackupEnabled = false;

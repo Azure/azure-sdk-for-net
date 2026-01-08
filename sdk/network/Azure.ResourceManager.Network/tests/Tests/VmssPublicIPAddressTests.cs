@@ -55,9 +55,12 @@ namespace Azure.ResourceManager.Network.Tests
             var vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
             var firstResult = vmssListAllPageResult.First();
 
-            Assert.That(vmssListAllPageResult, Is.Not.Null);
-            Assert.That(firstResult.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(firstResult.ResourceGuid, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vmssListAllPageResult, Is.Not.Null);
+                Assert.That(firstResult.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(firstResult.ResourceGuid, Is.Not.Null);
+            });
 
             string idItem = firstResult.Id;
             string vmIndex = GetNameById(idItem, "virtualMachines");
@@ -73,8 +76,11 @@ namespace Azure.ResourceManager.Network.Tests
             var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressDataAsync(nicName, ipConfigName, ipName);
 
             Assert.That(vmssGetResult, Is.Not.Null);
-            Assert.That(vmssGetResult.Value.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(vmssGetResult.Value.ResourceGuid, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vmssGetResult.Value.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(vmssGetResult.Value.ResourceGuid, Is.Not.Null);
+            });
         }
     }
 }

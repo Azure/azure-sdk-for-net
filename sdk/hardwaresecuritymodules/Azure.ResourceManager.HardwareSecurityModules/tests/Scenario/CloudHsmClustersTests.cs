@@ -109,14 +109,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string expectedResourceId = string.Format(resourceIdFormat, expecrtedSubId, expecrtedRgName, expectedResourceName);
 
             Assert.That(cloudHsmClusterData, Is.Not.Null);
-            Assert.That(cloudHsmClusterData.Id.ToString(), Is.EqualTo(expectedResourceId));
-            Assert.That(cloudHsmClusterData.Location.Name, Is.EqualTo(expectedResourceLocation));
-            Assert.That(cloudHsmClusterData.Name, Is.EqualTo(expectedResourceName));
-            Assert.That(cloudHsmClusterData.Sku, Is.Not.Null);
-            Assert.That(cloudHsmClusterData.Sku.Family.ToString(), Is.EqualTo(expectedSkuFamily));
-            Assert.That(cloudHsmClusterData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
-            Assert.That(cloudHsmClusterData.Tags, Is.Not.Null);
-            Assert.That(expectedTags.Count == cloudHsmClusterData.Tags.Count && !expectedTags.Except(cloudHsmClusterData.Tags).Any(), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cloudHsmClusterData.Id.ToString(), Is.EqualTo(expectedResourceId));
+                Assert.That(cloudHsmClusterData.Location.Name, Is.EqualTo(expectedResourceLocation));
+                Assert.That(cloudHsmClusterData.Name, Is.EqualTo(expectedResourceName));
+                Assert.That(cloudHsmClusterData.Sku, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(cloudHsmClusterData.Sku.Family.ToString(), Is.EqualTo(expectedSkuFamily));
+                Assert.That(cloudHsmClusterData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
+                Assert.That(cloudHsmClusterData.Tags, Is.Not.Null);
+                Assert.That(expectedTags.Count == cloudHsmClusterData.Tags.Count && !expectedTags.Except(cloudHsmClusterData.Tags).Any(), Is.True);
+            });
             //Assert.AreEqual(expectedIdentityType, cloudHsmClusterData.Identity.ManagedServiceIdentityType);
             //Assert.AreEqual(managedIdentityExpextedCount, cloudHsmClusterData.Identity.UserAssignedIdentities.Count);
         }

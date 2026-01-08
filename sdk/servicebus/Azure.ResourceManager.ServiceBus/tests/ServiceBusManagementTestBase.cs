@@ -100,15 +100,24 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             Assert.That(sBNamespace, Is.Not.Null);
             Assert.That(sBNamespace.Id, Is.Not.Null);
-            Assert.That(sBNamespace.Id.Name, Is.Not.Null);
-            Assert.That(sBNamespace.Data, Is.Not.Null);
-            Assert.That(sBNamespace.Data.Location, Is.Not.Null);
-            Assert.That(sBNamespace.Data.CreatedOn, Is.Not.Null);
-            Assert.That(sBNamespace.Data.Sku, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sBNamespace.Id.Name, Is.Not.Null);
+                Assert.That(sBNamespace.Data, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(sBNamespace.Data.Location, Is.Not.Null);
+                Assert.That(sBNamespace.Data.CreatedOn, Is.Not.Null);
+                Assert.That(sBNamespace.Data.Sku, Is.Not.Null);
+            });
             if (useDefaults)
             {
-                Assert.That(sBNamespace.Data.Location, Is.EqualTo(DefaultLocation));
-                Assert.That(sBNamespace.Data.Sku.Tier, Is.EqualTo(ServiceBusSkuTier.Standard));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sBNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                    Assert.That(sBNamespace.Data.Sku.Tier, Is.EqualTo(ServiceBusSkuTier.Standard));
+                });
             }
         }
 

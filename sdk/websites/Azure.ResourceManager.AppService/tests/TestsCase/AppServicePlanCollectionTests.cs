@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -73,8 +73,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, planName, input);
             AppServicePlanResource plan = lro.Value;
-            Assert.That((bool)await container.ExistsAsync(planName), Is.True);
-            Assert.That((bool)await container.ExistsAsync(planName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await container.ExistsAsync(planName), Is.True);
+                Assert.That((bool)await container.ExistsAsync(planName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

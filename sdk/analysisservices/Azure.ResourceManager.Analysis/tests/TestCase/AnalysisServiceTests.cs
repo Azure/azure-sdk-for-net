@@ -43,18 +43,24 @@ namespace Azure.ResourceManager.Analysis.Tests
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         private void AssertService(AnalysisServerData data1, AnalysisServerData data2)
         {
             AssertResource(data1, data2);
-            Assert.That(data2.State, Is.EqualTo(data1.State));
-            Assert.That(data2.AnalysisServerSku, Is.EqualTo(data1.AnalysisServerSku));
-            Assert.That(data2.BackupBlobContainerUri, Is.EqualTo(data1.BackupBlobContainerUri));
-            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.State, Is.EqualTo(data1.State));
+                Assert.That(data2.AnalysisServerSku, Is.EqualTo(data1.AnalysisServerSku));
+                Assert.That(data2.BackupBlobContainerUri, Is.EqualTo(data1.BackupBlobContainerUri));
+                Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            });
         }
 
         [TestCase]
@@ -80,10 +86,14 @@ namespace Azure.ResourceManager.Analysis.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4.Exists
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4.Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

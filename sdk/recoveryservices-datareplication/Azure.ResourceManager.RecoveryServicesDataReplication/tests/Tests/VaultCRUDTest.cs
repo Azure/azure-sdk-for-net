@@ -63,8 +63,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 vaultName,
                 vaultData);
 
-            Assert.That(vaultCreateOperation.HasCompleted, Is.True);
-            Assert.That(vaultCreateOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(vaultCreateOperation.HasCompleted, Is.True);
+                Assert.That(vaultCreateOperation.HasValue, Is.True);
+            });
 
             // Get
             DataReplicationVaultResource resource = await rg.GetDataReplicationVaults().GetAsync(

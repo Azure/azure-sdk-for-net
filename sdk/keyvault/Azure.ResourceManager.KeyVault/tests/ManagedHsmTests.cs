@@ -215,21 +215,24 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
             string expectedHsmUri = $"https://{expectedVaultName}.managedhsm.azure.net/";
 
-            Assert.That(managedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
-            Assert.That(managedHsmData.Location.ToString(), Is.EqualTo(expectedLocation.ToString()));
-            Assert.That(managedHsmData.Properties.TenantId, Is.EqualTo(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty));
-            Assert.That(managedHsmData.Name, Is.EqualTo(expectedVaultName));
-            Assert.That(managedHsmData.Sku.Family, Is.EqualTo(expectedSkuFamily));
-            Assert.That(managedHsmData.Sku.Name, Is.EqualTo(expectedSkuName));
-            Assert.That(managedHsmData.Properties.EnablePurgeProtection, Is.EqualTo(expectedEnablePurgeProtection));
-            Assert.That(managedHsmData.Properties.EnableSoftDelete, Is.EqualTo(expectedEnableSoftDelete));
-            Assert.That(managedHsmData.Properties.HsmUri.ToString(), Is.EqualTo(expectedHsmUri));
-            Assert.That(managedHsmData.Properties.InitialAdminObjectIds, Is.EqualTo(expectedInitialAdminObjectIds));
-            Assert.That(managedHsmData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(expectedNetworkAcls.Bypass));
-            Assert.That(managedHsmData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(expectedNetworkAcls.DefaultAction));
-            Assert.That(managedHsmData.Properties.PublicNetworkAccess, Is.EqualTo(expectedPublicNetworkAccess));
-            Assert.That(managedHsmData.Properties.SoftDeleteRetentionInDays, Is.EqualTo(expectedSoftDeleteRetentionInDays));
-            Assert.That(expectedTags.DictionaryEqual(managedHsmData.Tags), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(managedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
+                Assert.That(managedHsmData.Location.ToString(), Is.EqualTo(expectedLocation.ToString()));
+                Assert.That(managedHsmData.Properties.TenantId, Is.EqualTo(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty));
+                Assert.That(managedHsmData.Name, Is.EqualTo(expectedVaultName));
+                Assert.That(managedHsmData.Sku.Family, Is.EqualTo(expectedSkuFamily));
+                Assert.That(managedHsmData.Sku.Name, Is.EqualTo(expectedSkuName));
+                Assert.That(managedHsmData.Properties.EnablePurgeProtection, Is.EqualTo(expectedEnablePurgeProtection));
+                Assert.That(managedHsmData.Properties.EnableSoftDelete, Is.EqualTo(expectedEnableSoftDelete));
+                Assert.That(managedHsmData.Properties.HsmUri.ToString(), Is.EqualTo(expectedHsmUri));
+                Assert.That(managedHsmData.Properties.InitialAdminObjectIds, Is.EqualTo(expectedInitialAdminObjectIds));
+                Assert.That(managedHsmData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(expectedNetworkAcls.Bypass));
+                Assert.That(managedHsmData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(expectedNetworkAcls.DefaultAction));
+                Assert.That(managedHsmData.Properties.PublicNetworkAccess, Is.EqualTo(expectedPublicNetworkAccess));
+                Assert.That(managedHsmData.Properties.SoftDeleteRetentionInDays, Is.EqualTo(expectedSoftDeleteRetentionInDays));
+                Assert.That(expectedTags.DictionaryEqual(managedHsmData.Tags), Is.True);
+            });
         }
     }
 }

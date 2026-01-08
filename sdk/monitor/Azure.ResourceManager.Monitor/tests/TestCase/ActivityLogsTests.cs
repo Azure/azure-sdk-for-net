@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 sum++;
             }
-            Assert.That(sum > 0, Is.True);
+            Assert.That(sum, Is.GreaterThan(0));
         }
     }
 }

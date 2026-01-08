@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             // delete kusto pool
             await kustoPool.DeleteAsync(WaitUntil.Completed);
             kustoPoolList = await kustoPoolCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(kustoPoolList.Count, Is.EqualTo(kustoPoolCount - 1));
+            Assert.That(kustoPoolList, Has.Count.EqualTo(kustoPoolCount - 1));
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             // delete database
             await kustoDatabase.DeleteAsync(WaitUntil.Completed);
             kustoDatabaseList = await kustoPoolDatabaseCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(kustoDatabaseList.Count, Is.EqualTo(kustoDatabaseCount - 1));
+            Assert.That(kustoDatabaseList, Has.Count.EqualTo(kustoDatabaseCount - 1));
         }
 
         private void VerifyKustoPool(SynapseKustoPoolResource kustoPool, string name, SynapseDataSourceSku sku, KustoPoolState state, string workspaceName)
@@ -130,17 +130,23 @@ namespace Azure.ResourceManager.Synapse.Tests
 
         private void AssetEqualtsSku(SynapseDataSourceSku sku1, SynapseDataSourceSku sku2)
         {
-            Assert.That(sku2.Size, Is.EqualTo(sku1.Size));
-            Assert.That(sku2.Name, Is.EqualTo(sku1.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sku2.Size, Is.EqualTo(sku1.Size));
+                Assert.That(sku2.Name, Is.EqualTo(sku1.Name));
+            });
         }
 
         private void VerifyReadWriteDatabase(SynapseReadWriteDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string workspaceName, string kustoPoolName)
         {
             var databaseFullName = GetFullKustoDatabaseName(workspaceName, kustoPoolName, databaseName);
-            Assert.That(database, Is.Not.Null);
-            Assert.That(databaseFullName, Is.EqualTo(database.Name));
-            Assert.That(softDeletePeriod, Is.EqualTo(database.SoftDeletePeriod));
-            Assert.That(hotCachePeriod, Is.EqualTo(database.HotCachePeriod));
+            Assert.Multiple(() =>
+            {
+                Assert.That(database, Is.Not.Null);
+                Assert.That(databaseFullName, Is.EqualTo(database.Name));
+                Assert.That(softDeletePeriod, Is.EqualTo(database.SoftDeletePeriod));
+                Assert.That(hotCachePeriod, Is.EqualTo(database.HotCachePeriod));
+            });
         }
 
         private string GetFullKustoDatabaseName(string workspaceName, string kustoPoolName, string kustoDatabaseName)

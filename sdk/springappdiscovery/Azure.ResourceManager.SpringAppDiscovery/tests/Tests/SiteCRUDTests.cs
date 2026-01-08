@@ -48,11 +48,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             //create a site
             var createSiteOperation = await siteColletion.CreateOrUpdateAsync(WaitUntil.Completed, siteName, modelData, CancellationToken.None);
-            Assert.That(createSiteOperation.HasCompleted, Is.True);
-            Assert.That(createSiteOperation.HasValue, Is.True);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(createSiteOperation.HasCompleted, Is.True);
+                Assert.That(createSiteOperation.HasValue, Is.True);
 
-            //judge a site exist or not
-            Assert.That((bool)await siteColletion.ExistsAsync(siteName), Is.True);
+                //judge a site exist or not
+                Assert.That((bool)await siteColletion.ExistsAsync(siteName), Is.True);
+            });
 
             //get a site
             Response<SpringBootSiteResource> getSiteResponse = await siteColletion.GetAsync(siteName);
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 siteCount++;
             }
-            Assert.That(siteCount > 0, Is.True);
+            Assert.That(siteCount, Is.GreaterThan(0));
 
             //delete a site
             var deletetServerOperationAgain = await siteResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

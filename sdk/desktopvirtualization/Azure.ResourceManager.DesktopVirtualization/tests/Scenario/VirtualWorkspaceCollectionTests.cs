@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 workspaceData);
 
             Assert.That(opWorkspaceCreate, Is.Not.Null);
-            Assert.That(opWorkspaceCreate.HasCompleted, Is.True);
-            Assert.That(workspaceName, Is.EqualTo(opWorkspaceCreate.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opWorkspaceCreate.HasCompleted, Is.True);
+                Assert.That(workspaceName, Is.EqualTo(opWorkspaceCreate.Value.Data.Name));
+            });
 
             Response<VirtualWorkspaceResource> getOp = await workspaceCollection.GetAsync(
                 workspaceName);

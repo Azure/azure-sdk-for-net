@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.Chaos.Tests
             var targetTypeResponse = await this.TargetTypeCollection.GetAsync(TestConstants.VmssTargetName).ConfigureAwait(false);
             var capabilityTypeCollection = targetTypeResponse.Value.GetAllChaosCapabilityMetadata();
             var capabilityResponse = await capabilityTypeCollection.GetAsync(TestConstants.VmssShutdownCapabilityName).ConfigureAwait(false);
-            Assert.That(capabilityResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssShutdownCapabilityName));
-            Assert.That(targetTypeResponse.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.Multiple(() =>
+            {
+                Assert.That(capabilityResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssShutdownCapabilityName));
+                Assert.That(targetTypeResponse.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Tests
             Assert.That(result.Value.Data.Name, Is.EqualTo(jobName));
             // Get all
             var list = await mediaTransformJobCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             // Cancel
             while (result.Value.Data.State != MediaJobState.Canceled)
             {

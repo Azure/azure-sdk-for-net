@@ -46,11 +46,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
             EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
-            Assert.That(eventHub, Is.Not.Null);
-            Assert.That(eventhubName, Is.EqualTo(eventHub.Id.Name));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(eventHub, Is.Not.Null);
+                Assert.That(eventhubName, Is.EqualTo(eventHub.Id.Name));
 
-            //validate if created successfully
-            Assert.That((bool)await _eventHubCollection.ExistsAsync(eventhubName), Is.True);
+                //validate if created successfully
+                Assert.That((bool)await _eventHubCollection.ExistsAsync(eventhubName), Is.True);
+            });
             eventHub = await _eventHubCollection.GetAsync(eventhubName);
 
             //delete eventhub
@@ -58,8 +61,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _eventHubCollection.GetAsync(eventhubName); });
-            Assert.That(exception.Status, Is.EqualTo(404));
-            Assert.That((bool)await _eventHubCollection.ExistsAsync(eventhubName), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _eventHubCollection.ExistsAsync(eventhubName), Is.False);
+            });
         }
 
         [Test]
@@ -107,17 +113,20 @@ namespace Azure.ResourceManager.EventHubs.Tests
             };
             EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, parameter)).Value;
 
-            //validate
-            Assert.That(eventHub, Is.Not.Null);
-            Assert.That(eventHubName, Is.EqualTo(eventHub.Id.Name));
-            Assert.That(parameter.Status, Is.EqualTo(eventHub.Data.Status));
-            Assert.That(parameter.PartitionCount, Is.EqualTo(eventHub.Data.PartitionCount));
-            Assert.That(parameter.CaptureDescription.IntervalInSeconds, Is.EqualTo(eventHub.Data.CaptureDescription.IntervalInSeconds));
-            Assert.That(parameter.CaptureDescription.SizeLimitInBytes, Is.EqualTo(eventHub.Data.CaptureDescription.SizeLimitInBytes));
-            Assert.That(parameter.CaptureDescription.Destination.Name, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.Name));
-            Assert.That(parameter.CaptureDescription.Destination.BlobContainer, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.BlobContainer));
-            Assert.That(parameter.CaptureDescription.Destination.StorageAccountResourceId, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.StorageAccountResourceId));
-            Assert.That(parameter.CaptureDescription.Destination.ArchiveNameFormat, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.ArchiveNameFormat));
+            Assert.Multiple(() =>
+            {
+                //validate
+                Assert.That(eventHub, Is.Not.Null);
+                Assert.That(eventHubName, Is.EqualTo(eventHub.Id.Name));
+                Assert.That(parameter.Status, Is.EqualTo(eventHub.Data.Status));
+                Assert.That(parameter.PartitionCount, Is.EqualTo(eventHub.Data.PartitionCount));
+                Assert.That(parameter.CaptureDescription.IntervalInSeconds, Is.EqualTo(eventHub.Data.CaptureDescription.IntervalInSeconds));
+                Assert.That(parameter.CaptureDescription.SizeLimitInBytes, Is.EqualTo(eventHub.Data.CaptureDescription.SizeLimitInBytes));
+                Assert.That(parameter.CaptureDescription.Destination.Name, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.Name));
+                Assert.That(parameter.CaptureDescription.Destination.BlobContainer, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.BlobContainer));
+                Assert.That(parameter.CaptureDescription.Destination.StorageAccountResourceId, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.StorageAccountResourceId));
+                Assert.That(parameter.CaptureDescription.Destination.ArchiveNameFormat, Is.EqualTo(eventHub.Data.CaptureDescription.Destination.ArchiveNameFormat));
+            });
 
             //EventHub with Delete Cleanup Policy.
             string eventHubName1 = Recording.GenerateAssetName("eventhub");
@@ -133,13 +142,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
             };
             EventHubResource eventHub1 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName1, parameter1)).Value;
 
-            //validate
-            Assert.That(eventHub1, Is.Not.Null);
-            Assert.That(eventHubName1, Is.EqualTo(eventHub1.Id.Name));
-            Assert.That(parameter1.Status, Is.EqualTo(eventHub1.Data.Status));
-            Assert.That(parameter1.PartitionCount, Is.EqualTo(eventHub1.Data.PartitionCount));
-            Assert.That(parameter1.RetentionDescription.CleanupPolicy, Is.EqualTo(eventHub1.Data.RetentionDescription.CleanupPolicy));
-            Assert.That(parameter1.RetentionDescription.RetentionTimeInHours, Is.EqualTo(eventHub1.Data.RetentionDescription.RetentionTimeInHours));
+            Assert.Multiple(() =>
+            {
+                //validate
+                Assert.That(eventHub1, Is.Not.Null);
+                Assert.That(eventHubName1, Is.EqualTo(eventHub1.Id.Name));
+                Assert.That(parameter1.Status, Is.EqualTo(eventHub1.Data.Status));
+                Assert.That(parameter1.PartitionCount, Is.EqualTo(eventHub1.Data.PartitionCount));
+                Assert.That(parameter1.RetentionDescription.CleanupPolicy, Is.EqualTo(eventHub1.Data.RetentionDescription.CleanupPolicy));
+                Assert.That(parameter1.RetentionDescription.RetentionTimeInHours, Is.EqualTo(eventHub1.Data.RetentionDescription.RetentionTimeInHours));
+            });
 
             //EventHub with Compact Cleanup Policy.
             string eventHubName2 = Recording.GenerateAssetName("eventhub");
@@ -156,12 +168,15 @@ namespace Azure.ResourceManager.EventHubs.Tests
             };
             EventHubResource eventHub2 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName2, parameter2)).Value;
 
-            //validate
-            Assert.That(eventHub2, Is.Not.Null);
-            Assert.That(eventHubName2, Is.EqualTo(eventHub2.Id.Name));
-            Assert.That(parameter2.Status, Is.EqualTo(eventHub2.Data.Status));
-            Assert.That(parameter2.PartitionCount, Is.EqualTo(eventHub2.Data.PartitionCount));
-            Assert.That(parameter2.RetentionDescription.CleanupPolicy, Is.EqualTo(eventHub2.Data.RetentionDescription.CleanupPolicy));
+            Assert.Multiple(() =>
+            {
+                //validate
+                Assert.That(eventHub2, Is.Not.Null);
+                Assert.That(eventHubName2, Is.EqualTo(eventHub2.Id.Name));
+                Assert.That(parameter2.Status, Is.EqualTo(eventHub2.Data.Status));
+                Assert.That(parameter2.PartitionCount, Is.EqualTo(eventHub2.Data.PartitionCount));
+                Assert.That(parameter2.RetentionDescription.CleanupPolicy, Is.EqualTo(eventHub2.Data.RetentionDescription.CleanupPolicy));
+            });
             Assert.That(eventHub2.Data.RetentionDescription.RetentionTimeInHours, Is.EqualTo(-1));
             Assert.That(parameter2.RetentionDescription.TombstoneRetentionTimeInHours, Is.EqualTo(eventHub2.Data.RetentionDescription.TombstoneRetentionTimeInHours));
 
@@ -194,9 +209,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 if (eventHub.Id.Name == eventhubName2)
                     eventHub2 = eventHub;
             }
-            Assert.That(count, Is.EqualTo(2));
-            Assert.That(eventHub1, Is.Not.Null);
-            Assert.That(eventHub2, Is.Not.Null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(count, Is.EqualTo(2));
+                Assert.That(eventHub1, Is.Not.Null);
+                Assert.That(eventHub2, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -215,20 +234,26 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
-            Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //get all authorization rules
             List<EventHubAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
-            Assert.That(rules.Count, Is.EqualTo(1));
+            Assert.That(rules, Has.Count.EqualTo(1));
             bool isContainAuthorizationRuleName = false;
             foreach (EventHubAuthorizationRuleResource rule in rules)
             {
@@ -242,8 +267,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //update authorization rule
             parameter.Rights.Add(EventHubsAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             //delete authorization rule
             await authorizationRule.DeleteAsync(WaitUntil.Completed);
@@ -270,28 +298,40 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
-            Assert.That(authorizationRule, Is.Not.Null);
-            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(authorizationRule, Is.Not.Null);
+                Assert.That(parameter.Rights, Has.Count.EqualTo(authorizationRule.Data.Rights.Count));
+            });
 
             EventHubsAccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.That(keys1, Is.Not.Null);
-            Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
-            Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys1.PrimaryConnectionString, Is.Not.Null);
+                Assert.That(keys1.SecondaryConnectionString, Is.Not.Null);
+            });
 
             EventHubsAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(KeyType.PrimaryKey));
 
             //the recordings are sanitized therefore cannot be compared
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
-                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                    Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
+                });
             }
 
             EventHubsAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(KeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
-                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                    Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
+                });
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -303,8 +343,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
-                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                    Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
+                });
             }
 
             currentKeys = keys4;
@@ -315,8 +358,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
-                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                    Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
+                });
             }
         }
     }

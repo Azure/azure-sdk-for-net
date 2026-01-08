@@ -48,15 +48,18 @@ namespace Azure.ResourceManager.BotService.Tests
             Assert.That(privateEndpointConnectionData.ConnectionState.Status.ToString(), Is.EqualTo("Approved"));
             //3.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(list.Count, Is.EqualTo(1));
-            //4.Exist
-            //Assert.IsTrue(await collection.ExistsAsync(privateEndpointConnectionName));
-            Assert.That((bool)await collection.ExistsAsync(privateEndpointConnectionName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(list, Has.Count.EqualTo(1));
+                //4.Exist
+                //Assert.IsTrue(await collection.ExistsAsync(privateEndpointConnectionName));
+                Assert.That((bool)await collection.ExistsAsync(privateEndpointConnectionName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation
             //Delete
-            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list, Has.Count.EqualTo(1));
             /*foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);

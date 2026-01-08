@@ -68,8 +68,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 
             var createAlertProcessingRuleOperation = await rg.GetAlertProcessingRules().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, alertProcessingRule);
             await createAlertProcessingRuleOperation.WaitForCompletionAsync();
-            Assert.That(createAlertProcessingRuleOperation.HasCompleted, Is.True);
-            Assert.That(createAlertProcessingRuleOperation.HasValue, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createAlertProcessingRuleOperation.HasCompleted, Is.True);
+                Assert.That(createAlertProcessingRuleOperation.HasValue, Is.True);
+            });
 
             // Get Alert processing rule by name
             AlertProcessingRuleResource fetchedAlertProcessingRule = await rg.GetAlertProcessingRules().GetAsync(resourceName);

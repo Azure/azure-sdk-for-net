@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubNamespaceName = Recording.GenerateAssetName("azNotificationHubNamespace");
             await CreateNotificationHubNamespace(_resourceGroup, notificationHubNamespaceName);
             var list = await _namespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]

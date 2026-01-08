@@ -63,16 +63,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolData);
 
             Assert.That(op, Is.Not.Null);
-            Assert.That(op.HasCompleted, Is.True);
-            Assert.That(hostPoolName, Is.EqualTo(op.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(op.HasCompleted, Is.True);
+                Assert.That(hostPoolName, Is.EqualTo(op.Value.Data.Name));
+            });
 
             Response<HostPoolResource> getOp = await hostPoolCollection.GetAsync(
                 hostPoolName);
 
-            Assert.That(getOp.Value.Data.Name, Is.EqualTo(hostPoolName));
-            Assert.That(getOp.Value.Data.HostPoolType, Is.EqualTo(hostPoolType));
-            Assert.That(getOp.Value.Data.LoadBalancerType, Is.EqualTo(expectedLoadBalancerType));
-            Assert.That(getOp.Value.Data.PreferredAppGroupType, Is.EqualTo(preferredAppGroupType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getOp.Value.Data.Name, Is.EqualTo(hostPoolName));
+                Assert.That(getOp.Value.Data.HostPoolType, Is.EqualTo(hostPoolType));
+                Assert.That(getOp.Value.Data.LoadBalancerType, Is.EqualTo(expectedLoadBalancerType));
+                Assert.That(getOp.Value.Data.PreferredAppGroupType, Is.EqualTo(preferredAppGroupType));
+            });
 
             hostPoolData.FriendlyName = "Friendly Name";
             op = await hostPoolCollection.CreateOrUpdateAsync(

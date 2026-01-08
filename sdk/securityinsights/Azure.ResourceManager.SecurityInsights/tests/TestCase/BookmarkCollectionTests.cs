@@ -90,10 +90,14 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4Exists
-            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync("6a8d6ea6-04d5-49d7-8169-ffca8b0ced60"), Is.False);
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync("6a8d6ea6-04d5-49d7-8169-ffca8b0ced60"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

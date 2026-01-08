@@ -62,8 +62,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackCollection collection = DefaultResGroup.GetLocalRulestacks();
-            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
-            Assert.That((bool)await collection.ExistsAsync("invalidResourceName"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync("invalidResourceName"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -83,11 +86,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         private LocalRulestackData getLocalRulestackData()

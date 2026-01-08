@@ -38,14 +38,17 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
-            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Basic));
-            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.BasicOrStandard));
-            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(0));
-            Assert.That(responseCreate.Data.Port, Is.EqualTo(6379));
-            Assert.That(responseCreate.Data.SslPort, Is.EqualTo(6380));
-            Assert.That(responseCreate.Data.EnableNonSslPort, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+                Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Basic));
+                Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.BasicOrStandard));
+                Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(0));
+                Assert.That(responseCreate.Data.Port, Is.EqualTo(6379));
+                Assert.That(responseCreate.Data.SslPort, Is.EqualTo(6380));
+                Assert.That(responseCreate.Data.EnableNonSslPort, Is.False);
+            });
 
             var patch = new RedisPatch()
             {

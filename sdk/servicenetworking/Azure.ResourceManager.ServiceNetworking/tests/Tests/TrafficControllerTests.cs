@@ -210,14 +210,20 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             resourceGroupName = rgResource.Data.Name;
             //Testing PUT Operation
             TrafficControllerResource tcCreate = CreateTrafficControllerAsync(location, resourceGroupName, tcName).Result.Value;
-            Assert.That(tcCreate, Is.Not.Null, "Traffic Controller is Null");
-            Assert.That(tcName, Is.EqualTo(tcCreate.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tcCreate, Is.Not.Null, "Traffic Controller is Null");
+                Assert.That(tcName, Is.EqualTo(tcCreate.Data.Name));
+            });
             Assert.That(tcCreate.Data.TrafficControllerProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing GET Operation
             TrafficControllerResource tcGet = GetTrafficControllerAsync(resourceGroupName, tcName).Result;
-            Assert.That(tcGet, Is.Not.Null, "Traffic Controller is Null");
-            Assert.That(tcName, Is.EqualTo(tcGet.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tcGet, Is.Not.Null, "Traffic Controller is Null");
+                Assert.That(tcName, Is.EqualTo(tcGet.Data.Name));
+            });
             Assert.That(tcGet.Data.TrafficControllerProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing DELETE Operation
@@ -245,14 +251,20 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Testing PUT Operation
             string frontendName = Recording.GenerateAssetName("tc-frontend");
             var frontendCreation = CreateFrontendAsync(rgResource, frontendName, tc, location).Result.Value;
-            Assert.IsNotNull(frontendCreation);
-            Assert.That(frontendName, Is.EqualTo(frontendCreation.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(frontendCreation, Is.Not.Null);
+                Assert.That(frontendName, Is.EqualTo(frontendCreation.Data.Name));
+            });
             Assert.That(frontendCreation.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing GET Operation
             var frontendGet = GetFrontendAsync(frontendName, tc).Result;
-            Assert.IsNotNull(frontendGet);
-            Assert.That(frontendName, Is.EqualTo(frontendGet.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(frontendGet, Is.Not.Null);
+                Assert.That(frontendName, Is.EqualTo(frontendGet.Data.Name));
+            });
             Assert.That(frontendGet.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing DELETE Operation
@@ -282,14 +294,20 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 
             string associationName = Recording.GenerateAssetName("tc-association");
             TrafficControllerAssociationResource associationCreate = CreateAssociationAsync(resourceGroupName, associationName, tc, location).Result.Value;
-            Assert.IsNotNull(associationCreate);
-            Assert.That(associationName, Is.EqualTo(associationCreate.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(associationCreate, Is.Not.Null);
+                Assert.That(associationName, Is.EqualTo(associationCreate.Data.Name));
+            });
             Assert.That(associationCreate.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing the GET Operation
             TrafficControllerAssociationResource associationGet = GetAssociationAsync(associationName, tc).Result;
-            Assert.IsNotNull(associationGet);
-            Assert.That(associationName, Is.EqualTo(associationGet.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(associationGet, Is.Not.Null);
+                Assert.That(associationName, Is.EqualTo(associationGet.Data.Name));
+            });
             Assert.That(associationGet.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing DELETE Operation

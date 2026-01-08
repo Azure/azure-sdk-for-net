@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             Assert.That(shouldExist, Is.EqualTo(secretSyncs.Any()));
             if (shouldExist)
             {
-                Assert.That(secretSyncs.Count, Is.EqualTo(1));
+                Assert.That(secretSyncs, Has.Count.EqualTo(1));
                 CheckContents(secretSyncs[0]);
             }
         }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // SecretsStoreExtensionExtensions.GetSecretSyncsAsync (extends SubscriptionResource)
             List<SecretSyncResource> secretSyncsAsync = await subscription.GetSecretSyncsAsync().ToEnumerableAsync();
-            Assert.That(secretSyncsAsync.Count, Is.EqualTo(1));
+            Assert.That(secretSyncsAsync, Has.Count.EqualTo(1));
             CheckContents(secretSyncsAsync[0]);
         }
 
@@ -209,25 +209,34 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             string expectedSourcePath = null, string expectedTargetPath = null,
             Dictionary<string, string> expectedTags = null)
         {
-            Assert.That(ss.Data.Name, Is.EqualTo(SsName));
-            Assert.That(ss.Data.Properties.SecretProviderClassName, Is.EqualTo(SpcName));
-            Assert.That(ss.Data.Properties.ServiceAccountName, Is.EqualTo(ServiceAccountName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ss.Data.Name, Is.EqualTo(SsName));
+                Assert.That(ss.Data.Properties.SecretProviderClassName, Is.EqualTo(SpcName));
+                Assert.That(ss.Data.Properties.ServiceAccountName, Is.EqualTo(ServiceAccountName));
+            });
 
             if (expectedSourcePath is not null && expectedTargetPath is not null)
             {
                 var osm = ss.Data.Properties.ObjectSecretMapping;
-                Assert.That(osm.Count, Is.EqualTo(1));
-                Assert.That(expectedSourcePath, Is.EqualTo(osm[0].SourcePath));
-                Assert.That(expectedTargetPath, Is.EqualTo(osm[0].TargetKey));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(osm, Has.Count.EqualTo(1));
+                    Assert.That(expectedSourcePath, Is.EqualTo(osm[0].SourcePath));
+                    Assert.That(expectedTargetPath, Is.EqualTo(osm[0].TargetKey));
+                });
             }
 
             if (expectedTags is not null)
             {
-                Assert.That(ss.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
+                Assert.That(ss.Data.Tags, Has.Count.EqualTo(expectedTags.Count));
                 foreach (KeyValuePair<string, string> kv in ss.Data.Tags)
                 {
-                    Assert.That(expectedTags.ContainsKey(kv.Key), Is.True);
-                    Assert.That(kv.Value, Is.EqualTo(expectedTags[kv.Key]));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(expectedTags.ContainsKey(kv.Key), Is.True);
+                        Assert.That(kv.Value, Is.EqualTo(expectedTags[kv.Key]));
+                    });
                 }
             }
         }

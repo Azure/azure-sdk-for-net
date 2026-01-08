@@ -55,8 +55,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 agData);
 
             Assert.That(opApplicationGroupCreate, Is.Not.Null);
-            Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
-            Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
+                Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
+            });
 
             VirtualApplicationGroupResource railApplicationGroup = opApplicationGroupCreate.Value;
 
@@ -76,16 +79,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.That(opCreate, Is.Not.Null);
 
-            Assert.That(opCreate.Value.Data.Name, Is.EqualTo("testRemoteApplicationCrudAG/notepad"));
-            Assert.That(opCreate.Value.Data.Description, Is.EqualTo("Note Pad"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opCreate.Value.Data.Name, Is.EqualTo("testRemoteApplicationCrudAG/notepad"));
+                Assert.That(opCreate.Value.Data.Description, Is.EqualTo("Note Pad"));
+            });
 
             Response<VirtualApplicationResource> opGet = await railApplications.GetAsync("notepad");
 
             Assert.That(opGet, Is.Not.Null);
 
-            Assert.That(opGet.Value.Data.FilePath, Is.EqualTo("c:\\notepad.exe"));
-            Assert.That(opGet.Value.Data.IconPath, Is.EqualTo("c:\\notepad.exe"));
-            Assert.That(opGet.Value.Data.Description, Is.EqualTo("Note Pad"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opGet.Value.Data.FilePath, Is.EqualTo("c:\\notepad.exe"));
+                Assert.That(opGet.Value.Data.IconPath, Is.EqualTo("c:\\notepad.exe"));
+                Assert.That(opGet.Value.Data.Description, Is.EqualTo("Note Pad"));
+            });
 
             applicationData.Description = "NotePad";
 
@@ -93,8 +102,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.That(opUpdate, Is.Not.Null);
 
-            Assert.That(opUpdate.Value.Data.Name, Is.EqualTo("testRemoteApplicationCrudAG/notepad"));
-            Assert.That(opUpdate.Value.Data.Description, Is.EqualTo("NotePad"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(opUpdate.Value.Data.Name, Is.EqualTo("testRemoteApplicationCrudAG/notepad"));
+                Assert.That(opUpdate.Value.Data.Description, Is.EqualTo("NotePad"));
+            });
 
             ArmOperation opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
 

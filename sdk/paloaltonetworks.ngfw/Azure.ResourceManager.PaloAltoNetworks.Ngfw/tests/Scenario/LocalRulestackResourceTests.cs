@@ -46,8 +46,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, localRulestackResourceName);
             LocalRulestackResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackResource.ResourceType));
-            Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{localRulestackResourceName}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(localRulestackResourceIdentifier.ResourceType, Is.EqualTo(LocalRulestackResource.ResourceType));
+                Assert.That(localRulestackResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{localRulestackResourceName}"));
+            });
             Assert.Throws<ArgumentException>(() => LocalRulestackResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -55,8 +58,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.That(LocalRulestackResource.HasData, Is.True);
-            Assert.That(LocalRulestackResource.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(LocalRulestackResource.HasData, Is.True);
+                Assert.That(LocalRulestackResource.Data, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -89,8 +95,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackResource updatedResource = await LocalRulestackResource.AddTagAsync("Counter1", "3");
             IDictionary<string, string> tags = new Dictionary<string, string>() { { "Counter2", "4" }, { "Counter3", "5" } };
             LocalRulestackResource updatedResource2 = (await updatedResource.SetTagsAsync(tags)).Value;
-            Assert.That(tags, Is.EqualTo(updatedResource2.Data.Tags));
-            Assert.That(updatedResource2.Data.Tags.ContainsKey("Counter1"), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tags, Is.EqualTo(updatedResource2.Data.Tags));
+                Assert.That(updatedResource2.Data.Tags.ContainsKey("Counter1"), Is.False);
+            });
         }
 
         [TestCase]
@@ -155,8 +164,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Get()
         {
             LocalRulestackResource resource = await LocalRulestackResource.GetAsync();
-            Assert.That(resource, Is.Not.Null);
-            Assert.That(LocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(resource, Is.Not.Null);
+                Assert.That(LocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
+            });
         }
 
         [TestCase]

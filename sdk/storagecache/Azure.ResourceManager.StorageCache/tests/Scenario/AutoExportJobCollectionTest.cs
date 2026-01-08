@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             // Ensure the job is disabled before next test
             // Poll till the job is disabled
             AutoExportJobResource autoExportJob = await this.DefaultAmlFS.GetAutoExportJobs().GetAsync(name);
-            Assert.IsNotNull(autoExportJob);
+            Assert.That(autoExportJob, Is.Not.Null);
             while (autoExportJob.Data.State != AutoExportStatusType.Disabled)
             {
                 await Task.Delay(TimeSpan.FromSeconds(5));

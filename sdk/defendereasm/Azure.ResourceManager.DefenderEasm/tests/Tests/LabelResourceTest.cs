@@ -36,21 +36,30 @@ namespace Azure.ResourceManager.DefenderEasm.Tests.Tests
             EasmLabelData labelResourceData = new EasmLabelData();
             labelResourceData.Color = color;
             var createLabelOperation = await labels.CreateOrUpdateAsync(WaitUntil.Completed, labelName, labelResourceData);
-            Assert.That(createLabelOperation.Value.Data.Name, Is.EqualTo(labelName));
-            Assert.That(createLabelOperation.Value.Data.Color, Is.EqualTo(color));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createLabelOperation.Value.Data.Name, Is.EqualTo(labelName));
+                Assert.That(createLabelOperation.Value.Data.Color, Is.EqualTo(color));
+            });
 
             // get
             EasmLabelResource getLabelOperation = await labels.GetAsync(labelName);
-            Assert.That(getLabelOperation.Data.Name, Is.EqualTo(labelName));
-            Assert.That(getLabelOperation.Data.Color, Is.EqualTo(color));
+            Assert.Multiple(() =>
+            {
+                Assert.That(getLabelOperation.Data.Name, Is.EqualTo(labelName));
+                Assert.That(getLabelOperation.Data.Color, Is.EqualTo(color));
+            });
 
             // update
             EasmLabelPatch labelResourcePatch = new EasmLabelPatch();
             labelResourcePatch.Color = newColor;
             labelResourcePatch.DisplayName = newLabelName;
             EasmLabelResource updateLabelOperation = await getLabelOperation.UpdateAsync(labelResourcePatch);
-            Assert.That(updateLabelOperation.Data.DisplayName, Is.EqualTo(newLabelName));
-            Assert.That(updateLabelOperation.Data.Color, Is.EqualTo(newColor));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateLabelOperation.Data.DisplayName, Is.EqualTo(newLabelName));
+                Assert.That(updateLabelOperation.Data.Color, Is.EqualTo(newColor));
+            });
 
             // delete
             EasmLabelResource labelResource = await workspace.GetEasmLabelAsync(labelName);

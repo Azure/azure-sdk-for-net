@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Tests
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             var list = await accountFilterCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]

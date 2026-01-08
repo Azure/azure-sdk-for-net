@@ -63,12 +63,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
             var result = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
-            Assert.That(apiName, Is.EqualTo(result.Data.Name));
-            Assert.That(result.Data.Path, Is.EqualTo("newapiPath"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(apiName, Is.EqualTo(result.Data.Name));
+                Assert.That(result.Data.Path, Is.EqualTo("newapiPath"));
+            });
             var resultTrue = await collection.ExistsAsync(apiName);
             var resultFalse = await collection.ExistsAsync("foo");
-            Assert.That((bool)resultTrue, Is.True);
-            Assert.That((bool)resultFalse, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That((bool)resultTrue, Is.True);
+                Assert.That((bool)resultFalse, Is.False);
+            });
 
             await foreach (var item in collection.GetAllAsync())
             {
@@ -100,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var api = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
 
             var apiRevisionContracts = await api.GetApiRevisionsByServiceAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUriString);
+            Assert.That(apiRevisionContracts.FirstOrDefault().PrivateUriString, Is.Not.Empty);
         }
 
         [Test]
@@ -112,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 sum++;
             }
-            Assert.That(sum > 0, Is.True);
+            Assert.That(sum, Is.GreaterThan(0));
         }
     }
 }

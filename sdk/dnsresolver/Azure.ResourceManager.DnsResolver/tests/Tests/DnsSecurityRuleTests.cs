@@ -89,9 +89,12 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ACT
             var createdDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
 
-            // ASSERT
-            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdDnsSecurityRule.Value.Data.ProvisioningState));
-            Assert.That(createdDnsSecurityRule.Value.Data.ManagedDomainLists.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                // ASSERT
+                Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdDnsSecurityRule.Value.Data.ProvisioningState));
+                Assert.That(createdDnsSecurityRule.Value.Data.ManagedDomainLists, Has.Count.EqualTo(1));
+            });
         }
 
         [Test]
@@ -144,7 +147,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsSecurityRule = await createdDnsSecurityRule.Value.UpdateAsync(WaitUntil.Completed, patchableDnsSecurityRuleData);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedDnsSecurityRule.Value.Data.Tags, patchableDnsSecurityRuleData.Tags);
+            Assert.That(patchableDnsSecurityRuleData.Tags, Is.EquivalentTo(patchedDnsSecurityRule.Value.Data.Tags));
         }
 
         [Test]

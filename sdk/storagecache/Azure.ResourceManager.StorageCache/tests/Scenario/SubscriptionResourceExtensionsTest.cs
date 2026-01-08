@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             {
                 count++;
             }
-            Assert.That(count > 0, Is.True);
+            Assert.That(count, Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             {
                 count++;
             }
-            Assert.That(count > 0, Is.True);
+            Assert.That(count, Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             {
                 count++;
             }
-            Assert.That(count > 0, Is.True);
+            Assert.That(count, Is.GreaterThan(0));
         }
 
         [TestCase]
@@ -77,8 +77,12 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                     found = true;
                 count++;
             }
-            Assert.That(count > 0, Is.True);
-            Assert.That(found, Is.True);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(count, Is.GreaterThan(0));
+                Assert.That(found, Is.True);
+            });
         }
     }
 }

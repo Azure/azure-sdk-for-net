@@ -39,9 +39,12 @@ namespace Azure.ResourceManager.Synapse.Tests
             var createBigDatapoolParams = CommonData.PrepareBigDatapoolCreateParams(enableAutoScale:false, enableAutoPause:false);
             SynapseBigDataPoolInfoCollection bigdatapoolCollection = WorkspaceResource.GetSynapseBigDataPoolInfos();
             var bigDatapoolUnableAutoScale = (await bigdatapoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, bigDatapoolName, createBigDatapoolParams)).Value;
-            Assert.That(bigDatapoolUnableAutoScale.Data.ResourceType, Is.EqualTo(CommonTestFixture.SparkpoolType));
-            Assert.That(bigDatapoolUnableAutoScale.Data.Name, Is.EqualTo(bigDatapoolName));
-            Assert.That(bigDatapoolUnableAutoScale.Data.Location, Is.EqualTo(CommonData.Location));
+            Assert.Multiple(() =>
+            {
+                Assert.That(bigDatapoolUnableAutoScale.Data.ResourceType, Is.EqualTo(CommonTestFixture.SparkpoolType));
+                Assert.That(bigDatapoolUnableAutoScale.Data.Name, Is.EqualTo(bigDatapoolName));
+                Assert.That(bigDatapoolUnableAutoScale.Data.Location, Is.EqualTo(CommonData.Location));
+            });
 
             // update BigDatapool
             var bigDatapoolCreated = (await bigdatapoolCollection.GetAsync(bigDatapoolName)).Value;
@@ -57,14 +60,17 @@ namespace Azure.ResourceManager.Synapse.Tests
             // Enable Auto-scale and Auto-pause
             createBigDatapoolParams = CommonData.PrepareBigDatapoolCreateParams(enableAutoScale: true, enableAutoPause: true);
             var bigDatapoolEnableAutoScale = (await bigdatapoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, bigDatapoolName, createBigDatapoolParams)).Value;
-            Assert.That(bigDatapoolUnableAutoScale.Data.ResourceType, Is.EqualTo(CommonTestFixture.SparkpoolType));
-            Assert.That(bigDatapoolUnableAutoScale.Data.Name, Is.EqualTo(bigDatapoolName));
-            Assert.That(bigDatapoolUnableAutoScale.Data.Location, Is.EqualTo(CommonData.Location));
-            Assert.That(bigDatapoolEnableAutoScale.Data.AutoScale.IsEnabled, Is.True);
-            Assert.That(bigDatapoolEnableAutoScale.Data.AutoScale.MaxNodeCount, Is.EqualTo(CommonData.AutoScaleMaxNodeCount));
-            Assert.That(bigDatapoolEnableAutoScale.Data.AutoScale.MinNodeCount, Is.EqualTo(CommonData.AutoScaleMinNodeCount));
-            Assert.That(bigDatapoolEnableAutoScale.Data.AutoPause.IsEnabled, Is.True);
-            Assert.That(bigDatapoolEnableAutoScale.Data.AutoPause.DelayInMinutes, Is.EqualTo(CommonData.AutoPauseDelayInMinute));
+            Assert.Multiple(() =>
+            {
+                Assert.That(bigDatapoolUnableAutoScale.Data.ResourceType, Is.EqualTo(CommonTestFixture.SparkpoolType));
+                Assert.That(bigDatapoolUnableAutoScale.Data.Name, Is.EqualTo(bigDatapoolName));
+                Assert.That(bigDatapoolUnableAutoScale.Data.Location, Is.EqualTo(CommonData.Location));
+                Assert.That(bigDatapoolEnableAutoScale.Data.AutoScale.IsEnabled, Is.True);
+                Assert.That(bigDatapoolEnableAutoScale.Data.AutoScale.MaxNodeCount, Is.EqualTo(CommonData.AutoScaleMaxNodeCount));
+                Assert.That(bigDatapoolEnableAutoScale.Data.AutoScale.MinNodeCount, Is.EqualTo(CommonData.AutoScaleMinNodeCount));
+                Assert.That(bigDatapoolEnableAutoScale.Data.AutoPause.IsEnabled, Is.True);
+                Assert.That(bigDatapoolEnableAutoScale.Data.AutoPause.DelayInMinutes, Is.EqualTo(CommonData.AutoPauseDelayInMinute));
+            });
 
             // list BigDatapool from workspace
             var bigDataPoolFromWorkspace = bigdatapoolCollection.GetAllAsync();
@@ -77,7 +83,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             // delete spark pool
             await bigDataPool.DeleteAsync(WaitUntil.Completed);
             var bigDatapoolAfterDelete = await bigdatapoolCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(bigDatapoolAfterDelete.Count, Is.EqualTo(bigDatapoolCount - 1));
+            Assert.That(bigDatapoolAfterDelete, Has.Count.EqualTo(bigDatapoolCount - 1));
         }
     }
 }

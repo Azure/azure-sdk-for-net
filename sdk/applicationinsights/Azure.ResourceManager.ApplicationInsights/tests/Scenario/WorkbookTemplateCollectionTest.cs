@@ -78,8 +78,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
             var resourceName = Recording.GenerateAssetName("workbookTemplate");
             var data = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             _ = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
-            Assert.That((bool)await workbookTemplateCollection.ExistsAsync(resourceName), Is.True);
-            Assert.That((bool)await workbookTemplateCollection.ExistsAsync(resourceName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await workbookTemplateCollection.ExistsAsync(resourceName), Is.True);
+                Assert.That((bool)await workbookTemplateCollection.ExistsAsync(resourceName + "1"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await workbookTemplateCollection.ExistsAsync(null));
         }
     }

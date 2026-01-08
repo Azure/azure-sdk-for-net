@@ -77,8 +77,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             const string keyVirtualPath = "/etc/nginx/nginx.key";
             _ = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
 
-            Assert.That((bool)await collection.ExistsAsync(nginxCertificateName), Is.True);
-            Assert.That((bool)await collection.ExistsAsync(nginxCertificateName + "1"), Is.False);
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(nginxCertificateName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(nginxCertificateName + "1"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

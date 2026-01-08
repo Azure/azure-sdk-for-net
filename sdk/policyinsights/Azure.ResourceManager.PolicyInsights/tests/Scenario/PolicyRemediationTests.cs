@@ -108,8 +108,11 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
         private void ValidatepolicyRemediation(PolicyRemediationData policyRemediation, string policyRemediationName)
         {
-            Assert.IsNotNull(policyRemediation);
-            Assert.IsNotEmpty(policyRemediation.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(policyRemediation, Is.Not.Null);
+                Assert.That((string)policyRemediation.Id, Is.Not.Empty);
+            });
             Assert.That(policyRemediation.Name, Is.EqualTo(policyRemediationName));
             Assert.That(policyRemediation.ParallelDeployments, Is.EqualTo(1));
             Assert.That(policyRemediation.ResourceCount, Is.EqualTo(1));

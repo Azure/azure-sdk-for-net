@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _fhirServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateFhirService(list.FirstOrDefault().Data, fhirServiceName);
 
             // Delete
@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await fhirService.AddTagAsync("addtagkey", "addtagvalue");
             fhirService = await _fhirServiceCollection.GetAsync(fhirServiceName);
-            Assert.That(fhirService.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(fhirService.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = fhirService.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
-            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await fhirService.RemoveTagAsync("addtagkey");
@@ -84,14 +87,17 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         private void ValidateFhirService(FhirServiceData fhirService, string fhirServiceName)
         {
             Assert.That(fhirService, Is.Not.Null);
-            Assert.That(fhirService.ETag, Is.Not.Null);
-            Assert.That(fhirService.Id.Name, Is.EqualTo(fhirServiceName));
-            Assert.That(fhirService.Kind.ToString(), Is.EqualTo("fhir-R4"));
-            Assert.That(fhirService.Location, Is.EqualTo(DefaultLocation));
-            Assert.That(fhirService.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
-            Assert.That(fhirService.PublicNetworkAccess.ToString(), Is.EqualTo("Enabled"));
-            Assert.That(fhirService.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/fhirservices"));
-            Assert.That(fhirService.ResourceVersionPolicyConfiguration.Default.ToString(), Is.EqualTo("no-version"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fhirService.ETag, Is.Not.Null);
+                Assert.That(fhirService.Id.Name, Is.EqualTo(fhirServiceName));
+                Assert.That(fhirService.Kind.ToString(), Is.EqualTo("fhir-R4"));
+                Assert.That(fhirService.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(fhirService.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(fhirService.PublicNetworkAccess.ToString(), Is.EqualTo("Enabled"));
+                Assert.That(fhirService.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/fhirservices"));
+                Assert.That(fhirService.ResourceVersionPolicyConfiguration.Default.ToString(), Is.EqualTo("no-version"));
+            });
         }
     }
 }

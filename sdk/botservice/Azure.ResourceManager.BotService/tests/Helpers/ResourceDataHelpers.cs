@@ -15,18 +15,24 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
     {
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            });
         }
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.That(r2.Name, Is.EqualTo(r1.Name));
-            Assert.That(r2.Id, Is.EqualTo(r1.Id));
-            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
-            Assert.That(r2.Location, Is.EqualTo(r1.Location));
-            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         #region BotService
@@ -52,9 +58,12 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         public static void AssertBotServiceData(BotData data1, BotData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.That(data2.Properties.AppPasswordHint, Is.EqualTo(data1.Properties.AppPasswordHint));
-            Assert.That(data2.Properties.DisplayName, Is.EqualTo(data1.Properties.DisplayName));
-            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Properties.AppPasswordHint, Is.EqualTo(data1.Properties.AppPasswordHint));
+                Assert.That(data2.Properties.DisplayName, Is.EqualTo(data1.Properties.DisplayName));
+                Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
+            });
         }
         #endregion
 
@@ -113,9 +122,12 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         public static void AssertBotChannel(BotChannelData data1, BotChannelData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.That(data2.Sku, Is.EqualTo(data1.Sku));
-            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
-            Assert.That(data2.Properties.ProvisioningState, Is.EqualTo(data1.Properties.ProvisioningState));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Sku, Is.EqualTo(data1.Sku));
+                Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
+                Assert.That(data2.Properties.ProvisioningState, Is.EqualTo(data1.Properties.ProvisioningState));
+            });
         }
         #endregion
 
@@ -156,9 +168,12 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         public static void AssertBotConnectionSettingData(BotConnectionSettingData data1, BotConnectionSettingData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.That(data2.Sku, Is.EqualTo(data1.Sku));
-            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
-            Assert.That(data2.Properties.Parameters.Count, Is.EqualTo(data1.Properties.Parameters.Count));
+            Assert.Multiple(() =>
+            {
+                Assert.That(data2.Sku, Is.EqualTo(data1.Sku));
+                Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
+                Assert.That(data2.Properties.Parameters, Has.Count.EqualTo(data1.Properties.Parameters.Count));
+            });
         }
         #endregion
     }
