@@ -212,7 +212,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </summary>
         /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ScriptExecutionResource>> GetExecutionLogsAsync(IList<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScriptExecutionResource>> GetExecutionLogsAsync(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.GetExecutionLogs");
             scope.Start();
@@ -261,7 +261,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </summary>
         /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScriptExecutionResource> GetExecutionLogs(IList<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
+        public virtual Response<ScriptExecutionResource> GetExecutionLogs(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.GetExecutionLogs");
             scope.Start();

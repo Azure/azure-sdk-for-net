@@ -69,6 +69,14 @@ namespace Azure.Generator.Management.Utilities
                     outputParameter.Update(name: "data");
                 }
 
+                // For array body parameters, change the type from IList<T> to IEnumerable<T>
+                if (outputParameter.Location == ParameterLocation.Body && IsArrayParameterType(outputParameter.Type, out var elementType))
+                {
+                    // Convert IList<T> to IEnumerable<T>
+                    var enumerableType = new CSharpType(typeof(IEnumerable<>), elementType!);
+                    outputParameter.Update(type: enumerableType);
+                }
+
                 // Rename body parameters for resource/resourcecollection/mockablearmclient operations
                 if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider) &&
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
@@ -93,6 +101,29 @@ namespace Azure.Generator.Management.Utilities
             optionalParameters.Add(KnownParameters.CancellationTokenParameter);
 
             return [.. requiredParameters, .. optionalParameters];
+        }
+
+        private static bool IsArrayParameterType(CSharpType type, out CSharpType? elementType)
+        {
+            elementType = null;
+            // Check if it's IList<T>, IEnumerable<T>, IReadOnlyList<T>, etc.
+            if (type.IsGenericType && type.Arguments.Count == 1)
+            {
+                var frameworkType = type.FrameworkType;
+                if (frameworkType != null)
+                {
+                    var typeName = frameworkType.Name;
+                    if (typeName.StartsWith("IList") ||
+                        typeName.StartsWith("IEnumerable") ||
+                        typeName.StartsWith("IReadOnlyList") ||
+                        typeName.StartsWith("ICollection"))
+                    {
+                        elementType = type.Arguments[0];
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
