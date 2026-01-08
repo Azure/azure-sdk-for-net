@@ -112,26 +112,6 @@ public readonly struct ClientConnection
     /// <returns>A string in the format 'Id => Locator'.</returns>
     public override string ToString() => $"{Id} => {Locator}";
 
-    internal static ClientConnection Create(IConfigurationSection? properties, object credential, CredentialKind credentialKind)
-    {
-        if (properties is null)
-        {
-            return new(Guid.NewGuid().ToString(), null!, credential, credentialKind);
-        }
-        else
-        {
-            Dictionary<string, string> metadata = new();
-            foreach (var property in properties.GetChildren())
-            {
-                if (property.Key == "Endpoint")
-                    continue;
-
-                metadata.Add(property.Key, property.Value ?? string.Empty);
-            }
-            return new(properties.Key, properties["Endpoint"]!, credential, credentialKind, metadata);
-        }
-    }
-
     /// <summary> Metadata of the connection. </summary>
     public IReadOnlyDictionary<string, string> Metadata { get; }
 }
