@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
