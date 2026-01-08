@@ -74,6 +74,21 @@ namespace Azure.Identity
 
             MSAL.ManagedIdentitySource availableSource = availableSourceResult.Source;
 
+            // Handle IMDS V1 probe failures similar to HandleResponseAsync logic
+            if (availableSource == MSAL.ManagedIdentitySource.Imds && !string.IsNullOrEmpty(availableSourceResult.ImdsV1FailureReason))
+            {
+                string baseMessage = availableSourceResult.ImdsV1FailureReason switch
+                {
+                    "IdentityUnavailable" => ImdsManagedIdentityProbeSource.IdentityUnavailableError,
+                    "GatewayError" => ImdsManagedIdentityProbeSource.GatewayError,
+                    "Timeout" => ImdsManagedIdentityProbeSource.TimeoutError,
+                    "NoResponse" => ImdsManagedIdentityProbeSource.NoResponseError,
+                    _ => ImdsManagedIdentityProbeSource.UnknownError
+                };
+
+                throw new CredentialUnavailableException(baseMessage);
+            }
+
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
             // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
