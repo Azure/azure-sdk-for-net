@@ -233,7 +233,9 @@ namespace Azure.Generator.Management.Visitors
                 var constructorParameterType = constructorParameters[fullConstructorParameterIndex].Type;
 
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
-                if ((publicConstructor && constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType)) || constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                if ((publicConstructor && constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType)) ||
+                    constructorParameterType.AreNamesEqual(flattenedPropertyType) ||
+                    constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType))
                 {
                     var propertyParameter = flattenedProperty.AsParameter;
                     var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
