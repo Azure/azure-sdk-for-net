@@ -808,7 +808,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.Int32Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1062,7 +1062,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.Int64Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1316,7 +1316,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.BooleanValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1570,7 +1570,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.StringValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1824,7 +1824,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.Float32Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2086,7 +2086,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.DatetimeValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2348,7 +2348,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.DurationValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2602,7 +2602,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.UnknownValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2845,7 +2845,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.ModelValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3104,7 +3104,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3363,7 +3363,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3622,7 +3622,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3881,7 +3881,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableStringValue.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4136,7 +4136,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableModelValue.endpoint"
             }
           ],
           "initializedBy": 0,

@@ -424,7 +424,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Documentation.endpoint"
+              "crossLanguageDefinitionId": "Documentation.Lists.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -588,7 +588,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Documentation.endpoint"
+              "crossLanguageDefinitionId": "Documentation.TextFormatting.endpoint"
             }
           ],
           "initializedBy": 0,
