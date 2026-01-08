@@ -201,20 +201,10 @@ namespace Azure.Generator.Management.Visitors
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
 
-            // If there are no flattened properties, we need to add Null for all constructor parameters
-            if (flattenedProperties.Count == 0)
-            {
-                for (int i = 0; i < constructorParameters.Count; i++)
-                {
-                    parameters.Add(Null);
-                }
-                return parameters.ToArray();
-            }
-
             for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
             {
-                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
-                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= constructorParameters.Count)
+                // If we have processed all the constructor parameters, we can break the loop.
+                if (fullConstructorParameterIndex >= constructorParameters.Count)
                 {
                     break;
                 }
@@ -231,6 +221,13 @@ namespace Azure.Generator.Management.Visitors
                     }
                     fullConstructorParameterIndex++;
                 }
+
+                // If we have processed all the flattened properties, we can break the loop.
+                if (flattenedPropertyIndex >= flattenedProperties.Count)
+                {
+                    break;
+                }
+
                 var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
                 var flattenedPropertyType = flattenedProperty.Type;
                 var constructorParameterType = constructorParameters[fullConstructorParameterIndex].Type;
@@ -268,14 +265,33 @@ namespace Azure.Generator.Management.Visitors
                             var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                             parameters.Add(New.Instance(constructorParameterType, innerParameters));
                         }
+                        else
+                        {
+                            // The constructor parameter type is not in the flattened model types map.
+                            // This can happen for leaf models. We should pass the remaining flattened properties
+                            // to the nested constructor to populate the leaf model's properties.
+                            var remainingProperties = flattenedProperties.Skip(flattenedPropertyIndex).ToList();
+                            var innerParameters = BuildConstructorParameters(constructorParameterType, remainingProperties, parameterMap);
+                            parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                            // Mark all remaining properties as consumed
+                            flattenedPropertyIndex = flattenedProperties.Count;
+                        }
                     }
                 }
             }
 
             // If the additionalProperties parameter is missing at the end, we need to pass a new instance for it.
-            if (parameters.Count < constructorParameters.Count && additionalPropertyIndex == constructorParameters.Count - 1)
+            while (parameters.Count < constructorParameters.Count)
             {
-                parameters.Add(Null);
+                if (additionalPropertyIndex >= 0 && parameters.Count == additionalPropertyIndex)
+                {
+                    parameters.Add(Null);
+                }
+                else
+                {
+                    // For any other missing parameters, add Null
+                    parameters.Add(Null);
+                }
             }
             return parameters.ToArray();
 
