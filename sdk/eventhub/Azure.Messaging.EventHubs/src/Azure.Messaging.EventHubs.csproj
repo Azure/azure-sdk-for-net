@@ -67,4 +67,9 @@
       <CustomToolNamespace>Azure.Messaging.EventHubs</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Azure.Identity">
+      <HintPath>E:\.nuget\azure.identity\1.14.0\lib\netstandard2.0\Azure.Identity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
