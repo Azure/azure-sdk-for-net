@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StandbyPool;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.StandbyPool.Models
     public readonly partial struct StandbyPoolHealthStateCode : IEquatable<StandbyPoolHealthStateCode>
     {
         private readonly string _value;
+        /// <summary> StandbyPool is in healthy state. </summary>
+        private const string HealthyValue = "HealthState/healthy";
+        /// <summary> StandbyPool is in degraded state. </summary>
+        private const string DegradedValue = "HealthState/degraded";
 
         /// <summary> Initializes a new instance of <see cref="StandbyPoolHealthStateCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StandbyPoolHealthStateCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HealthyValue = "HealthState/healthy";
-        private const string DegradedValue = "HealthState/degraded";
+            _value = value;
+        }
 
         /// <summary> StandbyPool is in healthy state. </summary>
         public static StandbyPoolHealthStateCode Healthy { get; } = new StandbyPoolHealthStateCode(HealthyValue);
+
         /// <summary> StandbyPool is in degraded state. </summary>
         public static StandbyPoolHealthStateCode Degraded { get; } = new StandbyPoolHealthStateCode(DegradedValue);
+
         /// <summary> Determines if two <see cref="StandbyPoolHealthStateCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StandbyPoolHealthStateCode left, StandbyPoolHealthStateCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StandbyPoolHealthStateCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StandbyPoolHealthStateCode left, StandbyPoolHealthStateCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StandbyPoolHealthStateCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StandbyPoolHealthStateCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StandbyPoolHealthStateCode(string value) => new StandbyPoolHealthStateCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StandbyPoolHealthStateCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StandbyPoolHealthStateCode?(string value) => value == null ? null : new StandbyPoolHealthStateCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StandbyPoolHealthStateCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StandbyPoolHealthStateCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

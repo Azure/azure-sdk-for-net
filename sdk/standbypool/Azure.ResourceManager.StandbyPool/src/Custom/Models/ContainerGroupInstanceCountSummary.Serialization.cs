@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
