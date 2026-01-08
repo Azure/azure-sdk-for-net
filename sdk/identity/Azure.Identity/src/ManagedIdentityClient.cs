@@ -74,7 +74,6 @@ namespace Azure.Identity
 
             MSAL.ManagedIdentitySource availableSource = availableSourceResult.Source;
 
-            // Handle IMDS V1 probe failures similar to HandleResponseAsync logic
             if (availableSource == MSAL.ManagedIdentitySource.Imds && !string.IsNullOrEmpty(availableSourceResult.ImdsV1FailureReason))
             {
                 string baseMessage = availableSourceResult.ImdsV1FailureReason switch
