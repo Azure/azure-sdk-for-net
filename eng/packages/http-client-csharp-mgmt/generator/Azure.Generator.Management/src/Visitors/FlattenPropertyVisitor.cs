@@ -271,8 +271,6 @@ namespace Azure.Generator.Management.Visitors
 
                         // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
                         // update the parameter type to match the constructor parameter type for now
-                        parameter.Update(type: parameter.Type.InputType);
-
                         parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
                             ? parameter.Property("Value")
                             : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
