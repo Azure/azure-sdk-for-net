@@ -261,17 +261,6 @@ namespace Azure.Generator.Management.Visitors
                             var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                             parameters.Add(New.Instance(constructorParameterType, innerParameters));
                         }
-                        else
-                        {
-                            // The constructor parameter type is not in the flattened model types map.
-                            // This can happen for leaf models. We should pass the remaining flattened properties
-                            // to the nested constructor to populate the leaf model's properties.
-                            var remainingProperties = flattenedProperties.Skip(flattenedPropertyIndex).ToList();
-                            var innerParameters = BuildConstructorParameters(constructorParameterType, remainingProperties, parameterMap);
-                            parameters.Add(New.Instance(constructorParameterType, innerParameters));
-                            // Mark all remaining properties as consumed
-                            flattenedPropertyIndex = flattenedProperties.Count;
-                        }
                     }
                 }
             }
