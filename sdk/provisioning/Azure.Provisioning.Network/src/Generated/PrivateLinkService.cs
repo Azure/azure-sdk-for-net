@@ -32,6 +32,16 @@ public partial class PrivateLinkService : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// The access mode of the private link service.
+    /// </summary>
+    public BicepValue<PrivateLinkServiceAccessMode> AccessMode 
+    {
+        get { Initialize(); return _accessMode!; }
+        set { Initialize(); _accessMode!.Assign(value); }
+    }
+    private BicepValue<PrivateLinkServiceAccessMode>? _accessMode;
+
+    /// <summary>
     /// The list of subscriptions.
     /// </summary>
     public BicepList<string> AutoApprovalSubscriptions 
@@ -198,7 +208,7 @@ public partial class PrivateLinkService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PrivateLinkService.</param>
     public PrivateLinkService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/privateLinkServices", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/privateLinkServices", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -209,6 +219,7 @@ public partial class PrivateLinkService : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _accessMode = DefineProperty<PrivateLinkServiceAccessMode>("AccessMode", ["properties", "accessMode"]);
         _autoApprovalSubscriptions = DefineListProperty<string>("AutoApprovalSubscriptions", ["properties", "autoApproval", "subscriptions"]);
         _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["properties", "destinationIPAddress"]);
         _enableProxyProtocol = DefineProperty<bool>("EnableProxyProtocol", ["properties", "enableProxyProtocol"]);
@@ -232,6 +243,16 @@ public partial class PrivateLinkService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

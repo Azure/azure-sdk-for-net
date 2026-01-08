@@ -395,7 +395,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -518,7 +518,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.endpoint"
             }
           ],
           "initializedBy": 0,

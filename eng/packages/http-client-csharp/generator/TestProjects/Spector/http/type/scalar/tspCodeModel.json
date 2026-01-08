@@ -704,7 +704,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.String.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -970,7 +970,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Boolean.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1236,7 +1236,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Unknown.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1577,7 +1577,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.DecimalType.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1918,7 +1918,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2178,7 +2178,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2395,7 +2395,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.endpoint"
             }
           ],
           "initializedBy": 0,

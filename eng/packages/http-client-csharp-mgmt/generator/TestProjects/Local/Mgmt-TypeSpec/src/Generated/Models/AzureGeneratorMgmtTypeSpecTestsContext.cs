@@ -19,6 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
+    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState))]
@@ -40,6 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(BazProperties))]
     [ModelReaderWriterBuildable(typeof(BazResource))]
     [ModelReaderWriterBuildable(typeof(BestPracticeData))]
+    [ModelReaderWriterBuildable(typeof(BestPracticeListResult))]
     [ModelReaderWriterBuildable(typeof(BestPracticeProperties))]
     [ModelReaderWriterBuildable(typeof(BestPracticeResource))]
     [ModelReaderWriterBuildable(typeof(BestPracticeUpdate))]

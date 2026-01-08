@@ -37,7 +37,8 @@ import {
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope
+  ResourceScope,
+  sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
@@ -204,6 +205,13 @@ export function resolveArmResources(
         operationScope: getOperationScopeFromPath(operation.path)
       });
     }
+  }
+
+  // Sort methods in all valid resources for deterministic ordering
+  // This is necessary because methods may have been merged from incomplete resources
+  // and list operations may have been processed, so we sort at the end to ensure consistency
+  for (const resource of validResources) {
+    sortResourceMethods(resource.metadata.methods);
   }
 
   return {
@@ -396,25 +404,21 @@ function convertScopeToResourceScope(scope: string | ResolvedResource | undefine
 /**
  * Determine operation scope from path
  */
-function getOperationScopeFromPath(path: string): ResourceScope {
+export function getOperationScopeFromPath(path: string): ResourceScope {
   if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
     return ResourceScope.Extension;
   } else if (
-    path.startsWith(
-      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/"
-    )
+    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
   ) {
     return ResourceScope.ResourceGroup;
-  } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
+  } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
     return ResourceScope.Subscription;
   } else if (
-    path.startsWith(
-      "/providers/Microsoft.Management/managementGroups/{managementGroupId}/"
-    )
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(path)
   ) {
     return ResourceScope.ManagementGroup;
   }
-  return ResourceScope.Tenant;
+  return ResourceScope.Tenant;  // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
 /**

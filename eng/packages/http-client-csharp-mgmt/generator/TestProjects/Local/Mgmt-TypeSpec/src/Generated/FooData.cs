@@ -47,12 +47,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="plan"> Details of the resource plan. </param>
+        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
             Identity = identity;
+            Plan = plan;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -66,6 +68,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Details of the resource plan. </summary>
+        [WirePath("plan")]
+        public ArmPlan Plan { get; set; }
 
         /// <summary> the service url. </summary>
         [WirePath("properties.serviceUrl")]
