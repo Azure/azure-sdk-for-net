@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="isDefaultVersion"> The active state. </param>
         /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionVersionValidationStatus validationStatus, EdgeActionProvisioningState? provisioningState, EdgeActionIsDefaultVersion isDefaultVersion, DateTimeOffset lastPackageUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionVersionValidationStatus? validationStatus, EdgeActionProvisioningState? provisioningState, EdgeActionIsDefaultVersion isDefaultVersion, DateTimeOffset? lastPackageUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentType = deploymentType;
             ValidationStatus = validationStatus;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public EdgeActionVersionDeploymentType DeploymentType { get; set; }
 
         /// <summary> The validation status. </summary>
-        public EdgeActionVersionValidationStatus ValidationStatus { get; }
+        public EdgeActionVersionValidationStatus? ValidationStatus { get; }
 
         /// <summary> The provisioning state. </summary>
         public EdgeActionProvisioningState? ProvisioningState { get; }
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public EdgeActionIsDefaultVersion IsDefaultVersion { get; set; }
 
         /// <summary> The last update time in UTC for package update. </summary>
-        public DateTimeOffset LastPackageUpdatedOn { get; }
+        public DateTimeOffset? LastPackageUpdatedOn { get; }
     }
 }

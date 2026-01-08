@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.EdgeActions
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(EdgeActionAttachment))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionAttachmentResult))]
     [ModelReaderWriterBuildable(typeof(EdgeActionData))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterData))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterListResult))]

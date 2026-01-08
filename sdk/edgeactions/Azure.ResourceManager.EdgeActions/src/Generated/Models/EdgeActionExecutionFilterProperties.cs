@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="executionFilterIdentifierHeaderValue"> Custom Header Value associated with the execution filter. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeActionExecutionFilterProperties(ResourceIdentifier versionId, DateTimeOffset lastUpdatedOn, string executionFilterIdentifierHeaderName, string executionFilterIdentifierHeaderValue, EdgeActionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeActionExecutionFilterProperties(ResourceIdentifier versionId, DateTimeOffset? lastUpdatedOn, string executionFilterIdentifierHeaderName, string executionFilterIdentifierHeaderValue, EdgeActionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VersionId = versionId;
             LastUpdatedOn = lastUpdatedOn;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public ResourceIdentifier VersionId { get; set; }
 
         /// <summary> The last update time in UTC for the execution filter. </summary>
-        public DateTimeOffset LastUpdatedOn { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> Custom Header Key associated with the execution filter. </summary>
         public string ExecutionFilterIdentifierHeaderName { get; set; }

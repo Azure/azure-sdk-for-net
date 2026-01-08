@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EdgeActions;
 
 namespace Azure.ResourceManager.EdgeActions.Models
 {
@@ -20,11 +19,8 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionAttachment"/>. </summary>
         /// <param name="attachedResourceId"> The attached resource Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachedResourceId"/> is null. </exception>
-        public EdgeActionAttachment(ResourceIdentifier attachedResourceId)
+        internal EdgeActionAttachment(ResourceIdentifier attachedResourceId)
         {
-            Argument.AssertNotNull(attachedResourceId, nameof(attachedResourceId));
-
             AttachedResourceId = attachedResourceId;
         }
 
@@ -43,6 +39,6 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public string Id { get; }
 
         /// <summary> The attached resource Id. </summary>
-        public ResourceIdentifier AttachedResourceId { get; set; }
+        public ResourceIdentifier AttachedResourceId { get; }
     }
 }

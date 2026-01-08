@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
             }
             writer.WritePropertyName("versionId"u8);
             writer.WriteStringValue(VersionId);
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
-                writer.WriteStringValue(LastUpdatedOn, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             writer.WritePropertyName("executionFilterIdentifierHeaderName"u8);
             writer.WriteStringValue(ExecutionFilterIdentifierHeaderName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 return null;
             }
             ResourceIdentifier versionId = default;
-            DateTimeOffset lastUpdatedOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             string executionFilterIdentifierHeaderName = default;
             string executionFilterIdentifierHeaderValue = default;
             EdgeActionProvisioningState? provisioningState = default;
@@ -113,6 +113,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 }
                 if (prop.NameEquals("lastUpdateTime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
