@@ -77,6 +77,7 @@
     <ProjectReference Include="..\Spector\http\server\path\single\src\Server.Path.Single.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\not-versioned\src\Server.Versions.NotVersioned.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\versioned\src\Server.Versions.Versioned.csproj" />
+		<ProjectReference Include="..\Spector\http\service\multi-service\src\Service.MultiService.ServiceA.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
     <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />
@@ -96,7 +97,7 @@
     <ProjectReference Include="..\Spector\http\type\scalar\src\Type.Scalar.csproj" />
     <ProjectReference Include="..\Spector\http\type\union\src\Type.Union.csproj" />
     <ProjectReference Include="..\Spector\http\versioning\added\v1\src\Versioning.Added.V1.csproj" Aliases="VersioningAddedV1" />
-    <ProjectReference Include="..\Spector\http\versioning\added\v2\src\Versioning.Added.V2.csproj" Aliases="VersioningAddedV2"/>
+    <ProjectReference Include="..\Spector\http\versioning\added\v2\src\Versioning.Added.V2.csproj" Aliases="VersioningAddedV2" />
     <ProjectReference Include="..\Spector\http\versioning\madeOptional\v1\src\Versioning.MadeOptional.V1.csproj" Aliases="MadeOptionalV1" />
     <ProjectReference Include="..\Spector\http\versioning\madeOptional\v2\src\Versioning.MadeOptional.V2.csproj" Aliases="MadeOptionalV2" />
     <ProjectReference Include="..\Spector\http\versioning\removed\v1\src\Versioning.Removed.V1.csproj" Aliases="RemovedV1" />
