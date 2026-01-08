@@ -14,7 +14,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The configuration for a storage destination. </summary>
-    public partial class StorageDestinationConfiguration : IJsonModel<StorageDestinationConfiguration>
+    internal partial class StorageDestinationConfiguration : IJsonModel<StorageDestinationConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="StorageDestinationConfiguration"/> for deserialization. </summary>
         internal StorageDestinationConfiguration()

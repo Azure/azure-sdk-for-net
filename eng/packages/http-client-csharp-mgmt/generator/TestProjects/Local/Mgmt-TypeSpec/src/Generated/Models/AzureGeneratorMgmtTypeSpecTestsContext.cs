@@ -19,6 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
+    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState))]

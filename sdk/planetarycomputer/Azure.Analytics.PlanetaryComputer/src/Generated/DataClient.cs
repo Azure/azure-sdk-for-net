@@ -4030,7 +4030,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
             Response result = GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext());
-            IList<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -4062,7 +4062,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
             Response result = await GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -4219,7 +4219,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext());
-            IList<BinaryData> value = new List<BinaryData>();
+            List<BinaryData> value = new List<BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -4271,7 +4271,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<BinaryData> value = new List<BinaryData>();
+            List<BinaryData> value = new List<BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
