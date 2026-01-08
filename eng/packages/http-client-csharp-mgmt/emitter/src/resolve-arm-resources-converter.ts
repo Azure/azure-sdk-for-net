@@ -37,7 +37,8 @@ import {
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope
+  ResourceScope,
+  sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
@@ -204,6 +205,13 @@ export function resolveArmResources(
         operationScope: getOperationScopeFromPath(operation.path)
       });
     }
+  }
+
+  // Sort methods in all valid resources for deterministic ordering
+  // This is necessary because methods may have been merged from incomplete resources
+  // and list operations may have been processed, so we sort at the end to ensure consistency
+  for (const resource of validResources) {
+    sortResourceMethods(resource.metadata.methods);
   }
 
   return {
