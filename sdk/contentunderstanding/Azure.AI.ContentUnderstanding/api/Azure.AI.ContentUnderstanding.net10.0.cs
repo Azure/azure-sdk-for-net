@@ -477,7 +477,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.NumberField NumberField(System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? confidence = default(float?), string source = null, double? valueNumber = default(double?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.ObjectField ObjectField(System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? confidence = default(float?), string source = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> valueObject = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.StringField StringField(System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? confidence = default(float?), string source = null, string valueString = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.SupportedModels SupportedModels(System.Collections.Generic.IEnumerable<string> completion = null, System.Collections.Generic.IEnumerable<string> embedding = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.SupportedModels SupportedModels(System.Collections.Generic.IDictionary<string, string> completion = null, System.Collections.Generic.IDictionary<string, string> embedding = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TimeField TimeField(System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? confidence = default(float?), string source = null, System.TimeSpan? valueTime = default(System.TimeSpan?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.TranscriptPhrase TranscriptPhrase(string speaker = null, long startTimeMs = (long)0, long endTimeMs = (long)0, string locale = null, string text = null, float? confidence = default(float?), Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptWord> words = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TranscriptWord TranscriptWord(long startTimeMs = (long)0, long endTimeMs = (long)0, string text = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
@@ -1165,8 +1165,8 @@ namespace Azure.AI.ContentUnderstanding
     public partial class SupportedModels : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.SupportedModels>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.SupportedModels>
     {
         internal SupportedModels() { }
-        public System.Collections.Generic.IList<string> Completion { get { throw null; } }
-        public System.Collections.Generic.IList<string> Embedding { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Completion { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Embedding { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.SupportedModels JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.ContentUnderstanding.SupportedModels PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

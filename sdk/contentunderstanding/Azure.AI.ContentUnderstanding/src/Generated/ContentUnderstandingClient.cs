@@ -257,7 +257,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(resource, nameof(resource));
 
             Operation<BinaryData> result = CreateAnalyzer(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
+            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
         }
 
         /// <summary> Create a new analyzer asynchronously. </summary>
@@ -274,7 +274,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(resource, nameof(resource));
 
             Operation<BinaryData> result = await CreateAnalyzerAsync(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync");
+            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync");
         }
 
         /// <summary>
