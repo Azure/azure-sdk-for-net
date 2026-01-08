@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateGetDnsZoneRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateDeleteDnsZoneRequest(Guid subscriptionId, string resourceGroupName, string dnsZoneId, string privateCloudName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string dnsZoneId, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

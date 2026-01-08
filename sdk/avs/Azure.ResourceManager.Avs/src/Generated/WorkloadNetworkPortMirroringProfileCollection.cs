@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetPortMirroringAsync(string portMirroringId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetAsync(string portMirroringId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
 
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetPortMirroring");
+            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
+                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkPortMirroringProfileData> response = Response.FromValue(WorkloadNetworkPortMirroringProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkPortMirroringProfileResource> GetPortMirroring(string portMirroringId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkPortMirroringProfileResource> Get(string portMirroringId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
 
-            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetPortMirroring");
+            using DiagnosticScope scope = _workloadNetworkPortMirroringProfilesClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
+                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkPortMirroringProfileData> response = Response.FromValue(WorkloadNetworkPortMirroringProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
+                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkPortMirroringProfileData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
+                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkPortMirroringProfileData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
+                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkPortMirroringProfileData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
+                HttpMessage message = _workloadNetworkPortMirroringProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkPortMirroringProfileData> response = default;

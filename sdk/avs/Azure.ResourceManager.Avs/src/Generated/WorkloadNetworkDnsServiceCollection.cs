@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkDnsServiceResource>> GetDnsServiceAsync(string dnsServiceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkDnsServiceResource>> GetAsync(string dnsServiceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsServicesClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetDnsService");
+            using DiagnosticScope scope = _workloadNetworkDnsServicesClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
+                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkDnsServiceData> response = Response.FromValue(WorkloadNetworkDnsServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkDnsServiceResource> GetDnsService(string dnsServiceId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkDnsServiceResource> Get(string dnsServiceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
 
-            using DiagnosticScope scope = _workloadNetworkDnsServicesClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetDnsService");
+            using DiagnosticScope scope = _workloadNetworkDnsServicesClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
+                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkDnsServiceData> response = Response.FromValue(WorkloadNetworkDnsServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
+                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsServiceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
+                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsServiceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
+                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsServiceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
+                HttpMessage message = _workloadNetworkDnsServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDnsServiceData> response = default;

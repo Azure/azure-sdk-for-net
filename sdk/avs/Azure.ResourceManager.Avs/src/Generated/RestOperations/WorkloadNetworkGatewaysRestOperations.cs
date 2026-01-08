@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateGetGatewayRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, string gatewayId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, string gatewayId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateGetPortMirroringRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        internal HttpMessage CreateDeletePortMirroringRequest(Guid subscriptionId, string resourceGroupName, string portMirroringId, string privateCloudName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string portMirroringId, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

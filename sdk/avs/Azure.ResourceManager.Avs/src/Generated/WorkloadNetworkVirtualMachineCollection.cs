@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
-            using DiagnosticScope scope = _workloadNetworkVirtualMachinesClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetVirtualMachine");
+            using DiagnosticScope scope = _workloadNetworkVirtualMachinesClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
+                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkVirtualMachineData> response = Response.FromValue(WorkloadNetworkVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkVirtualMachineResource> GetVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkVirtualMachineResource> Get(string virtualMachineId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
-            using DiagnosticScope scope = _workloadNetworkVirtualMachinesClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetVirtualMachine");
+            using DiagnosticScope scope = _workloadNetworkVirtualMachinesClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
+                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkVirtualMachineData> response = Response.FromValue(WorkloadNetworkVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
+                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVirtualMachineData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
+                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVirtualMachineData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
+                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVirtualMachineData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetVirtualMachineRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
+                HttpMessage message = _workloadNetworkVirtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, virtualMachineId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVirtualMachineData> response = default;

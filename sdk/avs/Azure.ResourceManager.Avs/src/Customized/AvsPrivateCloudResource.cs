@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs
         {
             throw new NotSupportedException("The method is deprecated as of API version 2023-09-01 and will be removed in a future release.");
         }
-/*
+
         /// <summary>
         /// Get dhcp by id in a private cloud workload network.
         /// <list type="bullet">
@@ -156,7 +156,6 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDnsService</description>
         /// </item>
-
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkDnsServiceResource"/></description>
@@ -184,10 +183,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDnsService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,10 +221,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetDnsZone</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkDnsZoneResource"/></description>
         /// </item>
@@ -256,10 +247,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDnsZone</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,10 +285,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
         /// </item>
@@ -328,10 +311,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,10 +349,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetPortMirroring</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
         /// </item>
@@ -400,10 +375,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetPortMirroring</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -442,10 +413,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetPublicIP</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
@@ -472,10 +439,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetPublicIP</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,10 +477,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
@@ -544,10 +503,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetSegment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -586,10 +541,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetVirtualMachine</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkVirtualMachineResource"/></description>
         /// </item>
@@ -616,10 +567,6 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetVirtualMachine</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -658,10 +605,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetVmGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
@@ -690,10 +633,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>WorkloadNetworks_GetVmGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
@@ -716,6 +655,6 @@ namespace Azure.ResourceManager.Avs
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkVmGroups();
-        }*/
+        }
     }
 }
