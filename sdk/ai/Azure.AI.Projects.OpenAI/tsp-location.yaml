@@ -1,0 +1,7 @@
+repo: Azure/azure-rest-api-specs
+commit: 245e3919958a741781f16dc09a1d53dce627d9aa
+directory: specification/ai/Foundry/sdk-projects-openai
+entrypointFile: client.tsp
+additionalDirectories:
+  - specification/ai/Foundry
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

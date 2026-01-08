@@ -229,7 +229,6 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.BingCustomSearchAgentTool CreateBingCustomSearchTool(Azure.AI.Projects.OpenAI.BingCustomSearchToolParameters parameters) { throw null; }
         public static Azure.AI.Projects.OpenAI.BingGroundingAgentTool CreateBingGroundingTool(Azure.AI.Projects.OpenAI.BingGroundingSearchToolOptions options) { throw null; }
         public static Azure.AI.Projects.OpenAI.BrowserAutomationAgentTool CreateBrowserAutomationTool(Azure.AI.Projects.OpenAI.BrowserAutomationToolParameters parameters) { throw null; }
-        public static Azure.AI.Projects.OpenAI.LocalShellAgentTool CreateLocalShellTool() { throw null; }
         public static Azure.AI.Projects.OpenAI.MicrosoftFabricAgentTool CreateMicrosoftFabricTool(Azure.AI.Projects.OpenAI.FabricDataAgentToolOptions options) { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenAPIAgentTool CreateOpenApiTool(Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition definition) { throw null; }
         public static Azure.AI.Projects.OpenAI.SharepointAgentTool CreateSharepointTool(Azure.AI.Projects.OpenAI.SharePointGroundingToolOptions options) { throw null; }
@@ -751,88 +750,6 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.ImageBasedHostedAgentDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.ImageBasedHostedAgentDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LocalShellAgentTool : Azure.AI.Projects.OpenAI.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>
-    {
-        public LocalShellAgentTool() { }
-        protected override Azure.AI.Projects.OpenAI.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.OpenAI.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.OpenAI.LocalShellAgentTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAI.LocalShellAgentTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LocalShellAgentToolCallStatus : System.IEquatable<Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LocalShellAgentToolCallStatus(string value) { throw null; }
-        public static Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus Completed { get { throw null; } }
-        public static Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus Incomplete { get { throw null; } }
-        public static Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus InProgress { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus left, Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus right) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus left, Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class LocalShellAgentToolExecutionAction : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>
-    {
-        public LocalShellAgentToolExecutionAction(System.Collections.Generic.IEnumerable<string> command, System.Collections.Generic.IDictionary<string, string> env) { }
-        public System.Collections.Generic.IList<string> Command { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Env { get { throw null; } }
-        public int? TimeoutMs { get { throw null; } set { } }
-        public string User { get { throw null; } set { } }
-        public string WorkingDirectory { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LocalShellToolCallAgentResponseItem : Azure.AI.Projects.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>
-    {
-        internal LocalShellToolCallAgentResponseItem() { }
-        public Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction Action { get { throw null; } }
-        public string CallId { get { throw null; } }
-        public Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus Status { get { throw null; } }
-        protected override Azure.AI.Projects.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.OpenAI.AgentResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LocalShellToolCallOutputAgentResponseItem : Azure.AI.Projects.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>
-    {
-        internal LocalShellToolCallOutputAgentResponseItem() { }
-        public string Output { get { throw null; } }
-        public Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus Status { get { throw null; } }
-        protected override Azure.AI.Projects.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.OpenAI.AgentResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class McpToolExtensions
     {
         public static string get_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool) { throw null; }
@@ -1272,10 +1189,6 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.FabricDataAgentToolOptions FabricDataAgentToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.ToolProjectConnection> projectConnections = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.OpenAI.ContentFilterConfiguration contentFilterConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.AgentTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.ProtocolVersionRecord> containerProtocolVersions = null, string cpu = null, string memory = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.ImageBasedHostedAgentDefinition ImageBasedHostedAgentDefinition(Azure.AI.Projects.OpenAI.ContentFilterConfiguration contentFilterConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.AgentTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.ProtocolVersionRecord> containerProtocolVersions = null, string cpu = null, string memory = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, string image = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.LocalShellAgentTool LocalShellAgentTool() { throw null; }
-        public static Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction LocalShellAgentToolExecutionAction(System.Collections.Generic.IEnumerable<string> command = null, int? timeoutMs = default(int?), string workingDirectory = null, System.Collections.Generic.IDictionary<string, string> env = null, string user = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.LocalShellToolCallAgentResponseItem LocalShellToolCallAgentResponseItem(string id = null, Azure.AI.Projects.OpenAI.AgentResponseItemSource createdBy = null, Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus status = default(Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus), string callId = null, Azure.AI.Projects.OpenAI.LocalShellAgentToolExecutionAction action = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem LocalShellToolCallOutputAgentResponseItem(string id = null, Azure.AI.Projects.OpenAI.AgentResponseItemSource createdBy = null, Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus status = default(Azure.AI.Projects.OpenAI.LocalShellAgentToolCallStatus), string output = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.MemoryItem MemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.MemorySearchItem MemorySearchItem(Azure.AI.Projects.OpenAI.MemoryItem memoryItem = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.MemorySearchTool MemorySearchTool(string memoryStoreName = null, string scope = null, Azure.AI.Projects.OpenAI.MemorySearchToolOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
@@ -1346,13 +1259,10 @@ namespace Azure.AI.Projects.OpenAI
     {
         public static Azure.AI.Projects.OpenAI.AgentResponseItem AsAgentResponseItem(this OpenAI.Responses.ResponseItem responseItem) { throw null; }
     }
-    public static partial class ResponseResultExtension
+    public static partial class ResponseResultExtensions
     {
         public static System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(this OpenAI.Responses.ResponsesClient responseClient, Azure.AI.Projects.OpenAI.ProjectConversation conversation, Azure.AI.Projects.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(this OpenAI.Responses.ResponsesClient responseClient, Azure.AI.Projects.OpenAI.ProjectConversation conversation, Azure.AI.Projects.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class ResponseResultExtensions
-    {
         public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseResult response) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.ResponseResult response) { throw null; }
         public sealed partial class <G>$D7C08262BAEC712802F8752B389F8208

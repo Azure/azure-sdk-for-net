@@ -10,7 +10,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("ItemResource")]
+[CodeGenType("AgentResponseItem")]
 public partial class AgentResponseItem
 {
     public static AgentResponseItem CreateStructuredOutputsItem(BinaryData output = null)
