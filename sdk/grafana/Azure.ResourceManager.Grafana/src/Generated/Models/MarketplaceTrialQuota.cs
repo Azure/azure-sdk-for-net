@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The allocation details of the per subscription free trial slot of the subscription. </summary>
     public partial class MarketplaceTrialQuota
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceTrialQuota"/>. </summary>
         internal MarketplaceTrialQuota()
@@ -56,22 +27,25 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="grafanaResourceId"> Resource Id of the Grafana resource which is doing the trial. </param>
         /// <param name="trialStartOn"> The date and time in UTC of when the trial starts. </param>
         /// <param name="trialEndOn"> The date and time in UTC of when the trial ends. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceTrialQuota(AvailablePromotion? availablePromotion, ResourceIdentifier grafanaResourceId, DateTimeOffset? trialStartOn, DateTimeOffset? trialEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceTrialQuota(AvailablePromotion? availablePromotion, ResourceIdentifier grafanaResourceId, DateTimeOffset? trialStartOn, DateTimeOffset? trialEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailablePromotion = availablePromotion;
             GrafanaResourceId = grafanaResourceId;
             TrialStartOn = trialStartOn;
             TrialEndOn = trialEndOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Available enterprise promotion for the subscription. </summary>
         public AvailablePromotion? AvailablePromotion { get; }
+
         /// <summary> Resource Id of the Grafana resource which is doing the trial. </summary>
         public ResourceIdentifier GrafanaResourceId { get; }
+
         /// <summary> The date and time in UTC of when the trial starts. </summary>
         public DateTimeOffset? TrialStartOn { get; }
+
         /// <summary> The date and time in UTC of when the trial ends. </summary>
         public DateTimeOffset? TrialEndOn { get; }
     }

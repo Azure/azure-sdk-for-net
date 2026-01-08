@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmAttestationStatusResource : IJsonModel<HciVmAttestationStatusData>
     {
-        private static HciVmAttestationStatusData s_dataDeserializationInstance;
-        private static HciVmAttestationStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmAttestationStatusData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmAttestationStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmAttestationStatusData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmAttestationStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmAttestationStatusData>)Data).Write(writer, options);
 
-        HciVmAttestationStatusData IJsonModel<HciVmAttestationStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmAttestationStatusData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmAttestationStatusData IJsonModel<HciVmAttestationStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmAttestationStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmAttestationStatusData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmAttestationStatusData IPersistableModel<HciVmAttestationStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmAttestationStatusData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmAttestationStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmAttestationStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmAttestationStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

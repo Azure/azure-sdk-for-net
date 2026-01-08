@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// </list>
         /// </summary>
