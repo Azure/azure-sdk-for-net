@@ -951,7 +951,40 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ScheduledActionsExtensionProperties(actionId, status, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Test resource for verifying Get and Delete operation naming with custom operation names. </summary>
+        /// <summary> Parent resource for workload networks. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.WorkloadNetworksData"/> instance for mocking. </returns>
+        public static WorkloadNetworksData WorkloadNetworksData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworksProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WorkloadNetworksData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> The WorkloadNetworksProperties. </summary>
+        /// <param name="displayName"> Display name of the workload network. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.WorkloadNetworksProperties"/> instance for mocking. </returns>
+        public static WorkloadNetworksProperties WorkloadNetworksProperties(string displayName = default, string provisioningState = default)
+        {
+            return new WorkloadNetworksProperties(displayName, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Test resource for verifying Get and Delete operation naming with. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -985,6 +1018,41 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             members ??= new ChangeTrackingList<string>();
 
             return new WorkloadNetworkVmGroupProperties(displayName, members.ToList(), provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Test resource for verifying Get and Delete operation naming with. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.WorkloadNetworkSegmentData"/> instance for mocking. </returns>
+        public static WorkloadNetworkSegmentData WorkloadNetworkSegmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkSegmentProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WorkloadNetworkSegmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> The WorkloadNetworkSegmentProperties. </summary>
+        /// <param name="displayName"> Display name of the segment. </param>
+        /// <param name="connectedGateway"> Connected gateway. </param>
+        /// <param name="subnet"> Subnet for the segment. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.WorkloadNetworkSegmentProperties"/> instance for mocking. </returns>
+        public static WorkloadNetworkSegmentProperties WorkloadNetworkSegmentProperties(string displayName = default, string connectedGateway = default, string subnet = default, string provisioningState = default)
+        {
+            return new WorkloadNetworkSegmentProperties(displayName, connectedGateway, subnet, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

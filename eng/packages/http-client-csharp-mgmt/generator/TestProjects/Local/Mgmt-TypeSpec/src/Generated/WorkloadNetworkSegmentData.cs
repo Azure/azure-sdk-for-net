@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Test resource for verifying Get and Delete operation naming with. </summary>
-    public partial class WorkloadNetworkVmGroupData : TrackedResourceData
+    public partial class WorkloadNetworkSegmentData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public WorkloadNetworkVmGroupData(AzureLocation location) : base(location)
+        public WorkloadNetworkSegmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WorkloadNetworkVmGroupProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WorkloadNetworkSegmentProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,6 +42,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public WorkloadNetworkVmGroupProperties Properties { get; set; }
+        public WorkloadNetworkSegmentProperties Properties { get; set; }
     }
 }

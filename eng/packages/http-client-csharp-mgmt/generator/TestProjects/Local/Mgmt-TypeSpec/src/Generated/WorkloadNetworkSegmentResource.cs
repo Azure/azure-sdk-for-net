@@ -19,44 +19,44 @@ using Azure.ResourceManager.Resources;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// A class representing a WorkloadNetworkVmGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkVmGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWorkloadNetworkVmGroups method.
+    /// A class representing a WorkloadNetworkSegment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkSegmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWorkloadNetworkSegments method.
     /// </summary>
-    public partial class WorkloadNetworkVmGroupResource : ArmResource
+    public partial class WorkloadNetworkSegmentResource : ArmResource
     {
-        private readonly ClientDiagnostics _workloadNetworkVmGroupsClientDiagnostics;
-        private readonly WorkloadNetworkVmGroups _workloadNetworkVmGroupsRestClient;
+        private readonly ClientDiagnostics _workloadNetworkSegmentsClientDiagnostics;
+        private readonly WorkloadNetworkSegments _workloadNetworkSegmentsRestClient;
         private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
         private readonly WorkloadNetworks _workloadNetworksRestClient;
-        private readonly WorkloadNetworkVmGroupData _data;
+        private readonly WorkloadNetworkSegmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "MgmtTypeSpec/vmGroups";
+        public static readonly ResourceType ResourceType = "MgmtTypeSpec/segments";
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupResource for mocking. </summary>
-        protected WorkloadNetworkVmGroupResource()
+        /// <summary> Initializes a new instance of WorkloadNetworkSegmentResource for mocking. </summary>
+        protected WorkloadNetworkSegmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WorkloadNetworkVmGroupResource(ArmClient client, WorkloadNetworkVmGroupData data) : this(client, data.Id)
+        internal WorkloadNetworkSegmentResource(ArmClient client, WorkloadNetworkSegmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WorkloadNetworkVmGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WorkloadNetworkSegmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string workloadNetworkVmGroupApiVersion);
-            _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            TryGetApiVersion(ResourceType, out string workloadNetworkSegmentApiVersion);
+            _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual WorkloadNetworkVmGroupData Data
+        public virtual WorkloadNetworkSegmentData Data
         {
             get
             {
@@ -79,10 +79,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vmGroupId"> The vmGroupId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmGroupId)
+        /// <param name="segmentId"> The segmentId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string segmentId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -97,16 +97,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a VM Group by name.
+        /// Get a Segment by name.
         /// Uses
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_Get. </description>
+        /// <description> WorkloadNetworkSegments_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -114,14 +114,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WorkloadNetworkVmGroupResource"/>. </description>
+        /// <description> <see cref="WorkloadNetworkSegmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Get");
             scope.Start();
             try
             {
@@ -129,14 +129,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
+                Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,16 +146,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a VM Group by name.
+        /// Get a Segment by name.
         /// Uses
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_Get. </description>
+        /// <description> WorkloadNetworkSegments_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -163,14 +163,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WorkloadNetworkVmGroupResource"/>. </description>
+        /// <description> <see cref="WorkloadNetworkSegmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkloadNetworkVmGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkSegmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Get");
             scope.Start();
             try
             {
@@ -178,14 +178,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
+                Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,16 +195,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Delete a VM Group.
+        /// Delete a Segment.
         /// Uses
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_Delete. </description>
+        /// <description> WorkloadNetworkSegments_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -212,7 +212,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WorkloadNetworkVmGroupResource"/>. </description>
+        /// <description> <see cref="WorkloadNetworkSegmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Delete");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Delete");
             scope.Start();
             try
             {
@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation operation = new TestsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -245,16 +245,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Delete a VM Group.
+        /// Delete a Segment.
         /// Uses
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_Delete. </description>
+        /// <description> WorkloadNetworkSegments_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -262,7 +262,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WorkloadNetworkVmGroupResource"/>. </description>
+        /// <description> <see cref="WorkloadNetworkSegmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,7 +270,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Delete");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Delete");
             scope.Start();
             try
             {
@@ -278,7 +278,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation operation = new TestsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -295,15 +295,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a WorkloadNetworkVmGroup.
+        /// Update a WorkloadNetworkSegment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_CreateOrUpdate. </description>
+        /// <description> WorkloadNetworkSegments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -311,7 +311,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WorkloadNetworkVmGroupResource"/>. </description>
+        /// <description> <see cref="WorkloadNetworkSegmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,11 +319,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkloadNetworkVmGroupResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WorkloadNetworkSegmentResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Update");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Update");
             scope.Start();
             try
             {
@@ -331,11 +331,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
-                    _workloadNetworkVmGroupsClientDiagnostics,
+                TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
+                    new WorkloadNetworkSegmentOperationSource(Client),
+                    _workloadNetworkSegmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -354,15 +354,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a WorkloadNetworkVmGroup.
+        /// Update a WorkloadNetworkSegment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_CreateOrUpdate. </description>
+        /// <description> WorkloadNetworkSegments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -370,7 +370,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WorkloadNetworkVmGroupResource"/>. </description>
+        /// <description> <see cref="WorkloadNetworkSegmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,11 +378,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkloadNetworkVmGroupResource> Update(WaitUntil waitUntil, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WorkloadNetworkSegmentResource> Update(WaitUntil waitUntil, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Update");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Update");
             scope.Start();
             try
             {
@@ -390,11 +390,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
-                    _workloadNetworkVmGroupsClientDiagnostics,
+                TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
+                    new WorkloadNetworkSegmentOperationSource(Client),
+                    _workloadNetworkSegmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -417,12 +417,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkSegmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.AddTag");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.AddTag");
             scope.Start();
             try
             {
@@ -435,16 +435,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
-                    return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    WorkloadNetworkVmGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    WorkloadNetworkSegmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<WorkloadNetworkVmGroupResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<WorkloadNetworkSegmentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -460,12 +460,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<WorkloadNetworkVmGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkSegmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.AddTag");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.AddTag");
             scope.Start();
             try
             {
@@ -478,16 +478,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
-                    return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    WorkloadNetworkVmGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    WorkloadNetworkSegmentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<WorkloadNetworkVmGroupResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<WorkloadNetworkSegmentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -502,11 +502,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkSegmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.SetTags");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.SetTags");
             scope.Start();
             try
             {
@@ -520,16 +520,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
-                    return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    WorkloadNetworkVmGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    WorkloadNetworkSegmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<WorkloadNetworkVmGroupResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<WorkloadNetworkSegmentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -544,11 +544,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<WorkloadNetworkVmGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkSegmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.SetTags");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.SetTags");
             scope.Start();
             try
             {
@@ -562,16 +562,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
-                    return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    WorkloadNetworkVmGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    WorkloadNetworkSegmentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<WorkloadNetworkVmGroupResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<WorkloadNetworkSegmentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -586,11 +586,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkSegmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.RemoveTag");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -603,16 +603,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
-                    return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    WorkloadNetworkVmGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    WorkloadNetworkSegmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<WorkloadNetworkVmGroupResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<WorkloadNetworkSegmentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -627,11 +627,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<WorkloadNetworkVmGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkSegmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.RemoveTag");
+            using DiagnosticScope scope = _workloadNetworkSegmentsClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -644,16 +644,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
-                    return Response.FromValue(new WorkloadNetworkVmGroupResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    WorkloadNetworkVmGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    WorkloadNetworkSegmentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<WorkloadNetworkVmGroupResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<WorkloadNetworkSegmentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

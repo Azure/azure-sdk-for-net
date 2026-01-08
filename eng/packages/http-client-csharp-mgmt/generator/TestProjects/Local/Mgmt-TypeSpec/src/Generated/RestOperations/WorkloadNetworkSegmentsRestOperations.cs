@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class WorkloadNetworkVmGroups
+    internal partial class WorkloadNetworkSegments
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroups for mocking. </summary>
-        protected WorkloadNetworkVmGroups()
+        /// <summary> Initializes a new instance of WorkloadNetworkSegments for mocking. </summary>
+        protected WorkloadNetworkSegments()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroups. </summary>
+        /// <summary> Initializes a new instance of WorkloadNetworkSegments. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal WorkloadNetworkVmGroups(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal WorkloadNetworkSegments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string vmGroupId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string segmentId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,8 +49,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/vmGroups/", false);
-            uri.AppendPath(vmGroupId, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/segments/", false);
+            uri.AppendPath(segmentId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/vmGroups", false);
+            uri.AppendPath("/providers/MgmtTypeSpec/segments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

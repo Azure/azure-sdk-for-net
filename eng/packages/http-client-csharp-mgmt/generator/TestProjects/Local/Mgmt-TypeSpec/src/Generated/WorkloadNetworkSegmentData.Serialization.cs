@@ -18,16 +18,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Test resource for verifying Get and Delete operation naming with. </summary>
-    public partial class WorkloadNetworkVmGroupData : TrackedResourceData, IJsonModel<WorkloadNetworkVmGroupData>
+    public partial class WorkloadNetworkSegmentData : TrackedResourceData, IJsonModel<WorkloadNetworkSegmentData>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/> for deserialization. </summary>
-        internal WorkloadNetworkVmGroupData()
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/> for deserialization. </summary>
+        internal WorkloadNetworkSegmentData()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkloadNetworkVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkloadNetworkSegmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,10 +38,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadNetworkVmGroupData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -53,24 +53,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadNetworkVmGroupData IJsonModel<WorkloadNetworkVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkloadNetworkVmGroupData)JsonModelCreateCore(ref reader, options);
+        WorkloadNetworkSegmentData IJsonModel<WorkloadNetworkSegmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkloadNetworkSegmentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadNetworkVmGroupData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkloadNetworkVmGroupData(document.RootElement, options);
+            return DeserializeWorkloadNetworkSegmentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkloadNetworkVmGroupData DeserializeWorkloadNetworkVmGroupData(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkloadNetworkSegmentData DeserializeWorkloadNetworkSegmentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            WorkloadNetworkVmGroupProperties properties = default;
+            WorkloadNetworkSegmentProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = WorkloadNetworkVmGroupProperties.DeserializeWorkloadNetworkVmGroupProperties(prop.Value, options);
+                    properties = WorkloadNetworkSegmentProperties.DeserializeWorkloadNetworkSegmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +158,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadNetworkVmGroupData(
+            return new WorkloadNetworkSegmentData(
                 id,
                 name,
                 resourceType,
@@ -170,62 +170,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkloadNetworkSegmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkVmGroupData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadNetworkSegmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadNetworkVmGroupData IPersistableModel<WorkloadNetworkVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadNetworkVmGroupData)PersistableModelCreateCore(data, options);
+        WorkloadNetworkSegmentData IPersistableModel<WorkloadNetworkSegmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadNetworkSegmentData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkSegmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWorkloadNetworkVmGroupData(document.RootElement, options);
+                        return DeserializeWorkloadNetworkSegmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkVmGroupData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadNetworkSegmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkloadNetworkVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkloadNetworkSegmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="workloadNetworkVmGroupData"> The <see cref="WorkloadNetworkVmGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WorkloadNetworkVmGroupData workloadNetworkVmGroupData)
+        /// <param name="workloadNetworkSegmentData"> The <see cref="WorkloadNetworkSegmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WorkloadNetworkSegmentData workloadNetworkSegmentData)
         {
-            if (workloadNetworkVmGroupData == null)
+            if (workloadNetworkSegmentData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(workloadNetworkVmGroupData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(workloadNetworkSegmentData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkloadNetworkVmGroupData"/> from. </param>
-        internal static WorkloadNetworkVmGroupData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkloadNetworkSegmentData"/> from. </param>
+        internal static WorkloadNetworkSegmentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeWorkloadNetworkSegmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

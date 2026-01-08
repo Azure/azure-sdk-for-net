@@ -28,6 +28,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _workloadNetworkVmGroupsClientDiagnostics;
         private readonly WorkloadNetworkVmGroups _workloadNetworkVmGroupsRestClient;
+        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworks _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupCollection for mocking. </summary>
         protected WorkloadNetworkVmGroupCollection()
@@ -42,6 +44,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(WorkloadNetworkVmGroupResource.ResourceType, out string workloadNetworkVmGroupApiVersion);
             _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
             _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -173,8 +177,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary>
         /// Get a VM Group by name.
-        /// This operation has a custom name 'getVmGroup' instead of just 'get'.
-        /// The generated method should still be named 'Get' or 'GetAsync', not 'GetVmGroup'.
+        /// Uses
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -182,7 +185,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_GetVmGroup. </description>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -198,7 +201,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
             scope.Start();
             try
             {
@@ -206,7 +209,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,8 +227,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary>
         /// Get a VM Group by name.
-        /// This operation has a custom name 'getVmGroup' instead of just 'get'.
-        /// The generated method should still be named 'Get' or 'GetAsync', not 'GetVmGroup'.
+        /// Uses
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -233,7 +235,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_GetVmGroup. </description>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -249,7 +251,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
             scope.Start();
             try
             {
@@ -257,7 +259,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -338,7 +340,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_GetVmGroup. </description>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -354,7 +356,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -362,7 +364,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -395,7 +397,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_GetVmGroup. </description>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -411,7 +413,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -419,7 +421,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -452,7 +454,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_GetVmGroup. </description>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -468,7 +470,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -476,7 +478,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -513,7 +515,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_GetVmGroup. </description>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -529,7 +531,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworkVmGroupsClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -537,7 +539,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;

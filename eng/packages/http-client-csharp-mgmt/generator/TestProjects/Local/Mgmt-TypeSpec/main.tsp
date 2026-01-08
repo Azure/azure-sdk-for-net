@@ -42,6 +42,16 @@ namespace MgmtTypeSpec {
   @@clientLocation(Bars.get, "Bar");
   @@clientLocation(Bars.update, "Bar");
 
+  @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
+  @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");
+  @@clientLocation(WorkloadNetworkSegments.get, "WorkloadNetworks");
+  @@clientLocation(WorkloadNetworkSegments.delete, "WorkloadNetworks");
+
+  @@clientName(WorkloadNetworkVmGroups.get, "GetVmGroup");
+  @@clientName(WorkloadNetworkVmGroups.delete, "DeleteVmGroup");
+  @@clientName(WorkloadNetworkSegments.get, "GetSegment");
+  @@clientName(WorkloadNetworkSegments.delete, "DeleteSegment");
+
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
