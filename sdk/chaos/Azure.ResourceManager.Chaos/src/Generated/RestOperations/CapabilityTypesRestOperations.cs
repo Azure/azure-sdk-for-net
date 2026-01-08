@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateGetAllChaosCapabilityMetadataRequest(Guid subscriptionId, AzureLocation location, string targetTypeName, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, AzureLocation location, string targetTypeName, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllChaosCapabilityMetadataRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string targetTypeName, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string targetTypeName, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

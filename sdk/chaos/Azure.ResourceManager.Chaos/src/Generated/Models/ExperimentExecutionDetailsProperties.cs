@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -60,6 +59,12 @@ namespace Azure.ResourceManager.Chaos.Models
         internal ExperimentExecutionDetailsPropertiesRunInformation RunInformation { get; }
 
         /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<ChaosExperimentRunStepStatus> RunInformationSteps { get; } = new ChangeTrackingList<ChaosExperimentRunStepStatus>();
+        public IReadOnlyList<ChaosExperimentRunStepStatus> RunInformationSteps
+        {
+            get
+            {
+                return RunInformation.Steps;
+            }
+        }
     }
 }

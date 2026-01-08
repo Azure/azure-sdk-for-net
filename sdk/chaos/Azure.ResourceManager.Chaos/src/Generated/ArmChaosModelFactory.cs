@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -362,6 +363,26 @@ namespace Azure.ResourceManager.Chaos.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 displayName is null && description is null && propertiesSchema is null && resourceTypes is null ? default : new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="failureReason"> The reason why the execution failed. </param>
+        /// <param name="lastActionOn"> String that represents the last action date time. </param>
+        /// <param name="runInformationSteps"> The information of the experiment run. </param>
+        /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps)
+        {
+            runInformationSteps ??= new ChangeTrackingList<ChaosExperimentRunStepStatus>();
+
+            return new ExperimentExecutionDetails(default, id, name, default, additionalBinaryDataProperties: null);
         }
     }
 }
