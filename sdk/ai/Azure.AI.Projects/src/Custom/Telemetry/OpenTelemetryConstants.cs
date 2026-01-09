@@ -29,10 +29,8 @@ namespace Azure.AI.Projects.Telemetry
         public const string GenAiResponseModelKey = "gen_ai.response.model";
         public const string GenAiResponseVersionKey = "gen_ai.agent.version";
 
-        public const string GenAiSystemKey = "gen_ai.system";
-        public const string GenAiSystemValue = "az.ai.agents";
-        public const string GenAiProviderKey = "gen_ai.provider";
-        public const string GenAiProviderValue = "azure.ai.agents";
+        public const string GenAiProviderNameKey = "gen_ai.provider.name";
+        public const string GenAiProviderNameValue = "azure.ai.agents";
 
         public const string GenAiTokenTypeKey = "gen_ai.token.type";
 
@@ -68,7 +66,7 @@ namespace Azure.AI.Projects.Telemetry
         public const string EventNameUserMessage = "gen_ai.user.message";
         public const string EventNameAssistantMessage = "gen_ai.assistant.message";
 
-        public const string ClientName = "Azure.AI.Agents.AgentClient";
+        public const string ClientName = "Azure.AI.Projects.AIProjectAgentsOperations";
         public const string EnableOpenTelemetrySwitch = "Azure.Experimental.EnableActivitySource";
         public const string TraceContentsSwitch = "Azure.Experimental.TraceGenAIMessageContent";
         public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
@@ -78,5 +76,23 @@ namespace Azure.AI.Projects.Telemetry
         public const string GenAiRequestReasoningSummary = "gen_ai.request.reasoning.summary";
         public const string GenAiRequestStructuredInputs = "gen_ai.request.structured_inputs";
         public const string GenAiAgentVersion = "gen_ai.agent.version";
+
+        public const string GenAiAgentType = "gen_ai.agent.type";
+
+        // Agent type values
+        public const string AgentTypePrompt = "prompt";
+        public const string AgentTypeWorkflow = "workflow";
+        public const string AgentTypeHosted = "hosted";
+        public const string AgentTypeUnknown = "unknown";
+
+        // Hosted agent specific attributes
+        public const string GenAiAgentHostedCpu = "gen_ai.agent.hosted.cpu";
+        public const string GenAiAgentHostedMemory = "gen_ai.agent.hosted.memory";
+        public const string GenAiAgentHostedImage = "gen_ai.agent.hosted.image";
+        public const string GenAiAgentHostedProtocol = "gen_ai.agent.hosted.protocol";
+        public const string GenAiAgentHostedProtocolVersion = "gen_ai.agent.hosted.protocol_version";
+
+        // Event names
+        public const string EventNameAgentWorkflow = "gen_ai.agent.workflow";
     }
 }
