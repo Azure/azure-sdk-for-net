@@ -6,21 +6,22 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ContainerGroupInstanceCountSummary))]
     [ModelReaderWriterBuildable(typeof(PoolContainerGroupStateCount))]
     [ModelReaderWriterBuildable(typeof(PoolVirtualMachineStateCount))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolData))]
+    [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolDynamicSizing))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolElasticityProfile))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolForecastValues))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolPatch))]
@@ -28,11 +29,11 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolResource))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolRuntimeViewData))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolRuntimeViewProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolRuntimeViewResource))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolRuntimeViewResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupProfile))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyPoolStatus))]
@@ -46,16 +47,15 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolResource))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolRuntimeViewData))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolRuntimeViewProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolRuntimeViewResource))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolRuntimeViewResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(StandbyVirtualMachinePoolUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResource))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerStandbyPoolContext : ModelReaderWriterContext
     {
     }
