@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MongoCluster
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MongoClusterFirewallRuleResource"/> and their operations.
-    /// Each <see cref="MongoClusterFirewallRuleResource"/> in the collection will belong to the same instance of <see cref="MongoClusterResource"/>.
-    /// To get a <see cref="MongoClusterFirewallRuleCollection"/> instance call the GetMongoClusterFirewallRules method from an instance of <see cref="MongoClusterResource"/>.
+    /// A class representing a collection of <see cref="FirewallRuleResource"/> and their operations.
+    /// Each <see cref="FirewallRuleResource"/> in the collection will belong to the same instance of <see cref="MongoClusterResource"/>.
+    /// To get a <see cref="FirewallRuleCollection"/> instance call the GetFirewallRules method from an instance of <see cref="MongoClusterResource"/>.
     /// </summary>
-    public partial class MongoClusterFirewallRuleCollection : ArmCollection, IEnumerable<MongoClusterFirewallRuleResource>, IAsyncEnumerable<MongoClusterFirewallRuleResource>
+    public partial class FirewallRuleCollection : ArmCollection, IEnumerable<FirewallRuleResource>, IAsyncEnumerable<FirewallRuleResource>
     {
         private readonly ClientDiagnostics _firewallRulesClientDiagnostics;
         private readonly FirewallRules _firewallRulesRestClient;
 
-        /// <summary> Initializes a new instance of MongoClusterFirewallRuleCollection for mocking. </summary>
-        protected MongoClusterFirewallRuleCollection()
+        /// <summary> Initializes a new instance of FirewallRuleCollection for mocking. </summary>
+        protected FirewallRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterFirewallRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MongoClusterFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MongoClusterFirewallRuleResource.ResourceType, out string mongoClusterFirewallRuleApiVersion);
-            _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, mongoClusterFirewallRuleApiVersion ?? "2025-09-01");
+            TryGetApiVersion(FirewallRuleResource.ResourceType, out string firewallRuleApiVersion);
+            _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", FirewallRuleResource.ResourceType.Namespace, Diagnostics);
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, firewallRuleApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MongoClusterFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, MongoClusterFirewallRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, MongoClusterFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.MongoCluster
                 };
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, MongoClusterFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MongoClusterArmOperation<MongoClusterFirewallRuleResource> operation = new MongoClusterArmOperation<MongoClusterFirewallRuleResource>(
-                    new MongoClusterFirewallRuleOperationSource(Client),
+                MongoClusterArmOperation<FirewallRuleResource> operation = new MongoClusterArmOperation<FirewallRuleResource>(
+                    new FirewallRuleOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MongoClusterFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, MongoClusterFirewallRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, MongoClusterFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.MongoCluster
                 };
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, MongoClusterFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MongoClusterArmOperation<MongoClusterFirewallRuleResource> operation = new MongoClusterArmOperation<MongoClusterFirewallRuleResource>(
-                    new MongoClusterFirewallRuleOperationSource(Client),
+                MongoClusterArmOperation<FirewallRuleResource> operation = new MongoClusterArmOperation<FirewallRuleResource>(
+                    new FirewallRuleOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MongoClusterFirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.Get");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.Get");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MongoClusterFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MongoClusterFirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<FirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.Get");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.Get");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MongoClusterFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MongoClusterFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterAsyncCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterFirewallRuleResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterFirewallRuleData, FirewallRuleResource>(new FirewallRulesGetByMongoClusterAsyncCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FirewallRuleResource(Client, data));
         }
 
         /// <summary>
@@ -314,14 +314,14 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MongoClusterFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterFirewallRuleResource(Client, data));
+            return new PageableWrapper<MongoClusterFirewallRuleData, FirewallRuleResource>(new FirewallRulesGetByMongoClusterCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FirewallRuleResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<MongoClusterFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<FirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.MongoCluster
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MongoClusterFirewallRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<FirewallRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MongoClusterFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -520,11 +520,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<MongoClusterFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<FirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("MongoClusterFirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("FirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.MongoCluster
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MongoClusterFirewallRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<FirewallRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MongoClusterFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.MongoCluster
             }
         }
 
-        IEnumerator<MongoClusterFirewallRuleResource> IEnumerable<MongoClusterFirewallRuleResource>.GetEnumerator()
+        IEnumerator<FirewallRuleResource> IEnumerable<FirewallRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<MongoClusterFirewallRuleResource> IAsyncEnumerable<MongoClusterFirewallRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<FirewallRuleResource> IAsyncEnumerable<FirewallRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
