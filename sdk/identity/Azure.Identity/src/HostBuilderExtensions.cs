@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Azure.Identity
@@ -27,7 +26,7 @@ namespace Azure.Identity
             string sectionName)
                 where TSettings : ClientSettings, new()
                 where TClient : class
-            => host.AddAzureClient<TClient, TSettings>(sectionName, default);
+            => host.AddClient<TClient, TSettings>(sectionName).WithAzureCredential();
 
         /// <summary>
         /// Adds a singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
@@ -43,16 +42,7 @@ namespace Azure.Identity
             Action<TSettings> configureSettings)
                 where TSettings : ClientSettings, new()
                 where TClient : class
-        {
-            host.Services.AddSingleton(sp =>
-            {
-                TSettings settings = host.Configuration.GetAzureClientSettings<TSettings>(sectionName);
-                configureSettings?.Invoke(settings);
-                return settings;
-            });
-            host.Services.AddSingleton(sp => ActivatorUtilities.CreateInstance<TClient>(sp, sp.GetRequiredService<TSettings>()));
-            return host;
-        }
+            => host.AddClient<TClient, TSettings>(sectionName, configureSettings).WithAzureCredential();
 
         /// <summary>
         /// Adds a keyed singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
@@ -68,7 +58,7 @@ namespace Azure.Identity
             string sectionName)
                 where TSettings : ClientSettings, new()
                 where TClient : class
-            => host.AddKeyedAzureClient<TClient, TSettings>(key, sectionName, default);
+            => host.AddKeyedClient<TClient, TSettings>(key, sectionName).WithAzureCredential();
 
         /// <summary>
         /// Adds a keyed singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
@@ -86,15 +76,6 @@ namespace Azure.Identity
             Action<TSettings> configureSettings)
                 where TSettings : ClientSettings, new()
                 where TClient : class
-        {
-            host.Services.AddKeyedSingleton(key, (sp, key) =>
-            {
-                TSettings settings = host.Configuration.GetAzureClientSettings<TSettings>(sectionName);
-                configureSettings?.Invoke(settings);
-                return settings;
-            });
-            host.Services.AddKeyedSingleton(key, (sp, key) => ActivatorUtilities.CreateInstance<TClient>(sp, sp.GetRequiredKeyedService<TSettings>(key)));
-            return host;
-        }
+        => host.AddKeyedClient<TClient, TSettings>(key, sectionName, configureSettings).WithAzureCredential();
     }
 }
