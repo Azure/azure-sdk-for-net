@@ -162,9 +162,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
-                return new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
+                int exportIntervalMilliseconds = GetMetricExportInterval(exporterOptions);
+
+                var metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), exportIntervalMilliseconds)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
+                return metricReader;
             });
+        }
+
+        private const string OtelMetricExportIntervalEnvVar = "OTEL_METRIC_EXPORT_INTERVAL";
+        private const int DefaultMetricExportIntervalMilliseconds = 60000;
+
+        private static int GetMetricExportInterval(AzureMonitorExporterOptions exporterOptions)
+        {
+            return TryGetIntervalFromEnvironment(out int interval)
+                ? interval
+                : exporterOptions.MetricExportIntervalMilliseconds ?? DefaultMetricExportIntervalMilliseconds;
+        }
+
+        private static bool TryGetIntervalFromEnvironment(out int interval)
+        {
+            var envValue = Environment.GetEnvironmentVariable(OtelMetricExportIntervalEnvVar);
+            return int.TryParse(envValue, out interval);
         }
 
         /// <summary>

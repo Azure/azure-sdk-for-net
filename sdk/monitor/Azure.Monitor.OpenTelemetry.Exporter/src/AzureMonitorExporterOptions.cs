@@ -117,6 +117,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool EnableTraceBasedLogsSampler { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets the metric export interval in milliseconds.
+        /// If not set, the OpenTelemetry SDK default value of 60000 milliseconds (60 seconds) will be used.
+        /// </summary>
+        public int? MetricExportIntervalMilliseconds { get; set; }
+
+        /// <summary>
         /// Internal flag to control if Statsbeat is enabled.
         /// </summary>
         internal bool EnableStatsbeat { get; set; } = true;
