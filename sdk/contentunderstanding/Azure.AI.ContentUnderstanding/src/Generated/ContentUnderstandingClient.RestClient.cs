@@ -92,13 +92,13 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendPath(":copy", false);
+            uri.AppendPath(":copyAnalyzer", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (allowReplace != null)
             {
                 uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
