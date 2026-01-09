@@ -44,6 +44,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets the Prediction. </summary>
         [WirePath("prediction")]
-        public Prediction Prediction { get; }
+        internal Prediction Prediction { get; }
+
+        /// <summary> Gets the HistoricalData. </summary>
+        [WirePath("prediction.predictionInput.historicalData")]
+        public IReadOnlyList<long> PredictionInputHistoricalData
+        {
+            get
+            {
+                return Prediction.PredictionInputHistoricalData;
+            }
+        }
     }
 }
