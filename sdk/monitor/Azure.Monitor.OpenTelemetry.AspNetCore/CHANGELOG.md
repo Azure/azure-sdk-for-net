@@ -26,12 +26,8 @@
   // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
   // OTEL_TRACES_SAMPLER_ARG=1.0
   ```
-* **SamplingRatio Property Type Changed**: The `SamplingRatio` property on
-  `AzureMonitorExporterOptions` has been changed from `float` to `float?`.
-  This change allows proper detection of whether the user explicitly set a
-  sampling ratio, enabling correct precedence between `TracesPerSecond` and
-  `SamplingRatio` configuration.
-  
+  [#54876](https://github.com/Azure/azure-sdk-for-net/pull/54876)
+
 ### Bugs Fixed
 
 ### Other Changes
