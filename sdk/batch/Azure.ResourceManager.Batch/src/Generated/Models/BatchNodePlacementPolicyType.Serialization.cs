@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchNodePlacementPolicyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchNodePlacementPolicyType value) => value switch
         {
             BatchNodePlacementPolicyType.Regional => "Regional",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodePlacementPolicyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchNodePlacementPolicyType ToBatchNodePlacementPolicyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Regional")) return BatchNodePlacementPolicyType.Regional;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zonal")) return BatchNodePlacementPolicyType.Zonal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Regional"))
+            {
+                return BatchNodePlacementPolicyType.Regional;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zonal"))
+            {
+                return BatchNodePlacementPolicyType.Zonal;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNodePlacementPolicyType value.");
         }
     }

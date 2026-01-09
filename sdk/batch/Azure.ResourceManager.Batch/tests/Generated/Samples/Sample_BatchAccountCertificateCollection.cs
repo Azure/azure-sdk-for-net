@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -46,8 +46,7 @@ namespace Azure.ResourceManager.Batch.Samples
                 ThumbprintAlgorithm = "sha1",
                 ThumbprintString = "0a0e4f50d51beadeac1d35afc5116098e7902e6e",
                 Format = BatchAccountCertificateFormat.Pfx,
-                Data = BinaryData.FromObjectAsJson("MIIJsgIBAzCCCW4GCSqGSIb3DQE..."),
-                Password = "<ExamplePassword>",
+                Data = BinaryData.FromObjectAsJson("MIIJmQIBAzCCCVUGCSqGSIb3DQEHAaCCCUYEgglCMIIJPjCCBE0GCSqGSI..."),
             };
             ArmOperation<BatchAccountCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, content);
             BatchAccountCertificateResource result = lro.Value;
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchAccountCertificateCreateOrUpdateContent content = new BatchAccountCertificateCreateOrUpdateContent
             {
                 Format = BatchAccountCertificateFormat.Cer,
-                Data = BinaryData.FromObjectAsJson("MIICrjCCAZagAwI..."),
+                Data = BinaryData.FromObjectAsJson("MIIJmQIBAzCCCVUGCSqGSIb3DQEHAaCCCUYEgglCMIIJPjCCBE0GCSqGSI..."),
             };
             ArmOperation<BatchAccountCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, content);
             BatchAccountCertificateResource result = lro.Value;
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -126,8 +125,7 @@ namespace Azure.ResourceManager.Batch.Samples
             string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
             BatchAccountCertificateCreateOrUpdateContent content = new BatchAccountCertificateCreateOrUpdateContent
             {
-                Data = BinaryData.FromObjectAsJson("MIIJsgIBAzCCCW4GCSqGSIb3DQE..."),
-                Password = "<ExamplePassword>",
+                Data = BinaryData.FromObjectAsJson("MIIJmQIBAzCCCVUGCSqGSIb3DQEHAaCCCUYEgglCMIIJPjCCBE0GCSqGSI..."),
             };
             ArmOperation<BatchAccountCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, content);
             BatchAccountCertificateResource result = lro.Value;
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -221,7 +219,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -257,7 +255,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -295,7 +293,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -325,7 +323,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -355,7 +353,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -397,7 +395,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountResource created on azure
             // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

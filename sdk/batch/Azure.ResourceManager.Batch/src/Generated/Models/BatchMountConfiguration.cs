@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The file system to mount on each node. </summary>
     public partial class BatchMountConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchMountConfiguration"/>. </summary>
         public BatchMountConfiguration()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="nfsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="cifsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="fileShareConfiguration"> This property is mutually exclusive with all other properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchMountConfiguration(BatchBlobFileSystemConfiguration blobFileSystemConfiguration, BatchNfsMountConfiguration nfsMountConfiguration, BatchCifsMountConfiguration cifsMountConfiguration, BatchFileShareConfiguration fileShareConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchMountConfiguration(BatchBlobFileSystemConfiguration blobFileSystemConfiguration, BatchNFSMountConfiguration nfsMountConfiguration, BatchCifsMountConfiguration cifsMountConfiguration, BatchFileShareConfiguration fileShareConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobFileSystemConfiguration = blobFileSystemConfiguration;
             NfsMountConfiguration = nfsMountConfiguration;
             CifsMountConfiguration = cifsMountConfiguration;
             FileShareConfiguration = fileShareConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This property is mutually exclusive with all other properties. </summary>
         public BatchBlobFileSystemConfiguration BlobFileSystemConfiguration { get; set; }
+
         /// <summary> This property is mutually exclusive with all other properties. </summary>
-        public BatchNfsMountConfiguration NfsMountConfiguration { get; set; }
+        public BatchNFSMountConfiguration NfsMountConfiguration { get; set; }
+
         /// <summary> This property is mutually exclusive with all other properties. </summary>
         public BatchCifsMountConfiguration CifsMountConfiguration { get; set; }
+
         /// <summary> This property is mutually exclusive with all other properties. </summary>
         public BatchFileShareConfiguration FileShareConfiguration { get; set; }
     }

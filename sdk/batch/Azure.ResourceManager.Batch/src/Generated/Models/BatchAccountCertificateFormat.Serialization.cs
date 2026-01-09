@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAccountCertificateFormatExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAccountCertificateFormat value) => value switch
         {
             BatchAccountCertificateFormat.Pfx => "Pfx",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountCertificateFormat value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchAccountCertificateFormat ToBatchAccountCertificateFormat(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pfx")) return BatchAccountCertificateFormat.Pfx;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cer")) return BatchAccountCertificateFormat.Cer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pfx"))
+            {
+                return BatchAccountCertificateFormat.Pfx;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cer"))
+            {
+                return BatchAccountCertificateFormat.Cer;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountCertificateFormat value.");
         }
     }

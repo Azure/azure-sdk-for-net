@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchAccessRuleDirection : IEquatable<BatchAccessRuleDirection>
     {
         private readonly string _value;
+        /// <summary> Applies to inbound network traffic to the secured resources. </summary>
+        private const string InboundValue = "Inbound";
+        /// <summary> Applies to outbound network traffic from the secured resources. </summary>
+        private const string OutboundValue = "Outbound";
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchAccessRuleDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "Inbound";
-        private const string OutboundValue = "Outbound";
+            _value = value;
+        }
 
         /// <summary> Applies to inbound network traffic to the secured resources. </summary>
         public static BatchAccessRuleDirection Inbound { get; } = new BatchAccessRuleDirection(InboundValue);
+
         /// <summary> Applies to outbound network traffic from the secured resources. </summary>
         public static BatchAccessRuleDirection Outbound { get; } = new BatchAccessRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="BatchAccessRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchAccessRuleDirection left, BatchAccessRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchAccessRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchAccessRuleDirection left, BatchAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAccessRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchAccessRuleDirection(string value) => new BatchAccessRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchAccessRuleDirection?(string value) => value == null ? null : new BatchAccessRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchAccessRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchAccessRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

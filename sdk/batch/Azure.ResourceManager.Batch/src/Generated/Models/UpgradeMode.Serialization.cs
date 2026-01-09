@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class UpgradeModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this UpgradeMode value) => value switch
         {
             UpgradeMode.Automatic => "automatic",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static UpgradeMode ToUpgradeMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "automatic")) return UpgradeMode.Automatic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "manual")) return UpgradeMode.Manual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rolling")) return UpgradeMode.Rolling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "automatic"))
+            {
+                return UpgradeMode.Automatic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "manual"))
+            {
+                return UpgradeMode.Manual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rolling"))
+            {
+                return UpgradeMode.Rolling;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeMode value.");
         }
     }

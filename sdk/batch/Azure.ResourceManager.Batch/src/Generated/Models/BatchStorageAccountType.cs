@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.Batch.Models
     public enum BatchStorageAccountType
     {
         /// <summary> The data disk / OS disk should use standard locally redundant storage. </summary>
-        StandardLrs,
+        StandardLRS,
         /// <summary> The data disk / OS disk should use premium locally redundant storage. </summary>
-        PremiumLrs,
+        PremiumLRS,
         /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
         StandardSsdLrs
     }

@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Batch.Models
     public enum BatchInboundEndpointProtocol
     {
         /// <summary> Use TCP for the endpoint. </summary>
-        Tcp,
+        TCP,
         /// <summary> Use UDP for the endpoint. </summary>
-        Udp
+        UDP
     }
 }

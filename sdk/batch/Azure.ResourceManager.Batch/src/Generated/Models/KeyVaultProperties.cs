@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> KeyVault configuration when using an encryption KeySource of Microsoft.KeyVault. </summary>
     internal partial class KeyVaultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         public KeyVaultProperties()
@@ -53,24 +24,24 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier">
         /// Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
-        ///
-        ///  The Batch Account has a System Assigned identity
-        ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
-        ///  The KeyVault has soft-delete and purge protection enabled
+        /// 
+        /// The Batch Account has a System Assigned identity
+        /// The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
+        /// The KeyVault has soft-delete and purge protection enabled
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultProperties(Uri keyIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultProperties(Uri keyIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyIdentifier = keyIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
-        ///
-        ///  The Batch Account has a System Assigned identity
-        ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
-        ///  The KeyVault has soft-delete and purge protection enabled
+        /// 
+        /// The Batch Account has a System Assigned identity
+        /// The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
+        /// The KeyVault has soft-delete and purge protection enabled
         /// </summary>
         public Uri KeyIdentifier { get; set; }
     }

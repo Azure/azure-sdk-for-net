@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountDetectorResource created on azure
             // for more information of creating BatchAccountDetectorResource, please refer to the document of BatchAccountDetectorResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string detectorId = "poolsAndNodes";

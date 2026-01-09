@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchNetworkSecurityGroupRuleAccessExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchNetworkSecurityGroupRuleAccess value) => value switch
         {
             BatchNetworkSecurityGroupRuleAccess.Allow => "Allow",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNetworkSecurityGroupRuleAccess value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchNetworkSecurityGroupRuleAccess ToBatchNetworkSecurityGroupRuleAccess(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return BatchNetworkSecurityGroupRuleAccess.Allow;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny")) return BatchNetworkSecurityGroupRuleAccess.Deny;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow"))
+            {
+                return BatchNetworkSecurityGroupRuleAccess.Allow;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny"))
+            {
+                return BatchNetworkSecurityGroupRuleAccess.Deny;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNetworkSecurityGroupRuleAccess value.");
         }
     }
