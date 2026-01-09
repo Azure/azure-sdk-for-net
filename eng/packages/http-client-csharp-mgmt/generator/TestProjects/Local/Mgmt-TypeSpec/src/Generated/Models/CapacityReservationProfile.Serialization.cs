@@ -13,12 +13,12 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The Prediction. </summary>
-    internal partial class Prediction : IJsonModel<Prediction>
+    /// <summary> The CapacityReservationProfile. </summary>
+    internal partial class CapacityReservationProfile : IJsonModel<CapacityReservationProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Prediction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CapacityReservationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,15 +29,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Prediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Prediction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if (Optional.IsDefined(CapacityReservationGroup))
             {
-                writer.WritePropertyName("predictionInput"u8);
-                writer.WriteObjectValue(PredictionInput, options);
+                writer.WritePropertyName("capacityReservationGroup"u8);
+                writer.WriteObjectValue(CapacityReservationGroup, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -58,36 +58,40 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Prediction IJsonModel<Prediction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CapacityReservationProfile IJsonModel<CapacityReservationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Prediction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CapacityReservationProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Prediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Prediction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrediction(document.RootElement, options);
+            return DeserializeCapacityReservationProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Prediction DeserializePrediction(JsonElement element, ModelReaderWriterOptions options)
+        internal static CapacityReservationProfile DeserializeCapacityReservationProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PredictionInput predictionInput = default;
+            TestSubResource capacityReservationGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("predictionInput"u8))
+                if (prop.NameEquals("capacityReservationGroup"u8))
                 {
-                    predictionInput = PredictionInput.DeserializePredictionInput(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityReservationGroup = TestSubResource.DeserializeTestSubResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -95,47 +99,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Prediction(predictionInput, additionalBinaryDataProperties);
+            return new CapacityReservationProfile(capacityReservationGroup, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Prediction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CapacityReservationProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Prediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Prediction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Prediction IPersistableModel<Prediction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CapacityReservationProfile IPersistableModel<CapacityReservationProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Prediction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CapacityReservationProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Prediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrediction(document.RootElement, options);
+                        return DeserializeCapacityReservationProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Prediction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Prediction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CapacityReservationProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

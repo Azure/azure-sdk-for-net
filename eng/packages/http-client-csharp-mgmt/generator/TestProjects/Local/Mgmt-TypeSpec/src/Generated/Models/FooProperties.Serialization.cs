@@ -106,6 +106,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("writableSubResourceProp"u8);
                 ((IJsonModel<WritableSubResource>)WritableSubResourceProp).Write(writer, options);
             }
+            if (Optional.IsDefined(ComputeFleetVmProfile))
+            {
+                writer.WritePropertyName("computeFleetVmProfile"u8);
+                writer.WriteObjectValue(ComputeFleetVmProfile, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -159,6 +164,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             SafeFlattenModel optionalProperty = default;
             ETag? eTag = default;
             WritableSubResource writableSubResourceProp = default;
+            ComputeFleetVmProfile computeFleetVmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -266,6 +272,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     writableSubResourceProp = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("computeFleetVmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeFleetVmProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -283,6 +298,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 optionalProperty,
                 eTag,
                 writableSubResourceProp,
+                computeFleetVmProfile,
                 additionalBinaryDataProperties);
         }
 
