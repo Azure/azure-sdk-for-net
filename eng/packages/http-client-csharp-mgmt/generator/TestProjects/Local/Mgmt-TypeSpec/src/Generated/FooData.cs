@@ -259,6 +259,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Specifies the gallery applications that should be made available. </summary>
+        [WirePath("properties.vmProfile.applicationProfile.galleryApplications")]
+        public IList<string> VmGalleryApplications
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.VmGalleryApplications;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         [WirePath("properties.computeFleetVmProfile.capacityReservation.capacityReservationGroup.id")]
         public ResourceIdentifier ComputeFleetVmCapacityReservationGroupId
