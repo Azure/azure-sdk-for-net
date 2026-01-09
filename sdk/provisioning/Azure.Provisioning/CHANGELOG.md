@@ -10,12 +10,6 @@
     - OnlyIfNotExists - Adds `@onlyIfNotExists()` decorator
 - Added `BicepMetadata` property on `ProvisionableResource`
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.4.0 (2025-12-10)
 
 ### Features Added
