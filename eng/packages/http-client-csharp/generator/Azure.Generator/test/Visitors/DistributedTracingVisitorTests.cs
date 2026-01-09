@@ -82,11 +82,9 @@ namespace Azure.Generator.Tests.Visitors
             Assert.That(constructor, Is.Not.Null);
 
             var updatedConstructor = visitor.InvokeVisitConstructor(constructor!);
-            Assert.Multiple(() =>
-            {
-                Assert.That(updatedConstructor?.BodyStatements, Is.Not.Null);
-                Assert.That(updatedConstructor!.BodyStatements!.Any(), Is.True);
-            });
+
+            Assert.That(updatedConstructor?.BodyStatements, Is.Not.Null);
+            Assert.That(updatedConstructor!.BodyStatements!.Any(), Is.True);
 
             var bodyText = updatedConstructor.BodyStatements!.ToDisplayString();
             var expectedText = isSubClient

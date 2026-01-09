@@ -155,7 +155,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             {
                 Assert.That(pet, Is.Not.Null);
                 Assert.That(pet.Id, Is.EqualTo((++count).ToString()));
-                Assert.AreEqual(expectedPets[pet.Id], pet.Name);
+                Assert.That(expectedPets[pet.Id], Is.EqualTo(pet.Name));
             }
             return Task.CompletedTask;
         });
@@ -183,8 +183,8 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                 {
                     Assert.That(pet, Is.Not.Null);
                     Assert.That(pet, Is.Not.Null);
-                    Assert.AreEqual((++count).ToString(), pet!["id"]!.ToString());
-                    Assert.AreEqual(expectedPets[pet["id"]!.ToString()], pet["name"]!.ToString());
+                    Assert.That((++count).ToString(), Is.EqualTo(pet!["id"]!.ToString()));
+                    Assert.That(expectedPets[pet["id"]!.ToString()], Is.EqualTo(pet["name"]!.ToString()));
                 }
             }
             return Task.CompletedTask;

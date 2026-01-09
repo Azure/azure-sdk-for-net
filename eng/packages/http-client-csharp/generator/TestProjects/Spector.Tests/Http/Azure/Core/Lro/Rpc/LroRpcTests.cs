@@ -27,12 +27,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Rpc
         {
             var option = new GenerationOptions("text");
             var response = await new RpcClient(host, null).LongRunningRpcAsync(WaitUntil.Started, option);
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.GetRawResponse().Status, Is.EqualTo(202));
-                Assert.That(response.GetRawResponse().Headers.TryGetValue("operation-location", out string? operationLocation), Is.EqualTo(true));
-            });
-            Assert.AreEqual(true, operationLocation!.Contains("/azure/core/lro/rpc/generations/operations/operation1"));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(202));
+            Assert.That(response.GetRawResponse().Headers.TryGetValue("operation-location", out string? operationLocation), Is.EqualTo(true));
+            Assert.That(operationLocation!.Contains("/azure/core/lro/rpc/generations/operations/operation1"), Is.EqualTo(true));
         });
 
 
