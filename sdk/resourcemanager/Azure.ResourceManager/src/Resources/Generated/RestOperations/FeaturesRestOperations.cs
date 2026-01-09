@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the preview feature with the specified name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the preview feature with the specified name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Registers the preview feature for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Registers the preview feature for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Unregisters the preview feature for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Unregisters the preview feature for the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>

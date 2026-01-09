@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,10 +175,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -220,10 +221,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual Response<SubscriptionPolicySetDefinitionResource> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionPolicySetDefinitionResource> Get(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -231,7 +233,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken);
+                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,13 +267,14 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionPolicySetDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionPolicySetDefinitionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionPolicySetDefinitionResource> GetAllAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, expand, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,13 +300,14 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionPolicySetDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionPolicySetDefinitionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionPolicySetDefinitionResource> GetAll(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, expand, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -320,7 +324,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,10 +333,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -340,7 +345,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,7 +368,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,10 +377,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -383,7 +389,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken);
+                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +412,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,10 +421,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SubscriptionPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SubscriptionPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -426,7 +433,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SubscriptionPolicySetDefinitionResource>(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -451,7 +458,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,10 +467,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual NullableResponse<SubscriptionPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SubscriptionPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -471,7 +479,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken);
+                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SubscriptionPolicySetDefinitionResource>(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());

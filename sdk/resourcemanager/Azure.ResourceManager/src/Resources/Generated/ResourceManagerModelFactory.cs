@@ -26,17 +26,22 @@ namespace Azure.ResourceManager.Models
         /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
+        /// <param name="definitionVersion"> The version of the policy definition to use. </param>
+        /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="effectiveDefinitionVersion"> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
         /// <param name="excludedScopes"> The policy's excluded scopes. </param>
         /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
         /// <param name="description"> This message will be part of response in case of policy violation. </param>
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
+        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="overrides"> The policy property value override. </param>
+        /// <param name="assignmentType"> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </param>
+        /// <param name="instanceId"> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </param>
         /// <returns> A new <see cref="Resources.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null)
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string definitionVersion = null, string latestDefinitionVersion = null, string effectiveDefinitionVersion = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null, AssignmentType? assignmentType = null, Guid? instanceId = null)
         {
             excludedScopes ??= new List<string>();
             parameters ??= new Dictionary<string, ArmPolicyParameterValue>();
@@ -53,6 +58,9 @@ namespace Azure.ResourceManager.Models
                 managedIdentity,
                 displayName,
                 policyDefinitionId,
+                definitionVersion,
+                latestDefinitionVersion,
+                effectiveDefinitionVersion,
                 scope,
                 excludedScopes?.ToList(),
                 parameters,
@@ -62,6 +70,105 @@ namespace Azure.ResourceManager.Models
                 nonComplianceMessages?.ToList(),
                 resourceSelectors?.ToList(),
                 overrides?.ToList(),
+                assignmentType,
+                instanceId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicyDefinitionVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
+        /// <param name="displayName"> The display name of the policy definition. </param>
+        /// <param name="description"> The policy definition description. </param>
+        /// <param name="policyRule"> The policy rule. </param>
+        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
+        /// <param name="version"> The policy definition version in #.#.# format. </param>
+        /// <param name="externalEvaluationEnforcementSettings"> The details of the source of external evaluation results required by the policy during enforcement evaluation. </param>
+        /// <returns> A new <see cref="Resources.PolicyDefinitionVersionData"/> instance for mocking. </returns>
+        public static PolicyDefinitionVersionData PolicyDefinitionVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, string version = null, ExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = null)
+        {
+            parameters ??= new Dictionary<string, ArmPolicyParameter>();
+
+            return new PolicyDefinitionVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyType,
+                mode,
+                displayName,
+                description,
+                policyRule,
+                metadata,
+                parameters,
+                version,
+                externalEvaluationEnforcementSettings,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicySetDefinitionVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="displayName"> The display name of the policy set definition. </param>
+        /// <param name="description"> The policy set definition description. </param>
+        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
+        /// <param name="policyDefinitions"> An array of policy definition references. </param>
+        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
+        /// <param name="version"> The policy set definition version in #.#.# format. </param>
+        /// <returns> A new <see cref="Resources.PolicySetDefinitionVersionData"/> instance for mocking. </returns>
+        public static PolicySetDefinitionVersionData PolicySetDefinitionVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null, string version = null)
+        {
+            parameters ??= new Dictionary<string, ArmPolicyParameter>();
+            policyDefinitions ??= new List<PolicyDefinitionReference>();
+            policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
+
+            return new PolicySetDefinitionVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyType,
+                displayName,
+                description,
+                metadata,
+                parameters,
+                policyDefinitions?.ToList(),
+                policyDefinitionGroups?.ToList(),
+                version,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyDefinitionReference"/>. </summary>
+        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
+        /// <param name="definitionVersion"> The version of the policy definition to use. </param>
+        /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="effectiveDefinitionVersion"> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
+        /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
+        /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
+        /// <returns> A new <see cref="Resources.Models.PolicyDefinitionReference"/> instance for mocking. </returns>
+        public static PolicyDefinitionReference PolicyDefinitionReference(string policyDefinitionId = null, string definitionVersion = null, string latestDefinitionVersion = null, string effectiveDefinitionVersion = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string policyDefinitionReferenceId = null, IEnumerable<string> groupNames = null)
+        {
+            parameters ??= new Dictionary<string, ArmPolicyParameterValue>();
+            groupNames ??= new List<string>();
+
+            return new PolicyDefinitionReference(
+                policyDefinitionId,
+                definitionVersion,
+                latestDefinitionVersion,
+                effectiveDefinitionVersion,
+                parameters,
+                policyDefinitionReferenceId,
+                groupNames?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -77,10 +184,14 @@ namespace Azure.ResourceManager.Models
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
+        /// <param name="version"> The policy definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy definition. </param>
+        /// <param name="externalEvaluationEnforcementSettings"> The details of the source of external evaluation results required by the policy during enforcement evaluation. </param>
         /// <returns> A new <see cref="Resources.PolicyDefinitionData"/> instance for mocking. </returns>
-        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null)
+        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, string version = null, IEnumerable<string> versions = null, ExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = null)
         {
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
+            versions ??= new List<string>();
 
             return new PolicyDefinitionData(
                 id,
@@ -94,6 +205,9 @@ namespace Azure.ResourceManager.Models
                 policyRule,
                 metadata,
                 parameters,
+                version,
+                versions?.ToList(),
+                externalEvaluationEnforcementSettings,
                 serializedAdditionalRawData: null);
         }
 
@@ -102,19 +216,22 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="policyType"> The type of policy set definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="displayName"> The display name of the policy set definition. </param>
         /// <param name="description"> The policy set definition description. </param>
         /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
         /// <param name="policyDefinitions"> An array of policy definition references. </param>
         /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
+        /// <param name="version"> The policy set definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy set definition. </param>
         /// <returns> A new <see cref="Resources.PolicySetDefinitionData"/> instance for mocking. </returns>
-        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null)
+        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null, string version = null, IEnumerable<string> versions = null)
         {
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
             policyDefinitions ??= new List<PolicyDefinitionReference>();
             policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
+            versions ??= new List<string>();
 
             return new PolicySetDefinitionData(
                 id,
@@ -128,6 +245,126 @@ namespace Azure.ResourceManager.Models
                 parameters,
                 policyDefinitions?.ToList(),
                 policyDefinitionGroups?.ToList(),
+                version,
+                versions?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenRequest"/>. </summary>
+        /// <param name="operation"> The resource operation to acquire a token for. </param>
+        /// <param name="changeReference"> The change reference. </param>
+        /// <returns> A new <see cref="Resources.Models.PolicyTokenRequest"/> instance for mocking. </returns>
+        public static PolicyTokenRequest PolicyTokenRequest(PolicyTokenOperation operation = null, string changeReference = null)
+        {
+            return new PolicyTokenRequest(operation, changeReference, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenOperation"/>. </summary>
+        /// <param name="uri"> The request URI of the resource operation. </param>
+        /// <param name="httpMethod"> The http method of the resource operation. </param>
+        /// <param name="content"> The payload of the resource operation. </param>
+        /// <returns> A new <see cref="Resources.Models.PolicyTokenOperation"/> instance for mocking. </returns>
+        public static PolicyTokenOperation PolicyTokenOperation(Uri uri = null, string httpMethod = null, BinaryData content = null)
+        {
+            return new PolicyTokenOperation(uri, httpMethod, content, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenResponse"/>. </summary>
+        /// <param name="result"> The result of the completed token acquisition operation. Possible values are Succeeded and Failed. </param>
+        /// <param name="message"> Status message with additional details about the token acquisition operation result. </param>
+        /// <param name="retryAfter"> The date and time after which the client can try to acquire a token again in the case of retry-able failures. </param>
+        /// <param name="results"> An array of external evaluation endpoint invocation results. </param>
+        /// <param name="changeReference"> The change reference associated with the operation for which the token is acquired. </param>
+        /// <param name="token"> The issued policy token. </param>
+        /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
+        /// <param name="expiredOn"> The expiration of the policy token. </param>
+        /// <returns> A new <see cref="Resources.Models.PolicyTokenResponse"/> instance for mocking. </returns>
+        public static PolicyTokenResponse PolicyTokenResponse(PolicyTokenResult? result = null, string message = null, DateTimeOffset? retryAfter = null, IEnumerable<ExternalEvaluationEndpointInvocationResult> results = null, string changeReference = null, string token = null, string tokenId = null, DateTimeOffset? expiredOn = null)
+        {
+            results ??= new List<ExternalEvaluationEndpointInvocationResult>();
+
+            return new PolicyTokenResponse(
+                result,
+                message,
+                retryAfter,
+                results?.ToList(),
+                changeReference,
+                token,
+                tokenId,
+                expiredOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ExternalEvaluationEndpointInvocationResult"/>. </summary>
+        /// <param name="policyInfo"> The details of the policy requiring the external endpoint invocation. </param>
+        /// <param name="result"> The result of the external endpoint. Possible values are Succeeded and Failed. </param>
+        /// <param name="message"> The status message with additional details about the invocation result. </param>
+        /// <param name="retryAfter"> The date and time after which a failed endpoint invocation can be retried. </param>
+        /// <param name="claims"> The set of claims that will be attached to the policy token as an attestation for the result of the endpoint invocation. </param>
+        /// <param name="expiredOn"> The expiration of the results. </param>
+        /// <returns> A new <see cref="Resources.Models.ExternalEvaluationEndpointInvocationResult"/> instance for mocking. </returns>
+        public static ExternalEvaluationEndpointInvocationResult ExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo = null, ExternalEndpointResult? result = null, string message = null, DateTimeOffset? retryAfter = null, BinaryData claims = null, DateTimeOffset? expiredOn = null)
+        {
+            return new ExternalEvaluationEndpointInvocationResult(
+                policyInfo,
+                result,
+                message,
+                retryAfter,
+                claims,
+                expiredOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyLogInfo"/>. </summary>
+        /// <param name="policyDefinitionId"> The policy definition Id. </param>
+        /// <param name="policySetDefinitionId"> The policy set definition Id. </param>
+        /// <param name="policyDefinitionReferenceId"> The policy definition instance Id inside a policy set. </param>
+        /// <param name="policySetDefinitionName"> The policy set definition name. </param>
+        /// <param name="policySetDefinitionDisplayName"> The policy set definition display name. </param>
+        /// <param name="policySetDefinitionVersion"> The policy set definition version. </param>
+        /// <param name="policySetDefinitionCategory"> The policy set definition category. </param>
+        /// <param name="policyDefinitionName"> The policy definition name. </param>
+        /// <param name="policyDefinitionDisplayName"> The policy definition display name. </param>
+        /// <param name="policyDefinitionVersion"> The policy definition version. </param>
+        /// <param name="policyDefinitionEffect"> The policy definition action. </param>
+        /// <param name="policyDefinitionGroupNames"> An array of policy definition group names. </param>
+        /// <param name="policyAssignmentId"> The policy assignment Id. </param>
+        /// <param name="policyAssignmentName"> The policy assignment name. </param>
+        /// <param name="policyAssignmentDisplayName"> The policy assignment display name. </param>
+        /// <param name="policyAssignmentVersion"> The policy assignment version. </param>
+        /// <param name="policyAssignmentScope"> The policy assignment scope. </param>
+        /// <param name="resourceLocation"> The resource location. </param>
+        /// <param name="ancestors"> The management group ancestors. </param>
+        /// <param name="complianceReasonCode"> The policy compliance reason code. </param>
+        /// <param name="policyExemptionIds"> An array of policy exemption Ids. </param>
+        /// <returns> A new <see cref="Resources.Models.PolicyLogInfo"/> instance for mocking. </returns>
+        public static PolicyLogInfo PolicyLogInfo(string policyDefinitionId = null, string policySetDefinitionId = null, string policyDefinitionReferenceId = null, string policySetDefinitionName = null, string policySetDefinitionDisplayName = null, string policySetDefinitionVersion = null, string policySetDefinitionCategory = null, string policyDefinitionName = null, string policyDefinitionDisplayName = null, string policyDefinitionVersion = null, string policyDefinitionEffect = null, IEnumerable<string> policyDefinitionGroupNames = null, string policyAssignmentId = null, string policyAssignmentName = null, string policyAssignmentDisplayName = null, string policyAssignmentVersion = null, string policyAssignmentScope = null, string resourceLocation = null, string ancestors = null, string complianceReasonCode = null, IEnumerable<string> policyExemptionIds = null)
+        {
+            policyDefinitionGroupNames ??= new List<string>();
+            policyExemptionIds ??= new List<string>();
+
+            return new PolicyLogInfo(
+                policyDefinitionId,
+                policySetDefinitionId,
+                policyDefinitionReferenceId,
+                policySetDefinitionName,
+                policySetDefinitionDisplayName,
+                policySetDefinitionVersion,
+                policySetDefinitionCategory,
+                policyDefinitionName,
+                policyDefinitionDisplayName,
+                policyDefinitionVersion,
+                policyDefinitionEffect,
+                policyDefinitionGroupNames?.ToList(),
+                policyAssignmentId,
+                policyAssignmentName,
+                policyAssignmentDisplayName,
+                policyAssignmentVersion,
+                policyAssignmentScope,
+                resourceLocation,
+                ancestors,
+                complianceReasonCode,
+                policyExemptionIds?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

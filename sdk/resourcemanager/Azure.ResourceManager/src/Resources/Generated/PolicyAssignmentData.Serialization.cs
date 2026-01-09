@@ -61,6 +61,21 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
+            if (Optional.IsDefined(DefinitionVersion))
+            {
+                writer.WritePropertyName("definitionVersion"u8);
+                writer.WriteStringValue(DefinitionVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LatestDefinitionVersion))
+            {
+                writer.WritePropertyName("latestDefinitionVersion"u8);
+                writer.WriteStringValue(LatestDefinitionVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EffectiveDefinitionVersion))
+            {
+                writer.WritePropertyName("effectiveDefinitionVersion"u8);
+                writer.WriteStringValue(EffectiveDefinitionVersion);
+            }
             if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
@@ -139,6 +154,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AssignmentType))
+            {
+                writer.WritePropertyName("assignmentType"u8);
+                writer.WriteStringValue(AssignmentType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceId))
+            {
+                writer.WritePropertyName("instanceId"u8);
+                writer.WriteStringValue(InstanceId.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -170,6 +195,9 @@ namespace Azure.ResourceManager.Resources
             SystemData systemData = default;
             string displayName = default;
             string policyDefinitionId = default;
+            string definitionVersion = default;
+            string latestDefinitionVersion = default;
+            string effectiveDefinitionVersion = default;
             string scope = default;
             IList<string> notScopes = default;
             IDictionary<string, ArmPolicyParameterValue> parameters = default;
@@ -179,6 +207,8 @@ namespace Azure.ResourceManager.Resources
             IList<NonComplianceMessage> nonComplianceMessages = default;
             IList<ResourceSelector> resourceSelectors = default;
             IList<PolicyOverride> overrides = default;
+            AssignmentType? assignmentType = default;
+            Guid? instanceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,6 +272,21 @@ namespace Azure.ResourceManager.Resources
                         if (property0.NameEquals("policyDefinitionId"u8))
                         {
                             policyDefinitionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("definitionVersion"u8))
+                        {
+                            definitionVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("latestDefinitionVersion"u8))
+                        {
+                            latestDefinitionVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("effectiveDefinitionVersion"u8))
+                        {
+                            effectiveDefinitionVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -342,6 +387,24 @@ namespace Azure.ResourceManager.Resources
                             overrides = array;
                             continue;
                         }
+                        if (property0.NameEquals("assignmentType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            assignmentType = new AssignmentType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("instanceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instanceId = property0.Value.GetGuid();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -360,6 +423,9 @@ namespace Azure.ResourceManager.Resources
                 identity,
                 displayName,
                 policyDefinitionId,
+                definitionVersion,
+                latestDefinitionVersion,
+                effectiveDefinitionVersion,
                 scope,
                 notScopes ?? new ChangeTrackingList<string>(),
                 parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(),
@@ -369,6 +435,8 @@ namespace Azure.ResourceManager.Resources
                 nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(),
                 resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(),
                 overrides ?? new ChangeTrackingList<PolicyOverride>(),
+                assignmentType,
+                instanceId,
                 serializedAdditionalRawData);
         }
 
@@ -510,6 +578,75 @@ namespace Azure.ResourceManager.Resources
                     else
                     {
                         builder.AppendLine($"'{PolicyDefinitionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefinitionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    definitionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefinitionVersion))
+                {
+                    builder.Append("    definitionVersion: ");
+                    if (DefinitionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefinitionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefinitionVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestDefinitionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    latestDefinitionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestDefinitionVersion))
+                {
+                    builder.Append("    latestDefinitionVersion: ");
+                    if (LatestDefinitionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LatestDefinitionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LatestDefinitionVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EffectiveDefinitionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    effectiveDefinitionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EffectiveDefinitionVersion))
+                {
+                    builder.Append("    effectiveDefinitionVersion: ");
+                    if (EffectiveDefinitionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EffectiveDefinitionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EffectiveDefinitionVersion}'");
                     }
                 }
             }
@@ -716,6 +853,36 @@ namespace Azure.ResourceManager.Resources
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignmentType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    assignmentType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignmentType))
+                {
+                    builder.Append("    assignmentType: ");
+                    builder.AppendLine($"'{AssignmentType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    instanceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceId))
+                {
+                    builder.Append("    instanceId: ");
+                    builder.AppendLine($"'{InstanceId.Value.ToString()}'");
                 }
             }
 

@@ -54,19 +54,6 @@ namespace Azure.ResourceManager.ManagementGroups
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
-            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 

@@ -32,261 +32,89 @@ namespace Azure.ResourceManager.Resources
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data)
+        internal RequestUriBuilder CreateListBuiltInRequestUri(string filter, int? top)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
-        /// <param name="data"> The policy definition properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, policyDefinitionName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        PolicyDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
-        /// <param name="data"> The policy definition properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyDefinitionData> CreateOrUpdate(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, policyDefinitionName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        PolicyDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string policyDefinitionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string policyDefinitionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateDeleteRequest(subscriptionId, policyDefinitionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateDeleteRequest(subscriptionId, policyDefinitionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string policyDefinitionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string policyDefinitionName)
+        internal HttpMessage CreateListBuiltInRequest(string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <summary> This operation retrieves a list of all the built-in policy definitions that match the optional given $filter. If $filter='policyType -eq {value}' is provided, the returned list only includes all built-in policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all built-in policy definitions whose category match the {value}. </summary>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyDefinitionData>> GetAsync(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyDefinitionListResult>> ListBuiltInAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateGetRequest(subscriptionId, policyDefinitionName);
+            using var message = CreateListBuiltInRequest(filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PolicyDefinitionData value = default;
+                        PolicyDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((PolicyDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <summary> This operation retrieves a list of all the built-in policy definitions that match the optional given $filter. If $filter='policyType -eq {value}' is provided, the returned list only includes all built-in policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all built-in policy definitions whose category match the {value}. </summary>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyDefinitionData> Get(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        public Response<PolicyDefinitionListResult> ListBuiltIn(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateGetRequest(subscriptionId, policyDefinitionName);
+            using var message = CreateListBuiltInRequest(filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PolicyDefinitionData value = default;
+                        PolicyDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((PolicyDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -372,62 +200,70 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateAtManagementGroupRequestUri(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data)
+        internal RequestUriBuilder CreateListByManagementGroupRequestUri(string managementGroupId, string filter, int? top)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data)
+        internal HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <summary> This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
-        /// <param name="data"> The policy definition properties. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyDefinitionData>> CreateOrUpdateAtManagementGroupAsync(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PolicyDefinitionListResult>> ListByManagementGroupAsync(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policyDefinitionName, data);
+            using var message = CreateListByManagementGroupRequest(managementGroupId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
+                case 200:
                     {
-                        PolicyDefinitionData value = default;
+                        PolicyDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,106 +271,28 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <summary> This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
-        /// <param name="data"> The policy definition properties. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyDefinitionData> CreateOrUpdateAtManagementGroup(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PolicyDefinitionListResult> ListByManagementGroup(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policyDefinitionName, data);
+            using var message = CreateListByManagementGroupRequest(managementGroupId, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
+                case 200:
                     {
-                        PolicyDefinitionData value = default;
+                        PolicyDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteAtManagementGroupRequestUri(string managementGroupId, string policyDefinitionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policyDefinitionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAtManagementGroupAsync(string managementGroupId, string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policyDefinitionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteAtManagementGroup(string managementGroupId, string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policyDefinitionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -628,6 +386,174 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateAtManagementGroupRequestUri(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="data"> The policy definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PolicyDefinitionData>> CreateOrUpdateAtManagementGroupAsync(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policyDefinitionName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        PolicyDefinitionData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="data"> The policy definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PolicyDefinitionData> CreateOrUpdateAtManagementGroup(string managementGroupId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policyDefinitionName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        PolicyDefinitionData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtManagementGroupRequestUri(string managementGroupId, string policyDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policyDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
+        /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAtManagementGroupAsync(string managementGroupId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+
+            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policyDefinitionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
+        /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteAtManagementGroup(string managementGroupId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+
+            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policyDefinitionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string filter, int? top)
         {
             var uri = new RawRequestUriBuilder();
@@ -638,7 +564,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, false);
+                uri.AppendQuery("$filter", filter, true);
             }
             if (top != null)
             {
@@ -660,7 +586,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, false);
+                uri.AppendQuery("$filter", filter, true);
             }
             if (top != null)
             {
@@ -673,7 +599,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves a list of all the policy definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -700,7 +626,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves a list of all the policy definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -726,232 +652,150 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal RequestUriBuilder CreateListBuiltInRequestUri(string filter, int? top)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string policyDefinitionName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, false);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
             return uri;
         }
 
-        internal HttpMessage CreateListBuiltInRequest(string filter, int? top)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string policyDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, false);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> This operation retrieves a list of all the built-in policy definitions that match the optional given $filter. If $filter='policyType -eq {value}' is provided, the returned list only includes all built-in policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all built-in policy definitions whose category match the {value}. </summary>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
-        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
+        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PolicyDefinitionListResult>> ListBuiltInAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PolicyDefinitionData>> GetAsync(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBuiltInRequest(filter, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This operation retrieves a list of all the built-in policy definitions that match the optional given $filter. If $filter='policyType -eq {value}' is provided, the returned list only includes all built-in policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all built-in policy definitions whose category match the {value}. </summary>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
-        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PolicyDefinitionListResult> ListBuiltIn(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListBuiltInRequest(filter, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByManagementGroupRequestUri(string managementGroupId, string filter, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, false);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, false);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
-        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyDefinitionListResult>> ListByManagementGroupAsync(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-
-            using var message = CreateListByManagementGroupRequest(managementGroupId, filter, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
-        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyDefinitionListResult> ListByManagementGroup(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-
-            using var message = CreateListByManagementGroupRequest(managementGroupId, filter, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This operation retrieves a list of all the policy definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
-        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyDefinitionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
+            using var message = CreateGetRequest(subscriptionId, policyDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PolicyDefinitionListResult value = default;
+                        PolicyDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
+                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((PolicyDefinitionData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PolicyDefinitionData> Get(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+
+            using var message = CreateGetRequest(subscriptionId, policyDefinitionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PolicyDefinitionData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((PolicyDefinitionData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="data"> The policy definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PolicyDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, policyDefinitionName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        PolicyDefinitionData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -959,30 +803,106 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation retrieves a list of all the policy definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
-        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
+        /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="data"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyDefinitionListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PolicyDefinitionData> CreateOrUpdate(string subscriptionId, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, policyDefinitionName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        PolicyDefinitionData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string policyDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string policyDefinitionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policyDefinitions/", false);
+            uri.AppendPath(policyDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+
+            using var message = CreateDeleteRequest(subscriptionId, policyDefinitionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+
+            using var message = CreateDeleteRequest(subscriptionId, policyDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 204:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1127,6 +1047,86 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
             using var message = CreateListByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PolicyDefinitionListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation retrieves a list of all the policy definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PolicyDefinitionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PolicyDefinitionListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation retrieves a list of all the policy definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PolicyDefinitionListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

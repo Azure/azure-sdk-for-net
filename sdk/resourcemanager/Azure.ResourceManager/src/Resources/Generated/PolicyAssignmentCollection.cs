@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        ///  This operation creates or updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
+        /// This operation creates or updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
+        /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="data"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        ///  This operation creates or updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
+        /// This operation creates or updates a policy assignment with the given scope and name. Policy assignments apply to all resources contained within their scope. For example, when you assign a policy at resource group scope, that policy applies to all resources in the group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
+        /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="data"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,10 +167,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,10 +213,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual Response<PolicyAssignmentResource> Get(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAssignmentResource> Get(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -223,7 +225,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, cancellationToken);
+                var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -236,40 +238,8 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the list of all policy assignments associated with the given resource group in the given subscription that match the optional given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter is not provided, the unfiltered list includes all policy assignments associated with the resource group, including those that apply directly or apply from containing scopes, as well as any applied to resources contained within the resource group. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the resource group, which is everything in the unfiltered list except those applied to resources contained within the resource group. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the resource group. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value} that apply to the resource group.
+        /// This operation retrieves the list of all policy assignments applicable to the management group that match the given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter=atScope() is provided, the returned list includes all policy assignments that are assigned to the management group or the management group's ancestors. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the management group. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value} that apply to the management group.
         /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyAssignments_ListForResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAssignmentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyAssignments_ListForResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAssignmentResource"/></description>
-        /// </item>
         /// <item>
         /// <term>Request Path</term>
         /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyAssignments</description>
@@ -280,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +266,39 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyAssignments_ListForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,72 +307,41 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atScope() is provided, the returned list only includes all policy assignments that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the given scope. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAssignmentResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyAssignmentResource> GetAllAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
-            }
-            else if (Id.ResourceType == ManagementGroupResource.ResourceType)
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, expand, top);
                 return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, top);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            }
+            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            {
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top);
                 return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, expand, top);
                 return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
         /// <summary>
-        /// This operation retrieves the list of all policy assignments associated with the given resource group in the given subscription that match the optional given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter is not provided, the unfiltered list includes all policy assignments associated with the resource group, including those that apply directly or apply from containing scopes, as well as any applied to resources contained within the resource group. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the resource group, which is everything in the unfiltered list except those applied to resources contained within the resource group. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the resource group. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value} that apply to the resource group.
+        /// This operation retrieves the list of all policy assignments applicable to the management group that match the given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter=atScope() is provided, the returned list includes all policy assignments that are assigned to the management group or the management group's ancestors. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the management group. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value} that apply to the management group.
         /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyAssignments_ListForResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAssignmentResource"/></description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyAssignments_ListForResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAssignmentResource"/></description>
-        /// </item>
         /// <item>
         /// <term>Request Path</term>
         /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyAssignments</description>
@@ -381,7 +352,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,7 +368,39 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyAssignments_ListForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,33 +409,34 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atScope() is provided, the returned list only includes all policy assignments that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the given scope. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAssignmentResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyAssignmentResource> GetAll(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
-            }
-            else if (Id.ResourceType == ManagementGroupResource.ResourceType)
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, expand, top);
                 return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, top);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            }
+            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            {
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top);
                 return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, expand, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, expand, top);
                 return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
@@ -450,7 +454,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,10 +463,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -470,7 +475,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,7 +498,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -502,10 +507,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual Response<bool> Exists(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -513,7 +519,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, cancellationToken: cancellationToken);
+                var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -536,7 +542,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -545,10 +551,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual async Task<NullableResponse<PolicyAssignmentResource>> GetIfExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PolicyAssignmentResource>> GetIfExistsAsync(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -556,7 +563,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<PolicyAssignmentResource>(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -581,7 +588,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -590,10 +597,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual NullableResponse<PolicyAssignmentResource> GetIfExists(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PolicyAssignmentResource> GetIfExists(string policyAssignmentName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -601,7 +609,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, cancellationToken: cancellationToken);
+                var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<PolicyAssignmentResource>(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());

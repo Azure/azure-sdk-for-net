@@ -8,8 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagementGroups
 {
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,13 +115,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetManagementGroupPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetManagementGroupPolicySetDefinitionAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetManagementGroupPolicySetDefinitions().GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetManagementGroupPolicySetDefinitions().GetAsync(policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,7 +138,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,13 +147,186 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagementGroupPolicySetDefinitionResource> GetManagementGroupPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupPolicySetDefinitionResource> GetManagementGroupPolicySetDefinition(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);
+            return GetManagementGroupPolicySetDefinitions().Get(policySetDefinitionName, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy definition versions for all policy definitions at the management group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicyDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_ListAllAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PolicyDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyDefinitionVersionData> GetAtManagementGroupPolicyDefinitionVersionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDefinitionVersionsRestClient.CreateListAllAtManagementGroupRequest(this.Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicyDefinitionVersionData.DeserializePolicyDefinitionVersionData(e), _policyDefinitionVersionsClientDiagnostics, Pipeline, "ManagementGroupResource.GetAtManagementGroupPolicyDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy definition versions for all policy definitions at the management group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicyDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_ListAllAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicyDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyDefinitionVersionData> GetAtManagementGroupPolicyDefinitionVersions(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDefinitionVersionsRestClient.CreateListAllAtManagementGroupRequest(this.Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicyDefinitionVersionData.DeserializePolicyDefinitionVersionData(e), _policyDefinitionVersionsClientDiagnostics, Pipeline, "ManagementGroupResource.GetAtManagementGroupPolicyDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions at the management group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_ListAllAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PolicySetDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicySetDefinitionVersionData> GetAtManagementGroupPolicySetDefinitionVersionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policySetDefinitionVersionsRestClient.CreateListAllAtManagementGroupRequest(this.Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySetDefinitionVersionData.DeserializePolicySetDefinitionVersionData(e), _policySetDefinitionVersionsClientDiagnostics, Pipeline, "ManagementGroupResource.GetAtManagementGroupPolicySetDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions at the management group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_ListAllAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySetDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicySetDefinitionVersionData> GetAtManagementGroupPolicySetDefinitionVersions(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policySetDefinitionVersionsRestClient.CreateListAllAtManagementGroupRequest(this.Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySetDefinitionVersionData.DeserializePolicySetDefinitionVersionData(e), _policySetDefinitionVersionsClientDiagnostics, Pipeline, "ManagementGroupResource.GetAtManagementGroupPolicySetDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation acquires a policy token in the given management group for the given request body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/acquirePolicyToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyTokens_AcquireAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyTokenRequest"> The policy token properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
+        public virtual async Task<Response<PolicyTokenResponse>> AcquireAtManagementGroupPolicyTokenAsync(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = _policyTokensClientDiagnostics.CreateScope("ManagementGroupResource.AcquireAtManagementGroupPolicyToken");
+            scope.Start();
+            try
+            {
+                var response = await _policyTokensRestClient.AcquireAtManagementGroupAsync(this.Id.Name, policyTokenRequest, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation acquires a policy token in the given management group for the given request body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/acquirePolicyToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyTokens_AcquireAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyTokenRequest"> The policy token properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
+        public virtual Response<PolicyTokenResponse> AcquireAtManagementGroupPolicyToken(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = _policyTokensClientDiagnostics.CreateScope("ManagementGroupResource.AcquireAtManagementGroupPolicyToken");
+            scope.Start();
+            try
+            {
+                var response = _policyTokensRestClient.AcquireAtManagementGroup(this.Id.Name, policyTokenRequest, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

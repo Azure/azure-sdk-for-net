@@ -86,6 +86,77 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SubscriptionPolicySetDefinitionVersionResources in the SubscriptionPolicySetDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicySetDefinitionVersionResources and their operations over a SubscriptionPolicySetDefinitionVersionResource. </returns>
+        public virtual SubscriptionPolicySetDefinitionVersionCollection GetSubscriptionPolicySetDefinitionVersions()
+        {
+            return GetCachedClient(client => new SubscriptionPolicySetDefinitionVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition version in the given subscription with the given name and version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicySetDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy set definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionPolicySetDefinitionVersionResource>> GetSubscriptionPolicySetDefinitionVersionAsync(string policyDefinitionVersion, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionPolicySetDefinitionVersions().GetAsync(policyDefinitionVersion, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition version in the given subscription with the given name and version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicySetDefinitionVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyDefinitionVersion"> The policy set definition version.  The format is x.y.z where x is the major version number, y is the minor version number, and z is the patch number. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionPolicySetDefinitionVersionResource> GetSubscriptionPolicySetDefinitionVersion(string policyDefinitionVersion, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionPolicySetDefinitionVersions().Get(policyDefinitionVersion, expand, cancellationToken);
+        }
+
         /// <summary>
         /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// <list type="bullet">
@@ -99,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -107,14 +178,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +211,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,14 +219,15 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionPolicySetDefinitionResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +252,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +296,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +340,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +388,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
+        private readonly ClientDiagnostics _policyDefinitionVersionsClientDiagnostics;
+        private readonly PolicyDefinitionVersionsRestOperations _policyDefinitionVersionsRestClient;
+        private readonly ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
+        private readonly PolicySetDefinitionVersionsRestOperations _policySetDefinitionVersionsRestClient;
         private readonly ClientDiagnostics _resourceProviderProvidersClientDiagnostics;
         private readonly ProvidersRestOperations _resourceProviderProvidersRestClient;
         private readonly ClientDiagnostics _providersClientDiagnostics;
@@ -47,6 +51,10 @@ namespace Azure.ResourceManager.Resources
             _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tenantApiVersion);
             _tenantRestClient = new TenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantApiVersion);
+            _policyDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _policyDefinitionVersionsRestClient = new PolicyDefinitionVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _policySetDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _policySetDefinitionVersionsRestClient = new PolicySetDefinitionVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _resourceProviderProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceProviderResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceProviderResource.ResourceType, out string resourceProviderProvidersApiVersion);
             _resourceProviderProvidersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceProviderProvidersApiVersion);
@@ -98,7 +106,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +137,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,13 +184,14 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetTenantPolicySetDefinitions().GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetTenantPolicySetDefinitions().GetAsync(policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,7 +207,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,13 +216,14 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantPolicySetDefinitionResource> GetTenantPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicySetDefinitionResource> GetTenantPolicySetDefinition(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);
+            return GetTenantPolicySetDefinitions().Get(policySetDefinitionName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataPolicyManifestResources in the Tenant. </summary>
@@ -359,6 +369,106 @@ namespace Azure.ResourceManager.Resources
         public virtual Response<SubscriptionResource> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             return GetSubscriptions().Get(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy definition versions for all built-in policy definitions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/listPolicyDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_ListAllBuiltins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PolicyDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyDefinitionVersionData> GetBuiltinsPolicyDefinitionVersionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDefinitionVersionsRestClient.CreateListAllBuiltinsRequest();
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicyDefinitionVersionData.DeserializePolicyDefinitionVersionData(e), _policyDefinitionVersionsClientDiagnostics, Pipeline, "TenantResource.GetBuiltinsPolicyDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy definition versions for all built-in policy definitions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/listPolicyDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyDefinitionVersions_ListAllBuiltins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicyDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyDefinitionVersionData> GetBuiltinsPolicyDefinitionVersions(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDefinitionVersionsRestClient.CreateListAllBuiltinsRequest();
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicyDefinitionVersionData.DeserializePolicyDefinitionVersionData(e), _policyDefinitionVersionsClientDiagnostics, Pipeline, "TenantResource.GetBuiltinsPolicyDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy set definition versions for all built-in policy set definitions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/listPolicySetDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_ListAllBuiltins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PolicySetDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicySetDefinitionVersionData> GetBuiltinsPolicySetDefinitionVersionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policySetDefinitionVersionsRestClient.CreateListAllBuiltinsRequest();
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySetDefinitionVersionData.DeserializePolicySetDefinitionVersionData(e), _policySetDefinitionVersionsClientDiagnostics, Pipeline, "TenantResource.GetBuiltinsPolicySetDefinitionVersions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy set definition versions for all built-in policy set definitions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/listPolicySetDefinitionVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitionVersions_ListAllBuiltins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySetDefinitionVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicySetDefinitionVersionData> GetBuiltinsPolicySetDefinitionVersions(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policySetDefinitionVersionsRestClient.CreateListAllBuiltinsRequest();
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySetDefinitionVersionData.DeserializePolicySetDefinitionVersionData(e), _policySetDefinitionVersionsClientDiagnostics, Pipeline, "TenantResource.GetBuiltinsPolicySetDefinitionVersions", "value", null, cancellationToken);
         }
 
         /// <summary>

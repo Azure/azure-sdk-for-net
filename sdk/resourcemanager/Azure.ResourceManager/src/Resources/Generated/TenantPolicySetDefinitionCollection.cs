@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -73,10 +73,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
+                var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TenantPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -118,10 +119,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual Response<TenantPolicySetDefinitionResource> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicySetDefinitionResource> Get(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken);
+                var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TenantPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -154,7 +156,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,13 +165,14 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TenantPolicySetDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantPolicySetDefinitionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TenantPolicySetDefinitionResource> GetAllAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInRequest(filter, expand, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, expand, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "TenantPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -186,7 +189,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,13 +198,14 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantPolicySetDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantPolicySetDefinitionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TenantPolicySetDefinitionResource> GetAll(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInRequest(filter, expand, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, expand, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "TenantPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -218,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,10 +231,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -238,7 +243,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +266,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,10 +275,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -281,7 +287,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken: cancellationToken);
+                var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,7 +310,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,10 +319,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<TenantPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<TenantPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -324,7 +331,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<TenantPolicySetDefinitionResource>(response.GetRawResponse());
                 return Response.FromValue(new TenantPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
@@ -349,7 +356,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,10 +365,11 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual NullableResponse<TenantPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<TenantPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
@@ -369,7 +377,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken: cancellationToken);
+                var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<TenantPolicySetDefinitionResource>(response.GetRawResponse());
                 return Response.FromValue(new TenantPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());

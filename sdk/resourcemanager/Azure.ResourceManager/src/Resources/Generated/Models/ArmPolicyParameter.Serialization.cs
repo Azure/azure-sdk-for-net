@@ -75,6 +75,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
+            if (Optional.IsDefined(Schema))
+            {
+                writer.WritePropertyName("schema"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Schema);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Schema, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -120,6 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
             ArmPolicyParameterType? type = default;
             IList<BinaryData> allowedValues = default;
             BinaryData defaultValue = default;
+            BinaryData schema = default;
             ParameterDefinitionsValueMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -164,6 +177,15 @@ namespace Azure.ResourceManager.Resources.Models
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("schema"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,7 +201,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ArmPolicyParameter(type, allowedValues ?? new ChangeTrackingList<BinaryData>(), defaultValue, metadata, serializedAdditionalRawData);
+            return new ArmPolicyParameter(
+                type,
+                allowedValues ?? new ChangeTrackingList<BinaryData>(),
+                defaultValue,
+                schema,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -248,6 +276,21 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     builder.Append("  defaultValue: ");
                     builder.AppendLine($"'{DefaultValue.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schema), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  schema: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Schema))
+                {
+                    builder.Append("  schema: ");
+                    builder.AppendLine($"'{Schema.ToString()}'");
                 }
             }
 

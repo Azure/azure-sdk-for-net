@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,9 +69,59 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentToEnforcePolicyEffectOnlyOnEnrolledResourcesDuringResourceCreationOrUpdate()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentWithEnrollEnforcement.json
+            // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNamingEnroll";
+            PolicyAssignmentData data = new PolicyAssignmentData
+            {
+                DisplayName = "Enforce resource naming rules",
+                PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming",
+                Parameters =
+{
+["prefix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("DeptA"),
+},
+["suffix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
+},
+                Description = "Force resource names to begin with given DeptA and end with -LC",
+                Metadata = BinaryData.FromObjectAsJson(new
+                {
+                    assignedBy = "Special Someone",
+                }),
+                EnforcementMode = EnforcementMode.Enroll,
+            };
+            ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
+            PolicyAssignmentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +173,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +231,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithMultipleNonComplianceMessages()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentNonComplianceMessages.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentNonComplianceMessages.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +271,7 @@ PolicyDefinitionReferenceId = "8572513655450389710",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,6 +289,7 @@ PolicyDefinitionReferenceId = "8572513655450389710",
             {
                 DisplayName = "Limit the resource location and resource SKU",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policySetDefinitions/CostManagement",
+                DefinitionVersion = "1.*.*",
                 Description = "Limit the resource location and resource SKU",
                 Metadata = BinaryData.FromObjectAsJson(new
                 {
@@ -252,6 +303,15 @@ Selectors = {new ResourceSelectorExpression
 {
 Kind = ResourceSelectorKind.PolicyDefinitionReferenceId,
 In = {"Limit_Skus", "Limit_Locations"},
+}},
+}, new PolicyOverride
+{
+Kind = PolicyOverrideKind.DefinitionVersion,
+Value = "2.*.*",
+Selectors = {new ResourceSelectorExpression
+{
+Kind = ResourceSelectorKind.ResourceLocation,
+In = {"eastUSEuap", "centralUSEuap"},
 }},
 }},
             };
@@ -269,7 +329,7 @@ In = {"Limit_Skus", "Limit_Locations"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -316,7 +376,7 @@ In = {"eastus2euap", "centraluseuap"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithoutEnforcingPolicyEffectDuringResourceCreationOrUpdate()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithoutEnforcement.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createPolicyAssignmentWithoutEnforcement.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -366,7 +426,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -393,7 +453,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -420,7 +480,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -447,7 +507,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -474,7 +534,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -499,138 +559,9 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPolicyAssignmentsThatApplyToAResourceGroup()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResourceGroup.json
-            // this example is just showing the usage of "PolicyAssignments_ListForResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // get the collection of this PolicyAssignmentResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string resourceGroupName = "TestResourceGroup";
-            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}";
-            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
-
-            // invoke the operation and iterate over the result
-            string filter = "atScope()";
-            await foreach (PolicyAssignmentResource item in collection.GetAllAsync(filter: filter))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListAllPolicyAssignmentsThatApplyToAResource()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResource.json
-            // this example is just showing the usage of "PolicyAssignments_ListForResource" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // get the collection of this PolicyAssignmentResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string resourceGroupName = "TestResourceGroup";
-            string resourceProviderNamespace = "Microsoft.Compute";
-            string parentResourcePath = "virtualMachines/MyTestVm";
-            string resourceType = "domainNames";
-            string resourceName = "MyTestComputer.cloudapp.net";
-            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
-            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
-
-            // invoke the operation and iterate over the result
-            await foreach (PolicyAssignmentResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPolicyAssignmentsThatApplyToAManagementGroup()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForManagementGroup.json
-            // this example is just showing the usage of "PolicyAssignments_ListForManagementGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // get the collection of this PolicyAssignmentResource
-            string managementGroupId = "TestManagementGroup";
-            string scope = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}";
-            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
-
-            // invoke the operation and iterate over the result
-            string filter = "atScope()";
-            await foreach (PolicyAssignmentResource item in collection.GetAllAsync(filter: filter))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPolicyAssignmentsThatApplyToASubscription()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignments.json
-            // this example is just showing the usage of "PolicyAssignments_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // get the collection of this PolicyAssignmentResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string scope = $"/subscriptions/{subscriptionId}";
-            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
-
-            // invoke the operation and iterate over the result
-            string filter = "atScope()";
-            await foreach (PolicyAssignmentResource item in collection.GetAllAsync(filter: filter))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -653,7 +584,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -676,7 +607,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -699,7 +630,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -722,7 +653,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -745,7 +676,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -780,7 +711,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -815,7 +746,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -850,7 +781,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -885,7 +816,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

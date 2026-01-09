@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicyAssignment data model. </summary>
-    public partial class PolicyAssignmentData : ResourceData
+    public partial class PolicyAssignmentData : ResourceManager.Models.ResourceData
     {
 #pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
         private SystemAssignedServiceIdentity _identity;

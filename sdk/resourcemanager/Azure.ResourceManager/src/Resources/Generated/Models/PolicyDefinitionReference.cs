@@ -59,13 +59,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
+        /// <param name="definitionVersion"> The version of the policy definition to use. </param>
+        /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="effectiveDefinitionVersion"> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </param>
         /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
         /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
         /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ArmPolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyDefinitionReference(string policyDefinitionId, string definitionVersion, string latestDefinitionVersion, string effectiveDefinitionVersion, IDictionary<string, ArmPolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyDefinitionId = policyDefinitionId;
+            DefinitionVersion = definitionVersion;
+            LatestDefinitionVersion = latestDefinitionVersion;
+            EffectiveDefinitionVersion = effectiveDefinitionVersion;
             Parameters = parameters;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
             GroupNames = groupNames;
@@ -80,6 +86,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the policy definition or policy set definition. </summary>
         [WirePath("policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
+        /// <summary> The version of the policy definition to use. </summary>
+        [WirePath("definitionVersion")]
+        public string DefinitionVersion { get; set; }
+        /// <summary> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("latestDefinitionVersion")]
+        public string LatestDefinitionVersion { get; }
+        /// <summary> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("effectiveDefinitionVersion")]
+        public string EffectiveDefinitionVersion { get; }
         /// <summary> The parameter values for the referenced policy rule. The keys are the parameter names. </summary>
         [WirePath("parameters")]
         public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }

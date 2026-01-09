@@ -25,15 +25,75 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PolicyDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="PolicyDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPolicyDefinitionResource"/> object. </returns>
-        public virtual SubscriptionPolicyDefinitionResource GetSubscriptionPolicyDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyDefinitionVersionResource"/> object. </returns>
+        public virtual PolicyDefinitionVersionResource GetPolicyDefinitionVersionResource(ResourceIdentifier id)
         {
-            SubscriptionPolicyDefinitionResource.ValidateResourceId(id);
-            return new SubscriptionPolicyDefinitionResource(this, id);
+            PolicyDefinitionVersionResource.ValidateResourceId(id);
+            return new PolicyDefinitionVersionResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupNamePolicyDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupNamePolicyDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupNamePolicyDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagementGroupNamePolicyDefinitionVersionResource"/> object. </returns>
+        public virtual ManagementGroupNamePolicyDefinitionVersionResource GetManagementGroupNamePolicyDefinitionVersionResource(ResourceIdentifier id)
+        {
+            ManagementGroupNamePolicyDefinitionVersionResource.ValidateResourceId(id);
+            return new ManagementGroupNamePolicyDefinitionVersionResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicyDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicyDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPolicyDefinitionVersionResource"/> object. </returns>
+        public virtual SubscriptionPolicyDefinitionVersionResource GetSubscriptionPolicyDefinitionVersionResource(ResourceIdentifier id)
+        {
+            SubscriptionPolicyDefinitionVersionResource.ValidateResourceId(id);
+            return new SubscriptionPolicyDefinitionVersionResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicySetDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicySetDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="PolicySetDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicySetDefinitionVersionResource"/> object. </returns>
+        public virtual PolicySetDefinitionVersionResource GetPolicySetDefinitionVersionResource(ResourceIdentifier id)
+        {
+            PolicySetDefinitionVersionResource.ValidateResourceId(id);
+            return new PolicySetDefinitionVersionResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupPolicySetDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupPolicySetDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupPolicySetDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinitionVersionResource"/> object. </returns>
+        public virtual ManagementGroupPolicySetDefinitionVersionResource GetManagementGroupPolicySetDefinitionVersionResource(ResourceIdentifier id)
+        {
+            ManagementGroupPolicySetDefinitionVersionResource.ValidateResourceId(id);
+            return new ManagementGroupPolicySetDefinitionVersionResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicySetDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicySetDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicySetDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinitionVersionResource"/> object. </returns>
+        public virtual SubscriptionPolicySetDefinitionVersionResource GetSubscriptionPolicySetDefinitionVersionResource(ResourceIdentifier id)
+        {
+            SubscriptionPolicySetDefinitionVersionResource.ValidateResourceId(id);
+            return new SubscriptionPolicySetDefinitionVersionResource(this, id);
         }
 
         /// <summary>
@@ -61,15 +121,15 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionPolicySetDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicySetDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinitionResource"/> object. </returns>
-        public virtual SubscriptionPolicySetDefinitionResource GetSubscriptionPolicySetDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionPolicyDefinitionResource"/> object. </returns>
+        public virtual SubscriptionPolicyDefinitionResource GetSubscriptionPolicyDefinitionResource(ResourceIdentifier id)
         {
-            SubscriptionPolicySetDefinitionResource.ValidateResourceId(id);
-            return new SubscriptionPolicySetDefinitionResource(this, id);
+            SubscriptionPolicyDefinitionResource.ValidateResourceId(id);
+            return new SubscriptionPolicyDefinitionResource(this, id);
         }
 
         /// <summary>
@@ -94,6 +154,18 @@ namespace Azure.ResourceManager
         {
             ManagementGroupPolicySetDefinitionResource.ValidateResourceId(id);
             return new ManagementGroupPolicySetDefinitionResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicySetDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicySetDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinitionResource"/> object. </returns>
+        public virtual SubscriptionPolicySetDefinitionResource GetSubscriptionPolicySetDefinitionResource(ResourceIdentifier id)
+        {
+            SubscriptionPolicySetDefinitionResource.ValidateResourceId(id);
+            return new SubscriptionPolicySetDefinitionResource(this, id);
         }
 
         /// <summary>

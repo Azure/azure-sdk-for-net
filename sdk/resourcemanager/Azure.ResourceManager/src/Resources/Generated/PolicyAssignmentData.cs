@@ -70,22 +70,30 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
+        /// <param name="definitionVersion"> The version of the policy definition to use. </param>
+        /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="effectiveDefinitionVersion"> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
         /// <param name="excludedScopes"> The policy's excluded scopes. </param>
         /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
         /// <param name="description"> This message will be part of response in case of policy violation. </param>
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
+        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="overrides"> The policy property value override. </param>
+        /// <param name="assignmentType"> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </param>
+        /// <param name="instanceId"> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ManagedServiceIdentity managedIdentity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ManagedServiceIdentity managedIdentity, string displayName, string policyDefinitionId, string definitionVersion, string latestDefinitionVersion, string effectiveDefinitionVersion, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, AssignmentType? assignmentType, Guid? instanceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ManagedIdentity = managedIdentity;
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
+            DefinitionVersion = definitionVersion;
+            LatestDefinitionVersion = latestDefinitionVersion;
+            EffectiveDefinitionVersion = effectiveDefinitionVersion;
             Scope = scope;
             ExcludedScopes = excludedScopes;
             Parameters = parameters;
@@ -95,6 +103,8 @@ namespace Azure.ResourceManager.Resources
             NonComplianceMessages = nonComplianceMessages;
             ResourceSelectors = resourceSelectors;
             Overrides = overrides;
+            AssignmentType = assignmentType;
+            InstanceId = instanceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -110,6 +120,15 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The ID of the policy definition or policy set definition being assigned. </summary>
         [WirePath("properties.policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
+        /// <summary> The version of the policy definition to use. </summary>
+        [WirePath("properties.definitionVersion")]
+        public string DefinitionVersion { get; set; }
+        /// <summary> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("properties.latestDefinitionVersion")]
+        public string LatestDefinitionVersion { get; }
+        /// <summary> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("properties.effectiveDefinitionVersion")]
+        public string EffectiveDefinitionVersion { get; }
         /// <summary> The scope for the policy assignment. </summary>
         [WirePath("properties.scope")]
         public string Scope { get; }
@@ -154,7 +173,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
-        /// <summary> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </summary>
+        /// <summary> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </summary>
         [WirePath("properties.enforcementMode")]
         public EnforcementMode? EnforcementMode { get; set; }
         /// <summary> The messages that describe why a resource is non-compliant with the policy. </summary>
@@ -166,5 +185,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The policy property value override. </summary>
         [WirePath("properties.overrides")]
         public IList<PolicyOverride> Overrides { get; }
+        /// <summary> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </summary>
+        [WirePath("properties.assignmentType")]
+        public AssignmentType? AssignmentType { get; set; }
+        /// <summary> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </summary>
+        [WirePath("properties.instanceId")]
+        public Guid? InstanceId { get; }
     }
 }

@@ -99,6 +99,21 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsCollectionDefined(Versions))
+            {
+                writer.WritePropertyName("versions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Versions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -133,6 +148,8 @@ namespace Azure.ResourceManager.Resources
             IDictionary<string, ArmPolicyParameter> parameters = default;
             IList<PolicyDefinitionReference> policyDefinitions = default;
             IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
+            string version = default;
+            IList<string> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,6 +257,25 @@ namespace Azure.ResourceManager.Resources
                             policyDefinitionGroups = array;
                             continue;
                         }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("versions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            versions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -261,6 +297,8 @@ namespace Azure.ResourceManager.Resources
                 parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(),
                 policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
                 policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
+                version,
+                versions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -470,6 +508,65 @@ namespace Azure.ResourceManager.Resources
                         foreach (var item in PolicyDefinitionGroups)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    policyDefinitionGroups: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("    version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Versions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    versions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Versions))
+                {
+                    if (Versions.Any())
+                    {
+                        builder.Append("    versions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Versions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
                         }
                         builder.AppendLine("    ]");
                     }
