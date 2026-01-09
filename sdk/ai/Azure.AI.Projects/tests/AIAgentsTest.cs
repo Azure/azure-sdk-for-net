@@ -4,32 +4,37 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent;
-using Azure.Identity;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
+using Microsoft.ClientModel.TestFramework;
 using Azure.AI.Projects.Tests.Utils;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 
 public class AIAgentsTest : ProjectsClientTestBase
 {
-    public AIAgentsTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+    public AIAgentsTest(bool isAsync) : base(isAsync)
     {
     }
 
-    [TestCase]
     [RecordedTest]
-    [Ignore("Agents API calls are not recorded")]
+    public async Task AgentsGetPersistentClient()
+    {
+        AIProjectClient projectClient = new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), new MockTokenCredential());
+        PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+        Assert.That(agentsClient, Is.Not.Null);
+    }
+
+    [TestCase]
+    // We cannot instrument PersistentAgentsClient as it is created through AIProjectClient connection and
+    // it is not using SCM pipeline. We also do not have an options exposed to inject custom interceptor.
+    [LiveOnly]
     public async Task AgentsTest()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 
-        AIProjectClient projectClient = GetTestClient();
+        AIProjectClient projectClient = GetTestProjectClient();
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
         Console.WriteLine("Create an agent with a model deployment");
@@ -38,10 +43,10 @@ public class AIAgentsTest : ProjectsClientTestBase
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
-        Assert.NotNull(agent.Id);
-        Assert.AreEqual(agent.Model, modelDeploymentName);
-        Assert.AreEqual(agent.Name, "Math Tutor");
-        Assert.AreEqual(agent.Instructions, "You are a personal math tutor. Write and run code to answer math questions.");
+        Assert.That(agent.Id, Is.Not.Null);
+        Assert.That(agent.Model, Is.EqualTo(modelDeploymentName));
+        Assert.That(agent.Name, Is.EqualTo("Math Tutor"));
+        Assert.That(agent.Instructions, Is.EqualTo("You are a personal math tutor. Write and run code to answer math questions."));
 
         await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
     }

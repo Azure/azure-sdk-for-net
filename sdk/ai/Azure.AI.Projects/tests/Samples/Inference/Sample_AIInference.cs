@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AIInference : SamplesBase
 {
     [Test]
     [SyncOnly]
@@ -25,7 +26,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
+        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
@@ -61,7 +62,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
+        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
@@ -95,10 +96,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         #region Snippet:AI_Projects_EmbeddingSync
 #if SNIPPET
         var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -132,10 +133,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         #region Snippet:AI_Projects_EmbeddingAsync
 #if SNIPPET
         var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -168,11 +169,11 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ImageEmbeddingSync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -209,10 +210,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
         Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        Assert.That(response.Value.Data.Count, Is.EqualTo(input.Count));
         for (int i = 0; i < input.Count; i++)
         {
-            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Index, Is.EqualTo(i));
             Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
             var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
             Assert.That(embedding.Count, Is.GreaterThan(0));
@@ -226,10 +227,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         #region Snippet:AI_Projects_ImageEmbeddingAsync
 #if SNIPPET
         var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -266,10 +267,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
         Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        Assert.That(response.Value.Data.Count, Is.EqualTo(input.Count));
         for (int i = 0; i < input.Count; i++)
         {
-            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Index, Is.EqualTo(i));
             Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
             var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
             Assert.That(embedding.Count, Is.GreaterThan(0));
@@ -293,4 +294,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     //         ex.Message);
     //     Console.WriteLine(ex.Message);
     // }
+
+    public Sample_AIInference(bool isAsync) : base(isAsync)
+    { }
 }

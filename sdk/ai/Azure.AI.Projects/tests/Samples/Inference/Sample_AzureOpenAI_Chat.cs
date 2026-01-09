@@ -7,13 +7,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
-using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AzureOpenAI_Chat : SamplesBase
 {
     [Test]
     [SyncOnly]
@@ -25,12 +26,12 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -69,12 +70,12 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -101,4 +102,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(result.Content[0].Text);
         #endregion
     }
+
+    public Sample_AzureOpenAI_Chat(bool isAsync) : base(isAsync)
+    { }
 }

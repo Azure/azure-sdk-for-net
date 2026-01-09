@@ -223,6 +223,23 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
+    <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
+    <PackageReference Update="OpenTelemetry" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.2" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="[2.1.1,6.0)" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Projects'))">
+    <PackageReference Update="OpenAI" Version="[2.8.0,3.0)" />
+    <!-- Foundry libs depend on OpenAI; float SCM with upstream version -->
+    <PackageReference Update="System.ClientModel" Version="*" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
     <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
     <PackageReference Update="Microsoft.Agents.AI" Version="1.0.0-preview.251104.1" />
@@ -430,6 +447,7 @@
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="5.0.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
+    <PackageReference Update="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.CognitiveServices.Speech"  Version="1.47.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="6.1.3" />

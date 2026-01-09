@@ -6,14 +6,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
+using Azure.Identity;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_Deployment : SamplesBase
 {
     private void EnableSystemClientModelDebugging()
     {
@@ -73,7 +74,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
@@ -114,7 +115,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
@@ -142,4 +143,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(deploymentDetails);
         #endregion
     }
+
+    public Sample_Deployment(bool isAsync) : base(isAsync)
+    { }
 }

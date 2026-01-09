@@ -5,12 +5,10 @@
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Core;
 using System.Text.RegularExpressions;
-using System.ClientModel;
-using System.ClientModel.Primitives;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.AI.Projects
 {
@@ -32,7 +30,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public ClientResult<FileDataset> UploadFile(string name, string version, string filePath, string? connectionName = null)
+        public virtual ClientResult<FileDataset> UploadFile(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -63,7 +61,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public ClientResult<FolderDataset> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public virtual ClientResult<FolderDataset> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -108,7 +106,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public async Task<ClientResult<FileDataset>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
+        public virtual async Task<ClientResult<FileDataset>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -138,7 +136,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public async Task<ClientResult<FolderDataset>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public virtual async Task<ClientResult<FolderDataset>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {

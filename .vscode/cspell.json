@@ -64,12 +64,14 @@
     "aadds",
     "aadkerb",
     "adls",
+    "agentic",
     "aoai",
     "apos",
     "azsdk",
     "blazor",
     "byok",
     "centralus",
+    "clippy",
     "colls",
     "contoso",
     "cpus",
@@ -209,17 +211,6 @@
       "words": [
         "agri",
         "mobo"
-      ]
-    },
-    {
-      "filename": "**/sdk/ai/**/*.cs",
-      "words": [
-        "ansii",
-        "atbash",
-        "azureai",
-        "bleu",
-        "gleu",
-        "ubinary"
       ]
     },
     {

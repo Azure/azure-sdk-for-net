@@ -29,6 +29,14 @@ namespace Azure.AI.Projects
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
         private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
+        private RedTeams _cachedRedTeams;
+        private EvaluationRules _cachedEvaluationRules;
+        private EvaluationTaxonomies _cachedEvaluationTaxonomies;
+        private Evaluators _cachedEvaluators;
+        private Insights _cachedInsights;
+        private Schedules _cachedSchedules;
+        private AIProjectAgentsOperations _cachedAIProjectAgentsOperations;
+        private AIProjectMemoryStoresOperations _cachedAIProjectMemoryStoresOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }

@@ -21,6 +21,8 @@ namespace Azure.AI.Projects
         private const string CustomValue = "CustomKeys";
         /// <summary> No credential. </summary>
         private const string NoneValue = "None";
+        /// <summary> Agentic identity credential. </summary>
+        private const string AgenticIdentityValue = "AgenticIdentityToken";
 
         /// <summary> Initializes a new instance of <see cref="CredentialType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,6 +48,9 @@ namespace Azure.AI.Projects
 
         /// <summary> No credential. </summary>
         public static CredentialType None { get; } = new CredentialType(NoneValue);
+
+        /// <summary> Agentic identity credential. </summary>
+        public static CredentialType AgenticIdentity { get; } = new CredentialType(AgenticIdentityValue);
 
         /// <summary> Determines if two <see cref="CredentialType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

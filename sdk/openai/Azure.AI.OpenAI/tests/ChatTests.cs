@@ -21,7 +21,8 @@ using OpenAI.TestFramework.Mocks;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
-
+#pragma warning disable AOAI001
+#pragma warning disable SCME0001
 public partial class ChatTests : AoaiTestBase<ChatClient>
 {
     public ChatTests(bool isAsync) : base(isAsync)
@@ -173,6 +174,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
         {
             _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
+            Assert.False(GetSerializedOptionsContains("__EMPTY__"));
             Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
             Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
         }
@@ -564,7 +566,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         {
             options.SetNewMaxCompletionTokensPropertyEnabled();
         }
-
         ChatCompletion completion = await client.CompleteChatAsync(
             ["Hello, world! Please write a funny haiku to greet me."],
             options);
@@ -579,8 +580,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
         else
         {
-            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
             Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
         }
     }
     #endregion

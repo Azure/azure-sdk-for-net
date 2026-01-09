@@ -1,7 +1,8 @@
 # Azure AI Projects client library for .NET
 The AI Projects client library is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
-* **Create and run Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Create and run Classic Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Create Agents** using `Agents` property.
 * **Enumerate AI Models** deployed to your Foundry Project using the `Deployments` operations.
 * **Enumerate connected Azure resources** in your Foundry project using the `Connections` operations.
 * **Upload documents and create Datasets** to reference them using the `Datasets` operations.
@@ -23,6 +24,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Performing Classic Agent operations](#performing-classic-agent-operations)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -30,6 +32,9 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Connections operations](#connections-operations)
   - [Dataset operations](#dataset-operations)
   - [Indexes operations](#indexes-operations)
+  - [Files operations](#files-operations)
+  - [Fine-Tuning operations](#fine-tuning-operations)
+  - [Memory store operations](#memory-store-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -73,7 +78,7 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 
 ## Examples
 
-### Performing Agent operations
+### Performing Classic Agent operations
 
 The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
@@ -104,7 +109,7 @@ PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
 // Intermission: listing messages will retrieve the message just added
 
 List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
-Assert.AreEqual(message.Id, messagesList[0].Id);
+Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
 
 // Step 4: Run the agent
 ThreadRun run = agentsClient.Runs.CreateRun(
@@ -118,9 +123,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
+Assert.That(
     RunStatus.Completed,
-    run.Status,
+    Is.EqualTo(run.Status),
     run.LastError?.Message);
 
 Pageable<PersistentThreadMessage> messages
@@ -146,6 +151,94 @@ foreach (PersistentThreadMessage threadMessage in messages)
 
 agentsClient.Threads.DeleteThread(threadId: thread.Id);
 agentsClient.Administration.DeleteAgent(agentId: agent.Id);
+```
+
+### Performing Agent operations
+
+Azure.AI.Projects can be used to create, update and delete Agents.
+
+Create Agent
+
+Synchronous call:
+```C# Snippet:Sample_CreateAgentVersionCRUD_Sync
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent."
+};
+AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent2",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_CreateAgentVersionCRUD_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent."
+};
+AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent2",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Get Agent
+
+Synchronous call:
+```C# Snippet:Sample_GetAgentCRUD_Sync
+AgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
+Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_GetAgentCRUD_Async
+AgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
+Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
+```
+
+List Agents
+
+Synchronous call:
+```C# Snippet:Sample_ListAgentsCRUD_Sync
+foreach (AgentRecord agent in projectClient.Agents.GetAgents())
+{
+    Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
+}
+```
+
+Asynchronous call:
+```C# Snippet:Sample_ListAgentsCRUD_Async
+await foreach (AgentRecord agent in projectClient.Agents.GetAgentsAsync())
+{
+    Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
+}
+```
+
+Delete Agent
+
+Synchronous call:
+```C# Snippet:Sample_DeleteAgentCRUD_Sync
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_DeleteAgentCRUD_Async
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
 ### Get an authenticated AzureOpenAI client
@@ -353,6 +446,197 @@ foreach (AIProjectIndex version in projectClient.Indexes.GetIndexes())
 Console.WriteLine("Delete the Index version created above:");
 projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 ```
+
+### Files operations
+
+The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the ProjectOpenAIClient. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
+
+The first step working with OpenAI files is to authenticate to Azure through `AIProjectClient` and get the `OpenAIFileClient`.
+```C# Snippet:AI_Projects_Files_CreateClients
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
+
+Use authenticated `OpenAIFileClient` to upload the local files to Azure. 
+```C# Snippet:AI_Projects_Files_UploadFile
+using FileStream fileStream = File.OpenRead(trainFilePath);
+OpenAIFile uploadedFile = fileClient.UploadFile(
+    fileStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+```
+
+To retrieve file, use `GetFile` method of `OpenAIFileClient`.
+```C# Snippet:AI_Projects_Files_GetFile
+OpenAIFile retrievedFile = fileClient.GetFile(fileId);
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
+
+Use `GetFiles` method of `OpenAIFileClient` to list the files.
+```C# Snippet:AI_Projects_Files_ListFiles
+ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
+
+```C# Snippet:AI_Projects_Files_DeleteFile
+ClientResult<FileDeletionResult> deleteResult = fileClient.DeleteFile(fileId);
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
+```
+
+### Fine-Tuning operations
+
+The code below shows how to create a supervised fine-tuning job using the OpenAI Fine-Tuning API through the ProjectOpenAIClient. Fine-tuning allows you to customize models for specific tasks using your own training data. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
+
+```C# Snippet:AI_Projects_FineTuning_CreateClients
+string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
+
+The fine-tuning task represents the adaptation of deep neural network weights to the domain specific data. To achieve this goal, we need to provide model with training data set for weights update and a validation set for evaluation of learning efficiency.
+```C# Snippet:AI_Projects_FineTuning_UploadFiles
+// Upload training file
+Console.WriteLine("Uploading training file...");
+using FileStream trainStream = File.OpenRead(trainingFilePath);
+OpenAIFile trainFile = fileClient.UploadFile(
+    trainStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded training file with ID: {trainFile.Id}");
+
+// Upload validation file
+Console.WriteLine("Uploading validation file...");
+using FileStream validationStream = File.OpenRead(validationFilePath);
+OpenAIFile validationFile = fileClient.UploadFile(
+    validationStream,
+    "sft_validation_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
+```
+
+Now we will use the uploaded training and validation set to fine-tue the model. In our experiment we will train the model for three epochs batch size of one and the constant [learning rate](https://en.wikipedia.org/wiki/Learning_rate) of 1.0.
+```C# Snippet:AI_Projects_FineTuning_CreateJob
+// Create supervised fine-tuning job
+Console.WriteLine("Creating supervised fine-tuning job...");
+FineTuningJob fineTuningJob = fineTuningClient.FineTune(
+    modelDeploymentName,
+    trainFile.Id,
+    waitUntilCompleted: false,
+    new()
+    {
+        TrainingMethod = FineTuningTrainingMethod.CreateSupervised(
+            epochCount: 3,
+            batchSize: 1,
+            learningRate: 1.0),
+        ValidationFile = validationFile.Id
+    });
+Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Status: {fineTuningJob.Status}");
+```
+
+### Memory store operations
+
+Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
+Project client can be used to manage memory stores. In the examples below we show only synchronous version of API for brevity.
+
+Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for chat completion.
+
+```C# Snippet:Sample_Create_MemoryStore_Sync
+MemoryStoreDefaultDefinition memoryStoreDefinition = new(
+    chatModel: modelDeploymentName,
+    embeddingModel: embeddingDeploymentName
+);
+memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
+    name: "testMemoryStore",
+    definition: memoryStoreDefinition,
+    description: "Memory store demo."
+);
+Console.WriteLine($"Memory store with id {memoryStore.Id}, name {memoryStore.Name} and description {memoryStore.Description} was created.");
+```
+
+Update the description of memory store we have just created.
+
+```C# Snippet:Sample_Update_MemoryStore_Sync
+memoryStore = projectClient.MemoryStores.UpdateMemoryStore(name: memoryStore.Name, description: "New description for memory store demo.");
+Console.WriteLine($"Memory store with id {memoryStore.Id}, name {memoryStore.Name} now has description: {memoryStore.Description}.");
+```
+
+Get the memory store.
+
+```C# Snippet:Sample_Get_MemoryStore_Sync
+memoryStore = projectClient.MemoryStores.GetMemoryStore(name: memoryStore.Name);
+Console.WriteLine($"Returned Memory store with id {memoryStore.Id}, name {memoryStore.Name} and description {memoryStore.Description}.");
+```
+
+List all memory stores in our Microsoft Foundry.
+
+```C# Snippet:Sample_List_MemoryStore_Sync
+foreach (MemoryStore store in projectClient.MemoryStores.GetMemoryStores())
+{
+    Console.WriteLine($"Memory store id: {store.Id}, name: {store.Name}, description: {store.Description}.");
+}
+```
+
+Create a scope in the `MemoryStore` and add one item.
+
+```C# Snippet:Sample_AddMemories_MemoryStore_Sync
+string scope = "Flower";
+MemoryUpdateOptions memoryOptions = new(scope);
+memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem("My favourite flower is Cephalocereus euphorbioides."));
+MemoryUpdateResult updateResult = projectClient.MemoryStores.WaitForMemoriesUpdate(memoryStoreName: memoryStore.Name, options: memoryOptions, pollingInterval: 500);
+if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
+{
+    throw new InvalidOperationException(updateResult.ErrorDetails);
+}
+Console.WriteLine($"The update operation {updateResult.UpdateId} has finished with {updateResult.Status} status.");
+```
+
+Ask the question about the memorized item.
+
+```C# Snippet:Sample_MemorySearch_Sync
+MemorySearchOptions opts = new(scope)
+{
+    Items = { ResponseItem.CreateUserMessageItem("What was is your favourite flower?") },
+};
+MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
+    memoryStoreName: memoryStore.Name,
+    options: new(scope)
+);
+Console.WriteLine("==The output from memory tool.==");
+foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+{
+    Console.WriteLine(item.MemoryItem.Content);
+}
+Console.WriteLine("==End of memory tool output.==");
+```
+
+Remove the scope we have created from `MemoryStore`.
+
+```C# Snippet:Sample_DeleteScope_MemoryStore_Sync
+MemoryStoreDeleteScopeResponse deleteScopeResponse = projectClient.MemoryStores.DeleteScope(name: memoryStore.Name, scope: "Flower");
+string status = deleteScopeResponse.Deleted ? "" : " not";
+Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
+```
+
+Finally, delete `MemoryStore`.
+
+```C# Snippet:Sample_Cleanup_MemoryStore_Sync
+DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
+status = deleteResponse.Deleted ? "" : " not";
+Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
+```
+
+For more information abouit memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
 
 ## Troubleshooting
 
