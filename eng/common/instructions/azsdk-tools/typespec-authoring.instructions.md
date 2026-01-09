@@ -42,13 +42,13 @@ Prompt user to answer following question one by one:
 - **when add a new preview api version**, and the current latest api version is preview version, prompt user to ask if it want to replace the previous preview api version or add a new preview api version
 - **when add a new stable api version**, and the current latest api version is preview version, first identify which typespec items are added in this preview version, then prompt user to choose which items are GAed or all items are GAed
 
-### Step 2: Call the `azure-sdk-mcp/azsdk_typespec_authoring` tool
+### Step 2: Call the `azure-sdk-mcp/azsdk_typespec_retrieve_solution` tool
 
 Use this tool to retrieve validated solutions, suggestions, or fixes for TypeSpec issues. Combine the user’s question with all provided information collected in step 1 to construct a comprehensive query. Ensure the query is precise.
 
 ### Step 3: Extract the solution from the tool result
 
-Parse the response from `azure-sdk-mcp/azsdk_typespec_authoring` to identify the recommended fix or implementation solution.
+Parse the response from `azure-sdk-mcp/azsdk_typespec_retrieve_solution` to identify the recommended fix or implementation solution.
 show the solution flow, list all the steps to execute.
 
 ### Step 4: Execute the solution
@@ -58,7 +58,7 @@ Apply the extracted solution from step 3 to update the TypeSpec file accordingly
 
 ### Step 5: Summary the solution
 
-Summary the solution taken, and display the reference doc url from the response from `azure-sdk-mcp/azsdk_typespec_authoring` tool
+Summary the solution taken, and display the reference doc url from the response from `azure-sdk-mcp/azsdk_typespec_retrieve_solution` tool
 
 **When the task is to add a new api version, add following extra step:**
 
