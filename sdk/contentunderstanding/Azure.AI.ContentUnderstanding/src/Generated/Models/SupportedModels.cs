@@ -17,17 +17,19 @@ namespace Azure.AI.ContentUnderstanding
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
-        internal SupportedModels()
+        /// <param name="completion"> Chat completion models supported by the analyzer. </param>
+        /// <param name="embedding"> Embedding models supported by the analyzer. </param>
+        internal SupportedModels(IDictionary<string, string> completion, IDictionary<string, string> embedding)
         {
-            Completion = new ChangeTrackingList<string>();
-            Embedding = new ChangeTrackingList<string>();
+            Completion = completion;
+            Embedding = embedding;
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
         /// <param name="completion"> Chat completion models supported by the analyzer. </param>
         /// <param name="embedding"> Embedding models supported by the analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedModels(IList<string> completion, IList<string> embedding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedModels(IDictionary<string, string> completion, IDictionary<string, string> embedding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Completion = completion;
             Embedding = embedding;
@@ -35,9 +37,9 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Chat completion models supported by the analyzer. </summary>
-        public IList<string> Completion { get; }
+        public IDictionary<string, string> Completion { get; }
 
         /// <summary> Embedding models supported by the analyzer. </summary>
-        public IList<string> Embedding { get; }
+        public IDictionary<string, string> Embedding { get; }
     }
 }
