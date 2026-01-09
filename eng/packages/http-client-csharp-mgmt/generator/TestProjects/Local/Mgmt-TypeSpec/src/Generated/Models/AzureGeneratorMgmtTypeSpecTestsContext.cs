@@ -19,6 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
+    [ModelReaderWriterBuildable(typeof(ApplicationProfile))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties))]
@@ -144,6 +145,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserDetails))]
+    [ModelReaderWriterBuildable(typeof(VmProfile))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworksData))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkSegmentData))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkSegmentListResult))]
