@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AddonsCreateOrUpdateArcReg()
         {
-            // Generated from example definition: 2024-09-01/Addons_CreateOrUpdate_ArcReg.json
+            // Generated from example definition: 2025-09-01/Addons_CreateOrUpdate_ArcReg.json
             // this example is just showing the usage of "Addon_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AddonsCreateOrUpdateHCX()
         {
-            // Generated from example definition: 2024-09-01/Addons_CreateOrUpdate_HCX.json
+            // Generated from example definition: 2025-09-01/Addons_CreateOrUpdate_HCX.json
             // this example is just showing the usage of "Addon_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AddonsCreateOrUpdateHCXWithNetworks()
         {
-            // Generated from example definition: 2024-09-01/Addons_CreateOrUpdate_HCX_With_Networks.json
+            // Generated from example definition: 2025-09-01/Addons_CreateOrUpdate_HCX_With_Networks.json
             // this example is just showing the usage of "Addon_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AddonsCreateOrUpdateSRM()
         {
-            // Generated from example definition: 2024-09-01/Addons_CreateOrUpdate_SRM.json
+            // Generated from example definition: 2025-09-01/Addons_CreateOrUpdate_SRM.json
             // this example is just showing the usage of "Addon_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AddonsCreateOrUpdateVR()
         {
-            // Generated from example definition: 2024-09-01/Addons_CreateOrUpdate_VR.json
+            // Generated from example definition: 2025-09-01/Addons_CreateOrUpdate_VR.json
             // this example is just showing the usage of "Addon_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AddonsGetArcReg()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_ArcReg.json
+            // Generated from example definition: 2025-09-01/Addons_Get_ArcReg.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AddonsGetHCX()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_HCX.json
+            // Generated from example definition: 2025-09-01/Addons_Get_HCX.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AddonsGetHCXWithNetworks()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_HCX_With_Networks.json
+            // Generated from example definition: 2025-09-01/Addons_Get_HCX_With_Networks.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AddonsGetSRM()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_SRM.json
+            // Generated from example definition: 2025-09-01/Addons_Get_SRM.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AddonsGetVR()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_VR.json
+            // Generated from example definition: 2025-09-01/Addons_Get_VR.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AddonsList()
         {
-            // Generated from example definition: 2024-09-01/Addons_List.json
+            // Generated from example definition: 2025-09-01/Addons_List.json
             // this example is just showing the usage of "Addon_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AddonsGetArcReg()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_ArcReg.json
+            // Generated from example definition: 2025-09-01/Addons_Get_ArcReg.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AddonsGetHCX()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_HCX.json
+            // Generated from example definition: 2025-09-01/Addons_Get_HCX.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AddonsGetHCXWithNetworks()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_HCX_With_Networks.json
+            // Generated from example definition: 2025-09-01/Addons_Get_HCX_With_Networks.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AddonsGetSRM()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_SRM.json
+            // Generated from example definition: 2025-09-01/Addons_Get_SRM.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AddonsGetVR()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_VR.json
+            // Generated from example definition: 2025-09-01/Addons_Get_VR.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AddonsGetArcReg()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_ArcReg.json
+            // Generated from example definition: 2025-09-01/Addons_Get_ArcReg.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AddonsGetHCX()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_HCX.json
+            // Generated from example definition: 2025-09-01/Addons_Get_HCX.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AddonsGetHCXWithNetworks()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_HCX_With_Networks.json
+            // Generated from example definition: 2025-09-01/Addons_Get_HCX_With_Networks.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AddonsGetSRM()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_SRM.json
+            // Generated from example definition: 2025-09-01/Addons_Get_SRM.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AddonsGetVR()
         {
-            // Generated from example definition: 2024-09-01/Addons_Get_VR.json
+            // Generated from example definition: 2025-09-01/Addons_Get_VR.json
             // this example is just showing the usage of "Addon_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

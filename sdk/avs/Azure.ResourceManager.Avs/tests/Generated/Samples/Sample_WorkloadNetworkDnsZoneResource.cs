@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetDnsZone()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetDnsZone.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetDnsZone.json
             // this example is just showing the usage of "WorkloadNetworkDnsZone_GetDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeleteDnsZone()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeleteDnsZone.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_DeleteDnsZone.json
             // this example is just showing the usage of "WorkloadNetworkDnsZone_DeleteDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksUpdateDnsZone()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_UpdateDnsZone.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_UpdateDnsZone.json
             // this example is just showing the usage of "WorkloadNetworkDnsZone_UpdateDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
