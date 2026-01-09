@@ -54,28 +54,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Contents))
+            if (options.Format != "W" && Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
-                writer.WriteStartObject();
-                foreach (var item in Contents)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(Contents);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(Contents))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -143,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string description = default;
             string publisher = default;
             string icon = default;
-            IReadOnlyDictionary<string, BinaryData> contents = default;
+            BinaryData contents = default;
             DateTimeOffset? createdOn = default;
             IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default;
             bool? isEnabled = default;
@@ -176,19 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    contents = dictionary;
+                    contents = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("createdDate"u8))
@@ -233,7 +210,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 description,
                 publisher,
                 icon,
-                contents ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                contents,
                 createdOn,
                 parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(),
                 isEnabled,

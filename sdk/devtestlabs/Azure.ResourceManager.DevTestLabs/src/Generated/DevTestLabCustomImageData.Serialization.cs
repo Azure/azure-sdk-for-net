@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary> A custom image. </summary>
     public partial class DevTestLabCustomImageData : ResourceData, IJsonModel<DevTestLabCustomImageData>
     {
-        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/> for deserialization. </summary>
-        internal DevTestLabCustomImageData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabCustomImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -44,8 +39,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 throw new FormatException($"The model {nameof(DevTestLabCustomImageData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -138,6 +136,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (prop.NameEquals("properties"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     properties = CustomImageProperties.DeserializeCustomImageProperties(prop.Value, options);
                     continue;
                 }

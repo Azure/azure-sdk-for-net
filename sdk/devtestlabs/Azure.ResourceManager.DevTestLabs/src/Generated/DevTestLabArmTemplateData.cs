@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The contents of the ARM template. </summary>
-        public IReadOnlyDictionary<string, BinaryData> Contents
+        public BinaryData Contents
         {
             get
             {

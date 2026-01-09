@@ -84,7 +84,6 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(DevTestLabGlobalScheduleRetargetContent))]
     [ModelReaderWriterBuildable(typeof(DevTestLabImportVmContent))]
     [ModelReaderWriterBuildable(typeof(DevTestLabInboundNatRule))]
-    [ModelReaderWriterBuildable(typeof(DevTestLabManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(DevTestLabNetworkInterface))]
     [ModelReaderWriterBuildable(typeof(DevTestLabNotificationChannelData))]
     [ModelReaderWriterBuildable(typeof(DevTestLabNotificationChannelEvent))]

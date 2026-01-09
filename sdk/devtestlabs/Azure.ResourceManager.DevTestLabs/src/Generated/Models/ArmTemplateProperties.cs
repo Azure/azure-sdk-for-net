@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="ArmTemplateProperties"/>. </summary>
         internal ArmTemplateProperties()
         {
-            Contents = new ChangeTrackingDictionary<string, BinaryData>();
             ParametersValueFilesInfo = new ChangeTrackingList<DevTestLabParametersValueFileInfo>();
         }
 
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
         /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmTemplateProperties(string displayName, string description, string publisher, string icon, IReadOnlyDictionary<string, BinaryData> contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmTemplateProperties(string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary>
         /// The contents of the ARM template.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Contents { get; } = new ChangeTrackingDictionary<string, BinaryData>();
+        public BinaryData Contents { get; }
 
         /// <summary> The creation date of the armTemplate. </summary>
         public DateTimeOffset? CreatedOn { get; }

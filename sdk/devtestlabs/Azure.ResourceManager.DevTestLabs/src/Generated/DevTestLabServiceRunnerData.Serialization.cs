@@ -12,14 +12,18 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary> A container for a managed identity to execute DevTest lab services. </summary>
-    public partial class DevTestLabServiceRunnerData : ResourceData, IJsonModel<DevTestLabServiceRunnerData>
+    public partial class DevTestLabServiceRunnerData : TrackedResourceData, IJsonModel<DevTestLabServiceRunnerData>
     {
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceRunnerData"/> for deserialization. </summary>
+        internal DevTestLabServiceRunnerData()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabServiceRunnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -55,16 +59,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -97,9 +91,8 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            string location = default;
-            DevTestLabManagedIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -134,6 +127,11 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevTestLabsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -155,20 +153,6 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,9 +164,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,10 +14,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary> A Policy. </summary>
-    public partial class DevTestLabPolicyData : ResourceData
+    public partial class DevTestLabPolicyData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public DevTestLabPolicyData(AzureLocation location) : base(location)
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -25,25 +31,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the resource. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="location"> The location of the resource. </param>
-        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyProperties properties, IDictionary<string, string> tags, string location) : base(id, name, resourceType, systemData)
+        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, PolicyProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
         }
 
         /// <summary> The properties of the resource. </summary>
         internal PolicyProperties Properties { get; set; }
-
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The location of the resource. </summary>
-        public string Location { get; set; }
 
         /// <summary> The description of the policy. </summary>
         public string Description

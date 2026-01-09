@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary> A virtual machine. </summary>
-    public partial class DevTestLabVmData : ResourceData, IJsonModel<DevTestLabVmData>
+    public partial class DevTestLabVmData : TrackedResourceData, IJsonModel<DevTestLabVmData>
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/> for deserialization. </summary>
         internal DevTestLabVmData()
@@ -44,8 +44,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,11 +64,6 @@ namespace Azure.ResourceManager.DevTestLabs
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
             }
         }
 
@@ -99,9 +97,9 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             LabVirtualMachineProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -136,8 +134,17 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevTestLabsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     properties = LabVirtualMachineProperties.DeserializeLabVirtualMachineProperties(prop.Value, options);
                     continue;
                 }
@@ -162,11 +169,6 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -178,9 +180,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,17 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary> An artifact. </summary>
-    public partial class DevTestLabArtifactData : ResourceData
+    public partial class DevTestLabArtifactData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
-        /// <param name="properties"> The properties of the resource. </param>
-        internal DevTestLabArtifactData(ArtifactProperties properties)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal DevTestLabArtifactData(AzureLocation location) : base(location)
         {
-            Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
@@ -33,25 +31,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArtifactProperties properties, IDictionary<string, string> tags, string location) : base(id, name, resourceType, systemData)
+        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ArtifactProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
         }
 
         /// <summary> The properties of the resource. </summary>
         internal ArtifactProperties Properties { get; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
 
         /// <summary> The artifact's title. </summary>
         public string Title
