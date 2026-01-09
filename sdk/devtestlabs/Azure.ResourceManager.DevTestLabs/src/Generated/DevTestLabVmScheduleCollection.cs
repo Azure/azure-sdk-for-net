@@ -295,14 +295,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabVmScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabVmScheduleResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabVmSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabVmScheduleResource>(new DevTestLabVmSchedulesGetAllAsyncCollectionResultOfT(
                 _devTestLabVmSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context), data => new DevTestLabVmScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -337,14 +337,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabVmScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabVmScheduleResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabVmSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabVmScheduleResource>(new DevTestLabVmSchedulesGetAllCollectionResultOfT(
                 _devTestLabVmSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context), data => new DevTestLabVmScheduleResource(Client, data));
         }
 
         /// <summary>

@@ -381,6 +381,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="displayName"> The display name of the ARM template. </param>
         /// <param name="description"> The description of the ARM template. </param>
         /// <param name="publisher"> The publisher of the ARM template. </param>
@@ -390,9 +391,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
         /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArmTemplateData"/> instance for mocking. </returns>
-        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string publisher = default, string icon = default, IReadOnlyDictionary<string, BinaryData> contents = default, DateTimeOffset? createdOn = default, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default, bool? isEnabled = default, IDictionary<string, string> tags = default, string location = default)
+        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string displayName = default, string description = default, string publisher = default, string icon = default, IReadOnlyDictionary<string, BinaryData> contents = default, DateTimeOffset? createdOn = default, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default, bool? isEnabled = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -402,6 +402,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 displayName is null && description is null && publisher is null && icon is null && contents is null && createdOn is null && parametersValueFilesInfo is null && isEnabled is null ? default : new ArmTemplateProperties(
                     displayName,
                     description,
@@ -412,8 +413,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     (parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>()).ToList(),
                     isEnabled,
                     null),
-                tags,
-                location);
+                tags);
         }
 
         /// <summary> A file containing a set of parameter values for an ARM template. </summary>
@@ -1513,9 +1513,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 default,
-                tags,
-                location);
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactData"/>. </summary>

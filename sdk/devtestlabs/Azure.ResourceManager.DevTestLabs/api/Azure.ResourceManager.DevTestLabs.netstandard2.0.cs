@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabArmTemplateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>
+    public partial class DevTestLabArmTemplateData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>
     {
         internal DevTestLabArmTemplateData() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Contents { get { throw null; } }
@@ -30,11 +30,12 @@ namespace Azure.ResourceManager.DevTestLabs
         public string DisplayName { get { throw null; } }
         public string Icon { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
-        public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get { throw null; } }
         public string Publisher { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,10 +82,13 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Location { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
         public string Publisher { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string TargetOSType { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string TargetOsType { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -125,21 +129,26 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabArtifactSourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>
+    public partial class DevTestLabArtifactSourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>
     {
-        public DevTestLabArtifactSourceData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabArtifactSourceData() { }
         public string ArmTemplateFolderPath { get { throw null; } set { } }
         public string BranchRef { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public string FolderPath { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string SecurityToken { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? SourceType { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -159,12 +168,6 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateCollection GetDevTestLabArmTemplates() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetDevTestLabArtifact(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactCollection GetDevTestLabArtifacts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -197,29 +200,34 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabCostCollection : Azure.ResourceManager.ArmCollection
     {
         protected DevTestLabCostCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabCostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabCostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string labName, string name, Azure.ResourceManager.DevTestLabs.DevTestLabCostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string labName, string name, Azure.ResourceManager.DevTestLabs.DevTestLabCostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> Get(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> GetIfExists(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetIfExistsAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DevTestLabCostData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>
+    public partial class DevTestLabCostData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>
     {
-        public DevTestLabCostData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabCostData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public double? EstimatedLabCost { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails> LabCostDetails { get { throw null; } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost> ResourceCosts { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost TargetCost { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabCostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabCostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -266,22 +274,27 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabCustomImageData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>
+    public partial class DevTestLabCustomImageData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>
     {
-        public DevTestLabCustomImageData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabCustomImageData() { }
         public string Author { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan CustomImagePlan { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo> DataDiskStorageInfo { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public bool? IsPlanAuthorized { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public string ManagedImageId { get { throw null; } set { } }
         public string ManagedSnapshotId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd Vhd { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm Vm { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -313,9 +326,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DevTestLabData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>
+    public partial class DevTestLabData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>
     {
-        public DevTestLabData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabData() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement Announcement { get { throw null; } set { } }
         public string ArtifactsStorageAccount { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -325,18 +338,23 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Collections.Generic.IDictionary<string, string> ExtendedProperties { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? LabStorageType { get { throw null; } set { } }
         public string LoadBalancerId { get { throw null; } }
+        public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MandatoryArtifactsResourceIdsLinux { get { throw null; } }
         public System.Collections.Generic.IList<string> MandatoryArtifactsResourceIdsWindows { get { throw null; } }
         public string NetworkSecurityGroupId { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? PremiumDataDisks { get { throw null; } set { } }
         public string PremiumDataDiskStorageAccount { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public string PublicIPId { get { throw null; } }
+        public string PublicIpId { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport Support { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string VaultName { get { throw null; } }
         public string VmCreationResourceGroup { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -360,9 +378,9 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabDiskData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>
+    public partial class DevTestLabDiskData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>
     {
-        public DevTestLabDiskData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabDiskData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DiskBlobName { get { throw null; } set { } }
         public int? DiskSizeGiB { get { throw null; } set { } }
@@ -370,11 +388,16 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Uri DiskUri { get { throw null; } set { } }
         public string HostCaching { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedDiskId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string StorageAccountId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabDiskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabDiskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -427,16 +450,21 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>
+    public partial class DevTestLabEnvironmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>
     {
-        public DevTestLabEnvironmentData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabEnvironmentData() { }
         public string ArmTemplateDisplayName { get { throw null; } set { } }
         public string CreatedByUser { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment DeploymentProperties { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string ResourceGroupId { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -485,18 +513,23 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabFormulaData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>
+    public partial class DevTestLabFormulaData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>
     {
-        public DevTestLabFormulaData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabFormulaData() { }
         public string Author { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent FormulaContent { get { throw null; } set { } }
         public string LabVmId { get { throw null; } set { } }
-        public string OSType { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public string OsType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -528,6 +561,52 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DevTestLabGlobalScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>, System.Collections.IEnumerable
+    {
+        protected DevTestLabGlobalScheduleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DevTestLabGlobalScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DevTestLabGlobalScheduleResource() { }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Retarget(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RetargetAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DevTestLabNotificationChannelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>, System.Collections.IEnumerable
     {
         protected DevTestLabNotificationChannelCollection() { }
@@ -545,18 +624,23 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabNotificationChannelData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>
+    public partial class DevTestLabNotificationChannelData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>
     {
-        public DevTestLabNotificationChannelData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabNotificationChannelData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string EmailRecipient { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> Events { get { throw null; } }
+        public string Location { get { throw null; } set { } }
         public string NotificationLocale { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri WebHookUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -607,19 +691,24 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabPolicyData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>
+    public partial class DevTestLabPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>
     {
-        public DevTestLabPolicyData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabPolicyData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? EvaluatorType { get { throw null; } set { } }
         public string FactData { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName? FactName { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? Status { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Threshold { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -666,51 +755,14 @@ namespace Azure.ResourceManager.DevTestLabs
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ExportResourceUsage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExportResourceUsageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult> GenerateUploadUri(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>> GenerateUploadUriAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>> GetDevTestLabArtifactSourceAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceCollection GetDevTestLabArtifactSources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> GetDevTestLabCost(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetDevTestLabCostAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCostCollection GetDevTestLabCosts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetDevTestLabCustomImage(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>> GetDevTestLabCustomImageAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageCollection GetDevTestLabCustomImages() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetDevTestLabFormula(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>> GetDevTestLabFormulaAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabFormulaCollection GetDevTestLabFormulas() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetDevTestLabNotificationChannel(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>> GetDevTestLabNotificationChannelAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelCollection GetDevTestLabNotificationChannels() { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabPolicyCollection GetDevTestLabPolicies(string policySetName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetDevTestLabPolicy(string policySetName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(string policySetName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> GetDevTestLabServiceRunner(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetDevTestLabServiceRunnerAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetDevTestLabUser(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>> GetDevTestLabUserAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabUserCollection GetDevTestLabUsers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetDevTestLabVirtualNetwork(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource>> GetDevTestLabVirtualNetworkAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkCollection GetDevTestLabVirtualNetworks() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetDevTestLabVm(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetDevTestLabVmAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmCollection GetDevTestLabVms() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> GetLabSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> GetLabScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.LabScheduleCollection GetLabSchedules() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.LabVhd> GetVhds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.LabVhd> GetVhdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ImportVm(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportVmAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -725,26 +777,77 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DevTestLabScheduleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
+    public partial class DevTestLabScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>, System.Collections.IEnumerable
     {
-        public DevTestLabScheduleData(Azure.Core.AzureLocation location) { }
+        protected DevTestLabScheduleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DevTestLabScheduleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
+    {
+        internal DevTestLabScheduleData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DailyRecurrenceTime { get { throw null; } set { } }
         public int? HourlyRecurrenceMinute { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings NotificationSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string TargetResourceId { get { throw null; } set { } }
         public string TaskType { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevTestLabScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DevTestLabScheduleResource() { }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetApplicable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetApplicableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DevTestLabSecretCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>, System.Collections.IEnumerable
     {
@@ -763,13 +866,18 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabSecretData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>
+    public partial class DevTestLabSecretData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>
     {
-        public DevTestLabSecretData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabSecretData() { }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabSecretData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabSecretData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -818,15 +926,20 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabServiceFabricData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>
+    public partial class DevTestLabServiceFabricData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>
     {
-        public DevTestLabServiceFabricData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabServiceFabricData() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule ApplicableSchedule { get { throw null; } }
         public string EnvironmentId { get { throw null; } set { } }
         public string ExternalServiceFabricId { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -848,9 +961,6 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule> GetApplicableSchedules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> GetLabUserServicefabricSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> GetLabUserServicefabricScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleCollection GetLabUserServicefabricSchedules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -867,23 +977,72 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DevTestLabServiceFabricScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>, System.Collections.IEnumerable
+    {
+        protected DevTestLabServiceFabricScheduleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DevTestLabServiceFabricScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DevTestLabServiceFabricScheduleResource() { }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DevTestLabServiceRunnerCollection : Azure.ResourceManager.ArmCollection
     {
         protected DevTestLabServiceRunnerCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string labName, string name, Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string labName, string name, Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> Get(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetAsync(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> GetIfExists(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetIfExistsAsync(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DevTestLabServiceRunnerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>
+    public partial class DevTestLabServiceRunnerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>
     {
-        public DevTestLabServiceRunnerData(Azure.Core.AzureLocation location) { }
+        public DevTestLabServiceRunnerData() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity Identity { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -917,37 +1076,98 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public static partial class DevTestLabsExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult> EvaluatePolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetAll(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetAllAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLab(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateCollection GetDevTestLabArmTemplates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetDevTestLabArtifact(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource GetDevTestLabArtifactResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactCollection GetDevTestLabArtifacts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>> GetDevTestLabArtifactSourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceCollection GetDevTestLabArtifactSources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetDevTestLabAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> GetDevTestLabCost(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetDevTestLabCostAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabCostResource GetDevTestLabCostResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabCostCollection GetDevTestLabCosts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetDevTestLabCustomImage(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>> GetDevTestLabCustomImageAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource GetDevTestLabCustomImageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageCollection GetDevTestLabCustomImages(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetDevTestLabDisk(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>> GetDevTestLabDiskAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource GetDevTestLabDiskResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabDiskCollection GetDevTestLabDisks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetDevTestLabEnvironment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentCollection GetDevTestLabEnvironments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetDevTestLabFormula(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>> GetDevTestLabFormulaAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource GetDevTestLabFormulaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabFormulaCollection GetDevTestLabFormulas(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetDevTestLabNotificationChannel(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>> GetDevTestLabNotificationChannelAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelCollection GetDevTestLabNotificationChannels(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabPolicyCollection GetDevTestLabPolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string policySetName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetDevTestLabPolicy(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string policySetName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string policySetName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource GetDevTestLabPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabResource GetDevTestLabResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabCollection GetDevTestLabs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetDevTestLabSchedule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource GetDevTestLabScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabScheduleCollection GetDevTestLabSchedules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetDevTestLabSecret(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>> GetDevTestLabSecretAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource GetDevTestLabSecretResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabSecretCollection GetDevTestLabSecrets(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricCollection GetDevTestLabServiceFabrics(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string serviceFabricName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string serviceFabricName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string userName, string serviceFabricName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> GetDevTestLabServiceRunner(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetDevTestLabServiceRunnerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetDevTestLabUser(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>> GetDevTestLabUserAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabUserResource GetDevTestLabUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabUserCollection GetDevTestLabUsers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetDevTestLabVirtualNetwork(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource>> GetDevTestLabVirtualNetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkCollection GetDevTestLabVirtualNetworks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetDevTestLabVm(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetDevTestLabVmAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.DevTestLabVmResource GetDevTestLabVmResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.LabScheduleResource GetLabScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource GetLabUserServicefabricScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource GetLabVirtualmachineScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetSchedule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> GetScheduleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.ScheduleResource GetScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.ScheduleCollection GetSchedules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetSchedules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetSchedulesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVmCollection GetDevTestLabVms(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleCollection GetDevTestLabVmSchedules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName) { throw null; }
     }
     public partial class DevTestLabUserCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>, System.Collections.IEnumerable
     {
@@ -966,15 +1186,20 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabUserData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>
+    public partial class DevTestLabUserData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>
     {
-        public DevTestLabUserData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabUserData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity Identity { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore SecretStore { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -994,18 +1219,6 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetDevTestLabDisk(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>> GetDevTestLabDiskAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabDiskCollection GetDevTestLabDisks() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetDevTestLabEnvironment(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentCollection GetDevTestLabEnvironments() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetDevTestLabSecret(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>> GetDevTestLabSecretAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabSecretCollection GetDevTestLabSecrets() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricCollection GetDevTestLabServiceFabrics() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1035,18 +1248,23 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>
+    public partial class DevTestLabVirtualNetworkData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>
     {
-        public DevTestLabVirtualNetworkData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabVirtualNetworkData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet> AllowedSubnets { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string ExternalProviderResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet> ExternalSubnets { get { throw null; } }
+        public string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> SubnetOverrides { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1095,9 +1313,9 @@ namespace Azure.ResourceManager.DevTestLabs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DevTestLabVmData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>
+    public partial class DevTestLabVmData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>
     {
-        public DevTestLabVmData(Azure.Core.AzureLocation location) { }
+        internal DevTestLabVmData() { }
         public bool? AllowClaim { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule ApplicableSchedule { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus { get { throw null; } }
@@ -1109,7 +1327,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CustomImageId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> DataDiskParameters { get { throw null; } }
-        public bool? DisallowPublicIPAddress { get { throw null; } set { } }
+        public bool? DisallowPublicIpAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
@@ -1118,9 +1336,10 @@ namespace Azure.ResourceManager.DevTestLabs
         public string LabSubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LabVirtualNetworkId { get { throw null; } set { } }
         public string LastKnownPowerState { get { throw null; } }
+        public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface NetworkInterface { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
-        public string OSType { get { throw null; } }
+        public string OsType { get { throw null; } }
         public string OwnerObjectId { get { throw null; } set { } }
         public string OwnerUserPrincipalName { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
@@ -1130,10 +1349,14 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Size { get { throw null; } set { } }
         public string SshKey { get { throw null; } set { } }
         public string StorageType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string UserName { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? VmCreationSource { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabVmData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabVmData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1163,9 +1386,6 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule> GetApplicableSchedules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>> GetApplicableSchedulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> GetLabVirtualmachineSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> GetLabVirtualmachineScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleCollection GetLabVirtualmachineSchedules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection> GetRdpFileContents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>> GetRdpFileContentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Redeploy(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1194,185 +1414,49 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class LabScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.LabScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.LabScheduleResource>, System.Collections.IEnumerable
+    public partial class DevTestLabVmScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>, System.Collections.IEnumerable
     {
-        protected LabScheduleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.LabScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected DevTestLabVmScheduleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.LabScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.LabScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.LabScheduleResource> GetApplicable(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.LabScheduleResource> GetApplicableAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.LabScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.LabScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.LabScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.LabScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.LabScheduleResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
+    public partial class DevTestLabVmScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected LabScheduleResource() { }
+        protected DevTestLabVmScheduleResource() { }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class LabUserServicefabricScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>, System.Collections.IEnumerable
-    {
-        protected LabUserServicefabricScheduleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class LabUserServicefabricScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected LabUserServicefabricScheduleResource() { }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class LabVirtualmachineScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>, System.Collections.IEnumerable
-    {
-        protected LabVirtualmachineScheduleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class LabVirtualmachineScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected LabVirtualmachineScheduleResource() { }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.ScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.ScheduleResource>, System.Collections.IEnumerable
-    {
-        protected ScheduleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.ScheduleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevTestLabs.ScheduleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetIfExists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevTestLabs.ScheduleResource>> GetIfExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.ScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.ScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevTestLabs.ScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.ScheduleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ScheduleResource() { }
-        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Retarget(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RetargetAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> Update(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DevTestLabs.Mocking
@@ -1388,37 +1472,98 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource GetDevTestLabDiskResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource GetDevTestLabFormulaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource GetDevTestLabPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabResource GetDevTestLabResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource GetDevTestLabScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource GetDevTestLabSecretResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabUserResource GetDevTestLabUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmResource GetDevTestLabVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.LabScheduleResource GetLabScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.LabUserServicefabricScheduleResource GetLabUserServicefabricScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.LabVirtualmachineScheduleResource GetLabVirtualmachineScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.ScheduleResource GetScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableDevTestLabsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDevTestLabsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string labName, string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string labName, string name, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetAll(string labName, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetAllAsync(string labName, string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLab(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateCollection GetDevTestLabArmTemplates(string labName, string artifactSourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetDevTestLabArtifact(string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string labName, string artifactSourceName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactCollection GetDevTestLabArtifacts(string labName, string artifactSourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>> GetDevTestLabArtifactSourceAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceCollection GetDevTestLabArtifactSources(string labName) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetDevTestLabAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource> GetDevTestLabCost(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCostResource>> GetDevTestLabCostAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCostCollection GetDevTestLabCosts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetDevTestLabCustomImage(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>> GetDevTestLabCustomImageAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageCollection GetDevTestLabCustomImages(string labName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetDevTestLabDisk(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>> GetDevTestLabDiskAsync(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabDiskCollection GetDevTestLabDisks(string labName, string userName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetDevTestLabEnvironment(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentCollection GetDevTestLabEnvironments(string labName, string userName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetDevTestLabFormula(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>> GetDevTestLabFormulaAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabFormulaCollection GetDevTestLabFormulas(string labName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetDevTestLabNotificationChannel(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>> GetDevTestLabNotificationChannelAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelCollection GetDevTestLabNotificationChannels(string labName) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabPolicyCollection GetDevTestLabPolicies(string labName, string policySetName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetDevTestLabPolicy(string labName, string policySetName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(string labName, string policySetName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCollection GetDevTestLabs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.ScheduleResource>> GetScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DevTestLabs.ScheduleCollection GetSchedules() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetDevTestLabSchedule(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleCollection GetDevTestLabSchedules(string labName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetDevTestLabSecret(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>> GetDevTestLabSecretAsync(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabSecretCollection GetDevTestLabSecrets(string labName, string userName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(string labName, string userName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricCollection GetDevTestLabServiceFabrics(string labName, string userName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(string labName, string userName, string serviceFabricName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(string labName, string userName, string serviceFabricName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules(string labName, string userName, string serviceFabricName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource> GetDevTestLabServiceRunner(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource>> GetDevTestLabServiceRunnerAsync(string labName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetDevTestLabUser(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>> GetDevTestLabUserAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabUserCollection GetDevTestLabUsers(string labName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetDevTestLabVirtualNetwork(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource>> GetDevTestLabVirtualNetworkAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkCollection GetDevTestLabVirtualNetworks(string labName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetDevTestLabVm(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetDevTestLabVmAsync(string labName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmCollection GetDevTestLabVms(string labName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string labName, string virtualMachineName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string labName, string virtualMachineName, string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleCollection GetDevTestLabVmSchedules(string labName, string virtualMachineName) { throw null; }
     }
     public partial class MockableDevTestLabsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDevTestLabsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabs(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabsAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetSchedules(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.ScheduleResource> GetSchedulesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -1429,38 +1574,100 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus ComputeVmInstanceViewStatus(string code = null, string displayStatus = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties ComputeVmProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus> statuses = null, string osType = null, string vmSize = null, string networkInterfaceId = null, string osDiskId = null, System.Collections.Generic.IEnumerable<string> dataDiskIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk> dataDisks = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement DevTestLabAnnouncement(string title = null, string markdown = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? enabled = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? isExpired = default(bool?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule DevTestLabApplicableSchedule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData labVmsShutdown = null, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData labVmsStartup = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData DevTestLabArmTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, string publisher = null, string icon = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> contents = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> parametersValueFilesInfo = null, bool? isEnabled = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule DevTestLabApplicableSchedule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData labVmsShutdown = null, Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData labVmsStartup = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData DevTestLabArmTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string displayName = null, string description = null, string publisher = null, string icon = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> contents = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> parametersValueFilesInfo = null, bool? isEnabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData DevTestLabArmTemplateData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string displayName, string description, string publisher, string icon, System.BinaryData contents, System.DateTimeOffset? createdOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo DevTestLabArmTemplateInfo(System.BinaryData template = null, System.BinaryData parameters = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData DevTestLabArtifactData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOSType = null, System.BinaryData parameters = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData DevTestLabArtifactData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, System.BinaryData parameters, System.DateTimeOffset? createdOn) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData DevTestLabArtifactData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOsType = null, System.BinaryData parameters = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus DevTestLabArtifactDeploymentStatus(string deploymentStatus = null, int? artifactsApplied = default(int?), int? totalArtifacts = default(int?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData DevTestLabArtifactSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string displayName = null, System.Uri uri = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? sourceType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType?), string folderPath = null, string armTemplateFolderPath = null, string branchRef = null, string securityToken = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabCostData DevTestLabCostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost targetCost = null, double? estimatedLabCost = default(double?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails> labCostDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost> resourceCosts = null, string currencyCode = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent DevTestLabArtifactGenerateArmTemplateContent(string vmName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter> parameters = null, string location = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption? fileUploadOptions = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption?)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo DevTestLabArtifactInstallInfo(string artifactId = null, string artifactTitle = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter> parameters = null, string status = null, string deploymentStatusMessage = null, string vmExtensionStatusMessage = null, System.DateTimeOffset? installOn = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData DevTestLabArtifactSourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string displayName, System.Uri uri, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData DevTestLabArtifactSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Uri uri = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? sourceType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType?), string folderPath = null, string armTemplateFolderPath = null, string branchRef = null, string securityToken = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch DevTestLabArtifactSourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabCostData DevTestLabCostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost targetCost = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails> labCostDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost> resourceCosts = null, string currencyCode = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), double? estimatedLabCost = default(double?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabCostData DevTestLabCostData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost targetCost, double? estimatedLabCost, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails> labCostDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost> resourceCosts, string currencyCode, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails DevTestLabCostDetails(System.DateTimeOffset? on = default(System.DateTimeOffset?), double? cost = default(double?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType? costType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData DevTestLabCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm vm = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd vhd = null, string description = null, string author = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string managedImageId = null, string managedSnapshotId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan customImagePlan = null, bool? isPlanAuthorized = default(bool?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabData DevTestLabData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string defaultStorageAccount = null, string defaultPremiumStorageAccount = null, string artifactsStorageAccount = null, string premiumDataDiskStorageAccount = null, string vaultName = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? labStorageType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsLinux = null, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsWindows = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? premiumDataDisks = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? environmentPermission = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement announcement = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport support = null, string vmCreationResourceGroup = null, string publicIPId = null, string loadBalancerId = null, string networkSecurityGroupId = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabDiskData DevTestLabDiskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? diskType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), int? diskSizeGiB = default(int?), Azure.Core.ResourceIdentifier leasedByLabVmId = null, string diskBlobName = null, System.Uri diskUri = null, string storageAccountId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string hostCaching = null, Azure.Core.ResourceIdentifier managedDiskId = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData DevTestLabEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment deploymentProperties = null, string armTemplateDisplayName = null, string resourceGroupId = null, string createdByUser = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData DevTestLabCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm vm = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd vhd = null, string description = null, string author = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string managedImageId = null, string managedSnapshotId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan customImagePlan = null, bool? isPlanAuthorized = default(bool?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData DevTestLabCustomImageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm vm, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd vhd, string description, string author, System.DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch DevTestLabCustomImagePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabData DevTestLabData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? labStorageType, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsLinux, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsWindows, System.DateTimeOffset? createdOn, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? premiumDataDisks, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? environmentPermission, Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement announcement, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, System.Collections.Generic.IDictionary<string, string> extendedProperties, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabData DevTestLabData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string defaultStorageAccount = null, string defaultPremiumStorageAccount = null, string artifactsStorageAccount = null, string premiumDataDiskStorageAccount = null, string vaultName = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? labStorageType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsLinux = null, System.Collections.Generic.IEnumerable<string> mandatoryArtifactsResourceIdsWindows = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? premiumDataDisks = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? environmentPermission = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement announcement = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport support = null, string vmCreationResourceGroup = null, string publicIpId = null, string loadBalancerId = null, string networkSecurityGroupId = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabDiskData DevTestLabDiskData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? diskType, int? diskSizeGiB, Azure.Core.ResourceIdentifier leasedByLabVmId, string diskBlobName, System.Uri diskUri, string storageAccountId, System.DateTimeOffset? createdOn, string hostCaching, Azure.Core.ResourceIdentifier managedDiskId, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabDiskData DevTestLabDiskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? diskType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType?), int? diskSizeGiB = default(int?), Azure.Core.ResourceIdentifier leasedByLabVmId = null, string diskBlobName = null, System.Uri diskUri = null, string storageAccountId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string hostCaching = null, Azure.Core.ResourceIdentifier managedDiskId = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch DevTestLabDiskPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData DevTestLabEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment deploymentProperties = null, string armTemplateDisplayName = null, string resourceGroupId = null, string createdByUser = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData DevTestLabEnvironmentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment deploymentProperties, string armTemplateDisplayName, string resourceGroupId, string createdByUser, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment DevTestLabEnvironmentDeployment(Azure.Core.ResourceIdentifier armTemplateId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter> parameters = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch DevTestLabEnvironmentPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent DevTestLabEvaluatePoliciesContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy> policies = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult DevTestLabEvaluatePoliciesResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult> results = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet DevTestLabExternalSubnet(Azure.Core.ResourceIdentifier id = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData DevTestLabFormulaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, string author = null, string osType = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent formulaContent = null, string labVmId = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage DevTestLabGalleryImage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string author = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference imageReference = null, string icon = null, bool? isEnabled = default(bool?), string planId = null, bool? isPlanAuthorized = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData DevTestLabFormulaData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string description, string author, string osType, System.DateTimeOffset? createdOn, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent formulaContent, string labVmId, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData DevTestLabFormulaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string author = null, string osType = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent formulaContent = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), string labVmId = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch DevTestLabFormulaPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage DevTestLabGalleryImage(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string author, System.DateTimeOffset? createdOn, string description, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage DevTestLabGalleryImage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string author = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string description = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference imageReference = null, string icon = null, bool? isEnabled = default(bool?), string planId = null, bool? isPlanAuthorized = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(string uploadUri = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData DevTestLabNotificationChannelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Uri webHookUri = null, string emailRecipient = null, string notificationLocale = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> events = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> parametersValueInfo = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData DevTestLabPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName? factName = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName?), string factData = null, string threshold = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? evaluatorType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData DevTestLabNotificationChannelData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Uri webHookUri, string emailRecipient, string notificationLocale, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> events, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData DevTestLabNotificationChannelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri webHookUri = null, string emailRecipient = null, string notificationLocale = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent> events = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch DevTestLabNotificationChannelPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, System.BinaryData parametersValueInfo = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch DevTestLabPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData DevTestLabPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string description, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? status, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName? factName, string factData, string threshold, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? evaluatorType, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData DevTestLabPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName? factName = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName?), string factData = null, string threshold = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? evaluatorType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch DevTestLabPolicyPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult DevTestLabPolicySetResult(bool? hasError = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation> policyViolations = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation DevTestLabPolicyViolation(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection DevTestLabRdpConnection(string contents = null) { throw null; }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost DevTestLabResourceCost(string resourceName = null, string resourceUniqueId = null, double? resourceCost = default(double?), string resourceType = null, string resourceOwner = null, string resourcePricingTier = null, string resourceStatus = null, string resourceId = null, string externalResourceId = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), string taskType = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails weeklyRecurrence = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = default(int?), string timeZoneId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings notificationSettings = null, Azure.Core.ResourceIdentifier targetResourceId = null, string name = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData DevTestLabScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), string taskType = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails weeklyRecurrence = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = default(int?), string timeZoneId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings notificationSettings = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string targetResourceId = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabSecretData DevTestLabSecretData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string value = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData DevTestLabServiceFabricData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string externalServiceFabricId = null, string environmentId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule applicableSchedule = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData DevTestLabServiceRunnerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabUserData DevTestLabUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity identity = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore secretStore = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData DevTestLabVirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet> allowedSubnets = null, string description = null, string externalProviderResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet> externalSubnets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> subnetOverrides = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.DevTestLabVmData DevTestLabVmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string notes = null, string ownerObjectId = null, string ownerUserPrincipalName = null, string createdByUserId = null, string createdByUser = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier computeId = null, string customImageId = null, string osType = null, string size = null, string userName = null, string password = null, string sshKey = null, bool? isAuthenticationWithSshKey = default(bool?), string fqdn = null, string labSubnetName = null, Azure.Core.ResourceIdentifier labVirtualNetworkId = null, bool? disallowPublicIPAddress = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> artifacts = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus artifactDeploymentStatus = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference galleryImageReference = null, string planId = null, Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties computeVm = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface networkInterface = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule applicableSchedule = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? allowClaim = default(bool?), string storageType = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? vmCreationSource = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource?), Azure.Core.ResourceIdentifier environmentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> dataDiskParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter> scheduleParameters = null, string lastKnownPowerState = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch DevTestLabResourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), string taskType = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails weeklyRecurrence = null, string timeZoneId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings notificationSettings = null, Azure.Core.ResourceIdentifier targetResourceId = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = default(int?), string name = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(string name, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status, string taskType, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails weeklyRecurrence, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string timeZoneId, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings notificationSettings, Azure.Core.ResourceIdentifier targetResourceId) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData DevTestLabScheduleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status, string taskType, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails weeklyRecurrence, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string timeZoneId, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings notificationSettings, System.DateTimeOffset? createdOn, string targetResourceId, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData DevTestLabScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus?), string taskType = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails weeklyRecurrence = null, string timeZoneId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings notificationSettings = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string targetResourceId = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = default(int?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch DevTestLabSchedulePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabSecretData DevTestLabSecretData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string value, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabSecretData DevTestLabSecretData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch DevTestLabSecretPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData DevTestLabServiceFabricData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string externalServiceFabricId, string environmentId, Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule applicableSchedule, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData DevTestLabServiceFabricData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string externalServiceFabricId = null, string environmentId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule applicableSchedule = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch DevTestLabServiceFabricPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData DevTestLabServiceRunnerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost DevTestLabTargetCost(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus? status = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus?), int? target = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold> costThresholds = null, System.DateTimeOffset? cycleStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? cycleEndOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType? cycleType = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType?)) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabUserData DevTestLabUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity identity = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore secretStore = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabUserData DevTestLabUserData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity identity, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore secretStore, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch DevTestLabUserPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData DevTestLabVirtualNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet> allowedSubnets, string description, string externalProviderResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet> externalSubnets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> subnetOverrides, System.DateTimeOffset? createdOn, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData DevTestLabVirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet> allowedSubnets = null, string description = null, string externalProviderResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet> externalSubnets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> subnetOverrides = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch DevTestLabVirtualNetworkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent DevTestLabVmApplyArtifactsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> artifacts = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent DevTestLabVmCreationContent(string notes = null, string ownerObjectId = null, string ownerUserPrincipalName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string customImageId = null, string size = null, string userName = null, string password = null, string sshKey = null, bool? isAuthenticationWithSshKey = default(bool?), string labSubnetName = null, Azure.Core.ResourceIdentifier labVirtualNetworkId = null, bool? disallowPublicIpAddress = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> artifacts = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference galleryImageReference = null, string planId = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface networkInterface = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? allowClaim = default(bool?), string storageType = null, string environmentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> dataDiskParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter> scheduleParameters = null, int? bulkCreationParametersInstanceCount = default(int?), string name = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVmData DevTestLabVmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, System.DateTimeOffset? createdOn, Azure.Core.ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, Azure.Core.ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> artifacts, Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference galleryImageReference, string planId, Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties computeVm, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface networkInterface, Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule applicableSchedule, System.DateTimeOffset? expireOn, bool? allowClaim, string storageType, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? vmCreationSource, Azure.Core.ResourceIdentifier environmentId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> dataDiskParameters, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, System.Guid? uniqueIdentifier) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.DevTestLabVmData DevTestLabVmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string notes = null, string ownerObjectId = null, string ownerUserPrincipalName = null, string createdByUserId = null, string createdByUser = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier computeId = null, string customImageId = null, string osType = null, string size = null, string userName = null, string password = null, string sshKey = null, bool? isAuthenticationWithSshKey = default(bool?), string fqdn = null, string labSubnetName = null, Azure.Core.ResourceIdentifier labVirtualNetworkId = null, bool? disallowPublicIpAddress = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> artifacts = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus artifactDeploymentStatus = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference galleryImageReference = null, string planId = null, Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties computeVm = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface networkInterface = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule applicableSchedule = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? allowClaim = default(bool?), string storageType = null, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? vmCreationSource = default(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource?), Azure.Core.ResourceIdentifier environmentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> dataDiskParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter> scheduleParameters = null, string lastKnownPowerState = null, string provisioningState = null, System.Guid? uniqueIdentifier = default(System.Guid?), System.Collections.Generic.IDictionary<string, string> tags = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch DevTestLabVmPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails DevTestLabWeekDetails(System.Collections.Generic.IEnumerable<string> weekdays = null, string time = null) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.LabVhd LabVhd(string id = null) { throw null; }
     }
     public partial class AttachNewDataDiskDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>
     {
@@ -1468,7 +1675,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string DiskName { get { throw null; } set { } }
         public int? DiskSizeGiB { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? DiskType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1482,7 +1692,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Uri DiskUri { get { throw null; } }
         public string ManagedDiskId { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1495,7 +1708,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Code { get { throw null; } }
         public string DisplayStatus { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1508,11 +1724,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Collections.Generic.IReadOnlyList<string> DataDiskIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk> DataDisks { get { throw null; } }
         public string NetworkInterfaceId { get { throw null; } }
-        public string OSDiskId { get { throw null; } }
-        public string OSType { get { throw null; } }
+        public string OsDiskId { get { throw null; } }
+        public string OsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus> Statuses { get { throw null; } }
         public string VmSize { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1529,7 +1748,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string ProvisioningState { get { throw null; } }
         public string Title { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1542,8 +1764,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsShutdown { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsStartup { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1555,7 +1780,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabArmTemplateInfo() { }
         public System.BinaryData Parameters { get { throw null; } }
         public System.BinaryData Template { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1567,7 +1795,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabArmTemplateParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1580,7 +1811,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public int? ArtifactsApplied { get { throw null; } }
         public string DeploymentStatus { get { throw null; } }
         public int? TotalArtifacts { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1594,7 +1828,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter> Parameters { get { throw null; } }
         public string VmName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1611,7 +1848,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter> Parameters { get { throw null; } }
         public string Status { get { throw null; } set { } }
         public string VmExtensionStatusMessage { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1623,7 +1863,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabArtifactParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1633,7 +1876,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabArtifactSourcePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>
     {
         public DevTestLabArtifactSourcePatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1646,7 +1892,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public double? Cost { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType? CostType { get { throw null; } }
         public System.DateTimeOffset? On { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1661,7 +1910,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus? SendNotificationWhenExceeded { get { throw null; } set { } }
         public string ThresholdId { get { throw null; } set { } }
         public double? ThresholdValue { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1683,6 +1935,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1702,32 +1955,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevTestLabCustomImageOSType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType>
+    public readonly partial struct DevTestLabCustomImageOsType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DevTestLabCustomImageOSType(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType Linux { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType None { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType other) { throw null; }
+        public DevTestLabCustomImageOsType(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType Linux { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType None { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevTestLabCustomImagePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>
     {
         public DevTestLabCustomImagePatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1740,7 +1998,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Id { get { throw null; } set { } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1749,11 +2010,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     }
     public partial class DevTestLabCustomImageVhd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>
     {
-        public DevTestLabCustomImageVhd(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType osType) { }
+        public DevTestLabCustomImageVhd(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType osType) { }
         public string ImageName { get { throw null; } set { } }
         public bool? IsSysPrepEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOsType OsType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1763,10 +2027,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabCustomImageVm : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>
     {
         public DevTestLabCustomImageVm() { }
-        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState? LinuxOSState { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState? LinuxOsState { get { throw null; } set { } }
         public string SourceVmId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.WindowsOSState? WindowsOSState { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.WindowsOsState? WindowsOsState { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1779,7 +2046,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails AttachNewDataDiskOptions { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption? HostCaching { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1791,7 +2061,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabDataDiskStorageTypeInfo() { }
         public string Lun { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? StorageType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1802,7 +2075,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabDiskAttachContent() { }
         public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1813,7 +2089,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabDiskDetachContent() { }
         public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1823,7 +2102,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabDiskPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>
     {
         public DevTestLabDiskPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1845,6 +2127,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1853,7 +2136,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabEnvironmentDeployment() { }
         public Azure.Core.ResourceIdentifier ArmTemplateId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter> Parameters { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1863,7 +2149,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabEnvironmentPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>
     {
         public DevTestLabEnvironmentPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1885,6 +2174,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1892,7 +2182,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabEvaluatePoliciesContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy> Policies { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1903,7 +2196,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabEvaluatePoliciesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult> Results { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1917,7 +2213,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string FactName { get { throw null; } set { } }
         public string UserObjectId { get { throw null; } set { } }
         public string ValueOffset { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1929,7 +2228,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabExportResourceUsageContent() { }
         public System.Uri BlobStorageAbsoluteSasUri { get { throw null; } set { } }
         public System.DateTimeOffset? UsageStartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1941,7 +2243,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabExternalSubnet() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1963,13 +2268,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevTestLabFormulaPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>
     {
         public DevTestLabFormulaPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1988,8 +2297,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public bool? IsPlanAuthorized { get { throw null; } }
         public string Location { get { throw null; } }
         public string PlanId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2000,11 +2312,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabGalleryImageReference() { }
         public string Offer { get { throw null; } set { } }
-        public string OSType { get { throw null; } set { } }
+        public string OsType { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2015,7 +2330,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabGenerateUploadUriContent() { }
         public string BlobName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2026,7 +2344,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabGenerateUploadUriResult() { }
         public string UploadUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2038,7 +2359,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabGlobalScheduleRetargetContent() { }
         public Azure.Core.ResourceIdentifier CurrentResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2061,6 +2385,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2069,7 +2394,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabImportVmContent() { }
         public string DestinationVirtualMachineName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVirtualMachineResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2082,7 +2410,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public int? BackendPort { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? TransportProtocol { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2090,22 +2421,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevTestLabLinuxOSState : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState>
+    public readonly partial struct DevTestLabLinuxOsState : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DevTestLabLinuxOSState(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState DeprovisionApplied { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState DeprovisionRequested { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState NonDeprovisioned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState other) { throw null; }
+        public DevTestLabLinuxOsState(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState DeprovisionApplied { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState DeprovisionRequested { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState NonDeprovisioned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOsState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevTestLabManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity>
@@ -2115,7 +2447,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2126,15 +2461,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabNetworkInterface() { }
         public string DnsName { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
-        public string PublicIPAddress { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
+        public string PrivateIpAddress { get { throw null; } set { } }
+        public string PublicIpAddress { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIpAddressId { get { throw null; } set { } }
         public string RdpAuthority { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule> SharedPublicIPAddressInboundNatRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule> SharedPublicIpAddressInboundNatRules { get { throw null; } }
         public string SshAuthority { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2145,7 +2483,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabNotificationChannelEvent() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? EventName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2167,6 +2508,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2175,7 +2517,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabNotificationChannelNotifyContent() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? EventName { get { throw null; } set { } }
         public string JsonPayload { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2185,7 +2530,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabNotificationChannelPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>
     {
         public DevTestLabNotificationChannelPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2200,7 +2548,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
         public int? TimeInMinutes { get { throw null; } set { } }
         public string WebhookUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2212,7 +2563,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2223,8 +2577,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabParametersValueFileInfo() { }
         public string FileName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ParametersValueInfo { get { throw null; } }
+        public System.BinaryData ParametersValueInfo { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2234,7 +2591,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>
     {
         public DevTestLabPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2256,6 +2616,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2282,13 +2643,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevTestLabPolicyPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>
     {
         public DevTestLabPolicyPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2300,7 +2665,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabPolicySetResult() { }
         public bool? HasError { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation> PolicyViolations { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2322,6 +2690,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2330,7 +2699,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabPolicyViolation() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2342,7 +2714,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabPort() { }
         public int? BackendPort { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? TransportProtocol { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2364,6 +2739,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2371,7 +2747,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabRdpConnection() { }
         public string Contents { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2393,6 +2772,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2408,7 +2788,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string ResourceStatus { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string ResourceUniqueId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2419,7 +2802,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2440,7 +2826,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string TaskType { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2450,7 +2839,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabSchedulePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>
     {
         public DevTestLabSchedulePatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2460,7 +2852,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabSecretPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>
     {
         public DevTestLabSecretPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2470,7 +2865,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabServiceFabricPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>
     {
         public DevTestLabServiceFabricPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2493,6 +2891,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2512,16 +2911,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevTestLabSubnet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>
     {
         public DevTestLabSubnet() { }
-        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? AllowPublicIP { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? AllowPublicIp { get { throw null; } set { } }
         public string LabSubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2533,11 +2936,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabSubnetOverride() { }
         public string LabSubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort> SharedPublicIPAddressAllowedPorts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort> SharedPublicIpAddressAllowedPorts { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UseInVmCreationPermission { get { throw null; } set { } }
-        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UsePublicIPAddressPermission { get { throw null; } set { } }
+        public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UsePublicIpAddressPermission { get { throw null; } set { } }
         public string VirtualNetworkPoolName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2549,7 +2955,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabSupport() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Enabled { get { throw null; } set { } }
         public string Markdown { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2565,7 +2974,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType? CycleType { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus? Status { get { throw null; } set { } }
         public int? Target { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2587,6 +2999,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2605,6 +3018,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2624,6 +3038,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2635,7 +3050,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2645,7 +3063,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabUserPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>
     {
         public DevTestLabUserPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2657,7 +3078,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabUserSecretStore() { }
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string KeyVaultUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2667,7 +3091,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabVirtualNetworkPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>
     {
         public DevTestLabVirtualNetworkPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2678,7 +3105,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmApplyArtifactsContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> Artifacts { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2694,7 +3124,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CustomImageId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties> DataDiskParameters { get { throw null; } }
-        public bool? DisallowPublicIPAddress { get { throw null; } set { } }
+        public bool? DisallowPublicIpAddress { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference GalleryImageReference { get { throw null; } set { } }
@@ -2715,7 +3145,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string StorageType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string UserName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2738,6 +3171,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2745,7 +3179,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmDetachDataDiskContent() { }
         public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2755,7 +3192,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabVmPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>
     {
         public DevTestLabVmPatch() { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2766,7 +3206,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmResizeContent() { }
         public string Size { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2778,30 +3221,48 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabWeekDetails() { }
         public string Time { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Weekdays { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LabVhd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>
+    {
+        internal LabVhd() { }
+        public string Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.LabVhd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevTestLabs.Models.LabVhd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevTestLabs.Models.LabVhd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevTestLabs.Models.LabVhd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.LabVhd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WindowsOSState : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.WindowsOSState>
+    public readonly partial struct WindowsOsState : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.WindowsOsState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public WindowsOSState(string value) { throw null; }
-        public static Azure.ResourceManager.DevTestLabs.Models.WindowsOSState NonSysprepped { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.WindowsOSState SysprepApplied { get { throw null; } }
-        public static Azure.ResourceManager.DevTestLabs.Models.WindowsOSState SysprepRequested { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.WindowsOSState other) { throw null; }
+        public WindowsOsState(string value) { throw null; }
+        public static Azure.ResourceManager.DevTestLabs.Models.WindowsOsState NonSysprepped { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.WindowsOsState SysprepApplied { get { throw null; } }
+        public static Azure.ResourceManager.DevTestLabs.Models.WindowsOsState SysprepRequested { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevTestLabs.Models.WindowsOsState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.WindowsOSState left, Azure.ResourceManager.DevTestLabs.Models.WindowsOSState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.WindowsOSState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.WindowsOSState left, Azure.ResourceManager.DevTestLabs.Models.WindowsOSState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.WindowsOsState left, Azure.ResourceManager.DevTestLabs.Models.WindowsOsState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.WindowsOsState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevTestLabs.Models.WindowsOsState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.WindowsOsState left, Azure.ResourceManager.DevTestLabs.Models.WindowsOsState right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

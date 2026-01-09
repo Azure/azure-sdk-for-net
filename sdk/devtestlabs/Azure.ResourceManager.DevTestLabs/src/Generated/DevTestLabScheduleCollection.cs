@@ -291,14 +291,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabScheduleResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabScheduleResource>(new DevTestLabSchedulesGetAllAsyncCollectionResultOfT(
                 _devTestLabSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context), data => new DevTestLabScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -332,14 +332,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabScheduleResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabScheduleResource>(new DevTestLabSchedulesGetAllCollectionResultOfT(
                 _devTestLabSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context), data => new DevTestLabScheduleResource(Client, data));
         }
 
         /// <summary>
