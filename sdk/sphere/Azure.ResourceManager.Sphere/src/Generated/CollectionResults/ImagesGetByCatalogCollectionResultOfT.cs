@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class ImagesGetByCatalogCollectionResultOfT : Pageable<ImageData>
+    internal partial class ImagesGetByCatalogCollectionResultOfT : Pageable<SphereImageData>
     {
         private readonly Images _client;
         private readonly string _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ImagesGetByCatalogCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ImageData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SphereImageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 ImageListResult result = ImageListResult.FromResponse(response);
-                yield return Page<ImageData>.FromValues((IReadOnlyList<ImageData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereImageData>.FromValues((IReadOnlyList<SphereImageData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sphere
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context) : _client.CreateGetByCatalogRequest(_subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ImageCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereImageCollection.GetAll");
             scope.Start();
             try
             {

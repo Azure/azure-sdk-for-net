@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Initializes a new instance of <see cref="PagedDeviceInsight"/>. </summary>
         /// <param name="value"> The DeviceInsight items on this page. </param>
-        internal PagedDeviceInsight(IEnumerable<DeviceInsight> value)
+        internal PagedDeviceInsight(IEnumerable<SphereDeviceInsight> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="value"> The DeviceInsight items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedDeviceInsight(IList<DeviceInsight> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedDeviceInsight(IList<SphereDeviceInsight> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> The DeviceInsight items on this page. </summary>
-        public IList<DeviceInsight> Value { get; }
+        public IList<SphereDeviceInsight> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

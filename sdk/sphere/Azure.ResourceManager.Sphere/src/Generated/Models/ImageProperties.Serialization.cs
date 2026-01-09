@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Sphere.Models
             string uri = default;
             string description = default;
             string componentId = default;
-            ImageType? imageType = default;
-            ProvisioningState? provisioningState = default;
+            SphereImageType? imageType = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    imageType = new ImageType(prop.Value.GetString());
+                    imageType = new SphereImageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SphereProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

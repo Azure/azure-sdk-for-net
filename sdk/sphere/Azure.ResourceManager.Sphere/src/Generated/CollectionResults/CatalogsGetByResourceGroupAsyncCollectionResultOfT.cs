@@ -15,7 +15,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class CatalogsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<CatalogData>
+    internal partial class CatalogsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<SphereCatalogData>
     {
         private readonly Catalogs _client;
         private readonly string _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatalogsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CatalogData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SphereCatalogData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 CatalogListResult result = CatalogListResult.FromResponse(response);
-                yield return Page<CatalogData>.FromValues((IReadOnlyList<CatalogData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereCatalogData>.FromValues((IReadOnlyList<SphereCatalogData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sphere
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatalogCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereCatalogCollection.GetAll");
             scope.Start();
             try
             {

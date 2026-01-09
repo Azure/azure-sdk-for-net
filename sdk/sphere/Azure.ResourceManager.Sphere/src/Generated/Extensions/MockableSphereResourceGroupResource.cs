@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Sphere.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Catalogs in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Catalogs and their operations over a CatalogResource. </returns>
-        public virtual CatalogCollection GetCatalogs()
+        /// <summary> Gets a collection of SphereCatalogs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SphereCatalogs and their operations over a SphereCatalogResource. </returns>
+        public virtual SphereCatalogCollection GetSphereCatalogs()
         {
-            return GetCachedClient(client => new CatalogCollection(client, Id));
+            return GetCachedClient(client => new SphereCatalogCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CatalogResource>> GetCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return await GetCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return await GetSphereCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CatalogResource> GetCatalog(string catalogName, CancellationToken cancellationToken = default)
+        public virtual Response<SphereCatalogResource> GetSphereCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            return GetCatalogs().Get(catalogName, cancellationToken);
+            return GetSphereCatalogs().Get(catalogName, cancellationToken);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="hasDeployment"> Deployment status for the device group. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceGroupProperties(string description, OSFeedType? osFeedType, UpdatePolicy? updatePolicy, AllowCrashDumpCollection? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceGroupProperties(string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             OsFeedType = osFeedType;
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Sphere.Models
         public string Description { get; set; }
 
         /// <summary> Operating system feed type of the device group. </summary>
-        public OSFeedType? OsFeedType { get; set; }
+        public SphereOSFeedType? OsFeedType { get; set; }
 
         /// <summary> Update policy of the device group. </summary>
-        public UpdatePolicy? UpdatePolicy { get; set; }
+        public SphereUpdatePolicy? UpdatePolicy { get; set; }
 
         /// <summary> Flag to define if the user allows for crash dump collection. </summary>
-        public AllowCrashDumpCollection? AllowCrashDumpsCollection { get; set; }
+        public SphereAllowCrashDumpCollectionStatus? AllowCrashDumpsCollection { get; set; }
 
         /// <summary> Regional data boundary for the device group. </summary>
         public RegionalDataBoundary? RegionalDataBoundary { get; set; }
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Sphere.Models
         public bool? HasDeployment { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SphereProvisioningState? ProvisioningState { get; }
     }
 }

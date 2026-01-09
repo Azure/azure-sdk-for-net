@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentProperties"/>. </summary>
         public DeploymentProperties()
         {
-            DeployedImages = new ChangeTrackingList<ImageData>();
+            DeployedImages = new ChangeTrackingList<SphereImageData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentProperties"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="deploymentDateUtc"> Deployment date UTC. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentProperties(string deploymentId, IList<ImageData> deployedImages, DateTimeOffset? deploymentDateUtc, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentProperties(string deploymentId, IList<SphereImageData> deployedImages, DateTimeOffset? deploymentDateUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentId = deploymentId;
             DeployedImages = deployedImages;
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Sphere.Models
         public string DeploymentId { get; set; }
 
         /// <summary> Images deployed. </summary>
-        public IList<ImageData> DeployedImages { get; }
+        public IList<SphereImageData> DeployedImages { get; }
 
         /// <summary> Deployment date UTC. </summary>
         public DateTimeOffset? DeploymentDateUtc { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SphereProvisioningState? ProvisioningState { get; }
     }
 }

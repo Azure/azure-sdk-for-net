@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Initializes a new instance of <see cref="CatalogListResult"/>. </summary>
         /// <param name="value"> The Catalog items on this page. </param>
-        internal CatalogListResult(IEnumerable<CatalogData> value)
+        internal CatalogListResult(IEnumerable<SphereCatalogData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="value"> The Catalog items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CatalogListResult(IList<CatalogData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CatalogListResult(IList<SphereCatalogData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> The Catalog items on this page. </summary>
-        public IList<CatalogData> Value { get; }
+        public IList<SphereCatalogData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

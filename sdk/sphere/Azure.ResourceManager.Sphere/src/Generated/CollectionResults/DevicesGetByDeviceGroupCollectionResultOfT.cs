@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class DevicesGetByDeviceGroupCollectionResultOfT : Pageable<DeviceData>
+    internal partial class DevicesGetByDeviceGroupCollectionResultOfT : Pageable<SphereDeviceData>
     {
         private readonly Devices _client;
         private readonly string _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DevicesGetByDeviceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeviceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SphereDeviceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 DeviceListResult result = DeviceListResult.FromResponse(response);
-                yield return Page<DeviceData>.FromValues((IReadOnlyList<DeviceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereDeviceData>.FromValues((IReadOnlyList<SphereDeviceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sphere
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDeviceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _productName, _deviceGroupName, _context) : _client.CreateGetByDeviceGroupRequest(_subscriptionId, _resourceGroupName, _catalogName, _productName, _deviceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereDeviceCollection.GetAll");
             scope.Start();
             try
             {

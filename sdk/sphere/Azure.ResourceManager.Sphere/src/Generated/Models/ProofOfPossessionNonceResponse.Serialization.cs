@@ -15,7 +15,7 @@ using Azure.ResourceManager.Sphere;
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary> Result of the action to generate a proof of possession nonce. </summary>
-    public partial class ProofOfPossessionNonceResponse : CertificateProperties, IJsonModel<ProofOfPossessionNonceResponse>
+    public partial class ProofOfPossessionNonceResponse : SphereCertificateProperties, IJsonModel<ProofOfPossessionNonceResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CertificateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SphereCertificateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             string certificate = default;
-            CertificateStatus? status = default;
+            SphereCertificateStatus? status = default;
             string subject = default;
             string thumbprint = default;
             DateTimeOffset? expiryUtc = default;
             DateTimeOffset? notBeforeUtc = default;
-            ProvisioningState? provisioningState = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    status = new CertificateStatus(prop.Value.GetString());
+                    status = new SphereCertificateStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subject"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SphereProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CertificateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SphereCertificateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

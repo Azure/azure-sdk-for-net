@@ -15,7 +15,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class CatalogsGetDeviceInsightsAsyncCollectionResultOfT : AsyncPageable<DeviceInsight>
+    internal partial class CatalogsGetDeviceInsightsAsyncCollectionResultOfT : AsyncPageable<SphereDeviceInsight>
     {
         private readonly Catalogs _client;
         private readonly string _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatalogsGetDeviceInsightsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DeviceInsight>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SphereDeviceInsight>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 PagedDeviceInsight result = PagedDeviceInsight.FromResponse(response);
-                yield return Page<DeviceInsight>.FromValues((IReadOnlyList<DeviceInsight>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereDeviceInsight>.FromValues((IReadOnlyList<SphereDeviceInsight>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sphere
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDeviceInsightsRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context) : _client.CreateGetDeviceInsightsRequest(_subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatalogResource.GetDeviceInsights");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereCatalogResource.GetDeviceInsights");
             scope.Start();
             try
             {

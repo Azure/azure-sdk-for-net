@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="description"> Description of the product. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProductProperties(string description, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProductProperties(string description, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Sphere.Models
         public string Description { get; set; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SphereProvisioningState? ProvisioningState { get; }
     }
 }

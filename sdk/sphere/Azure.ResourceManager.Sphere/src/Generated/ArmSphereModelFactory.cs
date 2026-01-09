@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.CatalogData"/> instance for mocking. </returns>
-        public static CatalogData CatalogData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CatalogProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereCatalogData"/> instance for mocking. </returns>
+        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CatalogProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CatalogData(
+            return new SphereCatalogData(
                 id,
                 name,
                 resourceType,
@@ -47,35 +48,35 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="tenantId"> The Azure Sphere tenant ID associated with the catalog. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.CatalogProperties"/> instance for mocking. </returns>
-        public static CatalogProperties CatalogProperties(string tenantId = default, ProvisioningState? provisioningState = default)
+        public static CatalogProperties CatalogProperties(string tenantId = default, SphereProvisioningState? provisioningState = default)
         {
             return new CatalogProperties(tenantId, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for update operations of the Catalog. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.CatalogPatch"/> instance for mocking. </returns>
-        public static CatalogPatch CatalogPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.SphereCatalogPatch"/> instance for mocking. </returns>
+        public static SphereCatalogPatch SphereCatalogPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CatalogPatch(tags, additionalBinaryDataProperties: null);
+            return new SphereCatalogPatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response to the action call for count devices in a catalog. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
-        /// <returns> A new <see cref="Models.CountDevicesResponse"/> instance for mocking. </returns>
-        public static CountDevicesResponse CountDevicesResponse(int value = default)
+        /// <returns> A new <see cref="Models.CountDevicesResult"/> instance for mocking. </returns>
+        public static CountDevicesResult CountDevicesResult(int value = default)
         {
-            return new CountDevicesResponse(value, additionalBinaryDataProperties: null);
+            return new CountDevicesResult(value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response of the count for elements. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
-        /// <returns> A new <see cref="Models.CountElementsResponse"/> instance for mocking. </returns>
-        public static CountElementsResponse CountElementsResponse(int value = default)
+        /// <returns> A new <see cref="Models.CountElementsResult"/> instance for mocking. </returns>
+        public static CountElementsResult CountElementsResult(int value = default)
         {
-            return new CountElementsResponse(value, additionalBinaryDataProperties: null);
+            return new CountElementsResult(value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> An deployment resource belonging to a device group resource. </summary>
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.DeploymentData"/> instance for mocking. </returns>
-        public static DeploymentData DeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereDeploymentData"/> instance for mocking. </returns>
+        public static SphereDeploymentData SphereDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentProperties properties = default)
         {
-            return new DeploymentData(
+            return new SphereDeploymentData(
                 id,
                 name,
                 resourceType,
@@ -102,9 +103,9 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="deploymentDateUtc"> Deployment date UTC. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.DeploymentProperties"/> instance for mocking. </returns>
-        public static DeploymentProperties DeploymentProperties(string deploymentId = default, IEnumerable<ImageData> deployedImages = default, DateTimeOffset? deploymentDateUtc = default, ProvisioningState? provisioningState = default)
+        public static DeploymentProperties DeploymentProperties(string deploymentId = default, IEnumerable<SphereImageData> deployedImages = default, DateTimeOffset? deploymentDateUtc = default, SphereProvisioningState? provisioningState = default)
         {
-            deployedImages ??= new ChangeTrackingList<ImageData>();
+            deployedImages ??= new ChangeTrackingList<SphereImageData>();
 
             return new DeploymentProperties(deploymentId, deployedImages.ToList(), deploymentDateUtc, provisioningState, additionalBinaryDataProperties: null);
         }
@@ -115,10 +116,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.ImageData"/> instance for mocking. </returns>
-        public static ImageData ImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImageProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereImageData"/> instance for mocking. </returns>
+        public static SphereImageData SphereImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImageProperties properties = default)
         {
-            return new ImageData(
+            return new SphereImageData(
                 id,
                 name,
                 resourceType,
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="imageType"> The image type. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.ImageProperties"/> instance for mocking. </returns>
-        public static ImageProperties ImageProperties(string image = default, string imageId = default, string imageName = default, RegionalDataBoundary? regionalDataBoundary = default, string uri = default, string description = default, string componentId = default, ImageType? imageType = default, ProvisioningState? provisioningState = default)
+        public static ImageProperties ImageProperties(string image = default, string imageId = default, string imageName = default, RegionalDataBoundary? regionalDataBoundary = default, string uri = default, string description = default, string componentId = default, SphereImageType? imageType = default, SphereProvisioningState? provisioningState = default)
         {
             return new ImageProperties(
                 image,
@@ -159,10 +160,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.DeviceGroupData"/> instance for mocking. </returns>
-        public static DeviceGroupData DeviceGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceGroupProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereDeviceGroupData"/> instance for mocking. </returns>
+        public static SphereDeviceGroupData SphereDeviceGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceGroupProperties properties = default)
         {
-            return new DeviceGroupData(
+            return new SphereDeviceGroupData(
                 id,
                 name,
                 resourceType,
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="hasDeployment"> Deployment status for the device group. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.DeviceGroupProperties"/> instance for mocking. </returns>
-        public static DeviceGroupProperties DeviceGroupProperties(string description = default, OSFeedType? osFeedType = default, UpdatePolicy? updatePolicy = default, AllowCrashDumpCollection? allowCrashDumpsCollection = default, RegionalDataBoundary? regionalDataBoundary = default, bool? hasDeployment = default, ProvisioningState? provisioningState = default)
+        public static DeviceGroupProperties DeviceGroupProperties(string description = default, SphereOSFeedType? osFeedType = default, SphereUpdatePolicy? updatePolicy = default, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default, RegionalDataBoundary? regionalDataBoundary = default, bool? hasDeployment = default, SphereProvisioningState? provisioningState = default)
         {
             return new DeviceGroupProperties(
                 description,
@@ -202,10 +203,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="eventClass"> Event class. </param>
         /// <param name="eventType"> Event type. </param>
         /// <param name="eventCount"> Event count. </param>
-        /// <returns> A new <see cref="Models.DeviceInsight"/> instance for mocking. </returns>
-        public static DeviceInsight DeviceInsight(string deviceId = default, string description = default, DateTimeOffset startTimestampUtc = default, DateTimeOffset endTimestampUtc = default, string eventCategory = default, string eventClass = default, string eventType = default, int eventCount = default)
+        /// <returns> A new <see cref="Models.SphereDeviceInsight"/> instance for mocking. </returns>
+        public static SphereDeviceInsight SphereDeviceInsight(string deviceId = default, string description = default, DateTimeOffset startTimestampUtc = default, DateTimeOffset endTimestampUtc = default, string eventCategory = default, string eventClass = default, string eventType = default, int eventCount = default)
         {
-            return new DeviceInsight(
+            return new SphereDeviceInsight(
                 deviceId,
                 description,
                 startTimestampUtc,
@@ -223,10 +224,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.DeviceData"/> instance for mocking. </returns>
-        public static DeviceData DeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereDeviceData"/> instance for mocking. </returns>
+        public static SphereDeviceData SphereDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProperties properties = default)
         {
-            return new DeviceData(
+            return new SphereDeviceData(
                 id,
                 name,
                 resourceType,
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="lastUpdateRequestUtc"> Time when update was last requested. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.DeviceProperties"/> instance for mocking. </returns>
-        public static DeviceProperties DeviceProperties(string deviceId = default, string chipSku = default, string lastAvailableOsVersion = default, string lastInstalledOsVersion = default, DateTimeOffset? lastOsUpdateUtc = default, DateTimeOffset? lastUpdateRequestUtc = default, ProvisioningState? provisioningState = default)
+        public static DeviceProperties DeviceProperties(string deviceId = default, string chipSku = default, string lastAvailableOsVersion = default, string lastInstalledOsVersion = default, DateTimeOffset? lastOsUpdateUtc = default, DateTimeOffset? lastUpdateRequestUtc = default, SphereProvisioningState? provisioningState = default)
         {
             return new DeviceProperties(
                 deviceId,
@@ -263,10 +264,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.CertificateData"/> instance for mocking. </returns>
-        public static CertificateData CertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CertificateProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereCertificateData"/> instance for mocking. </returns>
+        public static SphereCertificateData SphereCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SphereCertificateProperties properties = default)
         {
-            return new CertificateData(
+            return new SphereCertificateData(
                 id,
                 name,
                 resourceType,
@@ -283,10 +284,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="expiryUtc"> The certificate expiry date. </param>
         /// <param name="notBeforeUtc"> The certificate not before date. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.CertificateProperties"/> instance for mocking. </returns>
-        public static CertificateProperties CertificateProperties(string certificate = default, CertificateStatus? status = default, string subject = default, string thumbprint = default, DateTimeOffset? expiryUtc = default, DateTimeOffset? notBeforeUtc = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.SphereCertificateProperties"/> instance for mocking. </returns>
+        public static SphereCertificateProperties SphereCertificateProperties(string certificate = default, SphereCertificateStatus? status = default, string subject = default, string thumbprint = default, DateTimeOffset? expiryUtc = default, DateTimeOffset? notBeforeUtc = default, SphereProvisioningState? provisioningState = default)
         {
-            return new CertificateProperties(
+            return new SphereCertificateProperties(
                 certificate,
                 status,
                 subject,
@@ -299,18 +300,18 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> The certificate chain response. </summary>
         /// <param name="certificateChain"> The certificate chain. </param>
-        /// <returns> A new <see cref="Models.CertificateChainResponse"/> instance for mocking. </returns>
-        public static CertificateChainResponse CertificateChainResponse(string certificateChain = default)
+        /// <returns> A new <see cref="Models.SphereCertificateChainResult"/> instance for mocking. </returns>
+        public static SphereCertificateChainResult SphereCertificateChainResult(string certificateChain = default)
         {
-            return new CertificateChainResponse(certificateChain, additionalBinaryDataProperties: null);
+            return new SphereCertificateChainResult(certificateChain, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request for the proof of possession nonce. </summary>
         /// <param name="proofOfPossessionNonce"> The proof of possession nonce. </param>
-        /// <returns> A new <see cref="Models.ProofOfPossessionNonceRequest"/> instance for mocking. </returns>
-        public static ProofOfPossessionNonceRequest ProofOfPossessionNonceRequest(string proofOfPossessionNonce = default)
+        /// <returns> A new <see cref="Models.ProofOfPossessionNonceContent"/> instance for mocking. </returns>
+        public static ProofOfPossessionNonceContent ProofOfPossessionNonceContent(string proofOfPossessionNonce = default)
         {
-            return new ProofOfPossessionNonceRequest(proofOfPossessionNonce, additionalBinaryDataProperties: null);
+            return new ProofOfPossessionNonceContent(proofOfPossessionNonce, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result of the action to generate a proof of possession nonce. </summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="notBeforeUtc"> The certificate not before date. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.ProofOfPossessionNonceResponse"/> instance for mocking. </returns>
-        public static ProofOfPossessionNonceResponse ProofOfPossessionNonceResponse(string certificate = default, CertificateStatus? status = default, string subject = default, string thumbprint = default, DateTimeOffset? expiryUtc = default, DateTimeOffset? notBeforeUtc = default, ProvisioningState? provisioningState = default)
+        public static ProofOfPossessionNonceResponse ProofOfPossessionNonceResponse(string certificate = default, SphereCertificateStatus? status = default, string subject = default, string thumbprint = default, DateTimeOffset? expiryUtc = default, DateTimeOffset? notBeforeUtc = default, SphereProvisioningState? provisioningState = default)
         {
             return new ProofOfPossessionNonceResponse(
                 certificate,
@@ -341,10 +342,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Sphere.ProductData"/> instance for mocking. </returns>
-        public static ProductData ProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProductProperties properties = default)
+        /// <returns> A new <see cref="Sphere.SphereProductData"/> instance for mocking. </returns>
+        public static SphereProductData SphereProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProductProperties properties = default)
         {
-            return new ProductData(
+            return new SphereProductData(
                 id,
                 name,
                 resourceType,
@@ -357,29 +358,29 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="description"> Description of the product. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.ProductProperties"/> instance for mocking. </returns>
-        public static ProductProperties ProductProperties(string description = default, ProvisioningState? provisioningState = default)
+        public static ProductProperties ProductProperties(string description = default, SphereProvisioningState? provisioningState = default)
         {
             return new ProductProperties(description, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request to the action call to bulk claim devices. </summary>
         /// <param name="deviceIdentifiers"> Device identifiers of the devices to be claimed. </param>
-        /// <returns> A new <see cref="Models.ClaimDevicesRequest"/> instance for mocking. </returns>
-        public static ClaimDevicesRequest ClaimDevicesRequest(IEnumerable<string> deviceIdentifiers = default)
+        /// <returns> A new <see cref="Models.ClaimSphereDevicesContent"/> instance for mocking. </returns>
+        public static ClaimSphereDevicesContent ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers = default)
         {
             deviceIdentifiers ??= new ChangeTrackingList<string>();
 
-            return new ClaimDevicesRequest(deviceIdentifiers.ToList(), additionalBinaryDataProperties: null);
+            return new ClaimSphereDevicesContent(deviceIdentifiers.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request of the action to create a signed device capability image. </summary>
         /// <param name="capabilities"> List of capabilities to create. </param>
-        /// <returns> A new <see cref="Models.GenerateCapabilityImageRequest"/> instance for mocking. </returns>
-        public static GenerateCapabilityImageRequest GenerateCapabilityImageRequest(IEnumerable<CapabilityType> capabilities = default)
+        /// <returns> A new <see cref="Models.GenerateCapabilityImageContent"/> instance for mocking. </returns>
+        public static GenerateCapabilityImageContent GenerateCapabilityImageContent(IEnumerable<SphereCapabilityType> capabilities = default)
         {
-            capabilities ??= new ChangeTrackingList<CapabilityType>();
+            capabilities ??= new ChangeTrackingList<SphereCapabilityType>();
 
-            return new GenerateCapabilityImageRequest(capabilities.ToList(), additionalBinaryDataProperties: null);
+            return new GenerateCapabilityImageContent(capabilities.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Signed device capability image response. </summary>
@@ -388,6 +389,178 @@ namespace Azure.ResourceManager.Sphere.Models
         public static SignedCapabilityImageResponse SignedCapabilityImageResponse(string image = default)
         {
             return new SignedCapabilityImageResponse(image, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereCatalogData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="tenantId"> The Azure Sphere tenant ID associated with the catalog. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereCatalogData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, SphereProvisioningState? provisioningState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SphereCatalogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereCertificateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
+        /// <param name="status"> The certificate status. </param>
+        /// <param name="subject"> The certificate subject. </param>
+        /// <param name="thumbprint"> The certificate thumbprint. </param>
+        /// <param name="expiryUtc"> The certificate expiry date. </param>
+        /// <param name="notBeforeUtc"> The certificate not before date. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereCertificateData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereCertificateData SphereCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState)
+        {
+            return new SphereCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereImageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="image"> Image as a UTF-8 encoded base 64 string on image create. This field contains the image URI on image reads. </param>
+        /// <param name="imageId"> Image ID. </param>
+        /// <param name="imageName"> Image name. </param>
+        /// <param name="regionalDataBoundary"> Regional data boundary for an image. </param>
+        /// <param name="uri"> Location the image. </param>
+        /// <param name="description"> The image description. </param>
+        /// <param name="componentId"> The image component id. </param>
+        /// <param name="imageType"> The image type. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereImageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereImageData SphereImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string imageId, string imageName, RegionalDataBoundary? regionalDataBoundary, Uri uri, string description, string componentId, SphereImageType? imageType, SphereProvisioningState? provisioningState)
+        {
+            return new SphereImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeploymentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="deploymentId"> Deployment ID. </param>
+        /// <param name="deployedImages"> Images deployed. </param>
+        /// <param name="deploymentDateUtc"> Deployment date UTC. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereDeploymentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereDeploymentData SphereDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, IEnumerable<SphereImageData> deployedImages, DateTimeOffset? deploymentDateUtc, SphereProvisioningState? provisioningState)
+        {
+            deployedImages ??= new ChangeTrackingList<SphereImageData>();
+
+            return new SphereDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeviceGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the device group. </param>
+        /// <param name="osFeedType"> Operating system feed type of the device group. </param>
+        /// <param name="updatePolicy"> Update policy of the device group. </param>
+        /// <param name="allowCrashDumpsCollection"> Flag to define if the user allows for crash dump collection. </param>
+        /// <param name="regionalDataBoundary"> Regional data boundary for the device group. </param>
+        /// <param name="hasDeployment"> Deployment status for the device group. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereDeviceGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereDeviceGroupData SphereDeviceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState)
+        {
+            return new SphereDeviceGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeviceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="deviceId"> Device ID. </param>
+        /// <param name="chipSku"> SKU of the chip. </param>
+        /// <param name="lastAvailableOSVersion"> OS version available for installation when update requested. </param>
+        /// <param name="lastInstalledOSVersion"> OS version running on device when update requested. </param>
+        /// <param name="lastOSUpdateUtc"> Time when update requested and new OS version available. </param>
+        /// <param name="lastUpdateRequestUtc"> Time when update was last requested. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereDeviceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereDeviceData SphereDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string chipSku, string lastAvailableOSVersion, string lastInstalledOSVersion, DateTimeOffset? lastOSUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState)
+        {
+            return new SphereDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereProductData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the product. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereProductData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereProductData SphereProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereProvisioningState? provisioningState)
+        {
+            return new SphereProductData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
         }
     }
 }

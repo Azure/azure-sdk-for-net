@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="lastUpdateRequestUtc"> Time when update was last requested. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProperties(string deviceId, string chipSku, string lastAvailableOsVersion, string lastInstalledOsVersion, DateTimeOffset? lastOsUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceProperties(string deviceId, string chipSku, string lastAvailableOsVersion, string lastInstalledOsVersion, DateTimeOffset? lastOsUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             ChipSku = chipSku;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Sphere.Models
         public DateTimeOffset? LastUpdateRequestUtc { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SphereProvisioningState? ProvisioningState { get; }
     }
 }

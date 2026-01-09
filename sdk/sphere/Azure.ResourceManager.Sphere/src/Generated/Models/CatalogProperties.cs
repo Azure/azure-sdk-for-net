@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="tenantId"> The Azure Sphere tenant ID associated with the catalog. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CatalogProperties(string tenantId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CatalogProperties(string tenantId, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             ProvisioningState = provisioningState;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Sphere.Models
         public string TenantId { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SphereProvisioningState? ProvisioningState { get; }
     }
 }

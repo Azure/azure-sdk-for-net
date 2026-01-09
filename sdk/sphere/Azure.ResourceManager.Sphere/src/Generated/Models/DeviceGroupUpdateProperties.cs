@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="allowCrashDumpsCollection"> Flag to define if the user allows for crash dump collection. </param>
         /// <param name="regionalDataBoundary"> Regional data boundary for the device group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceGroupUpdateProperties(string description, OSFeedType? osFeedType, UpdatePolicy? updatePolicy, AllowCrashDumpCollection? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceGroupUpdateProperties(string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             OsFeedType = osFeedType;
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.Sphere.Models
         public string Description { get; set; }
 
         /// <summary> Operating system feed type of the device group. </summary>
-        public OSFeedType? OsFeedType { get; set; }
+        public SphereOSFeedType? OsFeedType { get; set; }
 
         /// <summary> Update policy of the device group. </summary>
-        public UpdatePolicy? UpdatePolicy { get; set; }
+        public SphereUpdatePolicy? UpdatePolicy { get; set; }
 
         /// <summary> Flag to define if the user allows for crash dump collection. </summary>
-        public AllowCrashDumpCollection? AllowCrashDumpsCollection { get; set; }
+        public SphereAllowCrashDumpCollectionStatus? AllowCrashDumpsCollection { get; set; }
 
         /// <summary> Regional data boundary for the device group. </summary>
         public RegionalDataBoundary? RegionalDataBoundary { get; set; }

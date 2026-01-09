@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary> Result of the action to generate a proof of possession nonce. </summary>
-    public partial class ProofOfPossessionNonceResponse : CertificateProperties
+    public partial class ProofOfPossessionNonceResponse : SphereCertificateProperties
     {
         /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceResponse"/>. </summary>
         internal ProofOfPossessionNonceResponse()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="notBeforeUtc"> The certificate not before date. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProofOfPossessionNonceResponse(string certificate, CertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, additionalBinaryDataProperties)
+        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, additionalBinaryDataProperties)
         {
         }
     }

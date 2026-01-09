@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             string description = default;
-            OSFeedType? osFeedType = default;
-            UpdatePolicy? updatePolicy = default;
-            AllowCrashDumpCollection? allowCrashDumpsCollection = default;
+            SphereOSFeedType? osFeedType = default;
+            SphereUpdatePolicy? updatePolicy = default;
+            SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
             RegionalDataBoundary? regionalDataBoundary = default;
             bool? hasDeployment = default;
-            ProvisioningState? provisioningState = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    osFeedType = new OSFeedType(prop.Value.GetString());
+                    osFeedType = new SphereOSFeedType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("updatePolicy"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    updatePolicy = new UpdatePolicy(prop.Value.GetString());
+                    updatePolicy = new SphereUpdatePolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allowCrashDumpsCollection"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    allowCrashDumpsCollection = new AllowCrashDumpCollection(prop.Value.GetString());
+                    allowCrashDumpsCollection = new SphereAllowCrashDumpCollectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalDataBoundary"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SphereProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

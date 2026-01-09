@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sphere.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CatalogData item in Value)
+            foreach (SphereCatalogData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            IList<CatalogData> value = default;
+            IList<SphereCatalogData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CatalogData> array = new List<CatalogData>();
+                    List<SphereCatalogData> array = new List<SphereCatalogData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CatalogData.DeserializeCatalogData(item, options));
+                        array.Add(SphereCatalogData.DeserializeSphereCatalogData(item, options));
                     }
                     value = array;
                     continue;

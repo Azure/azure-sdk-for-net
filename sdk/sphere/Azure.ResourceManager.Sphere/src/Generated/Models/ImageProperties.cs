@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="imageType"> The image type. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageProperties(string image, string imageId, string imageName, RegionalDataBoundary? regionalDataBoundary, string uri, string description, string componentId, ImageType? imageType, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageProperties(string image, string imageId, string imageName, RegionalDataBoundary? regionalDataBoundary, string uri, string description, string componentId, SphereImageType? imageType, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             ImageId = imageId;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Sphere.Models
         public string ComponentId { get; }
 
         /// <summary> The image type. </summary>
-        public ImageType? ImageType { get; }
+        public SphereImageType? ImageType { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SphereProvisioningState? ProvisioningState { get; }
     }
 }

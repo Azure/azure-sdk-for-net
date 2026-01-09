@@ -15,7 +15,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class CertificatesGetByCatalogAsyncCollectionResultOfT : AsyncPageable<CertificateData>
+    internal partial class CertificatesGetByCatalogAsyncCollectionResultOfT : AsyncPageable<SphereCertificateData>
     {
         private readonly Certificates _client;
         private readonly string _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CertificatesGetByCatalogAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CertificateData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SphereCertificateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 CertificateListResult result = CertificateListResult.FromResponse(response);
-                yield return Page<CertificateData>.FromValues((IReadOnlyList<CertificateData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereCertificateData>.FromValues((IReadOnlyList<SphereCertificateData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sphere
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context) : _client.CreateGetByCatalogRequest(_subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CertificateCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereCertificateCollection.GetAll");
             scope.Start();
             try
             {

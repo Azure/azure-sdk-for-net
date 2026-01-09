@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sphere.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CertificateData item in Value)
+            foreach (SphereCertificateData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            IList<CertificateData> value = default;
+            IList<SphereCertificateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CertificateData> array = new List<CertificateData>();
+                    List<SphereCertificateData> array = new List<SphereCertificateData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CertificateData.DeserializeCertificateData(item, options));
+                        array.Add(SphereCertificateData.DeserializeSphereCertificateData(item, options));
                     }
                     value = array;
                     continue;

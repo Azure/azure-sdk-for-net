@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 writer.WritePropertyName("deployedImages"u8);
                 writer.WriteStartArray();
-                foreach (ImageData item in DeployedImages)
+                foreach (SphereImageData item in DeployedImages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             string deploymentId = default;
-            IList<ImageData> deployedImages = default;
+            IList<SphereImageData> deployedImages = default;
             DateTimeOffset? deploymentDateUtc = default;
-            ProvisioningState? provisioningState = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    List<ImageData> array = new List<ImageData>();
+                    List<SphereImageData> array = new List<SphereImageData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImageData.DeserializeImageData(item, options));
+                        array.Add(SphereImageData.DeserializeSphereImageData(item, options));
                     }
                     deployedImages = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SphereProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentProperties(deploymentId, deployedImages ?? new ChangeTrackingList<ImageData>(), deploymentDateUtc, provisioningState, additionalBinaryDataProperties);
+            return new DeploymentProperties(deploymentId, deployedImages ?? new ChangeTrackingList<SphereImageData>(), deploymentDateUtc, provisioningState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class CatalogsGetDevicesCollectionResultOfT : Pageable<DeviceData>
+    internal partial class CatalogsGetDevicesCollectionResultOfT : Pageable<SphereDeviceData>
     {
         private readonly Catalogs _client;
         private readonly string _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatalogsGetDevicesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeviceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SphereDeviceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 DeviceListResult result = DeviceListResult.FromResponse(response);
-                yield return Page<DeviceData>.FromValues((IReadOnlyList<DeviceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereDeviceData>.FromValues((IReadOnlyList<SphereDeviceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sphere
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDevicesRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context) : _client.CreateGetDevicesRequest(_subscriptionId, _resourceGroupName, _catalogName, _filter, _top, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatalogResource.GetDevices");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereCatalogResource.GetDevices");
             scope.Start();
             try
             {

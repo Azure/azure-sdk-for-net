@@ -38,153 +38,153 @@ namespace Azure.ResourceManager.Sphere
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CatalogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereCatalogResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetCatalogResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereCatalogResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CatalogResource"/> object. </returns>
-        public static CatalogResource GetCatalogResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereCatalogResource"/> object. </returns>
+        public static SphereCatalogResource GetSphereCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetCatalogResource(id);
+            return GetMockableSphereArmClient(client).GetSphereCatalogResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereDeploymentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeploymentResource"/> object. </returns>
-        public static DeploymentResource GetDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereDeploymentResource"/> object. </returns>
+        public static SphereDeploymentResource GetSphereDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetDeploymentResource(id);
+            return GetMockableSphereArmClient(client).GetSphereDeploymentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereImageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetImageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereImageResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ImageResource"/> object. </returns>
-        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereImageResource"/> object. </returns>
+        public static SphereImageResource GetSphereImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetImageResource(id);
+            return GetMockableSphereArmClient(client).GetSphereImageResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereDeviceGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetDeviceGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereDeviceGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeviceGroupResource"/> object. </returns>
-        public static DeviceGroupResource GetDeviceGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereDeviceGroupResource"/> object. </returns>
+        public static SphereDeviceGroupResource GetSphereDeviceGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetDeviceGroupResource(id);
+            return GetMockableSphereArmClient(client).GetSphereDeviceGroupResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereDeviceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetDeviceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereDeviceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeviceResource"/> object. </returns>
-        public static DeviceResource GetDeviceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereDeviceResource"/> object. </returns>
+        public static SphereDeviceResource GetSphereDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetDeviceResource(id);
+            return GetMockableSphereArmClient(client).GetSphereDeviceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetCertificateResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereCertificateResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CertificateResource"/> object. </returns>
-        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereCertificateResource"/> object. </returns>
+        public static SphereCertificateResource GetSphereCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetCertificateResource(id);
+            return GetMockableSphereArmClient(client).GetSphereCertificateResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProductResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SphereProductResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetProductResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereProductResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProductResource"/> object. </returns>
-        public static ProductResource GetProductResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SphereProductResource"/> object. </returns>
+        public static SphereProductResource GetSphereProductResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSphereArmClient(client).GetProductResource(id);
+            return GetMockableSphereArmClient(client).GetSphereProductResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of Catalogs in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of SphereCatalogs in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetCatalogs()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetSphereCatalogs()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Catalogs and their operations over a CatalogResource. </returns>
-        public static CatalogCollection GetCatalogs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SphereCatalogs and their operations over a SphereCatalogResource. </returns>
+        public static SphereCatalogCollection GetSphereCatalogs(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSphereResourceGroupResource(resourceGroupResource).GetCatalogs();
+            return GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalogs();
         }
 
         /// <summary>
         /// Get a Catalog
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetCatalogAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetSphereCatalogAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CatalogResource>> GetCatalogAsync(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSphereResourceGroupResource(resourceGroupResource).GetCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Catalog
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetCatalog(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetSphereCatalog(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -211,47 +211,47 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CatalogResource> GetCatalog(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
+        public static Response<SphereCatalogResource> GetSphereCatalog(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSphereResourceGroupResource(resourceGroupResource).GetCatalog(catalogName, cancellationToken);
+            return GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalog(catalogName, cancellationToken);
         }
 
         /// <summary>
         /// List Catalog resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereSubscriptionResource.GetCatalogsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereSubscriptionResource.GetSphereCatalogsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CatalogResource> GetCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SphereCatalogResource> GetSphereCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSphereSubscriptionResource(subscriptionResource).GetCatalogsAsync(cancellationToken);
+            return GetMockableSphereSubscriptionResource(subscriptionResource).GetSphereCatalogsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List Catalog resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSphereSubscriptionResource.GetCatalogs(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSphereSubscriptionResource.GetSphereCatalogs(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CatalogResource> GetCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SphereCatalogResource> GetSphereCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSphereSubscriptionResource(subscriptionResource).GetCatalogs(cancellationToken);
+            return GetMockableSphereSubscriptionResource(subscriptionResource).GetSphereCatalogs(cancellationToken);
         }
     }
 }

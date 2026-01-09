@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         /// <param name="value"> The Product items on this page. </param>
-        internal ProductListResult(IEnumerable<ProductData> value)
+        internal ProductListResult(IEnumerable<SphereProductData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="value"> The Product items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProductListResult(IList<ProductData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProductListResult(IList<SphereProductData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> The Product items on this page. </summary>
-        public IList<ProductData> Value { get; }
+        public IList<SphereProductData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

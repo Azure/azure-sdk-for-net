@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Initializes a new instance of <see cref="DeviceGroupListResult"/>. </summary>
         /// <param name="value"> The DeviceGroup items on this page. </param>
-        internal DeviceGroupListResult(IEnumerable<DeviceGroupData> value)
+        internal DeviceGroupListResult(IEnumerable<SphereDeviceGroupData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="value"> The DeviceGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceGroupListResult(IList<DeviceGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceGroupListResult(IList<SphereDeviceGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> The DeviceGroup items on this page. </summary>
-        public IList<DeviceGroupData> Value { get; }
+        public IList<SphereDeviceGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

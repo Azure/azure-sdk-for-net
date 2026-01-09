@@ -15,7 +15,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class CatalogsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<CatalogData>
+    internal partial class CatalogsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<SphereCatalogData>
     {
         private readonly Catalogs _client;
         private readonly string _subscriptionId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatalogsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CatalogData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SphereCatalogData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 CatalogListResult result = CatalogListResult.FromResponse(response);
-                yield return Page<CatalogData>.FromValues((IReadOnlyList<CatalogData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereCatalogData>.FromValues((IReadOnlyList<SphereCatalogData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sphere
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSphereSubscriptionResource.GetCatalogs");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSphereSubscriptionResource.GetSphereCatalogs");
             scope.Start();
             try
             {

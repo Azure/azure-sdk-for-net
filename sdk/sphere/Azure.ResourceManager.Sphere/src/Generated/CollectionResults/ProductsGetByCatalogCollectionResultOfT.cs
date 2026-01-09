@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class ProductsGetByCatalogCollectionResultOfT : Pageable<ProductData>
+    internal partial class ProductsGetByCatalogCollectionResultOfT : Pageable<SphereProductData>
     {
         private readonly Products _client;
         private readonly string _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ProductsGetByCatalogCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ProductData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SphereProductData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 ProductListResult result = ProductListResult.FromResponse(response);
-                yield return Page<ProductData>.FromValues((IReadOnlyList<ProductData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SphereProductData>.FromValues((IReadOnlyList<SphereProductData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sphere
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _context) : _client.CreateGetByCatalogRequest(_subscriptionId, _resourceGroupName, _catalogName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProductCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereProductCollection.GetAll");
             scope.Start();
             try
             {

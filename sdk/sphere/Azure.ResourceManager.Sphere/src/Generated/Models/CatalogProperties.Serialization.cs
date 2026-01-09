@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             string tenantId = default;
-            ProvisioningState? provisioningState = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SphereProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
