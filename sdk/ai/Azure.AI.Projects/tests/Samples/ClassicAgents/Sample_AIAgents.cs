@@ -9,12 +9,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent;
-using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AIAgents : SamplesBase
 {
     [Test]
     [SyncOnly]
@@ -25,7 +26,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -106,7 +107,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -192,4 +193,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
     }
+
+    public Sample_AIAgents(bool isAsync) : base(isAsync)
+    { }
 }

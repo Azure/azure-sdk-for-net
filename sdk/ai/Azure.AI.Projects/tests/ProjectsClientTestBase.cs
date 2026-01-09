@@ -4,16 +4,17 @@
 #nullable disable
 
 using System;
-using System.IO;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Azure.AI.Projects.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
-using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
@@ -23,7 +24,6 @@ namespace Azure.AI.Projects.Tests
     /// This class now uses a hybrid approach - it extends the standard Azure.Core RecordedTestBase
     /// but provides manual transport configuration for System.ClientModel compatibility.
     /// </summary>
-    [LiveOnly(Reason = "Restricted to live runs pending migration to SCM test framework")]
     public class ProjectsClientTestBase : RecordedTestBase<AIProjectsTestEnvironment>
     {
         #region Debug Method
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Tests
         }
         #endregion
 
-        private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+        private static RecordedTestMode? GetRecordedTestMode(string variable = "AZURE_TEST_MODE") => Environment.GetEnvironmentVariable(variable) switch
         {
             "Playback" => RecordedTestMode.Playback,
             "Live" => RecordedTestMode.Live,
@@ -90,13 +90,15 @@ namespace Azure.AI.Projects.Tests
             _ => null
         };
 
-        public ProjectsClientTestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
+        public ProjectsClientTestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode("CLIENTMODEL_TEST_MODE") ?? GetRecordedTestMode()) { }
 
         public ProjectsClientTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
         {
-            TestDiagnostics = false;
             // Apply sanitizers to protect sensitive information in recordings
             ProjectsTestSanitizers.ApplySanitizers(this);
+            // Icrease Test timeout because ComputerUse tool test can take a little
+            // more then 10 sec (default).
+            TestTimeoutInSeconds = 20;
         }
 
         /// <summary>
@@ -104,30 +106,93 @@ namespace Azure.AI.Projects.Tests
         /// We manually configure the transport for recording/playback since AIProjectClientOptions
         /// uses System.ClientModel.ClientPipelineOptions rather than Azure.Core.ClientOptions.
         /// </summary>
-        protected AIProjectClient GetTestClient(AIProjectClientOptions options = null)
-        {
-            options ??= new AIProjectClientOptions();
+        //protected AIProjectClient GetTestClient(AIProjectClientOptions options = null)
+        //{
+        //    options ??= new AIProjectClientOptions();
 
-            // Configure the options for recording if not in live mode
-            if (Mode != RecordedTestMode.Live && Recording != null)
+        //    // Configure the options for recording if not in live mode
+        //    if (Mode != RecordedTestMode.Live && Recording != null)
+        //    {
+        //        // Set up proxy transport for recording/playback
+        //        options.Transport = new ProjectsProxyTransport(Recording);
+
+        //        // Configure retry policy for faster playback
+        //        if (Mode == RecordedTestMode.Playback)
+        //        {
+        //            options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
+        //        }
+        //    }
+        //    options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
+        //    var endpoint = TestEnvironment.PROJECTENDPOINT;
+        //    var credential = TestEnvironment.Credential;
+
+        //    var client = new AIProjectClient(new Uri(endpoint), credential, options);
+
+        //    // Instrument the client for sync/async testing
+        //    return client; // InstrumentClient(client);
+        //}
+        protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument, headers);
+
+        protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
+        => GetConfiguredOptions(
+            new ProjectOpenAIClientOptions()
             {
-                // Set up proxy transport for recording/playback
-                options.Transport = new ProjectsProxyTransport(Recording);
+                Endpoint = endpoint,
+                ApiVersion = apiVersion,
+            },
+            instrument);
 
-                // Configure retry policy for faster playback
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-                }
+        private T GetConfiguredOptions<T>(T options, bool instrument, Dictionary<string, string> headers = null)
+            where T : ClientPipelineOptions
+        {
+            options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+            options.NetworkTimeout = TimeSpan.FromMinutes(5);
+            if (headers is not null && headers.Count > 0)
+            {
+                options.AddPolicy(new HeaderTestPolicy(headers), PipelinePosition.PerCall);
             }
-            options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-            var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var credential = TestEnvironment.Credential;
+            options.AddPolicy(
+                new TestPipelinePolicy(message =>
+                {
+                    if (Mode == RecordedTestMode.Playback)
+                    {
+                        // TODO: ...why!?
+                        message.Request.Headers.Set("Authorization", "Sanitized");
+                    }
+                    else
+                    {
+                        message.NetworkTimeout = TimeSpan.FromMinutes(5);
+                    }
+                }),
+                PipelinePosition.PerCall);
 
-            var client = new AIProjectClient(new Uri(endpoint), credential, options);
+            return instrument ? InstrumentClientOptions(options) : options;
+        }
 
-            // Instrument the client for sync/async testing
-            return client; // InstrumentClient(client);
+        private AuthenticationTokenProvider GetTestTokenProvider()
+        {
+            // For local testing if you are using non default account
+            // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
+            // also provide the PATH variable.
+            // This path should allow launching az command.
+            if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
+            {
+                return new AzureCliCredential();
+            }
+            return TestEnvironment.Credential;
+        }
+
+        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default)
+        {
+            AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
+            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
+        }
+
+        protected AIProjectClient GetTestProjectClientForLegacyAgents(Dictionary<string, string> headers = default)
+        {
+            AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
+            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
         }
 
         /// <summary>
@@ -138,13 +203,13 @@ namespace Azure.AI.Projects.Tests
         {
             options ??= new AIProjectClientOptions();
 
-            var endpoint = TestEnvironment.PROJECTENDPOINT;
+            var endpoint = TestEnvironment.PROJECT_ENDPOINT;
             var credential = TestEnvironment.Credential;
 
             var client = new AIProjectClient(new Uri(endpoint), credential, options);
 
             // Instrument the client for sync/async testing
-            return InstrumentClient(client);
+            return CreateProxyFromClient(client);
         }
 
         /// <summary>
@@ -341,6 +406,12 @@ namespace Azure.AI.Projects.Tests
         {
             return !string.IsNullOrEmpty(connectionString) &&
                    RegexAppInsightsConnectionString.IsMatch(connectionString);
+        }
+
+        protected static string GetTestFile(string fileName, [CallerFilePath] string pth = "")
+        {
+            var dirName = Path.GetDirectoryName(pth) ?? "";
+            return Path.Combine([ dirName, "TestData", fileName ]);
         }
     }
 }

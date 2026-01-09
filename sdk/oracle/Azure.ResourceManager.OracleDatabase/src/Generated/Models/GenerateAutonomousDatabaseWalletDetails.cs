@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> Autonomous Database Generate Wallet resource model. </summary>
     public partial class GenerateAutonomousDatabaseWalletDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GenerateAutonomousDatabaseWalletDetails"/>. </summary>
         /// <param name="password"> The password to encrypt the keys inside the wallet. </param>
@@ -59,24 +31,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="generateType"> The type of wallet to generate. </param>
         /// <param name="isRegional"> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </param>
         /// <param name="password"> The password to encrypt the keys inside the wallet. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateAutonomousDatabaseWalletDetails(WalletGenerateType? generateType, bool? isRegional, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateAutonomousDatabaseWalletDetails(WalletGenerateType? generateType, bool? isRegional, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GenerateType = generateType;
             IsRegional = isRegional;
             Password = password;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GenerateAutonomousDatabaseWalletDetails"/> for deserialization. </summary>
-        internal GenerateAutonomousDatabaseWalletDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of wallet to generate. </summary>
         public WalletGenerateType? GenerateType { get; set; }
+
         /// <summary> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </summary>
         public bool? IsRegional { get; set; }
+
         /// <summary> The password to encrypt the keys inside the wallet. </summary>
         public string Password { get; }
     }

@@ -9,15 +9,13 @@ using System.ClientModel;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Azure.AI.Projects.Tests.Samples.FineTuning;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
 
-namespace Azure.AI.Projects.Tests.Samples.FineTuning;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
+public class Sample15_Files : SamplesBase
 {
     [Test]
     public async Task FileOperationsAsync()
@@ -130,4 +128,6 @@ public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
             }
         }
     }
+    public Sample15_Files(bool isAsync) : base(isAsync)
+    { }
 }

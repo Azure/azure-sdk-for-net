@@ -47,6 +47,12 @@ model FooProperties {
 
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
+
+  /** WritableSubResource property for testing WritableSubResource type replacement */
+  writableSubResourceProp?: WritableSubResourceProp;
+}
+
+model WritableSubResourceProp {
 }
 
 model NestedFooModel {
@@ -54,7 +60,7 @@ model NestedFooModel {
 }
 
 model SafeFlattenModel {
-  flattenedProperty: string;
+  flattenedProperty?: string[];
 }
 
 @armResourceOperations
@@ -78,6 +84,14 @@ interface Foos {
       ArmLroLocationHeader<FinalResult = FooActionResult> &
       Azure.Core.Foundations.RetryAfterHeader
   >;
+
+  @get
+  @action("listDependencies")
+  listDependencies is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooDependency[]>
+  >;
 }
 
 model FooActionRequest {
@@ -87,6 +101,11 @@ model FooActionRequest {
 model FooActionResult {
   msg: string;
   error?: Azure.ResourceManager.Foundations.ErrorDetail;
+}
+
+model FooDependency {
+  dependencyName: string;
+  version?: string;
 }
 
 @singleton

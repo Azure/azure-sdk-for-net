@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Utils;
 
 internal partial class TestPipelinePolicy : PipelinePolicy
 {

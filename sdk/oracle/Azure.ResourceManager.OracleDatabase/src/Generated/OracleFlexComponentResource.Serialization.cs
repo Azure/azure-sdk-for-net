@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
+    /// <summary></summary>
     public partial class OracleFlexComponentResource : IJsonModel<OracleFlexComponentData>
     {
-        private static OracleFlexComponentData s_dataDeserializationInstance;
-        private static OracleFlexComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OracleFlexComponentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OracleFlexComponentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OracleFlexComponentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleFlexComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleFlexComponentData>)Data).Write(writer, options);
 
-        OracleFlexComponentData IJsonModel<OracleFlexComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleFlexComponentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleFlexComponentData IJsonModel<OracleFlexComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OracleFlexComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleFlexComponentData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OracleFlexComponentData IPersistableModel<OracleFlexComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleFlexComponentData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<OracleFlexComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleFlexComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OracleFlexComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -10,16 +10,14 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
-namespace Azure.AI.Projects.Tests.Samples.FineTuning;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnvironment>
+public partial class Sample19_FineTuning_OSS : SamplesBase
 {
     [Test]
     public async Task OssFineTuningAsync()
@@ -172,4 +170,7 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
         Console.WriteLine($"Status: {fineTuningJob.Status}");
         #endregion
     }
+
+    public Sample19_FineTuning_OSS(bool isAsync) : base(isAsync)
+    { }
 }

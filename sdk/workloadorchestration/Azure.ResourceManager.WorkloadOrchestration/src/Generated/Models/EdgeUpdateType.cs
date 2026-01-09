@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct EdgeUpdateType : IEquatable<EdgeUpdateType>
     {
         private readonly string _value;
+        /// <summary> Major version. </summary>
+        private const string MajorValue = "Major";
+        /// <summary> Minor version. </summary>
+        private const string MinorValue = "Minor";
+        /// <summary> Patch version. </summary>
+        private const string PatchValue = "Patch";
 
         /// <summary> Initializes a new instance of <see cref="EdgeUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeUpdateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MajorValue = "Major";
-        private const string MinorValue = "Minor";
-        private const string PatchValue = "Patch";
+            _value = value;
+        }
 
         /// <summary> Major version. </summary>
         public static EdgeUpdateType Major { get; } = new EdgeUpdateType(MajorValue);
+
         /// <summary> Minor version. </summary>
         public static EdgeUpdateType Minor { get; } = new EdgeUpdateType(MinorValue);
+
         /// <summary> Patch version. </summary>
         public static EdgeUpdateType Patch { get; } = new EdgeUpdateType(PatchValue);
+
         /// <summary> Determines if two <see cref="EdgeUpdateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeUpdateType left, EdgeUpdateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeUpdateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeUpdateType left, EdgeUpdateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeUpdateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeUpdateType(string value) => new EdgeUpdateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeUpdateType?(string value) => value == null ? null : new EdgeUpdateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeUpdateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeUpdateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -465,6 +465,8 @@
         "somaxconn",
         "sysctls",
         "tcpkeepalive",
+        "undrainable",
+        "vtpm",
         "wasi",
         "wmem"
       ]

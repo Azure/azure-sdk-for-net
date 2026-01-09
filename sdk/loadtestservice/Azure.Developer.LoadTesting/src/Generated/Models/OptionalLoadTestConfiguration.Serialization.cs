@@ -120,7 +120,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    endpointUri = new Uri(prop.Value.GetString());
+                    endpointUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requestsPerSecond"u8))

@@ -5,26 +5,22 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using Azure.Core.TestFramework;
-using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
     public class TelemetryTest : ProjectsClientTestBase
     {
-        public TelemetryTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        public TelemetryTest(bool isAsync) : base(isAsync)
         {
         }
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Pending Microsoft.ClientModel.TestFramework migration")]
         public async Task TelemetryOperationsTest()
         {
-            AIProjectClient projectClient = GetTestClient();
+            AIProjectClient projectClient = GetTestProjectClient();
 
             Console.WriteLine("Get the Application Insights connection string.");
             string connectionString = "";

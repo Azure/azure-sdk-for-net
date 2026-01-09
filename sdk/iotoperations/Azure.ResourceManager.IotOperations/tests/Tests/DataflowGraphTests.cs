@@ -88,13 +88,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                             Configuration = { new DataflowGraphGraphNodeConfiguration("key1", "value1"), new DataflowGraphGraphNodeConfiguration("key2", "value2") },
                         }),
                         new DataflowGraphDestinationNode("alert", new DataflowGraphDestinationNodeSettings("default", "telemetry/temperature/alert")),
-                        new DataflowGraphDestinationNode("fabric", new DataflowGraphDestinationNodeSettings("fabric", "my-table")
-                        {
-                            OutputSchemaSettings = new DataflowGraphDestinationSchemaSettings(DataflowGraphDestinationSchemaSerializationFormat.Parquet)
-                            {
-                                SchemaRef = "aio-sr://namespace/alert-parquet:1",
-                            },
-                        })
+                        new DataflowGraphDestinationNode("fabric", new DataflowGraphDestinationNodeSettings("fabric", "my-table"))
                     },
                     new DataflowGraphNodeConnection[]
                     {

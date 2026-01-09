@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DnsPrivateViewsLifecycleState : IEquatable<DnsPrivateViewsLifecycleState>
     {
         private readonly string _value;
+        /// <summary> DNS Private View is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> DNS Private View is deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> DNS Private View is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> DNS Private View is updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DnsPrivateViewsLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string DeletedValue = "Deleted";
-        private const string DeletingValue = "Deleting";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> DNS Private View is active. </summary>
         public static DnsPrivateViewsLifecycleState Active { get; } = new DnsPrivateViewsLifecycleState(ActiveValue);
+
         /// <summary> DNS Private View is deleted. </summary>
         public static DnsPrivateViewsLifecycleState Deleted { get; } = new DnsPrivateViewsLifecycleState(DeletedValue);
+
         /// <summary> DNS Private View is deleting. </summary>
         public static DnsPrivateViewsLifecycleState Deleting { get; } = new DnsPrivateViewsLifecycleState(DeletingValue);
+
         /// <summary> DNS Private View is updating. </summary>
         public static DnsPrivateViewsLifecycleState Updating { get; } = new DnsPrivateViewsLifecycleState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="DnsPrivateViewsLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsPrivateViewsLifecycleState left, DnsPrivateViewsLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsPrivateViewsLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsPrivateViewsLifecycleState left, DnsPrivateViewsLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsPrivateViewsLifecycleState(string value) => new DnsPrivateViewsLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsPrivateViewsLifecycleState?(string value) => value == null ? null : new DnsPrivateViewsLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsPrivateViewsLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsPrivateViewsLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
