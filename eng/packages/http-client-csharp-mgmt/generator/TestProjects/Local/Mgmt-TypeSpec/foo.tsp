@@ -52,6 +52,9 @@ model FooProperties {
 
   /** WritableSubResource property for testing WritableSubResource type replacement */
   writableSubResourceProp?: WritableSubResourceProp;
+
+  /** Test case for multi-layer safe flatten */
+  computeFleetVmProfile?: ComputeFleetVmProfile;
 }
 
 model WritableSubResourceProp {
@@ -63,6 +66,20 @@ model NestedFooModel {
 
 model SafeFlattenModel {
   flattenedProperty?: string[];
+}
+
+// Test case for multi-layer safe flatten with internal properties
+// This should flatten CapacityReservationGroupId all the way up to ComputeFleetVmProfile
+model TestSubResource {
+  id?: armResourceIdentifier;
+}
+
+model CapacityReservationProfile {
+  capacityReservationGroup?: TestSubResource;
+}
+
+model ComputeFleetVmProfile {
+  capacityReservation?: CapacityReservationProfile;
 }
 
 @armResourceOperations

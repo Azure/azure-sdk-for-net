@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -50,8 +51,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="optionalProperty"></param>
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
+        /// <param name="computeFleetVmProfile"> Test case for multi-layer safe flatten. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, WritableSubResource writableSubResourceProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -64,6 +66,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             OptionalProperty = optionalProperty;
             ETag = eTag;
             WritableSubResourceProp = writableSubResourceProp;
+            ComputeFleetVmProfile = computeFleetVmProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -111,6 +114,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         [WirePath("writableSubResourceProp")]
         public WritableSubResource WritableSubResourceProp { get; set; }
 
+        /// <summary> Test case for multi-layer safe flatten. </summary>
+        [WirePath("computeFleetVmProfile")]
+        internal ComputeFleetVmProfile ComputeFleetVmProfile { get; set; }
+
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
@@ -136,6 +143,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     OptionalProperty = new SafeFlattenModel();
                 }
                 return OptionalProperty.FlattenedProperty;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        [WirePath("computeFleetVmProfile.capacityReservation.capacityReservationGroup.id")]
+        public ResourceIdentifier ComputeFleetVmCapacityReservationGroupId
+        {
+            get
+            {
+                return ComputeFleetVmProfile is null ? default : ComputeFleetVmProfile.CapacityReservationGroupId;
+            }
+            set
+            {
+                if (ComputeFleetVmProfile is null)
+                {
+                    ComputeFleetVmProfile = new ComputeFleetVmProfile();
+                }
+                ComputeFleetVmProfile.CapacityReservationGroupId = value;
             }
         }
     }
