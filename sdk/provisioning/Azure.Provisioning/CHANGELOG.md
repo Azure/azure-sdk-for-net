@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `BicepFunction.Join` method corresponding to bicep built-in function `join` for combining array elements into a string with a delimiter.
+
 ### Breaking Changes
 
 ### Bugs Fixed
