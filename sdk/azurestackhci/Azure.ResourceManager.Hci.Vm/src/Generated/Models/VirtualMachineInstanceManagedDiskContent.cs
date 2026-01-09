@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class VirtualMachineInstanceManagedDiskContent
+    internal partial class VirtualMachineInstanceManagedDiskContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
