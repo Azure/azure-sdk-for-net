@@ -244,7 +244,7 @@ namespace Azure.AI.Projects.Telemetry
             else if (agentDefinition is Azure.AI.Projects.OpenAI.WorkflowAgentDefinition workflowAgentDefinition)
             {
                 // Handle workflow agent
-                scope.SetTagMaybe(GenAiRequestModelKey, "workflow");
+                // Note: Workflow agents do not have a model, so we don't set GenAiRequestModelKey
 
                 // Get the workflow YAML using reflection since WorkflowYaml is private
                 var workflowYamlProperty = typeof(Azure.AI.Projects.OpenAI.WorkflowAgentDefinition).GetProperty("WorkflowYaml",
@@ -301,26 +301,6 @@ namespace Azure.AI.Projects.Telemetry
                 // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
                 scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
-
-                // Try to get image from additional properties (workaround for deserialization not routing to ImageBasedHostedAgentDefinition)
-                // The image property gets stored in additional properties when deserialized as HostedAgentDefinition
-                var additionalPropertiesProperty = typeof(Azure.AI.Projects.OpenAI.HostedAgentDefinition)
-                    .GetProperty("AdditionalBinaryDataProperties", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-                if (additionalPropertiesProperty != null)
-                {
-                    var additionalProperties = additionalPropertiesProperty.GetValue(hostedAgentDefinition) as IDictionary<string, BinaryData>;
-                    if (additionalProperties != null && additionalProperties.TryGetValue("image", out var imageData))
-                    {
-                        string image = imageData.ToString();
-                        // Remove quotes if present
-                        if (image.StartsWith("\"") && image.EndsWith("\""))
-                        {
-                            image = image.Substring(1, image.Length - 2);
-                        }
-                        scope.SetTagMaybe(GenAiAgentHostedImage, image);
-                    }
-                }
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (hostedAgentDefinition.ContainerProtocolVersions != null &&

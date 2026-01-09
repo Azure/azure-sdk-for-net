@@ -506,6 +506,168 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
     }
 
+    [RecordedTest]
+    public async Task TestWorkflowAgentCreationWithTracingContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var agentName = "test-workflow-agent";
+
+        string workflowYaml = @"
+kind: workflow
+trigger:
+  kind: OnConversationStart
+  id: test_workflow
+  actions:
+    - kind: SetVariable
+      id: set_variable
+      variable: Local.TestVar
+      value: ""test""
+";
+
+        AgentDefinition workflowDefinition = WorkflowAgentDefinition.FromYaml(workflowYaml);
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new AgentVersionCreationOptions(workflowDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Not.Null);
+
+        // Verify attributes
+        var expectedAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.provider.name", "azure.ai.agents" },
+            { "gen_ai.operation.name", "create_agent" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.agent.name", agentName },
+            { "gen_ai.agent.id", "*" },
+            { "gen_ai.agent.version", "1" },
+            { "gen_ai.agent.type", "workflow" }
+        };
+
+        GenAiTraceVerifier.ValidateSpanAttributes(createAgentSpan, expectedAttributes);
+
+        // Verify no unexpected attributes
+        var actualAttributes = new HashSet<string>();
+        foreach (KeyValuePair<string, object> tag in createAgentSpan.EnumerateTagObjects())
+        {
+            actualAttributes.Add(tag.Key);
+        }
+
+        var expectedKeys = new HashSet<string>(expectedAttributes.Keys);
+        var unexpectedAttributes = actualAttributes.Except(expectedKeys).ToList();
+        Assert.That(unexpectedAttributes, Is.Empty,
+            $"Found unexpected attributes in create_agent span: {string.Join(", ", unexpectedAttributes)}");
+
+        // Verify workflow event with content
+        var events = createAgentSpan.Events.ToList();
+        Assert.That(events.Count, Is.EqualTo(1));
+        var workflowEvent = events[0];
+        Assert.That(workflowEvent.Name, Is.EqualTo("gen_ai.agent.workflow"));
+
+        var eventContent = workflowEvent.Tags.FirstOrDefault(t => t.Key == "gen_ai.event.content").Value as string;
+        Assert.That(eventContent, Is.Not.Null);
+
+        // Parse and verify content structure
+        var contentArray = System.Text.Json.JsonDocument.Parse(eventContent).RootElement;
+        Assert.That(contentArray.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
+        Assert.That(contentArray.GetArrayLength(), Is.EqualTo(1));
+
+        var contentItem = contentArray[0];
+        Assert.That(contentItem.GetProperty("type").GetString(), Is.EqualTo("workflow"));
+        Assert.That(contentItem.TryGetProperty("content", out var content), Is.True);
+        var workflowContent = content.GetString();
+        Assert.That(workflowContent, Does.Contain("kind: workflow"));
+    }
+
+    [RecordedTest]
+    public async Task TestWorkflowAgentCreationWithTracingContentRecordingDisabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var agentName = "test-workflow-agent";
+
+        string workflowYaml = @"
+kind: workflow
+trigger:
+  kind: OnConversationStart
+  id: test_workflow
+  actions:
+    - kind: SetVariable
+      id: set_variable
+      variable: Local.TestVar
+      value: ""test""
+";
+
+        AgentDefinition workflowDefinition = WorkflowAgentDefinition.FromYaml(workflowYaml);
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new AgentVersionCreationOptions(workflowDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Not.Null);
+
+        // Verify attributes
+        var expectedAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.provider.name", "azure.ai.agents" },
+            { "gen_ai.operation.name", "create_agent" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.agent.name", agentName },
+            { "gen_ai.agent.id", "*" },
+            { "gen_ai.agent.version", "1" },
+            { "gen_ai.agent.type", "workflow" }
+        };
+
+        GenAiTraceVerifier.ValidateSpanAttributes(createAgentSpan, expectedAttributes);
+
+        // Verify no unexpected attributes
+        var actualAttributes = new HashSet<string>();
+        foreach (KeyValuePair<string, object> tag in createAgentSpan.EnumerateTagObjects())
+        {
+            actualAttributes.Add(tag.Key);
+        }
+
+        var expectedKeys = new HashSet<string>(expectedAttributes.Keys);
+        var unexpectedAttributes = actualAttributes.Except(expectedKeys).ToList();
+        Assert.That(unexpectedAttributes, Is.Empty,
+            $"Found unexpected attributes in create_agent span: {string.Join(", ", unexpectedAttributes)}");
+
+        // Verify workflow event without content (empty array)
+        var events = createAgentSpan.Events.ToList();
+        Assert.That(events.Count, Is.EqualTo(1));
+        var workflowEvent = events[0];
+        Assert.That(workflowEvent.Name, Is.EqualTo("gen_ai.agent.workflow"));
+
+        var eventContent = workflowEvent.Tags.FirstOrDefault(t => t.Key == "gen_ai.event.content").Value as string;
+        Assert.That(eventContent, Is.Not.Null);
+
+        // Parse and verify content is empty array
+        var contentArray = System.Text.Json.JsonDocument.Parse(eventContent).RootElement;
+        Assert.That(contentArray.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
+        Assert.That(contentArray.GetArrayLength(), Is.EqualTo(0));
+    }
+
     private async Task WaitMayBe(int timeout = 1000)
     {
         if (Mode != RecordedTestMode.Playback)
