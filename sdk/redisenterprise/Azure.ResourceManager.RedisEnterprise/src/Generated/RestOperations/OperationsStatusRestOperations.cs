@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-08-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Gets the status of operation. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Gets the status of operation. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>

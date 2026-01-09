@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,266 +415,6 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Retrieves the access keys for the Redis Enterprise database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_ListKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RedisEnterpriseDataAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = await _redisEnterpriseDatabaseDatabasesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the access keys for the Redis Enterprise database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_ListKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RedisEnterpriseDataAccessKeys> GetKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.GetKeys");
-            scope.Start();
-            try
-            {
-                var response = _redisEnterpriseDatabaseDatabasesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates the Redis Enterprise database's access keys.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/regenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_RegenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Specifies which key to regenerate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisEnterpriseDataAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
-            scope.Start();
-            try
-            {
-                var response = await _redisEnterpriseDatabaseDatabasesRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys>(new RedisEnterpriseDataAccessKeysOperationSource(), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates the Redis Enterprise database's access keys.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/regenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_RegenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Specifies which key to regenerate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RedisEnterpriseDataAccessKeys> RegenerateKey(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
-            scope.Start();
-            try
-            {
-                var response = _redisEnterpriseDatabaseDatabasesRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys>(new RedisEnterpriseDataAccessKeysOperationSource(), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Imports database files to target database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/import</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Import</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Storage information for importing into the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ImportAsync(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
-            scope.Start();
-            try
-            {
-                var response = await _redisEnterpriseDatabaseDatabasesRestClient.ImportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Imports database files to target database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/import</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Import</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Storage information for importing into the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Import(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
-            scope.Start();
-            try
-            {
-                var response = _redisEnterpriseDatabaseDatabasesRestClient.Import(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Exports a database file from target database.
         /// <list type="bullet">
         /// <item>
@@ -687,7 +427,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -733,7 +473,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -767,19 +507,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Forcibly removes the link to the specified database resource.
+        /// Flushes all the keys in this database and also from its linked databases.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/forceUnlink</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/flush</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Databases_ForceUnlink</description>
+        /// <description>Databases_Flush</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -788,19 +528,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Information identifying the database to be unlinked. </param>
+        /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ForceUnlinkAsync(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
             scope.Start();
             try
             {
-                var response = await _redisEnterpriseDatabaseDatabasesRestClient.ForceUnlinkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateForceUnlinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _redisEnterpriseDatabaseDatabasesRestClient.FlushAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -813,19 +550,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Forcibly removes the link to the specified database resource.
+        /// Flushes all the keys in this database and also from its linked databases.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/forceUnlink</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/flush</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Databases_ForceUnlink</description>
+        /// <description>Databases_Flush</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -834,19 +571,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Information identifying the database to be unlinked. </param>
+        /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ForceUnlink(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Flush(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
             scope.Start();
             try
             {
-                var response = _redisEnterpriseDatabaseDatabasesRestClient.ForceUnlink(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateForceUnlinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _redisEnterpriseDatabaseDatabasesRestClient.Flush(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -871,7 +605,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -917,7 +651,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -951,19 +685,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Flushes all the keys in this database and also from its linked databases.
+        /// Forcibly removes the link to the specified database resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/flush</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/forceUnlink</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Databases_Flush</description>
+        /// <description>Databases_ForceUnlink</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -972,16 +706,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Information identifying the databases to be flushed. </param>
+        /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ForceUnlinkAsync(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
             scope.Start();
             try
             {
-                var response = await _redisEnterpriseDatabaseDatabasesRestClient.FlushAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisEnterpriseDatabaseDatabasesRestClient.ForceUnlinkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateForceUnlinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -994,19 +731,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Flushes all the keys in this database and also from its linked databases.
+        /// Forcibly removes the link to the specified database resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/flush</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/forceUnlink</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Databases_Flush</description>
+        /// <description>Databases_ForceUnlink</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1015,18 +752,281 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Information identifying the databases to be flushed. </param>
+        /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Flush(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ForceUnlink(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
             scope.Start();
             try
             {
-                var response = _redisEnterpriseDatabaseDatabasesRestClient.Flush(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _redisEnterpriseDatabaseDatabasesRestClient.ForceUnlink(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateForceUnlinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Imports database files to target database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/import</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Import</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Storage information for importing into the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ImportAsync(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
+            scope.Start();
+            try
+            {
+                var response = await _redisEnterpriseDatabaseDatabasesRestClient.ImportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Imports database files to target database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/import</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Import</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Storage information for importing into the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Import(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
+            scope.Start();
+            try
+            {
+                var response = _redisEnterpriseDatabaseDatabasesRestClient.Import(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the access keys for the Redis Enterprise database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RedisEnterpriseDataAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = await _redisEnterpriseDatabaseDatabasesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the access keys for the Redis Enterprise database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RedisEnterpriseDataAccessKeys> GetKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = _redisEnterpriseDatabaseDatabasesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates the Redis Enterprise database's access keys.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Specifies which key to regenerate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<RedisEnterpriseDataAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
+            scope.Start();
+            try
+            {
+                var response = await _redisEnterpriseDatabaseDatabasesRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys>(new RedisEnterpriseDataAccessKeysOperationSource(), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates the Redis Enterprise database's access keys.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Specifies which key to regenerate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<RedisEnterpriseDataAccessKeys> RegenerateKey(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
+            scope.Start();
+            try
+            {
+                var response = _redisEnterpriseDatabaseDatabasesRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys>(new RedisEnterpriseDataAccessKeysOperationSource(), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

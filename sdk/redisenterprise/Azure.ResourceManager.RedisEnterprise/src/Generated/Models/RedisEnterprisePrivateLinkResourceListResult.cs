@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterprisePrivateLinkResourceListResult(IReadOnlyList<RedisEnterprisePrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterprisePrivateLinkResourceListResult(IReadOnlyList<RedisEnterprisePrivateLinkResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<RedisEnterprisePrivateLinkResource> Value { get; }
+        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
+        public Uri NextLink { get; }
     }
 }

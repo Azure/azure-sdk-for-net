@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class RedisEnterprisePrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterprisePrivateEndpointConnectionListResult(IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterprisePrivateEndpointConnectionListResult(IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
         public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> Value { get; }
+        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
+        public Uri NextLink { get; }
     }
 }

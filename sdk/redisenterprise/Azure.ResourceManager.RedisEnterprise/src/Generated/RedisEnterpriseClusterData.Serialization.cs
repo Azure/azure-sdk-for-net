@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,6 +77,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(MaintenanceConfiguration))
+            {
+                writer.WritePropertyName("maintenanceConfiguration"u8);
+                writer.WriteObjectValue(MaintenanceConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             RedisEnterpriseHighAvailability? highAvailability = default;
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
+            MaintenanceConfiguration maintenanceConfiguration = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRedisEnterpriseContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -286,6 +292,15 @@ namespace Azure.ResourceManager.RedisEnterprise
                                 continue;
                             }
                             encryption = ClusterPropertiesEncryption.DeserializeClusterPropertiesEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenanceConfiguration = MaintenanceConfiguration.DeserializeMaintenanceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -372,6 +387,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 highAvailability,
                 minimumTlsVersion,
                 encryption,
+                maintenanceConfiguration,
                 hostName,
                 provisioningState,
                 redundancyMode,
@@ -625,6 +641,26 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     builder.Append("    encryption: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Encryption, options, 4, false, "    encryption: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("MaintenanceWindows", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maintenanceConfiguration: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      maintenanceConfiguration: {");
+                builder.Append("        maintenanceWindows: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(MaintenanceConfiguration))
+                {
+                    builder.Append("    maintenanceConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MaintenanceConfiguration, options, 4, false, "    maintenanceConfiguration: ");
                 }
             }
 

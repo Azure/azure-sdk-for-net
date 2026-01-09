@@ -73,11 +73,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Distinguishes the kind of cluster. Read-only. </param>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
-        /// <param name="zones"> The Availability Zones where this cluster will be deployed. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </param>
         /// <param name="encryption"> Encryption-at-rest configuration for the cluster. </param>
+        /// <param name="maintenanceConfiguration"> Cluster-level maintenance configuration. </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
         /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </param>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IList<string> zones, ManagedServiceIdentity identity, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, RedisEnterprisePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IList<string> zones, ManagedServiceIdentity identity, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, RedisEnterprisePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Sku = sku;
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             HighAvailability = highAvailability;
             MinimumTlsVersion = minimumTlsVersion;
             Encryption = encryption;
+            MaintenanceConfiguration = maintenanceConfiguration;
             HostName = hostName;
             ProvisioningState = provisioningState;
             RedundancyMode = redundancyMode;
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> The SKU to create, which affects price, performance, and features. </summary>
         [WirePath("sku")]
         public RedisEnterpriseSku Sku { get; set; }
-        /// <summary> The Availability Zones where this cluster will be deployed. </summary>
+        /// <summary> The availability zones. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The identity of the resource. </summary>
@@ -140,6 +142,20 @@ namespace Azure.ResourceManager.RedisEnterprise
                 if (Encryption is null)
                     Encryption = new ClusterPropertiesEncryption();
                 Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> Cluster-level maintenance configuration. </summary>
+        internal MaintenanceConfiguration MaintenanceConfiguration { get; set; }
+        /// <summary> Custom maintenance windows that apply to the cluster. </summary>
+        [WirePath("properties.maintenanceConfiguration.maintenanceWindows")]
+        public IList<ClusterCustomMaintenanceWindow> MaintenanceWindows
+        {
+            get
+            {
+                if (MaintenanceConfiguration is null)
+                    MaintenanceConfiguration = new MaintenanceConfiguration();
+                return MaintenanceConfiguration.MaintenanceWindows;
             }
         }
 

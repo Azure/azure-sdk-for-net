@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             IReadOnlyList<RedisEnterprisePrivateLinkResource> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,13 +108,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisEnterprisePrivateLinkResourceListResult(value ?? new ChangeTrackingList<RedisEnterprisePrivateLinkResource>(), serializedAdditionalRawData);
+            return new RedisEnterprisePrivateLinkResourceListResult(value ?? new ChangeTrackingList<RedisEnterprisePrivateLinkResource>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -142,6 +157,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         }
                         builder.AppendLine("  ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    builder.Append("  nextLink: ");
+                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
                 }
             }
 
