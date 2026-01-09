@@ -511,7 +511,7 @@
   </ItemGroup>
 
   <!--
-    xunit is only approved for legacy use. Azure SDK test rojects should use NUnit.
+    xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
   -->
   <ItemGroup Condition="
       ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
@@ -548,7 +548,7 @@
   </ItemGroup>
 
   <!--
-    BouncyCastle are approved only for legacy use.
+    BouncyCastle is approved only for legacy use.
   -->
   <ItemGroup Condition="
       ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')
