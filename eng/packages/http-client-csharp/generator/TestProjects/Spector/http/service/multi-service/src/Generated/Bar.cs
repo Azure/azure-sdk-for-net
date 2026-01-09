@@ -102,17 +102,19 @@ namespace Service.MultiService.ServiceB
         /// <summary> Test. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Test(CancellationToken cancellationToken = default)
+        public virtual Response<BarModel> Test(CancellationToken cancellationToken = default)
         {
-            return Test(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Test(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((BarModel)result, result);
         }
 
         /// <summary> Test. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> TestAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BarModel>> TestAsync(CancellationToken cancellationToken = default)
         {
-            return await TestAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await TestAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((BarModel)result, result);
         }
     }
 }
