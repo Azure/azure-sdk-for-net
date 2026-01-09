@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetVMGroup.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetVMGroup.json
             // this example is just showing the usage of "WorkloadNetworkVMGroup_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeleteVMGroup()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeleteVMGroup.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_DeleteVMGroup.json
             // this example is just showing the usage of "WorkloadNetworkVMGroup_DeleteVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksUpdateVMGroup()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_UpdateVMGroup.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_UpdateVMGroup.json
             // this example is just showing the usage of "WorkloadNetworkVMGroup_UpdateVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

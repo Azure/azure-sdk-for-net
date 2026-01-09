@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailability()
         {
-            // Generated from example definition: 2024-09-01/Locations_CheckTrialAvailability.json
+            // Generated from example definition: 2025-09-01/Locations_CheckTrialAvailability.json
             // this example is just showing the usage of "Locations_CheckAvsTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailabilityWithSku()
         {
-            // Generated from example definition: 2024-09-01/Locations_CheckTrialAvailabilityWithSku.json
+            // Generated from example definition: 2025-09-01/Locations_CheckTrialAvailabilityWithSku.json
             // this example is just showing the usage of "Locations_CheckAvsTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckAvsQuotaAvailability_LocationsCheckQuotaAvailability()
         {
-            // Generated from example definition: 2024-09-01/Locations_CheckQuotaAvailability.json
+            // Generated from example definition: 2025-09-01/Locations_CheckQuotaAvailability.json
             // this example is just showing the usage of "Locations_CheckAvsQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscription()
         {
-            // Generated from example definition: 2024-09-01/PrivateClouds_ListInSubscription.json
+            // Generated from example definition: 2025-09-01/PrivateClouds_ListInSubscription.json
             // this example is just showing the usage of "PrivateCloud_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscriptionStretched()
         {
-            // Generated from example definition: 2024-09-01/PrivateClouds_ListInSubscription_Stretched.json
+            // Generated from example definition: 2025-09-01/PrivateClouds_ListInSubscription_Stretched.json
             // this example is just showing the usage of "PrivateCloud_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvsSkus_SkusList()
         {
-            // Generated from example definition: 2024-09-01/Skus_List.json
+            // Generated from example definition: 2025-09-01/Skus_List.json
             // this example is just showing the usage of "Skus_GetAvsSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

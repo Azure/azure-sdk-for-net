@@ -357,5 +357,29 @@ namespace Azure.ResourceManager.Avs.Mocking
             AvsPureStoragePolicyResource.ValidateResourceId(id);
             return new AvsPureStoragePolicyResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AvsMaintenanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsMaintenanceResource.CreateResourceIdentifier" /> to create an <see cref="AvsMaintenanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AvsMaintenanceResource"/> object. </returns>
+        public virtual AvsMaintenanceResource GetAvsMaintenanceResource(ResourceIdentifier id)
+        {
+            AvsMaintenanceResource.ValidateResourceId(id);
+            return new AvsMaintenanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AvsLicenseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsLicenseResource.CreateResourceIdentifier" /> to create an <see cref="AvsLicenseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AvsLicenseResource"/> object. </returns>
+        public virtual AvsLicenseResource GetAvsLicenseResource(ResourceIdentifier id)
+        {
+            AvsLicenseResource.ValidateResourceId(id);
+            return new AvsLicenseResource(Client, id);
+        }
     }
 }
