@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         private readonly ClientDiagnostics _managedClustersClientDiagnostics;
         private readonly ManagedClusters _managedClustersRestClient;
-        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
-        private readonly ManagedAzResiliencyStatus _managedAzResiliencyStatusRestClient;
         private readonly ClientDiagnostics _managedApplyMaintenanceWindowClientDiagnostics;
         private readonly ManagedApplyMaintenanceWindow _managedApplyMaintenanceWindowRestClient;
+        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
+        private readonly ManagedAzResiliencyStatus _managedAzResiliencyStatusRestClient;
         private readonly ClientDiagnostics _managedMaintenanceWindowStatusClientDiagnostics;
         private readonly ManagedMaintenanceWindowStatus _managedMaintenanceWindowStatusRestClient;
         private readonly ServiceFabricManagedClusterData _data;
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             TryGetApiVersion(ResourceType, out string serviceFabricManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
             _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
-            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatus(_managedAzResiliencyStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
             _managedApplyMaintenanceWindowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
             _managedApplyMaintenanceWindowRestClient = new ManagedApplyMaintenanceWindow(_managedApplyMaintenanceWindowClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
+            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
+            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatus(_managedAzResiliencyStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
             _managedMaintenanceWindowStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
             _managedMaintenanceWindowStatusRestClient = new ManagedMaintenanceWindowStatus(_managedMaintenanceWindowStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
@@ -409,6 +409,188 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedAzResiliencyStatus_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Models.ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedAzResiliencyStatusRestClient.CreateGetManagedAzResiliencyStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Models.ManagedAzResiliencyStatus> response = Response.FromValue(Models.ManagedAzResiliencyStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedAzResiliencyStatus_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Models.ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedAzResiliencyStatusRestClient.CreateGetManagedAzResiliencyStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Models.ManagedAzResiliencyStatus> response = Response.FromValue(Models.ManagedAzResiliencyStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -813,188 +995,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedAzResiliencyStatus_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Models.ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedAzResiliencyStatusRestClient.CreateGetManagedAzResiliencyStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.ManagedAzResiliencyStatus> response = Response.FromValue(Models.ManagedAzResiliencyStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedAzResiliencyStatus_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Models.ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedAzResiliencyStatusRestClient.CreateGetManagedAzResiliencyStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.ManagedAzResiliencyStatus> response = Response.FromValue(Models.ManagedAzResiliencyStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
             }
             catch (Exception e)
             {

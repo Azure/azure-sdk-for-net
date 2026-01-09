@@ -9,7 +9,7 @@ using System.ComponentModel;
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public abstract partial class ManagedServiceProperties : ManagedServiceBaseProperties
+    public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>
         /// <param name="serviceTypeName"> The name of the service type. </param>
