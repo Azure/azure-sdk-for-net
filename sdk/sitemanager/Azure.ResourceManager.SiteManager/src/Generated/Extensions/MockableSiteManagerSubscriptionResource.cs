@@ -8,56 +8,58 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SiteManager;
 
 namespace Azure.ResourceManager.SiteManager.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSiteManagerSubscriptionResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerSubscriptionResource"/> class for mocking. </summary>
+        private ClientDiagnostics _sitesBySubscriptionClientDiagnostics;
+        private SitesBySubscription _sitesBySubscriptionRestClient;
+
+        /// <summary> Initializes a new instance of MockableSiteManagerSubscriptionResource for mocking. </summary>
         protected MockableSiteManagerSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSiteManagerSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSiteManagerSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics SitesBySubscriptionClientDiagnostics => _sitesBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SiteManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of SubscriptionEdgeSiteResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionEdgeSiteResources and their operations over a SubscriptionEdgeSiteResource. </returns>
-        public virtual SubscriptionEdgeSiteCollection GetSubscriptionEdgeSites()
+        private SitesBySubscription SitesBySubscriptionRestClient => _sitesBySubscriptionRestClient ??= new SitesBySubscription(SitesBySubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+
+        /// <summary> Gets a collection of SitesBySubscriptions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SitesBySubscriptions and their operations over a SitesBySubscriptionResource. </returns>
+        public virtual SitesBySubscriptionCollection GetSitesBySubscriptions()
         {
-            return GetCachedClient(client => new SubscriptionEdgeSiteCollection(client, Id));
+            return GetCachedClient(client => new SitesBySubscriptionCollection(client, Id));
         }
 
         /// <summary>
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +68,27 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubscriptionEdgeSiteResource>> GetSubscriptionEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitesBySubscriptionResource>> GetSitesBySubscriptionAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return await GetSitesBySubscriptions().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,67 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubscriptionEdgeSiteResource> GetSubscriptionEdgeSite(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<SitesBySubscriptionResource> GetSitesBySubscription(string siteName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionEdgeSites().Get(siteName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return GetSitesBySubscriptions().Get(siteName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Site resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteResource> GetSitesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeSiteData, SiteResource>(new SitesBySubscriptionGetAllAsyncCollectionResultOfT(SitesBySubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SiteResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Site resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteResource> GetSites(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeSiteData, SiteResource>(new SitesBySubscriptionGetAllCollectionResultOfT(SitesBySubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SiteResource(Client, data));
         }
     }
 }

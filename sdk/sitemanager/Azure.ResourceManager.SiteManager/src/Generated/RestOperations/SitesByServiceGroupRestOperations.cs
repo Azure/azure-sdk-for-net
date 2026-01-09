@@ -6,527 +6,138 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    internal partial class SitesByServiceGroupRestOperations
+    internal partial class SitesByServiceGroup
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of SitesByServiceGroupRestOperations. </summary>
+        /// <summary> Initializes a new instance of SitesByServiceGroup for mocking. </summary>
+        protected SitesByServiceGroup()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SitesByServiceGroup. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SitesByServiceGroupRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal SitesByServiceGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListByServiceGroupRequestUri(string servicegroupName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetByServiceGroupRequest(string servicegroupName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
             uri.AppendPath(servicegroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/sites", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByServiceGroupRequest(string servicegroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
-            uri.AppendPath("/providers/Microsoft.Edge/sites", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> list Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteListResult>> ListByServiceGroupAsync(string servicegroupName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByServiceGroupRequest(Uri nextPage, string servicegroupName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-
-            using var message = CreateListByServiceGroupRequest(servicegroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SiteListResult.DeserializeSiteListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> list Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteListResult> ListByServiceGroup(string servicegroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-
-            using var message = CreateListByServiceGroupRequest(servicegroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SiteListResult.DeserializeSiteListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string servicegroupName, string siteName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
-            uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
-            uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string servicegroupName, string siteName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
-            uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
-            uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EdgeSiteData>> GetAsync(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRequest(string servicegroupName, string siteName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var message = CreateGetRequest(servicegroupName, siteName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EdgeSiteData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((EdgeSiteData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EdgeSiteData> Get(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var message = CreateGetRequest(servicegroupName, siteName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EdgeSiteData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((EdgeSiteData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string servicegroupName, string siteName, EdgeSiteData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
             uri.AppendPath(servicegroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string servicegroupName, string siteName, EdgeSiteData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string servicegroupName, string siteName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(servicegroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
-            uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
-            uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> create or update Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string servicegroupName, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string servicegroupName, string siteName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(servicegroupName, siteName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> create or update Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string servicegroupName, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(servicegroupName, siteName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string servicegroupName, string siteName, EdgeSitePatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
             uri.AppendPath(servicegroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string servicegroupName, string siteName, EdgeSitePatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
-            uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
-            uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> update Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EdgeSiteData>> UpdateAsync(string servicegroupName, string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string servicegroupName, string siteName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(servicegroupName, siteName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EdgeSiteData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> update Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EdgeSiteData> Update(string servicegroupName, string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(servicegroupName, siteName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EdgeSiteData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string servicegroupName, string siteName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
             uri.AppendPath(servicegroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
             uri.AppendPath(siteName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string servicegroupName, string siteName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
-            uri.AppendPath(servicegroupName, true);
-            uri.AppendPath("/providers/Microsoft.Edge/sites/", false);
-            uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
             return message;
-        }
-
-        /// <summary> delete Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var message = CreateDeleteRequest(servicegroupName, siteName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> delete Site at SG scope. </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var message = CreateDeleteRequest(servicegroupName, siteName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByServiceGroupNextPageRequestUri(string nextLink, string servicegroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByServiceGroupNextPageRequest(string nextLink, string servicegroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> list Site at SG scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="servicegroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteListResult>> ListByServiceGroupNextPageAsync(string nextLink, string servicegroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-
-            using var message = CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SiteListResult.DeserializeSiteListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> list Site at SG scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="servicegroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteListResult> ListByServiceGroupNextPage(string nextLink, string servicegroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-
-            using var message = CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SiteListResult.DeserializeSiteListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

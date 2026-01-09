@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SiteManager.Mocking;
 
@@ -17,358 +19,323 @@ namespace Azure.ResourceManager.SiteManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.SiteManager. </summary>
     public static partial class SiteManagerExtensions
     {
+        /// <param name="client"></param>
         private static MockableSiteManagerArmClient GetMockableSiteManagerArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableSiteManagerArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableSiteManagerArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableSiteManagerResourceGroupResource GetMockableSiteManagerResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableSiteManagerResourceGroupResource GetMockableSiteManagerResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableSiteManagerResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableSiteManagerResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableSiteManagerSubscriptionResource GetMockableSiteManagerSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableSiteManagerSubscriptionResource GetMockableSiteManagerSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableSiteManagerSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableSiteManagerSubscriptionResource(client, subscriptionResource.Id));
+        }
+
+        /// <param name="tenantResource"></param>
+        private static MockableSiteManagerTenantResource GetMockableSiteManagerTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableSiteManagerTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
-        /// Gets a collection of ServiceGroupEdgeSiteResources in the ArmClient.
+        /// Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetServiceGroupEdgeSites(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetSiteResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Management/serviceGroups. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of ServiceGroupEdgeSiteResources and their operations over a ServiceGroupEdgeSiteResource. </returns>
-        public static ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSiteManagerArmClient(client).GetServiceGroupEdgeSites(scope);
-        }
-
-        /// <summary>
-        /// Get Site at SG scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetServiceGroupEdgeSiteAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Management/serviceGroups. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ServiceGroupEdgeSiteResource>> GetServiceGroupEdgeSiteAsync(this ArmClient client, ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableSiteManagerArmClient(client).GetServiceGroupEdgeSiteAsync(scope, siteName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Site at SG scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetServiceGroupEdgeSite(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Management/serviceGroups. </param>
-        /// <param name="siteName"> The name of the Site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<ServiceGroupEdgeSiteResource> GetServiceGroupEdgeSite(this ArmClient client, ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSiteManagerArmClient(client).GetServiceGroupEdgeSite(scope, siteName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupEdgeSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupEdgeSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetResourceGroupEdgeSiteResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceGroupEdgeSiteResource"/> object. </returns>
-        public static ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
+        public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSiteManagerArmClient(client).GetResourceGroupEdgeSiteResource(id);
+            return GetMockableSiteManagerArmClient(client).GetSiteResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionEdgeSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionEdgeSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SitesBySubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetSubscriptionEdgeSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetSitesBySubscriptionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubscriptionEdgeSiteResource"/> object. </returns>
-        public static SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitesBySubscriptionResource"/> object. </returns>
+        public static SitesBySubscriptionResource GetSitesBySubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSiteManagerArmClient(client).GetSubscriptionEdgeSiteResource(id);
+            return GetMockableSiteManagerArmClient(client).GetSitesBySubscriptionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceGroupEdgeSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceGroupEdgeSiteResource.CreateResourceIdentifier" /> to create a <see cref="ServiceGroupEdgeSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SitesByServiceGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetServiceGroupEdgeSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetSitesByServiceGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceGroupEdgeSiteResource"/> object. </returns>
-        public static ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitesByServiceGroupResource"/> object. </returns>
+        public static SitesByServiceGroupResource GetSitesByServiceGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSiteManagerArmClient(client).GetServiceGroupEdgeSiteResource(id);
+            return GetMockableSiteManagerArmClient(client).GetSitesByServiceGroupResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of ResourceGroupEdgeSiteResources in the ResourceGroupResource.
+        /// Gets a collection of Sites in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerResourceGroupResource.GetResourceGroupEdgeSites()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerResourceGroupResource.GetSites()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceGroupEdgeSiteResources and their operations over a ResourceGroupEdgeSiteResource. </returns>
-        public static ResourceGroupEdgeSiteCollection GetResourceGroupEdgeSites(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Sites and their operations over a SiteResource. </returns>
+        public static SiteCollection GetSites(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSiteManagerResourceGroupResource(resourceGroupResource).GetResourceGroupEdgeSites();
+            return GetMockableSiteManagerResourceGroupResource(resourceGroupResource).GetSites();
         }
 
         /// <summary>
         /// Get a Site
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerResourceGroupResource.GetResourceGroupEdgeSiteAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerResourceGroupResource.GetSiteAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupEdgeSiteResource>> GetResourceGroupEdgeSiteAsync(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SiteResource>> GetSiteAsync(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSiteManagerResourceGroupResource(resourceGroupResource).GetResourceGroupEdgeSiteAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSiteManagerResourceGroupResource(resourceGroupResource).GetSiteAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Site
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerResourceGroupResource.GetResourceGroupEdgeSite(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerResourceGroupResource.GetSite(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSite(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
+        public static Response<SiteResource> GetSite(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSiteManagerResourceGroupResource(resourceGroupResource).GetResourceGroupEdgeSite(siteName, cancellationToken);
+            return GetMockableSiteManagerResourceGroupResource(resourceGroupResource).GetSite(siteName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of SubscriptionEdgeSiteResources in the SubscriptionResource.
+        /// Gets a collection of SitesBySubscriptions in the <see cref="SubscriptionResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSubscriptionEdgeSites()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSitesBySubscriptions()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionEdgeSiteResources and their operations over a SubscriptionEdgeSiteResource. </returns>
-        public static SubscriptionEdgeSiteCollection GetSubscriptionEdgeSites(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of SitesBySubscriptions and their operations over a SitesBySubscriptionResource. </returns>
+        public static SitesBySubscriptionCollection GetSitesBySubscriptions(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSubscriptionEdgeSites();
+            return GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSitesBySubscriptions();
         }
 
         /// <summary>
         /// Get a Site
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSubscriptionEdgeSiteAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSitesBySubscriptionAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionEdgeSiteResource>> GetSubscriptionEdgeSiteAsync(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SitesBySubscriptionResource>> GetSitesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSubscriptionEdgeSiteAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSitesBySubscriptionAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Site
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSubscriptionEdgeSite(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSitesBySubscription(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SubscriptionEdgeSiteResource> GetSubscriptionEdgeSite(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
+        public static Response<SitesBySubscriptionResource> GetSitesBySubscription(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSubscriptionEdgeSite(siteName, cancellationToken);
+            return GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSitesBySubscription(siteName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Site resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSitesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SiteResource> GetSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSitesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List Site resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetSites(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SiteResource> GetSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSiteManagerSubscriptionResource(subscriptionResource).GetSites(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SitesByServiceGroups in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetSitesByServiceGroups()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of SitesByServiceGroups and their operations over a SitesByServiceGroupResource. </returns>
+        public static SitesByServiceGroupCollection GetSitesByServiceGroups(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSiteManagerTenantResource(tenantResource).GetSitesByServiceGroups();
+        }
+
+        /// <summary>
+        /// Get Site at SG scope
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetSitesByServiceGroupAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SitesByServiceGroupResource>> GetSitesByServiceGroupAsync(this TenantResource tenantResource, string servicegroupName, string siteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSiteManagerTenantResource(tenantResource).GetSitesByServiceGroupAsync(servicegroupName, siteName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Site at SG scope
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetSitesByServiceGroup(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SitesByServiceGroupResource> GetSitesByServiceGroup(this TenantResource tenantResource, string servicegroupName, string siteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSiteManagerTenantResource(tenantResource).GetSitesByServiceGroup(servicegroupName, siteName, cancellationToken);
+        }
+
+        /// <summary>
+        /// list Site at SG scope
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetSitesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SiteResource> GetSitesAsync(this TenantResource tenantResource, string servicegroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSiteManagerTenantResource(tenantResource).GetSitesAsync(servicegroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// list Site at SG scope
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetSites(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SiteResource> GetSites(this TenantResource tenantResource, string servicegroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSiteManagerTenantResource(tenantResource).GetSites(servicegroupName, cancellationToken);
         }
     }
 }
