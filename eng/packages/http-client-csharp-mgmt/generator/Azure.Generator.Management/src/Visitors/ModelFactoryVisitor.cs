@@ -18,10 +18,20 @@ namespace Azure.Generator.Management.Visitors
             { "ETag", "etag" }
         };
 
-        protected override TypeProvider? VisitType(TypeProvider type)
+        private bool _modelTypesEnsured = false;
+
+        protected override TypeProvider? PostVisitType(TypeProvider type)
         {
+            // Process model factory after all models have been visited
             if (type is ModelFactoryProvider modelFactory)
             {
+                // Ensure model types are built once, now that all flattening is complete
+                if (!_modelTypesEnsured)
+                {
+                    ManagementClientGenerator.Instance.OutputLibrary.EnsureModelTypesBuilt();
+                    _modelTypesEnsured = true;
+                }
+
                 var updatedMethods = new List<MethodProvider>();
                 foreach (var method in modelFactory.Methods)
                 {
@@ -39,9 +49,9 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
                 modelFactory.Update(methods: updatedMethods);
-                return modelFactory;
             }
-            return base.VisitType(type);
+
+            return base.PostVisitType(type);
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
