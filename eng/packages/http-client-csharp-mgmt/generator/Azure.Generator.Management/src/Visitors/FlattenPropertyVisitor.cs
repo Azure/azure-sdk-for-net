@@ -61,14 +61,14 @@ namespace Azure.Generator.Management.Visitors
             propertyNameMap = null;
             if (_flattenedModelTypes.TryGetValue(returnType, out var value))
             {
-                propertyNameMap = value.Item1;
+                propertyNameMap = value;
                 return true;
             }
             // handle the case where the return type is a derived type of a flattened model type
             // we only deal with single level inheritance here to avoid complexity
             else if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(returnType, out var typeProvider) && typeProvider is ModelProvider model && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
             {
-                propertyNameMap = value.Item1;
+                propertyNameMap = value;
                 return true;
             }
             return false;
@@ -283,9 +283,8 @@ namespace Azure.Generator.Management.Visitors
                         // This is a nested flattened property case - the constructor parameter is a complex type
                         // We need to find the correct internal property by matching the constructor parameter name,
                         // then recursively collect all nested flattened properties for that specific internal property
-                        if (_flattenedModelTypes.TryGetValue(propertyType, out var result))
+                        if (_flattenedModelTypes.TryGetValue(propertyType, out var propertyNameMap))
                         {
-                            var (propertyNameMap, _) = result;
                             // Try to match the constructor parameter name with an internal property name
                             if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list) && list.Count > 0)
                             {
@@ -340,7 +339,7 @@ namespace Azure.Generator.Management.Visitors
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
-        private readonly Dictionary<CSharpType, (Dictionary<string, List<FlattenPropertyInfo>>, Dictionary<CSharpType, List<FlattenPropertyInfo>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
+        private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -406,13 +405,12 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var propertyNameMap = propertyMap.ToDictionary(kvp => kvp.Key.Name.ToVariableName(), kvp => kvp.Value);
-            var propertyTypeMap = propertyMap.GroupBy(kvp => kvp.Key.Type).ToDictionary(kvp => kvp.Key, kvp => kvp.SelectMany(x => x.Value).ToList());
 
             if (isSafeFlatten || isFlattenProperty)
             {
                 var flattenedProperties = propertyMap.Values.SelectMany(x => x.Select(item => item.FlattenedProperty));
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
-                _flattenedModelTypes.Add(model.Type, (propertyNameMap, propertyTypeMap));
+                _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
         }
