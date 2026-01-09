@@ -6,116 +6,87 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSphereArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSphereArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSphereArmClient for mocking. </summary>
         protected MockableSphereArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSphereArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSphereArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSphereArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableSphereArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereCatalogResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereCatalogResource.CreateResourceIdentifier" /> to create a <see cref="SphereCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CatalogResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereCatalogResource"/> object. </returns>
-        public virtual SphereCatalogResource GetSphereCatalogResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CatalogResource"/> object. </returns>
+        public virtual CatalogResource GetCatalogResource(ResourceIdentifier id)
         {
-            SphereCatalogResource.ValidateResourceId(id);
-            return new SphereCatalogResource(Client, id);
+            CatalogResource.ValidateResourceId(id);
+            return new CatalogResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SphereCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereCertificateResource"/> object. </returns>
-        public virtual SphereCertificateResource GetSphereCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeploymentResource"/> object. </returns>
+        public virtual DeploymentResource GetDeploymentResource(ResourceIdentifier id)
         {
-            SphereCertificateResource.ValidateResourceId(id);
-            return new SphereCertificateResource(Client, id);
+            DeploymentResource.ValidateResourceId(id);
+            return new DeploymentResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereImageResource.CreateResourceIdentifier" /> to create a <see cref="SphereImageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereImageResource"/> object. </returns>
-        public virtual SphereImageResource GetSphereImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageResource"/> object. </returns>
+        public virtual ImageResource GetImageResource(ResourceIdentifier id)
         {
-            SphereImageResource.ValidateResourceId(id);
-            return new SphereImageResource(Client, id);
+            ImageResource.ValidateResourceId(id);
+            return new ImageResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereProductResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereProductResource.CreateResourceIdentifier" /> to create a <see cref="SphereProductResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereProductResource"/> object. </returns>
-        public virtual SphereProductResource GetSphereProductResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceGroupResource"/> object. </returns>
+        public virtual DeviceGroupResource GetDeviceGroupResource(ResourceIdentifier id)
         {
-            SphereProductResource.ValidateResourceId(id);
-            return new SphereProductResource(Client, id);
+            DeviceGroupResource.ValidateResourceId(id);
+            return new DeviceGroupResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereDeviceGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereDeviceGroupResource.CreateResourceIdentifier" /> to create a <see cref="SphereDeviceGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereDeviceGroupResource"/> object. </returns>
-        public virtual SphereDeviceGroupResource GetSphereDeviceGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceResource"/> object. </returns>
+        public virtual DeviceResource GetDeviceResource(ResourceIdentifier id)
         {
-            SphereDeviceGroupResource.ValidateResourceId(id);
-            return new SphereDeviceGroupResource(Client, id);
+            DeviceResource.ValidateResourceId(id);
+            return new DeviceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SphereDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereDeploymentResource"/> object. </returns>
-        public virtual SphereDeploymentResource GetSphereDeploymentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CertificateResource"/> object. </returns>
+        public virtual CertificateResource GetCertificateResource(ResourceIdentifier id)
         {
-            SphereDeploymentResource.ValidateResourceId(id);
-            return new SphereDeploymentResource(Client, id);
+            CertificateResource.ValidateResourceId(id);
+            return new CertificateResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SphereDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SphereDeviceResource.CreateResourceIdentifier" /> to create a <see cref="SphereDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ProductResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SphereDeviceResource"/> object. </returns>
-        public virtual SphereDeviceResource GetSphereDeviceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProductResource"/> object. </returns>
+        public virtual ProductResource GetProductResource(ResourceIdentifier id)
         {
-            SphereDeviceResource.ValidateResourceId(id);
-            return new SphereDeviceResource(Client, id);
+            ProductResource.ValidateResourceId(id);
+            return new ProductResource(Client, id);
         }
     }
 }

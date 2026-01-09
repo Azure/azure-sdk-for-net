@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal partial class DevicesRestOperations
+    internal partial class Devices
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DevicesRestOperations. </summary>
+        /// <summary> Initializes a new instance of Devices for mocking. </summary>
+        protected Devices()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Devices. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DevicesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Devices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListByDeviceGroupRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -50,105 +55,20 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices", false);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(deviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByDeviceGroupRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List Device resources by DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeviceListResult>> ListByDeviceGroupAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-
-            using var message = CreateListByDeviceGroupRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeviceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeviceListResult.DeserializeDeviceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List Device resources by DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeviceListResult> ListByDeviceGroup(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-
-            using var message = CreateListByDeviceGroupRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeviceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeviceListResult.DeserializeDeviceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -163,228 +83,19 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath("/devices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a Device. Use '.unassigned' or '.default' for the device group and product names when a device does not belong to a device group and product. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SphereDeviceData>> GetAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SphereDeviceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SphereDeviceData.DeserializeSphereDeviceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SphereDeviceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a Device. Use '.unassigned' or '.default' for the device group and product names when a device does not belong to a device group and product. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SphereDeviceData> Get(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SphereDeviceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SphereDeviceData.DeserializeSphereDeviceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SphereDeviceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDeviceData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDeviceData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create a Device. Use '.unassigned' or '.default' for the device group and product names to claim a device to the catalog only. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/>, <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDeviceData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a Device. Use '.unassigned' or '.default' for the device group and product names to claim a device to the catalog only. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/>, <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDeviceData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDevicePatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -399,108 +110,19 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath("/devices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDevicePatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Update a Device. Use '.unassigned' or '.default' for the device group and product names to move a device to the catalog level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/>, <paramref name="deviceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDevicePatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a Device. Use '.unassigned' or '.default' for the device group and product names to move a device to the catalog level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/>, <paramref name="deviceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDevicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -515,102 +137,16 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath("/devices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a Device. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByDeviceGroupRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a Device. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGenerateCapabilityImageRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, GenerateCapabilityImageContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -622,200 +158,54 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/generateCapabilityImage", false);
+            uri.AppendPath("/devices", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGenerateCapabilityImageRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, GenerateCapabilityImageContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/generateCapabilityImage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Generates the capability image for the device. Use '.unassigned' or '.default' for the device group and product names to generate the image for a device that does not belong to a specific device group and product. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="content"> Generate capability image request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/>, <paramref name="deviceName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateCapabilityImageAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, GenerateCapabilityImageContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateGenerateCapabilityImageRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Generates the capability image for the device. Use '.unassigned' or '.default' for the device group and product names to generate the image for a device that does not belong to a specific device group and product. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="content"> Generate capability image request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/>, <paramref name="deviceName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GenerateCapabilityImage(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, GenerateCapabilityImageContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateGenerateCapabilityImageRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByDeviceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByDeviceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List Device resources by DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeviceListResult>> ListByDeviceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByDeviceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-
-            using var message = CreateListByDeviceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeviceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeviceListResult.DeserializeDeviceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> List Device resources by DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeviceListResult> ListByDeviceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGenerateCapabilityImageRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-
-            using var message = CreateListByDeviceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeviceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeviceListResult.DeserializeDeviceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/generateCapabilityImage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
     }
 }

@@ -8,56 +8,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSphereResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSphereResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSphereResourceGroupResource for mocking. </summary>
         protected MockableSphereResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSphereResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSphereResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSphereResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of Catalogs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Catalogs and their operations over a CatalogResource. </returns>
+        public virtual CatalogCollection GetCatalogs()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of SphereCatalogResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
-        public virtual SphereCatalogCollection GetSphereCatalogs()
-        {
-            return GetCachedClient(client => new SphereCatalogCollection(client, Id));
+            return GetCachedClient(client => new CatalogCollection(client, Id));
         }
 
         /// <summary>
         /// Get a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Catalogs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +60,27 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CatalogResource>> GetCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            return await GetSphereCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            return await GetCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Catalogs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Catalogs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +89,11 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SphereCatalogResource> GetSphereCatalog(string catalogName, CancellationToken cancellationToken = default)
+        public virtual Response<CatalogResource> GetCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
-            return GetSphereCatalogs().Get(catalogName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            return GetCatalogs().Get(catalogName, cancellationToken);
         }
     }
 }
