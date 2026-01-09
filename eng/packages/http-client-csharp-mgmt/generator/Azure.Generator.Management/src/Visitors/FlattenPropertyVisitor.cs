@@ -291,6 +291,7 @@ namespace Azure.Generator.Management.Visitors
                             {
                                 // Found the internal property by name, now collect all nested flattened properties
                                 // that correspond to this internal property from the current flattened properties list
+                                // Note: list.Count > 0 check above ensures list[0] is safe to access
                                 var internalProperty = list[0].InternalProperty;
                                 var innerFlattenedProperties = CollectNestedFlattenedProperties(internalProperty, flattenedProperties);
 
@@ -750,6 +751,8 @@ namespace Azure.Generator.Management.Visitors
         /// <summary>
         /// Checks if the given internal property is in the flattening chain of the flattened property.
         /// This handles multi-level flattening by recursively checking the chain.
+        /// Note: The recursion depth is typically very shallow (2-3 levels at most) in practice,
+        /// as TypeSpec models rarely have deeply nested flattening structures.
         /// </summary>
         /// <param name="flattenedProvider">The flattened property provider to check</param>
         /// <param name="targetInternalProperty">The internal property to look for in the chain</param>
