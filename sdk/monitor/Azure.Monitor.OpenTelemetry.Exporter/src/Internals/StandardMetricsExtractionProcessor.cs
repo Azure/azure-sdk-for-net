@@ -108,8 +108,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     .Build();
             }, LazyThreadSafetyMode.ExecutionAndPublication);
 
-            // Don't trigger MeterProvider creation yet - it will be lazily initialized on first use
-
             if (_enableStandardMetrics)
             {
                 _standardMetricMeter = new Meter(StandardMetricConstants.StandardMetricMeterName);
@@ -148,11 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public override void OnEnd(Activity activity)
         {
-            // Fast path - avoid method call if already initialized
-            if (!_meterProvider.IsValueCreated)
-            {
-                EnsureMeterProviderInitialized();
-            }
+            EnsureMeterProviderInitialized();
 
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
