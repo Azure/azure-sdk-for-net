@@ -7,6 +7,8 @@ using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using System.ComponentModel;
+
 // Get configuration from environment variables
 var openAiEndpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
                      throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT is not set.");
@@ -36,6 +38,10 @@ var chatClient = new AzureOpenAIClient(
 //     .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
 //     .Build();
 
+[Description("Get the weather for a given location.")]
+static string GetWeather([Description("The location to get the weather for.")] string location)
+    => $"The weather in {location} is cloudy with a high of 15°C.";
+
 var agent = new ChatClientAgent(chatClient,
       name: "AgentWithHostedMCP",
       instructions: @"You are a helpful assistant with access to tools for fetching Microsoft documentation.
@@ -48,10 +54,10 @@ var agent = new ChatClientAgent(chatClient,
   Available tools:
   - microsoft_docs_fetch: Fetches and converts Microsoft Learn documentation
   - microsoft_docs_search: Searches Microsoft/Azure documentation
-  - microsoft_code_sample_search: Searches for code examples")
+  - microsoft_code_sample_search: Searches for code examples", tools: [AIFunctionFactory.Create(GetWeather)])
       .AsBuilder()
-      //   .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
-      .UseFoundryTools(FoundryHostedMcpTool.Create("web_search_preview"))
+        .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
+      //   .UseFoundryTools(FoundryHostedMcpTool.Create("web_search_preview"))
       .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
       .Build();
 
