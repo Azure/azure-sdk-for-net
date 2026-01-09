@@ -14,11 +14,5 @@ public interface IClientBuilder : IHostApplicationBuilder
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="credential"></param>
-    void SetCredentialObject(object credential);
-
-    /// <summary>
-    /// .
-    /// </summary>
-    IConfigurationSection ConfigurationSection { get; }
+    Func<IConfigurationSection, object> CredentialFactory { get; set; }
 }

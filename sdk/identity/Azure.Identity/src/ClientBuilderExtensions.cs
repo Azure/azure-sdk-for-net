@@ -19,7 +19,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
         {
-            clientBuilder.SetCredentialObject(new ConfigurableCredential(new CredentialSettings(clientBuilder.ConfigurationSection.GetSection("Credential"))));
+            clientBuilder.CredentialFactory = section => new ConfigurableCredential(new CredentialSettings(section.GetSection("Credential")));
             return clientBuilder;
         }
     }

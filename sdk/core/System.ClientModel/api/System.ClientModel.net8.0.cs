@@ -266,8 +266,7 @@ namespace System.ClientModel.Primitives
     }
     public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
     {
-        Microsoft.Extensions.Configuration.IConfigurationSection ConfigurationSection { get; }
-        void SetCredentialObject(object credential);
+        System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, object> CredentialFactory { get; set; }
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
