@@ -487,7 +487,9 @@ namespace Azure.Security.Attestation
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
                 foreach (var cert in token.GetBody<PolicyCertificatesResult>().InternalPolicyCertificates.Keys)
                 {
+#pragma warning disable SYSLIB0057 // Type or member is obsolete
                     certificates.Add(new X509Certificate2(Convert.FromBase64String(cert.X5C[0])));
+#pragma warning restore SYSLIB0057 // Type or member is obsolete
                 }
                 return new AttestationResponse<IReadOnlyList<X509Certificate2>>(result.GetRawResponse(), token, certificates.AsReadOnly());
             }

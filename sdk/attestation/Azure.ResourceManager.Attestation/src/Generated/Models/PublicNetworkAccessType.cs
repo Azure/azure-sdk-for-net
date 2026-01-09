@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Attestation.Models
     public readonly partial struct PublicNetworkAccessType : IEquatable<PublicNetworkAccessType>
     {
         private readonly string _value;
+        /// <summary> Enables public network connectivity to the Attestation Provider REST APIs. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disables public network connectivity to the Attestation Provider REST APIs. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PublicNetworkAccessType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enables public network connectivity to the Attestation Provider REST APIs. </summary>
         public static PublicNetworkAccessType Enabled { get; } = new PublicNetworkAccessType(EnabledValue);
+
         /// <summary> Disables public network connectivity to the Attestation Provider REST APIs. </summary>
         public static PublicNetworkAccessType Disabled { get; } = new PublicNetworkAccessType(DisabledValue);
+
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PublicNetworkAccessType left, PublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicNetworkAccessType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PublicNetworkAccessType(string value) => new PublicNetworkAccessType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PublicNetworkAccessType?(string value) => value == null ? null : new PublicNetworkAccessType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PublicNetworkAccessType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PublicNetworkAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

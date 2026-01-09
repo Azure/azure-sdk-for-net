@@ -60,7 +60,9 @@ namespace Azure.Security.Attestation
             {
                 foreach (string x5c in key.X5C)
                 {
+#pragma warning disable SYSLIB0057 // Type or member is obsolete
                     certificates.Add(new X509Certificate2(Convert.FromBase64String(x5c)));
+#pragma warning restore SYSLIB0057 // Type or member is obsolete
                 }
             }
             return new AttestationSigner(certificates.ToArray(), keyId);

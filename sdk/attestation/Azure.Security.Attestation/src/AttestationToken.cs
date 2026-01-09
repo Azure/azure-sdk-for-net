@@ -161,7 +161,9 @@ namespace Azure.Security.Attestation
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
                 foreach (var certificate in Header.X509CertificateChain)
                 {
+#pragma warning disable SYSLIB0057 // Type or member is obsolete
                     certificates.Add(new X509Certificate2(certificate));
+#pragma warning restore SYSLIB0057 // Type or member is obsolete
                 }
                 return certificates.ToArray();
             }
@@ -428,7 +430,9 @@ namespace Azure.Security.Attestation
             int i = 0;
             foreach (var base64Cert in base64certificates)
             {
+#pragma warning disable SYSLIB0057 // Type or member is obsolete
                 jwkCertificates[i] = new X509Certificate2(Convert.FromBase64String(base64Cert));
+#pragma warning restore SYSLIB0057 // Type or member is obsolete
                 i += 1;
             }
             return jwkCertificates;

@@ -8,15 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Attestation;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class AttestationProviderCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AttestationProviderCreateOrUpdateContent>
+    /// <summary> Attestation Providers List. </summary>
+    public partial class AttestationProviderCreateOrUpdateContent : IJsonModel<AttestationProviderCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationProviderCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AttestationProviderCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,36 +32,35 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("systemData"u8);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(Value))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (AttestationProviderData item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,70 +69,74 @@ namespace Azure.ResourceManager.Attestation.Models
             }
         }
 
-        AttestationProviderCreateOrUpdateContent IJsonModel<AttestationProviderCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AttestationProviderCreateOrUpdateContent IJsonModel<AttestationProviderCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AttestationProviderCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAttestationProviderCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static AttestationProviderCreateOrUpdateContent DeserializeAttestationProviderCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AttestationProviderCreateOrUpdateContent DeserializeAttestationProviderCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation location = default;
-            IDictionary<string, string> tags = default;
-            AttestationServiceCreationSpecificParams properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            SystemData systemData = default;
+            IList<AttestationProviderData> value = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAttestationContext.Default);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AttestationProviderData> array = new List<AttestationProviderData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item, options));
+                    }
+                    value = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AttestationProviderCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new AttestationProviderCreateOrUpdateContent(systemData, value ?? new ChangeTrackingList<AttestationProviderData>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AttestationProviderCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AttestationProviderCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -139,15 +146,20 @@ namespace Azure.ResourceManager.Attestation.Models
             }
         }
 
-        AttestationProviderCreateOrUpdateContent IPersistableModel<AttestationProviderCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AttestationProviderCreateOrUpdateContent IPersistableModel<AttestationProviderCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AttestationProviderCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAttestationProviderCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
@@ -155,6 +167,14 @@ namespace Azure.ResourceManager.Attestation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AttestationProviderCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AttestationProviderCreateOrUpdateContent"/> from. </param>
+        internal static AttestationProviderCreateOrUpdateContent FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAttestationProviderCreateOrUpdateContent(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
