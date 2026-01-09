@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 using NUnit.Framework;
@@ -155,8 +157,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             SapVirtualInstanceResource result = null;
             // Create SAP VIS
             JsonDocument jsonElement = GetJsonElement(filePath);
-            var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement);
-            sviData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
+            var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement, ModelReaderWriterOptions.Json);
+            sviData.Properties.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
             {
                 Name = Recording.GenerateAssetName(resourceName + "mrg-")
             };
@@ -208,7 +210,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             var softwareConfiguration =
                 SapInstallWithoutOSConfigSoftwareConfiguration.
                 DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(
-                    installJsonElement.RootElement);
+                    installJsonElement.RootElement, ModelReaderWriterOptions.Json);
             deploymentWithOSConfiguration.SoftwareConfiguration = softwareConfiguration;
 
             Console.WriteLine("Installing resource with Payload " + await getObjectAsString(sviData));
