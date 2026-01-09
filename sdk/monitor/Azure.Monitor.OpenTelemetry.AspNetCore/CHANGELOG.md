@@ -6,7 +6,7 @@
 
 ### Breaking Changes
 
-* **Default Sampler Changed**: The default sampling behavior has been changed from
+* **Default Sampler Changed** ([#54876](https://github.com/Azure/azure-sdk-for-net/pull/54876)): The default sampling behavior has been changed from
   `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
   `RateLimitedSampler` with 5.0 traces per second. This change significantly
   reduces telemetry volume for high-traffic applications and provides better
@@ -26,7 +26,6 @@
   // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
   // OTEL_TRACES_SAMPLER_ARG=1.0
   ```
-  [#54876](https://github.com/Azure/azure-sdk-for-net/pull/54876)
 
 ### Bugs Fixed
 
