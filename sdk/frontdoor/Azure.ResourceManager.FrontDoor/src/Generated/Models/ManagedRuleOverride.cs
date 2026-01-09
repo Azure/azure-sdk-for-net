@@ -60,13 +60,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
+        /// <param name="sensitivity"> Describes the override sensitivity to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, SensitivityType? sensitivity, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
             Action = action;
+            Sensitivity = sensitivity;
             Exclusions = exclusions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -85,6 +87,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Describes the override action to be applied when rule matches. </summary>
         [WirePath("action")]
         public RuleMatchActionType? Action { get; set; }
+        /// <summary> Describes the override sensitivity to be applied when rule matches. </summary>
+        [WirePath("sensitivity")]
+        public SensitivityType? Sensitivity { get; set; }
         /// <summary> Describes the exclusions that are applied to this specific rule. </summary>
         [WirePath("exclusions")]
         public IList<ManagedRuleExclusion> Exclusions { get; }
