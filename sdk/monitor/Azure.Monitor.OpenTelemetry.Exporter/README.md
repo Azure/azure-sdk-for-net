@@ -152,36 +152,36 @@ Some key concepts for OpenTelemetry include:
   Sampling is a mechanism to control the noise and overhead introduced by OpenTelemetry by reducing the number of samples of traces collected and sent to the backend.
   **Default Sampling**: By default, the Azure Monitor Exporter uses `RateLimitedSampler` with a rate of 5.0 traces per second. This provides cost-effective telemetry collection for most applications. To change the sampling behavior:
 
-- **For rate-limited sampling**: Set `TracesPerSecond` in `AzureMonitorExporterOptions`:
+    - **For rate-limited sampling**: Set `TracesPerSecond` in `AzureMonitorExporterOptions`:
 
-  ```csharp
-  .AddAzureMonitorTraceExporter(options => {
-      options.TracesPerSecond = 10.0; // Sample 10 traces per second
-  })
-  ```
+      ```csharp
+      .AddAzureMonitorTraceExporter(options => {
+          options.TracesPerSecond = 10.0; // Sample 10 traces per second
+      })
+      ```
 
-- **For percentage-based sampling**: Set `SamplingRatio` and clear `TracesPerSecond`:
+    - **For percentage-based sampling**: Set `SamplingRatio` and clear `TracesPerSecond`:
 
-  ```csharp
-  .AddAzureMonitorTraceExporter(options => {
-      options.SamplingRatio = 0.5f; // Sample 50% of traces
-      options.TracesPerSecond = null;
-  })
-  ```
+      ```csharp
+      .AddAzureMonitorTraceExporter(options => {
+          options.SamplingRatio = 0.5f; // Sample 50% of traces
+          options.TracesPerSecond = null;
+      })
+      ```
 
-- **Via environment variables**:
+    - **Via environment variables**:
 
-  ```
-  OTEL_TRACES_SAMPLER=microsoft.rate_limited
-  OTEL_TRACES_SAMPLER_ARG=10
-  ```
+      ```
+      OTEL_TRACES_SAMPLER=microsoft.rate_limited
+      OTEL_TRACES_SAMPLER_ARG=10
+      ```
 
-  or
+      or
 
-  ```
-  OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
-  OTEL_TRACES_SAMPLER_ARG=0.5
-  ```
+      ```
+      OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+      OTEL_TRACES_SAMPLER_ARG=0.5
+      ```
 
 - [Metric Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#metric-signal):
   OpenTelemetry allows to record raw measurements or metrics with predefined aggregation and a set of attributes (dimensions).

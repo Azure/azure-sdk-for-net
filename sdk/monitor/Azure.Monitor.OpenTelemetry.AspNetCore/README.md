@@ -136,6 +136,7 @@ The Azure Monitor Distro uses **rate-limited sampling** by default, collecting u
 
 To customize the sampling behavior:
 
+**Option 1: Set the rate limited sampler to use a configured traces per second**
 ``` C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {

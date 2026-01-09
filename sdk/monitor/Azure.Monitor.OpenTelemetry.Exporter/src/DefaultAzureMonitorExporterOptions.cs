@@ -31,7 +31,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (_configuration != null)
                 {
-                    //BindIConfigurationOptions(_configuration, options);
                     var azureMonitorSection = _configuration.GetSection(AzureMonitorExporterSectionFromConfig);
                     azureMonitorSection.Bind(options);
                     if (azureMonitorSection["TracesPerSecond"] == null && azureMonitorSection["SamplingRatio"] != null)

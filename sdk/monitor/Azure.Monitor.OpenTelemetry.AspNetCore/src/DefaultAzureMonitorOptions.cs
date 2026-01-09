@@ -28,7 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 if (_configuration != null)
                 {
-                    //_configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
                     var azureMonitorSection = _configuration.GetSection(AzureMonitorSectionFromConfig);
                     azureMonitorSection.Bind(options);
                     if (azureMonitorSection["TracesPerSecond"] == null && azureMonitorSection["SamplingRatio"] != null)
