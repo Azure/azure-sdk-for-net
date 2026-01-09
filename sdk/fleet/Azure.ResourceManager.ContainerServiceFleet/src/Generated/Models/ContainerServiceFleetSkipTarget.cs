@@ -7,48 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The definition of a single skip request. </summary>
     public partial class ContainerServiceFleetSkipTarget
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipTarget"/>. </summary>
         /// <param name="targetType"> The skip target type. </param>
         /// <param name="name">
-        /// The skip target's name.
+        /// The skip target's name. 
         /// To skip a member/group/stage, use the member/group/stage's name;
         /// Tp skip an after stage wait, use the parent stage's name.
         /// </param>
@@ -64,27 +36,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipTarget"/>. </summary>
         /// <param name="targetType"> The skip target type. </param>
         /// <param name="name">
-        /// The skip target's name.
+        /// The skip target's name. 
         /// To skip a member/group/stage, use the member/group/stage's name;
         /// Tp skip an after stage wait, use the parent stage's name.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType targetType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType targetType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetType = targetType;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipTarget"/> for deserialization. </summary>
-        internal ContainerServiceFleetSkipTarget()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The skip target type. </summary>
         public ContainerServiceFleetTargetType TargetType { get; }
+
         /// <summary>
-        /// The skip target's name.
+        /// The skip target's name. 
         /// To skip a member/group/stage, use the member/group/stage's name;
         /// Tp skip an after stage wait, use the parent stage's name.
         /// </summary>

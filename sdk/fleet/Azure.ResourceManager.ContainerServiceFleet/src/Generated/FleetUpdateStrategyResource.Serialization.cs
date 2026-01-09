@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
+    /// <summary></summary>
     public partial class FleetUpdateStrategyResource : IJsonModel<FleetUpdateStrategyData>
     {
-        private static FleetUpdateStrategyData s_dataDeserializationInstance;
-        private static FleetUpdateStrategyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FleetUpdateStrategyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FleetUpdateStrategyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FleetUpdateStrategyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FleetUpdateStrategyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FleetUpdateStrategyData>)Data).Write(writer, options);
 
-        FleetUpdateStrategyData IJsonModel<FleetUpdateStrategyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FleetUpdateStrategyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FleetUpdateStrategyData IJsonModel<FleetUpdateStrategyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FleetUpdateStrategyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FleetUpdateStrategyData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FleetUpdateStrategyData IPersistableModel<FleetUpdateStrategyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FleetUpdateStrategyData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        string IPersistableModel<FleetUpdateStrategyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FleetUpdateStrategyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FleetUpdateStrategyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
