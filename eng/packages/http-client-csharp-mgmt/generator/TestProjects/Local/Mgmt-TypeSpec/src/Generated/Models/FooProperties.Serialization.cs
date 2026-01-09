@@ -96,6 +96,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("optionalProperty"u8);
                 writer.WriteObjectValue(OptionalProperty, options);
             }
+            if (Optional.IsDefined(VmProfile))
+            {
+                writer.WritePropertyName("vmProfile"u8);
+                writer.WriteObjectValue(VmProfile, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -162,6 +167,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             IList<int> prop2 = default;
             NestedFooModel nestedProperty = default;
             SafeFlattenModel optionalProperty = default;
+            VmProfile vmProfile = default;
             ETag? eTag = default;
             WritableSubResource writableSubResourceProp = default;
             ComputeFleetVmProfile computeFleetVmProfile = default;
@@ -254,6 +260,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("vmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmProfile = VmProfile.DeserializeVmProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -296,6 +311,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
                 optionalProperty,
+                vmProfile,
                 eTag,
                 writableSubResourceProp,
                 computeFleetVmProfile,
