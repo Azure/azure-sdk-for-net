@@ -40,7 +40,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="DefaultAzureCredentialOptions"/> class.
         /// </summary>
         public DefaultAzureCredentialOptions()
         {
@@ -48,6 +48,7 @@ namespace Azure.Identity
 
         internal DefaultAzureCredentialOptions(CredentialSettings settings)
         {
+            //TODO: Fill in other properties as needed
             CredentialSource = settings.CredentialSource;
             ApiKey = settings.Key;
         }
@@ -58,16 +59,15 @@ namespace Azure.Identity
         private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
 
-        private string _credentialSource;
         /// <summary>
         /// Gets or sets the kind of credential to use.
         /// </summary>
         internal string CredentialSource
         {
-            get => _credentialSource;
+            get => field;
             set
             {
-                _credentialSource = ConvertCredentialSource(value);
+                field = ConvertCredentialSource(value);
             }
         }
 
@@ -75,6 +75,7 @@ namespace Azure.Identity
 
         private static string ConvertCredentialSource(string value) => value switch
         {
+            //TODO: Fill in other mappings as needed
             "AzureCli" => Constants.AzureCliCredential,
             _ => value,
         };

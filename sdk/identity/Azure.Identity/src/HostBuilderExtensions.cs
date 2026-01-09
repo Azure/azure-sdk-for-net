@@ -4,24 +4,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// .
+    /// Provides extension methods for the <see cref="IHostApplicationBuilder"/> interface.
     /// </summary>
     public static class HostBuilderExtensions
     {
         /// <summary>
-        /// .
+        /// Adds a singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TSettings"></typeparam>
-        /// <param name="host"></param>
-        /// <param name="sectionName"></param>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of Azure client.</typeparam>
+        /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
+        /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
+        /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
         public static IHostApplicationBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string sectionName)
@@ -30,14 +30,13 @@ namespace Azure.Identity
             => host.AddAzureClient<TClient, TSettings>(sectionName, default);
 
         /// <summary>
-        /// .
+        /// Adds a singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TSettings"></typeparam>
-        /// <param name="host"></param>
-        /// <param name="sectionName"></param>
-        /// <param name="configureSettings"></param>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of Azure client.</typeparam>
+        /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
+        /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
+        /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
+        /// <param name="configureSettings">Factory method to modify the <typeparamref name="TSettings"/> after they are created.</param>
         public static IHostApplicationBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string sectionName,
@@ -56,14 +55,13 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// .
+        /// Adds a keyed singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TSettings"></typeparam>
-        /// <param name="host"></param>
-        /// <param name="key"></param>
-        /// <param name="sectionName"></param>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of Azure client.</typeparam>
+        /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
+        /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
+        /// <param name="key">The unique key to register as.</param>
+        /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
         public static IHostApplicationBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string key,
@@ -73,15 +71,14 @@ namespace Azure.Identity
             => host.AddKeyedAzureClient<TClient, TSettings>(key, sectionName, default);
 
         /// <summary>
-        /// .
+        /// Adds a keyed singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TSettings"></typeparam>
-        /// <param name="host"></param>
-        /// <param name="key"></param>
-        /// <param name="sectionName"></param>
-        /// <param name="configureSettings"></param>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of Azure client.</typeparam>
+        /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
+        /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
+        /// <param name="key">The unique key to register as.</param>
+        /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
+        /// <param name="configureSettings">Factory method to modify the <typeparamref name="TSettings"/> after they are created.</param>
         public static IHostApplicationBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string key,

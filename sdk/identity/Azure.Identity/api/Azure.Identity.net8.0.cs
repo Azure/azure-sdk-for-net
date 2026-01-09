@@ -187,7 +187,7 @@ namespace Azure.Identity
     {
         public static T WithAzureCredential<T>(this T settings) where T : System.ClientModel.Primitives.ClientSettings { throw null; }
     }
-    public static partial class ConfigurationManagerExtensions
+    public static partial class ConfigurationExtensions
     {
         public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
     }

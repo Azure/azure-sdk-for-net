@@ -64,7 +64,7 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public static partial class ConfigurationManagerExtensions
+    public static partial class ConfigurationExtensions
     {
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
@@ -220,14 +220,13 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ClientSettings
+    public abstract partial class ClientSettings
     {
-        public ClientSettings() { }
+        protected ClientSettings() { }
         public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
         public object? CredentialObject { get { throw null; } set { } }
-        public object? Options { get { throw null; } set { } }
         public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        protected virtual void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
     }
     public abstract partial class CollectionResult
     {

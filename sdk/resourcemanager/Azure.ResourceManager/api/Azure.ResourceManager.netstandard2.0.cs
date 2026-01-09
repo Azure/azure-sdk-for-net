@@ -127,7 +127,7 @@ namespace Azure.ResourceManager
     {
         public ArmSettings() { }
         public string DefaultSubscriptionId { get { throw null; } set { } }
-        public new Azure.ResourceManager.ArmClientOptions Options { get { throw null; } set { } }
+        public Azure.ResourceManager.ArmClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class AzureResourceManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext

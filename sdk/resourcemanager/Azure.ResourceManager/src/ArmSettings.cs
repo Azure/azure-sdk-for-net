@@ -7,19 +7,19 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.ResourceManager
 {
     /// <summary>
-    /// .
+    /// Represents settings used to configure an <see cref="ArmClient"/>.
     /// </summary>
     public class ArmSettings : ClientSettings
     {
         /// <summary>
-        /// .
+        /// Gets or sets the default subscription ID.
         /// </summary>
         public string DefaultSubscriptionId { get; set; }
 
         /// <summary>
-        /// .
+        /// Gets or sets the <see cref="ArmClientOptions"/>.
         /// </summary>
-        public new ArmClientOptions Options { get; set; }
+        public ArmClientOptions Options { get; set; }
 
         /// <inheritdoc/>
         protected override void BindCore(IConfigurationSection section)

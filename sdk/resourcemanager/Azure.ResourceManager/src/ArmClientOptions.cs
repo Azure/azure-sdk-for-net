@@ -20,7 +20,7 @@ namespace Azure.ResourceManager
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         public ArmClientOptions() { }
 
