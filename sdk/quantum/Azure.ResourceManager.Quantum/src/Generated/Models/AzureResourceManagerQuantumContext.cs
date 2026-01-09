@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quantum.Models;
 
@@ -13,9 +14,11 @@ namespace Azure.ResourceManager.Quantum
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MoboBrokerResource))]
     [ModelReaderWriterBuildable(typeof(OfferingsListResult))]
     [ModelReaderWriterBuildable(typeof(ProviderAadInfo))]
     [ModelReaderWriterBuildable(typeof(ProviderApplicationInfo))]
@@ -26,18 +29,24 @@ namespace Azure.ResourceManager.Quantum
     [ModelReaderWriterBuildable(typeof(QuantumProvider))]
     [ModelReaderWriterBuildable(typeof(QuantumProviderDescription))]
     [ModelReaderWriterBuildable(typeof(QuantumProviderProperties))]
+    [ModelReaderWriterBuildable(typeof(QuantumQuotaAllocations))]
     [ModelReaderWriterBuildable(typeof(QuantumQuotaDimension))]
+    [ModelReaderWriterBuildable(typeof(QuantumSuiteOffer))]
+    [ModelReaderWriterBuildable(typeof(QuantumSuiteOfferListResult))]
+    [ModelReaderWriterBuildable(typeof(QuantumSuiteOfferProperties))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspaceData))]
+    [ModelReaderWriterBuildable(typeof(QuantumWorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceApiKey))]
     [ModelReaderWriterBuildable(typeof(WorkspaceApiKeys))]
     [ModelReaderWriterBuildable(typeof(WorkspaceKeyListResult))]
-    [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(WorkspaceNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(WorkspaceNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(WorkspaceResourceProperties))]
     public partial class AzureResourceManagerQuantumContext : ModelReaderWriterContext
     {
     }

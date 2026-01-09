@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Information about a specific sku. </summary>
     public partial class ProviderSkuDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProviderSkuDescription"/>. </summary>
         internal ProviderSkuDescription()
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="targets"> The list of targets available for this sku. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions for this sku. </param>
         /// <param name="pricingDetails"> The list of pricing details for the sku. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderSkuDescription(string id, string name, string version, string description, Uri restrictedAccessUri, bool? autoAdd, IReadOnlyList<string> targets, IReadOnlyList<QuantumQuotaDimension> quotaDimensions, IReadOnlyList<QuantumPricingDetail> pricingDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderSkuDescription(string id, string name, string version, string description, Uri restrictedAccessUri, bool? autoAdd, IList<string> targets, IList<QuantumQuotaDimension> quotaDimensions, IList<QuantumPricingDetail> pricingDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -75,26 +47,34 @@ namespace Azure.ResourceManager.Quantum.Models
             Targets = targets;
             QuotaDimensions = quotaDimensions;
             PricingDetails = pricingDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique sku id. </summary>
         public string Id { get; }
+
         /// <summary> Display name of this sku. </summary>
         public string Name { get; }
+
         /// <summary> Display name of this sku. </summary>
         public string Version { get; }
+
         /// <summary> Description about this sku. </summary>
         public string Description { get; }
+
         /// <summary> Uri to subscribe to the restricted access sku. </summary>
         public Uri RestrictedAccessUri { get; }
+
         /// <summary> Flag to indicate whether the sku should be automatically added during workspace creation. </summary>
         public bool? AutoAdd { get; }
+
         /// <summary> The list of targets available for this sku. </summary>
-        public IReadOnlyList<string> Targets { get; }
+        public IList<string> Targets { get; }
+
         /// <summary> The list of quota dimensions for this sku. </summary>
-        public IReadOnlyList<QuantumQuotaDimension> QuotaDimensions { get; }
+        public IList<QuantumQuotaDimension> QuotaDimensions { get; }
+
         /// <summary> The list of pricing details for the sku. </summary>
-        public IReadOnlyList<QuantumPricingDetail> PricingDetails { get; }
+        public IList<QuantumPricingDetail> PricingDetails { get; }
     }
 }

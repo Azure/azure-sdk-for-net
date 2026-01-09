@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Quantum.Models
     public readonly partial struct QuantumProvisioningStatus : IEquatable<QuantumProvisioningStatus>
     {
         private readonly string _value;
+        /// <summary> The provider is successfully provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The provider is starting provisioning. </summary>
+        private const string LaunchingValue = "Launching";
+        /// <summary> The provider is updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The provider is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The provider is deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The provider is failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="QuantumProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QuantumProvisioningStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string ProviderLaunchingValue = "ProviderLaunching";
-        private const string ProviderUpdatingValue = "ProviderUpdating";
-        private const string ProviderDeletingValue = "ProviderDeleting";
-        private const string ProviderProvisioningValue = "ProviderProvisioning";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The provider is successfully provisioned. </summary>
         public static QuantumProvisioningStatus Succeeded { get; } = new QuantumProvisioningStatus(SucceededValue);
-        /// <summary> ProviderLaunching. </summary>
-        public static QuantumProvisioningStatus ProviderLaunching { get; } = new QuantumProvisioningStatus(ProviderLaunchingValue);
-        /// <summary> ProviderUpdating. </summary>
-        public static QuantumProvisioningStatus ProviderUpdating { get; } = new QuantumProvisioningStatus(ProviderUpdatingValue);
-        /// <summary> ProviderDeleting. </summary>
-        public static QuantumProvisioningStatus ProviderDeleting { get; } = new QuantumProvisioningStatus(ProviderDeletingValue);
-        /// <summary> ProviderProvisioning. </summary>
-        public static QuantumProvisioningStatus ProviderProvisioning { get; } = new QuantumProvisioningStatus(ProviderProvisioningValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The provider is starting provisioning. </summary>
+        public static QuantumProvisioningStatus Launching { get; } = new QuantumProvisioningStatus(LaunchingValue);
+
+        /// <summary> The provider is updating. </summary>
+        public static QuantumProvisioningStatus Updating { get; } = new QuantumProvisioningStatus(UpdatingValue);
+
+        /// <summary> The provider is deleting. </summary>
+        public static QuantumProvisioningStatus Deleting { get; } = new QuantumProvisioningStatus(DeletingValue);
+
+        /// <summary> The provider is deleted. </summary>
+        public static QuantumProvisioningStatus Deleted { get; } = new QuantumProvisioningStatus(DeletedValue);
+
+        /// <summary> The provider is failed. </summary>
         public static QuantumProvisioningStatus Failed { get; } = new QuantumProvisioningStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="QuantumProvisioningStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QuantumProvisioningStatus left, QuantumProvisioningStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QuantumProvisioningStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QuantumProvisioningStatus left, QuantumProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QuantumProvisioningStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QuantumProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QuantumProvisioningStatus(string value) => new QuantumProvisioningStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QuantumProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QuantumProvisioningStatus?(string value) => value == null ? null : new QuantumProvisioningStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QuantumProvisioningStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QuantumProvisioningStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
