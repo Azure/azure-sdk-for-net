@@ -1,4 +1,5 @@
 directory: specification/elasticsan/resource-manager/Microsoft.ElasticSan/ElasticSan
 commit: e89374a1f5e2c4ddcf34ed01495a98dfedac0f8b
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/legacy-emitter-package.json
+# emitterPackageJsonPath: eng/legacy-emitter-package.json
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
