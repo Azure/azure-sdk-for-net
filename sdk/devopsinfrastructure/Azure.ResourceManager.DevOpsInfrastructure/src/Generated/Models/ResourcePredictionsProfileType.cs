@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     internal readonly partial struct ResourcePredictionsProfileType : IEquatable<ResourcePredictionsProfileType>
     {
         private readonly string _value;
+        /// <summary> Customer provides the stand-by agent scheme. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> The stand-by agent scheme is determined based on historical demand. </summary>
+        private const string AutomaticValue = "Automatic";
 
         /// <summary> Initializes a new instance of <see cref="ResourcePredictionsProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourcePredictionsProfileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManualValue = "Manual";
-        private const string AutomaticValue = "Automatic";
+            _value = value;
+        }
 
         /// <summary> Customer provides the stand-by agent scheme. </summary>
         public static ResourcePredictionsProfileType Manual { get; } = new ResourcePredictionsProfileType(ManualValue);
+
         /// <summary> The stand-by agent scheme is determined based on historical demand. </summary>
         public static ResourcePredictionsProfileType Automatic { get; } = new ResourcePredictionsProfileType(AutomaticValue);
+
         /// <summary> Determines if two <see cref="ResourcePredictionsProfileType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourcePredictionsProfileType left, ResourcePredictionsProfileType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourcePredictionsProfileType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourcePredictionsProfileType left, ResourcePredictionsProfileType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourcePredictionsProfileType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourcePredictionsProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourcePredictionsProfileType(string value) => new ResourcePredictionsProfileType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourcePredictionsProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourcePredictionsProfileType?(string value) => value == null ? null : new ResourcePredictionsProfileType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourcePredictionsProfileType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourcePredictionsProfileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

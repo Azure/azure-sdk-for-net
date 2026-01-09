@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmSecurityRuleProtocol : IEquatable<HciVmSecurityRuleProtocol>
     {
         private readonly string _value;
+        /// <summary> Transmission Control Protocol. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> User Datagram Protocol. </summary>
+        private const string UdpValue = "Udp";
+        /// <summary> Internet Control Message Protocol. </summary>
+        private const string IcmpValue = "Icmp";
+        /// <summary> Wildcard rule for all protocols. </summary>
+        private const string AsteriskValue = "*";
 
         /// <summary> Initializes a new instance of <see cref="HciVmSecurityRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmSecurityRuleProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "Tcp";
-        private const string UdpValue = "Udp";
-        private const string IcmpValue = "Icmp";
-        private const string AsteriskValue = "*";
+            _value = value;
+        }
 
         /// <summary> Transmission Control Protocol. </summary>
         public static HciVmSecurityRuleProtocol Tcp { get; } = new HciVmSecurityRuleProtocol(TcpValue);
+
         /// <summary> User Datagram Protocol. </summary>
         public static HciVmSecurityRuleProtocol Udp { get; } = new HciVmSecurityRuleProtocol(UdpValue);
+
         /// <summary> Internet Control Message Protocol. </summary>
         public static HciVmSecurityRuleProtocol Icmp { get; } = new HciVmSecurityRuleProtocol(IcmpValue);
+
         /// <summary> Wildcard rule for all protocols. </summary>
         public static HciVmSecurityRuleProtocol Asterisk { get; } = new HciVmSecurityRuleProtocol(AsteriskValue);
+
         /// <summary> Determines if two <see cref="HciVmSecurityRuleProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmSecurityRuleProtocol left, HciVmSecurityRuleProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmSecurityRuleProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmSecurityRuleProtocol left, HciVmSecurityRuleProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmSecurityRuleProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmSecurityRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmSecurityRuleProtocol(string value) => new HciVmSecurityRuleProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmSecurityRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmSecurityRuleProtocol?(string value) => value == null ? null : new HciVmSecurityRuleProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmSecurityRuleProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmSecurityRuleProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

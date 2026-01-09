@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of AkriConnectorsTagDigestSettings. </summary>
     internal partial class UnknownAkriConnectorsTagDigestSettings : AkriConnectorsTagDigestSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorsTagDigestSettings"/>. </summary>
         /// <param name="tagDigestType"> The tag or digest type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAkriConnectorsTagDigestSettings(AkriConnectorsTagDigestType tagDigestType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tagDigestType, serializedAdditionalRawData)
-        {
-            TagDigestType = tagDigestType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorsTagDigestSettings"/> for deserialization. </summary>
-        internal UnknownAkriConnectorsTagDigestSettings()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAkriConnectorsTagDigestSettings(AkriConnectorsTagDigestType tagDigestType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tagDigestType != default ? tagDigestType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -106,7 +106,7 @@ namespace Azure.Generator.Management.Providers
 
                 switch (method.Kind)
                 {
-                    case ResourceOperationKind.Get:
+                    case ResourceOperationKind.Read:
                         getMethod = method;
                         break;
                     case ResourceOperationKind.List:
@@ -376,9 +376,21 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName)
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
+                _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
             };
+        }
+
+        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, _resource);
+            }
+
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)

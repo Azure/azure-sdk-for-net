@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorsSecret properties. </summary>
     public partial class AkriConnectorsSecret
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsSecret"/>. </summary>
         /// <param name="secretKey"> The key in the secret to be mounted. </param>
@@ -65,24 +37,21 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="secretKey"> The key in the secret to be mounted. </param>
         /// <param name="secretAlias"> The application-defined alias for the secret. </param>
         /// <param name="secretRef"> The name of the secret to be mounted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AkriConnectorsSecret(string secretKey, string secretAlias, string secretRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AkriConnectorsSecret(string secretKey, string secretAlias, string secretRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretKey = secretKey;
             SecretAlias = secretAlias;
             SecretRef = secretRef;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorsSecret"/> for deserialization. </summary>
-        internal AkriConnectorsSecret()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The key in the secret to be mounted. </summary>
         public string SecretKey { get; set; }
+
         /// <summary> The application-defined alias for the secret. </summary>
         public string SecretAlias { get; set; }
+
         /// <summary> The name of the secret to be mounted. </summary>
         public string SecretRef { get; set; }
     }

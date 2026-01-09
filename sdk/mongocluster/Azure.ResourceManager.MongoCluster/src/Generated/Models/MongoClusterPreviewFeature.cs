@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterPreviewFeature : IEquatable<MongoClusterPreviewFeature>
     {
         private readonly string _value;
+        /// <summary> Enables geo replicas preview feature. The feature must be set at create-time on new cluster to enable linking a geo-replica cluster to it. </summary>
+        private const string GeoReplicasValue = "GeoReplicas";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPreviewFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterPreviewFeature(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GeoReplicasValue = "GeoReplicas";
+            _value = value;
+        }
 
         /// <summary> Enables geo replicas preview feature. The feature must be set at create-time on new cluster to enable linking a geo-replica cluster to it. </summary>
         public static MongoClusterPreviewFeature GeoReplicas { get; } = new MongoClusterPreviewFeature(GeoReplicasValue);
+
         /// <summary> Determines if two <see cref="MongoClusterPreviewFeature"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterPreviewFeature left, MongoClusterPreviewFeature right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterPreviewFeature"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterPreviewFeature left, MongoClusterPreviewFeature right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterPreviewFeature"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterPreviewFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterPreviewFeature(string value) => new MongoClusterPreviewFeature(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterPreviewFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterPreviewFeature?(string value) => value == null ? null : new MongoClusterPreviewFeature(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterPreviewFeature other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterPreviewFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

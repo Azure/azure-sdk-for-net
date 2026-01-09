@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Quota
                 QuotaOperationListResult result = QuotaOperationListResult.FromResponse(response);
                 yield return Page<QuotaOperationResult>.FromValues((IReadOnlyList<QuotaOperationResult>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    public partial class DevOpsStatelessAgentProfile : IUtf8JsonSerializable, IJsonModel<DevOpsStatelessAgentProfile>
+    /// <summary> Stateless profile meaning that the machines will be cleaned up after running a job. </summary>
+    public partial class DevOpsStatelessAgentProfile : DevOpsPoolAgentProfile, IJsonModel<DevOpsStatelessAgentProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsStatelessAgentProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsStatelessAgentProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,78 +29,83 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsStatelessAgentProfile)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        DevOpsStatelessAgentProfile IJsonModel<DevOpsStatelessAgentProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsStatelessAgentProfile IJsonModel<DevOpsStatelessAgentProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DevOpsStatelessAgentProfile)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DevOpsPoolAgentProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsStatelessAgentProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevOpsStatelessAgentProfile(document.RootElement, options);
         }
 
-        internal static DevOpsStatelessAgentProfile DeserializeDevOpsStatelessAgentProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DevOpsStatelessAgentProfile DeserializeDevOpsStatelessAgentProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string kind = default;
+            string kind = "Stateless";
             ResourcePredictions resourcePredictions = default;
             ResourcePredictionsProfile resourcePredictionsProfile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourcePredictions"u8))
+                if (prop.NameEquals("resourcePredictions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourcePredictions = ResourcePredictions.DeserializeResourcePredictions(property.Value, options);
+                    resourcePredictions = ResourcePredictions.DeserializeResourcePredictions(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourcePredictionsProfile"u8))
+                if (prop.NameEquals("resourcePredictionsProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourcePredictionsProfile = ResourcePredictionsProfile.DeserializeResourcePredictionsProfile(property.Value, options);
+                    resourcePredictionsProfile = ResourcePredictionsProfile.DeserializeResourcePredictionsProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DevOpsStatelessAgentProfile(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData);
+            return new DevOpsStatelessAgentProfile(kind, resourcePredictions, resourcePredictionsProfile, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DevOpsStatelessAgentProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevOpsStatelessAgentProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -109,15 +115,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        DevOpsStatelessAgentProfile IPersistableModel<DevOpsStatelessAgentProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsStatelessAgentProfile IPersistableModel<DevOpsStatelessAgentProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevOpsStatelessAgentProfile)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DevOpsPoolAgentProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStatelessAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsStatelessAgentProfile(document.RootElement, options);
                     }
                 default:
@@ -125,6 +136,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevOpsStatelessAgentProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

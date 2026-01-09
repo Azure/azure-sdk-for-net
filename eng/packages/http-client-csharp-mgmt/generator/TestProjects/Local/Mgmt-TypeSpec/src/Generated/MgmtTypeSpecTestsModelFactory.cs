@@ -136,9 +136,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -164,7 +165,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     writableSubResourceProp,
                     null),
                 extendedLocation,
-                identity);
+                identity,
+                plan);
         }
 
         /// <param name="serviceUri"> the service url. </param>
@@ -215,6 +217,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
         {
             return new FooActionResult(msg, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooDependency. </summary>
+        /// <param name="dependencyName"></param>
+        /// <param name="version"></param>
+        /// <returns> A new <see cref="Models.FooDependency"/> instance for mocking. </returns>
+        public static FooDependency FooDependency(string dependencyName = default, string version = default)
+        {
+            return new FooDependency(dependencyName, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -403,16 +414,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new EmployeeProperties(age, city, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The RP-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"></param>
         /// <returns> A new <see cref="Tests.BazData"/> instance for mocking. </returns>
-        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BazProperties properties = default, IDictionary<string, string> tags = default, string location = default)
+        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, BazProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -422,9 +433,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 properties,
-                tags,
-                location);
+                tags);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -505,6 +516,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, null));
+        }
+
+        /// <summary> The CheckNameAvailabilityResponse. </summary>
+        /// <param name="nameAvailable"></param>
+        /// <param name="reason"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool nameAvailable = default, string reason = default, string message = default)
+        {
+            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource. </summary>

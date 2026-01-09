@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
-    internal class DisconnectedOperationOperationSource : IOperationSource<DisconnectedOperationResource>
+    /// <summary></summary>
+    internal partial class DisconnectedOperationOperationSource : IOperationSource<DisconnectedOperationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DisconnectedOperationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DisconnectedOperationResource IOperationSource<DisconnectedOperationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DisconnectedOperationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDisconnectedOperationsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DisconnectedOperationData data = DisconnectedOperationData.DeserializeDisconnectedOperationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DisconnectedOperationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DisconnectedOperationResource> IOperationSource<DisconnectedOperationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DisconnectedOperationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDisconnectedOperationsContext.Default);
-            return await Task.FromResult(new DisconnectedOperationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DisconnectedOperationData data = DisconnectedOperationData.DeserializeDisconnectedOperationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DisconnectedOperationResource(_client, data);
         }
     }
 }
