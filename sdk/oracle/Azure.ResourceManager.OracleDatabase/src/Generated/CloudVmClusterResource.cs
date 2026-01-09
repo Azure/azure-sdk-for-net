@@ -524,6 +524,90 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
+        /// List Private IP Addresses by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CloudVmClusters_ListPrivateIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CloudVmClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateIPAddressResult> GetPrivateIPAddressesAsync(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CloudVmClusterResourceGetPrivateIPAddressesAsyncCollectionResultOfT(
+                _cloudVmClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                PrivateIPAddressesContent.ToRequestContent(content),
+                context);
+        }
+
+        /// <summary>
+        /// List Private IP Addresses by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CloudVmClusters_ListPrivateIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CloudVmClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateIPAddressResult> GetPrivateIPAddresses(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(
+                _cloudVmClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                PrivateIPAddressesContent.ToRequestContent(content),
+                context);
+        }
+
+        /// <summary>
         /// Remove VMs from the VM Cluster
         /// <list type="bullet">
         /// <item>
@@ -639,90 +723,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List Private IP Addresses by the provided filter
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_ListPrivateIpAddresses. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateIPAddressResult> GetPrivateIPAddressesAsync(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new CloudVmClusterResourceGetPrivateIPAddressesAsyncCollectionResultOfT(
-                _cloudVmClustersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                PrivateIPAddressesContent.ToRequestContent(content),
-                context);
-        }
-
-        /// <summary>
-        /// List Private IP Addresses by the provided filter
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_ListPrivateIpAddresses. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateIPAddressResult> GetPrivateIPAddresses(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(
-                _cloudVmClustersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                PrivateIPAddressesContent.ToRequestContent(content),
-                context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>
