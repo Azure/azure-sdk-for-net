@@ -223,7 +223,7 @@ namespace System.ClientModel.Primitives
     {
         protected ClientSettings() { }
         public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
-        public object? CredentialObject { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? CredentialObject { get { throw null; } set { } }
         public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
     }
@@ -264,7 +264,7 @@ namespace System.ClientModel.Primitives
     }
     public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
     {
-        System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, object> CredentialFactory { get; set; }
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider> factory);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

@@ -48,10 +48,15 @@ public abstract class AuthenticationPolicy : PipelinePolicy
             });
             apiKey = apiKeyProvider.GetToken(options, default).TokenValue;
         }
+        else if (settings.Credential is not null && settings.Credential.Key is not null)
+        {
+            apiKey = settings.Credential.Key;
+        }
         else
         {
-            apiKey = (string)settings.CredentialObject!;
+            throw new InvalidOperationException("API key is not provided in the ClientSettings.");
         }
+
         return ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(new ApiKeyCredential(apiKey));
     }
 }

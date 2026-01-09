@@ -18,9 +18,6 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
         public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
-        {
-            clientBuilder.CredentialFactory = section => new ConfigurableCredential(new CredentialSettings(section.GetSection("Credential")));
-            return clientBuilder;
-        }
+            => clientBuilder.WithCredential(section => new ConfigurableCredential(new CredentialSettings(section.GetSection("Credential"))));
     }
 }

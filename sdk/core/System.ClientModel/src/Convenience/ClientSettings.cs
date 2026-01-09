@@ -18,7 +18,7 @@ public abstract class ClientSettings
     /// <summary>
     /// Gets or sets the credential object.
     /// </summary>
-    public object? CredentialObject { get; set; }
+    public AuthenticationTokenProvider? CredentialObject { get; set; }
 
     /// <summary>
     /// Binds the values from the <see cref="IConfigurationSection"/> to the properties of the <see cref="ClientSettings"/>.
@@ -31,11 +31,6 @@ public abstract class ClientSettings
         }
 
         Credential ??= new CredentialSettings(section.GetSection("Credential"));
-
-        if (CredentialObject is null && Credential.CredentialSource == "ApiKey")
-        {
-            CredentialObject = Credential.Key;
-        }
 
         BindCore(section);
     }

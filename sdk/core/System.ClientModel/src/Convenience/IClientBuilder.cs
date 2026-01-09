@@ -12,7 +12,8 @@ namespace System.ClientModel.Primitives;
 public interface IClientBuilder : IHostApplicationBuilder
 {
     /// <summary>
-    /// Gets or sets a factory function to create credential objects based on the provided <see cref="IConfigurationSection"/>.
+    /// Configures the <see cref="IClientBuilder"/> to use the specified factory function to create the credential object.
     /// </summary>
-    Func<IConfigurationSection, object> CredentialFactory { get; set; }
+    /// <param name="factory">A method that creates a credential object from the specified <see cref="IConfigurationSection"/>.</param>
+    IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider> factory);
 }
