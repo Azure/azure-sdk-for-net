@@ -8,13 +8,16 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using Specs.Azure.ClientGeneratorCore.ClientInitialization;
-using Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient;
 
 namespace Microsoft.Extensions.Azure
 {
     public static partial class _Specs_AzureClientGeneratorCoreClientInitializationClientBuilderExtensions
     {
+        public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, string name)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
@@ -22,6 +25,9 @@ namespace Microsoft.Extensions.Azure
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
+
+        public static IAzureClientBuilder<MultipleParamsClient, MultipleParamsClientOptions> AddMultipleParamsClient<TBuilder>(this TBuilder builder, string name, string region)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         public static IAzureClientBuilder<MultipleParamsClient, MultipleParamsClientOptions> AddMultipleParamsClient<TBuilder>(this TBuilder builder, Uri endpoint, string name, string region)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
@@ -31,6 +37,9 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<MultipleParamsClient, MultipleParamsClientOptions> AddMultipleParamsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
+        public static IAzureClientBuilder<MixedParamsClient, MixedParamsClientOptions> AddMixedParamsClient<TBuilder>(this TBuilder builder, string name)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<MixedParamsClient, MixedParamsClientOptions> AddMixedParamsClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
@@ -38,6 +47,9 @@ namespace Microsoft.Extensions.Azure
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<MixedParamsClient, MixedParamsClientOptions> AddMixedParamsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
+
+        public static IAzureClientBuilder<PathParamClient, PathParamClientOptions> AddPathParamClient<TBuilder>(this TBuilder builder, string blobName)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         public static IAzureClientBuilder<PathParamClient, PathParamClientOptions> AddPathParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
@@ -47,6 +59,9 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<PathParamClient, PathParamClientOptions> AddPathParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
+        public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder>(this TBuilder builder, string blobName, string blob)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName, string blob)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
@@ -54,6 +69,9 @@ namespace Microsoft.Extensions.Azure
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
+
+        public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder>(this TBuilder builder, string blobName)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;

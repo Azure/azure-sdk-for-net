@@ -76,11 +76,6 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(UserMetadata))
-            {
-                writer.WritePropertyName("userMetadata"u8);
-                writer.WriteStringValue(UserMetadata);
-            }
             if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
@@ -90,6 +85,21 @@ namespace Azure.ResourceManager.EventHubs
             {
                 writer.WritePropertyName("retentionDescription"u8);
                 writer.WriteObjectValue(RetentionDescription, options);
+            }
+            if (Optional.IsDefined(MessageTimestampDescription))
+            {
+                writer.WritePropertyName("messageTimestampDescription"u8);
+                writer.WriteObjectValue(MessageTimestampDescription, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Identifier))
+            {
+                writer.WritePropertyName("identifier"u8);
+                writer.WriteStringValue(Identifier);
+            }
+            if (Optional.IsDefined(UserMetadata))
+            {
+                writer.WritePropertyName("userMetadata"u8);
+                writer.WriteStringValue(UserMetadata);
             }
             writer.WriteEndObject();
         }
@@ -124,9 +134,11 @@ namespace Azure.ResourceManager.EventHubs
             DateTimeOffset? updatedAt = default;
             long? partitionCount = default;
             EventHubEntityStatus? status = default;
-            string userMetadata = default;
             CaptureDescription captureDescription = default;
             RetentionDescription retentionDescription = default;
+            MessageTimestampDescription messageTimestampDescription = default;
+            string identifier = default;
+            string userMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,11 +235,6 @@ namespace Azure.ResourceManager.EventHubs
                             status = property0.Value.GetString().ToEventHubEntityStatus();
                             continue;
                         }
-                        if (property0.NameEquals("userMetadata"u8))
-                        {
-                            userMetadata = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("captureDescription"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -246,6 +253,25 @@ namespace Azure.ResourceManager.EventHubs
                             retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("messageTimestampDescription"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            messageTimestampDescription = MessageTimestampDescription.DeserializeMessageTimestampDescription(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("identifier"u8))
+                        {
+                            identifier = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("userMetadata"u8))
+                        {
+                            userMetadata = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -260,15 +286,17 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 partitionIds ?? new ChangeTrackingList<string>(),
                 createdAt,
                 updatedAt,
                 partitionCount,
                 status,
-                userMetadata,
                 captureDescription,
                 retentionDescription,
-                location,
+                messageTimestampDescription,
+                identifier,
+                userMetadata,
                 serializedAdditionalRawData);
         }
 
@@ -451,29 +479,6 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    userMetadata: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserMetadata))
-                {
-                    builder.Append("    userMetadata: ");
-                    if (UserMetadata.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserMetadata}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserMetadata}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CaptureDescription), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -501,6 +506,72 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     builder.Append("    retentionDescription: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RetentionDescription, options, 4, false, "    retentionDescription: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("MessageTimestampType", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    messageTimestampDescription: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      messageTimestampDescription: {");
+                builder.Append("        timestampType: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(MessageTimestampDescription))
+                {
+                    builder.Append("    messageTimestampDescription: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MessageTimestampDescription, options, 4, false, "    messageTimestampDescription: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    identifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identifier))
+                {
+                    builder.Append("    identifier: ");
+                    if (Identifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Identifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Identifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userMetadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserMetadata))
+                {
+                    builder.Append("    userMetadata: ");
+                    if (UserMetadata.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserMetadata}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserMetadata}'");
+                    }
                 }
             }
 

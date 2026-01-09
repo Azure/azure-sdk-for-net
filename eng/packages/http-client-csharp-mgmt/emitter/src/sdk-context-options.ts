@@ -57,6 +57,14 @@ export const armResourceUpdateName = "@armResourceUpdate";
 const armResourceUpdateRegex = "Azure\\.ResourceManager\\.@armResourceUpdate";
 
 export const extensionResourceOperationName = "@extensionResourceOperation";
+export const legacyExtensionResourceOperationName = "@legacyExtensionResourceOperation";
+export const legacyResourceOperationName = "@legacyResourceOperation";
+export const builtInResourceOperationName = "@builtInResourceOperation";
+
+export const armResourceWithParameter =
+  "Azure.ResourceManager.Private.@armResourceWithParameter";
+const armResourceWithParameterRegex =
+  "Azure\\.ResourceManager\\.Private\\.@armResourceWithParameter";
 
 export const armResourceInternal =
   "Azure.ResourceManager.Private.@armResourceInternal";
@@ -89,6 +97,9 @@ export const nonResourceMethodMetadata =
 const nonResourceMethodMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
 
+// New unified decorator for ARM provider schema
+export const armProviderSchema = "Azure.ClientGenerator.Core.@armProviderSchema";
+
 export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
@@ -112,6 +123,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     resourceGroupResourceRegex,
     singletonRegex,
     subscriptionResourceRegex,
-    tenantResourceRegex
+    tenantResourceRegex,
+    armResourceWithParameterRegex,
   ]
 };

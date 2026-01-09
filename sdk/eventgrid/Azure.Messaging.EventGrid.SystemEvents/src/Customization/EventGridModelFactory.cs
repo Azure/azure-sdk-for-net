@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
+using Microsoft.TypeSpec.Generator.Customizations;
 using AcsRouterJobStatus = Azure.Messaging.EventGrid.Models.AcsRouterJobStatus;
 
 namespace Azure.Messaging.EventGrid

@@ -2561,7 +2561,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.endpoint"
+              "crossLanguageDefinitionId": "Encode.Duration.Query.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4792,7 +4792,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.endpoint"
+              "crossLanguageDefinitionId": "Encode.Duration.Property.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6207,7 +6207,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.endpoint"
+              "crossLanguageDefinitionId": "Encode.Duration.Header.endpoint"
             }
           ],
           "initializedBy": 0,

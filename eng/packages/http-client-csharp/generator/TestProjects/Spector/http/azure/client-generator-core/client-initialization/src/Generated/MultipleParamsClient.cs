@@ -13,13 +13,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Service;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization
 {
     public partial class MultipleParamsClient
     {
         protected MultipleParamsClient() => throw null;
 
         public MultipleParamsClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new MultipleParamsClientOptions()) => throw null;
+
+        public MultipleParamsClient(string name, string region, MultipleParamsClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
 
         public MultipleParamsClient(Uri endpoint, string name, string region, MultipleParamsClientOptions options) => throw null;
 

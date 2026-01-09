@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Communication
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains, CommunicationPublicNetworkAccess? publicNetworkAccess, bool? isLocalAuthDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -84,6 +86,8 @@ namespace Azure.ResourceManager.Communication
             Version = version;
             ImmutableResourceId = immutableResourceId;
             LinkedDomains = linkedDomains;
+            PublicNetworkAccess = publicNetworkAccess;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -116,5 +120,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> List of email Domain resource Ids. </summary>
         [WirePath("properties.linkedDomains")]
         public IList<string> LinkedDomains { get; }
+        /// <summary> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public CommunicationPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Disable local authentication for the CommunicationService. </summary>
+        [WirePath("properties.disableLocalAuth")]
+        public bool? IsLocalAuthDisabled { get; set; }
     }
 }

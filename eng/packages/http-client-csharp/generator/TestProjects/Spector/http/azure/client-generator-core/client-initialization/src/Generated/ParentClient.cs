@@ -8,13 +8,15 @@
 using System;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient
 {
     public partial class ParentClient
     {
         protected ParentClient() => throw null;
 
         public ParentClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new _Specs_AzureClientGeneratorCoreClientInitializationClientOptions()) => throw null;
+
+        public ParentClient(string blobName, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
         public ParentClient(Uri endpoint, string blobName, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions options) => throw null;
 

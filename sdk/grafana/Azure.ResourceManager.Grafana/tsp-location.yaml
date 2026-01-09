@@ -1,4 +1,4 @@
 directory: specification/dashboard/Dashboard.Management
-commit: a39b73b1c7d12a633805a3b2ed3177a8bfddd9e2
+commit: a03d9e3159075f4b5ab9224c1008d541ee792dc5
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The mode the network plugin should use. </summary>
+    /// <summary>
+    /// The mode the network plugin should use.
+    /// Serialized Name: NetworkPluginMode
+    /// </summary>
     public readonly partial struct ContainerServiceNetworkPluginMode : IEquatable<ContainerServiceNetworkPluginMode>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string OverlayValue = "overlay";
 
-        /// <summary> Used with networkPlugin=azure, pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet's method of route tables. For more information visit https://aka.ms/aks/azure-cni-overlay. </summary>
+        /// <summary>
+        /// Used with networkPlugin=azure, pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet's method of route tables. For more information visit https://aka.ms/aks/azure-cni-overlay.
+        /// Serialized Name: NetworkPluginMode.overlay
+        /// </summary>
         public static ContainerServiceNetworkPluginMode Overlay { get; } = new ContainerServiceNetworkPluginMode(OverlayValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPluginMode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPluginMode left, ContainerServiceNetworkPluginMode right) => left.Equals(right);

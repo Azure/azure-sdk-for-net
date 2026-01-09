@@ -11,13 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization
 {
     public partial class ParamAliasClient
     {
         protected ParamAliasClient() => throw null;
 
         public ParamAliasClient(string blobName, string blob) : this(new Uri("http://localhost:3000"), blobName, blob, new ParamAliasClientOptions()) => throw null;
+
+        public ParamAliasClient(string blobName, string blob, ParamAliasClientOptions options) : this(new Uri("http://localhost:3000"), blobName, blob, options) => throw null;
 
         public ParamAliasClient(Uri endpoint, string blobName, string blob, ParamAliasClientOptions options) => throw null;
 

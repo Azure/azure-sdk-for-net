@@ -588,9 +588,7 @@ namespace Azure.Provisioning.Expressions
         public static Azure.Provisioning.BicepValue<string> Concat(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.BicepValue<string> CreateGuid(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.ArmDeployment GetDeployment() { throw null; }
-        public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetExtensionResourceId(Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> resourceId, Azure.Provisioning.BicepValue<string> resourceType, params Azure.Provisioning.BicepValue<string>[] resourceNames) { throw null; }
         public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup() { throw null; }
-        public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Subscription GetSubscription() { throw null; }
         public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetSubscriptionResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Tenant GetTenant() { throw null; }
@@ -833,6 +831,13 @@ namespace Azure.Provisioning.Primitives
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.BicepStatement> Statements { get { throw null; } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
+    public sealed partial class BicepMetadata
+    {
+        public BicepMetadata() { }
+        public uint? BatchSize { get { throw null; } set { } }
+        public string? Description { get { throw null; } set { } }
+        public bool OnlyIfNotExists { get { throw null; } set { } }
+    }
     public partial class BicepValueReference
     {
         public BicepValueReference(Azure.Provisioning.Primitives.ProvisionableConstruct construct, string propertyName, params string[]? path) { }
@@ -935,6 +940,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class ProvisionableResource : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {
         protected ProvisionableResource(string bicepIdentifier, Azure.Core.ResourceType resourceType, string? resourceVersion = null) : base (default(string)) { }
+        public Azure.Provisioning.Primitives.BicepMetadata BicepMetadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.ProvisionableResource> DependsOn { get { throw null; } }
         public bool IsExistingResource { get { throw null; } protected set { } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
@@ -2046,6 +2052,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2023_04_01;
             public static readonly string V2024_05_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_03_01;
         }
     }
     public partial class ManagementGroupPolicySetDefinition : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2079,6 +2086,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2023_04_01;
             public static readonly string V2024_05_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_03_01;
         }
     }
     public partial class ManagementGroupSubscription : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2205,6 +2213,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2024_04_01;
             public static readonly string V2024_05_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_03_01;
         }
     }
     public partial class PolicyDefinitionGroup : Azure.Provisioning.Primitives.ProvisionableConstruct

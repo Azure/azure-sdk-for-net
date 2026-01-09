@@ -54,6 +54,16 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -80,6 +90,8 @@ namespace Azure.ResourceManager.Communication.Models
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IList<string> linkedDomains = default;
+            CommunicationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,6 +142,24 @@ namespace Azure.ResourceManager.Communication.Models
                             linkedDomains = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new CommunicationPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -139,7 +169,13 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CommunicationServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, linkedDomains ?? new ChangeTrackingList<string>());
+            return new CommunicationServiceResourcePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                linkedDomains ?? new ChangeTrackingList<string>(),
+                publicNetworkAccess,
+                disableLocalAuth);
         }
 
         BinaryData IPersistableModel<CommunicationServiceResourcePatch>.Write(ModelReaderWriterOptions options)

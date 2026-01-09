@@ -15,7 +15,7 @@ Check the release readiness of an SDK package by collecting the required informa
       - Go
 
 2. **Execute Readiness Check**:
-    - Use the `azsdk_check_package_release_readiness` tool with the provided package name and selected language
+    - Use the `azsdk_release_sdk` tool with the provided package name, selected language, and set checkReady to true.
     - Do not check for existing pull requests to run this step.
     - Do not ask the user to create a release plan to run this step.
 

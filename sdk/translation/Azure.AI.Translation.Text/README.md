@@ -1,20 +1,18 @@
 # Azure Text Translation client library for .NET
 
-Text translation is a cloud-based REST API feature of the Translator service that uses neural machine translation technology to enable quick and accurate source-to-target text translation in real time across all supported languages.
+Azure text translation is a cloud-based REST API provided by the Azure Translator service. It utilizes neural machine translation technology to deliver precise, contextually relevant, and semantically accurate real-time text translations across all supported languages.
 
 Use the Text Translation client library for .NET to:
 
-* Return a list of languages supported by Translate, Transliterate, and Dictionary operations.
+- Retrieve the list of languages supported for translation and transliteration operations, as well as LLM models available for translations.
 
-* Render single source-language text to multiple target-language texts with a single request.
+- Perform deterministic text translation from a specified source language to a target language, with configurable parameters to ensure precision and maintain contextual integrity.
 
-* Convert text of a source language in letters of a different script.
+- Execute transliteration by converting text from the original script to an alternative script representation.
 
-* Return equivalent words for the source term in the target language.
+- Use LLM models to produce translation output variants that are tone-specific and gender-aware.
 
-* Return grammatical structure and context examples for the source term and target term pair.
-
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/src) | [API reference documentation](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/translator/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/src) | [API reference documentation](https://learn.microsoft.com/azure/ai-services/translator/text-translation/preview/rest-api-guide) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/translator/)
 
 ## Getting started
 
@@ -95,12 +93,12 @@ A `TextTranslationClient` is the primary interface for developers using the Text
 
 ### Input
 
-A **text element** (`string`), is a single unit of input to be processed by the translation models in the Translator service. Operations on `TextTranslationClient` may take a single text element or a collection of text elements.
+A **TranslateInputItem** is a single unit of input to be processed by the translation models in the Translator service. Each `TranslateInputItem` defines both the input string to translate and the output specifications for the translation. Operations on `TextTranslationClient` may take a single `TranslateInputItem` or a collection of `TranslateInputItem` objects.
 For text element length limits, maximum requests size, and supported text encoding see [here][translator_limits].
 
 ### Return value
 
-Return values, such as `Response<IReadOnlyList<TranslatedTextItem>>`, is the result of a Text Translation operation, It contains array with one result for each string in the input array.  An operation's return value also may optionally include information about the input text element (for example detected language).
+Return values, such as `Response<IReadOnlyList<TranslatedTextItem>>`, is the result of a Text Translation operation. It contains an array with one `TranslatedTextItem` for each input `TranslateInputItem`. An operation's return value also may optionally include information about the input text element (for example detected language).
 
 ### Thread safety
 
@@ -145,6 +143,7 @@ For samples on using the `languages` endpoint refer to more samples [here][langu
 Please refer to the service documentation for a conceptual discussion of [languages][languages_doc].
 
 ### Translate
+
 The simplest use of the Translate method is to invoke it with a single target language and one input string.
 
 ```C# Snippet:GetTextTranslation
@@ -279,12 +278,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [translator_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/Custom/TextTranslationClient.cs
 
-[translator_auth]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#authentication
+[translator_auth]: https://learn.microsoft.com/azure/ai-services/translator/text-translation/reference/authentication
 [translator_limits]: https://learn.microsoft.com/azure/cognitive-services/translator/request-limits
 
-[languages_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-languages
-[translate_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-translate
-[transliterate_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-transliterate
+[languages_doc]: https://learn.microsoft.com/azure/ai-services/translator/text-translation/preview/get-languages
+[translate_doc]: https://learn.microsoft.com/azure/ai-services/translator/text-translation/preview/translate-api
+[transliterate_doc]: https://learn.microsoft.com/azure/ai-services/translator/text-translation/preview/transliterate-api
 
 [client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
 [languages_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
@@ -297,7 +296,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[custom_details]: https://learn.microsoft.com/azure/ai-services/translator/reference/v3-0-reference#authentication-with-microsoft-entra-id
+[custom_details]: https://learn.microsoft.com/azure/ai-services/translator/text-translation/reference/authentication#authentication-with-microsoft-entra-id
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [azure_cli]: https://learn.microsoft.com/cli/azure/

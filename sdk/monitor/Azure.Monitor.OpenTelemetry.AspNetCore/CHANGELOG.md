@@ -29,6 +29,10 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
+  instead of replica names in the Role Instance field.
+  ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
+
 ### Other Changes
 
 ## 1.4.0 (2025-11-14)

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The result of the List SchemaGroup operation. </summary>
+    /// <summary> The response of a SchemaGroup list operation. </summary>
     internal partial class SchemaGroupListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.EventHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/>. </summary>
-        internal SchemaGroupListResult()
+        /// <param name="value"> The SchemaGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SchemaGroupListResult(IEnumerable<EventHubsSchemaGroupData> value)
         {
-            Value = new ChangeTrackingList<EventHubsSchemaGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/>. </summary>
-        /// <param name="value"> Result of the List SchemaGroups operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Schema Groups. </param>
+        /// <param name="value"> The SchemaGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaGroupListResult(IReadOnlyList<EventHubsSchemaGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchemaGroupListResult(IReadOnlyList<EventHubsSchemaGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the List SchemaGroups operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/> for deserialization. </summary>
+        internal SchemaGroupListResult()
+        {
+        }
+
+        /// <summary> The SchemaGroup items on this page. </summary>
         public IReadOnlyList<EventHubsSchemaGroupData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Schema Groups. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

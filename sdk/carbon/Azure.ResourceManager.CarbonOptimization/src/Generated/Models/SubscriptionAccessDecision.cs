@@ -13,46 +13,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     /// <summary> Access Decision for each Subscription. </summary>
     public partial class SubscriptionAccessDecision
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionAccessDecision"/>. </summary>
         /// <param name="subscriptionId"> Id of Subscription. </param>
         /// <param name="decision"> Access decision to subscription. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         internal SubscriptionAccessDecision(string subscriptionId, CarbonEmissionAccessDecision decision)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-
             SubscriptionId = subscriptionId;
             Decision = decision;
         }
@@ -61,24 +29,21 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Id of Subscription. </param>
         /// <param name="decision"> Access decision to subscription. </param>
         /// <param name="denialReason"> The reason why access request got denied. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAccessDecision(string subscriptionId, CarbonEmissionAccessDecision decision, string denialReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionAccessDecision(string subscriptionId, CarbonEmissionAccessDecision decision, string denialReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             Decision = decision;
             DenialReason = denialReason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SubscriptionAccessDecision"/> for deserialization. </summary>
-        internal SubscriptionAccessDecision()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of Subscription. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> Access decision to subscription. </summary>
         public CarbonEmissionAccessDecision Decision { get; }
+
         /// <summary> The reason why access request got denied. </summary>
         public string DenialReason { get; }
     }

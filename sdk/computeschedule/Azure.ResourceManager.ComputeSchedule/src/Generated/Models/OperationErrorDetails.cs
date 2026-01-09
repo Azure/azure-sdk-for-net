@@ -13,47 +13,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> This defines a list of operation errors associated with a unique operationId. </summary>
     public partial class OperationErrorDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code of the operation. </param>
         /// <param name="errorDetails"> The error details of the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errorCode"/> or <paramref name="errorDetails"/> is null. </exception>
         internal OperationErrorDetails(string errorCode, string errorDetails)
         {
-            Argument.AssertNotNull(errorCode, nameof(errorCode));
-            Argument.AssertNotNull(errorDetails, nameof(errorDetails));
-
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
         }
@@ -65,8 +32,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="errorDetailsTimestamp"> The timestamp of the error occurence. </param>
         /// <param name="azureOperationName"> The compute operationid of the Start/Deallocate/Hibernate request. </param>
         /// <param name="crpOperationId"> The compute operationid of the Start/Deallocate/Hibernate request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationErrorDetails(string errorCode, string errorDetails, DateTimeOffset? timestamp, DateTimeOffset? errorDetailsTimestamp, string azureOperationName, string crpOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationErrorDetails(string errorCode, string errorDetails, DateTimeOffset? timestamp, DateTimeOffset? errorDetailsTimestamp, string azureOperationName, string crpOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
@@ -74,24 +41,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ErrorDetailsTimestamp = errorDetailsTimestamp;
             AzureOperationName = azureOperationName;
             CrpOperationId = crpOperationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationErrorDetails"/> for deserialization. </summary>
-        internal OperationErrorDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The error code of the operation. </summary>
         public string ErrorCode { get; }
+
         /// <summary> The error details of the operation. </summary>
         public string ErrorDetails { get; }
+
         /// <summary> The timestamp of the error occurence. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> The timestamp of the error occurence. </summary>
         public DateTimeOffset? ErrorDetailsTimestamp { get; }
+
         /// <summary> The compute operationid of the Start/Deallocate/Hibernate request. </summary>
         public string AzureOperationName { get; }
+
         /// <summary> The compute operationid of the Start/Deallocate/Hibernate request. </summary>
         public string CrpOperationId { get; }
     }

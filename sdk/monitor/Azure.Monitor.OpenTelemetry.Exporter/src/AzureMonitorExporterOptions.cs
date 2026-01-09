@@ -120,6 +120,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         internal bool EnableStatsbeat { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether standard metrics should be collected.
+        /// Default is true.
+        /// </summary>
+        internal bool EnableStandardMetrics { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether performance counters should be collected.
+        /// Default is true.
+        /// </summary>
+        internal bool EnablePerfCounters { get; set; } = true;
+
         internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
         {
             liveMetricsOptions.ConnectionString = ConnectionString;

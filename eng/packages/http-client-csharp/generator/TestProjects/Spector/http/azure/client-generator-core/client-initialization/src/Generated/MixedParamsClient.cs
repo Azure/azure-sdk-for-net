@@ -13,13 +13,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Service;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization
 {
     public partial class MixedParamsClient
     {
         protected MixedParamsClient() => throw null;
 
         public MixedParamsClient(string name) : this(new Uri("http://localhost:3000"), name, new MixedParamsClientOptions()) => throw null;
+
+        public MixedParamsClient(string name, MixedParamsClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
         public MixedParamsClient(Uri endpoint, string name, MixedParamsClientOptions options) => throw null;
 

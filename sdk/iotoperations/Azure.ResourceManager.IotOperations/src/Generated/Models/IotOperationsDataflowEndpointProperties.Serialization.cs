@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class IotOperationsDataflowEndpointProperties : IUtf8JsonSerializable, IJsonModel<IotOperationsDataflowEndpointProperties>
+    /// <summary> DataflowEndpoint Resource properties. NOTE - Only one type of endpoint is supported for one Resource. </summary>
+    public partial class IotOperationsDataflowEndpointProperties : IJsonModel<IotOperationsDataflowEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotOperationsDataflowEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowEndpointProperties"/> for deserialization. </summary>
+        internal IotOperationsDataflowEndpointProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsDataflowEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotOperationsDataflowEndpointProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(HostType))
@@ -81,15 +86,20 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("healthState"u8);
+                writer.WriteStringValue(HealthState.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,22 +108,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        IotOperationsDataflowEndpointProperties IJsonModel<IotOperationsDataflowEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsDataflowEndpointProperties IJsonModel<IotOperationsDataflowEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotOperationsDataflowEndpointProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotOperationsDataflowEndpointProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotOperationsDataflowEndpointProperties(document.RootElement, options);
         }
 
-        internal static IotOperationsDataflowEndpointProperties DeserializeIotOperationsDataflowEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotOperationsDataflowEndpointProperties DeserializeIotOperationsDataflowEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -128,102 +143,110 @@ namespace Azure.ResourceManager.IotOperations.Models
             DataflowEndpointMqtt mqttSettings = default;
             DataflowEndpointOpenTelemetry openTelemetrySettings = default;
             IotOperationsProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceHealthState? healthState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"u8))
+                if (prop.NameEquals("endpointType"u8))
                 {
-                    endpointType = new DataflowEndpointType(property.Value.GetString());
+                    endpointType = new DataflowEndpointType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostType"u8))
+                if (prop.NameEquals("hostType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostType = new DataflowEndpointHostType(property.Value.GetString());
+                    hostType = new DataflowEndpointHostType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataExplorerSettings"u8))
+                if (prop.NameEquals("dataExplorerSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataExplorerSettings = DataflowEndpointDataExplorer.DeserializeDataflowEndpointDataExplorer(property.Value, options);
+                    dataExplorerSettings = DataflowEndpointDataExplorer.DeserializeDataflowEndpointDataExplorer(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataLakeStorageSettings"u8))
+                if (prop.NameEquals("dataLakeStorageSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataLakeStorageSettings = DataflowEndpointDataLakeStorage.DeserializeDataflowEndpointDataLakeStorage(property.Value, options);
+                    dataLakeStorageSettings = DataflowEndpointDataLakeStorage.DeserializeDataflowEndpointDataLakeStorage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("fabricOneLakeSettings"u8))
+                if (prop.NameEquals("fabricOneLakeSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricOneLakeSettings = DataflowEndpointFabricOneLake.DeserializeDataflowEndpointFabricOneLake(property.Value, options);
+                    fabricOneLakeSettings = DataflowEndpointFabricOneLake.DeserializeDataflowEndpointFabricOneLake(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("kafkaSettings"u8))
+                if (prop.NameEquals("kafkaSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kafkaSettings = DataflowEndpointKafka.DeserializeDataflowEndpointKafka(property.Value, options);
+                    kafkaSettings = DataflowEndpointKafka.DeserializeDataflowEndpointKafka(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("localStorageSettings"u8))
+                if (prop.NameEquals("localStorageSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localStorageSettings = DataflowEndpointLocalStorage.DeserializeDataflowEndpointLocalStorage(property.Value, options);
+                    localStorageSettings = DataflowEndpointLocalStorage.DeserializeDataflowEndpointLocalStorage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mqttSettings"u8))
+                if (prop.NameEquals("mqttSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mqttSettings = DataflowEndpointMqtt.DeserializeDataflowEndpointMqtt(property.Value, options);
+                    mqttSettings = DataflowEndpointMqtt.DeserializeDataflowEndpointMqtt(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("openTelemetrySettings"u8))
+                if (prop.NameEquals("openTelemetrySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    openTelemetrySettings = DataflowEndpointOpenTelemetry.DeserializeDataflowEndpointOpenTelemetry(property.Value, options);
+                    openTelemetrySettings = DataflowEndpointOpenTelemetry.DeserializeDataflowEndpointOpenTelemetry(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new IotOperationsProvisioningState(property.Value.GetString());
+                    provisioningState = new IotOperationsProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("healthState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthState = new ResourceHealthState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IotOperationsDataflowEndpointProperties(
                 endpointType,
                 hostType,
@@ -235,13 +258,17 @@ namespace Azure.ResourceManager.IotOperations.Models
                 mqttSettings,
                 openTelemetrySettings,
                 provisioningState,
-                serializedAdditionalRawData);
+                healthState,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<IotOperationsDataflowEndpointProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotOperationsDataflowEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -251,15 +278,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        IotOperationsDataflowEndpointProperties IPersistableModel<IotOperationsDataflowEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsDataflowEndpointProperties IPersistableModel<IotOperationsDataflowEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotOperationsDataflowEndpointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotOperationsDataflowEndpointProperties(document.RootElement, options);
                     }
                 default:
@@ -267,6 +299,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IotOperationsDataflowEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
