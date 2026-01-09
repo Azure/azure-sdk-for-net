@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -79,8 +78,7 @@ namespace Azure.Generator.Management.Utilities
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Delete:
-                        // Initially add Delete to the resource; it may later be moved to the collection
-                        // if there is no corresponding Read (Get) operation for non-singleton resources.
+                        // only resource has get
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Action:
@@ -130,24 +128,9 @@ namespace Azure.Generator.Management.Utilities
             }
 
             // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
-            // However, this only makes sense if there's a Get/Read method, otherwise the resource can never be retrieved to be updated.
-            bool hasGetMethod = methodsInResource.Any(m => m.Kind == ResourceOperationKind.Read);
-            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod)
+            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null)
             {
                 methodsInResource.Add(createMethod);
-            }
-
-            // If there's no Get operation and the resource is not a singleton, move Delete from Resource to Collection
-            // This is because without Get, you can't obtain a Resource instance to call Delete on
-            bool shouldMoveDeleteToCollection = !hasGetMethod && resourceMetadata.SingletonResourceName is null;
-            if (shouldMoveDeleteToCollection)
-            {
-                var deleteMethod = methodsInResource.FirstOrDefault(m => m.Kind == ResourceOperationKind.Delete);
-                if (deleteMethod is not null)
-                {
-                    methodsInResource.Remove(deleteMethod);
-                    methodsInCollection.Add(deleteMethod);
-                }
             }
 
             return new(methodsInResource, methodsInCollection, methodsInExtension);

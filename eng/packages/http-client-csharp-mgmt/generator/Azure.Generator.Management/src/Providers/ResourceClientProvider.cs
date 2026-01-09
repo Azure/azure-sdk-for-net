@@ -98,8 +98,6 @@ namespace Azure.Generator.Management.Providers
 
         public bool IsSingleton => SingletonResourceName is not null;
 
-        internal bool HasGetOperation => _resourceServiceMethods.Any(m => m.Kind == ResourceOperationKind.Read);
-
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
         private IReadOnlyList<ResourceClientProvider>? _childResources;
