@@ -79,7 +79,8 @@ namespace Azure.Generator.Management.Utilities
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Delete:
-                        // Delete goes to resource if there's a Get operation, otherwise to collection
+                        // Initially add Delete to the resource; it may later be moved to the collection
+                        // if there is no corresponding Read (Get) operation for non-singleton resources.
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Action:
@@ -131,8 +132,7 @@ namespace Azure.Generator.Management.Utilities
             // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
             // However, this only makes sense if there's a Get/Read method, otherwise the resource can never be retrieved to be updated.
             bool hasGetMethod = methodsInResource.Any(m => m.Kind == ResourceOperationKind.Read);
-            bool canAddCreateAsUpdate = resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod;
-            if (canAddCreateAsUpdate && createMethod is not null)
+            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null && hasGetMethod)
             {
                 methodsInResource.Add(createMethod);
             }
