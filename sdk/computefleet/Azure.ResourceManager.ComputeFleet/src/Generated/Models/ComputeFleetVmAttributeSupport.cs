@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetVmAttributeSupport : IEquatable<ComputeFleetVmAttributeSupport>
     {
         private readonly string _value;
+        /// <summary> All VMSizes having the feature support will be excluded. </summary>
+        private const string ExcludedValue = "Excluded";
+        /// <summary>  VMSizes that have the feature support and that do not have the feature support will be used. Included is a union of Excluded and Required. </summary>
+        private const string IncludedValue = "Included";
+        /// <summary> Only the VMSizes having the feature support will be used. </summary>
+        private const string RequiredValue = "Required";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributeSupport"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetVmAttributeSupport(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExcludedValue = "Excluded";
-        private const string IncludedValue = "Included";
-        private const string RequiredValue = "Required";
+            _value = value;
+        }
 
         /// <summary> All VMSizes having the feature support will be excluded. </summary>
         public static ComputeFleetVmAttributeSupport Excluded { get; } = new ComputeFleetVmAttributeSupport(ExcludedValue);
-        /// <summary> VMSizes that have the feature support and that do not have the feature support will be used. Included is a union of Excluded and Required. </summary>
+
+        /// <summary>  VMSizes that have the feature support and that do not have the feature support will be used. Included is a union of Excluded and Required. </summary>
         public static ComputeFleetVmAttributeSupport Included { get; } = new ComputeFleetVmAttributeSupport(IncludedValue);
+
         /// <summary> Only the VMSizes having the feature support will be used. </summary>
         public static ComputeFleetVmAttributeSupport Required { get; } = new ComputeFleetVmAttributeSupport(RequiredValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmAttributeSupport"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetVmAttributeSupport left, ComputeFleetVmAttributeSupport right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmAttributeSupport"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetVmAttributeSupport left, ComputeFleetVmAttributeSupport right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetVmAttributeSupport"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmAttributeSupport"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetVmAttributeSupport(string value) => new ComputeFleetVmAttributeSupport(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmAttributeSupport"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetVmAttributeSupport?(string value) => value == null ? null : new ComputeFleetVmAttributeSupport(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetVmAttributeSupport other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetVmAttributeSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

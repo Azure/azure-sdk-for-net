@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a virtual machine scale set OS profile. </summary>
     public partial class ComputeFleetVmssOSProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssOSProfile"/>. </summary>
         public ComputeFleetVmssOSProfile()
@@ -109,8 +81,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// virtual machine scale set.
         /// </param>
         /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssOSProfile(string computerNamePrefix, string adminUsername, string adminPassword, string customData, ComputeFleetWindowsConfiguration windowsConfiguration, ComputeFleetLinuxConfiguration linuxConfiguration, IList<ComputeFleetVaultSecretGroup> secrets, bool? areExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssOSProfile(string computerNamePrefix, string adminUsername, string adminPassword, string customData, ComputeFleetWindowsConfiguration windowsConfiguration, ComputeFleetLinuxConfiguration linuxConfiguration, IList<ComputeFleetVaultSecretGroup> secrets, bool? areExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerNamePrefix = computerNamePrefix;
             AdminUsername = adminUsername;
@@ -121,7 +93,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             Secrets = secrets;
             AreExtensionOperationsAllowed = areExtensionOperationsAllowed;
             IsGuestProvisionSignalRequired = isGuestProvisionSignalRequired;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -129,6 +101,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// set. Computer name prefixes must be 1 to 15 characters long.
         /// </summary>
         public string ComputerNamePrefix { get; set; }
+
         /// <summary>
         /// Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; **Windows-only
         /// restriction:** Cannot end in "." &lt;br&gt;&lt;br&gt; **Disallowed values:**
@@ -140,6 +113,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// (Linux):** 64 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 20 characters
         /// </summary>
         public string AdminUsername { get; set; }
+
         /// <summary>
         /// Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length
         /// (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters
@@ -157,6 +131,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Extension](https://learn.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection)
         /// </summary>
         public string AdminPassword { get; set; }
+
         /// <summary>
         /// Specifies a base-64 encoded string of custom data. The base-64 encoded string
         /// is decoded to a binary array that is saved as a file on the Virtual Machine.
@@ -165,14 +140,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// creation](https://learn.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
         /// </summary>
         public string CustomData { get; set; }
+
         /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
         public ComputeFleetWindowsConfiguration WindowsConfiguration { get; set; }
+
         /// <summary>
         /// Specifies the Linux operating system settings on the virtual machine. For a
         /// list of supported Linux distributions, see [Linux on Azure-Endorsed
         /// Distributions](https://learn.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
         /// </summary>
         public ComputeFleetLinuxConfiguration LinuxConfiguration { get; set; }
+
         /// <summary>
         /// Specifies set of certificates that should be installed onto the virtual
         /// machines in the scale set. To install certificates on a virtual machine it is
@@ -182,12 +160,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Windows](https://learn.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
         /// </summary>
         public IList<ComputeFleetVaultSecretGroup> Secrets { get; }
+
         /// <summary>
         /// Specifies whether extension operations should be allowed on the virtual machine
         /// scale set. This may only be set to False when no extensions are present on the
         /// virtual machine scale set.
         /// </summary>
         public bool? AreExtensionOperationsAllowed { get; set; }
+
         /// <summary> Optional property which must either be set to True or omitted. </summary>
         public bool? IsGuestProvisionSignalRequired { get; set; }
     }

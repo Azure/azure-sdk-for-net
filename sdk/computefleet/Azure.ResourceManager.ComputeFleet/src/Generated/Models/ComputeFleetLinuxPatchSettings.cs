@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Specifies settings related to VM Guest Patching on Linux. </summary>
     public partial class ComputeFleetLinuxPatchSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxPatchSettings"/>. </summary>
         public ComputeFleetLinuxPatchSettings()
@@ -70,13 +41,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies additional settings for patch mode AutomaticByPlatform in VM Guest
         /// Patching on Linux.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetLinuxPatchSettings(ComputeFleetLinuxVmGuestPatchMode? patchMode, ComputeFleetLinuxPatchAssessmentMode? assessmentMode, ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetLinuxPatchSettings(ComputeFleetLinuxVmGuestPatchMode? patchMode, ComputeFleetLinuxPatchAssessmentMode? assessmentMode, ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchMode = patchMode;
             AssessmentMode = assessmentMode;
             AutomaticByPlatformSettings = automaticByPlatformSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -88,6 +59,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// the platform. The property provisionVMAgent must be true
         /// </summary>
         public ComputeFleetLinuxVmGuestPatchMode? PatchMode { get; set; }
+
         /// <summary>
         /// Specifies the mode of VM Guest Patch Assessment for the IaaS virtual
         /// machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You
@@ -96,6 +68,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// The property provisionVMAgent must be true.
         /// </summary>
         public ComputeFleetLinuxPatchAssessmentMode? AssessmentMode { get; set; }
+
         /// <summary>
         /// Specifies additional settings for patch mode AutomaticByPlatform in VM Guest
         /// Patching on Linux.

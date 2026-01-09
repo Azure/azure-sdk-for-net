@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,19 +15,31 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetDiskCreateOptionType : IEquatable<ComputeFleetDiskCreateOptionType>
     {
         private readonly string _value;
+        /// <summary>
+        /// This value is used when you are using an image to create the virtual machine.
+        /// If you are using a platform image, you also use the imageReference element
+        /// described above. If you are using a marketplace image, you also use the
+        /// plan element previously described.
+        /// </summary>
+        private const string FromImageValue = "FromImage";
+        /// <summary> This value is used when creating an empty data disk. </summary>
+        private const string EmptyValue = "Empty";
+        /// <summary> This value is used when you are using a specialized disk to create the virtual machine. </summary>
+        private const string AttachValue = "Attach";
+        /// <summary> This value is used to create a data disk from a snapshot or another disk. </summary>
+        private const string CopyValue = "Copy";
+        /// <summary> This value is used to create a data disk from a disk restore point. </summary>
+        private const string RestoreValue = "Restore";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetDiskCreateOptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FromImageValue = "FromImage";
-        private const string EmptyValue = "Empty";
-        private const string AttachValue = "Attach";
-        private const string CopyValue = "Copy";
-        private const string RestoreValue = "Restore";
+            _value = value;
+        }
 
         /// <summary>
         /// This value is used when you are using an image to create the virtual machine.
@@ -35,31 +48,49 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// plan element previously described.
         /// </summary>
         public static ComputeFleetDiskCreateOptionType FromImage { get; } = new ComputeFleetDiskCreateOptionType(FromImageValue);
+
         /// <summary> This value is used when creating an empty data disk. </summary>
         public static ComputeFleetDiskCreateOptionType Empty { get; } = new ComputeFleetDiskCreateOptionType(EmptyValue);
+
         /// <summary> This value is used when you are using a specialized disk to create the virtual machine. </summary>
         public static ComputeFleetDiskCreateOptionType Attach { get; } = new ComputeFleetDiskCreateOptionType(AttachValue);
+
         /// <summary> This value is used to create a data disk from a snapshot or another disk. </summary>
         public static ComputeFleetDiskCreateOptionType Copy { get; } = new ComputeFleetDiskCreateOptionType(CopyValue);
+
         /// <summary> This value is used to create a data disk from a disk restore point. </summary>
         public static ComputeFleetDiskCreateOptionType Restore { get; } = new ComputeFleetDiskCreateOptionType(RestoreValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiskCreateOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetDiskCreateOptionType left, ComputeFleetDiskCreateOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetDiskCreateOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetDiskCreateOptionType left, ComputeFleetDiskCreateOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetDiskCreateOptionType(string value) => new ComputeFleetDiskCreateOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetDiskCreateOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetDiskCreateOptionType?(string value) => value == null ? null : new ComputeFleetDiskCreateOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetDiskCreateOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetDiskCreateOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
