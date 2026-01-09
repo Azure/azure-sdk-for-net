@@ -10,4 +10,8 @@
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Compute.Skus" VersionOverride="1.0.0-alpha.20251125.4" />
+  </ItemGroup>
 </Project>
