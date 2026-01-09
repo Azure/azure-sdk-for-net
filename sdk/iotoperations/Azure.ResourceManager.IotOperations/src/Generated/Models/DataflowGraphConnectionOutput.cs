@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowGraph DataflowGraphNode Connection Output. </summary>
-    public partial class DataflowGraphConnectionOutput
+    internal partial class DataflowGraphConnectionOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

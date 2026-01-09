@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,101 +15,162 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmSize : IEquatable<HciVmSize>
     {
         private readonly string _value;
+        /// <summary> Default virtual machine size. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Standard A2 v2 virtual machine size. </summary>
+        private const string StandardA2V2Value = "Standard_A2_v2";
+        /// <summary> Standard A4 v2 virtual machine size. </summary>
+        private const string StandardA4V2Value = "Standard_A4_v2";
+        /// <summary> Standard D2s v3 virtual machine size. </summary>
+        private const string StandardD2sV3Value = "Standard_D2s_v3";
+        /// <summary> Standard D4s v3 virtual machine size. </summary>
+        private const string StandardD4sV3Value = "Standard_D4s_v3";
+        /// <summary> Standard D8s v3 virtual machine size. </summary>
+        private const string StandardD8sV3Value = "Standard_D8s_v3";
+        /// <summary> Standard D16s v3 virtual machine size. </summary>
+        private const string StandardD16sV3Value = "Standard_D16s_v3";
+        /// <summary> Standard D32s v3 virtual machine size. </summary>
+        private const string StandardD32sV3Value = "Standard_D32s_v3";
+        /// <summary> Standard DS2 v2 virtual machine size. </summary>
+        private const string StandardDS2V2Value = "Standard_DS2_v2";
+        /// <summary> Standard DS3 v2 virtual machine size. </summary>
+        private const string StandardDS3V2Value = "Standard_DS3_v2";
+        /// <summary> Standard DS4 v2 virtual machine size. </summary>
+        private const string StandardDS4V2Value = "Standard_DS4_v2";
+        /// <summary> Standard DS5 v2 virtual machine size. </summary>
+        private const string StandardDS5V2Value = "Standard_DS5_v2";
+        /// <summary> Standard DS13 v2 virtual machine size. </summary>
+        private const string StandardDS13V2Value = "Standard_DS13_v2";
+        /// <summary> Standard K8S v1 virtual machine size. </summary>
+        private const string StandardK8SV1Value = "Standard_K8S_v1";
+        /// <summary> Standard K8S2 v1 virtual machine size. </summary>
+        private const string StandardK8S2V1Value = "Standard_K8S2_v1";
+        /// <summary> Standard K8S3 v1 virtual machine size. </summary>
+        private const string StandardK8S3V1Value = "Standard_K8S3_v1";
+        /// <summary> Standard K8S4 v1 virtual machine size. </summary>
+        private const string StandardK8S4V1Value = "Standard_K8S4_v1";
+        /// <summary> Standard NK6 virtual machine size. </summary>
+        private const string StandardNK6Value = "Standard_NK6";
+        /// <summary> Standard NK12 virtual machine size. </summary>
+        private const string StandardNK12Value = "Standard_NK12";
+        /// <summary> Standard NV6 virtual machine size. </summary>
+        private const string StandardNV6Value = "Standard_NV6";
+        /// <summary> Standard NV12 virtual machine size. </summary>
+        private const string StandardNV12Value = "Standard_NV12";
+        /// <summary> Standard K8S5 v1 virtual machine size. </summary>
+        private const string StandardK8S5V1Value = "Standard_K8S5_v1";
+        /// <summary> Custom virtual machine size. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="HciVmSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmSize(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string StandardA2V2Value = "Standard_A2_v2";
-        private const string StandardA4V2Value = "Standard_A4_v2";
-        private const string StandardD2sV3Value = "Standard_D2s_v3";
-        private const string StandardD4sV3Value = "Standard_D4s_v3";
-        private const string StandardD8sV3Value = "Standard_D8s_v3";
-        private const string StandardD16sV3Value = "Standard_D16s_v3";
-        private const string StandardD32sV3Value = "Standard_D32s_v3";
-        private const string StandardDS2V2Value = "Standard_DS2_v2";
-        private const string StandardDS3V2Value = "Standard_DS3_v2";
-        private const string StandardDS4V2Value = "Standard_DS4_v2";
-        private const string StandardDS5V2Value = "Standard_DS5_v2";
-        private const string StandardDS13V2Value = "Standard_DS13_v2";
-        private const string StandardK8SV1Value = "Standard_K8S_v1";
-        private const string StandardK8S2V1Value = "Standard_K8S2_v1";
-        private const string StandardK8S3V1Value = "Standard_K8S3_v1";
-        private const string StandardK8S4V1Value = "Standard_K8S4_v1";
-        private const string StandardNK6Value = "Standard_NK6";
-        private const string StandardNK12Value = "Standard_NK12";
-        private const string StandardNV6Value = "Standard_NV6";
-        private const string StandardNV12Value = "Standard_NV12";
-        private const string StandardK8S5V1Value = "Standard_K8S5_v1";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> Default virtual machine size. </summary>
         public static HciVmSize Default { get; } = new HciVmSize(DefaultValue);
+
         /// <summary> Standard A2 v2 virtual machine size. </summary>
         public static HciVmSize StandardA2V2 { get; } = new HciVmSize(StandardA2V2Value);
+
         /// <summary> Standard A4 v2 virtual machine size. </summary>
         public static HciVmSize StandardA4V2 { get; } = new HciVmSize(StandardA4V2Value);
+
         /// <summary> Standard D2s v3 virtual machine size. </summary>
         public static HciVmSize StandardD2sV3 { get; } = new HciVmSize(StandardD2sV3Value);
+
         /// <summary> Standard D4s v3 virtual machine size. </summary>
         public static HciVmSize StandardD4sV3 { get; } = new HciVmSize(StandardD4sV3Value);
+
         /// <summary> Standard D8s v3 virtual machine size. </summary>
         public static HciVmSize StandardD8sV3 { get; } = new HciVmSize(StandardD8sV3Value);
+
         /// <summary> Standard D16s v3 virtual machine size. </summary>
         public static HciVmSize StandardD16sV3 { get; } = new HciVmSize(StandardD16sV3Value);
+
         /// <summary> Standard D32s v3 virtual machine size. </summary>
         public static HciVmSize StandardD32sV3 { get; } = new HciVmSize(StandardD32sV3Value);
+
         /// <summary> Standard DS2 v2 virtual machine size. </summary>
         public static HciVmSize StandardDS2V2 { get; } = new HciVmSize(StandardDS2V2Value);
+
         /// <summary> Standard DS3 v2 virtual machine size. </summary>
         public static HciVmSize StandardDS3V2 { get; } = new HciVmSize(StandardDS3V2Value);
+
         /// <summary> Standard DS4 v2 virtual machine size. </summary>
         public static HciVmSize StandardDS4V2 { get; } = new HciVmSize(StandardDS4V2Value);
+
         /// <summary> Standard DS5 v2 virtual machine size. </summary>
         public static HciVmSize StandardDS5V2 { get; } = new HciVmSize(StandardDS5V2Value);
+
         /// <summary> Standard DS13 v2 virtual machine size. </summary>
         public static HciVmSize StandardDS13V2 { get; } = new HciVmSize(StandardDS13V2Value);
+
         /// <summary> Standard K8S v1 virtual machine size. </summary>
         public static HciVmSize StandardK8SV1 { get; } = new HciVmSize(StandardK8SV1Value);
+
         /// <summary> Standard K8S2 v1 virtual machine size. </summary>
         public static HciVmSize StandardK8S2V1 { get; } = new HciVmSize(StandardK8S2V1Value);
+
         /// <summary> Standard K8S3 v1 virtual machine size. </summary>
         public static HciVmSize StandardK8S3V1 { get; } = new HciVmSize(StandardK8S3V1Value);
+
         /// <summary> Standard K8S4 v1 virtual machine size. </summary>
         public static HciVmSize StandardK8S4V1 { get; } = new HciVmSize(StandardK8S4V1Value);
+
         /// <summary> Standard NK6 virtual machine size. </summary>
         public static HciVmSize StandardNK6 { get; } = new HciVmSize(StandardNK6Value);
+
         /// <summary> Standard NK12 virtual machine size. </summary>
         public static HciVmSize StandardNK12 { get; } = new HciVmSize(StandardNK12Value);
+
         /// <summary> Standard NV6 virtual machine size. </summary>
         public static HciVmSize StandardNV6 { get; } = new HciVmSize(StandardNV6Value);
+
         /// <summary> Standard NV12 virtual machine size. </summary>
         public static HciVmSize StandardNV12 { get; } = new HciVmSize(StandardNV12Value);
+
         /// <summary> Standard K8S5 v1 virtual machine size. </summary>
         public static HciVmSize StandardK8S5V1 { get; } = new HciVmSize(StandardK8S5V1Value);
+
         /// <summary> Custom virtual machine size. </summary>
         public static HciVmSize Custom { get; } = new HciVmSize(CustomValue);
+
         /// <summary> Determines if two <see cref="HciVmSize"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmSize left, HciVmSize right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmSize"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmSize left, HciVmSize right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmSize"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmSize(string value) => new HciVmSize(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmSize?(string value) => value == null ? null : new HciVmSize(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmSize other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

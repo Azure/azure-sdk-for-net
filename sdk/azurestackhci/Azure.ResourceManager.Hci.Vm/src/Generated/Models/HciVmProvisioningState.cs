@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmProvisioningState : IEquatable<HciVmProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Provisioning has succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Provisioning has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Provisioning is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Provisioning has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Deletion of the resource is in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Provisioning has been canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="HciVmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string InProgressValue = "InProgress";
-        private const string AcceptedValue = "Accepted";
-        private const string DeletingValue = "Deleting";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Provisioning has succeeded. </summary>
         public static HciVmProvisioningState Succeeded { get; } = new HciVmProvisioningState(SucceededValue);
+
         /// <summary> Provisioning has failed. </summary>
         public static HciVmProvisioningState Failed { get; } = new HciVmProvisioningState(FailedValue);
+
         /// <summary> Provisioning is in progress. </summary>
         public static HciVmProvisioningState InProgress { get; } = new HciVmProvisioningState(InProgressValue);
+
         /// <summary> Provisioning has been accepted. </summary>
         public static HciVmProvisioningState Accepted { get; } = new HciVmProvisioningState(AcceptedValue);
+
         /// <summary> Deletion of the resource is in progress. </summary>
         public static HciVmProvisioningState Deleting { get; } = new HciVmProvisioningState(DeletingValue);
+
         /// <summary> Provisioning has been canceled. </summary>
         public static HciVmProvisioningState Canceled { get; } = new HciVmProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="HciVmProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmProvisioningState left, HciVmProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmProvisioningState left, HciVmProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmProvisioningState(string value) => new HciVmProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmProvisioningState?(string value) => value == null ? null : new HciVmProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

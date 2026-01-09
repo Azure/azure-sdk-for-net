@@ -14,40 +14,27 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public partial class MongoClusterEntraIdentityProvider : MongoClusterIdentityProvider
     {
         /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProvider"/>. </summary>
-        /// <param name="properties"> The Entra identity properties for the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public MongoClusterEntraIdentityProvider(MongoClusterEntraIdentityProviderProperties properties)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
-            Type = IdentityProviderType.MicrosoftEntraId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProvider"/>. </summary>
         /// <param name="type"> The type of identity provider that the user belongs to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The Entra identity properties for the user. </param>
-        internal MongoClusterEntraIdentityProvider(IdentityProviderType type, IDictionary<string, BinaryData> serializedAdditionalRawData, MongoClusterEntraIdentityProviderProperties properties) : base(type, serializedAdditionalRawData)
+        internal MongoClusterEntraIdentityProvider(IdentityProviderType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MongoClusterEntraIdentityProviderProperties properties) : base(@type, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProvider"/> for deserialization. </summary>
-        internal MongoClusterEntraIdentityProvider()
-        {
         }
 
         /// <summary> The Entra identity properties for the user. </summary>
         internal MongoClusterEntraIdentityProviderProperties Properties { get; set; }
+
         /// <summary> The principal type of the user. </summary>
         public MongoClusterEntraPrincipalType? MongoClusterEntraIdentityProviderPrincipalType
         {
-            get => Properties is null ? default(MongoClusterEntraPrincipalType?) : Properties.PrincipalType;
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
             set
             {
-                Properties = value.HasValue ? new MongoClusterEntraIdentityProviderProperties(value.Value) : null;
+                Properties = value.HasValue ? new MongoClusterEntraIdentityProviderProperties(value.Value) : default;
             }
         }
     }

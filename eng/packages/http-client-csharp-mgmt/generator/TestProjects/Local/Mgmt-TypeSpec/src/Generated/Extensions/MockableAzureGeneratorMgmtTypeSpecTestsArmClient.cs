@@ -332,6 +332,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SampleDataResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworksResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworksResource"/> object. </returns>
+        public virtual WorkloadNetworksResource GetWorkloadNetworksResource(ResourceIdentifier id)
+        {
+            WorkloadNetworksResource.ValidateResourceId(id);
+            return new WorkloadNetworksResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
+        public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
+            return new WorkloadNetworkVmGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
+        public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkSegmentResource.ValidateResourceId(id);
+            return new WorkloadNetworkSegmentResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

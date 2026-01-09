@@ -24,7 +24,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             // Act
-            var result = BatchError.FromResponse(mockResponse.Object);
+            var result = (BatchError)mockResponse.Object;
 
             // Assert
             Assert.NotNull(result);
@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             // Act
-            var result = BatchError.FromResponse(mockResponse.Object);
+            var result = (BatchError)mockResponse.Object;
 
             // Assert
             Assert.NotNull(result);
@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             // Act
-            var result = BatchError.FromResponse(mockResponse.Object);
+            var result = (BatchError)mockResponse.Object;
 
             // Assert
             Assert.NotNull(result);

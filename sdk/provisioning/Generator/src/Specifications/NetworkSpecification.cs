@@ -96,6 +96,7 @@ public class NetworkSpecification() :
         typeof(LoadBalancingRuleResource),
         typeof(ProbeResource),
         typeof(OutboundRuleResource),
+        typeof(PrivateDnsZoneGroupResource)
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

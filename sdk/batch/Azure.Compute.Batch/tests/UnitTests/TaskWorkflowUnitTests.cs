@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            var batchTaskAddCollectionResult = BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
+            var batchTaskAddCollectionResult = (BatchCreateTaskCollectionResult)mockResponse.Object;
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                 It.IsAny<string>(),
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            var batchTaskAddCollectionResult = BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
+            var batchTaskAddCollectionResult = (BatchCreateTaskCollectionResult)mockResponse.Object;
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                 It.IsAny<string>(),
@@ -755,7 +755,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            return BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
+            return (BatchCreateTaskCollectionResult)mockResponse.Object;
         }
 
         /// <summary>
