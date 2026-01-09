@@ -190,6 +190,7 @@ The samples demonstrate:
 * **Domain-Specific Analysis** - Extract structured fields from invoices using `prebuilt-invoice`
 * **Advanced Document Features** - Extract charts, hyperlinks, formulas, and annotations from documents
 * **Custom Analyzers** - Create custom analyzers with field schemas for specialized extraction needs
+* **Labeled Training Data** - [Create custom analyzers with labeled training data][sample16] for enhanced document extraction accuracy
 * **Document Classification** - Create and use classifiers to categorize documents
 * **Analyzer Management** - Get, list, update, copy, and delete analyzers
 * **Result Management** - Retrieve result files from video analysis and delete analysis results
@@ -265,6 +266,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample16]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample16_CreateAnalyzerWithLabels.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
