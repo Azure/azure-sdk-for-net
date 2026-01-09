@@ -276,5 +276,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 return Properties.FlattenedProperty;
             }
         }
+
+        /// <summary> Gets or sets the Id. </summary>
+        [WirePath("properties.computeFleetVmProfile.capacityReservation.capacityReservationGroup.id")]
+        public ResourceIdentifier ComputeFleetVmCapacityReservationGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeFleetVmCapacityReservationGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ComputeFleetVmCapacityReservationGroupId = value;
+            }
+        }
     }
 }
