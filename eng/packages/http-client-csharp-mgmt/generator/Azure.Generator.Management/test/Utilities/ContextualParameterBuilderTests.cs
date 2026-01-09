@@ -24,7 +24,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern(string.Empty);
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(0, contextualParameters.Count, "Tenant path should not have any contextual parameters.");
+            Assert.That(contextualParameters, Is.Empty, "Tenant path should not have any contextual parameters.");
         }
 
         [TestCase]
@@ -34,11 +34,14 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
 
-            Assert.AreEqual(1, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+            Assert.That(contextualParameters.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
 
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+            });
         }
 
         [TestCase]
@@ -48,14 +51,17 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
 
-            Assert.AreEqual(2, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
-            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
+            Assert.That(contextualParameters.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("resourceGroups"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("resourceGroupName"));
 
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("id.ResourceGroupName", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.ResourceGroupName"));
+            });
         }
 
         [TestCase]
@@ -63,10 +69,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(1, contextualParameters.Count);
-            Assert.AreEqual("managementGroups", contextualParameters[0].Key);
-            Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("managementGroups"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("managementGroupId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -74,10 +83,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Example/examples/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(1, contextualParameters.Count);
-            Assert.AreEqual("examples", contextualParameters[0].Key);
-            Assert.AreEqual("name", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -85,13 +97,16 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(2, contextualParameters.Count);
-            Assert.AreEqual("examples", contextualParameters[0].Key);
-            Assert.AreEqual("exampleName", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[1].Key);
-            Assert.AreEqual("name", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -99,16 +114,19 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Example/examples/{exampleName}/childResources/{childName}/grandChildResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(3, contextualParameters.Count);
-            Assert.AreEqual("examples", contextualParameters[0].Key);
-            Assert.AreEqual("exampleName", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Parent.Parent.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[1].Key);
-            Assert.AreEqual("childName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("grandChildResources", contextualParameters[2].Key);
-            Assert.AreEqual("name", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent.Name"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("childName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("grandChildResources"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -117,16 +135,19 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{name}");
 
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(3, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
-            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.ResourceGroupName", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("virtualMachines", contextualParameters[2].Key);
-            Assert.AreEqual("name", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("resourceGroups"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("resourceGroupName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.ResourceGroupName"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("virtualMachines"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -134,19 +155,22 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(4, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
-            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.ResourceGroupName", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("virtualMachines", contextualParameters[2].Key);
-            Assert.AreEqual("vmName", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("extensions", contextualParameters[3].Key);
-            Assert.AreEqual("name", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("resourceGroups"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("resourceGroupName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.ResourceGroupName"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("virtualMachines"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("vmName"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[3].Key, Is.EqualTo("extensions"));
+                Assert.That(contextualParameters[3].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -154,22 +178,25 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{extensionName}/childResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(5, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
-            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.ResourceGroupName", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("virtualMachines", contextualParameters[2].Key);
-            Assert.AreEqual("vmName", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Parent.Parent.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("extensions", contextualParameters[3].Key);
-            Assert.AreEqual("extensionName", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[4].Key);
-            Assert.AreEqual("name", contextualParameters[4].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("resourceGroups"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("resourceGroupName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.ResourceGroupName"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("virtualMachines"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("vmName"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent.Name"));
+                Assert.That(contextualParameters[3].Key, Is.EqualTo("extensions"));
+                Assert.That(contextualParameters[3].VariableName, Is.EqualTo("extensionName"));
+                Assert.That(contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[4].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[4].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -177,13 +204,16 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(2, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("name", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -191,16 +221,19 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(3, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("exampleName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[2].Key);
-            Assert.AreEqual("name", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -208,19 +241,22 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{childName}/grandChildResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(4, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("exampleName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Parent.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[2].Key);
-            Assert.AreEqual("childName", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("grandChildResources", contextualParameters[3].Key);
-            Assert.AreEqual("name", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent.Name"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("childName"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[3].Key, Is.EqualTo("grandChildResources"));
+                Assert.That(contextualParameters[3].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -228,13 +264,16 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Example/examples/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(2, contextualParameters.Count);
-            Assert.AreEqual("managementGroups", contextualParameters[0].Key);
-            Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("name", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("managementGroups"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("managementGroupId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -242,16 +281,19 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(3, contextualParameters.Count);
-            Assert.AreEqual("managementGroups", contextualParameters[0].Key);
-            Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Parent.Parent.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("exampleName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[2].Key);
-            Assert.AreEqual("name", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("managementGroups"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("managementGroupId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent.Name"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -259,19 +301,22 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{childName}/grandChildResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(4, contextualParameters.Count);
-            Assert.AreEqual("managementGroups", contextualParameters[0].Key);
-            Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Parent.Parent.Parent.Name", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("exampleName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Parent.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[2].Key);
-            Assert.AreEqual("childName", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("grandChildResources", contextualParameters[3].Key);
-            Assert.AreEqual("name", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(4));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("managementGroups"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("managementGroupId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent.Parent.Name"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent.Name"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("childName"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[3].Key, Is.EqualTo("grandChildResources"));
+                Assert.That(contextualParameters[3].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -279,16 +324,19 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/examples/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual(3, contextualParameters.Count);
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("providers", contextualParameters[1].Key);
-            Assert.AreEqual("resourceProviderNamespace", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.ResourceType.Namespace", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("examples", contextualParameters[2].Key);
-            Assert.AreEqual("name", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.That(contextualParameters.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("providers"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("resourceProviderNamespace"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.ResourceType.Namespace"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -296,16 +344,22 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         {
             var requestPathPattern = new RequestPathPattern("/{resourceUri}/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
-            Assert.AreEqual("resourceUri", contextualParameters[0].Key);
-            Assert.AreEqual("resourceUri", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.Parent.Parent", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual(3, contextualParameters.Count);
-            Assert.AreEqual("examples", contextualParameters[1].Key);
-            Assert.AreEqual("exampleName", contextualParameters[1].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
-            Assert.AreEqual("childResources", contextualParameters[2].Key);
-            Assert.AreEqual("name", contextualParameters[2].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("resourceUri"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("resourceUri"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Parent"));
+                Assert.That(contextualParameters.Count, Is.EqualTo(3));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("examples"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("exampleName"));
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+                Assert.That(contextualParameters[2].Key, Is.EqualTo("childResources"));
+                Assert.That(contextualParameters[2].VariableName, Is.EqualTo("name"));
+                Assert.That(contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Name"));
+            });
         }
 
         [TestCase]
@@ -317,17 +371,20 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot");
             var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
 
-            Assert.AreEqual(2, contextualParameters.Count, "Should have subscriptionId and location parameters");
+            Assert.That(contextualParameters.Count, Is.EqualTo(2), "Should have subscriptionId and location parameters");
 
-            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
-            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
-            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(contextualParameters[0].Key, Is.EqualTo("subscriptions"));
+                Assert.That(contextualParameters[0].VariableName, Is.EqualTo("subscriptionId"));
+                Assert.That(contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.SubscriptionId"));
 
-            Assert.AreEqual("locations", contextualParameters[1].Key);
-            Assert.AreEqual("location", contextualParameters[1].VariableName);
-            // For a singleton resource, the location should be extracted from Id.Parent.Name
-            // because Id.Name would return "spot" (the singleton name)
-            Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+                Assert.That(contextualParameters[1].Key, Is.EqualTo("locations"));
+                Assert.That(contextualParameters[1].VariableName, Is.EqualTo("location"));
+                // For a singleton resource, the location should be extracted from Id.Parent.Name
+                // because Id.Name would return "spot" (the singleton name)
+                Assert.That(contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("id.Parent.Name"));
+            });
         }
     }
 }

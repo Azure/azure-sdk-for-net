@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.IsTrue(gotHelloWorld);
+            Assert.That(gotHelloWorld, Is.True);
         }
 
         [RecordedTest]
@@ -56,12 +56,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int pageCount = 0;
             await foreach (var page in pages)
             {
-                Assert.IsTrue(page.Values.Count <= pageSize);
+                Assert.That(page.Values, Has.Count.LessThanOrEqualTo(pageSize));
                 pageCount++;
             }
 
             // Assert
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
         }
 
         [RecordedTest]
@@ -87,14 +87,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     firstPage = page;
                 }
 
-                Assert.IsTrue(page.Values.Count <= pageSize);
+                Assert.That(page.Values, Has.Count.LessThanOrEqualTo(pageSize));
                 pageCount++;
             }
 
             // Assert
-            Assert.NotNull(firstPage);
-            Assert.AreEqual("library/busybox", firstPage.Values[0]);
-            Assert.IsTrue(pageCount >= minExpectedPages);
+            Assert.That(firstPage, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstPage.Values[0], Is.EqualTo("library/busybox"));
+                Assert.That(pageCount >= minExpectedPages, Is.True);
+            });
         }
 
         [RecordedTest]
@@ -112,7 +115,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 var repositories = client.GetRepositoryNamesAsync();
-                Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not created.");
+                Assert.That(await repositories.ContainsAsync(repositoryId), Is.True, $"Test set-up failed: Repository {repositoryId} was not created.");
 
                 // Act
                 await client.DeleteRepositoryAsync(repositoryId);
@@ -120,7 +123,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Assert
                 repositories = client.GetRepositoryNamesAsync();
-                Assert.IsFalse(await repositories.ContainsAsync(repositoryId), $"Repository {repositoryId} was not deleted.");
+                Assert.That(await repositories.ContainsAsync(repositoryId), Is.False, $"Repository {repositoryId} was not deleted.");
             }
             finally
             {

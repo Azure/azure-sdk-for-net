@@ -70,12 +70,15 @@ namespace Azure.ResourceManager.Network.Tests
             var nspName = Recording.GenerateAssetName(_nspNamePrefix);
             var createNspReqData = new NetworkSecurityPerimeterData(TestEnvironment.Location);
             var createNspResData = (await _resourceGroup.GetNetworkSecurityPerimeters().CreateOrUpdateAsync(WaitUntil.Completed, nspName, createNspReqData)).Value;
-            Assert.AreEqual(createNspResData.Data.Name, nspName);
-            Assert.AreEqual(createNspResData.Data.Location.Name, TestEnvironment.Location);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nspName, Is.EqualTo(createNspResData.Data.Name));
+                Assert.That(TestEnvironment.Location, Is.EqualTo(createNspResData.Data.Location.Name));
+            });
 
             // Get NSP
             NetworkSecurityPerimeterResource nsp = (await _resourceGroup.GetNetworkSecurityPerimeterAsync(nspName)).Value;
-            Assert.AreEqual(nsp.Data.Name, nspName);
+            Assert.That(nspName, Is.EqualTo(nsp.Data.Name));
 
             // List NSPs
             var nspList = await _resourceGroup.GetNetworkSecurityPerimeters().GetAllAsync().ToEnumerableAsync();
@@ -103,12 +106,12 @@ namespace Azure.ResourceManager.Network.Tests
             var createProfileReqData = new NetworkSecurityPerimeterProfileData();
             var createProfileResData = (await nsp.GetNetworkSecurityPerimeterProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, createProfileReqData)).Value;
 
-            Assert.AreEqual(createProfileResData.Data.Name, profileName);
+            Assert.That(profileName, Is.EqualTo(createProfileResData.Data.Name));
 
             // Get NSP Profile
             NetworkSecurityPerimeterProfileResource profile = (await nsp.GetNetworkSecurityPerimeterProfileAsync(profileName));
 
-            Assert.AreEqual(profile.Data.Name, profileName);
+            Assert.That(profileName, Is.EqualTo(profile.Data.Name));
 
             // List NSP Profiles
             var nspProfileList = await nsp.GetNetworkSecurityPerimeterProfiles().GetAllAsync().ToEnumerableAsync();
@@ -143,8 +146,8 @@ namespace Azure.ResourceManager.Network.Tests
                 .GetNetworkSecurityPerimeterAccessRules()
                 .CreateOrUpdateAsync(WaitUntil.Completed, ipRuleName, ipRuleReqData)
             ).Value;
-            Assert.AreEqual(ipRuleResData.Data.Name, ipRuleName);
-            CollectionAssert.AreEqual(ipRuleResData.Data.AddressPrefixes, ipRuleReqData.AddressPrefixes);
+            Assert.That(ipRuleName, Is.EqualTo(ipRuleResData.Data.Name));
+            Assert.That(ipRuleReqData.AddressPrefixes, Is.EqualTo(ipRuleResData.Data.AddressPrefixes).AsCollection);
 
             // Create FQDN Access Rule
             var fqdnRuleName = Recording.GenerateAssetName(_accessRuleNamePrefix);
@@ -159,8 +162,8 @@ namespace Azure.ResourceManager.Network.Tests
                 .GetNetworkSecurityPerimeterAccessRules()
                 .CreateOrUpdateAsync(WaitUntil.Completed, fqdnRuleName, fqdnRuleReqData)
             ).Value;
-            Assert.AreEqual(fqdnRuleResData.Data.Name, fqdnRuleName);
-            CollectionAssert.AreEqual(fqdnRuleResData.Data.FullyQualifiedDomainNames, fqdnRuleReqData.FullyQualifiedDomainNames);
+            Assert.That(fqdnRuleName, Is.EqualTo(fqdnRuleResData.Data.Name));
+            Assert.That(fqdnRuleReqData.FullyQualifiedDomainNames, Is.EqualTo(fqdnRuleResData.Data.FullyQualifiedDomainNames).AsCollection);
 
             // Get AccessRules List
             var rulesList = await profile.GetNetworkSecurityPerimeterAccessRules().GetAllAsync().ToEnumerableAsync();
@@ -169,8 +172,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get IP Address AccessRule
             NetworkSecurityPerimeterAccessRuleResource ipRule = await profile.GetNetworkSecurityPerimeterAccessRuleAsync(ipRuleName);
-            Assert.IsNotNull(ipRule);
-            Assert.AreEqual(ipRule.Data.Name, ipRuleName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ipRule, Is.Not.Null);
+                Assert.That(ipRuleName, Is.EqualTo(ipRule.Data.Name));
+            });
 
             // Update IP Address Access Rule
             var ipRulePatchReqData = new NetworkSecurityPerimeterAccessRuleData()
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.Network.Tests
                 AddressPrefixes = { "198.168.1.1/32" },
             };
             var ipRulePatchResData = (await ipRule.UpdateAsync(WaitUntil.Completed, ipRulePatchReqData)).Value;
-            CollectionAssert.AreEqual(ipRulePatchResData.Data.AddressPrefixes, ipRulePatchReqData.AddressPrefixes);
+            Assert.That(ipRulePatchReqData.AddressPrefixes, Is.EqualTo(ipRulePatchResData.Data.AddressPrefixes).AsCollection);
 
             // Delete AccessRule
             await ipRule.DeleteAsync(WaitUntil.Completed);
@@ -208,15 +214,21 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var createAssociationResData = (await nsp.GetNetworkSecurityPerimeterAssociations().CreateOrUpdateAsync(WaitUntil.Completed, associationName, createAssociationReqData)).Value;
-            Assert.AreEqual(createAssociationResData.Data.Name, associationName);
-            Assert.AreEqual(createAssociationResData.Data.PrivateLinkResourceId, createAssociationReqData.PrivateLinkResourceId);
-            Assert.AreEqual(createAssociationResData.Data.ProfileId, createAssociationReqData.ProfileId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(associationName, Is.EqualTo(createAssociationResData.Data.Name));
+                Assert.That(createAssociationReqData.PrivateLinkResourceId, Is.EqualTo(createAssociationResData.Data.PrivateLinkResourceId));
+                Assert.That(createAssociationReqData.ProfileId, Is.EqualTo(createAssociationResData.Data.ProfileId));
+            });
 
             // Get
             NetworkSecurityPerimeterAssociationResource association = await nsp.GetNetworkSecurityPerimeterAssociationAsync(associationName);
-            Assert.AreEqual(association.Data.Name, associationName);
-            Assert.AreEqual(association.Data.PrivateLinkResourceId, createAssociationReqData.PrivateLinkResourceId);
-            Assert.AreEqual(association.Data.ProfileId, createAssociationReqData.ProfileId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(associationName, Is.EqualTo(association.Data.Name));
+                Assert.That(createAssociationReqData.PrivateLinkResourceId, Is.EqualTo(association.Data.PrivateLinkResourceId));
+                Assert.That(createAssociationReqData.ProfileId, Is.EqualTo(association.Data.ProfileId));
+            });
 
             // Update Association
             var partchAssociationReqData = new NetworkSecurityPerimeterAssociationData()
@@ -228,7 +240,7 @@ namespace Azure.ResourceManager.Network.Tests
             await association.UpdateAsync(WaitUntil.Completed, partchAssociationReqData);
 
             association = await nsp.GetNetworkSecurityPerimeterAssociationAsync(associationName);
-            Assert.AreEqual(association.Data.AccessMode, partchAssociationReqData.AccessMode);
+            Assert.That(partchAssociationReqData.AccessMode, Is.EqualTo(association.Data.AccessMode));
 
             // List Associations
             var associationsList = await nsp.GetNetworkSecurityPerimeterAssociations().GetAllAsync().ToEnumerableAsync();
@@ -260,8 +272,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             var createLinkResData = (await nsp.GetNetworkSecurityPerimeterLinks().CreateOrUpdateAsync(WaitUntil.Completed, linkName, createLinkReqData)).Value;
 
-            Assert.AreEqual(createLinkResData.Data.Name, linkName);
-            Assert.AreEqual(createLinkResData.Data.AutoApprovedRemotePerimeterResourceId, remoteNsp.Data.Id.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkName, Is.EqualTo(createLinkResData.Data.Name));
+                Assert.That(remoteNsp.Data.Id.ToString(), Is.EqualTo(createLinkResData.Data.AutoApprovedRemotePerimeterResourceId));
+            });
 
             //List Link & Link references
             var linksList = await nsp.GetNetworkSecurityPerimeterLinks().GetAllAsync().ToEnumerableAsync();
@@ -273,8 +288,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get Link
             var link = (await nsp.GetNetworkSecurityPerimeterLinkAsync(linkName)).Value;
-            Assert.AreEqual(link.Data.Name, linkName);
-            Assert.AreEqual(link.Data.AutoApprovedRemotePerimeterResourceId, remoteNsp.Data.Id.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkName, Is.EqualTo(link.Data.Name));
+                Assert.That(remoteNsp.Data.Id.ToString(), Is.EqualTo(link.Data.AutoApprovedRemotePerimeterResourceId));
+            });
 
             // Delete Link
             await link.DeleteAsync(WaitUntil.Completed);
@@ -286,7 +304,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get Link Ref
             var linkRefName = "Ref-from-" + linkName + "-" + nsp.Data.PerimeterGuid;
             var linkRef = (await remoteNsp.GetNetworkSecurityPerimeterLinkReferenceAsync(linkRefName)).Value;
-            Assert.AreEqual(linkRef.Data.Status, NetworkSecurityPerimeterLinkStatus.Disconnected);
+            Assert.That(NetworkSecurityPerimeterLinkStatus.Disconnected, Is.EqualTo(linkRef.Data.Status));
 
             // Delete Link Ref
             await linkRef.DeleteAsync(WaitUntil.Completed);
@@ -310,12 +328,12 @@ namespace Azure.ResourceManager.Network.Tests
                 EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
             };
             var createLogConfigResData = (await nsp.GetNetworkSecurityPerimeterLoggingConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, logConfigName, createLogConfigReqData)).Value;
-            Assert.AreEqual(createLogConfigResData.Data.Name, logConfigName);
-            CollectionAssert.AreEqual(createLogConfigResData.Data.EnabledLogCategories, createLogConfigReqData.EnabledLogCategories);
+            Assert.That(logConfigName, Is.EqualTo(createLogConfigResData.Data.Name));
+            Assert.That(createLogConfigReqData.EnabledLogCategories, Is.EqualTo(createLogConfigResData.Data.EnabledLogCategories).AsCollection);
 
             // Ge Logging configuration
             NetworkSecurityPerimeterLoggingConfigurationResource logConfig = await nsp.GetNetworkSecurityPerimeterLoggingConfigurationAsync(logConfigName);
-            CollectionAssert.AreEqual(logConfig.Data.EnabledLogCategories, createLogConfigReqData.EnabledLogCategories);
+            Assert.That(createLogConfigReqData.EnabledLogCategories, Is.EqualTo(logConfig.Data.EnabledLogCategories).AsCollection);
 
             await logConfig.DeleteAsync(WaitUntil.Completed);
 

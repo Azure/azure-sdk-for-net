@@ -32,7 +32,7 @@ public class StreamExtensionsTests
         ReadOnlyMemory<byte> buffer = new byte[0];
         await StreamExtensions.WriteAsync(ms, buffer);
 
-        Assert.AreEqual(0, ms.Length);
+        Assert.That(ms.Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class StreamExtensionsTests
         await StreamExtensions.WriteAsync(ms, buffer);
 
         // Check that nothing was written
-        Assert.AreEqual(0, ms.Length);
+        Assert.That(ms.Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -116,7 +116,7 @@ public class StreamExtensionsTests
         ms.Seek(0, SeekOrigin.Begin);
         for (byte i = 0; i < ms.Length; i++)
         {
-            Assert.AreEqual(i, ms.ReadByte());
+            Assert.That(ms.ReadByte(), Is.EqualTo(i));
         }
     }
 

@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful training.");
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful training.");
         }
     }
 }

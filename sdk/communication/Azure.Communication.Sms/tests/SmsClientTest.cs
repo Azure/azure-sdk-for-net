@@ -73,7 +73,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var smsClient = new SmsClient(TestConnectionString);
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var smsClient = new SmsClient(TestConnectionString, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Azure.Communication.Sms.Tests
             Uri endpoint = new Uri("http://localhost");
             var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace Azure.Communication.Sms.Tests
             Uri endpoint = new Uri("http://localhost");
             var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            Assert.That(smsClient.OptOuts, Is.Not.Null);
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]
@@ -116,18 +116,21 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .ReturnsAsync((string from, string to, string message, SmsSendOptions options, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(expectedMessage, message);
-                    Assert.AreEqual(cancellationToken, token);
-                    Assert.AreEqual(expectedOptions, options);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(from, Is.EqualTo(expectedFrom));
+                        Assert.That(to, Is.EqualTo(expectedTo));
+                        Assert.That(message, Is.EqualTo(expectedMessage));
+                        Assert.That(token, Is.EqualTo(cancellationToken));
+                        Assert.That(options, Is.EqualTo(expectedOptions));
+                    });
                     return expectedResponse = new Mock<Response<SmsSendResult>>().Object;
                 });
 
             Response<SmsSendResult> actualResponse = await mockClient.Object.SendAsync(expectedFrom, expectedTo, expectedMessage, expectedOptions, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]
@@ -142,18 +145,21 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .Returns((string from, string to, string message, SmsSendOptions options, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(expectedMessage, message);
-                    Assert.AreEqual(cancellationToken, token);
-                    Assert.AreEqual(expectedOptions, options);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(from, Is.EqualTo(expectedFrom));
+                        Assert.That(to, Is.EqualTo(expectedTo));
+                        Assert.That(message, Is.EqualTo(expectedMessage));
+                        Assert.That(token, Is.EqualTo(cancellationToken));
+                        Assert.That(options, Is.EqualTo(expectedOptions));
+                    });
                     return expectedResponse = new Mock<Response<SmsSendResult>>().Object;
                 });
 
             Response<SmsSendResult> actualResponse = mockClient.Object.Send(expectedFrom, expectedTo, expectedMessage, expectedOptions, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         private static IEnumerable<object?[]> TestDataForSingleSms()

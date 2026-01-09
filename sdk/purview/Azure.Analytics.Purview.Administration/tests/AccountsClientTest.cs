@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             Response fetchResponse = await client.GetAccountPropertiesAsync(new());
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("dotnetLLCPurviewAccount", fetchBodyJson.GetProperty("name").GetString());
+            Assert.That(fetchBodyJson.GetProperty("name").GetString(), Is.EqualTo("dotnetLLCPurviewAccount"));
         }
 
         [RecordedTest]
@@ -39,8 +39,11 @@ namespace Azure.Analytics.Purview.Administration.Tests
             }));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(updateRespons));
             JsonElement upateBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("dotnetLLCPurviewAccount", upateBodyJson.GetProperty("name").GetString());
-            Assert.AreEqual("udpatedFriendlyName", upateBodyJson.GetProperty("properties").GetProperty("friendlyName").GetString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(upateBodyJson.GetProperty("name").GetString(), Is.EqualTo("dotnetLLCPurviewAccount"));
+                Assert.That(upateBodyJson.GetProperty("properties").GetProperty("friendlyName").GetString(), Is.EqualTo("udpatedFriendlyName"));
+            });
         }
 
         [RecordedTest]
@@ -55,7 +58,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(genResponse));
             JsonElement genKeyBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual(genResponse.Status, 200);
+            Assert.That(genResponse.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -69,11 +72,11 @@ namespace Azure.Analytics.Purview.Administration.Tests
             }));
             using var jsonDocumentGen = JsonDocument.Parse(GetContentFromResponse(genResponse));
             JsonElement genKeyBodyJson = jsonDocumentGen.RootElement;
-            Assert.AreEqual(genResponse.Status, 200);
+            Assert.That(genResponse.Status, Is.EqualTo(200));
             Response listKeysResponse = await client.GetAccessKeysAsync(new());
             using var jsonDocumentListKeys = JsonDocument.Parse(GetContentFromResponse(listKeysResponse));
             JsonElement listKeyBodyJson = jsonDocumentListKeys.RootElement;
-            Assert.AreEqual(listKeysResponse.Status, 200);
+            Assert.That(listKeysResponse.Status, Is.EqualTo(200));
         }
 
         private static BinaryData GetContentFromResponse(Response r)

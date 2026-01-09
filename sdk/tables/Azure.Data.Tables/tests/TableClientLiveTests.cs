@@ -50,7 +50,7 @@ namespace Azure.Data.Tables.Tests
                 // Query the entities with string filter.
                 entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
             }
-            Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+            Assert.That(entityResults, Has.Count.EqualTo(1), "The entity result count should match the created count");
 
             // GetEntity works also
             await client.GetEntityAsync<TableEntity>(partitionKeyValue, rowKeyValue);
@@ -315,17 +315,20 @@ namespace Azure.Data.Tables.Tests
             // Validate that we are able to query the table from the service.
             var entities = await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entities.Count, Is.EqualTo(1));
+            Assert.That(entities, Has.Count.EqualTo(1));
 
             // Validate that we are not able to fetch the entity outside the range of the row key filter.
             var ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () =>
                     await sasTableclient.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false));
-            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
-            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.ResourceNotFound.ToString()));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.ResourceNotFound.ToString()));
 
-            // Validate that we are able to fetch the entity with the client with full access.
-            Assert.That(async () => await client.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.Nothing);
+                // Validate that we are able to fetch the entity with the client with full access.
+                Assert.That(async () => await client.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.Nothing);
+            });
         }
 
         /// <summary>
@@ -347,7 +350,7 @@ namespace Azure.Data.Tables.Tests
 
             entityResults = await client.QueryAsync<TableEntity>(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.That(entityResults, Has.Count.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
             entityResults.Clear();
         }
 
@@ -369,9 +372,12 @@ namespace Azure.Data.Tables.Tests
 
             entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
-            Assert.AreEqual("foo", entityResults[0]["ETag"]);
-            Assert.AreNotEqual(entityResults[0]["ETag"], entityResults[0].ETag);
+            Assert.That(entityResults, Has.Count.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.Multiple(() =>
+            {
+                Assert.That(entityResults[0]["ETag"], Is.EqualTo("foo"));
+                Assert.That(entityResults[0].ETag, Is.Not.EqualTo(entityResults[0]["ETag"]));
+            });
             entityResults.Clear();
         }
 
@@ -397,7 +403,7 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+            Assert.That(entityResults, Has.Count.EqualTo(10), "The entity result count should be 10");
         }
 
         /// <summary>
@@ -419,7 +425,7 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+            Assert.That(entityResults, Has.Count.EqualTo(10), "The entity result count should be 10");
         }
 
         /// <summary>
@@ -606,10 +612,13 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
-            // Verify that the merge property does not yet exist yet and that the original property does exist.
+            Assert.Multiple(() =>
+            {
+                // Verify that the merge property does not yet exist yet and that the original property does exist.
 
-            Assert.That(originalEntity.TryGetValue(mergepropertyName, out var _), Is.False);
-            Assert.That(originalEntity[propertyName], Is.EqualTo(originalValue));
+                Assert.That(originalEntity.TryGetValue(mergepropertyName, out var _), Is.False);
+                Assert.That(originalEntity[propertyName], Is.EqualTo(originalValue));
+            });
 
             await client.UpsertEntityAsync(partialEntity, TableUpdateMode.Merge).ConfigureAwait(false);
 
@@ -619,10 +628,13 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
-            // Verify that the merge property does not yet exist yet and that the original property does exist.
+            Assert.Multiple(() =>
+            {
+                // Verify that the merge property does not yet exist yet and that the original property does exist.
 
-            Assert.That(mergedEntity[mergepropertyName], Is.EqualTo(mergeValue));
-            Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
+                Assert.That(mergedEntity[mergepropertyName], Is.EqualTo(mergeValue));
+                Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
+            });
 
             // Update just the merged value.
 
@@ -635,10 +647,13 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
-            // Verify that the merge property does not yet exist yet and that the original property does exist.
+            Assert.Multiple(() =>
+            {
+                // Verify that the merge property does not yet exist yet and that the original property does exist.
 
-            Assert.That(mergedEntity[mergepropertyName], Is.EqualTo(mergeUpdatedValue));
-            Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
+                Assert.That(mergedEntity[mergepropertyName], Is.EqualTo(mergeUpdatedValue));
+                Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
+            });
         }
 
         [RecordedTest]
@@ -740,18 +755,24 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
-            Assert.That(entityResults.First().PartitionKey, Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First().RowKey, Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First().Timestamp, Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTimeOffset?");
-            Assert.That(entityResults.First().Timestamp, Is.Not.Null, "The entity property should not be null");
-            Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
-            Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
-            Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
-            Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
-            Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
-            Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
-            Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
+            Assert.Multiple(() =>
+            {
+                Assert.That(entityResults.First().PartitionKey, Is.TypeOf<string>(), "The entity property should be of type string");
+                Assert.That(entityResults.First().RowKey, Is.TypeOf<string>(), "The entity property should be of type string");
+                Assert.That(entityResults.First().Timestamp, Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTimeOffset?");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(entityResults.First().Timestamp, Is.Not.Null, "The entity property should not be null");
+                Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
+                Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
+                Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
+                Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
+                Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
+                Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+                Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+                Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
+            });
         }
 
         /// <summary>
@@ -773,14 +794,17 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
-            Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
-            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
-            Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
-            Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
-            Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
-            Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
-            Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
-            Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
+            Assert.Multiple(() =>
+            {
+                Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
+                Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTimeOffset>(), "The entity property should be of type DateTime");
+                Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
+                Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
+                Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
+                Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+                Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+                Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
+            });
         }
 
         /// <summary>
@@ -817,17 +841,20 @@ namespace Azure.Data.Tables.Tests
                 .GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey, new[] { nameof(entityToCreate.Timestamp) })
                 .ConfigureAwait(false);
 
-            Assert.That(entity.PartitionKey, Is.Null, "The entity property should be null");
-            Assert.That(entity.RowKey, Is.Null, "The entity property should be null");
-            Assert.That(entity.Timestamp, Is.Not.Null, "The entity property should not be null");
-            Assert.That(entity.TryGetValue(StringTypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(DateTypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(GuidTypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(BinaryTypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(Int64TypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(DoubleTypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(DoubleDecimalTypePropertyName, out _), Is.False, "The entity property should not exist");
-            Assert.That(entity.TryGetValue(IntTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity.PartitionKey, Is.Null, "The entity property should be null");
+                Assert.That(entity.RowKey, Is.Null, "The entity property should be null");
+                Assert.That(entity.Timestamp, Is.Not.Null, "The entity property should not be null");
+                Assert.That(entity.TryGetValue(StringTypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(DateTypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(GuidTypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(BinaryTypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(Int64TypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(DoubleTypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(DoubleDecimalTypePropertyName, out _), Is.False, "The entity property should not exist");
+                Assert.That(entity.TryGetValue(IntTypePropertyName, out _), Is.False, "The entity property should not exist");
+            });
         }
 
         /// <summary>
@@ -874,7 +901,7 @@ namespace Azure.Data.Tables.Tests
 
             entityResults = await client.QueryAsync<TestEntity>(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.That(entityResults, Has.Count.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
             entityResults.Clear();
         }
 
@@ -897,7 +924,7 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+            Assert.That(entityResults, Has.Count.EqualTo(10), "The entity result count should be 10");
         }
 
         /// <summary>
@@ -954,10 +981,14 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
-            Assert.IsNotNull(retrievedEntity, "The entity should not be null");
-            Assert.IsTrue(TimeSpan.Compare(
-                retrievedEntity!.TimespanProperty.Value, interval) == 0,
-                "The property value should be equal to the original value");
+            Assert.Multiple(() =>
+            {
+                Assert.That(retrievedEntity, Is.Not.Null, "The entity should not be null");
+                Assert.That(TimeSpan.Compare(
+                    retrievedEntity!.TimespanProperty.Value, interval),
+                    Is.EqualTo(0),
+                    "The property value should be equal to the original value");
+            });
         }
 
         /// <summary>
@@ -1178,21 +1209,24 @@ namespace Azure.Data.Tables.Tests
 
             for (int i = 0; i < entityResults.Count; i++)
             {
-                Assert.That(entityResults[i].BinaryTypeProperty, Is.EqualTo(entitiesToCreate[i].BinaryTypeProperty), "The entities should be equivalent");
-                Assert.That(
-                    entityResults[i].DatetimeOffsetTypeProperty,
-                    Is.EqualTo(entitiesToCreate[i].DatetimeOffsetTypeProperty),
-                    "The entities should be equivalent");
-                Assert.That(entityResults[i].DatetimeTypeProperty, Is.EqualTo(entitiesToCreate[i].DatetimeTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToCreate[i].DoubleTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToCreate[i].GuidTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToCreate[i].Int64TypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].UInt64TypeProperty, Is.EqualTo(entitiesToCreate[i].UInt64TypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToCreate[i].IntTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
-                Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
-                Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToCreate[i].StringTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].ETag, Is.Not.EqualTo(default(ETag)), $"ETag value should not be default: {entityResults[i].ETag}");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityResults[i].BinaryTypeProperty, Is.EqualTo(entitiesToCreate[i].BinaryTypeProperty), "The entities should be equivalent");
+                    Assert.That(
+                        entityResults[i].DatetimeOffsetTypeProperty,
+                        Is.EqualTo(entitiesToCreate[i].DatetimeOffsetTypeProperty),
+                        "The entities should be equivalent");
+                    Assert.That(entityResults[i].DatetimeTypeProperty, Is.EqualTo(entitiesToCreate[i].DatetimeTypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToCreate[i].DoubleTypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToCreate[i].GuidTypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToCreate[i].Int64TypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].UInt64TypeProperty, Is.EqualTo(entitiesToCreate[i].UInt64TypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToCreate[i].IntTypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
+                    Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
+                    Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToCreate[i].StringTypeProperty), "The entities should be equivalent");
+                    Assert.That(entityResults[i].ETag, Is.Not.EqualTo(default(ETag)), $"ETag value should not be default: {entityResults[i].ETag}");
+                });
             }
         }
 
@@ -1224,10 +1258,13 @@ namespace Azure.Data.Tables.Tests
 
             for (int i = 0; i < entityResults.Count; i++)
             {
-                Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
-                Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
-                Assert.That(entityResults[i].MyFoo, Is.EqualTo(entitiesToCreate[i].MyFoo), "The entities should be equivalent");
-                Assert.That(entityResults[i].MyNullableFoo, Is.EqualTo(entitiesToCreate[i].MyNullableFoo), "The entities should be equivalent");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
+                    Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
+                    Assert.That(entityResults[i].MyFoo, Is.EqualTo(entitiesToCreate[i].MyFoo), "The entities should be equivalent");
+                    Assert.That(entityResults[i].MyNullableFoo, Is.EqualTo(entitiesToCreate[i].MyNullableFoo), "The entities should be equivalent");
+                });
             }
         }
 
@@ -1255,10 +1292,13 @@ namespace Azure.Data.Tables.Tests
 
             var policies = await client.GetAccessPoliciesAsync();
 
-            Assert.That(policies.Value[0].Id, Is.EqualTo(policyToCreate[0].Id));
-            Assert.That(policies.Value[0].AccessPolicy.ExpiresOn, Is.EqualTo(policyToCreate[0].AccessPolicy.ExpiresOn));
-            Assert.That(policies.Value[0].AccessPolicy.Permission, Is.EqualTo(policyToCreate[0].AccessPolicy.Permission));
-            Assert.That(policies.Value[0].AccessPolicy.StartsOn, Is.EqualTo(policyToCreate[0].AccessPolicy.StartsOn));
+            Assert.Multiple(() =>
+            {
+                Assert.That(policies.Value[0].Id, Is.EqualTo(policyToCreate[0].Id));
+                Assert.That(policies.Value[0].AccessPolicy.ExpiresOn, Is.EqualTo(policyToCreate[0].AccessPolicy.ExpiresOn));
+                Assert.That(policies.Value[0].AccessPolicy.Permission, Is.EqualTo(policyToCreate[0].AccessPolicy.Permission));
+                Assert.That(policies.Value[0].AccessPolicy.StartsOn, Is.EqualTo(policyToCreate[0].AccessPolicy.StartsOn));
+            });
         }
 
         /// <summary>
@@ -1287,7 +1327,7 @@ namespace Azure.Data.Tables.Tests
             // Get the single entity by PartitionKey and RowKey that does not exist.
             var result = await client.GetEntityIfExistsAsync<TableEntity>(PartitionKeyValue, Recording.Random.NewGuid().ToString()).ConfigureAwait(false);
 
-            Assert.AreEqual((int)HttpStatusCode.NotFound, result.GetRawResponse().Status);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             Exception ex = Assert.Catch(() => { var x = result.Value; });
             Assert.That(ex.Message, Does.Contain(result.GetRawResponse().Status.ToString()));
         }
@@ -1382,15 +1422,15 @@ namespace Azure.Data.Tables.Tests
 
             for (int i = 0; i < entitiesToCreate.Count; i++)
             {
-                Assert.AreEqual((int)HttpStatusCode.NoContent, response.Value[i].Status);
+                Assert.That(response.Value[i].Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
-            Assert.That(response.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+            Assert.That(response.Value, Has.Count.EqualTo(entitiesToCreate.Count));
 
             // Query the entities.
 
             var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.That(entityResults, Has.Count.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
         }
 
         /// <summary>
@@ -1446,27 +1486,30 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(response.Value[entitiesToCreate.IndexOf(entity)].Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
 
-            Assert.That(response.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+            Assert.That(response.Value, Has.Count.EqualTo(entitiesToCreate.Count));
 
             // Query the entities.
 
             var entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(
-                entityResults.Count,
-                Is.EqualTo(entitiesToCreate.Count - 1),
+                entityResults,
+Has.Count.EqualTo(entitiesToCreate.Count - 1),
                 "The entity result count should match the created count minus the deleted count.");
-            Assert.That(
-                entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey).ContainsKey("StringTypeProperty"),
-                "The merged entity result should still contain StringTypeProperty.");
-            Assert.That(
-                entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey)["MergedProperty"],
-                Is.EqualTo("foo"),
-                "The merged entity should have merged the value of MergedProperty.");
-            Assert.That(
-                entityResults.Single(e => e.RowKey == entitiesToCreate[2].RowKey)["StringTypeProperty"],
-                Is.EqualTo(updatedString),
-                "The entity result property should have been updated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                            entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey).ContainsKey("StringTypeProperty"),
+                            "The merged entity result should still contain StringTypeProperty.");
+                Assert.That(
+                    entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey)["MergedProperty"],
+                    Is.EqualTo("foo"),
+                    "The merged entity should have merged the value of MergedProperty.");
+                Assert.That(
+                    entityResults.Single(e => e.RowKey == entitiesToCreate[2].RowKey)["StringTypeProperty"],
+                    Is.EqualTo(updatedString),
+                    "The entity result property should have been updated.");
+            });
         }
 
         /// <summary>
@@ -1493,12 +1536,15 @@ namespace Azure.Data.Tables.Tests
 
             var ex = Assert.ThrowsAsync<TableTransactionFailedException>(() => client.SubmitTransactionAsync(batch));
 
-            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
-            Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
-            Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-            Assert.AreEqual(ex.FailedTransactionActionIndex, entitiesToCreate.IndexOf(entitiesToCreate.Last()));
-            Assert.AreEqual(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey, entitiesToCreate.Last().RowKey);
-            Assert.That(ex.Message.Contains(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
+                Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Conflict), $"Status should be {HttpStatusCode.Conflict}");
+                Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
+                Assert.That(entitiesToCreate.IndexOf(entitiesToCreate.Last()), Is.EqualTo(ex.FailedTransactionActionIndex));
+                Assert.That(entitiesToCreate.Last().RowKey, Is.EqualTo(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey));
+            });
+            Assert.That(ex.Message, Does.Contain(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
 
             // Cosmos allows batches larger than 100.
             if (_endpointType != TableEndpointType.CosmosTable && _endpointType != TableEndpointType.CosmosTableAAD)
@@ -1517,16 +1563,19 @@ namespace Azure.Data.Tables.Tests
         {
             var entity = new CustomizeSerializationEntity { PartitionKey = "partition", RowKey = "1", CurrentCount = 10, LastCount = 5, NamedProperty = "foo" };
 
-            Assert.NotZero(entity.CountDiff);
+            Assert.That(entity.CountDiff, Is.Not.Zero);
 
             await client.AddEntityAsync(entity);
 
             TableEntity retrievedEntity = await client.GetEntityAsync<TableEntity>(entity.PartitionKey, entity.RowKey);
 
-            Assert.IsFalse(retrievedEntity.TryGetValue("CountDiff", out var diffVal));
-            Assert.IsFalse(retrievedEntity.TryGetValue("NamedProperty", out var namedPropValue));
-            Assert.IsTrue(retrievedEntity.TryGetValue("renamed_property", out namedPropValue));
-            Assert.AreEqual("foo", namedPropValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(retrievedEntity.TryGetValue("CountDiff", out var diffVal), Is.False);
+                Assert.That(retrievedEntity.TryGetValue("NamedProperty", out var namedPropValue), Is.False);
+                Assert.That(retrievedEntity.TryGetValue("renamed_property", out namedPropValue), Is.True);
+                Assert.That(namedPropValue, Is.EqualTo("foo"));
+            });
         }
     }
 }

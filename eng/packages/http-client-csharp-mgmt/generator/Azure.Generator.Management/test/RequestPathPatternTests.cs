@@ -15,7 +15,7 @@ namespace Azure.Generator.Management.Tests
         {
             var ancestorPattern = new RequestPathPattern(ancestor);
             var descendantPattern = new RequestPathPattern(descendant);
-            Assert.AreEqual(expected, ancestorPattern.IsAncestorOf(descendantPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(descendantPattern), Is.EqualTo(expected));
         }
 
         [Test]
@@ -24,12 +24,12 @@ namespace Azure.Generator.Management.Tests
             var ancestorPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var childPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             // Ancestor and child are the same length, should return false
-            Assert.IsFalse(ancestorPattern.IsAncestorOf(childPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(childPattern), Is.False);
 
             var longerAncestor = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage");
             var shorterChild = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             // Ancestor is longer than child, should return false
-            Assert.IsFalse(longerAncestor.IsAncestorOf(shorterChild));
+            Assert.That(longerAncestor.IsAncestorOf(shorterChild), Is.False);
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Azure.Generator.Management.Tests
         {
             var ancestorPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var descendantPattern = new RequestPathPattern("/subscriptions/{otherSub}/resourceGroups/{otherGroup}/providers/Microsoft.Storage/storageAccounts/{accountName}");
-            Assert.IsTrue(ancestorPattern.IsAncestorOf(descendantPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(descendantPattern), Is.True);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Generator.Management.Tests
         {
             var ancestorPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var descendantPattern = new RequestPathPattern("/tenants/{tenantId}/resourceGroups/{resourceGroupName}");
-            Assert.IsFalse(ancestorPattern.IsAncestorOf(descendantPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(descendantPattern), Is.False);
         }
     }
 }

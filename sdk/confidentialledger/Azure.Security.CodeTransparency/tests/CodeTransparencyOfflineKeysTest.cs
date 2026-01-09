@@ -30,8 +30,8 @@ namespace Azure.Security.CodeTransparency.Tests
         {
             var keys = new CodeTransparencyOfflineKeys();
 
-            Assert.IsNotNull(keys.ByIssuer);
-            Assert.AreEqual(0, keys.ByIssuer.Count);
+            Assert.That(keys.ByIssuer, Is.Not.Null);
+            Assert.That(keys.ByIssuer.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Azure.Security.CodeTransparency.Tests
 
             keys.Add("ledger1", doc);
 
-            Assert.AreEqual(1, keys.ByIssuer.Count);
-            Assert.AreSame(doc, keys.ByIssuer["ledger1"]);
+            Assert.That(keys.ByIssuer, Has.Count.EqualTo(1));
+            Assert.That(keys.ByIssuer["ledger1"], Is.SameAs(doc));
         }
 
         [Test]
@@ -56,8 +56,8 @@ namespace Azure.Security.CodeTransparency.Tests
             keys.Add("ledger1", doc1);
             keys.Add("ledger1", doc2);
 
-            Assert.AreEqual(1, keys.ByIssuer.Count);
-            Assert.AreSame(doc2, keys.ByIssuer["ledger1"]);
+            Assert.That(keys.ByIssuer, Has.Count.EqualTo(1));
+            Assert.That(keys.ByIssuer["ledger1"], Is.SameAs(doc2));
         }
 
         [Test]
@@ -70,8 +70,8 @@ namespace Azure.Security.CodeTransparency.Tests
             keys.Add("Ledger.Domain", doc1);
             keys.Add("ledger.domain", doc2);
 
-            Assert.AreEqual(1, keys.ByIssuer.Count);
-            Assert.AreSame(doc2, keys.ByIssuer["LEDGER.DOMAIN"]);
+            Assert.That(keys.ByIssuer, Has.Count.EqualTo(1));
+            Assert.That(keys.ByIssuer["LEDGER.DOMAIN"], Is.SameAs(doc2));
         }
 
         [Test]
@@ -133,9 +133,12 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var keys = CodeTransparencyOfflineKeys.FromBinaryData(binary);
 
-            Assert.AreEqual(2, keys.ByIssuer.Count);
-            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger1.contoso.com"));
-            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger2.contoso.com"));
+            Assert.That(keys.ByIssuer, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys.ByIssuer.ContainsKey("ledger1.contoso.com"), Is.True);
+                Assert.That(keys.ByIssuer.ContainsKey("ledger2.contoso.com"), Is.True);
+            });
         }
 
         [Test]
@@ -150,9 +153,12 @@ namespace Azure.Security.CodeTransparency.Tests
             using var doc = JsonDocument.Parse(json);
             var keys = CodeTransparencyOfflineKeys.DeserializeKeys(doc.RootElement);
 
-            Assert.AreEqual(2, keys.ByIssuer.Count);
-            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger1.example.com"));
-            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger2.example.com"));
+            Assert.That(keys.ByIssuer, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys.ByIssuer.ContainsKey("ledger1.example.com"), Is.True);
+                Assert.That(keys.ByIssuer.ContainsKey("ledger2.example.com"), Is.True);
+            });
         }
     }
 }

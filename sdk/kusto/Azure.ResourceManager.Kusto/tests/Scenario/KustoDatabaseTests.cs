@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KustoReadWriteDatabase actualDatabaseData)
         {
             AssertEquality(expectedDatabaseData.HotCachePeriod, actualDatabaseData.HotCachePeriod);
-            Assert.IsFalse(actualDatabaseData.IsFollowed);
+            Assert.That(actualDatabaseData.IsFollowed, Is.False);
             AssertEquality(KustoKind.ReadWrite, actualDatabaseData.Kind);
             AssertEquality(expectedDatabaseData.Location, actualDatabaseData.Location);
             AssertEquality(expectedFullDatabaseName, actualDatabaseData.Name);

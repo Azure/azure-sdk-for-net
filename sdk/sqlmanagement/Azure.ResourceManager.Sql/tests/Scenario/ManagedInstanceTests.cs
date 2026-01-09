@@ -53,32 +53,41 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName,vnetName,DefaultLocation,_resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
-            Assert.AreEqual(managedInstanceName, managedInstance.Data.Name);
-            Assert.AreEqual("westus2", managedInstance.Data.Location.ToString());
+            Assert.That(managedInstance.Data, Is.Not.Null);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(managedInstance.Data.Name, Is.EqualTo(managedInstanceName));
+                Assert.That(managedInstance.Data.Location.ToString(), Is.EqualTo("westus2"));
 
-            // 2.CheckIfExist
-            Assert.IsTrue(await _resourceGroup.GetManagedInstances().ExistsAsync(managedInstanceName));
-            Assert.IsFalse(await _resourceGroup.GetManagedInstances().ExistsAsync(managedInstanceName + "0"));
+                // 2.CheckIfExist
+                Assert.That((bool)await _resourceGroup.GetManagedInstances().ExistsAsync(managedInstanceName), Is.True);
+                Assert.That((bool)await _resourceGroup.GetManagedInstances().ExistsAsync(managedInstanceName + "0"), Is.False);
+            });
 
             // 3.Get
             var getManagedInstance = await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName);
-            Assert.IsNotNull(getManagedInstance.Value.Data);
-            Assert.AreEqual(managedInstanceName, getManagedInstance.Value.Data.Name);
-            Assert.AreEqual("westus2", getManagedInstance.Value.Data.Location.ToString());
+            Assert.That(getManagedInstance.Value.Data, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getManagedInstance.Value.Data.Name, Is.EqualTo(managedInstanceName));
+                Assert.That(getManagedInstance.Value.Data.Location.ToString(), Is.EqualTo("westus2"));
+            });
 
             // 4.GetAll
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(managedInstanceName, list.FirstOrDefault().Data.Name);
-            Assert.AreEqual("westus2", list.FirstOrDefault().Data.Location.ToString());
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(managedInstanceName));
+                Assert.That(list.FirstOrDefault().Data.Location.ToString(), Is.EqualTo("westus2"));
+            });
 
             // 5.Delte
             await managedInstance.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

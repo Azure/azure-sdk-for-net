@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var input = ResourceDataHelpers.GetAccountData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationAccountResource account = lro.Value;
-            Assert.AreEqual(name, account.Data.Name);
+            Assert.That(account.Data.Name, Is.EqualTo(name));
             //2.Get
             AutomationAccountResource account2 = await account.GetAsync();
             ResourceDataHelpers.AssertAccount(account.Data, account2.Data);
@@ -46,10 +46,14 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4.Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

@@ -31,9 +31,12 @@ namespace Azure.Identity.Tests
             {
                 var options = new WorkloadIdentityCredentialOptions();
 
-                Assert.AreEqual(expTenantId, options.TenantId);
-                Assert.AreEqual(expClientId, options.ClientId);
-                Assert.AreEqual(expTokenFilePath, options.TokenFilePath);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(options.TenantId, Is.EqualTo(expTenantId));
+                    Assert.That(options.ClientId, Is.EqualTo(expClientId));
+                    Assert.That(options.TokenFilePath, Is.EqualTo(expTokenFilePath));
+                });
             }
         }
     }

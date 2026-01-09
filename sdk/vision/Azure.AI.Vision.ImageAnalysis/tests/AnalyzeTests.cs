@@ -34,9 +34,9 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             {
                 var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
-                Assert.IsNotNull(result);
+                Assert.That(result, Is.Not.Null);
                 var iaResult = result.Value;
-                Assert.IsNotNull(iaResult);
+                Assert.That(iaResult, Is.Not.Null);
 
                 ValidateResponse(iaResult, testFeatures, false, 2);
             }
@@ -53,9 +53,9 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             {
                 var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
-                Assert.IsNotNull(result);
+                Assert.That(result, Is.Not.Null);
                 var iaResult = result.Value;
-                Assert.IsNotNull(iaResult);
+                Assert.That(iaResult, Is.Not.Null);
 
                 ValidateResponse(iaResult, testFeatures, false, 2);
             }
@@ -69,9 +69,9 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures);
 
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             var iaResult = result.Value;
-            Assert.IsNotNull(iaResult);
+            Assert.That(iaResult, Is.Not.Null);
 
             ValidateResponse(iaResult, testFeatures, false, 0);
         }
@@ -90,9 +90,9 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
                 var result = await client.AnalyzeAsync(BinaryData.FromStream(fileStream), testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
-                Assert.IsNotNull(result);
+                Assert.That(result, Is.Not.Null);
                 var iaResult = result.Value;
-                Assert.IsNotNull(iaResult);
+                Assert.That(iaResult, Is.Not.Null);
 
                 ValidateResponse(iaResult, testFeatures, false, 2);
             }
@@ -115,9 +115,9 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             var iaResult = result.Value;
-            Assert.IsNotNull(iaResult);
+            Assert.That(iaResult, Is.Not.Null);
 
             ValidateResponse(iaResult, testFeatures, false, 2);
         }
@@ -133,7 +133,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNull(captionResult);
+                Assert.That(captionResult, Is.Null);
             }
 
             if (testFeatures.HasFlag(VisualFeatures.DenseCaptions))
@@ -142,7 +142,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNull(iaResult.DenseCaptions);
+                Assert.That(iaResult.DenseCaptions, Is.Null);
             }
 
             var objectsResult = iaResult.Objects;
@@ -152,7 +152,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNull(objectsResult);
+                Assert.That(objectsResult, Is.Null);
             }
 
             if (testFeatures.HasFlag(VisualFeatures.Tags))
@@ -161,7 +161,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNull(iaResult.Tags);
+                Assert.That(iaResult.Tags, Is.Null);
             }
 
             if (testFeatures.HasFlag(VisualFeatures.People))
@@ -170,7 +170,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNull(iaResult.People);
+                Assert.That(iaResult.People, Is.Null);
             }
 
             if (testFeatures.HasFlag(VisualFeatures.SmartCrops))
@@ -179,13 +179,13 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             else
             {
-                Assert.IsNull(iaResult.SmartCrops);
+                Assert.That(iaResult.SmartCrops, Is.Null);
             }
 
             var readResult = iaResult.Read;
             if (!testFeatures.HasFlag(VisualFeatures.Read))
             {
-                Assert.IsNull(readResult);
+                Assert.That(readResult, Is.Null);
             }
             else
             {
@@ -195,111 +195,138 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
         private void ValidateMetaData(ImageAnalysisResult iaResult)
         {
-            Assert.Greater(iaResult.Metadata.Height, 0);
-            Assert.Greater(iaResult.Metadata.Width, 0);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(iaResult.ModelVersion));
+            Assert.Multiple(() =>
+            {
+                Assert.That(iaResult.Metadata.Height, Is.GreaterThan(0));
+                Assert.That(iaResult.Metadata.Width, Is.GreaterThan(0));
+                Assert.That(string.IsNullOrWhiteSpace(iaResult.ModelVersion), Is.False);
+            });
         }
 
         private void ValidateCaption(CaptionResult captionResult, bool genderNeutral)
         {
-            Assert.IsNotNull(captionResult);
-            Assert.Greater(captionResult.Confidence, 0);
-            Assert.Less(captionResult.Confidence, 1);
-            Assert.True(captionResult.Text.ToLower().Contains(genderNeutral ? "person" : "woman"));
-            Assert.True(captionResult.Text.ToLower().Contains("table"));
-            Assert.True(captionResult.Text.ToLower().Contains("laptop"));
+            Assert.That(captionResult, Is.Not.Null);
+            Assert.That(captionResult.Confidence, Is.GreaterThan(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(captionResult.Confidence, Is.LessThan(1));
+                Assert.That(captionResult.Text.ToLower(), Does.Contain(genderNeutral ? "person" : "woman"));
+            });
+            Assert.That(captionResult.Text.ToLower(), Does.Contain("table"));
+            Assert.That(captionResult.Text.ToLower(), Does.Contain("laptop"));
         }
 
         private void ValidateDenseCaptions(ImageAnalysisResult iaResult)
         {
             var denseCaptionsResult = iaResult.DenseCaptions;
 
-            Assert.IsNotNull(denseCaptionsResult);
-            Assert.Greater(denseCaptionsResult.Values.Count, 1);
+            Assert.That(denseCaptionsResult, Is.Not.Null);
+            Assert.That(denseCaptionsResult.Values, Has.Count.GreaterThan(1));
 
             var firstCaption = denseCaptionsResult.Values[0];
-            Assert.IsNotNull(firstCaption);
-            Assert.IsNotNull(firstCaption.BoundingBox);
-            Assert.IsTrue(firstCaption.BoundingBox.Width == iaResult.Metadata.Width);
-            Assert.IsTrue(firstCaption.BoundingBox.Height == iaResult.Metadata.Height);
-            Assert.IsNotNull(firstCaption.Text);
+            Assert.That(firstCaption, Is.Not.Null);
+            Assert.That(firstCaption.BoundingBox, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstCaption.BoundingBox.Width, Is.EqualTo(iaResult.Metadata.Width));
+                Assert.That(firstCaption.BoundingBox.Height, Is.EqualTo(iaResult.Metadata.Height));
+                Assert.That(firstCaption.Text, Is.Not.Null);
+            });
             if (iaResult.Caption != null)
             {
-                Assert.AreEqual(iaResult.Caption.Text, firstCaption.Text);
+                Assert.That(firstCaption.Text, Is.EqualTo(iaResult.Caption.Text));
             }
 
             var boundingBoxes = new HashSet<ImageBoundingBox>(new BoundingBoxComparer());
 
             foreach (var oneDenseCaption in denseCaptionsResult.Values)
             {
-                Assert.IsNotNull(oneDenseCaption.BoundingBox);
-                Assert.IsTrue(boundingBoxes.Add(oneDenseCaption.BoundingBox));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(oneDenseCaption.BoundingBox, Is.Not.Null);
+                    Assert.That(boundingBoxes.Add(oneDenseCaption.BoundingBox), Is.True);
+                });
                 ValidateBoxInResult(oneDenseCaption.BoundingBox, iaResult.Metadata);
 
-                Assert.IsNotNull(oneDenseCaption.Text);
-                Assert.IsFalse(string.IsNullOrEmpty(oneDenseCaption.Text));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(oneDenseCaption.Text, Is.Not.Null);
+                    Assert.That(string.IsNullOrEmpty(oneDenseCaption.Text), Is.False);
 
-                Assert.Greater(oneDenseCaption.Confidence, 0);
-                Assert.Less(oneDenseCaption.Confidence, 1);
+                    Assert.That(oneDenseCaption.Confidence, Is.GreaterThan(0));
+                });
+                Assert.That(oneDenseCaption.Confidence, Is.LessThan(1));
             }
         }
 
         private void ValidateObjectsResult(ObjectsResult objectsResult)
         {
-            Assert.IsNotNull(objectsResult);
-            Assert.Greater(objectsResult.Values.Count, 0);
+            Assert.That(objectsResult, Is.Not.Null);
+            Assert.That(objectsResult.Values.Count, Is.GreaterThan(0));
 
             foreach (var oneObject in objectsResult.Values)
             {
-                Assert.IsNotNull(oneObject.BoundingBox);
-                Assert.IsTrue(oneObject.BoundingBox.X > 0 || oneObject.BoundingBox.Y > 0 || oneObject.BoundingBox.Height > 0 || oneObject.BoundingBox.Width > 0);
-                Assert.IsNotNull(oneObject.Tags);
+                Assert.That(oneObject.BoundingBox, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(oneObject.BoundingBox.X > 0 || oneObject.BoundingBox.Y > 0 || oneObject.BoundingBox.Height > 0 || oneObject.BoundingBox.Width > 0, Is.True);
+                    Assert.That(oneObject.Tags, Is.Not.Null);
+                });
                 foreach (var oneTag in oneObject.Tags)
                 {
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(oneTag.Name));
-                    Assert.Greater(oneTag.Confidence, 0);
-                    Assert.Less(oneTag.Confidence, 1);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(string.IsNullOrWhiteSpace(oneTag.Name), Is.False);
+                        Assert.That(oneTag.Confidence, Is.GreaterThan(0));
+                    });
+                    Assert.That(oneTag.Confidence, Is.LessThan(1));
                 }
             }
 
-            Assert.Greater(objectsResult.Values.Select(v => v.Tags.Select(t => t.Name.Equals("person", StringComparison.OrdinalIgnoreCase))).Count(), 0);
+            Assert.That(objectsResult.Values.Select(v => v.Tags.Select(t => t.Name.Equals("person", StringComparison.OrdinalIgnoreCase))).Count(), Is.GreaterThan(0));
         }
 
         private void ValidatePeopleResult(ImageAnalysisResult iaResult)
         {
             var peopleResult = iaResult.People;
 
-            Assert.IsNotNull(peopleResult);
-            Assert.Greater(peopleResult.Values.Count, 0);
+            Assert.That(peopleResult, Is.Not.Null);
+            Assert.That(peopleResult.Values.Count, Is.GreaterThan(0));
 
             var boundingBoxes = new HashSet<ImageBoundingBox>(new BoundingBoxComparer());
 
             foreach (var onePerson in peopleResult.Values)
             {
-                Assert.IsNotNull(onePerson.BoundingBox);
-                Assert.IsTrue(boundingBoxes.Add(onePerson.BoundingBox));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(onePerson.BoundingBox, Is.Not.Null);
+                    Assert.That(boundingBoxes.Add(onePerson.BoundingBox), Is.True);
+                });
                 ValidateBoxInResult(onePerson.BoundingBox, iaResult.Metadata);
 
-                Assert.Greater(onePerson.Confidence, 0);
-                Assert.Less(onePerson.Confidence, 1);
+                Assert.That(onePerson.Confidence, Is.GreaterThan(0));
+                Assert.That(onePerson.Confidence, Is.LessThan(1));
             }
         }
 
         private void ValidateTags(TagsResult tagsResult)
         {
-            Assert.IsNotNull(tagsResult);
-            Assert.IsNotNull(tagsResult.Values);
-            Assert.Greater(tagsResult.Values.Count, 0);
+            Assert.That(tagsResult, Is.Not.Null);
+            Assert.That(tagsResult.Values, Is.Not.Null);
+            Assert.That(tagsResult.Values.Count, Is.GreaterThan(0));
 
             int found = 0;
             var tagNames = new HashSet<string>();
 
             foreach (var oneTag in tagsResult.Values)
             {
-                Assert.Greater(oneTag.Confidence, 0);
-                Assert.Less(oneTag.Confidence, 1);
+                Assert.That(oneTag.Confidence, Is.GreaterThan(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(oneTag.Confidence, Is.LessThan(1));
 
-                Assert.IsFalse(string.IsNullOrWhiteSpace(oneTag.Name));
+                    Assert.That(string.IsNullOrWhiteSpace(oneTag.Name), Is.False);
+                });
                 if (oneTag.Name.Equals("person", StringComparison.OrdinalIgnoreCase) ||
                     oneTag.Name.Equals("woman", StringComparison.OrdinalIgnoreCase) ||
                     oneTag.Name.Equals("laptop", StringComparison.OrdinalIgnoreCase) ||
@@ -309,25 +336,25 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                     found++;
                 }
 
-                Assert.IsTrue(tagNames.Add(oneTag.Name));
+                Assert.That(tagNames.Add(oneTag.Name), Is.True);
             }
 
-            Assert.GreaterOrEqual(found, 2);
+            Assert.That(found, Is.GreaterThanOrEqualTo(2));
         }
 
         private void ValidateSmartCrops(ImageAnalysisResult iaResult, int smartCropsSpecified)
         {
             var smartCropsResult = iaResult.SmartCrops;
-            Assert.IsNotNull(smartCropsResult);
+            Assert.That(smartCropsResult, Is.Not.Null);
 
-            Assert.IsNotNull(smartCropsResult.Values);
-            Assert.AreEqual(0 != smartCropsSpecified ? smartCropsSpecified : 1, smartCropsResult.Values.Count);
+            Assert.That(smartCropsResult.Values, Is.Not.Null);
+            Assert.That(smartCropsResult.Values, Has.Count.EqualTo(0 != smartCropsSpecified ? smartCropsSpecified : 1));
 
             var boundingBoxes = new HashSet<ImageBoundingBox>(new BoundingBoxComparer());
 
             foreach (var oneCrop in smartCropsResult.Values)
             {
-                Assert.IsTrue(boundingBoxes.Add(oneCrop.BoundingBox));
+                Assert.That(boundingBoxes.Add(oneCrop.BoundingBox), Is.True);
                 ValidateBoxInResult(oneCrop.BoundingBox, iaResult.Metadata);
             }
         }
@@ -335,7 +362,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         private void ValidateRead(ImageAnalysisResult result)
         {
             ReadResult readResult = result.Read;
-            Assert.IsNotNull(readResult);
+            Assert.That(readResult, Is.Not.Null);
 
             StringBuilder allText = new StringBuilder();
             int words = 0;
@@ -348,7 +375,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             foreach (var block in readResult.Blocks)
                 foreach (var oneLine in block.Lines)
                 {
-                    Assert.True(oneLine.BoundingPolygon.All(p => IsInPolygon(p, pagePolygon)));
+                    Assert.That(oneLine.BoundingPolygon.All(p => IsInPolygon(p, pagePolygon)), Is.True);
 
                     words += oneLine.Words.Count;
                     lines++;
@@ -356,25 +383,37 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                     foreach (var word in oneLine.Words)
                     {
                         // Assert.True(word.BoundingPolygon.All(p => IsInPolygon(p, oneLine.BoundingPolygon)));
-                        Assert.Greater(word.Confidence, 0);
-                        Assert.Less(word.Confidence, 1);
-                        Assert.True(oneLine.Text.Contains(word.Text));
+                        Assert.That(word.Confidence, Is.GreaterThan(0));
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(word.Confidence, Is.LessThan(1));
+                            Assert.That(oneLine.Text, Does.Contain(word.Text));
+                        });
                     }
                 }
 
-            Assert.AreEqual(words, 6);
-            Assert.AreEqual(lines, 3);
-            Assert.AreEqual(allText.ToString(), $"Sample text{Environment.NewLine}Hand writing{Environment.NewLine}123 456{Environment.NewLine}");
+            Assert.Multiple(() =>
+            {
+                Assert.That(words, Is.EqualTo(6));
+                Assert.That(lines, Is.EqualTo(3));
+                Assert.That($"Sample text{Environment.NewLine}Hand writing{Environment.NewLine}123 456{Environment.NewLine}", Is.EqualTo(allText.ToString()));
+            });
         }
 
         private void ValidateBoxInResult(ImageBoundingBox box, ImageMetadata imageMetadata)
         {
-            Assert.GreaterOrEqual(box.X, 0);
-            Assert.LessOrEqual(box.X, imageMetadata.Width);
-            Assert.GreaterOrEqual(box.Y, 0);
-            Assert.LessOrEqual(box.Y, imageMetadata.Height);
-            Assert.LessOrEqual(box.Height, imageMetadata.Height - box.Y);
-            Assert.LessOrEqual(box.Width, imageMetadata.Width - box.X);
+            Assert.That(box.X, Is.GreaterThanOrEqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(box.X, Is.LessThanOrEqualTo(imageMetadata.Width));
+                Assert.That(box.Y, Is.GreaterThanOrEqualTo(0));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(box.Y, Is.LessThanOrEqualTo(imageMetadata.Height));
+                Assert.That(box.Height, Is.LessThanOrEqualTo(imageMetadata.Height - box.Y));
+                Assert.That(box.Width, Is.LessThanOrEqualTo(imageMetadata.Width - box.X));
+            });
         }
 
         private static bool IsInPolygon(ImagePoint suspectPoint, IEnumerable<ImagePoint> polygon)

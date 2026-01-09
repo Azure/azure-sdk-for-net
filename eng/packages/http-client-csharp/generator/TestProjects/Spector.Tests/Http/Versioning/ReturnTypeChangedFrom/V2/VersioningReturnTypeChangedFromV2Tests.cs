@@ -14,8 +14,11 @@ namespace TestProjects.Spector.Tests.Http.Versioning.ReturnTypeChangedFrom.V2
         public Task Versioning_ReturnTypeChangedFrom_Test() => Test(async (host) =>
         {
             var response = await new ReturnTypeChangedFromClient(host).TestAsync("test");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("test", response.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value, Is.EqualTo("test"));
+            });
         });
     }
 }

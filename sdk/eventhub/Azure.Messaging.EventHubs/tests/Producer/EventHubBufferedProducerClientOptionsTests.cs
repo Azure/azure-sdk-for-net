@@ -30,8 +30,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions();
 
             Assert.That(options.RetryOptions, Is.Not.Null, "The retry options should not be null.");
-            Assert.That(options.RetryOptions.MaximumRetries, Is.GreaterThan(standardRetryOptions.MaximumRetries), "The buffered retry options should allow for more retries than the standard.");
-            Assert.That(options.RetryOptions.TryTimeout, Is.GreaterThan(standardRetryOptions.TryTimeout), "The buffered retry options should allow for a longer try timeout than the standard.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.RetryOptions.MaximumRetries, Is.GreaterThan(standardRetryOptions.MaximumRetries), "The buffered retry options should allow for more retries than the standard.");
+                Assert.That(options.RetryOptions.TryTimeout, Is.GreaterThan(standardRetryOptions.TryTimeout), "The buffered retry options should allow for a longer try timeout than the standard.");
+            });
         }
 
         /// <summary>
@@ -61,16 +64,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
-            Assert.That(clone.EnableIdempotentRetries, Is.EqualTo(options.EnableIdempotentRetries), "The flag to enable idempotent publishing should have been copied.");
-            Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
-            Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
-            Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.MaximumConcurrentSends, Is.EqualTo(options.MaximumConcurrentSends), "The number of concurrent total sends should have been copied.");
-            Assert.That(clone.MaximumConcurrentSendsPerPartition, Is.EqualTo(options.MaximumConcurrentSendsPerPartition), "The number of concurrent sends to a partition should have been copied.");
-            Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time should have been copied.");
-            Assert.That(clone.MaximumEventBufferLengthPerPartition, Is.EqualTo(options.MaximumEventBufferLengthPerPartition), "The maximum event buffer length should have been copied.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
+                Assert.That(clone.EnableIdempotentRetries, Is.EqualTo(options.EnableIdempotentRetries), "The flag to enable idempotent publishing should have been copied.");
+                Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
+                Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
+                Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
+                Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
+                Assert.That(clone.MaximumConcurrentSends, Is.EqualTo(options.MaximumConcurrentSends), "The number of concurrent total sends should have been copied.");
+                Assert.That(clone.MaximumConcurrentSendsPerPartition, Is.EqualTo(options.MaximumConcurrentSendsPerPartition), "The number of concurrent sends to a partition should have been copied.");
+                Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time should have been copied.");
+                Assert.That(clone.MaximumEventBufferLengthPerPartition, Is.EqualTo(options.MaximumEventBufferLengthPerPartition), "The maximum event buffer length should have been copied.");
+            });
         }
 
         /// <summary>
@@ -102,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of EventHubBufferedProducerClientOptions is not being cloned.");
+                Assert.That(knownMembers, Does.Contain(property.Name), $"The property: {property.Name} of EventHubBufferedProducerClientOptions is not being cloned.");
             }
         }
 
@@ -270,10 +276,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var transformedOptions = options.ToEventHubProducerClientOptions();
 
-            Assert.That(transformedOptions.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
-            Assert.That(transformedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
-            Assert.That(transformedOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
-            Assert.That(transformedOptions.EnableIdempotentPartitions, Is.EqualTo(options.EnableIdempotentRetries), "Idempotent partitions should be the same as idempotent retries.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(transformedOptions.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
+                Assert.That(transformedOptions.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
+                Assert.That(transformedOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
+                Assert.That(transformedOptions.EnableIdempotentPartitions, Is.EqualTo(options.EnableIdempotentRetries), "Idempotent partitions should be the same as idempotent retries.");
+            });
         }
     }
 }

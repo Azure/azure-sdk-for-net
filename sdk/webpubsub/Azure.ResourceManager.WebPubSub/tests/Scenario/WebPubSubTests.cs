@@ -72,8 +72,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
             await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
-            Assert.IsTrue(await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName));
-            Assert.IsFalse(await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName), Is.True);
+                Assert.That((bool)await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName + "1"), Is.False);
+            });
         }
 
         [Test]
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
             await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
             List<WebPubSubResource> webPubSubList = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, webPubSubList.Count);
+            Assert.That(webPubSubList.Count, Is.EqualTo(1));
             ValidateWebPubSub(webPubSubList.FirstOrDefault(item => item.Data.Name == webPubSubName).Data, webPubSubName);
         }
 
@@ -108,10 +111,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         private void ValidateWebPubSub(WebPubSubData webPubSub, string webPubSubName)
         {
-            Assert.IsNotNull(webPubSub);
-            Assert.IsNotEmpty(webPubSub.Id);
-            Assert.AreEqual(webPubSubName, webPubSub.Name);
-            Assert.AreEqual(AzureLocation.WestUS2, webPubSub.Location);
+            Assert.Multiple(() =>
+            {
+                Assert.That(webPubSub, Is.Not.Null);
+                Assert.That((string)webPubSub.Id, Is.Not.Empty);
+            });
+            Assert.That(webPubSub.Name, Is.EqualTo(webPubSubName));
+            Assert.That(webPubSub.Location, Is.EqualTo(AzureLocation.WestUS2));
         }
     }
 }

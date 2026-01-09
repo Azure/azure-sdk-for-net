@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             MessageToStringConverter converter = new MessageToStringConverter();
             string result = converter.Convert(message);
 
-            Assert.AreEqual(value, result);
+            Assert.That(result, Is.EqualTo(value));
         }
 
         [Theory]
@@ -65,11 +65,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             // constructing the message, but in practice it wouldn't be null when receiving.
             if (value == null)
             {
-                Assert.AreEqual("", result);
+                Assert.That(result, Is.EqualTo(""));
             }
             else
             {
-                Assert.AreEqual(value, result);
+                Assert.That(result, Is.EqualTo(value));
             }
         }
 
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             MessageToStringConverter converter = new MessageToStringConverter();
             string result = converter.Convert(message);
-            Assert.AreEqual(message.Body.ToString(), result);
+            Assert.That(result, Is.EqualTo(message.Body.ToString()));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             MessageToStringConverter converter = new MessageToStringConverter();
             string result = converter.Convert(message);
-            Assert.AreEqual("value", result);
+            Assert.That(result, Is.EqualTo("value"));
         }
 
         [Test]

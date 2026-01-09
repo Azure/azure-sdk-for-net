@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportAzureServiceCollection.ExistsAsync(_existSupportTicketName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Support.Tests
             var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             var content = new SupportNameAvailabilityContent(supportTicketName, SupportResourceType.MicrosoftSupportSupportTickets);
             var result = await supportTicket.Value.CheckCommunicationNameAvailabilityAsync(content);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(result.Value.IsNameAvailable, true);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Value.IsNameAvailable, Is.EqualTo(true));
         }
 
         [RecordedTest]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _supportAzureServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateGetSupportTicket(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketName).Data, _existSupportTicketName);
         }
 
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Support.Tests
             var supportTicketName = $"dotnet_sdk_test_new_ticket_name_{assetName}";
             await _supportAzureServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, BuildSupportTicketData());
             var supportTicket = await _supportAzureServiceCollection.GetAsync(supportTicketName);
-            Assert.IsNotNull(supportTicket);
-            Assert.IsNotEmpty(supportTicket.Value.Data.Id);
-            Assert.AreEqual(supportTicket.Value.Data.Name, supportTicketName);
-            Assert.AreEqual(supportTicket.Value.Data.Title, "dotnet sdk unit test, please close");
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicket, Is.Not.Null);
+                Assert.That((string)supportTicket.Value.Data.Id, Is.Not.Empty);
+                Assert.That(supportTicketName, Is.EqualTo(supportTicket.Value.Data.Name));
+            });
+            Assert.That(supportTicket.Value.Data.Title, Is.EqualTo("dotnet sdk unit test, please close"));
         }
 
         [RecordedTest]
@@ -77,17 +80,23 @@ namespace Azure.ResourceManager.Support.Tests
             var firstName = supportTicket.Value.Data.ContactDetails.FirstName;
             await supportTicket.Value.UpdateAsync(BuildUpdateSupportTicket(supportTicket.Value.Data));
             supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
-            Assert.IsNotNull(supportTicket);
-            Assert.IsNotEmpty(supportTicket.Value.Data.Id);
-            Assert.AreEqual(supportTicket.Value.Data.Name, _existSupportTicketName);
-            Assert.AreNotEqual(supportTicket.Value.Data.ContactDetails.FirstName, firstName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicket, Is.Not.Null);
+                Assert.That((string)supportTicket.Value.Data.Id, Is.Not.Empty);
+            });
+            Assert.That(supportTicket.Value.Data.Name, Is.EqualTo(_existSupportTicketName));
+            Assert.That(firstName, Is.Not.EqualTo(supportTicket.Value.Data.ContactDetails.FirstName));
         }
 
         private void ValidateGetSupportTicket(SupportTicketData supportTicket, string supportTicketName)
         {
-            Assert.IsNotNull(supportTicket);
-            Assert.IsNotEmpty(supportTicket.Id);
-            Assert.AreEqual(supportTicket.Name, supportTicketName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicket, Is.Not.Null);
+                Assert.That((string)supportTicket.Id, Is.Not.Empty);
+                Assert.That(supportTicketName, Is.EqualTo(supportTicket.Name));
+            });
         }
 
         private SupportTicketData BuildSupportTicketData()

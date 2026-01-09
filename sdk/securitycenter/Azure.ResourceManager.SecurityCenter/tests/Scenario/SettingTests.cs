@@ -52,17 +52,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _settingCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSetting(list.First(item => item.Data.Name == _existSettingName), _existSettingName);
         }
 
         private void ValidateSetting(SecuritySettingResource setting, string settingName)
         {
-            Assert.IsNotNull(setting);
-            Assert.IsNotNull(setting.Data.Id);
-            Assert.AreEqual(settingName, setting.Data.Name);
-            Assert.AreEqual("DataExportSettings", setting.Data.Kind.ToString());
-            Assert.AreEqual("Microsoft.Security/settings", setting.Data.ResourceType.ToString());
+            Assert.That(setting, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(setting.Data.Id, Is.Not.Null);
+                Assert.That(setting.Data.Name, Is.EqualTo(settingName));
+                Assert.That(setting.Data.Kind.ToString(), Is.EqualTo("DataExportSettings"));
+                Assert.That(setting.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/settings"));
+            });
         }
     }
 }

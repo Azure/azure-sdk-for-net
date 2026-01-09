@@ -59,9 +59,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             var batch = new ServiceBusMessageBatch(mockBatch, mockDiagnostics);
 
-            Assert.That(batch.MaxSizeInBytes, Is.EqualTo(mockBatch.MaxSizeInBytes), "The maximum size should have been delegated.");
-            Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
-            Assert.That(batch.Count, Is.EqualTo(mockBatch.Count), "The count should have been delegated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.MaxSizeInBytes, Is.EqualTo(mockBatch.MaxSizeInBytes), "The maximum size should have been delegated.");
+                Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
+                Assert.That(batch.Count, Is.EqualTo(mockBatch.Count), "The count should have been delegated.");
+            });
         }
 
         /// <summary>
@@ -78,8 +81,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var batch = new ServiceBusMessageBatch(mockBatch, mockDiagnostics);
             var message = new ServiceBusMessage(new byte[] { 0x21 });
 
-            Assert.That(batch.TryAddMessage(message), Is.True, "The message should have been accepted.");
-            Assert.That(mockBatch.TryAddCalledWith, Is.SameAs(message), "The message should have been passed with delegation.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.TryAddMessage(message), Is.True, "The message should have been accepted.");
+                Assert.That(mockBatch.TryAddCalledWith, Is.SameAs(message), "The message should have been passed with delegation.");
+            });
         }
 
         /// <summary>

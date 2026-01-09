@@ -32,7 +32,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             var response = await new MultiPartClient(host, null).GetFormDataClient().BasicAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -46,7 +46,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             var response = await new MultiPartClient(host, null).GetFormDataClient().JsonPartAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -60,7 +60,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             var response = await new MultiPartClient(host, null).GetFormDataClient().CheckFileNameAndContentTypeAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -82,7 +82,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             var response = await new MultiPartClient(host, null).GetFormDataClient().FileArrayAndBasicAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -97,7 +97,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 .GetFormDataHttpPartsContentTypeClient()
                 .ImageJpegContentTypeAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -112,7 +112,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 .GetFormDataHttpPartsContentTypeClient()
                 .OptionalContentTypeAsync(contentWithNoContentType, contentWithNoContentType.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
 
             using MultiPartFormDataBinaryContent contentWithContentType = new MultiPartFormDataBinaryContent();
             await using var imageStream2 = File.OpenRead(SampleJpgPath);
@@ -123,7 +123,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 .GetFormDataHttpPartsContentTypeClient()
                 .OptionalContentTypeAsync(contentWithContentType, contentWithContentType.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -138,7 +138,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 .GetFormDataHttpPartsContentTypeClient()
                 .RequiredContentTypeAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -162,7 +162,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 .GetFormDataHttpPartsClient()
                 .JsonArrayAndFileArrayAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -174,7 +174,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 .GetFormDataHttpPartsClient()
                 .GetFormDataHttpPartsNonStringClient()
                 .FloatAsync(content, content.ContentType, null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -190,7 +190,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             var response = await new MultiPartClient(host, null).GetFormDataClient().BinaryArrayPartsAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -202,7 +202,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             var response = await new MultiPartClient(host, null).GetFormDataClient().AnonymousModelAsync(content, content.ContentType, null);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -224,7 +224,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
                 content.Add(imageStream2, "picture", "picture", "application/octet-stream");
             }
             var response = await new MultiPartClient(host, null).GetFormDataClient().MultiBinaryPartsAsync(content, content.ContentType, null);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         internal partial class MultiPartFormDataBinaryContent : RequestContent

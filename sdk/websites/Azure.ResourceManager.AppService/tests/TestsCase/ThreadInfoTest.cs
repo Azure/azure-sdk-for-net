@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 Assert.Fail(ex.Message);
             }
-            Assert.NotZero(threadsInfoRecord);
+            Assert.That(threadsInfoRecord, Is.Not.Zero);
         }
 
         [TestCase]
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 Assert.Fail(ex.Message);
             }
-            Assert.NotZero(threadsInfoRecord);
+            Assert.That(threadsInfoRecord, Is.Not.Zero);
         }
 
         [TestCase]
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 Assert.Fail(ex.Message);
             }
-            Assert.NotZero(threadsInfoRecord);
+            Assert.That(threadsInfoRecord, Is.Not.Zero);
         }
 
         [TestCase]
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 Assert.Fail(ex.Message);
             }
-            Assert.NotZero(threadsInfoRecord);
+            Assert.That(threadsInfoRecord, Is.Not.Zero);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
             var strategy = DelayStrategy.CreateExponentialDelayStrategy(initialDelay, maxDelay: maxDelay);
             var response = new MockResponse(400);
             var delay = strategy.GetNextDelay(response, 30);
-            Assert.LessOrEqual(delay.TotalMilliseconds, maxDelay.TotalMilliseconds);
+            Assert.That(delay.TotalMilliseconds, Is.LessThanOrEqualTo(maxDelay.TotalMilliseconds));
         }
 
         [Test]
@@ -44,12 +44,12 @@ namespace Azure.Core.Tests
         private static void AssertDelay(TimeSpan initialDelay, TimeSpan currentDelay, int retryNumber, TimeSpan? maxDelay = default)
         {
             var max = maxDelay ?? TimeSpan.MaxValue;
-            Assert.GreaterOrEqual(
+            Assert.That(
                 currentDelay.TotalMilliseconds,
-                Math.Pow((1 - DelayStrategy.DefaultJitterFactor), retryNumber) * (1 << (retryNumber - 1)) * initialDelay.TotalMilliseconds);
-            Assert.LessOrEqual(
+                Is.GreaterThanOrEqualTo(Math.Pow((1 - DelayStrategy.DefaultJitterFactor), retryNumber) * (1 << (retryNumber - 1)) * initialDelay.TotalMilliseconds));
+            Assert.That(
                 currentDelay.TotalMilliseconds,
-                Math.Min(max.TotalMilliseconds, Math.Pow(1 + DelayStrategy.DefaultJitterFactor, retryNumber) * (1 << (retryNumber - 1)) * initialDelay.TotalMilliseconds));
+                Is.LessThanOrEqualTo(Math.Min(max.TotalMilliseconds, Math.Pow(1 + DelayStrategy.DefaultJitterFactor, retryNumber) * (1 << (retryNumber - 1)) * initialDelay.TotalMilliseconds)));
         }
     }
 }

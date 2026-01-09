@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             string result = path.Bind(bindingData);
 
-            Assert.AreEqual(queueOrTopicNamePattern, result);
+            Assert.That(result, Is.EqualTo(queueOrTopicNamePattern));
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             string result = path.Bind(null);
 
-            Assert.AreEqual(queueOrTopicNamePattern, result);
+            Assert.That(result, Is.EqualTo(queueOrTopicNamePattern));
         }
     }
 }

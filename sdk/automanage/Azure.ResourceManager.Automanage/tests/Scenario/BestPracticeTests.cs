@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             // there are two best practices profiles, Production & DevTest
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
         }
     }
 }

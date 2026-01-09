@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"NFC GET started.....");
             NetworkFabricControllerResource getResult = await networkFabricController.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkFabricControllerName);
+            Assert.That(TestEnvironment.NetworkFabricControllerName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await networkFabricController.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

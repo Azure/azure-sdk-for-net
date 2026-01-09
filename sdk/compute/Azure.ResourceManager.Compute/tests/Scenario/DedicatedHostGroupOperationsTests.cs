@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             DedicatedHostGroupResource updated = await group.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updated.Data.Tags);
+            Assert.That(updated.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

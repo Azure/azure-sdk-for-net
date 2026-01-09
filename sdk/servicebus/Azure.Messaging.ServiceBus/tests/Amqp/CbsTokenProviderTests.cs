@@ -67,8 +67,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
             Assert.That(cbsToken, Is.Not.Null, "The token should have been produced");
-            Assert.That(cbsToken.TokenValue, Is.EqualTo(tokenValue), "The token value should match");
-            Assert.That(cbsToken.ExpiresAtUtc, Is.EqualTo(expires.DateTime), "The token expiration should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cbsToken.TokenValue, Is.EqualTo(tokenValue), "The token value should match");
+                Assert.That(cbsToken.ExpiresAtUtc, Is.EqualTo(expires.DateTime), "The token expiration should match");
+            });
         }
 
         /// <summary>
@@ -139,8 +142,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             var firstCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
             var nextCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
-            Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
-            Assert.That(nextCallToken, Is.Not.Null, "The next call token should have been produced.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
+                Assert.That(nextCallToken, Is.Not.Null, "The next call token should have been produced.");
+            });
             Assert.That(firstCallToken, Is.SameAs(nextCallToken), "The same token instance should have been returned for both calls.");
 
             mockCredential
@@ -173,8 +179,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             var firstCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
             var nextCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
-            Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
-            Assert.That(nextCallToken, Is.Not.Null, "The next call token should have been produced.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
+                Assert.That(nextCallToken, Is.Not.Null, "The next call token should have been produced.");
+            });
             Assert.That(firstCallToken, Is.Not.SameAs(nextCallToken), "The token should have been expired and returned two unique instances.");
 
             mockCredential
@@ -202,8 +211,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             var firstCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
             var nextCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
-            Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
-            Assert.That(nextCallToken, Is.Not.Null, "The next call token should have been produced.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
+                Assert.That(nextCallToken, Is.Not.Null, "The next call token should have been produced.");
+            });
             Assert.That(firstCallToken, Is.Not.SameAs(nextCallToken), "The token should have been expired and returned two unique instances.");
 
             mockCredential
@@ -243,8 +255,11 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             for (var index = 0; index < otherTokens.Length; ++index)
             {
-                Assert.That(otherTokens[index], Is.Not.Null, $"The token at index `{ index }` should have been produced.");
-                Assert.That(firstCallToken, Is.Not.SameAs(otherTokens[index]), $"The token at index `{ index } ` should not have matched the first call instance.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(otherTokens[index], Is.Not.Null, $"The token at index `{index}` should have been produced.");
+                    Assert.That(firstCallToken, Is.Not.SameAs(otherTokens[index]), $"The token at index `{index} ` should not have matched the first call instance.");
+                });
 
                 if (index > 0)
                 {

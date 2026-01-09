@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             var input = ResourceDataHelpers.GetPolicyData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             FrontDoorWebApplicationFirewallPolicyResource firewall1 = lro.Value;
-            Assert.AreEqual(name, firewall1.Data.Name);
+            Assert.That(firewall1.Data.Name, Is.EqualTo(name));
             //2.Get
             FrontDoorWebApplicationFirewallPolicyResource firewall2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertPolicy(firewall1.Data, firewall2.Data);
@@ -64,10 +64,14 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

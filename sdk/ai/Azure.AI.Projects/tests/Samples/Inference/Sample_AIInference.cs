@@ -208,12 +208,18 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
 
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
-        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(input, Has.Count.EqualTo(response.Value.Data.Count));
+        });
         for (int i = 0; i < input.Count; i++)
         {
-            Assert.AreEqual(response.Value.Data[i].Index, i);
-            Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(i, Is.EqualTo(response.Value.Data[i].Index));
+                Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            });
             var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
             Assert.That(embedding.Count, Is.GreaterThan(0));
         }
@@ -265,12 +271,18 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
 
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
-        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(input, Has.Count.EqualTo(response.Value.Data.Count));
+        });
         for (int i = 0; i < input.Count; i++)
         {
-            Assert.AreEqual(response.Value.Data[i].Index, i);
-            Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(i, Is.EqualTo(response.Value.Data[i].Index));
+                Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            });
             var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
             Assert.That(embedding.Count, Is.GreaterThan(0));
         }

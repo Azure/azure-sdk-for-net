@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 }
                 Console.WriteLine($"Total number of search results:{count}");
                 #endregion
-                Assert.GreaterOrEqual(count, 3);
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
             }
             finally
             {

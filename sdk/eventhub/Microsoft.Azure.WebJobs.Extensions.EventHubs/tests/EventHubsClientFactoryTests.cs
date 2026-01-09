@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
             var client = factory.GetEventHubProducerClient(expectedPathName, "connection");
-            Assert.AreEqual(expectedPathName, client.EventHubName);
+            Assert.That(client.EventHubName, Is.EqualTo(expectedPathName));
         }
 
         [Test]
@@ -52,13 +52,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var consumer = factory.GetEventHubConsumerClient("k1", "connection", null);
             var host = factory.GetEventProcessorHost("k1", "connection", null, true);
 
-            Assert.AreEqual("k1", producer.EventHubName);
-            Assert.AreEqual("k1", consumer.EventHubName);
-            Assert.AreEqual("k1", host.EventHubName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.EventHubName, Is.EqualTo("k1"));
+                Assert.That(consumer.EventHubName, Is.EqualTo("k1"));
+                Assert.That(host.EventHubName, Is.EqualTo("k1"));
 
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", producer.FullyQualifiedNamespace);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", consumer.FullyQualifiedNamespace);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", host.FullyQualifiedNamespace);
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
+                Assert.That(consumer.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
+                Assert.That(host.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
+            });
         }
 
         [Test]
@@ -77,13 +80,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var consumer = factory.GetEventHubConsumerClient("k1", "connection", null);
             var host = factory.GetEventProcessorHost("k1", "connection", null, true);
 
-            Assert.AreEqual("k1", producer.EventHubName);
-            Assert.AreEqual("k1", consumer.EventHubName);
-            Assert.AreEqual("k1", host.EventHubName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer.EventHubName, Is.EqualTo("k1"));
+                Assert.That(consumer.EventHubName, Is.EqualTo("k1"));
+                Assert.That(host.EventHubName, Is.EqualTo("k1"));
 
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", producer.FullyQualifiedNamespace);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", consumer.FullyQualifiedNamespace);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", host.FullyQualifiedNamespace);
+                Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
+                Assert.That(consumer.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
+                Assert.That(host.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
+            });
         }
 
         [Test]
@@ -95,8 +101,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
             var errorMessage = Assert.Throws<InvalidOperationException>(() => factory.GetEventHubProducerClient("k1", ConnectionString)).Message;
-            StringAssert.DoesNotContain(ConnectionString, errorMessage);
-            StringAssert.Contains("REDACTED", errorMessage);
+            Assert.That(errorMessage, Does.Not.Contain(ConnectionString));
+            Assert.That(errorMessage, Does.Contain("REDACTED"));
         }
 
         [Test]
@@ -111,8 +117,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var producer2 = factory.GetEventHubProducerClient("k1", "connection");
             var consumer2 = factory.GetEventHubConsumerClient("k1", "connection", null);
 
-            Assert.AreSame(producer, producer2);
-            Assert.AreSame(consumer, consumer2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer2, Is.SameAs(producer));
+                Assert.That(consumer2, Is.SameAs(consumer));
+            });
         }
 
         [Test]
@@ -137,13 +146,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var consumer3 = factory.GetEventHubConsumerClient("k1", "connection3", "csg");
             var consumer4 = factory.GetEventHubConsumerClient("k1", "connection4", "csg");
 
-            // Create different consumers for different eventhub namespaces.
-            Assert.AreNotSame(consumer1, consumer2);
-            Assert.AreNotSame(consumer3, consumer4);
-            // Create different consumers for different consumer groups.
-            Assert.AreNotSame(consumer1, consumer3);
+            Assert.Multiple(() =>
+            {
+                // Create different consumers for different eventhub namespaces.
+                Assert.That(consumer2, Is.Not.SameAs(consumer1));
+                Assert.That(consumer4, Is.Not.SameAs(consumer3));
+                // Create different consumers for different consumer groups.
+                Assert.That(consumer3, Is.Not.SameAs(consumer1));
+            });
             // Use the same consumer client for the same namespace/eventhub/consumergroup
-            Assert.AreSame(consumer2, consumer4);
+            Assert.That(consumer4, Is.SameAs(consumer2));
         }
 
         [Test]
@@ -168,16 +180,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var producer3 = factory.GetEventHubProducerClient("k1", "connection3");
             var producer4 = factory.GetEventHubProducerClient("k1", "connection4");
 
-            Assert.AreEqual("k1", producer1.EventHubName);
-            Assert.AreEqual("k1", producer2.EventHubName);
-            Assert.AreNotSame(producer1, producer2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(producer1.EventHubName, Is.EqualTo("k1"));
+                Assert.That(producer2.EventHubName, Is.EqualTo("k1"));
+                Assert.That(producer2, Is.Not.SameAs(producer1));
 
-            Assert.AreEqual("k1", producer3.EventHubName);
-            Assert.AreEqual("k1", producer4.EventHubName);
-            Assert.AreNotSame(producer3, producer4);
+                Assert.That(producer3.EventHubName, Is.EqualTo("k1"));
+                Assert.That(producer4.EventHubName, Is.EqualTo("k1"));
+                Assert.That(producer4, Is.Not.SameAs(producer3));
 
-            Assert.AreSame(producer1, producer3);
-            Assert.AreSame(producer2, producer4);
+                Assert.That(producer3, Is.SameAs(producer1));
+            });
+            Assert.That(producer4, Is.SameAs(producer2));
         }
 
         [Test]
@@ -197,8 +212,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var factory = ConfigurationUtilities.CreateFactory(configuration, options, factoryMock.Object);
 
             var client = factory.GetCheckpointStoreClient();
-            Assert.AreEqual("azure-webjobs-eventhub", client.Name);
-            Assert.AreEqual("devstoreaccount1", client.AccountName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(client.Name, Is.EqualTo("azure-webjobs-eventhub"));
+                Assert.That(client.AccountName, Is.EqualTo("devstoreaccount1"));
+            });
         }
 
         [TestCase("k1", "k1", ConnectionString)]
@@ -223,12 +241,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 .GetValue(producer);
             EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
 
-            Assert.AreEqual(testEndpoint, connectionOptions.CustomEndpointAddress);
-            Assert.AreEqual(expectedPathName, producer.EventHubName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionOptions.CustomEndpointAddress, Is.EqualTo(testEndpoint));
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedPathName));
+            });
 
             EventHubProducerClientOptions producerOptions = (EventHubProducerClientOptions)typeof(EventHubProducerClient).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(producer);
-            Assert.AreEqual(10, producerOptions.RetryOptions.MaximumRetries);
-            Assert.AreEqual(expectedPathName, producer.EventHubName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(producerOptions.RetryOptions.MaximumRetries, Is.EqualTo(10));
+                Assert.That(producer.EventHubName, Is.EqualTo(expectedPathName));
+            });
         }
 
         [TestCase("k1", "k1", ConnectionString)]
@@ -258,7 +282,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection)
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(connection);
-            Assert.AreEqual(testEndpoint, connectionOptions.CustomEndpointAddress);
+            Assert.That(connectionOptions.CustomEndpointAddress, Is.EqualTo(testEndpoint));
 
             EventHubsRetryPolicy retryPolicy = (EventHubsRetryPolicy)typeof(EventHubConsumerClient)
                 .GetProperty("RetryPolicy", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -269,8 +293,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubsRetryOptions retryOptions = (EventHubsRetryOptions)retryPolicy.GetType()
                 .GetProperty("Options", BindingFlags.Public | BindingFlags.Instance)
                 .GetValue(retryPolicy);
-            Assert.AreEqual(10, retryOptions.MaximumRetries);
-            Assert.AreEqual(expectedPathName, consumer.EventHubName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(retryOptions.MaximumRetries, Is.EqualTo(10));
+                Assert.That(consumer.EventHubName, Is.EqualTo(expectedPathName));
+            });
         }
 
         [TestCase("k1", "k1", ConnectionString)]
@@ -297,16 +324,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventProcessorOptions processorOptions = (EventProcessorOptions)typeof(EventProcessor<EventProcessorHostPartition>)
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);
-            Assert.AreEqual(testEndpoint, processorOptions.ConnectionOptions.CustomEndpointAddress);
-            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, processorOptions.ConnectionOptions.TransportType);
-            Assert.AreEqual("http://proxyserver/", ((WebProxy)processorOptions.ConnectionOptions.Proxy).Address.AbsoluteUri);
-            Assert.AreEqual(10, processorOptions.RetryOptions.MaximumRetries);
-            Assert.AreEqual(expectedPathName, processor.EventHubName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.ConnectionOptions.CustomEndpointAddress, Is.EqualTo(testEndpoint));
+                Assert.That(processorOptions.ConnectionOptions.TransportType, Is.EqualTo(EventHubsTransportType.AmqpWebSockets));
+                Assert.That(((WebProxy)processorOptions.ConnectionOptions.Proxy).Address.AbsoluteUri, Is.EqualTo("http://proxyserver/"));
+                Assert.That(processorOptions.RetryOptions.MaximumRetries, Is.EqualTo(10));
+                Assert.That(processor.EventHubName, Is.EqualTo(expectedPathName));
+            });
 
             int batchSize = (int)typeof(EventProcessor<EventProcessorHostPartition>)
                 .GetProperty("EventBatchMaximumCount", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);
-            Assert.AreEqual(20, batchSize);
+            Assert.That(batchSize, Is.EqualTo(20));
         }
 
         [Test]
@@ -322,7 +352,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);
 
-            Assert.AreEqual(LoadBalancingStrategy.Greedy, processorOptions.LoadBalancingStrategy);
+            Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(LoadBalancingStrategy.Greedy));
         }
     }
 }

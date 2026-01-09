@@ -187,8 +187,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "Task cancellation should result in an exception");
 
-            Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
-            Assert.That(readIndex, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
+                Assert.That(readIndex, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
+            });
         }
 
         /// <summary>
@@ -255,14 +258,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.Nothing, "Iteration should have ended naturally, rather than by cancellation.");
 
-            // Due to the random delay applied while waiting for items without the maximum wait time, the
-            // actual iteration count is non-deterministic.  It is known, however, that it will be greater than the
-            // channel read count, as the wait time accounts for the maximum random period; at least one default item
-            // will be emitted.
+            Assert.Multiple(() =>
+            {
+                // Due to the random delay applied while waiting for items without the maximum wait time, the
+                // actual iteration count is non-deterministic.  It is known, however, that it will be greater than the
+                // channel read count, as the wait time accounts for the maximum random period; at least one default item
+                // will be emitted.
 
-            Assert.That(readCancellation.Token.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
-            Assert.That(iterateCount, Is.GreaterThan(readCount), "There should have been default items returned due to the wait time expiring.");
+                Assert.That(readCancellation.Token.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
+                Assert.That(iterateCount, Is.GreaterThan(readCount), "There should have been default items returned due to the wait time expiring.");
+            });
         }
 
         /// <summary>
@@ -320,9 +326,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "Task cancellation should result in an exception");
 
-            Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
-            Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
-            Assert.That(iterateCount, Is.EqualTo(readCount), "There should have been no items returned; all iterations should have been reading actual values.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
+                Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
+                Assert.That(iterateCount, Is.EqualTo(readCount), "There should have been no items returned; all iterations should have been reading actual values.");
+            });
         }
 
         /// <summary>
@@ -451,8 +460,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "Cancellation of the read operation should have been surfaced.");
 
-            Assert.That(readCancellation.Token.IsCancellationRequested, Is.False, "Iteration should stopped due to exception.");
-            Assert.That(readCount, Is.EqualTo(maxReadItems), "The items emitted before the exception should have been read.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(readCancellation.Token.IsCancellationRequested, Is.False, "Iteration should stopped due to exception.");
+                Assert.That(readCount, Is.EqualTo(maxReadItems), "The items emitted before the exception should have been read.");
+            });
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             var response = await this.Client.GetQuotaRequestDetails(new ResourceIdentifier(Scope)).GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/quotaRequests", StringComparison.OrdinalIgnoreCase)));
+            Assert.That(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/quotaRequests", StringComparison.OrdinalIgnoreCase)), Is.True);
         }
 
         [TestCase]
@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 .GetAllAsync(filter: "provisioningState eq 'Failed'", top: top)
                 .ToEnumerableAsync();
 
-            Assert.IsTrue(response.All(x => string.Equals(x.Data.ProvisioningState.ToString(), "Failed", StringComparison.OrdinalIgnoreCase)));
-            Assert.AreEqual(top, response.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.All(x => string.Equals(x.Data.ProvisioningState.ToString(), "Failed", StringComparison.OrdinalIgnoreCase)), Is.True);
+                Assert.That(response, Has.Count.EqualTo(top));
+            });
         }
 
         [TestCase]
@@ -57,7 +60,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             string requestId = "2779d9c5-f58a-4163-8f5d-8de32a546c25";
             var response = await this.Client.GetQuotaRequestDetailAsync(new ResourceIdentifier(Scope), requestId);
 
-            Assert.AreEqual(requestId, response.Value.Data.Name);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(requestId));
         }
 
         [TestCase]
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             var response = await this.Client.GetCurrentQuotaLimitBaseAsync(new ResourceIdentifier(Scope), ResourceName);
 
-            Assert.AreEqual(ResourceName, response.Value.Data.Name);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(ResourceName));
         }
 
         [TestCase]
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             var response = await this.Client.GetCurrentQuotaLimitBases(new ResourceIdentifier(Scope)).GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/quotas", StringComparison.OrdinalIgnoreCase)));
+            Assert.That(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/quotas", StringComparison.OrdinalIgnoreCase)), Is.True);
         }
 
         [TestCase]
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             var response = await this.Client.GetCurrentUsagesBaseAsync(new ResourceIdentifier(Scope), ResourceName);
 
-            Assert.AreEqual(ResourceName, response.Value.Data.Name);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(ResourceName));
         }
 
         [TestCase]
@@ -89,7 +92,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             var response = await this.Client.GetCurrentUsagesBases(new ResourceIdentifier(Scope)).GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/usages", StringComparison.OrdinalIgnoreCase)));
+            Assert.That(response.All(x => string.Equals(x.Data.ResourceType, "Microsoft.Quota/usages", StringComparison.OrdinalIgnoreCase)), Is.True);
         }
 
         [TestCase]
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             var response = await Client.GetCurrentQuotaLimitBases(new ResourceIdentifier(Scope)).CreateOrUpdateAsync(WaitUntil.Started, ResourceName, data);
 
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
 
         [TestCase]
@@ -135,8 +138,11 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
-                Assert.AreEqual("InvalidResourceName", ex.ErrorCode);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Status, Is.EqualTo(400));
+                    Assert.That(ex.ErrorCode, Is.EqualTo("InvalidResourceName"));
+                });
                 return;
             }
 

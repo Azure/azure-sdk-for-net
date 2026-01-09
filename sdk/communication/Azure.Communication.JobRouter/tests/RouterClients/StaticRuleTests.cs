@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.DoesNotThrow(() =>
             {
                 var rule = new StaticRouterRule(new RouterValue(input));
-                Assert.AreEqual(input, rule.Value.Value);
+                Assert.That(rule.Value.Value, Is.EqualTo(input));
             });
         }
     }

@@ -41,13 +41,16 @@ public class StreamedCollectionTests
         {
             PipelineResponse response = page.GetRawResponse();
 
-            Assert.AreEqual(200, response.Status);
-            Assert.IsTrue(response.Content.ToString().StartsWith("event"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo(200));
+                Assert.That(response.Content.ToString(), Does.StartWith("event"));
+            });
 
             pageCount++;
         }
 
-        Assert.AreEqual(1, pageCount);
+        Assert.That(pageCount, Is.EqualTo(1));
     }
 
     [Test]
@@ -62,13 +65,16 @@ public class StreamedCollectionTests
         {
             PipelineResponse response = page.GetRawResponse();
 
-            Assert.AreEqual(200, response.Status);
-            Assert.IsTrue(response.Content.ToString().StartsWith("event"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo(200));
+                Assert.That(response.Content.ToString(), Does.StartWith("event"));
+            });
 
             pageCount++;
         }
 
-        Assert.AreEqual(1, pageCount);
+        Assert.That(pageCount, Is.EqualTo(1));
     }
 
     [Test]
@@ -80,11 +86,11 @@ public class StreamedCollectionTests
         int count = 0;
         foreach (StreamedValue value in values)
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.AreEqual(MockStreamedData.TotalItemCount, count);
+        Assert.That(count, Is.EqualTo(MockStreamedData.TotalItemCount));
     }
 
     [Test]
@@ -93,22 +99,22 @@ public class StreamedCollectionTests
         StreamedCollectionClient client = new();
         StreamedValueCollectionResult? values = client.GetValues() as StreamedValueCollectionResult;
 
-        Assert.IsNotNull(values);
+        Assert.That(values, Is.Not.Null);
 
         ClientResult page = values!.GetRawPages().First();
         MockStreamedResponse? response = page.GetRawResponse() as MockStreamedResponse;
 
-        Assert.IsNotNull(response);
-        Assert.IsFalse(response?.IsDisposed);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response?.IsDisposed, Is.False);
 
         int count = 0;
         foreach (StreamedValue value in values!.GetPageValues(page))
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.IsTrue(response?.IsDisposed);
+        Assert.That(response?.IsDisposed, Is.True);
     }
 
     [Test]
@@ -120,11 +126,11 @@ public class StreamedCollectionTests
         int count = 0;
         await foreach (StreamedValue value in values)
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.AreEqual(MockStreamedData.TotalItemCount, count);
+        Assert.That(count, Is.EqualTo(MockStreamedData.TotalItemCount));
     }
 
     [Test]
@@ -133,21 +139,21 @@ public class StreamedCollectionTests
         StreamedCollectionClient client = new();
         AsyncStreamedValueCollectionResult? values = client.GetValuesAsync() as AsyncStreamedValueCollectionResult;
 
-        Assert.IsNotNull(values);
+        Assert.That(values, Is.Not.Null);
 
         ClientResult page = await values!.GetRawPagesAsync().FirstAsync();
         MockStreamedResponse? response = page.GetRawResponse() as MockStreamedResponse;
 
-        Assert.IsNotNull(response);
-        Assert.IsFalse(response?.IsDisposed);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response?.IsDisposed, Is.False);
 
         int count = 0;
         await foreach (StreamedValue value in values!.GetPageValuesAsync(page))
         {
-            Assert.AreEqual(count, value.Id);
+            Assert.That(value.Id, Is.EqualTo(count));
             count++;
         }
 
-        Assert.IsTrue(response?.IsDisposed);
+        Assert.That(response?.IsDisposed, Is.True);
     }
 }

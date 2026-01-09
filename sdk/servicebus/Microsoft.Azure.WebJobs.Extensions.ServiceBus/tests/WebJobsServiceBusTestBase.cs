@@ -327,7 +327,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
                 var errors = logs.Where(IsError);
-                Assert.IsEmpty(errors, string.Join(
+                Assert.That(errors, Is.Empty, string.Join(
                     ",",
                     errors.Select(e => e.Exception != null ? e.Exception.StackTrace : e.FormattedMessage)));
 
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
-                Assert.AreEqual(ExpectedRemainingMessages, properties.ActiveMessageCount);
+                Assert.That(properties.ActiveMessageCount, Is.EqualTo(ExpectedRemainingMessages));
             }
 
             private static bool IsError(LogMessage logMessage)

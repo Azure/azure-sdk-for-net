@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task GetLocationsSubscriptions()
         {
             var list = await _subscription.GetLocationsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.Name == "eastus"));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.Name == "eastus"), Is.Not.Null);
         }
 
         [RecordedTest]
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Subscription.Tests
             // CreateOrUpdate
             string tagName = "testEmptyTag";
             var predefinedTag = await _subscription.CreateOrUpdatePredefinedTagAsync(tagName);
-            Assert.IsNotNull(predefinedTag);
-            Assert.AreEqual(tagName, predefinedTag.Value.TagName);
+            Assert.That(predefinedTag, Is.Not.Null);
+            Assert.That(predefinedTag.Value.TagName, Is.EqualTo(tagName));
 
             // GetAll
             var list = await _subscription.GetAllPredefinedTagsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsNotNull(list.First(item => item.TagName == tagName));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.First(item => item.TagName == tagName), Is.Not.Null);
 
             // Delete
             var deleteResponse = await _subscription.DeletePredefinedTagAsync(tagName);
-            Assert.AreEqual(200, deleteResponse.Status);
+            Assert.That(deleteResponse.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Subscription.Tests
             // Add a TagValue
             string tagValue = "preTestValue";
             var predefinedTagValue = await _subscription.CreateOrUpdatePredefinedTagValueAsync(tagName, tagValue);
-            Assert.IsNotNull(predefinedTagValue);
-            Assert.AreEqual(tagValue, predefinedTagValue.Value.TagValue);
+            Assert.That(predefinedTagValue, Is.Not.Null);
+            Assert.That(predefinedTagValue.Value.TagValue, Is.EqualTo(tagValue));
 
             // Delete a TagValue
             var deleteResponse1 = await _subscription.CreateOrUpdatePredefinedTagValueAsync(tagName, tagValue);
-            Assert.AreEqual(200, deleteResponse1.GetRawResponse().Status);
+            Assert.That(deleteResponse1.GetRawResponse().Status, Is.EqualTo(200));
 
             // Delete--409 Please delete all the associated tag values before deleting the tag name.
             //var deleteResponse = await _subscription.DeletePredefinedTagAsync(tagName);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task GetFeatures()
         {
             var list  = await _subscription.GetFeaturesAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [RecordedTest]
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task CancelSubscription()
         {
             var response = await _subscription.CancelSubscriptionAsync();
-            Assert.AreEqual(200,response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Subscription.Tests
                 SubscriptionNameValue = "azSubscriptionTestName"
             };
             var response = await _subscription.RenameSubscriptionAsync(data);
-            Assert.AreEqual(200,response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task EnableSubscription()
         {
             var response = await _subscription.EnableSubscriptionAsync();
-            Assert.AreEqual(200,response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

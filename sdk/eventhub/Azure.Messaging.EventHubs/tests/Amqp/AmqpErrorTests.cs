@@ -82,8 +82,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
-            Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+                Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
+            });
         }
 
         /// <summary>
@@ -113,8 +116,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (exception is EventHubsException)
             {
-                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(reason), "The proper failure reason should be specified");
-                Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(reason), "The proper failure reason should be specified");
+                    Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                });
             }
         }
 
@@ -137,8 +143,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -161,8 +170,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -216,8 +228,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (exception is EventHubsException)
             {
-                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(reason), "The proper failure reason should be specified");
-                Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(reason), "The proper failure reason should be specified");
+                    Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                });
             }
         }
 
@@ -240,8 +255,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -264,8 +282,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -288,8 +309,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForResponse(response, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -328,8 +352,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
-            Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+                Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
+            });
         }
 
         /// <summary>
@@ -360,8 +387,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (exception is EventHubsException)
             {
-                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(reason), "The proper failure reason should be specified");
-                Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(reason), "The proper failure reason should be specified");
+                    Assert.That(((EventHubsException)exception).EventHubName, Is.EqualTo(resourceName), "The exception should report the proper resource");
+                });
             }
         }
 
@@ -385,8 +415,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -410,8 +443,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ResourceNotFound), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -435,8 +471,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 
@@ -460,9 +499,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
-            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
-            Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be transient.");
-            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The exception reason should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+                Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be transient.");
+                Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The exception reason should match.");
+            });
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 

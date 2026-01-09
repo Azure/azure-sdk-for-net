@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesKeywordTokenizerV2()
         {
             KeywordTokenizer sut = new KeywordTokenizer("test");
-            Assert.AreEqual(@"#Microsoft.Azure.Search.KeywordTokenizerV2", sut.ODataType);
+            Assert.That(sut.ODataType, Is.EqualTo(@"#Microsoft.Azure.Search.KeywordTokenizerV2"));
         }
 
         [TestCase(@"#Microsoft.Azure.Search.KeywordTokenizer")]
@@ -32,11 +32,14 @@ namespace Azure.Search.Documents.Tests.Models
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
             KeywordTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement) as KeywordTokenizer;
 
-            Assert.NotNull(sut);
-            Assert.AreEqual(odataType, sut.ODataType);
-            Assert.AreEqual("test", sut.Name);
-            Assert.AreEqual(1, sut.BufferSize);
-            Assert.AreEqual(1, sut.MaxTokenLength);
+            Assert.That(sut, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sut.ODataType, Is.EqualTo(odataType));
+                Assert.That(sut.Name, Is.EqualTo("test"));
+                Assert.That(sut.BufferSize, Is.EqualTo(1));
+                Assert.That(sut.MaxTokenLength, Is.EqualTo(1));
+            });
 
             using MemoryStream stream = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
@@ -47,8 +50,11 @@ namespace Azure.Search.Documents.Tests.Models
             stream.Position = 0;
 
             jsonDoc = JsonDocument.Parse(stream);
-            Assert.True(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem));
-            Assert.AreEqual(odataType, odataTypeElem.GetString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem), Is.True);
+                Assert.That(odataTypeElem.GetString(), Is.EqualTo(odataType));
+            });
             jsonDoc.Dispose();
         }
     }

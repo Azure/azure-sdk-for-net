@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { "https://management.azure.com//.default" }), CancellationToken.None);
 
-            Assert.IsNotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]

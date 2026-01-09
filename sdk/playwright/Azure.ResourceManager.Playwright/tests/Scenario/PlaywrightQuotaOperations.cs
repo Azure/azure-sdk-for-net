@@ -56,12 +56,18 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             Response<PlaywrightQuotaResource> getResponse = await _quotaCollection.GetAsync(PlaywrightQuotaName.ExecutionMinutes);
             PlaywrightQuotaResource quotaResource = getResponse.Value;
 
-            Assert.IsNotNull(quotaResource);
-            Assert.IsTrue(quotaResource.HasData);
-            Assert.IsNotNull(quotaResource.Data.Properties);
-            Assert.AreEqual(PlaywrightProvisioningState.Succeeded, quotaResource.Data.Properties.ProvisioningState);
-            Assert.IsNotNull(quotaResource.Data.Properties.FreeTrial);
-            Assert.IsTrue(quotaResource.Data.Name.Contains("ExecutionMinutes"));
+            Assert.That(quotaResource, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(quotaResource.HasData, Is.True);
+                Assert.That(quotaResource.Data.Properties, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(quotaResource.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
+                Assert.That(quotaResource.Data.Properties.FreeTrial, Is.Not.Null);
+                Assert.That(quotaResource.Data.Name, Does.Contain("ExecutionMinutes"));
+            });
         }
 
         [TestCase]
@@ -71,16 +77,22 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             // Test List quotas for the workspace
             List<PlaywrightQuotaResource> allQuotas = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsNotEmpty(allQuotas);
+            Assert.That(allQuotas, Is.Not.Empty);
             bool foundExecutionMinutesQuota = false;
 
             foreach (PlaywrightQuotaResource quota in allQuotas)
             {
-                Assert.IsNotNull(quota);
-                Assert.IsTrue(quota.HasData);
-                Assert.IsNotNull(quota.Data.Properties);
-                Assert.AreEqual(PlaywrightProvisioningState.Succeeded, quota.Data.Properties.ProvisioningState);
-                Assert.IsNotNull(quota.Data.Properties.FreeTrial);
+                Assert.That(quota, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(quota.HasData, Is.True);
+                    Assert.That(quota.Data.Properties, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(quota.Data.Properties.ProvisioningState, Is.EqualTo(PlaywrightProvisioningState.Succeeded));
+                    Assert.That(quota.Data.Properties.FreeTrial, Is.Not.Null);
+                });
 
                 if (quota.Data.Name.Contains("ExecutionMinutes"))
                 {
@@ -88,7 +100,7 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
                 }
             }
 
-            Assert.IsTrue(foundExecutionMinutesQuota, "ExecutionMinutes quota should be found in GetAll results");
+            Assert.That(foundExecutionMinutesQuota, Is.True, "ExecutionMinutes quota should be found in GetAll results");
         }
 
         [TestCase]
@@ -97,7 +109,7 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
         {
             // Test if quota exists
             Response<bool> existsResponse = await _quotaCollection.ExistsAsync(PlaywrightQuotaName.ExecutionMinutes);
-            Assert.IsTrue(existsResponse.Value, "ExecutionMinutes quota should exist");
+            Assert.That(existsResponse.Value, Is.True, "ExecutionMinutes quota should exist");
         }
 
         [TestCase]
@@ -108,8 +120,11 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             Response<PlaywrightQuotaResource> quotaResponse = await _quotaCollection.GetAsync(PlaywrightQuotaName.ExecutionMinutes);
             PlaywrightQuotaResource quotaResource = quotaResponse.Value;
 
-            Assert.AreEqual("Microsoft.LoadTestService/locations/playwrightQuotas", quotaResource.Data.Id.ResourceType.ToString());
-            Assert.AreEqual(PlaywrightQuotaResource.ResourceType, quotaResource.Data.Id.ResourceType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(quotaResource.Data.Id.ResourceType.ToString(), Is.EqualTo("Microsoft.LoadTestService/locations/playwrightQuotas"));
+                Assert.That(quotaResource.Data.Id.ResourceType, Is.EqualTo(PlaywrightQuotaResource.ResourceType));
+            });
         }
     }
 }

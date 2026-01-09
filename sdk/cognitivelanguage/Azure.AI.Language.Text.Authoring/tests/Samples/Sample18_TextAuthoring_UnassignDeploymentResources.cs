@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Unassign operation completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful unassignment of deployment resources.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful unassignment of deployment resources.");
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Unassign operation completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful unassignment of deployment resources.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful unassignment of deployment resources.");
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleManagementPolicy1 != null)
             {
                 var roleManagementPolicy2 = await roleManagementPolicy1.GetAsync();
-                Assert.AreEqual(roleManagementPolicy2.Value.Data.Name, roleManagementPolicy1.Data.Name);
+                Assert.That(roleManagementPolicy1.Data.Name, Is.EqualTo(roleManagementPolicy2.Value.Data.Name));
             }
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleManagementPolicy1 != null)
             {
                 var roleManagementPolicy2 = await roleManagementPolicy1.UpdateAsync(data);
-                Assert.IsNull(roleManagementPolicy2.Value.Data.Description);
+                Assert.That(roleManagementPolicy2.Value.Data.Description, Is.Null);
             }
         }
     }

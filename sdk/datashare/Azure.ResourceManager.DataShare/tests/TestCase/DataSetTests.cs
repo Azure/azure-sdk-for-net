@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
             var input = ResourceDataHelpers.GetDataSetData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             ShareDataSetResource set1 = lro.Value;
-            Assert.AreEqual(name, set1.Data.Name);
+            Assert.That(set1.Data.Name, Is.EqualTo(name));
             //2.Get
             ShareDataSetResource set2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertDataSet(set1.Data, set2.Data);
@@ -73,10 +73,14 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
-            //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(3));
+                //4Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //ResourceTests

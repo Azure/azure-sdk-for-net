@@ -79,16 +79,19 @@ namespace Azure.ResourceManager.VirtualEnclaves.Tests.Scenario
             var collection = resourceGroup.GetVirtualEnclaveCommunities();
             var community = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communityName, communityData);
 
-            // Assert
-            Assert.That(community.Value.Data.Name, Is.EqualTo(communityName));
-            Assert.That(community.Value.Data.Properties.AddressSpace, Is.EqualTo("10.0.0.0/16"));
-            Assert.That(community.Value.Data.Properties.FirewallSku, Is.EqualTo(VirtualEnclaveFirewallSku.Standard));
-            Assert.That(community.Value.Data.Properties.PolicyOverride, Is.EqualTo(VirtualEnclaveCommunityPolicyOverride.Enclave));
-            Assert.That(community.Value.Data.Properties.ApprovalSettings.EndpointCreation, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
-            Assert.That(community.Value.Data.Properties.ApprovalSettings.ConnectionCreation, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
-            Assert.That(community.Value.Data.Properties.DnsServers, Has.Member("168.63.129.16"));
-            Assert.That(community.Value.Data.Properties.GovernedServiceList, Has.Count.EqualTo(1));
-            Assert.That(community.Value.Data.Properties.CommunityRoleAssignments, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(community.Value.Data.Name, Is.EqualTo(communityName));
+                Assert.That(community.Value.Data.Properties.AddressSpace, Is.EqualTo("10.0.0.0/16"));
+                Assert.That(community.Value.Data.Properties.FirewallSku, Is.EqualTo(VirtualEnclaveFirewallSku.Standard));
+                Assert.That(community.Value.Data.Properties.PolicyOverride, Is.EqualTo(VirtualEnclaveCommunityPolicyOverride.Enclave));
+                Assert.That(community.Value.Data.Properties.ApprovalSettings.EndpointCreation, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
+                Assert.That(community.Value.Data.Properties.ApprovalSettings.ConnectionCreation, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
+                Assert.That(community.Value.Data.Properties.DnsServers, Has.Member("168.63.129.16"));
+                Assert.That(community.Value.Data.Properties.GovernedServiceList, Has.Count.EqualTo(1));
+                Assert.That(community.Value.Data.Properties.CommunityRoleAssignments, Has.Count.EqualTo(1));
+            });
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 TestAzureComponentFactory.Instance,
                 Options.Create(options));
             var client = factory.Create(null, attributeHub);
-            Assert.AreEqual(expectedHub, client.Hub);
+            Assert.That(client.Hub, Is.EqualTo(expectedHub));
         }
 
         [TestCase(null, "https://global.webpubsub.azure.com")]
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 TestAzureComponentFactory.Instance,
                 Options.Create(options));
             var client = factory.Create(attributeConnection, "hub");
-            Assert.AreEqual(new Uri(expectedEndpoint), client.Endpoint);
+            Assert.That(client.Endpoint, Is.EqualTo(new Uri(expectedEndpoint)));
         }
     }
 }

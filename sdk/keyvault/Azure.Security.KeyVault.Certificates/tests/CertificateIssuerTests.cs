@@ -14,16 +14,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void ConstructorArgumentValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificateIssuer((string)null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new CertificateIssuer("test", null));
-            Assert.AreEqual("provider", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("provider"));
 
             ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer("test", string.Empty));
-            Assert.AreEqual("provider", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("provider"));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 writer.WriteEndObject();
             }
 
-            Assert.AreEqual(@"{""provider"":""provider"",""credentials"":{""account_id"":""accountId""}}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo(@"{""provider"":""provider"",""credentials"":{""account_id"":""accountId""}}"));
         }
 
         [Test]
@@ -78,19 +78,22 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             // Assert that the CertificateIssuer was serialized properly.
-            Assert.That(expectedJson, Is.EqualTo(json.ToString()));
+            Assert.That(json.ToString(), Is.EqualTo(expectedJson));
 
             // De-Serialze the CertificateIssuer.
             var jDoc = JsonDocument.Parse(expectedJson);
             CertificateIssuer deserializedIssuer = new CertificateIssuer();
             ((IJsonDeserializable)deserializedIssuer).ReadProperties(jDoc.RootElement);
 
-            // Assert that the CertificateIssuer was de-serialized properly.
-            Assert.That(deserializedIssuer.AccountId, Is.EqualTo(issuer.AccountId));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].Email, Is.EqualTo(issuer.AdministratorContacts[0].Email));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].FirstName, Is.EqualTo(issuer.AdministratorContacts[0].FirstName));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].LastName, Is.EqualTo(issuer.AdministratorContacts[0].LastName));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].Phone, Is.EqualTo(issuer.AdministratorContacts[0].Phone));
+            Assert.Multiple(() =>
+            {
+                // Assert that the CertificateIssuer was de-serialized properly.
+                Assert.That(deserializedIssuer.AccountId, Is.EqualTo(issuer.AccountId));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].Email, Is.EqualTo(issuer.AdministratorContacts[0].Email));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].FirstName, Is.EqualTo(issuer.AdministratorContacts[0].FirstName));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].LastName, Is.EqualTo(issuer.AdministratorContacts[0].LastName));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].Phone, Is.EqualTo(issuer.AdministratorContacts[0].Phone));
+            });
         }
 
         [Test]
@@ -111,14 +114,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateIssuer deserializedIssuer = new CertificateIssuer();
             ((IJsonDeserializable)deserializedIssuer).ReadProperties(jDoc.RootElement);
 
-            // Assert that the CertificateIssuer was de-serialized properly.
-            Assert.That(deserializedIssuer.Id, Is.EqualTo(id));
-            Assert.That(deserializedIssuer.Name, Is.EqualTo(name));
-            Assert.That(deserializedIssuer.AccountId, Is.EqualTo(accountId));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].Email, Is.EqualTo(email));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].FirstName, Is.EqualTo(firstName));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].LastName, Is.EqualTo(lastName));
-            Assert.That(deserializedIssuer.AdministratorContacts[0].Phone, Is.EqualTo(phone));
+            Assert.Multiple(() =>
+            {
+                // Assert that the CertificateIssuer was de-serialized properly.
+                Assert.That(deserializedIssuer.Id, Is.EqualTo(id));
+                Assert.That(deserializedIssuer.Name, Is.EqualTo(name));
+                Assert.That(deserializedIssuer.AccountId, Is.EqualTo(accountId));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].Email, Is.EqualTo(email));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].FirstName, Is.EqualTo(firstName));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].LastName, Is.EqualTo(lastName));
+                Assert.That(deserializedIssuer.AdministratorContacts[0].Phone, Is.EqualTo(phone));
+            });
         }
     }
 }

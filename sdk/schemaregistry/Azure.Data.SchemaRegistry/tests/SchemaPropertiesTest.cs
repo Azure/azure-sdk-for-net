@@ -11,29 +11,38 @@ namespace Azure.Data.SchemaRegistry.Tests
         public void CanCreateFromCtor()
         {
             var properties = new SchemaProperties(SchemaFormat.Avro, "schemaId", "groupName", "name", 1);
-            Assert.AreEqual(SchemaFormat.Avro, properties.Format);
-            Assert.AreEqual("schemaId", properties.Id);
-            Assert.AreEqual("groupName", properties.GroupName);
-            Assert.AreEqual("name", properties.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Format, Is.EqualTo(SchemaFormat.Avro));
+                Assert.That(properties.Id, Is.EqualTo("schemaId"));
+                Assert.That(properties.GroupName, Is.EqualTo("groupName"));
+                Assert.That(properties.Name, Is.EqualTo("name"));
+            });
         }
 
         [Test]
         public void CanCreateFromFactory()
         {
             var properties = SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Avro, "schemaId");
-            Assert.AreEqual(SchemaFormat.Avro, properties.Format);
-            Assert.AreEqual("schemaId", properties.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Format, Is.EqualTo(SchemaFormat.Avro));
+                Assert.That(properties.Id, Is.EqualTo("schemaId"));
+            });
         }
 
         [Test]
         public void CanCreateFromFactoryCurrent()
         {
             var properties = SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Avro, "schemaId", "groupName", "name", 1);
-            Assert.AreEqual(SchemaFormat.Avro, properties.Format);
-            Assert.AreEqual("schemaId", properties.Id);
-            Assert.AreEqual("groupName", properties.GroupName);
-            Assert.AreEqual("name", properties.Name);
-            Assert.AreEqual(1, properties.Version);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Format, Is.EqualTo(SchemaFormat.Avro));
+                Assert.That(properties.Id, Is.EqualTo("schemaId"));
+                Assert.That(properties.GroupName, Is.EqualTo("groupName"));
+                Assert.That(properties.Name, Is.EqualTo("name"));
+                Assert.That(properties.Version, Is.EqualTo(1));
+            });
         }
     }
 }

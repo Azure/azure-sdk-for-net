@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             ITriggerBinding binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             ITriggerBinding binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         [Test]
@@ -103,9 +103,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
             var autoCompleteMessagesFlagSentToListener = (bool)listener.GetType().GetField("_autoCompleteMessages", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
-            Assert.NotNull(listenerOptions);
-            Assert.True(listenerOptions.AutoCompleteMessages);
-            Assert.False(autoCompleteMessagesFlagSentToListener);
+            Assert.That(listenerOptions, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(listenerOptions.AutoCompleteMessages, Is.True);
+                Assert.That(autoCompleteMessagesFlagSentToListener, Is.False);
+            });
         }
 
         [Test]
@@ -140,9 +143,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
             var maxMessageBatchSizeSentToListener = (int)listener.GetType().GetField("_maxMessageBatchSize", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
-            Assert.NotNull(listenerOptions);
-            Assert.AreEqual(listenerOptions.MaxMessageBatchSize, 1000);
-            Assert.AreEqual(maxMessageBatchSizeSentToListener, 2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(listenerOptions, Is.Not.Null);
+                Assert.That(1000, Is.EqualTo(listenerOptions.MaxMessageBatchSize));
+                Assert.That(2, Is.EqualTo(maxMessageBatchSizeSentToListener));
+            });
         }
 
         [Test]
@@ -177,9 +183,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
             var maxMessageBatchSizeSentToListener = (int)listener.GetType().GetField("_maxMessageBatchSize", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
-            Assert.NotNull(listenerOptions);
-            Assert.AreEqual(listenerOptions.MaxMessageBatchSize, 1000);
-            Assert.AreEqual(maxMessageBatchSizeSentToListener, 1000);
+            Assert.Multiple(() =>
+            {
+                Assert.That(listenerOptions, Is.Not.Null);
+                Assert.That(1000, Is.EqualTo(listenerOptions.MaxMessageBatchSize));
+            });
+            Assert.That(1000, Is.EqualTo(maxMessageBatchSizeSentToListener));
         }
 
         internal static void TestJob_AccountOverride(

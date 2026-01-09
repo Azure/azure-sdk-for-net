@@ -102,8 +102,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
-            Assert.AreEqual("1", resultCollection[0].Id);
-            Assert.AreEqual("2", resultCollection[1].Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultCollection[0].Id, Is.EqualTo("1"));
+                Assert.That(resultCollection[1].Id, Is.EqualTo("2"));
+            });
         }
 
         [Test]
@@ -199,10 +202,13 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
-            Assert.AreEqual("4", resultCollection[0].Id);
-            Assert.AreEqual("5", resultCollection[1].Id);
-            Assert.AreEqual("2", resultCollection[2].Id);
-            Assert.AreEqual("3", resultCollection[3].Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultCollection[0].Id, Is.EqualTo("4"));
+                Assert.That(resultCollection[1].Id, Is.EqualTo("5"));
+                Assert.That(resultCollection[2].Id, Is.EqualTo("2"));
+                Assert.That(resultCollection[3].Id, Is.EqualTo("3"));
+            });
         }
 
         [Test]
@@ -241,8 +247,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
 
-            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Name);
-            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.FirstOrDefault().PrimaryLanguage.Name, Is.Null);
+                Assert.That(response.FirstOrDefault().PrimaryLanguage.Iso6391Name, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -281,8 +290,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
 
-            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Name);
-            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.FirstOrDefault().PrimaryLanguage.Name, Is.Not.Null);
+                Assert.That(response.FirstOrDefault().PrimaryLanguage.Iso6391Name, Is.Null);
+            });
         }
 
         // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
@@ -329,7 +341,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             TextAnalytics.DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
 
-            Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
+            Assert.That(response.Sentences.FirstOrDefault().Text, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -436,14 +448,20 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             TextAnalytics.DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
 
             SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
-            Assert.AreEqual("park", opinionS1.Target.Text);
-            Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
-            Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
+            Assert.Multiple(() =>
+            {
+                Assert.That(opinionS1.Target.Text, Is.EqualTo("park"));
+                Assert.That(opinionS1.Target.Sentiment, Is.EqualTo(TextSentiment.Positive));
+                Assert.That(opinionS1.Assessments.FirstOrDefault().Text, Is.EqualTo("clean"));
+            });
 
             SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
-            Assert.AreEqual("park", opinionS2.Target.Text);
-            Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
-            Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
+            Assert.Multiple(() =>
+            {
+                Assert.That(opinionS2.Target.Text, Is.EqualTo("park"));
+                Assert.That(opinionS2.Target.Sentiment, Is.EqualTo(TextSentiment.Positive));
+                Assert.That(opinionS2.Assessments.FirstOrDefault().Text, Is.EqualTo("clean"));
+            });
         }
 
         [Test]
@@ -478,7 +496,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             CategorizedEntityCollection response = await client.RecognizeEntitiesAsync("Microsoft was founded");
 
-            Assert.IsNotNull(response.FirstOrDefault().Category);
+            Assert.That(response.FirstOrDefault().Category, Is.Not.Null);
         }
 
         [Test]
@@ -523,7 +541,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             LinkedEntityCollection response = await client.RecognizeLinkedEntitiesAsync(documents);
 
-            Assert.AreEqual(string.Empty, response.FirstOrDefault().Matches.FirstOrDefault().Text);
+            Assert.That(response.FirstOrDefault().Matches.FirstOrDefault().Text, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -568,9 +586,12 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             ExtractKeyPhrasesResultCollection result = await client.ExtractKeyPhrasesBatchAsync(documents);
             var resultError = result[1];
-            Assert.IsTrue(resultError.HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
-            Assert.AreEqual("Document text is empty.", resultError.Error.Message);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultError.HasError, Is.True);
+                Assert.That(resultError.Error.ErrorCode.ToString(), Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
+                Assert.That(resultError.Error.Message, Is.EqualTo("Document text is empty."));
+            });
         }
 
         [Test]
@@ -581,7 +602,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             TextAnalyticsClient client = CreateTestClient(new MockTransport());
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(new[] { "test" }, options: new AnalyzeHealthcareEntitiesOptions { DisplayName = "test" }));
 
-            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DisplayName is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("AnalyzeHealthcareEntitiesOptions.DisplayName is not available in API version v3.1. Use service API version 2022-05-01 or newer."));
         }
     }
 }

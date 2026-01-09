@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
             await producer.SendAsync(new[] { new EventData(ReadOnlyMemory<byte>.Empty) });
 
-            Assert.IsEmpty(testListener.Activities);
+            Assert.That(testListener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -106,17 +106,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
+            Assert.That(messageActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".Message"));
 
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventHubProducerClient", sendActivity.Source.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sendActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".EventHubProducerClient"));
 
-            Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
-            // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
-            Assert.That(messageActivity.Tags, Does.Not.Contain(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
-            Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
-            Assert.That(sendActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+                Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
+                // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
+                Assert.That(messageActivity.Tags, Does.Not.Contain(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
+                Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
+                Assert.That(sendActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+            });
             Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
 
@@ -178,8 +181,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
 
-            Assert.That(batchEvent.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
-            Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batchEvent.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
+                Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
+            });
             Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
             Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
@@ -221,8 +227,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (EventData eventData in writtenEventsData)
             {
-                Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
-                Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
+                    Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
+                });
             }
         }
 
@@ -270,19 +279,25 @@ namespace Azure.Messaging.EventHubs.Tests
 
             EventDataBatch batch = await producer.CreateBatchAsync();
 
-            Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
-            Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
-            Assert.That(batch.TryAdd(eventData3), Is.False, "The third event should not have been added to the batch.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
+                Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
+                Assert.That(batch.TryAdd(eventData3), Is.False, "The third event should not have been added to the batch.");
+            });
 
             await producer.SendAsync(batch);
 
             activity.Stop();
-            Assert.That(writtenEventsData.Count, Is.EqualTo(3), "Each of the events should have been instrumented when attempting to add them to the batch.");
+            Assert.That(writtenEventsData, Has.Count.EqualTo(3), "Each of the events should have been instrumented when attempting to add them to the batch.");
 
             foreach (EventData eventData in writtenEventsData)
             {
-                Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
-                Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
+                    Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
+                });
             }
         }
 
@@ -320,11 +335,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedLinks = new[] { new ActivityLink(ActivityContext.Parse(diagnosticId1, null)), new ActivityLink(ActivityContext.Parse(diagnosticId2, null)) };
             var links = sendActivity.Links.ToList();
 
-            Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links, Has.Count.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
             for (int i = 0; i < links.Count; i++)
             {
-                Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
-                Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
+                    Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
+                });
             }
         }
 
@@ -373,9 +391,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData3 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id3" } });
             var batch = await producer.CreateBatchAsync();
 
-            Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
-            Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
-            Assert.That(batch.TryAdd(eventData3), Is.False, "The third event should not have been added to the batch.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
+                Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
+                Assert.That(batch.TryAdd(eventData3), Is.False, "The third event should not have been added to the batch.");
+            });
 
             await producer.SendAsync(batch);
 
@@ -385,11 +406,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedLinks = new[] { new ActivityLink(ActivityContext.Parse(diagnosticId1, null)), new ActivityLink(ActivityContext.Parse(diagnosticId2, null)) };
             var links = sendActivity.Links.ToList();
 
-            Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links, Has.Count.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
             for (int i = 0; i < links.Count; i++)
             {
-                Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
-                Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
+                    Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
+                });
             }
         }
 
@@ -414,7 +438,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
 
-            Assert.IsEmpty(testListener.Activities);
+            Assert.That(testListener.Activities, Is.Empty);
         }
 
         /// <summary>
@@ -454,12 +478,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var activities = listener.Activities.ToList();
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(activities.Select(scope => scope.OperationName), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(activities.Select(scope => scope.OperationName), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
+            });
 
             for (var index = 0; index < eventBatch.Count; ++index)
             {
-                Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(eventBatch[index].Properties, out var targetId, out var _));
+                Assert.That(MessagingClientDiagnostics.TryExtractTraceContext(eventBatch[index].Properties, out var targetId, out var _), Is.True);
                 var targetSpanId = ActivityContext.Parse(targetId, null).SpanId;
                 Assert.That(activities.SelectMany(scope => scope.Links.Select(l => l.Context.SpanId)), Has.One.EqualTo(targetSpanId), $"There should have been a link for the diagnostic identifier: { targetId }");
             }
@@ -507,14 +534,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(processingActivity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
             AssertCommonTags(processingActivity, eventHubName, fullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor", processingActivity.Source.Name);
+            Assert.That(processingActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor"));
 
             var expectedTag =
                 new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute,
                     enqueuedTime.ToUnixTimeMilliseconds());
 
             var tags = processingActivity.TagObjects;
-            Assert.That(tags.Contains(expectedTag), Is.True, "The processing scope should have contained the enqueued time tag.");
+            Assert.That(tags, Does.Contain(expectedTag), "The processing scope should have contained the enqueued time tag.");
         }
 
         /// <summary>
@@ -554,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(processingScope, Is.Not.Null, "There should have been a single scope present for the processing activity.");
 
             var linkedActivities = processingScope.Links.Where(a => a.Context.TraceId == ActivityContext.Parse(diagnosticId, null).TraceId).ToList();
-            Assert.That(linkedActivities.Count, Is.EqualTo(2), "There should have been a two activities linked to the diagnostic identifier.");
+            Assert.That(linkedActivities, Has.Count.EqualTo(2), "There should have been a two activities linked to the diagnostic identifier.");
 
             var expectedTags = new List<KeyValuePair<string, object>>()
             {
@@ -591,10 +618,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.EnableBatchTracing = false;
             await mockProcessor.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
 
-            // Validate the diagnostics.
+            Assert.Multiple(() =>
+            {
+                // Validate the diagnostics.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.IsEmpty(listener.Activities);
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(listener.Activities, Is.Empty);
+            });
         }
 
         /// <summary>
@@ -630,9 +660,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace)));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName)));
+            Assert.That(checkpointActivity.Tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext)));
             cancellationSource.Cancel();
         }
 
@@ -642,24 +672,24 @@ namespace Azure.Messaging.EventHubs.Tests
         private void AssertCommonTags(Activity activity, string eventHubName, string endpoint, MessagingDiagnosticOperation operation, int eventCount)
         {
             var tags = activity.TagObjects.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, endpoint));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, endpoint)));
 
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext)));
             if (operation != default)
             {
-                CollectionAssert.Contains(tags,
-                    new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+                Assert.That(tags,
+                    Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString())));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName)));
             }
             else
             {
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName)));
             }
 
             if (eventCount > 1)
-                CollectionAssert.Contains(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount));
+                Assert.That(tags, Has.Member(new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount)));
             else
-                CollectionAssert.DoesNotContain(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount));
+                Assert.That(tags, Has.No.Member(new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount)));
         }
 
         /// <summary>

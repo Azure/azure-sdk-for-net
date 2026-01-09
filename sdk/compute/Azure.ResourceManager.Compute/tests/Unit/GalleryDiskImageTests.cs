@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
             galleryDiskImage.Source = new GalleryArtifactVersionSource();
             var galleryDiskImageSource = galleryDiskImage.GallerySource;
 
-            Assert.IsNull(galleryDiskImageSource);
+            Assert.That(galleryDiskImageSource, Is.Null);
         }
     }
 }

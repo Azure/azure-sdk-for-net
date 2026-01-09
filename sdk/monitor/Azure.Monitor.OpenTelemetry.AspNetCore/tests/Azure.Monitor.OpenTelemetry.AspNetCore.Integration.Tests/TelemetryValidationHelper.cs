@@ -17,8 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         {
             TestContext.Out.WriteLine($"{nameof(ValidateExpectedTelemetry)}: '{description}'");
 
-            Assert.IsNotNull(logsTable, $"({description}) Expected a non-null table.");
-            Assert.AreEqual(1, logsTable!.Rows.Count, $"({description}) Expected 1 row in the table but found {logsTable.Rows.Count} rows.");
+            Assert.That(logsTable, Is.Not.Null, $"({description}) Expected a non-null table.");
+            Assert.That(logsTable!.Rows.Count, Is.EqualTo(1), $"({description}) Expected 1 row in the table but found {logsTable.Rows.Count} rows.");
 
             var row = logsTable.Rows[0];
             foreach (PropertyInfo property in expectedTelemetry.GetType().GetProperties())
@@ -26,9 +26,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 if (property.Name == "Properties")
                 {
                     var jsonString = row[property.Name]?.ToString();
-                    Assert.IsNotNull(jsonString, $"({description}) Expected a non-null value for {property.Name}");
+                    Assert.That(jsonString, Is.Not.Null, $"({description}) Expected a non-null value for {property.Name}");
                     var expectedProperties = property.GetValue(expectedTelemetry, null) as List<KeyValuePair<string, string>>;
-                    Assert.IsNotNull(expectedProperties, $"({description}) Expected a non-null value for {nameof(expectedTelemetry)}.Properties");
+                    Assert.That(expectedProperties, Is.Not.Null, $"({description}) Expected a non-null value for {nameof(expectedTelemetry)}.Properties");
 
                     ValidateProperties(
                         description: description,
@@ -39,9 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 {
                     TestContext.Out.WriteLine($"PropertyName: '{property.Name}' ExpectedValue: '{property.GetValue(expectedTelemetry, null)}' ActualValue: '{row[property.Name]}'");
 
-                    Assert.AreEqual(
-                        expected: property.GetValue(expectedTelemetry, null)!.ToString(),
-                        actual: row[property.Name].ToString(),
+                    Assert.That(
+                        property.GetValue(expectedTelemetry, null)!.ToString(),
+                        Is.EqualTo(row[property.Name].ToString()),
                         message: $"({description}) Expected {property.Name} to be '{property.GetValue(expectedTelemetry, null)}' but found '{logsTable.Rows[0][property.Name]}'.");
                 }
             }
@@ -53,24 +53,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         {
 #if NET
             var jsonNode = JsonNode.Parse(jsonString);
-            Assert.IsNotNull(jsonNode, $"({description}) Expected a non-null JSON node.");
+            Assert.That(jsonNode, Is.Not.Null, $"({description}) Expected a non-null JSON node.");
 
             var expectedCount = expectedProperties.Count;
             var actualCount = ((JsonObject)jsonNode!).Count;
-            Assert.AreEqual(expectedCount, actualCount, $"({description}) Expected {expectedCount} properties but found {actualCount}.");
+            Assert.That(actualCount, Is.EqualTo(expectedCount), $"({description}) Expected {expectedCount} properties but found {actualCount}.");
 
             foreach (var expectedProperty in expectedProperties)
             {
                 var jsonValue = jsonNode![expectedProperty.Key];
-                Assert.IsNotNull(jsonValue, $"({description}) Expected a non-null JSON value for Properties.'{expectedProperty.Key}'.");
+                Assert.That(jsonValue, Is.Not.Null, $"({description}) Expected a non-null JSON value for Properties.'{expectedProperty.Key}'.");
                 var actualValue = jsonValue!.ToString();
 
                 TestContext.Out.WriteLine($"Properties.'{expectedProperty.Key}' ExpectedValue: '{expectedProperty.Value}' ActualValue: '{actualValue}'");
 
-                Assert.AreEqual(
-                    expected: expectedProperty.Value,
-                    actual: actualValue,
-                    message: $"({description}) Expected Properties.'{expectedProperty.Key}' to be '{expectedProperty.Value}' but found '{actualValue}'.");
+                Assert.That(actualValue, Is.EqualTo(expectedProperty.Value), $"({description}) Expected Properties.'{expectedProperty.Key}' to be '{expectedProperty.Value}' but found '{actualValue}'.");
             }
 #endif
         }

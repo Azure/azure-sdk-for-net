@@ -25,7 +25,7 @@ namespace Azure.Core.TestFramework.Tests
             TestClient client = InstrumentClient(new TestClient());
             var result = client.Method2();
 
-            Assert.AreEqual("Hello", result);
+            Assert.That(result, Is.EqualTo("Hello"));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.Core.TestFramework.Tests
             TestClient client = InstrumentClient(new TestClient());
             var result = await client.MethodAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Core.TestFramework.Tests
             TestClient client = InstrumentClient(new TestClient());
             var result = await client.MethodGenericAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
         }
 
         [Test]
@@ -52,14 +52,14 @@ namespace Azure.Core.TestFramework.Tests
             TestClient client = InstrumentClient(new TestClient());
             var result = await client.MethodAsync(123, new CancellationTokenSource().Token);
 
-            Assert.AreEqual(IsAsync ? "Async 123 True" : "Sync 123 True", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 True" : "Sync 123 True"));
         }
 
         [Test]
         public void ThrowsForInvalidClientTypes()
         {
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => InstrumentClient(new InvalidTestClient()));
-            Assert.AreEqual("Client type contains public non-virtual async method MethodAsync", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Client type contains public non-virtual async method MethodAsync"));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.Core.TestFramework.Tests
             {
                 TestClient client = InstrumentClient(new TestClient());
                 InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => client.Method(123));
-                Assert.AreEqual("Async method call expected for Method", exception.Message);
+                Assert.That(exception.Message, Is.EqualTo("Async method call expected for Method"));
             }
         }
 
@@ -80,8 +80,8 @@ namespace Azure.Core.TestFramework.Tests
             {
                 TestClient client = InstrumentClient(new TestClient());
                 InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => client.NoAlternativeAsync(123));
-                Assert.AreEqual("Unable to find a method with name NoAlternative and System.Int32,System.Threading.CancellationToken parameters." +
-                                " Make sure both methods have the same signature including the cancellationToken parameter", exception.Message);
+                Assert.That(exception.Message, Is.EqualTo("Unable to find a method with name NoAlternative and System.Int32,System.Threading.CancellationToken parameters." +
+                                " Make sure both methods have the same signature including the cancellationToken parameter"));
             }
         }
 
@@ -109,15 +109,15 @@ namespace Azure.Core.TestFramework.Tests
 
             // Static schema
             Response<string> staticData = await client.GetDataAsync<string>();
-            Assert.AreEqual($"{responseDataPrefix} - static", staticData.GetRawResponse().ReasonPhrase);
+            Assert.That(staticData.GetRawResponse().ReasonPhrase, Is.EqualTo($"{responseDataPrefix} - static"));
 
             // Static schema with generic arg
             Response<string> staticGenericData = await client.GetDataAsync<string>(arg);
-            Assert.AreEqual($"{responseDataPrefix} - static {arg}", staticGenericData.GetRawResponse().ReasonPhrase);
+            Assert.That(staticGenericData.GetRawResponse().ReasonPhrase, Is.EqualTo($"{responseDataPrefix} - static {arg}"));
 
             // Dynamic schema
             Response<object> dynamicData = await client.GetDataAsync();
-            Assert.AreEqual($"{responseDataPrefix} - dynamic", dynamicData.GetRawResponse().ReasonPhrase);
+            Assert.That(dynamicData.GetRawResponse().ReasonPhrase, Is.EqualTo($"{responseDataPrefix} - dynamic"));
         }
 
         /// <summary>
@@ -134,14 +134,14 @@ namespace Azure.Core.TestFramework.Tests
             try { await client.GetFailureAsync<string>(); }
             catch (InvalidOperationException ex)
             {
-                Assert.AreEqual($"{exceptionPrefix} - static", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo($"{exceptionPrefix} - static"));
             }
 
             // Dynamic schema
             try { await client.GetFailureAsync(); }
             catch (InvalidOperationException ex)
             {
-                Assert.AreEqual($"{exceptionPrefix} - dynamic", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo($"{exceptionPrefix} - dynamic"));
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Core.TestFramework.Tests
             TestClient subClient = client.GetAnotherTestClient();
             var result = await subClient.MethodAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Azure.Core.TestFramework.Tests
             AnotherType subClient = client.SubClientProperty;
             var result = await subClient.MethodAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace Azure.Core.TestFramework.Tests
             AnotherType subClient = client.GetAnotherType();
             var result = await subClient.MethodAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
         }
 
         [Test]
@@ -186,7 +186,7 @@ namespace Azure.Core.TestFramework.Tests
             TestClientOperations subClient = client.SubProperty;
             var result = await subClient.MethodAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+            Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace Azure.Core.TestFramework.Tests
             InternalType subClient = client.GetInternalType();
             // should not throw
             var result = subClient.Method(123);
-            Assert.AreEqual("Sync 123 False", result);
+            Assert.That(result, Is.EqualTo("Sync 123 False"));
         }
 
         [Test]
@@ -206,7 +206,7 @@ namespace Azure.Core.TestFramework.Tests
             var testClient = new TestClient();
             TestClient client = InstrumentClient(testClient);
 
-            Assert.AreSame(GetOriginal(client), testClient);
+            Assert.That(testClient, Is.SameAs(GetOriginal(client)));
         }
 
         [Test]

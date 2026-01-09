@@ -119,9 +119,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected void ValidateSeriesKey(DimensionKey seriesKey)
         {
-            Assert.That(seriesKey, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(seriesKey, Is.Not.Null);
 
-            Assert.That(Count(seriesKey), Is.EqualTo(2));
+                Assert.That(Count(seriesKey), Is.EqualTo(2));
+            });
             Assert.That(seriesKey.TryGetValue("Dim1", out string dim1));
             Assert.That(seriesKey.TryGetValue("Dim2", out string dim2));
 
@@ -137,8 +140,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (KeyValuePair<string, string> dimension in groupKey)
             {
-                Assert.That(dimension.Key, Is.EqualTo("Dim1").Or.EqualTo("Dim2"));
-                Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dimension.Key, Is.EqualTo("Dim1").Or.EqualTo("Dim2"));
+                    Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
+                });
 
                 count++;
             }
@@ -149,18 +155,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected void ValidateTempDataFeedDimensionKey(DimensionKey dimensionKey, string expectedDimensionA)
         {
-            Assert.That(dimensionKey, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dimensionKey, Is.Not.Null);
 
-            Assert.That(Count(dimensionKey), Is.EqualTo(1));
+                Assert.That(Count(dimensionKey), Is.EqualTo(1));
+            });
             Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameA, out string dimensionA));
             Assert.That(dimensionA, Is.EqualTo(expectedDimensionA));
         }
 
         protected void ValidateTempDataFeedDimensionKey(DimensionKey dimensionKey, string expectedDimensionA, string expectedDimensionB)
         {
-            Assert.That(dimensionKey, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dimensionKey, Is.Not.Null);
 
-            Assert.That(Count(dimensionKey), Is.EqualTo(2));
+                Assert.That(Count(dimensionKey), Is.EqualTo(2));
+            });
             Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameA, out string dimensionA));
             Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameB, out string dimensionB));
             Assert.That(dimensionA, Is.EqualTo(expectedDimensionA));

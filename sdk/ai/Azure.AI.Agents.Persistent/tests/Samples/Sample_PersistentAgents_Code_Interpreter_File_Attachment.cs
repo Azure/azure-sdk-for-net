@@ -74,9 +74,9 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachment_PrintMessages
@@ -151,9 +151,9 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachmentSync_PrintMessages

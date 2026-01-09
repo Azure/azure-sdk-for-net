@@ -16,8 +16,11 @@ public class PipelineRequestHeadersTests
         ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Mock value", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Mock value"));
+        });
     }
 
     [Test]
@@ -27,8 +30,11 @@ public class PipelineRequestHeadersTests
         headers.Add("Mock-Header", "Value 1");
         headers.Add("Mock-Header", "Value 2");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Value 1,Value 2", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Value 1,Value 2"));
+        });
     }
 
     [Test]
@@ -37,8 +43,11 @@ public class PipelineRequestHeadersTests
         ArrayBackedRequestHeaders headers = new();
         headers.Set("Mock-Header", "Mock value");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Mock value", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Mock value"));
+        });
     }
 
     [Test]
@@ -48,8 +57,11 @@ public class PipelineRequestHeadersTests
         headers.Set("Mock-Header", "Value 1");
         headers.Set("Mock-Header", "Value 2");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Value 2", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Value 2"));
+        });
     }
 
     [Test]
@@ -58,11 +70,14 @@ public class PipelineRequestHeadersTests
         ArrayBackedRequestHeaders headers = new();
         headers.Set("Mock-Header", "Mock value");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Mock value", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Mock value"));
+        });
 
         headers.Remove("Mock-Header");
-        Assert.IsFalse(headers.TryGetValue("Mock-Header", out string? _));
+        Assert.That(headers.TryGetValue("Mock-Header", out string? _), Is.False);
     }
 
     [Test]
@@ -71,8 +86,11 @@ public class PipelineRequestHeadersTests
         ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Mock value", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Mock value"));
+        });
     }
 
     [Test]
@@ -82,8 +100,11 @@ public class PipelineRequestHeadersTests
         headers.Add("Mock-Header", "Value 1");
         headers.Add("Mock-Header", "Value 2");
 
-        Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
-        Assert.AreEqual("Value 1,Value 2", value);
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValue("Mock-Header", out string? value), Is.True);
+            Assert.That(value, Is.EqualTo("Value 1,Value 2"));
+        });
     }
 
     [Test]
@@ -92,9 +113,12 @@ public class PipelineRequestHeadersTests
         ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
-        Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
-        Assert.AreEqual(1, values!.Count());
-        Assert.AreEqual("Mock value", values!.First());
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values), Is.True);
+            Assert.That(values!.Count(), Is.EqualTo(1));
+            Assert.That(values!.First(), Is.EqualTo("Mock value"));
+        });
     }
 
     [Test]
@@ -104,10 +128,13 @@ public class PipelineRequestHeadersTests
         headers.Add("Mock-Header", "Value 1");
         headers.Add("Mock-Header", "Value 2");
 
-        Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
-        Assert.AreEqual(2, values!.Count());
-        Assert.AreEqual("Value 1", values!.ElementAt(0));
-        Assert.AreEqual("Value 2", values!.ElementAt(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values), Is.True);
+            Assert.That(values!.Count(), Is.EqualTo(2));
+            Assert.That(values!.ElementAt(0), Is.EqualTo("Value 1"));
+            Assert.That(values!.ElementAt(1), Is.EqualTo("Value 2"));
+        });
     }
 
     [Test]
@@ -116,8 +143,11 @@ public class PipelineRequestHeadersTests
         ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
-        Assert.IsTrue(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values));
-        Assert.AreEqual(1, values!.Count());
-        Assert.AreEqual("Mock value", values!.First());
+        Assert.Multiple(() =>
+        {
+            Assert.That(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values), Is.True);
+            Assert.That(values!.Count(), Is.EqualTo(1));
+            Assert.That(values!.First(), Is.EqualTo("Mock value"));
+        });
     }
 }

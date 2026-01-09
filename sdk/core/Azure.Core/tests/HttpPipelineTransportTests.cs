@@ -22,8 +22,8 @@ namespace Azure.Core.Tests
             var sharedInstance = HttpClientTransport.Shared;
 #endif
 
-            Assert.AreEqual(noOptionsSpecified, target == sharedInstance);
-            Assert.AreEqual(noOptionsSpecified, target == target2);
+            Assert.That(noOptionsSpecified, Is.EqualTo(target == sharedInstance));
+            Assert.That(noOptionsSpecified, Is.EqualTo(target == target2));
         }
 
         private class MockHttpPipelineTransport : HttpPipelineTransport

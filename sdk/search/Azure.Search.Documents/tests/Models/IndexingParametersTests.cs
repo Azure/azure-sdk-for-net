@@ -15,15 +15,21 @@ namespace Azure.Search.Documents.Tests.Models
         public void ConfigurationInitializesIndexingParametersConfiguration()
         {
             IndexingParameters parameters = new IndexingParameters();
-            Assert.IsNull(parameters.IndexingParametersConfiguration);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.IndexingParametersConfiguration, Is.Null);
 
-            // Setting Configuration should initialize IndexingParametersConfiguration
-            Assert.IsNotNull(parameters.Configuration);
-            Assert.AreEqual(0, parameters.Configuration.Count);
+                // Setting Configuration should initialize IndexingParametersConfiguration
+                Assert.That(parameters.Configuration, Is.Not.Null);
+            });
+            Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
 
             parameters.Configuration["customTestProperty"] = "custom";
-            Assert.IsNotNull(parameters.IndexingParametersConfiguration);
-            Assert.AreEqual(1, parameters.Configuration.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.IndexingParametersConfiguration, Is.Not.Null);
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -38,14 +44,17 @@ namespace Azure.Search.Documents.Tests.Models
                 },
             };
 
-            Assert.AreEqual(2, parameters.Configuration.Count);
-            Assert.AreEqual(BlobIndexerParsingMode.Json, parameters.Configuration["parsingMode"]);
-            Assert.AreEqual("custom", parameters.Configuration["customTestProperty"]);
+            Assert.That(parameters.Configuration.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration["parsingMode"], Is.EqualTo(BlobIndexerParsingMode.Json));
+                Assert.That(parameters.Configuration["customTestProperty"], Is.EqualTo("custom"));
 
-            Assert.AreEqual(1, parameters.IndexingParametersConfiguration.Count());
-            Assert.AreEqual("custom", parameters.IndexingParametersConfiguration["customTestProperty"]);
+                Assert.That(parameters.IndexingParametersConfiguration.Count(), Is.EqualTo(1));
+                Assert.That(parameters.IndexingParametersConfiguration["customTestProperty"], Is.EqualTo("custom"));
 
-            Assert.AreEqual(BlobIndexerParsingMode.Json, parameters.IndexingParametersConfiguration.ParsingMode);
+                Assert.That(parameters.IndexingParametersConfiguration.ParsingMode, Is.EqualTo(BlobIndexerParsingMode.Json));
+            });
         }
 
         [Test]
@@ -77,25 +86,28 @@ namespace Azure.Search.Documents.Tests.Models
 
             IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
 
-            Assert.AreEqual(BlobIndexerParsingMode.Json, configuration.ParsingMode);
-            Assert.AreEqual(".png", configuration.ExcludedFileNameExtensions);
-            Assert.AreEqual(".json,.jsonc", configuration.IndexedFileNameExtensions);
-            Assert.IsFalse(configuration.FailOnUnsupportedContentType);
-            Assert.IsFalse(configuration.FailOnUnprocessableDocument);
-            Assert.IsTrue(configuration.IndexStorageMetadataOnlyForOversizedDocuments);
-            Assert.AreEqual("A,B", configuration.DelimitedTextHeaders);
-            Assert.AreEqual("|", configuration.DelimitedTextDelimiter);
-            Assert.IsTrue(configuration.FirstLineContainsHeaders);
-            Assert.AreEqual("$.values", configuration.DocumentRoot);
-            Assert.AreEqual(BlobIndexerDataToExtract.AllMetadata, configuration.DataToExtract);
-            Assert.AreEqual(BlobIndexerImageAction.GenerateNormalizedImages, configuration.ImageAction);
-            Assert.IsTrue(configuration.AllowSkillsetToReadFileData);
-            Assert.AreEqual(BlobIndexerPdfTextRotationAlgorithm.DetectAngles, configuration.PdfTextRotationAlgorithm);
-            Assert.AreEqual(IndexerExecutionEnvironment.Standard, configuration.ExecutionEnvironment);
-            Assert.AreEqual(TimeSpan.Parse("12:34:56"), configuration.QueryTimeout);
+            Assert.Multiple(() =>
+            {
+                Assert.That(configuration.ParsingMode, Is.EqualTo(BlobIndexerParsingMode.Json));
+                Assert.That(configuration.ExcludedFileNameExtensions, Is.EqualTo(".png"));
+                Assert.That(configuration.IndexedFileNameExtensions, Is.EqualTo(".json,.jsonc"));
+                Assert.That(configuration.FailOnUnsupportedContentType, Is.False);
+                Assert.That(configuration.FailOnUnprocessableDocument, Is.False);
+                Assert.That(configuration.IndexStorageMetadataOnlyForOversizedDocuments, Is.True);
+                Assert.That(configuration.DelimitedTextHeaders, Is.EqualTo("A,B"));
+                Assert.That(configuration.DelimitedTextDelimiter, Is.EqualTo("|"));
+                Assert.That(configuration.FirstLineContainsHeaders, Is.True);
+                Assert.That(configuration.DocumentRoot, Is.EqualTo("$.values"));
+                Assert.That(configuration.DataToExtract, Is.EqualTo(BlobIndexerDataToExtract.AllMetadata));
+                Assert.That(configuration.ImageAction, Is.EqualTo(BlobIndexerImageAction.GenerateNormalizedImages));
+                Assert.That(configuration.AllowSkillsetToReadFileData, Is.True);
+                Assert.That(configuration.PdfTextRotationAlgorithm, Is.EqualTo(BlobIndexerPdfTextRotationAlgorithm.DetectAngles));
+                Assert.That(configuration.ExecutionEnvironment, Is.EqualTo(IndexerExecutionEnvironment.Standard));
+                Assert.That(configuration.QueryTimeout, Is.EqualTo(TimeSpan.Parse("12:34:56")));
 
-            Assert.AreEqual(1, configuration.Count());
-            Assert.AreEqual("custom", configuration["customTestProperty"]);
+                Assert.That(configuration.Count(), Is.EqualTo(1));
+                Assert.That(configuration["customTestProperty"], Is.EqualTo("custom"));
+            });
         }
 
         [Test]
@@ -127,25 +139,25 @@ namespace Azure.Search.Documents.Tests.Models
 
             IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
 
-            Assert.IsNull(configuration.ParsingMode);
-            Assert.IsNull(configuration.ExcludedFileNameExtensions);
-            Assert.IsNull(configuration.IndexedFileNameExtensions);
-            Assert.IsNull(configuration.FailOnUnsupportedContentType);
-            Assert.IsNull(configuration.FailOnUnprocessableDocument);
-            Assert.IsNull(configuration.IndexStorageMetadataOnlyForOversizedDocuments);
-            Assert.IsNull(configuration.DelimitedTextHeaders);
-            Assert.IsNull(configuration.DelimitedTextDelimiter);
-            Assert.IsNull(configuration.FirstLineContainsHeaders);
-            Assert.IsNull(configuration.DocumentRoot);
-            Assert.IsNull(configuration.DataToExtract);
-            Assert.IsNull(configuration.ImageAction);
-            Assert.IsNull(configuration.AllowSkillsetToReadFileData);
-            Assert.IsNull(configuration.PdfTextRotationAlgorithm);
-            Assert.IsNull(configuration.ExecutionEnvironment);
-            Assert.IsNull(configuration.QueryTimeout);
+            Assert.That(configuration.ParsingMode, Is.Null);
+            Assert.That(configuration.ExcludedFileNameExtensions, Is.Null);
+            Assert.That(configuration.IndexedFileNameExtensions, Is.Null);
+            Assert.That(configuration.FailOnUnsupportedContentType, Is.Null);
+            Assert.That(configuration.FailOnUnprocessableDocument, Is.Null);
+            Assert.That(configuration.IndexStorageMetadataOnlyForOversizedDocuments, Is.Null);
+            Assert.That(configuration.DelimitedTextHeaders, Is.Null);
+            Assert.That(configuration.DelimitedTextDelimiter, Is.Null);
+            Assert.That(configuration.FirstLineContainsHeaders, Is.Null);
+            Assert.That(configuration.DocumentRoot, Is.Null);
+            Assert.That(configuration.DataToExtract, Is.Null);
+            Assert.That(configuration.ImageAction, Is.Null);
+            Assert.That(configuration.AllowSkillsetToReadFileData, Is.Null);
+            Assert.That(configuration.PdfTextRotationAlgorithm, Is.Null);
+            Assert.That(configuration.ExecutionEnvironment, Is.Null);
+            Assert.That(configuration.QueryTimeout, Is.Null);
 
-            Assert.AreEqual(1, configuration.Count());
-            Assert.IsNull(configuration["customTestProperty"]);
+            Assert.That(configuration.Count(), Is.EqualTo(1));
+            Assert.That(configuration["customTestProperty"], Is.Null);
         }
 
         [Test]
@@ -175,7 +187,7 @@ namespace Azure.Search.Documents.Tests.Models
             IndexingParameters parameters = new IndexingParameters();
             ICollection<string> keys = parameters.Configuration.Keys;
 
-            Assert.AreEqual(0, keys.Count);
+            Assert.That(keys.Count, Is.EqualTo(0));
 
             parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
             {
@@ -183,13 +195,13 @@ namespace Azure.Search.Documents.Tests.Models
                 ["customTestProperty"] = "custom",
             };
 
-            Assert.AreEqual(2, keys.Count);
-            CollectionAssert.Contains(keys, "parsingMode");
-            CollectionAssert.Contains(keys, "customTestProperty");
+            Assert.That(keys.Count, Is.EqualTo(2));
+            Assert.That(keys, Has.Member("parsingMode"));
+            Assert.That(keys, Has.Member("customTestProperty"));
 
             parameters.Configuration.Clear();
 
-            Assert.AreEqual(0, keys.Count);
+            Assert.That(keys.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -198,7 +210,7 @@ namespace Azure.Search.Documents.Tests.Models
             IndexingParameters parameters = new IndexingParameters();
             ICollection<object> values = parameters.Configuration.Values;
 
-            Assert.AreEqual(0, values.Count);
+            Assert.That(values.Count, Is.EqualTo(0));
 
             parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
             {
@@ -206,13 +218,13 @@ namespace Azure.Search.Documents.Tests.Models
                 ["customTestProperty"] = "custom",
             };
 
-            Assert.AreEqual(2, values.Count);
-            CollectionAssert.Contains(values, BlobIndexerParsingMode.Json);
-            CollectionAssert.Contains(values, "custom");
+            Assert.That(values.Count, Is.EqualTo(2));
+            Assert.That(values, Has.Member(BlobIndexerParsingMode.Json));
+            Assert.That(values, Has.Member("custom"));
 
             parameters.Configuration.Clear();
 
-            Assert.AreEqual(0, values.Count);
+            Assert.That(values.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -221,7 +233,7 @@ namespace Azure.Search.Documents.Tests.Models
             IndexingParameters parameters = new IndexingParameters();
             ICollection<string> keys = parameters.Configuration.Keys;
 
-            Assert.IsTrue(keys.IsReadOnly);
+            Assert.That(keys.IsReadOnly, Is.True);
             Assert.Throws<NotSupportedException>(() => keys.Add("customTestProperty"));
             Assert.Throws<NotSupportedException>(() => keys.Remove("customTestProperty"));
             Assert.Throws<NotSupportedException>(() => keys.Clear());
@@ -233,7 +245,7 @@ namespace Azure.Search.Documents.Tests.Models
             IndexingParameters parameters = new IndexingParameters();
             ICollection<object> values = parameters.Configuration.Values;
 
-            Assert.IsTrue(values.IsReadOnly);
+            Assert.That(values.IsReadOnly, Is.True);
             Assert.Throws<NotSupportedException>(() => values.Add("custom"));
             Assert.Throws<NotSupportedException>(() => values.Remove("custom"));
             Assert.Throws<NotSupportedException>(() => values.Clear());
@@ -253,7 +265,7 @@ namespace Azure.Search.Documents.Tests.Models
 
             string[] keys = new string[parameters.Configuration.Count];
             parameters.Configuration.Keys.CopyTo(keys, 0);
-            Assert.AreEqual(new[] { "parsingMode", "customTestProperty" }, keys);
+            Assert.That(keys, Is.EqualTo(new[] { "parsingMode", "customTestProperty" }));
         }
 
         [Test]
@@ -270,12 +282,12 @@ namespace Azure.Search.Documents.Tests.Models
 
             object[] values = new object[parameters.Configuration.Count];
             parameters.Configuration.Values.CopyTo(values, 0);
-            Assert.AreEqual(new object[] { BlobIndexerParsingMode.Json, "custom" }, values);
+            Assert.That(values, Is.EqualTo(new object[] { BlobIndexerParsingMode.Json, "custom" }));
         }
 
         [Test]
         public void ConfigurationIsReadWrite() =>
-            Assert.IsFalse(new IndexingParameters().Configuration.IsReadOnly);
+            Assert.That(new IndexingParameters().Configuration.IsReadOnly, Is.False);
 
         [Test]
         public void AddsToCorrectConfiguration()
@@ -283,19 +295,25 @@ namespace Azure.Search.Documents.Tests.Models
             IndexingParameters parameters = new IndexingParameters();
 
             parameters.Configuration.Add("parsingMode", "json");
-            Assert.AreEqual(1, parameters.Configuration.Count);
-            Assert.IsTrue(parameters.Configuration.ContainsKey("parsingMode"));
-            Assert.IsFalse(parameters.Configuration.Contains(new KeyValuePair<string, object>("parsingMode", "json")));
-            Assert.IsTrue(parameters.Configuration.Contains(new KeyValuePair<string, object>("parsingMode", BlobIndexerParsingMode.Json)));
-            Assert.AreEqual(0, parameters.IndexingParametersConfiguration.Count());
-            Assert.IsFalse(parameters.IndexingParametersConfiguration.ContainsKey("parsingMode"));
+            Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.ContainsKey("parsingMode"), Is.True);
+                Assert.That(parameters.Configuration.Contains(new KeyValuePair<string, object>("parsingMode", "json")), Is.False);
+                Assert.That(parameters.Configuration.Contains(new KeyValuePair<string, object>("parsingMode", BlobIndexerParsingMode.Json)), Is.True);
+                Assert.That(parameters.IndexingParametersConfiguration.Count(), Is.EqualTo(0));
+                Assert.That(parameters.IndexingParametersConfiguration.ContainsKey("parsingMode"), Is.False);
+            });
 
             parameters.Configuration.Add("customTestProperty", "custom");
-            Assert.AreEqual(2, parameters.Configuration.Count);
-            Assert.IsTrue(parameters.Configuration.ContainsKey("customTestProperty"));
-            Assert.AreEqual(1, parameters.IndexingParametersConfiguration.Count());
-            Assert.IsTrue(parameters.IndexingParametersConfiguration.ContainsKey("customTestProperty"));
-            Assert.IsTrue(parameters.IndexingParametersConfiguration.Contains(new KeyValuePair<string, object>("customTestProperty", "custom")));
+            Assert.That(parameters.Configuration.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.ContainsKey("customTestProperty"), Is.True);
+                Assert.That(parameters.IndexingParametersConfiguration.Count(), Is.EqualTo(1));
+                Assert.That(parameters.IndexingParametersConfiguration.ContainsKey("customTestProperty"), Is.True);
+                Assert.That(parameters.IndexingParametersConfiguration, Does.Contain(new KeyValuePair<string, object>("customTestProperty", "custom")));
+            });
         }
 
         [Test]
@@ -337,10 +355,13 @@ namespace Azure.Search.Documents.Tests.Models
             KeyValuePair<string, object>[] pairs = new KeyValuePair<string, object>[parameters.Configuration.Count + 1];
             parameters.Configuration.CopyTo(pairs, 1);
 
-            Assert.IsNull(pairs[0].Key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pairs[0].Key, Is.Null);
 
-            // Dictionary order is guaranteed, so check the last one which should be from AdditionalProperties.
-            Assert.AreEqual("customTestProperty", pairs[3].Key);
+                // Dictionary order is guaranteed, so check the last one which should be from AdditionalProperties.
+                Assert.That(pairs[3].Key, Is.EqualTo("customTestProperty"));
+            });
         }
 
         [Test]
@@ -354,16 +375,16 @@ namespace Azure.Search.Documents.Tests.Models
                 },
             };
 
-            Assert.AreEqual(1, parameters.Configuration.Count);
-            CollectionAssert.Contains(parameters.Configuration.Keys, "customTestProperty");
+            Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            Assert.That(parameters.Configuration.Keys, Has.Member("customTestProperty"));
 
             parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration
             {
                 ParsingMode = BlobIndexerParsingMode.Json,
             };
 
-            Assert.AreEqual(1, parameters.Configuration.Count);
-            CollectionAssert.Contains(parameters.Configuration.Keys, "parsingMode");
+            Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            Assert.That(parameters.Configuration.Keys, Has.Member("parsingMode"));
         }
 
         [Test]
@@ -379,8 +400,11 @@ namespace Azure.Search.Documents.Tests.Models
 
             parameters.Configuration.Remove("parsingMode");
 
-            Assert.AreEqual(0, parameters.Configuration.Count);
-            Assert.IsNull(parameters.IndexingParametersConfiguration.ParsingMode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
+                Assert.That(parameters.IndexingParametersConfiguration.ParsingMode, Is.Null);
+            });
         }
 
         [Test]
@@ -396,8 +420,11 @@ namespace Azure.Search.Documents.Tests.Models
 
             parameters.Configuration.Remove("customTestProperty");
 
-            Assert.AreEqual(0, parameters.Configuration.Count);
-            Assert.AreEqual(0, parameters.IndexingParametersConfiguration.Count());
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
+                Assert.That(parameters.IndexingParametersConfiguration.Count(), Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -411,14 +438,23 @@ namespace Azure.Search.Documents.Tests.Models
                 },
             };
 
-            Assert.IsFalse(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", "text")));
-            Assert.AreEqual(1, parameters.Configuration.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", "text")), Is.False);
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            });
 
-            Assert.IsFalse(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", "json")));
-            Assert.AreEqual(1, parameters.Configuration.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", "json")), Is.False);
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            });
 
-            Assert.IsTrue(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", BlobIndexerParsingMode.Json)));
-            Assert.AreEqual(0, parameters.Configuration.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Remove(new KeyValuePair<string, object>("parsingMode", BlobIndexerParsingMode.Json)), Is.True);
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -432,11 +468,17 @@ namespace Azure.Search.Documents.Tests.Models
                 },
             };
 
-            Assert.IsFalse(parameters.Configuration.Remove(new KeyValuePair<string, object>("customTestProperty", "other")));
-            Assert.AreEqual(1, parameters.Configuration.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Remove(new KeyValuePair<string, object>("customTestProperty", "other")), Is.False);
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(1));
+            });
 
-            Assert.IsTrue(parameters.Configuration.Remove(new KeyValuePair<string, object>("customTestProperty", "custom")));
-            Assert.AreEqual(0, parameters.Configuration.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameters.Configuration.Remove(new KeyValuePair<string, object>("customTestProperty", "custom")), Is.True);
+                Assert.That(parameters.Configuration.Count, Is.EqualTo(0));
+            });
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Path
             var client = new PathClient(host, null);
             var name = "foo";
             var response = await client.NormalAsync(name);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -26,7 +26,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Path
             var client = new PathClient(host, null);
             string? name = isOptional ? null : "foo";
             var response = await client.OptionalAsync(name);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

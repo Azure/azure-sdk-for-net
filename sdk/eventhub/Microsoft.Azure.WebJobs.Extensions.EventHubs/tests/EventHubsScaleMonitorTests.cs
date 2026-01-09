@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public void ScaleMonitorDescriptor_ReturnsExpectedValue()
         {
-            Assert.AreEqual($"{_functionId}-EventHubTrigger-{_eventHubName}-{_consumerGroup}".ToLower(), _scaleMonitor.Descriptor.Id);
+            Assert.That(_scaleMonitor.Descriptor.Id, Is.EqualTo($"{_functionId}-EventHubTrigger-{_eventHubName}-{_consumerGroup}".ToLower()));
         }
 
         [Test]
@@ -63,11 +63,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             // verify the non-generic implementation works properly
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
         }
 
         [Test]
@@ -90,15 +90,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             context.Metrics = eventHubTriggerMetrics;
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual("WorkerCount (17) > PartitionCount (16).", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo("WorkerCount (17) > PartitionCount (16)."));
+            });
             log = logs[1];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Number of instances (17) is too high relative to number of partitions (16) for EventHubs entity ({_eventHubName}, {_consumerGroup}).", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo($"Number of instances (17) is too high relative to number of partitions (16) for EventHubs entity ({_eventHubName}, {_consumerGroup})."));
+            });
 
             // verify again with a non generic context instance
             var context2 = new ScaleStatusContext
@@ -107,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Metrics = eventHubTriggerMetrics
             };
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context2);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
         }
 
         [Test]
@@ -130,16 +136,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             context.Metrics = eventHubTriggerMetrics;
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual("EventCount (2900) > WorkerCount (1) * 1,000.", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo("EventCount (2900) > WorkerCount (1) * 1,000."));
+            });
             log = logs[1];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Event count (2900) for EventHubs entity ({_eventHubName}, {_consumerGroup}) " +
-                         $"is too high relative to the number of instances (1).", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo($"Event count (2900) for EventHubs entity ({_eventHubName}, {_consumerGroup}) " +
+                             $"is too high relative to the number of instances (1)."));
+            });
 
             // verify again with a non generic context instance
             var context2 = new ScaleStatusContext
@@ -148,7 +160,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Metrics = eventHubTriggerMetrics
             };
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context2);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
         }
 
         [Test]
@@ -170,12 +182,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"'{_eventHubName}' is idle.", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo($"'{_eventHubName}' is idle."));
+            });
         }
 
         [Test]
@@ -197,12 +212,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Event count is increasing for '{_eventHubName}'.", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo($"Event count is increasing for '{_eventHubName}'."));
+            });
         }
 
         [Test]
@@ -224,12 +242,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Event count is decreasing for '{_eventHubName}'.", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo($"Event count is decreasing for '{_eventHubName}'."));
+            });
         }
 
         [Test]
@@ -251,12 +272,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"EventHubs entity '{_eventHubName}' is steady.", log.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(log.FormattedMessage, Is.EqualTo($"EventHubs entity '{_eventHubName}' is steady."));
+            });
         }
     }
 }

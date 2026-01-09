@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task GetAll()
         {
             var list = await mediaAssetCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

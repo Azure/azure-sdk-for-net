@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.Catalog.Tests
             Response fetchResponse = await client.SearchAsync(RequestContent.Create(data));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual(0, fetchBodyJson.GetProperty("@search.count").GetInt16());
+            Assert.That(fetchBodyJson.GetProperty("@search.count").GetInt16(), Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -40,10 +40,10 @@ namespace Azure.Analytics.Purview.Catalog.Tests
                 keywords = "sampledata.csv",
             };
             Response fetchResponse = await client.SuggestAsync(RequestContent.Create(data));
-            Assert.AreEqual(fetchResponse.Status, 200);
+            Assert.That(fetchResponse.Status, Is.EqualTo(200));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("s3://testpurview/sampledata.csv", fetchBodyJson.GetProperty("value")[0].GetProperty("qualifiedName").GetString());
+            Assert.That(fetchBodyJson.GetProperty("value")[0].GetProperty("qualifiedName").GetString(), Is.EqualTo("s3://testpurview/sampledata.csv"));
         }
 
         [RecordedTest]
@@ -55,10 +55,10 @@ namespace Azure.Analytics.Purview.Catalog.Tests
                 keywords = "sampledata",
             };
             Response fetchResponse = await client.AutoCompleteAsync(RequestContent.Create(data));
-            Assert.AreEqual(fetchResponse.Status, 200);
+            Assert.That(fetchResponse.Status, Is.EqualTo(200));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("sampledata csv", fetchBodyJson.GetProperty("value")[0].GetProperty("queryPlusText").GetString());
+            Assert.That(fetchBodyJson.GetProperty("value")[0].GetProperty("queryPlusText").GetString(), Is.EqualTo("sampledata csv"));
         }
 
         private static BinaryData GetContentFromResponse(Response r)

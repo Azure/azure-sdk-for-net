@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
@@ -36,11 +36,17 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(CallConnected), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(CallConnected)));
+                Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            });
         }
 
         [Test]
@@ -54,17 +60,20 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
             var createCallFailedInternalEvent = new CreateCallFailedInternal(CallConnectionId, ServerCallId, CorelationId, "mismatchedOperationId", null);
             SendAndProcessEvent(handler, new CreateCallFailed(createCallFailedInternalEvent));
             CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(CreateCallFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+            });
+            Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(CreateCallFailed)));
+            Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -80,7 +89,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.ConnectCall(new ConnectCallOptions(new ServerCallLocator(ServerCallId), new Uri(CallBackUri)));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
@@ -88,11 +97,17 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             ConnectCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(CallConnected), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(CallConnected)));
+                Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            });
         }
 
         [Test]
@@ -106,16 +121,19 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             var response = callAutomationClient.ConnectCall(new ConnectCallOptions(new ServerCallLocator(ServerCallId), new Uri(CallBackUri)));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
             SendAndProcessEvent(handler, new ConnectFailed(CallConnectionId, ServerCallId, CorelationId, "mismatchedOperationId", null));
             ConnectCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(ConnectFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+            });
+            Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(ConnectFailed)));
+            Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -130,7 +148,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
@@ -138,11 +156,17 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             AnswerCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(CallConnected), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(CallConnected)));
+                Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            });
         }
 
         [Test]
@@ -155,7 +179,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
             var transferee = new CommunicationIdentifierModel();
             transferee.CommunicationUser = new CommunicationUserIdentifierModel(TransfereeUser);
             transferee.RawId = TransfereeUser;
@@ -171,15 +195,18 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(CallTransferAccepted), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(response.Value.OperationContext, returnedResult.SuccessResult.OperationContext);
-            Assert.AreEqual(transferee.CommunicationUser.Id, returnedResult.SuccessResult.Transferee.RawId);
-            Assert.AreEqual(transferTarget.CommunicationUser.Id, returnedResult.SuccessResult.TransferTarget.RawId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(CallTransferAccepted)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.OperationContext, Is.EqualTo(response.Value.OperationContext));
+            Assert.That(returnedResult.SuccessResult.Transferee.RawId, Is.EqualTo(transferee.CommunicationUser.Id));
+            Assert.That(returnedResult.SuccessResult.TransferTarget.RawId, Is.EqualTo(transferTarget.CommunicationUser.Id));
         }
 
         [Test]
@@ -192,7 +219,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallTransferFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
@@ -200,13 +227,19 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(CallTransferFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(response.Value.OperationContext, returnedResult.FailureResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(CallTransferFailed)));
+                Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+                Assert.That(returnedResult.FailureResult.OperationContext, Is.EqualTo(response.Value.OperationContext));
+            });
         }
 
         [Test]
@@ -219,7 +252,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callInvite = CreateMockInvite();
 
             var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
@@ -227,13 +260,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(AddParticipantSucceeded), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(response.Value.OperationContext, returnedResult.SuccessResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(AddParticipantSucceeded)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.OperationContext, Is.EqualTo(response.Value.OperationContext));
         }
 
         [Test]
@@ -246,7 +282,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             var callInvite = CreateMockInvite();
             var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
@@ -254,13 +290,19 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(AddParticipantFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(response.Value.OperationContext, returnedResult.FailureResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(AddParticipantFailed)));
+                Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+                Assert.That(returnedResult.FailureResult.OperationContext, Is.EqualTo(response.Value.OperationContext));
+            });
         }
 
         [Test]
@@ -272,7 +314,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             var internalEvent = new PlayCompletedInternal(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { });
 
@@ -282,13 +324,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(PlayCompleted), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.SuccessResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(PlayCompleted)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [Test]
@@ -300,7 +345,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             var internalEvent = new PlayFailedInternal(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }, null);
 
@@ -310,13 +355,19 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(PlayFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(PlayFailed)));
+                Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+                Assert.That(returnedResult.FailureResult.OperationContext, Is.EqualTo(OperationContext));
+            });
         }
 
         [Test]
@@ -328,7 +379,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().CancelAllMediaOperations();
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new PlayCanceled(CallConnectionId, ServerCallId, CorelationId, null, null));
@@ -336,12 +387,15 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.PlayCanceledSucessEvent);
-            Assert.IsNull(returnedResult.RecognizeCanceledSucessEvent);
-            Assert.AreEqual(typeof(PlayCanceled), returnedResult.PlayCanceledSucessEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.PlayCanceledSucessEvent.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.PlayCanceledSucessEvent, Is.Not.Null);
+                Assert.That(returnedResult.RecognizeCanceledSucessEvent, Is.Null);
+            });
+            Assert.That(returnedResult.PlayCanceledSucessEvent.GetType(), Is.EqualTo(typeof(PlayCanceled)));
+            Assert.That(returnedResult.PlayCanceledSucessEvent.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -353,7 +407,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().CancelAllMediaOperations();
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new RecognizeCanceled(CallConnectionId, ServerCallId, CorelationId, null, null));
@@ -361,12 +415,15 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.RecognizeCanceledSucessEvent);
-            Assert.IsNull(returnedResult.PlayCanceledSucessEvent);
-            Assert.AreEqual(typeof(RecognizeCanceled), returnedResult.RecognizeCanceledSucessEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.RecognizeCanceledSucessEvent.CallConnectionId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.RecognizeCanceledSucessEvent, Is.Not.Null);
+                Assert.That(returnedResult.PlayCanceledSucessEvent, Is.Null);
+            });
+            Assert.That(returnedResult.RecognizeCanceledSucessEvent.GetType(), Is.EqualTo(typeof(RecognizeCanceled)));
+            Assert.That(returnedResult.RecognizeCanceledSucessEvent.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -378,7 +435,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().StartRecognizing(new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier(TargetId), 1) { OperationContext = OperationContext });
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new RecognizeCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation(), CallMediaRecognitionType.Dtmf, null));
@@ -386,13 +443,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             StartRecognizingEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(RecognizeCompleted), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.SuccessResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(RecognizeCompleted)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [Test]
@@ -404,7 +464,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().StartRecognizing(new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier(TargetId), 1) { OperationContext = OperationContext });
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             var internalEvent = new RecognizeFailedInternal(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }, null);
 
@@ -414,13 +474,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             StartRecognizingEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(RecognizeFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+            });
+            Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(RecognizeFailed)));
+            Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.FailureResult.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [Test]
@@ -433,7 +496,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callInvite = CreateMockInvite();
 
             var response = callConnection.RemoveParticipant(new RemoveParticipantOptions(callInvite.Target));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.RemoveParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
@@ -441,13 +504,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             RemoveParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(RemoveParticipantSucceeded), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(response.Value.OperationContext, returnedResult.SuccessResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(RemoveParticipantSucceeded)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.OperationContext, Is.EqualTo(response.Value.OperationContext));
         }
 
         [Test]
@@ -460,7 +526,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             var callInvite = CreateMockInvite();
             var response = callConnection.RemoveParticipant(new RemoveParticipantOptions(callInvite.Target));
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.RemoveParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
@@ -468,13 +534,19 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             RemoveParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(RemoveParticipantFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(response.Value.OperationContext, returnedResult.FailureResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(RemoveParticipantFailed)));
+                Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+                Assert.That(returnedResult.FailureResult.OperationContext, Is.EqualTo(response.Value.OperationContext));
+            });
         }
 
         [Test]
@@ -489,7 +561,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             dtmfOption.OperationContext = OperationContext;
 
             var response = callConnection.GetCallMedia().SendDtmfTones(dtmfOption);
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.SendDtmfTonesCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
@@ -497,13 +569,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendDtmfTonesEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(SendDtmfTonesCompleted), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.SuccessResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(SendDtmfTonesCompleted)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [Test]
@@ -518,7 +593,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             dtmfOption.OperationContext = OperationContext;
 
             var response = callConnection.GetCallMedia().SendDtmfTones(dtmfOption);
-            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.SendDtmfTonesFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
@@ -526,13 +601,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendDtmfTonesEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(SendDtmfTonesFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+            });
+            Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(SendDtmfTonesFailed)));
+            Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.FailureResult.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [Test]
@@ -544,7 +622,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callInvite = CreateMockInvite();
             var response = callConnection.CancelAddParticipantOperation(invitationId);
 
-            Assert.AreEqual(202, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(202));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.CancelAddParticipantFailed(
@@ -558,13 +636,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(false, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.FailureResult);
-            Assert.IsNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(CancelAddParticipantFailed), returnedResult.FailureResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
-            Assert.AreEqual(invitationId, returnedResult.FailureResult.InvitationId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(false));
+                Assert.That(returnedResult.FailureResult, Is.Not.Null);
+                Assert.That(returnedResult.SuccessResult, Is.Null);
+            });
+            Assert.That(returnedResult.FailureResult.GetType(), Is.EqualTo(typeof(CancelAddParticipantFailed)));
+            Assert.That(returnedResult.FailureResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.FailureResult.InvitationId, Is.EqualTo(invitationId));
         }
 
         [Test]
@@ -576,7 +657,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callInvite = CreateMockInvite();
             var response = callConnection.CancelAddParticipantOperation(invitationId);
 
-            Assert.AreEqual(202, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(202));
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.CancelAddParticipantSucceeded(
@@ -589,13 +670,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
-            Assert.NotNull(returnedResult);
-            Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(CancelAddParticipantSucceeded), returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(invitationId, returnedResult.SuccessResult.InvitationId);
+            Assert.That(returnedResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returnedResult.IsSuccess, Is.EqualTo(true));
+                Assert.That(returnedResult.SuccessResult, Is.Not.Null);
+                Assert.That(returnedResult.FailureResult, Is.Null);
+            });
+            Assert.That(returnedResult.SuccessResult.GetType(), Is.EqualTo(typeof(CancelAddParticipantSucceeded)));
+            Assert.That(returnedResult.SuccessResult.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(returnedResult.SuccessResult.InvitationId, Is.EqualTo(invitationId));
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanCreateEsuLicense()
         {
             HybridComputeLicenseData resourceData = await createEsuLicense();
-            Assert.AreEqual(esuLicenseName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(esuLicenseName));
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdateEsuLicense()
         {
             HybridComputeLicenseData resourceData = await updateEsuLicense();
-            Assert.AreNotEqual("Activated", resourceData.LicenseDetails.State);
+            Assert.That(resourceData.LicenseDetails.State, Is.Not.EqualTo("Activated"));
         }
 
         [TestCase]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetEsuLicense()
         {
             HybridComputeLicenseData resourceData = await getEsuLicense();
-            Assert.AreEqual(esuLicenseName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(esuLicenseName));
         }
 
         [TestCase]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetEsuLicenseCollection()
         {
             HybridComputeLicenseCollection resourceCollection = await getEsuLicenseCollection();
-            Assert.IsNotNull(resourceCollection);
+            Assert.That(resourceCollection, Is.Not.Null);
         }
 
         [TestCase]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanCreateLicenseProfile()
         {
             HybridComputeLicenseProfileData resourceData = await createLicenseProfile();
-            Assert.AreEqual("default", resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo("default"));
         }
 
         [TestCase]
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetLicenseProfile()
         {
             HybridComputeLicenseProfileData resourceData = await getLicenseProfile();
-            Assert.AreEqual("default", resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo("default"));
         }
 
         [TestCase]
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdateLicenseProfile()
         {
             HybridComputeLicenseProfileData resourceData = await updateLicenseProfile();
-            Assert.AreEqual("default", resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo("default"));
         }
 
         [TestCase]

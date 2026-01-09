@@ -29,8 +29,11 @@ public class AdaptersTests
         for (int i = start; i < num; i++)
         {
             bool success = await async.MoveNextAsync();
-            Assert.That(success, Is.True);
-            Assert.That(async.Current, Is.EqualTo(i));
+            Assert.Multiple(() =>
+            {
+                Assert.That(success, Is.True);
+                Assert.That(async.Current, Is.EqualTo(i));
+            });
         }
     }
 
@@ -48,8 +51,11 @@ public class AdaptersTests
         for (int i = start; i < num; i++)
         {
             bool success = await asyncEnumerator.MoveNextAsync();
-            Assert.That(success, Is.True);
-            Assert.That(asyncEnumerator.Current, Is.EqualTo(i));
+            Assert.Multiple(() =>
+            {
+                Assert.That(success, Is.True);
+                Assert.That(asyncEnumerator.Current, Is.EqualTo(i));
+            });
         }
     }
 

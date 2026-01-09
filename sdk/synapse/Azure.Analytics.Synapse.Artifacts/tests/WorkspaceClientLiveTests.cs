@@ -39,8 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             WorkspaceClient client = CreateClient();
             Workspace space = await client.GetAsync();
-            Assert.NotNull(space.Name);
-            Assert.NotNull(space.WorkspaceUID);
+            Assert.Multiple(() =>
+            {
+                Assert.That(space.Name, Is.Not.Null);
+                Assert.That(space.WorkspaceUID, Is.Not.Null);
+            });
         }
     }
 }

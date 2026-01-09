@@ -157,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedQuerySubstring = $"pages={pages}";
 
-            Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedQuerySubstring));
         }
 
         [Test]
@@ -182,7 +182,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedQuerySubstring = $"locale={locale}";
 
-            Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedQuerySubstring));
         }
 
         private static object[] s_AnalyzeDocumentSendsFeaturesTestCases =
@@ -217,7 +217,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             if (features.Length > 0)
             {
-                Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+                Assert.That(requestUriQuery, Does.Contain(expectedQuerySubstring));
             }
             else
             {
@@ -252,7 +252,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             {
                 var expectedQuerySubstring = "queryFields=" + string.Join("%2C", queryFields);
 
-                Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+                Assert.That(requestUriQuery, Does.Contain(expectedQuerySubstring));
             }
             else
             {
@@ -285,7 +285,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 
-            Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            Assert.That(requestUriQuery, Does.Contain(expectedQuerySubstring));
         }
 
         private DocumentIntelligenceClient CreateNonInstrumentedClient(DocumentIntelligenceClientOptions options)

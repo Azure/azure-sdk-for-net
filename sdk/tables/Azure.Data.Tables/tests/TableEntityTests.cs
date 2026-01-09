@@ -31,16 +31,19 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ValidateDictionaryEntityGetTypes()
         {
-            Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
-            Assert.That(fullEntity.GetBinaryData("binarydata"), Is.InstanceOf(typeof(BinaryData)));
-            Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
-            Assert.That(fullEntity.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime?)));
-            Assert.That(fullEntity.GetDateTimeOffset("datetimeoffset"), Is.InstanceOf(typeof(DateTimeOffset?)));
-            Assert.That(fullEntity.GetDouble("double"), Is.InstanceOf(typeof(double?)));
-            Assert.That(fullEntity.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
-            Assert.That(fullEntity.GetInt32("int32"), Is.InstanceOf(typeof(int?)));
-            Assert.That(fullEntity.GetInt64("int64"), Is.InstanceOf(typeof(long?)));
-            Assert.That(fullEntity.GetString("string"), Is.InstanceOf(typeof(string)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
+                Assert.That(fullEntity.GetBinaryData("binarydata"), Is.InstanceOf(typeof(BinaryData)));
+                Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
+                Assert.That(fullEntity.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime?)));
+                Assert.That(fullEntity.GetDateTimeOffset("datetimeoffset"), Is.InstanceOf(typeof(DateTimeOffset?)));
+                Assert.That(fullEntity.GetDouble("double"), Is.InstanceOf(typeof(double?)));
+                Assert.That(fullEntity.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
+                Assert.That(fullEntity.GetInt32("int32"), Is.InstanceOf(typeof(int?)));
+                Assert.That(fullEntity.GetInt64("int64"), Is.InstanceOf(typeof(long?)));
+                Assert.That(fullEntity.GetString("string"), Is.InstanceOf(typeof(string)));
+            });
         }
 
         /// <summary>
@@ -66,16 +69,19 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ValidateDictionaryEntityGetTypeForNonexistentProperties()
         {
-            Assert.That(fullEntity.GetBinary(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetBinaryData(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetBoolean(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetDateTime(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetDateTimeOffset(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetDouble(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetGuid(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetInt32(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetInt64(nonexistentKey), Is.Null);
-            Assert.That(fullEntity.GetString(nonexistentKey), Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity.GetBinary(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetBinaryData(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetBoolean(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetDateTime(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetDateTimeOffset(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetDouble(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetGuid(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetInt32(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetInt64(nonexistentKey), Is.Null);
+                Assert.That(fullEntity.GetString(nonexistentKey), Is.Null);
+            });
         }
 
         /// <summary>
@@ -84,15 +90,18 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ValidateDictionaryEntityGetTypeForNulledProperties()
         {
-            Assert.That(emptyEntity.GetBinary(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetBoolean(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetDateTime(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetDateTimeOffset(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetDouble(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetGuid(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetInt32(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetInt64(nulledPropertyKey), Is.Null);
-            Assert.That(emptyEntity.GetString(nulledPropertyKey), Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(emptyEntity.GetBinary(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetBoolean(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetDateTime(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetDateTimeOffset(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetDouble(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetGuid(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetInt32(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetInt64(nulledPropertyKey), Is.Null);
+                Assert.That(emptyEntity.GetString(nulledPropertyKey), Is.Null);
+            });
         }
 
         /// <summary>
@@ -102,27 +111,54 @@ namespace Azure.Data.Tables.Tests
         public void ValidateDictionaryEntityGetPropertiesWithIndexer()
         {
             Assert.That(fullEntity["binary"], Is.Not.Null);
-            Assert.That(fullEntity["binary"], Is.InstanceOf(typeof(byte[])));
-            Assert.That(fullEntity["boolean"], Is.Not.Null);
-            Assert.That(fullEntity["boolean"], Is.InstanceOf(typeof(bool?)));
-            Assert.That(fullEntity["datetime"], Is.Not.Null);
-            Assert.That(fullEntity["datetime"], Is.InstanceOf(typeof(DateTime?)));
-            Assert.That(fullEntity["datetimeoffset"], Is.Not.Null);
-            Assert.That(fullEntity["datetimeoffset"], Is.InstanceOf(typeof(DateTimeOffset?)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["binary"], Is.InstanceOf(typeof(byte[])));
+                Assert.That(fullEntity["boolean"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["boolean"], Is.InstanceOf(typeof(bool?)));
+                Assert.That(fullEntity["datetime"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["datetime"], Is.InstanceOf(typeof(DateTime?)));
+                Assert.That(fullEntity["datetimeoffset"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["datetimeoffset"], Is.InstanceOf(typeof(DateTimeOffset?)));
+                Assert.That(fullEntity["double"], Is.Not.Null);
+            });
             Assert.That(fullEntity["double"], Is.Not.Null);
-            Assert.That(fullEntity["double"], Is.Not.Null);
-            Assert.That(fullEntity["double"], Is.InstanceOf(typeof(double?)));
-            Assert.That(fullEntity["guid"], Is.Not.Null);
-            Assert.That(fullEntity["guid"], Is.InstanceOf(typeof(Guid)));
-            Assert.That(fullEntity["int32"], Is.Not.Null);
-            Assert.That(fullEntity["int32"], Is.InstanceOf(typeof(int?)));
-            Assert.That(fullEntity["int64"], Is.Not.Null);
-            Assert.That(fullEntity["int64"], Is.InstanceOf(typeof(long?)));
-            Assert.That(fullEntity["string"], Is.Not.Null);
-            Assert.That(fullEntity["string"], Is.InstanceOf(typeof(string)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["double"], Is.InstanceOf(typeof(double?)));
+                Assert.That(fullEntity["guid"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["guid"], Is.InstanceOf(typeof(Guid)));
+                Assert.That(fullEntity["int32"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["int32"], Is.InstanceOf(typeof(int?)));
+                Assert.That(fullEntity["int64"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["int64"], Is.InstanceOf(typeof(long?)));
+                Assert.That(fullEntity["string"], Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(fullEntity["string"], Is.InstanceOf(typeof(string)));
 
-            // Timestamp property returned as object casted as DateTimeOffset?
-            Assert.That(fullEntity.Timestamp, Is.Not.Null);
+                // Timestamp property returned as object casted as DateTimeOffset?
+                Assert.That(fullEntity.Timestamp, Is.Not.Null);
+            });
             Assert.That(fullEntity.Timestamp, Is.InstanceOf(typeof(DateTimeOffset?)));
         }
 
@@ -134,11 +170,14 @@ namespace Azure.Data.Tables.Tests
         {
             var nonexistentKey = "I was never set!";
 
-            // Test getting nonexistent property works.
-            Assert.That(emptyEntity[nonexistentKey], Is.Null);
+            Assert.Multiple(() =>
+            {
+                // Test getting nonexistent property works.
+                Assert.That(emptyEntity[nonexistentKey], Is.Null);
 
-            // Test getting a property that was set to null.
-            Assert.That(emptyEntity[nulledPropertyKey], Is.Null);
+                // Test getting a property that was set to null.
+                Assert.That(emptyEntity[nulledPropertyKey], Is.Null);
+            });
         }
 
         /// <summary>
@@ -185,43 +224,67 @@ namespace Azure.Data.Tables.Tests
 
             // Initialize a property to an int value
             entity["Foo"] = 0;
-            Assert.That(entity["Foo"] is int);
-            Assert.That(entity["Foo"], Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo"] is int);
+                Assert.That(entity["Foo"], Is.EqualTo(0));
+            });
 
             // Try to change the value to a double
             entity["Foo"] = 1.1;
-            Assert.That(entity["Foo"] is double);
-            Assert.That(entity["Foo"], Is.EqualTo(1.1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo"] is double);
+                Assert.That(entity["Foo"], Is.EqualTo(1.1));
+            });
 
             // Change to a double compatible int
             entity["Foo"] = 0;
-            Assert.That(entity["Foo"] is double);
-            Assert.That(entity["Foo"], Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo"] is double);
+                Assert.That(entity["Foo"], Is.EqualTo(0));
+            });
 
             // Change to a double compatible int
             entity["Foo"] = 1;
-            Assert.That(entity["Foo"] is double);
-            Assert.That(entity["Foo"], Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo"] is double);
+                Assert.That(entity["Foo"], Is.EqualTo(1));
+            });
 
             // Initialize a property to an int value
             entity["Foo2"] = 0;
-            Assert.That(entity["Foo2"] is int);
-            Assert.That(entity["Foo2"], Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo2"] is int);
+                Assert.That(entity["Foo2"], Is.EqualTo(0));
+            });
 
             // Change to a long
             entity["Foo2"] = 5L;
-            Assert.That(entity["Foo2"] is long);
-            Assert.That(entity["Foo2"], Is.EqualTo(5L));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo2"] is long);
+                Assert.That(entity["Foo2"], Is.EqualTo(5L));
+            });
 
             // Change to a long compatible int
             entity["Foo2"] = 0;
-            Assert.That(entity["Foo2"] is long);
-            Assert.That(entity["Foo2"], Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo2"] is long);
+                Assert.That(entity["Foo2"], Is.EqualTo(0));
+            });
 
             // Initialize a property to an int value
             entity["Foo3"] = 0;
-            Assert.That(entity["Foo3"] is int);
-            Assert.That(entity["Foo3"], Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["Foo3"] is int);
+                Assert.That(entity["Foo3"], Is.EqualTo(0));
+            });
 
             // Validate invalid conversions
             entity["Foo3"] = "fail";
@@ -256,18 +319,24 @@ namespace Azure.Data.Tables.Tests
 
             // Initialize a property to an DateTimeOffset value
             entity["DTOffset"] = offsetNow;
-            Assert.That(entity["DTOffset"] is DateTimeOffset);
-            Assert.That(entity["DTOffset"], Is.EqualTo(offsetNow));
-            Assert.That(entity.GetDateTimeOffset("DTOffset"), Is.EqualTo(offsetNow));
-            Assert.That(entity.GetDateTime("DTOffset"), Is.EqualTo(dateNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["DTOffset"] is DateTimeOffset);
+                Assert.That(entity["DTOffset"], Is.EqualTo(offsetNow));
+                Assert.That(entity.GetDateTimeOffset("DTOffset"), Is.EqualTo(offsetNow));
+                Assert.That(entity.GetDateTime("DTOffset"), Is.EqualTo(dateNow));
+            });
 
             // Initialize a property to an DateTime value
             entity["DT"] = dateNow;
-            Assert.AreEqual(typeof(DateTime), entity["DT"].GetType());
+            Assert.That(entity["DT"].GetType(), Is.EqualTo(typeof(DateTime)));
             DateTimeOffset dtoffset = (DateTime)entity["DT"];
-            Assert.That(entity["DT"], Is.EqualTo(dateNow));
-            Assert.That(entity.GetDateTime("DT"), Is.EqualTo(dateNow));
-            Assert.That(entity.GetDateTimeOffset("DT"), Is.EqualTo(offsetNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(entity["DT"], Is.EqualTo(dateNow));
+                Assert.That(entity.GetDateTime("DT"), Is.EqualTo(dateNow));
+                Assert.That(entity.GetDateTimeOffset("DT"), Is.EqualTo(offsetNow));
+            });
         }
 
         [Test]
@@ -288,7 +357,7 @@ namespace Azure.Data.Tables.Tests
             byte[] array = new byte[] { 1, 2, 3, 4, 5 };
             te.Add("binarydata", array);
             byte[] roundTrip = te.GetBinaryData("binarydata").ToArray();
-            CollectionAssert.AreEqual(array, roundTrip);
+            Assert.That(roundTrip, Is.EqualTo(array).AsCollection);
         }
     }
 }

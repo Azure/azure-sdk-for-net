@@ -29,10 +29,13 @@ namespace Azure.Data.Tables.Tests
                 GetTokenCallback = (trc, _) =>
                 {
                     ++callCount;
-                    Assert.AreEqual(_scopes, trc.Scopes);
-                    Assert.AreEqual(_expectedTenantId, trc.TenantId);
-                    // Validate that the token cache is working.
-                    Assert.That(callCount, Is.LessThanOrEqualTo(1));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(trc.Scopes, Is.EqualTo(_scopes));
+                        Assert.That(trc.TenantId, Is.EqualTo(_expectedTenantId));
+                        // Validate that the token cache is working.
+                        Assert.That(callCount, Is.LessThanOrEqualTo(1));
+                    });
                 }
             };
         }
@@ -45,7 +48,7 @@ namespace Azure.Data.Tables.Tests
             MockTransport transport = CreateMockTransport(new MockResponse(200));
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
 
-            Assert.True(transport.SingleRequest.Headers.TryGetValue("Authorization", out _));
+            Assert.That(transport.SingleRequest.Headers.TryGetValue("Authorization", out _), Is.True);
         }
 
         [Test]
@@ -59,7 +62,7 @@ namespace Azure.Data.Tables.Tests
             {
                 await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             }
-            Assert.True(transport.Requests.All(r => r.Headers.TryGetValue("Authorization", out _)));
+            Assert.That(transport.Requests.All(r => r.Headers.TryGetValue("Authorization", out _)), Is.True);
         }
 
         [Test]
@@ -97,10 +100,10 @@ namespace Azure.Data.Tables.Tests
             // if enableTenantDiscovery is true, the first request should be unauthorized
             if (enableTenantDiscovery)
             {
-                Assert.False(transport.Requests[0].Headers.TryGetValue("Authorization", out _));
+                Assert.That(transport.Requests[0].Headers.TryGetValue("Authorization", out _), Is.False);
             }
             // If enableTenantDiscovery is true, all but the first request should be authorized.
-            Assert.True(transport.Requests.Skip(enableTenantDiscovery ? 1 : 0).All(r => r.Headers.TryGetValue("Authorization", out _)));
+            Assert.That(transport.Requests.Skip(enableTenantDiscovery ? 1 : 0).All(r => r.Headers.TryGetValue("Authorization", out _)), Is.True);
         }
     }
 }

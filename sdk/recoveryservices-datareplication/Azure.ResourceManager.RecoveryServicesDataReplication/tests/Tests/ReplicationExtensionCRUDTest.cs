@@ -52,19 +52,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 DataReplicationTestUtilities.DefaultReplicationExtensionName,
                 replicationExtdata);
 
-            Assert.IsTrue(createReplicationExtOperation.HasCompleted);
-            Assert.IsTrue(createReplicationExtOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createReplicationExtOperation.HasCompleted, Is.True);
+                Assert.That(createReplicationExtOperation.HasValue, Is.True);
+            });
 
             // Get
             var getReplicationExtOperation = await vault.GetDataReplicationExtensions().GetAsync(
                 DataReplicationTestUtilities.DefaultReplicationExtensionName);
             var relicationExtModelResource = getReplicationExtOperation.Value;
 
-            Assert.IsNotNull(relicationExtModelResource);
+            Assert.That(relicationExtModelResource, Is.Not.Null);
 
             // Delete
             var deleteReplicationExtOperation = await relicationExtModelResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteReplicationExtOperation.HasCompleted);
+            Assert.That(deleteReplicationExtOperation.HasCompleted, Is.True);
         }
     }
 }

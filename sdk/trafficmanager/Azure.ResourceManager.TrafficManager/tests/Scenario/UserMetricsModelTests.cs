@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             TrafficManagerUserMetricsResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics();
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
-            Assert.IsNotEmpty(userMetricsModelResource.Data.Key);
+            Assert.That(userMetricsModelResource.Data.Key, Is.Not.Empty);
 
             await Delete();
 
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
-            Assert.IsEmpty(userMetricsModelResource.Data.Key);
+            Assert.That(userMetricsModelResource.Data.Key, Is.Empty);
         }
 
         [RecordedTest]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             ResourceIdentifier resourceIdentifier = TrafficManagerUserMetricsResource.CreateResourceIdentifier(FalseySubId);
             var badResource = Client.GetTrafficManagerUserMetricsResource(resourceIdentifier);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await badResource.DeleteAsync(WaitUntil.Completed));
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
 
             await Task.CompletedTask;
         }
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             TrafficManagerUserMetricsResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics();
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
-            Assert.IsEmpty(userMetricsModelResource.Data.Key);
+            Assert.That(userMetricsModelResource.Data.Key, Is.Empty);
 
             await Create();
 
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
-            Assert.IsNotEmpty(userMetricsModelResource.Data.Key);
+            Assert.That(userMetricsModelResource.Data.Key, Is.Not.Empty);
         }
 
         private async Task Delete()
@@ -89,8 +89,11 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             ArmOperation<TrafficManagerUserMetricsResource> userMetricsModelResourceOperation = await userMetricsModelResource.CreateOrUpdateAsync(WaitUntil.Completed);
 
-            Assert.IsTrue(userMetricsModelResourceOperation.HasCompleted);
-            Assert.IsTrue(userMetricsModelResourceOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(userMetricsModelResourceOperation.HasCompleted, Is.True);
+                Assert.That(userMetricsModelResourceOperation.HasValue, Is.True);
+            });
         }
     }
 }

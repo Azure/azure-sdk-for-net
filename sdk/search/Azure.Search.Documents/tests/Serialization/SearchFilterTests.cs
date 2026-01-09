@@ -15,149 +15,185 @@ namespace Azure.Search.Documents.Tests
         [Test]
         public void NoArguments()
         {
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq 2"));
+            Assert.That(SearchFilter.Create($"Foo eq 2"), Is.EqualTo("Foo eq 2"));
         }
 
         [Test]
         public void OneArgument()
         {
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {2}"));
+            Assert.That(SearchFilter.Create($"Foo eq {2}"), Is.EqualTo("Foo eq 2"));
         }
 
         [Test]
         public void ManyArguments()
         {
-            Assert.AreEqual("Foo eq 2 and Bar eq 3",
-                SearchFilter.Create($"Foo eq {2} and Bar eq {3}"));
-            Assert.AreEqual("Foo eq 2 and Bar eq 3 and Baz eq 4",
-                SearchFilter.Create($"Foo eq {2} and Bar eq {3} and Baz eq {4}"));
-            Assert.AreEqual("Foo eq 2 and Bar eq 3 and Baz eq 4 and Qux eq 5",
-                SearchFilter.Create($"Foo eq {2} and Bar eq {3} and Baz eq {4} and Qux eq {5}"));
-            Assert.AreEqual("Foo eq 2 and Bar eq 3 and Baz eq 4 and Qux eq 5 and Quux eq 6",
-                SearchFilter.Create($"Foo eq {2} and Bar eq {3} and Baz eq {4} and Qux eq {5} and Quux eq {6}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {2} and Bar eq {3}"),
+                            Is.EqualTo("Foo eq 2 and Bar eq 3"));
+                Assert.That(SearchFilter.Create($"Foo eq {2} and Bar eq {3} and Baz eq {4}"),
+                    Is.EqualTo("Foo eq 2 and Bar eq 3 and Baz eq 4"));
+                Assert.That(SearchFilter.Create($"Foo eq {2} and Bar eq {3} and Baz eq {4} and Qux eq {5}"),
+                    Is.EqualTo("Foo eq 2 and Bar eq 3 and Baz eq 4 and Qux eq 5"));
+                Assert.That(SearchFilter.Create($"Foo eq {2} and Bar eq {3} and Baz eq {4} and Qux eq {5} and Quux eq {6}"),
+                    Is.EqualTo("Foo eq 2 and Bar eq 3 and Baz eq 4 and Qux eq 5 and Quux eq 6"));
+            });
         }
 
         [Test]
         public void Null()
         {
-            Assert.AreEqual("Foo eq null", SearchFilter.Create($"Foo eq {null}"));
+            Assert.That(SearchFilter.Create($"Foo eq {null}"), Is.EqualTo("Foo eq null"));
         }
 
         [Test]
         public void Bool()
         {
             bool x = true;
-            Assert.AreEqual("Foo eq true", SearchFilter.Create($"Foo eq {x}"));
-            Assert.AreEqual("Foo eq true", SearchFilter.Create($"Foo eq {true}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {x}"), Is.EqualTo("Foo eq true"));
+                Assert.That(SearchFilter.Create($"Foo eq {true}"), Is.EqualTo("Foo eq true"));
+            });
 
             x = false;
-            Assert.AreEqual("Foo eq false", SearchFilter.Create($"Foo eq {x}"));
-            Assert.AreEqual("Foo eq false", SearchFilter.Create($"Foo eq {false}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {x}"), Is.EqualTo("Foo eq false"));
+                Assert.That(SearchFilter.Create($"Foo eq {false}"), Is.EqualTo("Foo eq false"));
+            });
         }
 
         [Test]
         public void Zero()
         {
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(sbyte)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(byte)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(short)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(ushort)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(int)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(uint)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(long)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(ulong)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(decimal)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(float)0}"));
-            Assert.AreEqual("Foo eq 0", SearchFilter.Create($"Foo eq {(double)0}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {(sbyte)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(byte)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(short)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(ushort)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(int)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(uint)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(long)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(ulong)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(decimal)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(float)0}"), Is.EqualTo("Foo eq 0"));
+                Assert.That(SearchFilter.Create($"Foo eq {(double)0}"), Is.EqualTo("Foo eq 0"));
+            });
         }
 
         [Test]
         public void Positive()
         {
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(sbyte)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(byte)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(short)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(ushort)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(int)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(uint)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(long)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(ulong)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(decimal)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(float)2}"));
-            Assert.AreEqual("Foo eq 2", SearchFilter.Create($"Foo eq {(double)2}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {(sbyte)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(byte)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(short)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(ushort)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(int)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(uint)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(long)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(ulong)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(decimal)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(float)2}"), Is.EqualTo("Foo eq 2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(double)2}"), Is.EqualTo("Foo eq 2"));
+            });
         }
 
         [Test]
         public void Negative()
         {
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(sbyte)-2}"));
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(short)-2}"));
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(int)-2}"));
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(long)-2}"));
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(decimal)-2}"));
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(float)-2}"));
-            Assert.AreEqual("Foo eq -2", SearchFilter.Create($"Foo eq {(double)-2}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {(sbyte)-2}"), Is.EqualTo("Foo eq -2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(short)-2}"), Is.EqualTo("Foo eq -2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(int)-2}"), Is.EqualTo("Foo eq -2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(long)-2}"), Is.EqualTo("Foo eq -2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(decimal)-2}"), Is.EqualTo("Foo eq -2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(float)-2}"), Is.EqualTo("Foo eq -2"));
+                Assert.That(SearchFilter.Create($"Foo eq {(double)-2}"), Is.EqualTo("Foo eq -2"));
+            });
         }
 
         [Test]
         public void Decimals()
         {
-            Assert.AreEqual("Foo eq 2.5", SearchFilter.Create($"Foo eq {(decimal)2.5}"));
-            Assert.AreEqual("Foo eq 2.5", SearchFilter.Create($"Foo eq {(float)2.5}"));
-            Assert.AreEqual("Foo eq 2.5", SearchFilter.Create($"Foo eq {(double)2.5}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {(decimal)2.5}"), Is.EqualTo("Foo eq 2.5"));
+                Assert.That(SearchFilter.Create($"Foo eq {(float)2.5}"), Is.EqualTo("Foo eq 2.5"));
+                Assert.That(SearchFilter.Create($"Foo eq {(double)2.5}"), Is.EqualTo("Foo eq 2.5"));
+            });
         }
 
         [Test]
         public void Exponents()
         {
-            Assert.AreEqual("Foo eq 2.5e+10", SearchFilter.Create($"Foo eq {(float)2.5e10}"));
-            Assert.AreEqual("Foo eq 2.5e+20", SearchFilter.Create($"Foo eq {(double)2.5e20}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {(float)2.5e10}"), Is.EqualTo("Foo eq 2.5e+10"));
+                Assert.That(SearchFilter.Create($"Foo eq {(double)2.5e20}"), Is.EqualTo("Foo eq 2.5e+20"));
+            });
         }
 
         [Test]
         public void Limits()
         {
-            Assert.AreEqual("Foo eq NaN", SearchFilter.Create($"Foo eq {float.NaN}"));
-            Assert.AreEqual("Foo eq NaN", SearchFilter.Create($"Foo eq {double.NaN}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {float.NaN}"), Is.EqualTo("Foo eq NaN"));
+                Assert.That(SearchFilter.Create($"Foo eq {double.NaN}"), Is.EqualTo("Foo eq NaN"));
 
-            Assert.AreEqual("Foo eq INF", SearchFilter.Create($"Foo eq {float.PositiveInfinity}"));
-            Assert.AreEqual("Foo eq INF", SearchFilter.Create($"Foo eq {double.PositiveInfinity}"));
+                Assert.That(SearchFilter.Create($"Foo eq {float.PositiveInfinity}"), Is.EqualTo("Foo eq INF"));
+                Assert.That(SearchFilter.Create($"Foo eq {double.PositiveInfinity}"), Is.EqualTo("Foo eq INF"));
 
-            Assert.AreEqual("Foo eq -INF", SearchFilter.Create($"Foo eq {float.NegativeInfinity}"));
-            Assert.AreEqual("Foo eq -INF", SearchFilter.Create($"Foo eq {double.NegativeInfinity}"));
+                Assert.That(SearchFilter.Create($"Foo eq {float.NegativeInfinity}"), Is.EqualTo("Foo eq -INF"));
+                Assert.That(SearchFilter.Create($"Foo eq {double.NegativeInfinity}"), Is.EqualTo("Foo eq -INF"));
+            });
         }
 
         [Test]
         public void Dates()
         {
-            Assert.AreEqual("Alan eq 1912-06-23T11:59:59.0000000+00:00",
-                SearchFilter.Create($"Alan eq {new DateTime(1912, 6, 23, 11, 59, 59)}"));
-            Assert.AreEqual("Alan eq 1912-06-23T11:59:59.0000000+00:00",
-                SearchFilter.Create($"Alan eq {new DateTimeOffset(1912, 6, 23, 11, 59, 59, TimeSpan.Zero)}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Alan eq {new DateTime(1912, 6, 23, 11, 59, 59)}"),
+                            Is.EqualTo("Alan eq 1912-06-23T11:59:59.0000000+00:00"));
+                Assert.That(SearchFilter.Create($"Alan eq {new DateTimeOffset(1912, 6, 23, 11, 59, 59, TimeSpan.Zero)}"),
+                    Is.EqualTo("Alan eq 1912-06-23T11:59:59.0000000+00:00"));
+            });
         }
 
         [Test]
         public void Text()
         {
-            Assert.AreEqual("Foo eq 'x'", SearchFilter.Create($"Foo eq {'x'}"));
-            Assert.AreEqual("Foo eq ''''", SearchFilter.Create($"Foo eq {'\''}"));
-            Assert.AreEqual("Foo eq '\"'", SearchFilter.Create($"Foo eq {'"'}"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"Foo eq {'x'}"), Is.EqualTo("Foo eq 'x'"));
+                Assert.That(SearchFilter.Create($"Foo eq {'\''}"), Is.EqualTo("Foo eq ''''"));
+                Assert.That(SearchFilter.Create($"Foo eq {'"'}"), Is.EqualTo("Foo eq '\"'"));
 
-            Assert.AreEqual("Foo eq 'bar'", SearchFilter.Create($"Foo eq {"bar"}"));
-            Assert.AreEqual("Foo eq 'bar''s'", SearchFilter.Create($"Foo eq {"bar's"}"));
-            Assert.AreEqual("Foo eq '\"bar\"'", SearchFilter.Create($"Foo eq {"\"bar\""}"));
+                Assert.That(SearchFilter.Create($"Foo eq {"bar"}"), Is.EqualTo("Foo eq 'bar'"));
+                Assert.That(SearchFilter.Create($"Foo eq {"bar's"}"), Is.EqualTo("Foo eq 'bar''s'"));
+                Assert.That(SearchFilter.Create($"Foo eq {"\"bar\""}"), Is.EqualTo("Foo eq '\"bar\"'"));
+            });
 
             StringBuilder sb = new StringBuilder("bar");
-            Assert.AreEqual("Foo eq 'bar'", SearchFilter.Create($"Foo eq {sb}"));
+            Assert.That(SearchFilter.Create($"Foo eq {sb}"), Is.EqualTo("Foo eq 'bar'"));
         }
 
         [Test]
         public void Points()
         {
             GeoPosition position = new GeoPosition(2.0, 3.0);
-            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({position}, Foo) < 3"));
-            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new GeoPosition(2.0, 3.0, 5.0)}, Foo) < 3"));
-            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new GeoPoint(position)}, Foo) < 3"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(SearchFilter.Create($"geo.distance({position}, Foo) < 3"), Is.EqualTo("geo.distance(geography'POINT(2 3)', Foo) < 3"));
+                Assert.That(SearchFilter.Create($"geo.distance({new GeoPosition(2.0, 3.0, 5.0)}, Foo) < 3"), Is.EqualTo("geo.distance(geography'POINT(2 3)', Foo) < 3"));
+                Assert.That(SearchFilter.Create($"geo.distance({new GeoPoint(position)}, Foo) < 3"), Is.EqualTo("geo.distance(geography'POINT(2 3)', Foo) < 3"));
+            });
         }
 
         [Test]
@@ -171,14 +207,14 @@ namespace Azure.Search.Documents.Tests
                     new GeoPosition(1, 1),
                     new GeoPosition(0, 0),
                 });
-            Assert.AreEqual(
-                "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
-                SearchFilter.Create($"geo.intersects(Foo, {line})"));
+            Assert.That(
+                SearchFilter.Create($"geo.intersects(Foo, {line})"),
+                Is.EqualTo("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')"));
 
             GeoPolygon polygon = new GeoPolygon(line.Coordinates);
-            Assert.AreEqual(
-                "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
-                SearchFilter.Create($"geo.intersects(Foo, {polygon})"));
+            Assert.That(
+                SearchFilter.Create($"geo.intersects(Foo, {polygon})"),
+                Is.EqualTo("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')"));
 
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
                 $"{new GeoLineString(new[] { new GeoPosition(0, 0) })}"));
@@ -190,7 +226,7 @@ namespace Azure.Search.Documents.Tests
 
         [TestCaseSource(nameof(GetMicrosoftSpatialPointsData))]
         public void MicrosoftSpatialPoints(string filter) =>
-            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", filter);
+            Assert.That(filter, Is.EqualTo("geo.distance(geography'POINT(2 3)', Foo) < 3"));
 
         private static IEnumerable GetMicrosoftSpatialPointsData()
         {
@@ -228,7 +264,7 @@ namespace Azure.Search.Documents.Tests
         public void MicrosoftSpatialPolygonsThrows(object geography, string expectedException)
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"{geography}"));
-            StringAssert.StartsWith(expectedException, ex.Message);
+            Assert.That(ex.Message, Does.StartWith(expectedException));
         }
 
         private static IEnumerable GetMicrosoftSpatialPolygonsThrowsData()
@@ -274,7 +310,7 @@ namespace Azure.Search.Documents.Tests
         public void OtherThrows()
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"Foo eq {new string[] { }}"));
-            Assert.AreEqual("Unable to convert argument 0 from type System.String[] to an OData literal.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Unable to convert argument 0 from type System.String[] to an OData literal."));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             catch (UnauthorizedAccessException ex)
             {
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.Unauthorized, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.Unauthorized));
                 return;
             }
             Assert.Fail($"Expected exception not thrown");
@@ -51,9 +51,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.MessagingEntityNotFound, ex.Reason);
+                Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.NotFound, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
                 return;
             }
             Assert.Fail("No exception!");
@@ -69,10 +69,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.MessagingEntityAlreadyExists, ex.Reason);
-                Assert.IsFalse(ex.IsTransient);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.MessagingEntityAlreadyExists));
+                    Assert.That(ex.IsTransient, Is.False);
+                });
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.Conflict, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.Conflict));
                 return;
             }
             Assert.Fail("No exception!");
@@ -90,10 +93,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.GeneralError, ex.Reason);
-                Assert.IsTrue(ex.IsTransient);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.GeneralError));
+                    Assert.That(ex.IsTransient, Is.True);
+                });
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.Conflict, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.Conflict));
                 return;
             }
             Assert.Fail("No exception!");
@@ -110,10 +116,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.GeneralError, ex.Reason);
-                Assert.IsTrue(ex.IsTransient);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.GeneralError));
+                    Assert.That(ex.IsTransient, Is.True);
+                });
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.Conflict, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.Conflict));
                 return;
             }
             Assert.Fail("No exception!");
@@ -130,10 +139,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.ServiceBusy, ex.Reason);
-                Assert.IsTrue(ex.IsTransient);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.ServiceBusy));
+                    Assert.That(ex.IsTransient, Is.True);
+                });
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.ServiceUnavailable, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.ServiceUnavailable));
                 return;
             }
             Assert.Fail("No exception!");
@@ -151,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             catch (ArgumentException ex)
             {
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.BadRequest, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.BadRequest));
                 return;
             }
             Assert.Fail("No exception!");
@@ -171,7 +183,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             catch (InvalidOperationException ex)
             {
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.Forbidden, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
                 return;
             }
             Assert.Fail("No exception!");
@@ -189,10 +201,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.QuotaExceeded, ex.Reason);
-                Assert.IsFalse(ex.IsTransient);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.QuotaExceeded));
+                    Assert.That(ex.IsTransient, Is.False);
+                });
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.Forbidden, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
                 return;
             }
             Assert.Fail("No exception!");
@@ -210,10 +225,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.GeneralError, ex.Reason);
-                Assert.IsTrue(ex.IsTransient);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.GeneralError));
+                    Assert.That(ex.IsTransient, Is.True);
+                });
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual(429, inner.Status);
+                Assert.That(inner.Status, Is.EqualTo(429));
                 return;
             }
             Assert.Fail("No exception!");
@@ -230,7 +248,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var pipeline = HttpPipelineBuilder.Build(options);
             var requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, port, true);
 
-            Assert.AreEqual(port, requestResponse.BuildDefaultUri("dummy").Port);
+            Assert.That(requestResponse.BuildDefaultUri("dummy").Port, Is.EqualTo(port));
         }
 
         [Test]
@@ -244,7 +262,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, port, true);
 
             var defaultPort = new UriBuilder("https://www.examplke.com").Uri.Port;
-            Assert.AreEqual(defaultPort, requestResponse.BuildDefaultUri("dummy").Port);
+            Assert.That(requestResponse.BuildDefaultUri("dummy").Port, Is.EqualTo(defaultPort));
         }
 
         [Test]
@@ -257,7 +275,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, -1, useTls);
 
             var expectedScheme = useTls ? "https" : "http";
-            Assert.AreEqual(expectedScheme, requestResponse.BuildDefaultUri("dummy").Scheme);
+            Assert.That(requestResponse.BuildDefaultUri("dummy").Scheme, Is.EqualTo(expectedScheme));
         }
     }
 }

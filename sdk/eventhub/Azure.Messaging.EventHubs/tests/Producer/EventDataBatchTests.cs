@@ -84,8 +84,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, "ns", "eh", sendOptions, MockClientDiagnostics);
 
-            Assert.That(batch.SendOptions, Is.SameAs(sendOptions), "The send options should have been set.");
-            Assert.That(GetInnerBatch(batch), Is.SameAs(mockBatch), "The inner transport batch should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.SendOptions, Is.SameAs(sendOptions), "The send options should have been set.");
+                Assert.That(GetInnerBatch(batch), Is.SameAs(mockBatch), "The inner transport batch should have been set.");
+            });
         }
 
         /// <summary>
@@ -99,9 +102,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
 
-            Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(mockBatch.MaximumSizeInBytes), "The maximum size should have been delegated.");
-            Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
-            Assert.That(batch.Count, Is.EqualTo(mockBatch.Count), "The count should have been delegated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(mockBatch.MaximumSizeInBytes), "The maximum size should have been delegated.");
+                Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
+                Assert.That(batch.Count, Is.EqualTo(mockBatch.Count), "The count should have been delegated.");
+            });
         }
 
         /// <summary>
@@ -116,8 +122,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
             var eventData = new EventData(new byte[] { 0x21 });
 
-            Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
-            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
+                Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
+            });
         }
 
         /// <summary>

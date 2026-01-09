@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 }
             };
             var list = await _subscriptionGovernanceRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleId, data);
-            Assert.IsNotNull(list);
+            Assert.That(list, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var list = await _subscriptionGovernanceRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
 #pragma warning disable 0618
     }

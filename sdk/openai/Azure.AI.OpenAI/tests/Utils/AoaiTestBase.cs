@@ -593,8 +593,11 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
 
     protected void ValidateById<T>(string id, string parentId)
     {
-        Assert.That(id, Is.Not.Null.Or.Empty);
-        Assert.That(parentId, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(id, Is.Not.Null.Or.Empty);
+            Assert.That(parentId, Is.Not.Null.Or.Empty);
+        });
         switch (typeof(T).Name)
         {
             case nameof(ThreadMessage):
@@ -720,10 +723,16 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         ValidateClientResult(result);
 
         PipelineResponse response = result.GetRawResponse();
-        Assert.That(response.Status, Is.GreaterThanOrEqualTo(200).And.LessThan(300));
-        Assert.That(response.Headers, Is.Not.Null);
-        Assert.That(response.Headers.GetFirstOrDefault("Content-Type"), Does.StartWith("application/json"));
-        Assert.That(response.Content, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Status, Is.GreaterThanOrEqualTo(200).And.LessThan(300));
+            Assert.That(response.Headers, Is.Not.Null);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Headers.GetFirstOrDefault("Content-Type"), Does.StartWith("application/json"));
+            Assert.That(response.Content, Is.Not.Null);
+        });
 
         return response;
     }

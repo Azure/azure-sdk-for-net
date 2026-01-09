@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Tests
             string domainNameLabel = Recording.GenerateAssetName("domainnamelabel");
             Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await subscription.CheckDnsNameAvailabilityAsync(TestEnvironment.Location, domainNameLabel);
 
-            Assert.True(dnsNameAvailability.Value.Available);
+            Assert.That(dnsNameAvailability.Value.Available, Is.True);
         }
 
         // The CheckDnsAvailability api expects a location parameter which

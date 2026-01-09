@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(204, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(204), "Expected the status to indicate successful deletion.");
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(204, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(204), "Expected the status to indicate successful deletion.");
         }
     }
 }

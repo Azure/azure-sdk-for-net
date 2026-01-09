@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicAutoscaleSettingData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var autoscaleSetting = lro.Value;
-            Assert.AreEqual(name, autoscaleSetting.Data.Name);
+            Assert.That(autoscaleSetting.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

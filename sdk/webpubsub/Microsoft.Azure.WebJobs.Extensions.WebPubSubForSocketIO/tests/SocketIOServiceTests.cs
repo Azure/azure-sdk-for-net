@@ -27,29 +27,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         {
             var connectionInfo = new SocketIOConnectionInfo(connectionString);
 
-            Assert.NotNull(connectionInfo.KeyCredential);
-            Assert.AreEqual(connectionString, connectionInfo.ConnectionString);
-            Assert.AreEqual(expectedEndpoint, connectionInfo.Endpoint.ToString());
-            Assert.Null(connectionInfo.TokenCredential);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectionInfo.KeyCredential, Is.Not.Null);
+                Assert.That(connectionInfo.ConnectionString, Is.EqualTo(connectionString));
+                Assert.That(connectionInfo.Endpoint.ToString(), Is.EqualTo(expectedEndpoint));
+                Assert.That(connectionInfo.TokenCredential, Is.Null);
+            });
 
             var service = new WebPubSubForSocketIOService(connectionInfo.Endpoint, connectionInfo.KeyCredential, "testHub");
 
             var clientConnection = service.GetNegotiationResult(userId);
 
-            Assert.NotNull(clientConnection);
-            Assert.AreEqual(expectedEndpoint, clientConnection.Endpoint.AbsoluteUri);
-            Assert.AreEqual(expectedPath, clientConnection.Path);
-            Assert.NotNull(clientConnection.Token);
+            Assert.That(clientConnection, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(clientConnection.Endpoint.AbsoluteUri, Is.EqualTo(expectedEndpoint));
+                Assert.That(clientConnection.Path, Is.EqualTo(expectedPath));
+                Assert.That(clientConnection.Token, Is.Not.Null);
+            });
 
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(clientConnection.Token);
 
             if (string.IsNullOrEmpty(userId))
             {
-                Assert.IsNull(jwt.Subject);
+                Assert.That(jwt.Subject, Is.Null);
             }
             else
             {
-                Assert.AreEqual(userId, jwt.Subject);
+                Assert.That(jwt.Subject, Is.EqualTo(userId));
             }
         }
 
@@ -61,8 +67,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var configs = new WebPubSubValidationOptions(info);
 
-            Assert.IsTrue(configs.TryGetKey("abc", out var key));
-            Assert.AreEqual("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A", key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(configs.TryGetKey("abc", out var key), Is.True);
+                Assert.That(key, Is.EqualTo("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A"));
+            });
         }
 
         [TestCase("http://localhost:8080/", "localhost")]
@@ -71,15 +80,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         {
             var info = new SocketIOConnectionInfo(endpoint, new DefaultAzureCredential());
 
-            Assert.Null(info.KeyCredential);
-            Assert.Null(info.ConnectionString);
-            Assert.AreEqual(endpoint, info.Endpoint.ToString());
-            Assert.NotNull(info.TokenCredential);
+            Assert.Multiple(() =>
+            {
+                Assert.That(info.KeyCredential, Is.Null);
+                Assert.That(info.ConnectionString, Is.Null);
+                Assert.That(info.Endpoint.ToString(), Is.EqualTo(endpoint));
+                Assert.That(info.TokenCredential, Is.Not.Null);
+            });
 
             var configs = new WebPubSubValidationOptions(info);
 
-            Assert.IsTrue(configs.TryGetKey(host, out var key));
-            Assert.Null(key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(configs.TryGetKey(host, out var key), Is.True);
+                Assert.That(key, Is.Null);
+            });
         }
 
         [TestCase("https://sio-5kkfcgr2obqvm.webpubsub.azure.com/")]
@@ -96,9 +111,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var service = new WebPubSubForSocketIOService(clientMoc.Object);
             var result = service.GetNegotiationResult("user");
 
-            Assert.AreEqual("https://sio-5kkfcgr2obqvm.webpubsub.azure.com/", result.Endpoint.AbsoluteUri);
-            Assert.AreEqual("/clients/socketio/hubs/hub", result.Path);
-            Assert.AreEqual(token, result.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Endpoint.AbsoluteUri, Is.EqualTo("https://sio-5kkfcgr2obqvm.webpubsub.azure.com/"));
+                Assert.That(result.Path, Is.EqualTo("/clients/socketio/hubs/hub"));
+                Assert.That(result.Token, Is.EqualTo(token));
+            });
         }
 
         [Test]
@@ -111,12 +129,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var service = new WebPubSubForSocketIOService(clientMoc.Object, new AzureKeyCredential("abcdefghijklmn"));
             var result = service.GetNegotiationResult("user");
 
-            Assert.AreEqual("https://abc.com/", result.Endpoint.AbsoluteUri);
-            Assert.AreEqual("/clients/socketio/hubs/hub", result.Path);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Endpoint.AbsoluteUri, Is.EqualTo("https://abc.com/"));
+                Assert.That(result.Path, Is.EqualTo("/clients/socketio/hubs/hub"));
+            });
 
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(result.Token);
-            Assert.AreEqual("user", jwt.Subject);
-            Assert.AreEqual("https://abc.com/clients/socketio/hubs/hub", jwt.Audiences.First());
+            Assert.Multiple(() =>
+            {
+                Assert.That(jwt.Subject, Is.EqualTo("user"));
+                Assert.That(jwt.Audiences.First(), Is.EqualTo("https://abc.com/clients/socketio/hubs/hub"));
+            });
         }
     }
 }

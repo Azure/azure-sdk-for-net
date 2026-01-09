@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var createResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.AreEqual(clusterName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(clusterName));
 
             // Get
             var getResult = await clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(clusterName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(clusterName));
             NetworkCloudClusterResource clusterResource = Client.GetNetworkCloudClusterResource(getResult.Value.Data.Id);
 
             // Update cluster location
@@ -127,8 +127,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var patchResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, patchResult.Value.Data.Tags);
-            Assert.AreEqual("Foo floor", patchResult.Value.Data.ClusterLocation);
+            Assert.Multiple(() =>
+            {
+                Assert.That(patchResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
+                Assert.That(patchResult.Value.Data.ClusterLocation, Is.EqualTo("Foo floor"));
+            });
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudClusterResource>();
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // List by Subscription
             var listBySubscription = new List<NetworkCloudClusterResource>();
@@ -144,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             // Patch Upgrade Strategy
              NetworkCloudClusterPatch patch2 = new NetworkCloudClusterPatch()
@@ -161,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2);
-            Assert.IsNotNull(strategyResult.Value);
+            Assert.That(strategyResult.Value, Is.Not.Null);
 
             // Patch Secret Archive Settings
             NetworkCloudClusterPatch patch3 = new NetworkCloudClusterPatch()
@@ -172,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
-            Assert.IsNotNull(secretArchiveResult.Value);
+            Assert.That(secretArchiveResult.Value, Is.Not.Null);
 
             // Patch VulnerabilityScanningContainerScan
             try
@@ -182,12 +185,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     VulnerabilityScanningContainerScan = VulnerabilityScanningSettingsContainerScan.Enabled
                 };
                 var vulnerabilityScanResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch4);
-                Assert.IsNotNull(vulnerabilityScanResult.Value);
+                Assert.That(vulnerabilityScanResult.Value, Is.Not.Null);
             }
             catch (Exception ex)
             {
-                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
-                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
+                Assert.That(ex.Message, Does.Contain("cluster conditions do not pass validation for cluster"));
+                Assert.That(ex.Message, Does.Contain("ClusterDeployedCondition is not True"));
             }
 
             // Cluster Update Version
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             catch (Exception ex)
             {
                 // special case: if the cluster was never deployed, version update (CUVA) is not allowed
-                StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
+                Assert.That(ex.Message, Does.Contain($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True"));
             }
 
              // Continue Cluster Update Version
@@ -214,12 +217,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             catch (Exception ex)
             {
                 // special case: if the cluster was never deployed, version update (CUVA) is not allowed
-                StringAssert.Contains($"cluster {clusterName} does not have suitable conditions to continue to update", ex.Message);
+                Assert.That(ex.Message, Does.Contain($"cluster {clusterName} does not have suitable conditions to continue to update"));
             }
 
             // Delete
             var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

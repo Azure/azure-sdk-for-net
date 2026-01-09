@@ -21,7 +21,7 @@ namespace Azure.Generator.Tests.Providers
 
             var writer = new TypeProviderWriter(uriBuilderDefinition);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
     }
 }

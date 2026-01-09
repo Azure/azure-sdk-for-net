@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
             });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
             var availabilitySet = lro.Value;
-            Assert.AreEqual(setName, availabilitySet.Data.Name);
+            Assert.That(availabilitySet.Data.Name, Is.EqualTo(setName));
         }
 
         [TestCase]
@@ -71,8 +71,11 @@ namespace Azure.ResourceManager.Compute.Tests
             });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
             var availabilitySet = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(setName));
-            Assert.IsFalse(await collection.ExistsAsync(setName + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(setName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(setName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -121,8 +124,11 @@ namespace Azure.ResourceManager.Compute.Tests
                     set2 = availabilitySet;
             }
 
-            Assert.NotNull(set1);
-            Assert.NotNull(set2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(set1, Is.Not.Null);
+                Assert.That(set2, Is.Not.Null);
+            });
         }
     }
 }

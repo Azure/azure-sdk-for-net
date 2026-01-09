@@ -23,16 +23,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 EntityStatus.Active,
                 true,
                 2000);
-            Assert.AreEqual("topicName", properties.Name);
-            Assert.AreEqual(100, properties.MaxSizeInMegabytes);
-            Assert.IsTrue(properties.RequiresDuplicateDetection);
-            Assert.AreEqual(TimeSpan.FromSeconds(10), properties.DefaultMessageTimeToLive);
-            Assert.AreEqual(TimeSpan.FromMinutes(5), properties.AutoDeleteOnIdle);
-            Assert.AreEqual(TimeSpan.FromMinutes(10), properties.DuplicateDetectionHistoryTimeWindow);
-            Assert.IsFalse(properties.EnableBatchedOperations);
-            Assert.AreEqual(EntityStatus.Active, properties.Status);
-            Assert.IsTrue(properties.EnablePartitioning);
-            Assert.AreEqual(2000, properties.MaxMessageSizeInKilobytes);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo("topicName"));
+                Assert.That(properties.MaxSizeInMegabytes, Is.EqualTo(100));
+                Assert.That(properties.RequiresDuplicateDetection, Is.True);
+                Assert.That(properties.DefaultMessageTimeToLive, Is.EqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(properties.AutoDeleteOnIdle, Is.EqualTo(TimeSpan.FromMinutes(5)));
+                Assert.That(properties.DuplicateDetectionHistoryTimeWindow, Is.EqualTo(TimeSpan.FromMinutes(10)));
+                Assert.That(properties.EnableBatchedOperations, Is.False);
+                Assert.That(properties.Status, Is.EqualTo(EntityStatus.Active));
+                Assert.That(properties.EnablePartitioning, Is.True);
+                Assert.That(properties.MaxMessageSizeInKilobytes, Is.EqualTo(2000));
+            });
         }
 
         [Test]
@@ -49,13 +52,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 twoDaysAgo,
                 yesterday,
                 today);
-            Assert.AreEqual("topicName", properties.Name);
-            Assert.AreEqual(10, properties.ScheduledMessageCount);
-            Assert.AreEqual(1000, properties.SizeInBytes);
-            Assert.AreEqual(5, properties.SubscriptionCount);
-            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
-            Assert.AreEqual(yesterday, properties.UpdatedAt);
-            Assert.AreEqual(today, properties.AccessedAt);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo("topicName"));
+                Assert.That(properties.ScheduledMessageCount, Is.EqualTo(10));
+                Assert.That(properties.SizeInBytes, Is.EqualTo(1000));
+                Assert.That(properties.SubscriptionCount, Is.EqualTo(5));
+                Assert.That(properties.CreatedAt, Is.EqualTo(twoDaysAgo));
+                Assert.That(properties.UpdatedAt, Is.EqualTo(yesterday));
+                Assert.That(properties.AccessedAt, Is.EqualTo(today));
+            });
         }
 
         [Test]
@@ -77,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             };
             var properties = new TopicProperties(options);
 
-            Assert.AreEqual(options, new CreateTopicOptions(properties));
+            Assert.That(new CreateTopicOptions(properties), Is.EqualTo(options));
         }
     }
 }

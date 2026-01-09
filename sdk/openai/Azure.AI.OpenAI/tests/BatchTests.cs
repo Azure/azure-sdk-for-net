@@ -57,8 +57,11 @@ public class BatchTests : AoaiTestBase<BatchClient>
         string createdFileId = newFile.Id;
         newFile = await fileClient.GetFileAsync(createdFileId);
         Validate(newFile);
-        Assert.That(newFile.Id, Is.EqualTo(createdFileId));
-        Assert.That(newFile.GetAzureOpenAIFileStatus(), Is.EqualTo(AzureOpenAIFileStatus.Processed));
+        Assert.Multiple(() =>
+        {
+            Assert.That(newFile.Id, Is.EqualTo(createdFileId));
+            Assert.That(newFile.GetAzureOpenAIFileStatus(), Is.EqualTo(AzureOpenAIFileStatus.Processed));
+        });
     }
 
     [RecordedTest]
@@ -200,10 +203,13 @@ public class BatchTests : AoaiTestBase<BatchClient>
             }
         }
 
-        Assert.That(resultBatchId, Is.EqualTo(createBatchOperation.BatchId));
-        Assert.That(resultInputFileId, Is.EqualTo(batchInputFile.Id));
-        Assert.That(resultOutputFileId, Is.Not.Null.And.Not.Empty);
-        Assert.That(resultStatus, Is.EqualTo("completed"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(resultBatchId, Is.EqualTo(createBatchOperation.BatchId));
+            Assert.That(resultInputFileId, Is.EqualTo(batchInputFile.Id));
+            Assert.That(resultOutputFileId, Is.Not.Null.And.Not.Empty);
+            Assert.That(resultStatus, Is.EqualTo("completed"));
+        });
 
         BinaryData batchOutputBytes = await fileClient.DownloadFileAsync(resultOutputFileId);
         Assert.That(batchOutputBytes, Is.Not.Null);
@@ -215,10 +221,16 @@ public class BatchTests : AoaiTestBase<BatchClient>
         foreach (ChatCompletion batchCompletion in batchCompletions)
         {
             Assert.That(batchCompletion, Is.Not.Null);
-            Assert.That(batchCompletion.Role, Is.EqualTo(ChatMessageRole.Assistant));
-            Assert.That(batchCompletion.Content, Has.Count.EqualTo(1));
-            Assert.That(batchCompletion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-            Assert.That(batchCompletion.Content[0].Text, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(batchCompletion.Role, Is.EqualTo(ChatMessageRole.Assistant));
+                Assert.That(batchCompletion.Content, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(batchCompletion.Content[0].Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+                Assert.That(batchCompletion.Content[0].Text, Is.Not.Null.Or.Empty);
+            });
         }
     }
 
@@ -254,7 +266,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
                 }
                 if (documentProperty.NameEquals("error"u8))
                 {
-                    Assert.IsTrue(documentProperty.Value.ValueKind == JsonValueKind.Null);
+                    Assert.That(documentProperty.Value.ValueKind, Is.EqualTo(JsonValueKind.Null));
                     foundNullError = true;
                 }
                 if (documentProperty.NameEquals("response"u8))
@@ -282,10 +294,14 @@ public class BatchTests : AoaiTestBase<BatchClient>
             {
                 Assert.That(expectedCustomIds.Any(expectedId => expectedId == customId));
             }
-            Assert.True(foundNullError);
-            Assert.That(requestId, Is.Not.Null.And.Not.Empty);
-            Assert.That(statusCode, Is.EqualTo(200));
-            Assert.That(deserializedResponseBody, Is.Not.Null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(foundNullError, Is.True);
+                Assert.That(requestId, Is.Not.Null.And.Not.Empty);
+                Assert.That(statusCode, Is.EqualTo(200));
+                Assert.That(deserializedResponseBody, Is.Not.Null);
+            });
             deserializedBodyOutputs.Add(deserializedResponseBody!);
         }
         if (expectedCustomIds is not null)

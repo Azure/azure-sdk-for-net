@@ -73,27 +73,33 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var price = response.Value;
 
-            // Should return 200 with monthly price
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("USD", price.Properties.BillingCurrencyTotal.CurrencyCode);
-            Assert.IsTrue(price.Properties.BillingCurrencyTotal.Amount > 0);
-            Assert.AreEqual("USD", price.Properties.PricingCurrencyTotal.CurrencyCode);
-            Assert.IsTrue(price.Properties.PricingCurrencyTotal.Amount > 0);
-            Assert.IsNotEmpty(price.Properties.ReservationOrderId.ToString());
+            Assert.Multiple(() =>
+            {
+                // Should return 200 with monthly price
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(price.Properties.BillingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
+                Assert.That(price.Properties.BillingCurrencyTotal.Amount, Is.GreaterThan(0));
+                Assert.That(price.Properties.PricingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
+                Assert.That(price.Properties.PricingCurrencyTotal.Amount, Is.GreaterThan(0));
+                Assert.That(price.Properties.ReservationOrderId.ToString(), Is.Not.Empty);
+            });
 
             if (billingPlan.Equals("Upfront"))
             {
-                Assert.IsEmpty(price.Properties.PaymentSchedule);
+                Assert.That(price.Properties.PaymentSchedule, Is.Empty);
             }
             else
             {
-                Assert.AreEqual(12, price.Properties.PaymentSchedule.Count);
+                Assert.That(price.Properties.PaymentSchedule, Has.Count.EqualTo(12));
                 foreach (var item in price.Properties.PaymentSchedule)
                 {
-                    Assert.AreEqual("USD", item.PricingCurrencyTotal.CurrencyCode);
-                    Assert.IsTrue(item.PricingCurrencyTotal.Amount > 0);
-                    Assert.IsNotNull(item.DueOn);
-                    Assert.AreEqual(PaymentStatus.Scheduled, item.Status);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(item.PricingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
+                        Assert.That(item.PricingCurrencyTotal.Amount, Is.GreaterThan(0));
+                        Assert.That(item.DueOn, Is.Not.Null);
+                        Assert.That(item.Status, Is.EqualTo(PaymentStatus.Scheduled));
+                    });
                 }
             }
         }

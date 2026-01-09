@@ -70,17 +70,29 @@ namespace Azure.AI.Inference.Tests.Samples
 #if !SNIPPET
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            });
             ChatCompletions result = response.Value;
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
-            Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
-            Assert.That(result.ToolCalls.Count, Is.EqualTo(1));
-            Assert.That(functionToolCall, Is.Not.Null);
-            Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
-            Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+                Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.ToolCalls, Has.Count.EqualTo(1));
+                Assert.That(functionToolCall, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
+                Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+            });
 
             Dictionary<string, string> arguments
                 = JsonConvert.DeserializeObject<Dictionary<string, string>>(functionToolCall.Arguments);
@@ -113,9 +125,12 @@ namespace Azure.AI.Inference.Tests.Samples
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
-            Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
-            Assert.That(followupResponse.Value.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.Multiple(() =>
+            {
+                Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
+                Assert.That(followupResponse.Value.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            });
         }
 
         [Test]
@@ -175,17 +190,29 @@ namespace Azure.AI.Inference.Tests.Samples
 #if !SNIPPET
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            });
             ChatCompletions result = response.Value;
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
-            Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
-            Assert.That(result.ToolCalls.Count, Is.EqualTo(1));
-            Assert.That(functionToolCall, Is.Not.Null);
-            Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
-            Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+                Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(result.Content, Is.Not.Null.Or.Empty);
+                Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.ToolCalls, Has.Count.EqualTo(1));
+                Assert.That(functionToolCall, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
+                Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+            });
 
             Dictionary<string, string> arguments
                 = JsonConvert.DeserializeObject<Dictionary<string, string>>(functionToolCall.Arguments);
@@ -218,9 +245,12 @@ namespace Azure.AI.Inference.Tests.Samples
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
-            Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
-            Assert.That(followupResponse.Value.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.Multiple(() =>
+            {
+                Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
+                Assert.That(followupResponse.Value.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            });
         }
     }
 }

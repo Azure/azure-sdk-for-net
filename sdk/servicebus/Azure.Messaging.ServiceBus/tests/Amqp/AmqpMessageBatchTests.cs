@@ -348,11 +348,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             var batchReadOnly = batch.AsReadOnly<AmqpMessage>();
             Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
-            Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
+            Assert.That(batchReadOnly, Has.Count.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 
             for (var index = 0; index < amqpMessages.Length; ++index)
             {
-                Assert.That(batchReadOnly.Contains(amqpMessages[index]), $"The message at index: { index } was not in the enumerable.");
+                Assert.That(batchReadOnly, Does.Contain(amqpMessages[index]), $"The message at index: {index} was not in the enumerable.");
             }
         }
 

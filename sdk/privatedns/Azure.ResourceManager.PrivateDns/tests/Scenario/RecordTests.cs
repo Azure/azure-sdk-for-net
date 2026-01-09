@@ -61,35 +61,41 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var aaaaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, aaaaRecordName, data);
             ValidateRecordBaseInfo(aaaaRecord.Value.Data, aaaaRecordName);
-            Assert.AreEqual("privateDnsZones/AAAA", aaaaRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, aaaaRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.PrivateDnsAaaaRecords[0].IPv6Address.ToString());
-            Assert.AreEqual(ipv6AddressValue2, aaaaRecord.Value.Data.PrivateDnsAaaaRecords[1].IPv6Address.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(aaaaRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/AAAA"));
+                Assert.That(aaaaRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(aaaaRecord.Value.Data.PrivateDnsAaaaRecords[0].IPv6Address.ToString(), Is.EqualTo(ipv6AddressValue1));
+                Assert.That(aaaaRecord.Value.Data.PrivateDnsAaaaRecords[1].IPv6Address.ToString(), Is.EqualTo(ipv6AddressValue2));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(aaaaRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await aaaaRecord.Value.UpdateAsync(new PrivateDnsAaaaRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(aaaaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, aaaaRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv6AddressValue1, getResponse.Value.Data.PrivateDnsAaaaRecords[0].IPv6Address.ToString());
-            Assert.AreEqual(ipv6AddressValue2, getResponse.Value.Data.PrivateDnsAaaaRecords[1].IPv6Address.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsAaaaRecords[0].IPv6Address.ToString(), Is.EqualTo(ipv6AddressValue1));
+                Assert.That(getResponse.Value.Data.PrivateDnsAaaaRecords[1].IPv6Address.ToString(), Is.EqualTo(ipv6AddressValue2));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == aaaaRecordName).Data, aaaaRecordName);
 
             // Delete
             await aaaaRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(aaaaRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -118,35 +124,41 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var aRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, aRecordName, data);
             ValidateRecordBaseInfo(aRecord.Value.Data, aRecordName);
-            Assert.AreEqual("privateDnsZones/A", aRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, aRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.PrivateDnsARecords[0].IPv4Address.ToString());
-            Assert.AreEqual(ipv4AddressValue2, aRecord.Value.Data.PrivateDnsARecords[1].IPv4Address.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(aRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/A"));
+                Assert.That(aRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(aRecord.Value.Data.PrivateDnsARecords[0].IPv4Address.ToString(), Is.EqualTo(ipv4AddressValue1));
+                Assert.That(aRecord.Value.Data.PrivateDnsARecords[1].IPv4Address.ToString(), Is.EqualTo(ipv4AddressValue2));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(aRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await aRecord.Value.UpdateAsync(new PrivateDnsARecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(aRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, aRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(ipv4AddressValue1, getResponse.Value.Data.PrivateDnsARecords[0].IPv4Address.ToString());
-            Assert.AreEqual(ipv4AddressValue2, getResponse.Value.Data.PrivateDnsARecords[1].IPv4Address.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsARecords[0].IPv4Address.ToString(), Is.EqualTo(ipv4AddressValue1));
+                Assert.That(getResponse.Value.Data.PrivateDnsARecords[1].IPv4Address.ToString(), Is.EqualTo(ipv4AddressValue2));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == aRecordName).Data, aRecordName);
 
             // Delete
             await aRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(aRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -164,33 +176,39 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var cnameRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cnameRecordName, data);
             ValidateRecordBaseInfo(cnameRecord.Value.Data, cnameRecordName);
-            Assert.AreEqual("privateDnsZones/CNAME", cnameRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, cnameRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(aliasValue, cnameRecord.Value.Data.Cname);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cnameRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/CNAME"));
+                Assert.That(cnameRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(cnameRecord.Value.Data.Cname, Is.EqualTo(aliasValue));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(cnameRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await cnameRecord.Value.UpdateAsync(new PrivateDnsCnameRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(cnameRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, cnameRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(aliasValue, getResponse.Value.Data.Cname);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.Cname, Is.EqualTo(aliasValue));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == cnameRecordName).Data, cnameRecordName);
 
             // Delete
             await cnameRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(cnameRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -221,39 +239,45 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var mxRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mxRecordName, data);
             ValidateRecordBaseInfo(mxRecord.Value.Data, mxRecordName);
-            Assert.AreEqual("privateDnsZones/MX", mxRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, mxRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(10, mxRecord.Value.Data.PrivateDnsMXRecords[0].Preference);
-            Assert.AreEqual(11, mxRecord.Value.Data.PrivateDnsMXRecords[1].Preference);
-            Assert.AreEqual(mailExchangeValue1, mxRecord.Value.Data.PrivateDnsMXRecords[0].Exchange);
-            Assert.AreEqual(mailExchangeValue2, mxRecord.Value.Data.PrivateDnsMXRecords[1].Exchange);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mxRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/MX"));
+                Assert.That(mxRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(mxRecord.Value.Data.PrivateDnsMXRecords[0].Preference, Is.EqualTo(10));
+                Assert.That(mxRecord.Value.Data.PrivateDnsMXRecords[1].Preference, Is.EqualTo(11));
+                Assert.That(mxRecord.Value.Data.PrivateDnsMXRecords[0].Exchange, Is.EqualTo(mailExchangeValue1));
+                Assert.That(mxRecord.Value.Data.PrivateDnsMXRecords[1].Exchange, Is.EqualTo(mailExchangeValue2));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(mxRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await mxRecord.Value.UpdateAsync(new PrivateDnsMXRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(mxRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, mxRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(10, getResponse.Value.Data.PrivateDnsMXRecords[0].Preference);
-            Assert.AreEqual(11, getResponse.Value.Data.PrivateDnsMXRecords[1].Preference);
-            Assert.AreEqual(mailExchangeValue1, getResponse.Value.Data.PrivateDnsMXRecords[0].Exchange);
-            Assert.AreEqual(mailExchangeValue2, getResponse.Value.Data.PrivateDnsMXRecords[1].Exchange);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsMXRecords[0].Preference, Is.EqualTo(10));
+                Assert.That(getResponse.Value.Data.PrivateDnsMXRecords[1].Preference, Is.EqualTo(11));
+                Assert.That(getResponse.Value.Data.PrivateDnsMXRecords[0].Exchange, Is.EqualTo(mailExchangeValue1));
+                Assert.That(getResponse.Value.Data.PrivateDnsMXRecords[1].Exchange, Is.EqualTo(mailExchangeValue2));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == mxRecordName).Data, mxRecordName);
 
             // Delete
             await mxRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(mxRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -282,35 +306,41 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var ptrRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ptrRecordName, data);
             ValidateRecordBaseInfo(ptrRecord.Value.Data, ptrRecordName);
-            Assert.AreEqual("privateDnsZones/PTR", ptrRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, ptrRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(domainNameValue1, ptrRecord.Value.Data.PrivateDnsPtrRecords[0].PtrDomainName);
-            Assert.AreEqual(domainNameValue2, ptrRecord.Value.Data.PrivateDnsPtrRecords[1].PtrDomainName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ptrRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/PTR"));
+                Assert.That(ptrRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(ptrRecord.Value.Data.PrivateDnsPtrRecords[0].PtrDomainName, Is.EqualTo(domainNameValue1));
+                Assert.That(ptrRecord.Value.Data.PrivateDnsPtrRecords[1].PtrDomainName, Is.EqualTo(domainNameValue2));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(ptrRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await ptrRecord.Value.UpdateAsync(new PrivateDnsPtrRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(ptrRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, ptrRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(domainNameValue1, getResponse.Value.Data.PrivateDnsPtrRecords[0].PtrDomainName);
-            Assert.AreEqual(domainNameValue2, getResponse.Value.Data.PrivateDnsPtrRecords[1].PtrDomainName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsPtrRecords[0].PtrDomainName, Is.EqualTo(domainNameValue1));
+                Assert.That(getResponse.Value.Data.PrivateDnsPtrRecords[1].PtrDomainName, Is.EqualTo(domainNameValue2));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == ptrRecordName).Data, ptrRecordName);
 
             // Delete
             await ptrRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(ptrRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -326,36 +356,42 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var soaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, soaRecordName, data);
             ValidateRecordBaseInfo(soaRecord.Value.Data, soaRecordName);
-            Assert.IsNotNull(soaRecord.Value.Data.PrivateDnsSoaRecord.Email);
-            Assert.AreEqual("privateDnsZones/SOA", soaRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, soaRecord.Value.Data.TtlInSeconds);
-            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds > 0);
-            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.RetryTimeInSeconds > 0);
-            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.ExpireTimeInSeconds > 0);
-            Assert.IsTrue(soaRecord.Value.Data.PrivateDnsSoaRecord.MinimumTtlInSeconds > 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.Email, Is.Not.Null);
+                Assert.That(soaRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/SOA"));
+                Assert.That(soaRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds, Is.GreaterThan(0));
+                Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.RetryTimeInSeconds, Is.GreaterThan(0));
+                Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.ExpireTimeInSeconds, Is.GreaterThan(0));
+                Assert.That(soaRecord.Value.Data.PrivateDnsSoaRecord.MinimumTtlInSeconds, Is.GreaterThan(0));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(soaRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await soaRecord.Value.UpdateAsync(new PrivateDnsSoaRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(soaRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, soaRecordName);
-            Assert.IsNotNull(getResponse.Value.Data.PrivateDnsSoaRecord.Email);
-            Assert.AreEqual("privateDnsZones/SOA", getResponse.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds > 0);
-            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.RetryTimeInSeconds > 0);
-            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.ExpireTimeInSeconds > 0);
-            Assert.IsTrue(getResponse.Value.Data.PrivateDnsSoaRecord.MinimumTtlInSeconds > 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.Email, Is.Not.Null);
+                Assert.That(getResponse.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/SOA"));
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.RefreshTimeInSeconds, Is.GreaterThan(0));
+                Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.RetryTimeInSeconds, Is.GreaterThan(0));
+                Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.ExpireTimeInSeconds, Is.GreaterThan(0));
+                Assert.That(getResponse.Value.Data.PrivateDnsSoaRecord.MinimumTtlInSeconds, Is.GreaterThan(0));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == soaRecordName).Data, soaRecordName);
         }
 
@@ -391,35 +427,41 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var srvRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, srvRecordName, data);
             ValidateRecordBaseInfo(srvRecord.Value.Data, srvRecordName);
-            Assert.AreEqual("privateDnsZones/SRV", srvRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, srvRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(targetValue1, srvRecord.Value.Data.PrivateDnsSrvRecords[0].Target);
-            Assert.AreEqual(targetValue2, srvRecord.Value.Data.PrivateDnsSrvRecords[1].Target);
+            Assert.Multiple(() =>
+            {
+                Assert.That(srvRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/SRV"));
+                Assert.That(srvRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(srvRecord.Value.Data.PrivateDnsSrvRecords[0].Target, Is.EqualTo(targetValue1));
+                Assert.That(srvRecord.Value.Data.PrivateDnsSrvRecords[1].Target, Is.EqualTo(targetValue2));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(srvRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await srvRecord.Value.UpdateAsync(new PrivateDnsSrvRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(srvRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, srvRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(targetValue1, getResponse.Value.Data.PrivateDnsSrvRecords[0].Target);
-            Assert.AreEqual(targetValue2, getResponse.Value.Data.PrivateDnsSrvRecords[1].Target);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsSrvRecords[0].Target, Is.EqualTo(targetValue1));
+                Assert.That(getResponse.Value.Data.PrivateDnsSrvRecords[1].Target, Is.EqualTo(targetValue2));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == srvRecordName).Data, srvRecordName);
 
             // Delete
             await srvRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(srvRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -446,40 +488,49 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var txtRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, txtRecordName, data);
             ValidateRecordBaseInfo(txtRecord.Value.Data, txtRecordName);
-            Assert.AreEqual("privateDnsZones/TXT", txtRecord.Value.Data.ResourceType.Type.ToString());
-            Assert.AreEqual(3600, txtRecord.Value.Data.TtlInSeconds);
-            Assert.AreEqual(2, txtRecord.Value.Data.PrivateDnsTxtRecords.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(txtRecord.Value.Data.ResourceType.Type.ToString(), Is.EqualTo("privateDnsZones/TXT"));
+                Assert.That(txtRecord.Value.Data.TtlInSeconds, Is.EqualTo(3600));
+                Assert.That(txtRecord.Value.Data.PrivateDnsTxtRecords, Has.Count.EqualTo(2));
+            });
 
             // Exist
             bool flag = await collection.ExistsAsync(txtRecordName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Update
             var updateResponse = await txtRecord.Value.UpdateAsync(new PrivateDnsTxtRecordData() { TtlInSeconds = 7200 });
-            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+            Assert.That(updateResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
 
             // Get
             var getResponse = await collection.GetAsync(txtRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, txtRecordName);
-            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
-            Assert.AreEqual(2, getResponse.Value.Data.PrivateDnsTxtRecords.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(getResponse.Value.Data.TtlInSeconds, Is.EqualTo(7200));
+                Assert.That(getResponse.Value.Data.PrivateDnsTxtRecords, Has.Count.EqualTo(2));
+            });
 
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == txtRecordName).Data, txtRecordName);
 
             // Delete
             await txtRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(txtRecordName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateRecordBaseInfo(PrivateDnsBaseRecordData recordData, string recordDataName)
         {
-            Assert.IsNotNull(recordData);
-            Assert.IsNotNull(recordData.ETag);
-            Assert.AreEqual(recordDataName, recordData.Name);
+            Assert.That(recordData, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recordData.ETag, Is.Not.Null);
+                Assert.That(recordData.Name, Is.EqualTo(recordDataName));
+            });
         }
     }
 }

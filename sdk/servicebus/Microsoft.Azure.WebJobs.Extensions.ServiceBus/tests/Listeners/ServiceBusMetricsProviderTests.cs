@@ -20,34 +20,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.Listeners
             // Test base case
             var metrics = ServiceBusMetricsProvider.CreateTriggerMetrics(null, 0, 0, 0, false);
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+                Assert.That(metrics.MessageCount, Is.EqualTo(0));
+                Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+                Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
+            });
 
             // Test messages on main queue
             metrics = ServiceBusMetricsProvider.CreateTriggerMetrics(message, 10, 0, 0, false);
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(10, metrics.MessageCount);
-            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+                Assert.That(metrics.MessageCount, Is.EqualTo(10));
+                Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
+            });
 
             // Test listening on dead letter queue
             metrics = ServiceBusMetricsProvider.CreateTriggerMetrics(message, 10, 100, 0, true);
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(100, metrics.MessageCount);
-            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+                Assert.That(metrics.MessageCount, Is.EqualTo(100));
+                Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
+                Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
+            });
 
             // Test partitions
             metrics = ServiceBusMetricsProvider.CreateTriggerMetrics(null, 0, 0, 16, false);
 
-            Assert.AreEqual(16, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metrics.PartitionCount, Is.EqualTo(16));
+                Assert.That(metrics.MessageCount, Is.EqualTo(0));
+                Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+                Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
+            });
         }
     }
 }

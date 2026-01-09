@@ -28,8 +28,8 @@ namespace Microsoft.Extensions.Azure.Tests
             }
 
             var logs = loggerFactory.Loggers["Test.source"].Logs;
-            Assert.AreEqual(1, logs.Count);
-            Assert.AreEqual(logLevel, logs[0].Level);
+            Assert.That(logs, Has.Count.EqualTo(1));
+            Assert.That(logs[0].Level, Is.EqualTo(logLevel));
         }
 
         [Test]

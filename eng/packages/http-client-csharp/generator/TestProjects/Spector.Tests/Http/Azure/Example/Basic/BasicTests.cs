@@ -30,9 +30,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.Example.Basic
                 }
             };
             var response = await new AzureExampleClient(host, null).BasicActionAsync("query", "header", RequestContent.Create(value));
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
             JsonNode responseBody = JsonNode.Parse(response.Content!)!;
-            Assert.AreEqual("text", (string)responseBody["stringProperty"]!);
+            Assert.That((string)responseBody["stringProperty"]!, Is.EqualTo("text"));
         });
     }
 }

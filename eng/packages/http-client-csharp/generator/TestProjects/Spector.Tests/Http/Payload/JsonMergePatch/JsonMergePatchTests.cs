@@ -25,7 +25,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.JsonMergePatch
                     InnerModel = new InnerModel { Name = "InnerMadge", Description = "innerDesc" },
                     IntArray = { 1, 2, 3 }
                 });
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
@@ -43,7 +43,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.JsonMergePatch
                         innerModel = (InnerModel?)null,
                         intArray = (int[]?)null
                     })));
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
@@ -61,7 +61,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.JsonMergePatch
                         innerModel = (InnerModel?)null,
                         intArray = (int[]?)null
                     })));
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
     }
 }

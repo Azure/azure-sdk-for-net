@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 return;
             }
 
-            Assert.IsNotNull(createdGraph);
-            Assert.IsNotNull(createdGraph.Data);
-            Assert.IsNotNull(createdGraph.Data.Properties);
+            Assert.That(createdGraph, Is.Not.Null);
+            Assert.That(createdGraph.Data, Is.Not.Null);
+            Assert.That(createdGraph.Data.Properties, Is.Not.Null);
 
             // Delete DataflowGraph
             await createdGraph.DeleteAsync(WaitUntil.Completed);

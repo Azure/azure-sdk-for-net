@@ -83,8 +83,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -133,8 +136,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -182,8 +188,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -231,8 +240,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -294,8 +306,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -360,12 +375,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var ownership = (await checkpointStore.ListOwnershipAsync(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, scope.ConsumerGroups.First(), cancellationSource.Token))?.ToList();
 
             Assert.That(ownership, Is.Not.Null, "The ownership list should have been returned.");
-            Assert.That(ownership.Count, Is.AtLeast(1), "At least one partition should have been owned.");
+            Assert.That(ownership, Has.Count.AtLeast(1), "At least one partition should have been owned.");
 
             foreach (var partitionOwnership in ownership)
             {
-                Assert.That(partitionIds.Contains(partitionOwnership.PartitionId), Is.True, $"The partition `{ partitionOwnership.PartitionId }` is not valid for the Event Hub.");
-                Assert.That(partitionOwnership.OwnerIdentifier, Is.Empty, "Ownership should have bee relinquished when the processor was stopped.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionIds, Does.Contain(partitionOwnership.PartitionId), $"The partition `{partitionOwnership.PartitionId}` is not valid for the Event Hub.");
+                    Assert.That(partitionOwnership.OwnerIdentifier, Is.Empty, "Ownership should have bee relinquished when the processor was stopped.");
+                });
             }
         }
 
@@ -447,8 +465,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -508,13 +529,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Validate that a single partition was processed.
 
-            Assert.That(partitions.Count, Is.EqualTo(1), "All events should have been processed from a single partition.");
+            Assert.That(partitions, Has.Count.EqualTo(1), "All events should have been processed from a single partition.");
 
             // Validate a checkpoint was created and that events were processed.
 
             var checkpoint = await checkpointStore.GetCheckpointAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, partitions.First(), cancellationSource.Token);
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
-            Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
+                Assert.That(processedEvents, Has.Count.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+            });
 
             // Reset state and start the processor again; it should resume from the event following the checkpoint.
 
@@ -534,8 +558,11 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in afterCheckpointEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                    Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                });
             }
         }
 
@@ -828,8 +855,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 processor.StopProcessing(cancellationSource.Token);
             }
 
-            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            });
 
             cancellationSource.Cancel();
         }
@@ -880,8 +910,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processor.StopProcessingAsync(cancellationSource.Token);
 
-            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            });
 
             // Send another single event to prove restart was successful.
 
@@ -973,9 +1006,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StopProcessingAsync(cancellationSource.Token);
             processorStopped = true;
 
-            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(eventsProcessedAfterStop, Is.False, "Events should not have been dispatched for processing after the processor has stopped.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(eventsProcessedAfterStop, Is.False, "Events should not have been dispatched for processing after the processor has stopped.");
+            });
         }
 
         /// <summary>
@@ -1035,17 +1071,23 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processor.StopProcessingAsync(cancellationSource.Token);
 
-            // Validate that a single partition was processed and a checkpoint can be written.
+            Assert.Multiple(async () =>
+            {
+                // Validate that a single partition was processed and a checkpoint can be written.
 
-            Assert.That(partitions.Count, Is.EqualTo(1), "All events should have been processed from a single partition.");
-            Assert.That(checkpointArgs, Is.Not.Null, "The checkpoint arguments should have been captured.");
-            Assert.That(async () => await checkpointArgs.UpdateCheckpointAsync(cancellationSource.Token), Throws.Nothing, "Checkpointing should be safe after stopping.");
+                Assert.That(partitions, Has.Count.EqualTo(1), "All events should have been processed from a single partition.");
+                Assert.That(checkpointArgs, Is.Not.Null, "The checkpoint arguments should have been captured.");
+                Assert.That(async () => await checkpointArgs.UpdateCheckpointAsync(cancellationSource.Token), Throws.Nothing, "Checkpointing should be safe after stopping.");
+            });
 
             // Validate a checkpoint was created and that events were processed.
 
             var checkpoint = await checkpointStore.GetCheckpointAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, partitions.First(), cancellationSource.Token);
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
-            Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
+                Assert.That(processedEvents, Has.Count.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+            });
         }
 
         /// <summary>

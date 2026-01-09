@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerUseMocks
             bool result = await IsExpensiveAsync(fakeModelId, fakeDocumentUri, mockClient.Object);
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
             #endregion
         }
 
@@ -119,8 +119,8 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            Assert.AreEqual(1, invalidModelIds.Count);
-            Assert.AreEqual(fakeInvalidModelId, invalidModelIds[0]);
+            Assert.That(invalidModelIds, Has.Count.EqualTo(1));
+            Assert.That(invalidModelIds[0], Is.EqualTo(fakeInvalidModelId));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             await foreach ( CryptoKeyResult result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
-            Assert.NotNull(results);
+            Assert.That(results, Is.Not.Null);
         }
     }
 }

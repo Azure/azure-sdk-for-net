@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var input = ResourceDataHelpers.GetVariableData(name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationVariableResource variable1 = lro.Value;
-            Assert.AreEqual(name, variable1.Data.Name);
+            Assert.That(variable1.Data.Name, Is.EqualTo(name));
             //2.Get
             AutomationVariableResource variable2 = await variable1.GetAsync();
             ResourceDataHelpers.AssertVariable(variable1.Data, variable2.Data);
@@ -50,10 +50,14 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
+                //4.Exists
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

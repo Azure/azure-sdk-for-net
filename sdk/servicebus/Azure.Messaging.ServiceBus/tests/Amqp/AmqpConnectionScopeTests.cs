@@ -182,8 +182,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
 
             Assert.That(observedException, Is.Not.Null, "An exception should have been observed.");
-            Assert.That(observedException, Is.TypeOf<ServiceBusException>(), "The exception should have been translated.");
-            Assert.That(((ServiceBusException)observedException).IsTransient, Is.True, "The exception should be transient.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(observedException, Is.TypeOf<ServiceBusException>(), "The exception should have been translated.");
+                Assert.That(((ServiceBusException)observedException).IsTransient, Is.True, "The exception should be transient.");
+            });
 
             mockScope.MockConnection.VerifyAll();
         }

@@ -118,21 +118,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             ServiceBusListener.ConcurrencyUpdateManager concurrencyUpdateManager = new ServiceBusListener.ConcurrencyUpdateManager(concurrencyManager, messageProcessor, null, false, _functionId, logger);
 
             // when no messages are being processed, concurrency is not adjusted
-            Assert.AreEqual(1, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(1));
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 10);
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(1, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(1));
 
             // ensure processor concurrency is adjusted up
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(10, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(10));
 
             // ensure processor concurrency is adjusted down
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 5);
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(5, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(5));
         }
 
         [Test]
@@ -147,26 +147,38 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             ILogger logger = _loggerFactory.CreateLogger("test");
             ServiceBusListener.ConcurrencyUpdateManager concurrencyUpdateManager = new ServiceBusListener.ConcurrencyUpdateManager(concurrencyManager, null, sessionMessageProcessor, true, _functionId, logger);
 
-            // when no messages are being processed, concurrency is not adjusted
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                // when no messages are being processed, concurrency is not adjusted
+                Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(1));
+                Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
+            });
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 10);
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(1));
+                Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
+            });
 
             // ensure processor concurrency is adjusted up
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(10, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(10));
+                Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
+            });
 
             // ensure processor concurrency is adjusted down
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 5);
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(5, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(5));
+                Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -313,22 +325,28 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         {
             IScaleMonitor scaleMonitor = _listener.GetMonitor();
 
-            Assert.AreEqual(typeof(ServiceBusScaleMonitor), scaleMonitor.GetType());
-            Assert.AreEqual(scaleMonitor.Descriptor.Id, $"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower());
+            Assert.Multiple(() =>
+            {
+                Assert.That(scaleMonitor.GetType(), Is.EqualTo(typeof(ServiceBusScaleMonitor)));
+                Assert.That($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(), Is.EqualTo(scaleMonitor.Descriptor.Id));
+            });
 
             var scaleMonitor2 = _listener.GetMonitor();
 
-            Assert.AreSame(scaleMonitor, scaleMonitor2);
+            Assert.That(scaleMonitor2, Is.SameAs(scaleMonitor));
         }
 
         [Test]
         public void StopAsync_LogListenerDetails()
         {
             Assert.DoesNotThrow(() => _listener.StopAsync(CancellationToken.None));
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")));
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
+            Assert.Multiple(() =>
+            {
+                Assert.That(_loggerProvider.GetAllLogMessages()
+                            .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")), Is.Not.Null);
+                Assert.That(_loggerProvider.GetAllLogMessages()
+                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")), Is.Not.Null);
+            });
         }
 
         [Test]
@@ -338,10 +356,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             {
                 _listener.Started = false;
                 Assert.ThrowsAsync<InvalidOperationException>(() => _listener.StopAsync(CancellationToken.None));
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")));
-                Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(_loggerProvider.GetAllLogMessages()
+                                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Attempting to stop ServiceBus listener")), Is.Not.Null);
+                    Assert.That(_loggerProvider.GetAllLogMessages()
+                        .SingleOrDefault(x => x.FormattedMessage.StartsWith("ServiceBus listener stopped")), Is.Not.Null);
+                });
             }
             finally
             {
@@ -366,10 +387,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         [Test]
@@ -389,10 +410,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         [Test]
@@ -413,10 +434,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessSessionMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         [Test]
@@ -437,10 +458,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 async () => await _listener.ProcessSessionMessageAsync(args),
                 Throws.InstanceOf<InvalidOperationException>());
 
-            Assert.NotNull(_loggerProvider.GetAllLogMessages()
+            Assert.That(_loggerProvider.GetAllLogMessages()
                 .SingleOrDefault(
                     x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
-                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
+                                                       "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning), Is.Not.Null);
         }
 
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)

@@ -25,11 +25,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 .BuildServiceProvider();
             var validator = serviceProvider.GetRequiredService<RequestValidator>();
 
-            Assert.NotNull(validator);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.That(validator, Is.Not.Null);
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
 
             var serviceClient = serviceProvider.GetRequiredService<WebPubSubServiceClient<TestHub>>();
-            Assert.NotNull(serviceClient);
+            Assert.That(serviceClient, Is.Not.Null);
         }
 
         [Test]
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var wpsOptions = serviceProvider.GetRequiredService<IOptions<WebPubSubOptions>>();
 
             // no throws
-            Assert.NotNull(wpsOptions);
-            Assert.NotNull(wpsOptions.Value);
-            Assert.Null(wpsOptions.Value.ServiceEndpoint);
+            Assert.That(wpsOptions, Is.Not.Null);
+            Assert.That(wpsOptions.Value, Is.Not.Null);
+            Assert.That(wpsOptions.Value.ServiceEndpoint, Is.Null);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 .BuildServiceProvider();
             var clientFactory = serviceProvider.GetRequiredService<WebPubSubServiceClientFactory>();
 
-            Assert.NotNull(clientFactory);
+            Assert.That(clientFactory, Is.Not.Null);
             Assert.Throws<ArgumentException>(() => clientFactory.Create<TestHub>());
         }
 
@@ -73,8 +73,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var validator = app.Services.GetRequiredService<RequestValidator>();
 
-            Assert.NotNull(validator);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.That(validator, Is.Not.Null);
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
         }
 
         [Test]
@@ -92,10 +92,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var validator = app.Services.GetRequiredService<RequestValidator>();
             var adaptor = app.Services.GetRequiredService<ServiceRequestHandlerAdapter>();
 
-            Assert.NotNull(validator);
-            Assert.NotNull(adaptor);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
-            Assert.NotNull(adaptor.GetHub(customHub), "Custom hub should be registered");
+            Assert.Multiple(() =>
+            {
+                Assert.That(validator, Is.Not.Null);
+                Assert.That(adaptor, Is.Not.Null);
+            });
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
+            Assert.That(adaptor.GetHub(customHub), Is.Not.Null, "Custom hub should be registered");
         }
 
         [Test]
@@ -112,10 +115,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var validator = app.Services.GetRequiredService<RequestValidator>();
             var adaptor = app.Services.GetRequiredService<ServiceRequestHandlerAdapter>();
 
-            Assert.NotNull(validator);
-            Assert.NotNull(adaptor);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
-            Assert.NotNull(adaptor.GetHub(nameof(TestHub)), "Hub with the name that matches the class name should be registered");
+            Assert.Multiple(() =>
+            {
+                Assert.That(validator, Is.Not.Null);
+                Assert.That(adaptor, Is.Not.Null);
+            });
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
+            Assert.That(adaptor.GetHub(nameof(TestHub)), Is.Not.Null, "Hub with the name that matches the class name should be registered");
         }
 
         private sealed class TestHub : WebPubSubHub

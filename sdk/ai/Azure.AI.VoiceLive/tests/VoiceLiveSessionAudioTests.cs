@@ -96,10 +96,13 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastJsonMessage(fake);
             Assert.That(last, Is.Not.Null, "Expected a JSON command to have been sent.");
             var root = last!.RootElement;
-            Assert.That(root.TryGetProperty("type", out var typeProp), Is.True, "type property missing");
-            Assert.That(typeProp.GetString(), Is.EqualTo("input_audio_buffer.append"));
-            Assert.That(root.TryGetProperty("audio", out var audioProp), Is.True, "audio property missing");
-            Assert.That(audioProp.GetString(), Is.EqualTo("AQID"), "Base64 encoding mismatch");
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("type", out var typeProp), Is.True, "type property missing");
+                Assert.That(typeProp.GetString(), Is.EqualTo("input_audio_buffer.append"));
+                Assert.That(root.TryGetProperty("audio", out var audioProp), Is.True, "audio property missing");
+                Assert.That(audioProp.GetString(), Is.EqualTo("AQID"), "Base64 encoding mismatch");
+            });
         }
 
         [Test]
@@ -250,7 +253,7 @@ namespace Azure.AI.VoiceLive.Tests
                 }
             }
 
-            CollectionAssert.AreEqual(new[] { "input_audio.turn.start", "input_audio.turn.append", "input_audio.turn.end" }, turnEvents, "Unexpected turn event sequence");
+            Assert.That(turnEvents, Is.EqualTo(new[] { "input_audio.turn.start", "input_audio.turn.append", "input_audio.turn.end" }).AsCollection, "Unexpected turn event sequence");
         }
 
         [Test]

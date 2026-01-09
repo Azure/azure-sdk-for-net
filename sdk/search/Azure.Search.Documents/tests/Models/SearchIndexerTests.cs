@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void ParsesETag(string value, string expected)
         {
             SearchIndexer sut = new SearchIndexer(null, null, null, null, null, null, null, null, null, null, value, null, null, serializedAdditionalRawData: null);
-            Assert.AreEqual(expected, sut.ETag?.ToString());
+            Assert.That(sut.ETag?.ToString(), Is.EqualTo(expected));
         }
     }
 }

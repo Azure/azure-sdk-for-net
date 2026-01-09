@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Tests
         public async Task GetAll()
         {
             var list = await _serviceFabricApplicationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

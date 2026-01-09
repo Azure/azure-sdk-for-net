@@ -80,7 +80,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                         Transport = new MockTransport(
                             req =>
                             {
-                                Assert.AreEqual(customUri.Host, req.Uri.Host);
+                                Assert.That(req.Uri.Host, Is.EqualTo(customUri.Host));
                                 var cert = new MockResponse(200);
                                 cert.SetContent(
                                     @" {

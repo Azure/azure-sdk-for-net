@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            Assert.IsTrue(nginxDeploymentName.Equals(nginxDeployment.Data.Name));
+            Assert.That(nginxDeploymentName, Is.EqualTo(nginxDeployment.Data.Name));
         }
 
         [TestCase]
@@ -63,8 +63,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             _ = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            Assert.IsTrue(await collection.ExistsAsync(nginxDeploymentName));
-            Assert.IsFalse(await collection.ExistsAsync(nginxDeploymentName + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(nginxDeploymentName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(nginxDeploymentName + "1"), Is.False);
+            });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -77,12 +80,12 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment1 = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
             NullableResponse<NginxDeploymentResource> nginxDeploymentResponse = await collection.GetIfExistsAsync(nginxDeploymentName);
 
-            Assert.True(nginxDeploymentResponse.HasValue);
+            Assert.That(nginxDeploymentResponse.HasValue, Is.True);
             NginxDeploymentResource nginxDeployment2 = nginxDeploymentResponse.Value;
             ResourceDataHelper.AssertTrackedResourceData(nginxDeployment1.Data, nginxDeployment2.Data);
 
             NullableResponse<NginxDeploymentResource> nginxDeploymentResource2 = await collection.GetIfExistsAsync(nginxDeploymentName + "1");
-            Assert.False(nginxDeploymentResource2.HasValue);
+            Assert.That(nginxDeploymentResource2.HasValue, Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetIfExistsAsync(null));
         }
 
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
 
             string nginxDeploymentName1 = Recording.GenerateAssetName("testDeployment-");
             string nginxDeploymentName2 = Recording.GenerateAssetName("testDeployment-");
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -131,8 +134,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                     nginxDeployment2 = nginxDeployment;
             }
 
-            Assert.NotNull(nginxDeployment1);
-            Assert.NotNull(nginxDeployment2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(nginxDeployment1, Is.Not.Null);
+                Assert.That(nginxDeployment2, Is.Not.Null);
+            });
         }
     }
 }

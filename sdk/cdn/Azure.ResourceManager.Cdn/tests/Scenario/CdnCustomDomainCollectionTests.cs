@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnCustomDomainName = Recording.GenerateAssetName("customDomain-");
             string hostName = "sdktest1.clitest.azfdtest.xyz";
             CdnCustomDomainResource cdnCustomDomain = await CreateCdnCustomDomain(cdnEndpoint, cdnCustomDomainName, hostName);
-            Assert.AreEqual(cdnCustomDomainName, cdnCustomDomain.Data.Name);
+            Assert.That(cdnCustomDomain.Data.Name, Is.EqualTo(cdnCustomDomainName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, cdnCustomDomainName, null));
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 if (tempCustomDomain.Data.HostName.Equals("sdktest2.clitest.azfdtest.xyz"))
                     count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

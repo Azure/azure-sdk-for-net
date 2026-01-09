@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // Get created guest configuration assignment
             Response<GuestConfigurationVmssAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.VMSSAssignmentName);
             GuestConfigurationVmssAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
-            Assert.IsNotNull(guestAssignmentResourceRetrieved);
-            Assert.AreEqual(GuestConfigurationManagementUtilities.VMSSAssignmentName, guestAssignmentResourceRetrieved.Data.Name);
+            Assert.That(guestAssignmentResourceRetrieved, Is.Not.Null);
+            Assert.That(guestAssignmentResourceRetrieved.Data.Name, Is.EqualTo(GuestConfigurationManagementUtilities.VMSSAssignmentName));
         }
     }
 }

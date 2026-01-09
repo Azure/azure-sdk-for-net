@@ -130,36 +130,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<QueueProperties> createdQueueResponse = await client.CreateQueueAsync(queueOptions);
             Response rawResponse = createdQueueResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+                Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+                Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            });
 
             QueueProperties createdQueue = createdQueueResponse.Value;
 
             if (CanSetMaxMessageSize(premium))
             {
-                Assert.AreEqual(100000, createdQueue.MaxMessageSizeInKilobytes);
+                Assert.That(createdQueue.MaxMessageSizeInKilobytes, Is.EqualTo(100000));
             }
             else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 // standard namespaces either use 256KB or 1024KB when in Canary
-                Assert.LessOrEqual(createdQueue.MaxMessageSizeInKilobytes, 1024);
+                Assert.That(createdQueue.MaxMessageSizeInKilobytes, Is.LessThanOrEqualTo(1024));
             }
             else
             {
-                Assert.IsNull(createdQueue.MaxMessageSizeInKilobytes);
+                Assert.That(createdQueue.MaxMessageSizeInKilobytes, Is.Null);
             }
 
             AssertQueueOptions(queueOptions, createdQueue);
 
             Response<QueueProperties> getQueueResponse = await client.GetQueueAsync(queueOptions.Name);
             rawResponse = createdQueueResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+            Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+            Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
             QueueProperties getQueue = getQueueResponse.Value;
-            Assert.AreEqual(createdQueue, getQueue);
+            Assert.That(getQueue, Is.EqualTo(createdQueue));
 
             getQueue.EnableBatchedOperations = false;
             getQueue.MaxDeliveryCount = 9;
@@ -185,20 +188,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 // when in playback mode.
                 var rules = updatedQueue.AuthorizationRules;
                 updatedQueue.AuthorizationRules = getQueue.AuthorizationRules.Clone();
-                Assert.AreEqual(getQueue, updatedQueue);
+                Assert.That(updatedQueue, Is.EqualTo(getQueue));
                 updatedQueue.AuthorizationRules = rules;
             }
             else
             {
-                Assert.AreEqual(getQueue, updatedQueue);
+                Assert.That(updatedQueue, Is.EqualTo(getQueue));
             }
             Response<bool> isExistsResponse = await client.QueueExistsAsync(queueName);
             rawResponse = createdQueueResponse.GetRawResponse();
 
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.True(isExistsResponse.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+                Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+                Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+                Assert.That(isExistsResponse.Value, Is.True);
+            });
 
             List<QueueProperties> queueList = new List<QueueProperties>();
             await foreach (QueueProperties queue in client.GetQueuesAsync())
@@ -207,8 +213,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
 
             queueList = queueList.Where(e => e.Name.StartsWith(nameof(BasicQueueCrudOperations).ToLower())).ToList();
-            Assert.True(queueList.Count == 1, $"Expected 1 queue but {queueList.Count} queues returned");
-            Assert.AreEqual(queueList.First().Name, queueName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(queueList, Has.Count.EqualTo(1), $"Expected 1 queue but {queueList.Count} queues returned");
+                Assert.That(queueName, Is.EqualTo(queueList.First().Name));
+            });
 
             await client.DeleteQueueAsync(updatedQueue.Name);
 
@@ -218,7 +227,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             isExistsResponse = await client.QueueExistsAsync(queueName);
-            Assert.False(isExistsResponse.Value);
+            Assert.That(isExistsResponse.Value, Is.False);
         }
 
         [RecordedTest]
@@ -255,24 +264,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<TopicProperties> createdTopicResponse = await client.CreateTopicAsync(options);
             Response rawResponse = createdTopicResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+                Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+                Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            });
 
             TopicProperties createdTopic = createdTopicResponse.Value;
 
             if (CanSetMaxMessageSize(premium))
             {
-                Assert.AreEqual(100000, createdTopic.MaxMessageSizeInKilobytes);
+                Assert.That(createdTopic.MaxMessageSizeInKilobytes, Is.EqualTo(100000));
             }
             else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 // standard namespaces either use 256KB or 1024KB when in Canary
-                Assert.LessOrEqual(createdTopic.MaxMessageSizeInKilobytes, 1024);
+                Assert.That(createdTopic.MaxMessageSizeInKilobytes, Is.LessThanOrEqualTo(1024));
             }
             else
             {
-                Assert.IsNull(createdTopic.MaxMessageSizeInKilobytes);
+                Assert.That(createdTopic.MaxMessageSizeInKilobytes, Is.Null);
             }
 
             AssertTopicOptions(options, createdTopic);
@@ -280,13 +292,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
 
             rawResponse = getTopicResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+            Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+            Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
 
             TopicProperties getTopic = getTopicResponse.Value;
 
-            Assert.AreEqual(createdTopic, getTopic);
+            Assert.That(getTopic, Is.EqualTo(createdTopic));
 
             getTopic.EnableBatchedOperations = false;
             getTopic.DefaultMessageTimeToLive = TimeSpan.FromDays(3);
@@ -300,15 +312,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<TopicProperties> updatedTopicResponse = await client.UpdateTopicAsync(getTopic);
             rawResponse = updatedTopicResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+                Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+                Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            });
 
             TopicProperties updatedTopic = updatedTopicResponse.Value;
-            Assert.AreEqual(getTopic, updatedTopic);
+            Assert.That(updatedTopic, Is.EqualTo(getTopic));
 
             bool exists = await client.TopicExistsAsync(topicName);
-            Assert.True(exists);
+            Assert.That(exists, Is.True);
 
             List<TopicProperties> topicList = new List<TopicProperties>();
             await foreach (TopicProperties topic in client.GetTopicsAsync())
@@ -316,21 +331,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 topicList.Add(topic);
             }
             topicList = topicList.Where(e => e.Name.StartsWith(nameof(BasicTopicCrudOperations).ToLower())).ToList();
-            Assert.True(topicList.Count == 1, $"Expected 1 topic but {topicList.Count} topics returned");
-            Assert.AreEqual(topicList.First().Name, topicName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(topicList, Has.Count.EqualTo(1), $"Expected 1 topic but {topicList.Count} topics returned");
+                Assert.That(topicName, Is.EqualTo(topicList.First().Name));
+            });
 
             Response response = await client.DeleteTopicAsync(updatedTopic.Name);
-            Assert.NotNull(response.ClientRequestId);
-            Assert.IsTrue(response.ContentStream.CanRead);
-            Assert.AreEqual(0, response.ContentStream.Position);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(response.ClientRequestId, Is.Not.Null);
+                Assert.That(response.ContentStream.CanRead, Is.True);
+                Assert.That(response.ContentStream.Position, Is.EqualTo(0));
 
-            Assert.That(
-                  async () =>
-                  await client.GetTopicAsync(options.Name),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
+                Assert.That(
+                      async () =>
+                      await client.GetTopicAsync(options.Name),
+                      Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
+            });
 
             exists = await client.TopicExistsAsync(topicName);
-            Assert.False(exists);
+            Assert.That(exists, Is.False);
         }
 
         private bool CanSetMaxMessageSize(bool premium)
@@ -364,38 +385,47 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<SubscriptionProperties> createdSubscriptionResponse = await client.CreateSubscriptionAsync(options);
             Response rawResponse = createdSubscriptionResponse.GetRawResponse();
-            Assert.NotNull(rawResponse.ClientRequestId);
-            Assert.IsTrue(rawResponse.ContentStream.CanRead);
-            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rawResponse.ClientRequestId, Is.Not.Null);
+                Assert.That(rawResponse.ContentStream.CanRead, Is.True);
+                Assert.That(rawResponse.ContentStream.Position, Is.EqualTo(0));
+            });
 
             SubscriptionProperties createdSubscription = createdSubscriptionResponse.Value;
 
-            Assert.AreEqual(options, new CreateSubscriptionOptions(createdSubscription));
+            Assert.That(new CreateSubscriptionOptions(createdSubscription), Is.EqualTo(options));
 
             SubscriptionProperties getSubscription = await client.GetSubscriptionAsync(options.TopicName, options.SubscriptionName);
-            Assert.AreEqual(options, new CreateSubscriptionOptions(getSubscription));
+            Assert.That(new CreateSubscriptionOptions(getSubscription), Is.EqualTo(options));
 
             getSubscription.DefaultMessageTimeToLive = TimeSpan.FromDays(3);
             getSubscription.MaxDeliveryCount = 9;
 
             SubscriptionProperties updatedSubscription = await client.UpdateSubscriptionAsync(getSubscription);
-            Assert.AreEqual(getSubscription, updatedSubscription);
+            Assert.That(updatedSubscription, Is.EqualTo(getSubscription));
 
             bool exists = await client.SubscriptionExistsAsync(topicName, subscriptionName);
-            Assert.True(exists);
+            Assert.That(exists, Is.True);
 
             List<SubscriptionProperties> subscriptionList = new List<SubscriptionProperties>();
             await foreach (Page<SubscriptionProperties> subscriptionPage in client.GetSubscriptionsAsync(topicName).AsPages())
             {
-                Assert.NotNull(subscriptionPage.GetRawResponse().ClientRequestId);
-                Assert.IsTrue(subscriptionPage.GetRawResponse().ContentStream.CanRead);
-                Assert.AreEqual(0, subscriptionPage.GetRawResponse().ContentStream.Position);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(subscriptionPage.GetRawResponse().ClientRequestId, Is.Not.Null);
+                    Assert.That(subscriptionPage.GetRawResponse().ContentStream.CanRead, Is.True);
+                    Assert.That(subscriptionPage.GetRawResponse().ContentStream.Position, Is.EqualTo(0));
+                });
                 subscriptionList.AddRange(subscriptionPage.Values);
             }
             subscriptionList = subscriptionList.Where(e => e.TopicName.StartsWith(nameof(BasicSubscriptionCrudOperations).ToLower())).ToList();
-            Assert.True(subscriptionList.Count == 1, $"Expected 1 subscription but {subscriptionList.Count} subscriptions returned");
-            Assert.AreEqual(subscriptionList.First().TopicName, topicName);
-            Assert.AreEqual(subscriptionList.First().SubscriptionName, subscriptionName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(subscriptionList, Has.Count.EqualTo(1), $"Expected 1 subscription but {subscriptionList.Count} subscriptions returned");
+                Assert.That(topicName, Is.EqualTo(subscriptionList.First().TopicName));
+                Assert.That(subscriptionName, Is.EqualTo(subscriptionList.First().SubscriptionName));
+            });
 
             await client.DeleteSubscriptionAsync(options.TopicName, options.SubscriptionName);
 
@@ -407,7 +437,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             await client.DeleteTopicAsync(options.TopicName);
 
             exists = await client.SubscriptionExistsAsync(topicName, subscriptionName);
-            Assert.False(exists);
+            Assert.That(exists, Is.False);
         }
 
         [RecordedTest]
@@ -427,7 +457,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 new CreateSubscriptionOptions(topicName, subscriptionName),
                 rule1);
             RuleProperties getRule1 = await client.GetRuleAsync(topicName, subscriptionName, "rule1");
-            Assert.AreEqual(rule1, new CreateRuleOptions(getRule1));
+            Assert.That(new CreateRuleOptions(getRule1), Is.EqualTo(rule1));
 
             var sqlRuleFilter = new SqlRuleFilter("stringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam");
             sqlRuleFilter.Parameters.Add("@stringParam", "string");
@@ -443,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             };
             await client.CreateRuleAsync(topicName, subscriptionName, rule2);
             RuleProperties getRule2 = await client.GetRuleAsync(topicName, subscriptionName, "rule2");
-            Assert.AreEqual(rule2, new CreateRuleOptions(getRule2));
+            Assert.That(new CreateRuleOptions(getRule2), Is.EqualTo(rule2));
 
             var correlationRuleFilter = new CorrelationRuleFilter()
             {
@@ -465,7 +495,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             };
             await client.CreateRuleAsync(topicName, subscriptionName, rule3);
             RuleProperties getRule3 = await client.GetRuleAsync(topicName, subscriptionName, "rule3");
-            Assert.AreEqual(rule3, new CreateRuleOptions(getRule3));
+            Assert.That(new CreateRuleOptions(getRule3), Is.EqualTo(rule3));
 
             List<RuleProperties> ruleList = new List<RuleProperties>();
             await foreach (RuleProperties rule in client.GetRulesAsync(topicName, subscriptionName))
@@ -473,18 +503,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 ruleList.Add(rule);
             }
             RuleProperties[] ruleArr = ruleList.ToArray();
-            Assert.True(ruleArr.Length == 3);
-            Assert.AreEqual(rule1, new CreateRuleOptions(ruleArr[0]));
-            Assert.AreEqual(rule2, new CreateRuleOptions(ruleArr[1]));
-            Assert.AreEqual(rule3, new CreateRuleOptions(ruleArr[2]));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ruleArr.Length, Is.EqualTo(3));
+                Assert.That(new CreateRuleOptions(ruleArr[0]), Is.EqualTo(rule1));
+                Assert.That(new CreateRuleOptions(ruleArr[1]), Is.EqualTo(rule2));
+                Assert.That(new CreateRuleOptions(ruleArr[2]), Is.EqualTo(rule3));
+            });
 
             ((CorrelationRuleFilter)getRule3.Filter).CorrelationId = "correlationIdModified";
             SubscriptionProperties sub = await client.GetSubscriptionAsync(topicName, subscriptionName);
             RuleProperties updatedRule3 = await client.UpdateRuleAsync(topicName, subscriptionName, getRule3);
-            Assert.AreEqual(getRule3, updatedRule3);
+            Assert.That(updatedRule3, Is.EqualTo(getRule3));
 
             bool exists = await client.RuleExistsAsync(topicName, subscriptionName, rule1.Name);
-            Assert.True(exists);
+            Assert.That(exists, Is.True);
 
             await client.DeleteRuleAsync(topicName, subscriptionName, "rule1");
             Assert.That(
@@ -493,7 +526,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             exists = await client.RuleExistsAsync(topicName, subscriptionName, rule1.Name);
-            Assert.False(exists);
+            Assert.That(exists, Is.False);
 
             await client.DeleteTopicAsync(topicName);
         }
@@ -530,29 +563,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 runtimeInfoList.Add(queueRuntimeInfo);
             }
             runtimeInfoList = runtimeInfoList.Where(e => e.Name.StartsWith(nameof(GetQueueRuntimeInfo).ToLower())).ToList();
-            Assert.True(runtimeInfoList.Count == 1, $"Expected 1 queue but {runtimeInfoList.Count} queues returned");
+            Assert.That(runtimeInfoList, Has.Count.EqualTo(1), $"Expected 1 queue but {runtimeInfoList.Count} queues returned");
             QueueRuntimeProperties runtimeInfo = runtimeInfoList.First();
-            Assert.NotNull(runtimeInfo);
+            Assert.That(runtimeInfo, Is.Not.Null);
 
-            Assert.AreEqual(queueName, runtimeInfo.Name);
-            Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
-            Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
-            Assert.AreEqual(1, runtimeInfo.ActiveMessageCount);
-            Assert.AreEqual(1, runtimeInfo.DeadLetterMessageCount);
-            Assert.AreEqual(1, runtimeInfo.ScheduledMessageCount);
-            Assert.AreEqual(3, runtimeInfo.TotalMessageCount);
-            Assert.True(runtimeInfo.SizeInBytes > 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(runtimeInfo.Name, Is.EqualTo(queueName));
+                Assert.That(runtimeInfo.CreatedAt, Is.LessThan(runtimeInfo.UpdatedAt));
+                Assert.That(runtimeInfo.UpdatedAt, Is.LessThan(runtimeInfo.AccessedAt));
+                Assert.That(runtimeInfo.ActiveMessageCount, Is.EqualTo(1));
+                Assert.That(runtimeInfo.DeadLetterMessageCount, Is.EqualTo(1));
+                Assert.That(runtimeInfo.ScheduledMessageCount, Is.EqualTo(1));
+                Assert.That(runtimeInfo.TotalMessageCount, Is.EqualTo(3));
+                Assert.That(runtimeInfo.SizeInBytes > 0, Is.True);
+            });
 
             QueueRuntimeProperties singleRuntimeInfo = await mgmtClient.GetQueueRuntimePropertiesAsync(runtimeInfo.Name);
 
-            Assert.AreEqual(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
-            Assert.AreEqual(runtimeInfo.CreatedAt, singleRuntimeInfo.CreatedAt);
-            Assert.AreEqual(runtimeInfo.UpdatedAt, singleRuntimeInfo.UpdatedAt);
-            Assert.AreEqual(runtimeInfo.TotalMessageCount, singleRuntimeInfo.TotalMessageCount);
-            Assert.AreEqual(runtimeInfo.ActiveMessageCount, singleRuntimeInfo.ActiveMessageCount);
-            Assert.AreEqual(runtimeInfo.DeadLetterMessageCount, singleRuntimeInfo.DeadLetterMessageCount);
-            Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleRuntimeInfo.ScheduledMessageCount);
-            Assert.AreEqual(runtimeInfo.SizeInBytes, singleRuntimeInfo.SizeInBytes);
+            Assert.That(singleRuntimeInfo.AccessedAt, Is.EqualTo(runtimeInfo.AccessedAt));
+            Assert.That(singleRuntimeInfo.CreatedAt, Is.EqualTo(runtimeInfo.CreatedAt));
+            Assert.That(singleRuntimeInfo.UpdatedAt, Is.EqualTo(runtimeInfo.UpdatedAt));
+            Assert.That(singleRuntimeInfo.TotalMessageCount, Is.EqualTo(runtimeInfo.TotalMessageCount));
+            Assert.That(singleRuntimeInfo.ActiveMessageCount, Is.EqualTo(runtimeInfo.ActiveMessageCount));
+            Assert.That(singleRuntimeInfo.DeadLetterMessageCount, Is.EqualTo(runtimeInfo.DeadLetterMessageCount));
+            Assert.That(singleRuntimeInfo.ScheduledMessageCount, Is.EqualTo(runtimeInfo.ScheduledMessageCount));
+            Assert.That(singleRuntimeInfo.SizeInBytes, Is.EqualTo(runtimeInfo.SizeInBytes));
 
             await mgmtClient.DeleteQueueAsync(queueName);
         }
@@ -598,30 +634,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 runtimeInfoList.Add(subscriptionRuntimeInfo);
             }
             runtimeInfoList = runtimeInfoList.Where(e => e.TopicName.StartsWith(nameof(GetSubscriptionRuntimeInfoTest).ToLower())).ToList();
-            Assert.True(runtimeInfoList.Count == 1, $"Expected 1 subscription but {runtimeInfoList.Count} subscriptions returned");
+            Assert.That(runtimeInfoList, Has.Count.EqualTo(1), $"Expected 1 subscription but {runtimeInfoList.Count} subscriptions returned");
             SubscriptionRuntimeProperties runtimeInfo = runtimeInfoList.First();
-            Assert.NotNull(runtimeInfo);
+            Assert.That(runtimeInfo, Is.Not.Null);
 
-            Assert.AreEqual(topicName, runtimeInfo.TopicName);
-            Assert.AreEqual(subscriptionName, runtimeInfo.SubscriptionName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(runtimeInfo.TopicName, Is.EqualTo(topicName));
+                Assert.That(runtimeInfo.SubscriptionName, Is.EqualTo(subscriptionName));
 
-            Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
-            Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
+                Assert.That(runtimeInfo.CreatedAt, Is.LessThan(runtimeInfo.UpdatedAt));
+                Assert.That(runtimeInfo.UpdatedAt, Is.LessThan(runtimeInfo.AccessedAt));
 
-            Assert.AreEqual(1, runtimeInfo.ActiveMessageCount);
-            Assert.AreEqual(1, runtimeInfo.DeadLetterMessageCount);
-            Assert.AreEqual(2, runtimeInfo.TotalMessageCount);
+                Assert.That(runtimeInfo.ActiveMessageCount, Is.EqualTo(1));
+                Assert.That(runtimeInfo.DeadLetterMessageCount, Is.EqualTo(1));
+                Assert.That(runtimeInfo.TotalMessageCount, Is.EqualTo(2));
+            });
 
             SubscriptionRuntimeProperties singleRuntimeInfo = await client.GetSubscriptionRuntimePropertiesAsync(topicName, subscriptionName);
 
-            Assert.AreEqual(runtimeInfo.CreatedAt, singleRuntimeInfo.CreatedAt);
-            Assert.AreEqual(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
-            Assert.AreEqual(runtimeInfo.UpdatedAt, singleRuntimeInfo.UpdatedAt);
-            Assert.AreEqual(runtimeInfo.SubscriptionName, singleRuntimeInfo.SubscriptionName);
-            Assert.AreEqual(runtimeInfo.TotalMessageCount, singleRuntimeInfo.TotalMessageCount);
-            Assert.AreEqual(runtimeInfo.ActiveMessageCount, singleRuntimeInfo.ActiveMessageCount);
-            Assert.AreEqual(runtimeInfo.DeadLetterMessageCount, singleRuntimeInfo.DeadLetterMessageCount);
-            Assert.AreEqual(runtimeInfo.TopicName, singleRuntimeInfo.TopicName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(singleRuntimeInfo.CreatedAt, Is.EqualTo(runtimeInfo.CreatedAt));
+                Assert.That(singleRuntimeInfo.AccessedAt, Is.EqualTo(runtimeInfo.AccessedAt));
+                Assert.That(singleRuntimeInfo.UpdatedAt, Is.EqualTo(runtimeInfo.UpdatedAt));
+                Assert.That(singleRuntimeInfo.SubscriptionName, Is.EqualTo(runtimeInfo.SubscriptionName));
+                Assert.That(singleRuntimeInfo.TotalMessageCount, Is.EqualTo(runtimeInfo.TotalMessageCount));
+                Assert.That(singleRuntimeInfo.ActiveMessageCount, Is.EqualTo(runtimeInfo.ActiveMessageCount));
+                Assert.That(singleRuntimeInfo.DeadLetterMessageCount, Is.EqualTo(runtimeInfo.DeadLetterMessageCount));
+                Assert.That(singleRuntimeInfo.TopicName, Is.EqualTo(runtimeInfo.TopicName));
+            });
 
             List<TopicRuntimeProperties> topicRuntimePropertiesList = new List<TopicRuntimeProperties>();
             await foreach (TopicRuntimeProperties topicRuntime in client.GetTopicsRuntimePropertiesAsync())
@@ -629,23 +671,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 topicRuntimePropertiesList.Add(topicRuntime);
             }
             topicRuntimePropertiesList = topicRuntimePropertiesList.Where(e => e.Name.StartsWith(nameof(GetSubscriptionRuntimeInfoTest).ToLower())).ToList();
-            Assert.True(topicRuntimePropertiesList.Count == 1, $"Expected 1 subscription but {topicRuntimePropertiesList.Count} subscriptions returned");
+            Assert.That(topicRuntimePropertiesList, Has.Count.EqualTo(1), $"Expected 1 subscription but {topicRuntimePropertiesList.Count} subscriptions returned");
             TopicRuntimeProperties topicRuntimeProperties = topicRuntimePropertiesList.First();
-            Assert.NotNull(topicRuntimeProperties);
+            Assert.That(topicRuntimeProperties, Is.Not.Null);
 
-            Assert.AreEqual(topicName, topicRuntimeProperties.Name);
-            Assert.True(topicRuntimeProperties.CreatedAt < topicRuntimeProperties.UpdatedAt);
-            Assert.True(topicRuntimeProperties.UpdatedAt < topicRuntimeProperties.AccessedAt);
+            Assert.Multiple(() =>
+            {
+                Assert.That(topicRuntimeProperties.Name, Is.EqualTo(topicName));
+                Assert.That(topicRuntimeProperties.CreatedAt, Is.LessThan(topicRuntimeProperties.UpdatedAt));
+                Assert.That(topicRuntimeProperties.UpdatedAt, Is.LessThan(topicRuntimeProperties.AccessedAt));
 
-            Assert.AreEqual(1, topicRuntimeProperties.ScheduledMessageCount);
+                Assert.That(topicRuntimeProperties.ScheduledMessageCount, Is.EqualTo(1));
+            });
 
             TopicRuntimeProperties singleTopicRuntimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
 
-            Assert.AreEqual(topicRuntimeProperties.CreatedAt, singleTopicRuntimeProperties.CreatedAt);
-            Assert.AreEqual(topicRuntimeProperties.AccessedAt, singleTopicRuntimeProperties.AccessedAt);
-            Assert.AreEqual(topicRuntimeProperties.UpdatedAt, singleTopicRuntimeProperties.UpdatedAt);
-            Assert.AreEqual(topicRuntimeProperties.ScheduledMessageCount, singleTopicRuntimeProperties.ScheduledMessageCount);
-            Assert.AreEqual(topicRuntimeProperties.Name, singleTopicRuntimeProperties.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(singleTopicRuntimeProperties.CreatedAt, Is.EqualTo(topicRuntimeProperties.CreatedAt));
+                Assert.That(singleTopicRuntimeProperties.AccessedAt, Is.EqualTo(topicRuntimeProperties.AccessedAt));
+                Assert.That(singleTopicRuntimeProperties.UpdatedAt, Is.EqualTo(topicRuntimeProperties.UpdatedAt));
+                Assert.That(singleTopicRuntimeProperties.ScheduledMessageCount, Is.EqualTo(topicRuntimeProperties.ScheduledMessageCount));
+                Assert.That(singleTopicRuntimeProperties.Name, Is.EqualTo(topicRuntimeProperties.Name));
+            });
 
             await client.DeleteTopicAsync(topicName);
         }
@@ -673,23 +721,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 runtimeInfoList.Add(topicRuntimeInfo);
             }
             runtimeInfoList = runtimeInfoList.Where(e => e.Name.StartsWith(nameof(GetTopicRuntimeInfo).ToLower())).ToList();
-            Assert.True(runtimeInfoList.Count == 1, $"Expected 1 topic but {runtimeInfoList.Count} topics returned");
+            Assert.That(runtimeInfoList, Has.Count.EqualTo(1), $"Expected 1 topic but {runtimeInfoList.Count} topics returned");
             TopicRuntimeProperties runtimeInfo = runtimeInfoList.First();
-            Assert.NotNull(runtimeInfo);
+            Assert.That(runtimeInfo, Is.Not.Null);
 
-            Assert.AreEqual(topicName, runtimeInfo.Name);
-            Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
-            Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
-            Assert.AreEqual(1, runtimeInfo.SubscriptionCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(runtimeInfo.Name, Is.EqualTo(topicName));
+                Assert.That(runtimeInfo.CreatedAt, Is.LessThan(runtimeInfo.UpdatedAt));
+                Assert.That(runtimeInfo.UpdatedAt, Is.LessThan(runtimeInfo.AccessedAt));
+                Assert.That(runtimeInfo.SubscriptionCount, Is.EqualTo(1));
+            });
 
             TopicRuntimeProperties singleTopicRI = await client.GetTopicRuntimePropertiesAsync(runtimeInfo.Name);
 
-            Assert.AreEqual(runtimeInfo.AccessedAt, singleTopicRI.AccessedAt);
-            Assert.AreEqual(runtimeInfo.CreatedAt, singleTopicRI.CreatedAt);
-            Assert.AreEqual(runtimeInfo.UpdatedAt, singleTopicRI.UpdatedAt);
-            Assert.AreEqual(runtimeInfo.SizeInBytes, singleTopicRI.SizeInBytes);
-            Assert.AreEqual(runtimeInfo.SubscriptionCount, singleTopicRI.SubscriptionCount);
-            Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleTopicRI.ScheduledMessageCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(singleTopicRI.AccessedAt, Is.EqualTo(runtimeInfo.AccessedAt));
+                Assert.That(singleTopicRI.CreatedAt, Is.EqualTo(runtimeInfo.CreatedAt));
+                Assert.That(singleTopicRI.UpdatedAt, Is.EqualTo(runtimeInfo.UpdatedAt));
+                Assert.That(singleTopicRI.SizeInBytes, Is.EqualTo(runtimeInfo.SizeInBytes));
+                Assert.That(singleTopicRI.SubscriptionCount, Is.EqualTo(runtimeInfo.SubscriptionCount));
+                Assert.That(singleTopicRI.ScheduledMessageCount, Is.EqualTo(runtimeInfo.ScheduledMessageCount));
+            });
 
             await client.DeleteTopicAsync(topicName);
         }
@@ -835,14 +889,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(destinationName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            Assert.NotNull(msg);
-            Assert.AreEqual("mid", msg.MessageId);
+            Assert.That(msg, Is.Not.Null);
+            Assert.That(msg.MessageId, Is.EqualTo("mid"));
             await receiver.DeadLetterMessageAsync(msg);
 
             receiver = sbClient.CreateReceiver(dlqDestinationName);
             msg = await receiver.ReceiveMessageAsync();
-            Assert.NotNull(msg);
-            Assert.AreEqual("mid", msg.MessageId);
+            Assert.That(msg, Is.Not.Null);
+            Assert.That(msg.MessageId, Is.EqualTo("mid"));
             await receiver.CompleteMessageAsync(msg);
 
             await mgmtClient.DeleteQueueAsync(queueName);
@@ -882,7 +936,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 topicName,
                 subscriptionName,
                 new CreateRuleOptions("rule1", sqlFilter));
-            Assert.AreEqual(sqlFilter, rule.Filter);
+            Assert.That(rule.Filter, Is.EqualTo(sqlFilter));
 
             await client.DeleteTopicAsync(topicName);
         }
@@ -906,8 +960,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 topicName,
                 subscriptionName,
                 new CreateRuleOptions("rule1", filter));
-            Assert.True(filter.ApplicationProperties.Count == 3);
-            Assert.AreEqual(filter, rule.Filter);
+            Assert.Multiple(() =>
+            {
+                Assert.That(filter.ApplicationProperties, Has.Count.EqualTo(3));
+                Assert.That(rule.Filter, Is.EqualTo(filter));
+            });
 
             await client.DeleteTopicAsync(topicName);
         }
@@ -918,9 +975,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var client = CreateClient();
 
             NamespaceProperties nsInfo = await client.GetNamespacePropertiesAsync();
-            Assert.NotNull(nsInfo);
+            Assert.That(nsInfo, Is.Not.Null);
             // Assert.AreEqual(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
-            Assert.AreEqual(NamespaceType.Messaging, nsInfo.NamespaceType); // Common namespace type used for testing is messaging.
+            Assert.That(nsInfo.NamespaceType, Is.EqualTo(NamespaceType.Messaging)); // Common namespace type used for testing is messaging.
         }
 
         [RecordedTest]
@@ -1065,16 +1122,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                Assert.AreEqual(queueOptions,
-                    new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes });
-                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules, MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes },
+                                    Is.EqualTo(queueOptions));
+                    Assert.That(new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules, MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes }, Is.EqualTo(createdQueue));
+                });
             }
             else
             {
-                Assert.AreEqual(queueOptions,
-                    new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes });
-                Assert.AreEqual(createdQueue,
-                    new QueueProperties(queueOptions) { MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes },
+                                    Is.EqualTo(queueOptions));
+                    Assert.That(new QueueProperties(queueOptions) { MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes },
+                        Is.EqualTo(createdQueue));
+                });
             }
         }
 
@@ -1082,20 +1145,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                // Auth rules use a randomly generated key, but we don't want to store
-                // these in our test recordings, so we skip the auth rule comparison
-                // when in playback mode.
-                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes });
-                Assert.AreEqual(createdTopic, new TopicProperties(options)
+                Assert.Multiple(() =>
                 {
-                    AuthorizationRules = createdTopic.AuthorizationRules.Clone(),
-                    MaxMessageSizeInKilobytes = createdTopic.MaxMessageSizeInKilobytes
+                    // Auth rules use a randomly generated key, but we don't want to store
+                    // these in our test recordings, so we skip the auth rule comparison
+                    // when in playback mode.
+                    Assert.That(new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes }, Is.EqualTo(options));
+                    Assert.That(new TopicProperties(options)
+                    {
+                        AuthorizationRules = createdTopic.AuthorizationRules.Clone(),
+                        MaxMessageSizeInKilobytes = createdTopic.MaxMessageSizeInKilobytes
+                    }, Is.EqualTo(createdTopic));
                 });
             }
             else
             {
-                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes });
-                Assert.AreEqual(createdTopic, new TopicProperties(options) { MaxMessageSizeInKilobytes = createdTopic.MaxMessageSizeInKilobytes });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes }, Is.EqualTo(options));
+                    Assert.That(new TopicProperties(options) { MaxMessageSizeInKilobytes = createdTopic.MaxMessageSizeInKilobytes }, Is.EqualTo(createdTopic));
+                });
             }
         }
 

@@ -68,10 +68,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             // Act
             ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(accountId, accountDomain, keyCredential);
 
-            // Assert
-            Assert.AreEqual(accountId, client.AccountId);
-            Assert.AreEqual(accountDomain, client.AccountDomain);
-            Assert.NotNull(client.SupportedAssetFileTypes);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(client.AccountId, Is.EqualTo(accountId));
+                Assert.That(client.AccountDomain, Is.EqualTo(accountDomain));
+                Assert.That(client.SupportedAssetFileTypes, Is.Not.Null);
+            });
 
             // Act and assert
 
@@ -136,7 +139,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
                 excepted = true;
             }
 
-            Assert.AreNotEqual(shouldSucceed, excepted);
+            Assert.That(excepted, Is.Not.EqualTo(shouldSucceed));
         }
 
         [Test]
@@ -158,14 +161,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
                 // This is fine
             }
 
-            Assert.True(exceptedWithUnsupportedFileType);
+            Assert.That(exceptedWithUnsupportedFileType, Is.True);
         }
 
         private static void AssertArgumentException<TException>(string argumentName, TestDelegate code)
             where TException : ArgumentException
         {
             TException exception = Assert.Throws<TException>(code);
-            Assert.AreEqual(argumentName, exception.ParamName);
+            Assert.That(exception.ParamName, Is.EqualTo(argumentName));
         }
     }
 }

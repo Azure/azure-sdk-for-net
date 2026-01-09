@@ -21,14 +21,17 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("account.core.table.windows.net", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("comp=list", tableuribuilder.Query);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("account.core.table.windows.net"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo("comp=list"));
 
-            Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -42,14 +45,17 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("account.core.table.windows.net", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("", tableuribuilder.Query);
-            Assert.AreEqual("table", tableuribuilder.Tablename);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("account.core.table.windows.net"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
+                Assert.That(tableuribuilder.Tablename, Is.EqualTo("table"));
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -63,13 +69,16 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("account.core.table.windows.net", tableuribuilder.Host);
-            Assert.AreEqual(8080, tableuribuilder.Port);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("", tableuribuilder.Query);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("account.core.table.windows.net"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(8080));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -83,24 +92,27 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("account.core.table.windows.net", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), tableuribuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", tableuribuilder.Sas.Identifier);
-            Assert.AreEqual(TableSasIPRange.Parse("168.1.5.60-168.1.5.70"), tableuribuilder.Sas.IPRange);
-            Assert.AreEqual("rw", tableuribuilder.Sas.Permissions);
-            Assert.AreEqual(TableSasProtocol.Https, tableuribuilder.Sas.Protocol);
-            Assert.AreEqual("b", tableuribuilder.Sas.Resource);
-            Assert.IsNull(tableuribuilder.Sas.ResourceTypes);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", tableuribuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), tableuribuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", tableuribuilder.Sas.Version);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("account.core.table.windows.net"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+                Assert.That(tableuribuilder.Sas.Identifier, Is.EqualTo(""));
+                Assert.That(tableuribuilder.Sas.IPRange, Is.EqualTo(TableSasIPRange.Parse("168.1.5.60-168.1.5.70")));
+                Assert.That(tableuribuilder.Sas.Permissions, Is.EqualTo("rw"));
+                Assert.That(tableuribuilder.Sas.Protocol, Is.EqualTo(TableSasProtocol.Https));
+                Assert.That(tableuribuilder.Sas.Resource, Is.EqualTo("b"));
+                Assert.That(tableuribuilder.Sas.ResourceTypes, Is.Null);
+                Assert.That(tableuribuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+                Assert.That(tableuribuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+                Assert.That(tableuribuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("", tableuribuilder.Query);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
 
-            Assert.That(newUri.ToString(), Is.EqualTo(originalUri.Uri.ToString()));
+                Assert.That(newUri.ToString(), Is.EqualTo(originalUri.Uri.ToString()));
+            });
         }
 
         [Test]
@@ -114,15 +126,18 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.AreEqual("account", tableuribuilder.AccountName);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("comp=list", tableuribuilder.Query);
-            Assert.AreEqual("", tableuribuilder.Tablename);
-            Assert.AreEqual(originalUri, newUri);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("127.0.0.1"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo("comp=list"));
+                Assert.That(tableuribuilder.Tablename, Is.EqualTo(""));
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -136,15 +151,18 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.AreEqual("account", tableuribuilder.AccountName);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("", tableuribuilder.Query);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("127.0.0.1"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
 
-            Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -158,15 +176,18 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", tableuribuilder.Host);
-            Assert.AreEqual(8080, tableuribuilder.Port);
-            Assert.AreEqual("account", tableuribuilder.AccountName);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("", tableuribuilder.Query);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("127.0.0.1"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(8080));
+                Assert.That(tableuribuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
 
-            Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -180,15 +201,18 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.AreEqual("account", tableuribuilder.AccountName);
-            Assert.IsNull(tableuribuilder.Sas);
-            Assert.AreEqual("", tableuribuilder.Query);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("127.0.0.1"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.AccountName, Is.EqualTo("account"));
+                Assert.That(tableuribuilder.Sas, Is.Null);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
 
-            Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -202,26 +226,29 @@ namespace Azure.Data.Tables.Tests
             var tableuribuilder = new TableUriBuilder(originalUri.Uri);
             Uri newUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.AreEqual("https", tableuribuilder.Scheme);
-            Assert.AreEqual("127.0.0.1", tableuribuilder.Host);
-            Assert.AreEqual(443, tableuribuilder.Port);
-            Assert.AreEqual("account", tableuribuilder.AccountName);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableuribuilder.Scheme, Is.EqualTo("https"));
+                Assert.That(tableuribuilder.Host, Is.EqualTo("127.0.0.1"));
+                Assert.That(tableuribuilder.Port, Is.EqualTo(443));
+                Assert.That(tableuribuilder.AccountName, Is.EqualTo("account"));
 
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), tableuribuilder.Sas.ExpiresOn);
-            Assert.AreEqual("", tableuribuilder.Sas.Identifier);
-            Assert.AreEqual(TableSasIPRange.Parse("168.1.5.60-168.1.5.70"), tableuribuilder.Sas.IPRange);
-            Assert.AreEqual("rw", tableuribuilder.Sas.Permissions);
-            Assert.AreEqual(TableSasProtocol.Https, tableuribuilder.Sas.Protocol);
-            Assert.AreEqual("b", tableuribuilder.Sas.Resource);
-            Assert.IsNull(tableuribuilder.Sas.ResourceTypes);
-            Assert.AreEqual("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk=", tableuribuilder.Sas.Signature);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), tableuribuilder.Sas.StartsOn);
-            Assert.AreEqual("2015-04-05", tableuribuilder.Sas.Version);
+                Assert.That(tableuribuilder.Sas.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+                Assert.That(tableuribuilder.Sas.Identifier, Is.EqualTo(""));
+                Assert.That(tableuribuilder.Sas.IPRange, Is.EqualTo(TableSasIPRange.Parse("168.1.5.60-168.1.5.70")));
+                Assert.That(tableuribuilder.Sas.Permissions, Is.EqualTo("rw"));
+                Assert.That(tableuribuilder.Sas.Protocol, Is.EqualTo(TableSasProtocol.Https));
+                Assert.That(tableuribuilder.Sas.Resource, Is.EqualTo("b"));
+                Assert.That(tableuribuilder.Sas.ResourceTypes, Is.Null);
+                Assert.That(tableuribuilder.Sas.Signature, Is.EqualTo("Z/RHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk="));
+                Assert.That(tableuribuilder.Sas.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+                Assert.That(tableuribuilder.Sas.Version, Is.EqualTo("2015-04-05"));
 
-            Assert.AreEqual("", tableuribuilder.Query);
+                Assert.That(tableuribuilder.Query, Is.EqualTo(""));
 
-            Assert.AreEqual(originalUri, newUri);
+                Assert.That(newUri, Is.EqualTo(originalUri));
+            });
         }
 
         [Test]
@@ -238,10 +265,13 @@ namespace Azure.Data.Tables.Tests
             // Act
             Uri resultUri = tableuribuilder.ToUri();
 
-            // Assert
-            Assert.That(resultUri.ToString(), Is.EqualTo(initialUri.ToString()));
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
-            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(resultUri.ToString(), Is.EqualTo(initialUri.ToString()));
+                Assert.That(resultUri.PathAndQuery, Does.Contain($"st={WebUtility.UrlEncode(startTime)}"));
+            });
+            Assert.That(resultUri.PathAndQuery, Does.Contain($"se={WebUtility.UrlEncode(expiryTime)}"));
         }
 
         [Test]
@@ -259,7 +289,7 @@ namespace Azure.Data.Tables.Tests
             }
             catch (FormatException e)
             {
-                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+                Assert.That(e.Message, Does.Contain("was not recognized as a valid DateTime."));
             }
         }
     }

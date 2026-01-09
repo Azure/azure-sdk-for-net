@@ -59,14 +59,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartTrainingAsync(new Uri(encodedUriString), useTrainingLabels: false);
             await client.StartTrainingAsync(new Uri(decodedUriString), useTrainingLabels: false);
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody, Does.Contain(encodedUriString));
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 
@@ -101,8 +101,11 @@ namespace Azure.AI.FormRecognizer.Tests
             var response = await client.GetCustomModelAsync("00000000-0000-0000-0000-000000000000");
             var model = response.Value;
 
-            Assert.IsEmpty(model.TrainingDocuments);
-            Assert.IsEmpty(model.Errors);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.TrainingDocuments, Is.Empty);
+                Assert.That(model.Errors, Is.Empty);
+            });
         }
 
         private static string GetString(RequestContent content)

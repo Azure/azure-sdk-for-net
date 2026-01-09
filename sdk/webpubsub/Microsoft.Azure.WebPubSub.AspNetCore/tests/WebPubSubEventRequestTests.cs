@@ -43,18 +43,21 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             response.SetState("bbb", BinaryData.FromObjectAsJson("bbb1"));
             var updated = connectionContext.UpdateStates(response.ConnectionStates);
 
-            // new
-            Assert.AreEqual("ddd", updated["test"].ToObjectFromJson<string>());
-            // no change
-            Assert.AreEqual("aaa", updated["aaa"].ToObjectFromJson<string>());
-            // update
-            Assert.AreEqual("bbb1", updated["bbb"].ToObjectFromJson<string>());
+            Assert.Multiple(() =>
+            {
+                // new
+                Assert.That(updated["test"].ToObjectFromJson<string>(), Is.EqualTo("ddd"));
+                // no change
+                Assert.That(updated["aaa"].ToObjectFromJson<string>(), Is.EqualTo("aaa"));
+                // update
+                Assert.That(updated["bbb"].ToObjectFromJson<string>(), Is.EqualTo("bbb1"));
+            });
 
             response.ClearStates();
             updated = connectionContext.UpdateStates(response.ConnectionStates);
 
             // After clear is null.
-            Assert.IsNull(updated);
+            Assert.That(updated, Is.Null);
         }
 
         [Test]
@@ -70,9 +73,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var decoded = encoded.DecodeConnectionStates();
 
-            CollectionAssert.AreEquivalent(
-                state.Values.Select(d => d.ToObjectFromJson<string>()),
-                decoded.Values.Select(d => d.ToObjectFromJson<string>()));
+            Assert.That(
+                decoded.Values.Select(d => d.ToObjectFromJson<string>()),
+                Is.EquivalentTo(state.Values.Select(d => d.ToObjectFromJson<string>())));
         }
 
         [Test]
@@ -82,13 +85,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var converted = JsonSerializer.Deserialize<ConnectEventRequest>(request);
 
-            Assert.AreEqual(6, converted.Claims.Count);
-            Assert.AreEqual(1, converted.Query.Count);
-            Assert.AreEqual(2, converted.Subprotocols.Count);
-            Assert.AreEqual(2, converted.Headers.Count);
-            Assert.AreEqual(new string[] { "protocol1", "protocol2" }, converted.Subprotocols);
-            Assert.NotNull(converted.ClientCertificates);
-            Assert.AreEqual(0, converted.ClientCertificates.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(converted.Claims, Has.Count.EqualTo(6));
+                Assert.That(converted.Query, Has.Count.EqualTo(1));
+                Assert.That(converted.Subprotocols, Has.Count.EqualTo(2));
+                Assert.That(converted.Headers, Has.Count.EqualTo(2));
+            });
+            Assert.That(converted.Subprotocols, Is.EqualTo(new string[] { "protocol1", "protocol2" }));
+            Assert.That(converted.ClientCertificates, Is.Not.Null);
+            Assert.That(converted.ClientCertificates.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -122,12 +128,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var converted = JsonSerializer.Deserialize<ConnectEventRequest>(serilized);
 
-            Assert.AreEqual(3, converted.Claims.Count);
-            Assert.AreEqual(2, converted.Query.Count);
-            Assert.AreEqual(2, converted.Subprotocols.Count);
-            Assert.AreEqual(new string[] { "protocol1", "protocol2" }, converted.Subprotocols);
-            Assert.NotNull(converted.ClientCertificates);
-            Assert.AreEqual(2, converted.ClientCertificates.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(converted.Claims, Has.Count.EqualTo(3));
+                Assert.That(converted.Query, Has.Count.EqualTo(2));
+                Assert.That(converted.Subprotocols, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(converted.Subprotocols, Is.EqualTo(new string[] { "protocol1", "protocol2" }));
+                Assert.That(converted.ClientCertificates, Is.Not.Null);
+            });
+            Assert.That(converted.ClientCertificates, Has.Count.EqualTo(2));
         }
 
         [Test]
@@ -151,7 +163,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var converted = JsonSerializer.Deserialize<DisconnectedEventRequest>(request);
 
-            Assert.AreEqual("invalid", converted.Reason);
+            Assert.That(converted.Reason, Is.EqualTo("invalid"));
         }
 
         [Test]
@@ -162,14 +174,20 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
 
-            Assert.AreEqual(typeof(ConnectEventRequest), request.GetType());
+            Assert.That(request.GetType(), Is.EqualTo(typeof(ConnectEventRequest)));
 
             var connectRequest = request as ConnectEventRequest;
 
-            Assert.NotNull(connectRequest.ConnectionContext);
-            Assert.NotNull(connectRequest.Headers);
-            Assert.AreEqual(2, connectRequest.Headers.Count);
-            Assert.AreEqual(TestUri.Host, connectRequest.ConnectionContext.Origin);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectRequest.ConnectionContext, Is.Not.Null);
+                Assert.That(connectRequest.Headers, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(connectRequest.Headers, Has.Count.EqualTo(2));
+                Assert.That(connectRequest.ConnectionContext.Origin, Is.EqualTo(TestUri.Host));
+            });
         }
 
         [TestCase(MqttProtocolVersion.V311)]
@@ -187,7 +205,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 },
                 body: body);
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
-            Assert.IsInstanceOf<MqttConnectEventRequest>(request);
+            Assert.That(request, Is.InstanceOf<MqttConnectEventRequest>());
             var mqttRequest = request as MqttConnectEventRequest;
             var mqttResponse = mqttRequest.CreateMqttResponse("userId", new string[] { "group1", "group2" }, new string[] { "role1", "role2" });
             mqttResponse.Mqtt = new()
@@ -195,21 +213,30 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 UserProperties = new List<MqttUserProperty> { new("name1", "value1") }
             };
 
-            Assert.AreEqual("mqtt", mqttRequest.Subprotocols.Single());
+            Assert.That(mqttRequest.Subprotocols.Single(), Is.EqualTo("mqtt"));
             var clientCert = mqttRequest.ClientCertificates.Single();
-            Assert.AreEqual("thumbprint", clientCert.Thumbprint);
-            Assert.AreEqual("certificate content", clientCert.Content);
-            Assert.AreEqual("username", mqttRequest.Mqtt.Username);
-            Assert.AreEqual("password", mqttRequest.Mqtt.Password);
+            Assert.Multiple(() =>
+            {
+                Assert.That(clientCert.Thumbprint, Is.EqualTo("thumbprint"));
+                Assert.That(clientCert.Content, Is.EqualTo("certificate content"));
+                Assert.That(mqttRequest.Mqtt.Username, Is.EqualTo("username"));
+                Assert.That(mqttRequest.Mqtt.Password, Is.EqualTo("password"));
+            });
             var userProperty = mqttRequest.Mqtt.UserProperties.Single();
-            Assert.AreEqual("a", userProperty.Name);
-            Assert.AreEqual("b", userProperty.Value);
-            Assert.AreEqual(protocolVersion, mqttRequest.Mqtt.ProtocolVersion);
+            Assert.Multiple(() =>
+            {
+                Assert.That(userProperty.Name, Is.EqualTo("a"));
+                Assert.That(userProperty.Value, Is.EqualTo("b"));
+                Assert.That(mqttRequest.Mqtt.ProtocolVersion, Is.EqualTo(protocolVersion));
+            });
 
             var mqttContext = mqttRequest.ConnectionContext as MqttConnectionContext;
-            Assert.AreEqual(hubName, mqttContext.Hub);
-            Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
-            Assert.Null(mqttContext.SessionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mqttContext.Hub, Is.EqualTo(hubName));
+                Assert.That(mqttContext.PhysicalConnectionId, Is.EqualTo("physicalConnectionId"));
+                Assert.That(mqttContext.SessionId, Is.Null);
+            });
         }
 
         [TestCase]
@@ -227,13 +254,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 },
                 body: body);
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
-            Assert.IsInstanceOf<ConnectedEventRequest>(request);
+            Assert.That(request, Is.InstanceOf<ConnectedEventRequest>());
 
             var mqttContext = request.ConnectionContext as MqttConnectionContext;
-            Assert.NotNull(mqttContext);
-            Assert.AreEqual(hubName, mqttContext.Hub);
-            Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
-            Assert.AreEqual("sessionId", mqttContext.SessionId);
+            Assert.That(mqttContext, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mqttContext.Hub, Is.EqualTo(hubName));
+                Assert.That(mqttContext.PhysicalConnectionId, Is.EqualTo("physicalConnectionId"));
+                Assert.That(mqttContext.SessionId, Is.EqualTo("sessionId"));
+            });
         }
 
         [TestCase]
@@ -251,19 +281,25 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 },
                 body: body);
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
-            Assert.IsInstanceOf<MqttDisconnectedEventRequest>(request);
+            Assert.That(request, Is.InstanceOf<MqttDisconnectedEventRequest>());
             var mqttRequest = (MqttDisconnectedEventRequest)request;
 
-            Assert.False(mqttRequest.Mqtt.InitiatedByClient);
-            Assert.AreEqual(128, (int)mqttRequest.Mqtt.DisconnectPacket.Code);
-            Assert.AreEqual("a", mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Name);
-            Assert.AreEqual("b", mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mqttRequest.Mqtt.InitiatedByClient, Is.False);
+                Assert.That((int)mqttRequest.Mqtt.DisconnectPacket.Code, Is.EqualTo(128));
+                Assert.That(mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Name, Is.EqualTo("a"));
+                Assert.That(mqttRequest.Mqtt.DisconnectPacket.UserProperties.Single().Value, Is.EqualTo("b"));
+            });
 
             var mqttContext = mqttRequest.ConnectionContext as MqttConnectionContext;
-            Assert.NotNull(mqttContext);
-            Assert.AreEqual(hubName, mqttContext.Hub);
-            Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
-            Assert.AreEqual("sessionId", mqttContext.SessionId);
+            Assert.That(mqttContext, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mqttContext.Hub, Is.EqualTo(hubName));
+                Assert.That(mqttContext.PhysicalConnectionId, Is.EqualTo("physicalConnectionId"));
+                Assert.That(mqttContext.SessionId, Is.EqualTo("sessionId"));
+            });
         }
 
         [Test]
@@ -274,12 +310,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var request = await context.Request.ReadWebPubSubEventAsync(validator);
 
-            Assert.AreEqual(typeof(ConnectedEventRequest), request.GetType());
+            Assert.That(request.GetType(), Is.EqualTo(typeof(ConnectedEventRequest)));
 
             var connectedRequest = request as ConnectedEventRequest;
 
-            Assert.NotNull(connectedRequest.ConnectionContext);
-            Assert.AreEqual(TestUri.Host, connectedRequest.ConnectionContext.Origin);
+            Assert.That(connectedRequest.ConnectionContext, Is.Not.Null);
+            Assert.That(connectedRequest.ConnectionContext.Origin, Is.EqualTo(TestUri.Host));
         }
 
         [Test]
@@ -290,13 +326,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
 
-            Assert.AreEqual(typeof(UserEventRequest), request.GetType());
+            Assert.That(request.GetType(), Is.EqualTo(typeof(UserEventRequest)));
 
             var userRequest = request as UserEventRequest;
 
-            Assert.NotNull(userRequest.ConnectionContext);
-            Assert.AreEqual(TestUri.Host, userRequest.ConnectionContext.Origin);
-            Assert.AreEqual(text, userRequest.Data.ToString());
+            Assert.That(userRequest.ConnectionContext, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(userRequest.ConnectionContext.Origin, Is.EqualTo(TestUri.Host));
+                Assert.That(userRequest.Data.ToString(), Is.EqualTo(text));
+            });
         }
 
         [TestCase("7aab239577fd4f24bc919802fb629f5f", true)]
@@ -310,7 +349,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 origin: TestUri.Host);
             var options = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;") }));
             var result = options.IsValidSignature(connectionContext);
-            Assert.AreEqual(valid, result);
+            Assert.That(result, Is.EqualTo(valid));
         }
 
         [Test]
@@ -322,7 +361,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
             var result = TestValidator.IsValidSignature(connectionContext);
-            Assert.True(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -335,7 +374,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 origin: TestUri.Host);
             var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
-            Assert.True(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -347,7 +386,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 origin: TestUri.Host);
             var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
-            Assert.False(result);
+            Assert.That(result, Is.False);
         }
 
         [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
@@ -363,7 +402,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 origin: TestUri.Host);
             var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
-            Assert.True(result);
+            Assert.That(result, Is.True);
         }
 
         [TestCase("OPTIONS", true)]
@@ -375,19 +414,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             var result = context.Request.IsPreflightRequest(out var requestHosts);
 
-            Assert.AreEqual(valid, result);
+            Assert.That(result, Is.EqualTo(valid));
 
             if (valid)
             {
-                Assert.NotNull(requestHosts);
-                Assert.AreEqual(TestUri.Host, requestHosts[0]);
+                Assert.That(requestHosts, Is.Not.Null);
+                Assert.That(requestHosts[0], Is.EqualTo(TestUri.Host));
                 if (multiDomains)
                 {
-                    Assert.AreEqual(2, requestHosts.Count);
+                    Assert.That(requestHosts, Has.Count.EqualTo(2));
                 }
                 else
                 {
-                    Assert.AreEqual(1, requestHosts.Count);
+                    Assert.That(requestHosts, Has.Count.EqualTo(1));
                 }
             }
         }
@@ -400,7 +439,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
 
-            Assert.AreEqual(expected, validator.IsValidOrigin(new List<string> { requestHost }));
+            Assert.That(validator.IsValidOrigin(new List<string> { requestHost }), Is.EqualTo(expected));
         }
 
         private static HttpContext PrepareHttpContext(

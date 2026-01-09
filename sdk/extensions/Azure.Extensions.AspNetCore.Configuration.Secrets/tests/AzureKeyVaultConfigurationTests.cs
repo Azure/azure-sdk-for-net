@@ -109,9 +109,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 provider.Load();
 
                 var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
-                Assert.AreEqual(new[] { "Secret1", "Secret2" }, childKeys);
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
-                Assert.AreEqual("Value2", provider.Get("Secret2"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(childKeys, Is.EqualTo(new[] { "Secret1", "Secret2" }));
+                    Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                    Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
+                });
             }
         }
 
@@ -147,8 +150,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 // Assert
                 var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
-                Assert.AreEqual(new[] { "Secret1" }, childKeys);
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(childKeys, Is.EqualTo(new[] { "Secret1" }));
+                    Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                });
             }
         }
 
@@ -175,8 +181,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 // Assert
                 var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
-                Assert.AreEqual(new[] { "Secret1" }, childKeys);
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(childKeys, Is.EqualTo(new[] { "Secret1" }));
+                    Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                });
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret2"));
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret3"));
             }
@@ -200,7 +209,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 SetPages(client,
                     new[]
@@ -210,7 +219,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 );
 
                 provider.Load();
-                Assert.AreEqual("Value2", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value2"));
             }
         }
 
@@ -239,7 +248,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -254,8 +263,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 await provider.Wait();
 
-                Assert.AreEqual("Value2", provider.Get("Secret1"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(provider.Get("Secret1"), Is.EqualTo("Value2"));
+                    Assert.That(numOfTokensFired, Is.EqualTo(1));
+                });
             }
         }
 
@@ -284,7 +296,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -292,8 +304,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 await provider.Wait();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
-                Assert.AreEqual(0, numOfTokensFired);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                    Assert.That(numOfTokensFired, Is.EqualTo(0));
+                });
             }
         }
 
@@ -322,7 +337,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -338,7 +353,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 await provider.Wait();
 
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret2"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.That(numOfTokensFired, Is.EqualTo(1));
             }
         }
 
@@ -367,7 +382,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 provider.Load();
 
-                Assert.AreEqual("Value2", provider.Get("Secret2"));
+                Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
 
                 await provider.Wait();
 
@@ -384,7 +399,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 await provider.Wait();
 
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret2"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.That(numOfTokensFired, Is.EqualTo(1));
             }
         }
 
@@ -412,7 +427,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -431,9 +446,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 await provider.Wait();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
-                Assert.AreEqual("Value2", provider.Get("Secret2"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                    Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
+                    Assert.That(numOfTokensFired, Is.EqualTo(1));
+                });
             }
         }
 
@@ -454,7 +472,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+                Assert.That(provider.Get("Section:Secret1"), Is.EqualTo("Value1"));
             }
         }
         [Test]
@@ -474,7 +492,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value1", provider.Get("section:secret1"));
+                Assert.That(provider.Get("section:secret1"), Is.EqualTo("Value1"));
             }
         }
 
@@ -499,7 +517,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+                Assert.That(provider.Get("Section:Secret1"), Is.EqualTo("Value1"));
             }
         }
 
@@ -528,7 +546,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value2", provider.Get("Section:Secret1"));
+                Assert.That(provider.Get("Section:Secret1"), Is.EqualTo("Value2"));
             }
         }
 
@@ -549,10 +567,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 provider.Load();
 
-                // Assert
-                Assert.AreEqual("innerValue1", provider.Get("innerKey1"));
-                Assert.AreEqual("innerValue2", provider.Get("innerKey2"));
-                Assert.AreEqual("innerValue3", provider.Get("innerKey3"));
+                Assert.Multiple(() =>
+                {
+                    // Assert
+                    Assert.That(provider.Get("innerKey1"), Is.EqualTo("innerValue1"));
+                    Assert.That(provider.Get("innerKey2"), Is.EqualTo("innerValue2"));
+                    Assert.That(provider.Get("innerKey3"), Is.EqualTo("innerValue3"));
+                });
             }
         }
 
@@ -585,9 +606,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             provider.Load();
             await tcs.Task;
 
-            // Assert
-            Assert.AreEqual("Value1", provider.Get("Secret1"));
-            Assert.AreEqual("Value2", provider.Get("Secret2"));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
+            });
         }
 
         [Test]
@@ -623,10 +647,10 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             // Assert
             for (int i = 0; i < expectedCount; i++)
             {
-                Assert.AreEqual(i.ToString(), provider.Get("Secret" + i));
+                Assert.That(provider.Get("Secret" + i), Is.EqualTo(i.ToString()));
             }
 
-            Assert.LessOrEqual(maxParallel, 32);
+            Assert.That(maxParallel, Is.LessThanOrEqualTo(32));
         }
 
         [Test]

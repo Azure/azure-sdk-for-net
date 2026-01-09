@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was also called
-            Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
+            Assert.That(callConnectionIdPassedFromOngoingEventProcessor, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate didnt get called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
+            Assert.That(callConnectionIdPassedFromOngoingEventProcessor, Is.EqualTo(ServerCallId));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was also called
-            Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
+            Assert.That(callConnectionIdPassedFromOngoingEventProcessor, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
 
             // Assert if the delegate was never called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
+            Assert.That(callConnectionIdPassedFromOngoingEventProcessor, Is.EqualTo(ServerCallId));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was never called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
+            Assert.That(callConnectionIdPassedFromOngoingEventProcessor, Is.EqualTo(ServerCallId));
         }
     }
 }

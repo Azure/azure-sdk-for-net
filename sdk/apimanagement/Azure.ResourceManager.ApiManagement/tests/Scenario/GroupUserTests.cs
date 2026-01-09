@@ -61,18 +61,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
 
             var groupContract = (await groupCollection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters)).Value;
-            Assert.NotNull(groupContract);
-            Assert.AreEqual(newGroupDisplayName, groupContract.Data.DisplayName);
-            Assert.IsFalse(groupContract.Data.IsBuiltIn);
-            Assert.NotNull(groupContract.Data.Description);
-            Assert.AreEqual(ApiManagementGroupType.Custom, groupContract.Data.GroupType);
+            Assert.That(groupContract, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
+                Assert.That(groupContract.Data.IsBuiltIn, Is.False);
+                Assert.That(groupContract.Data.Description, Is.Not.Null);
+                Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
+            });
 
             var userId = Recording.GenerateAssetName("sdkUserId");
             var collection = ApiServiceResource.GetApiManagementUsers();
 
             // list all group users
             var listResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
-            Assert.IsEmpty(listResponse);
+            Assert.That(listResponse, Is.Empty);
 
             // create a new user and add to the group
             var createParameters = new ApiManagementUserCreateOrUpdateContent()
@@ -84,24 +87,27 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Note = "dummy note"
             };
             var userContract = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, userId, createParameters)).Value;
-            Assert.NotNull(userContract);
+            Assert.That(userContract, Is.Not.Null);
 
             // add user to group
             var addUserContract = (await groupContract.CreateGroupUserAsync(userId)).Value;
-            Assert.NotNull(addUserContract);
-            Assert.AreEqual(userContract.Data.Email, addUserContract.Email);
-            Assert.AreEqual(userContract.Data.FirstName, addUserContract.FirstName);
+            Assert.That(addUserContract, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(addUserContract.Email, Is.EqualTo(userContract.Data.Email));
+                Assert.That(addUserContract.FirstName, Is.EqualTo(userContract.Data.FirstName));
+            });
 
             // list group user
             var listgroupResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
-            Assert.AreEqual(listgroupResponse.Count, 1);
+            Assert.That(listgroupResponse.Count, Is.EqualTo(1));
 
             // remove user from group
             await groupContract.DeleteGroupUserAsync(userId);
 
             // make sure user is removed
             var falseResult = (await groupContract.CheckGroupUserEntityExistsAsync(userId)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

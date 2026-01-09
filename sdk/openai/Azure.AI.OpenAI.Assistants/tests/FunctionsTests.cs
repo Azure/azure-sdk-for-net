@@ -135,8 +135,11 @@ public class FunctionsTests : AssistantsTestBase
         {
             RequiredFunctionToolCall requiredFunctionCall = toolCall as RequiredFunctionToolCall;
             Assert.That(requiredFunctionCall, Is.Not.Null);
-            Assert.That(requiredFunctionCall.Name, Is.Not.Null.Or.Empty);
-            Assert.That(requiredFunctionCall.Arguments, Is.Not.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(requiredFunctionCall.Name, Is.Not.Null.Or.Empty);
+                Assert.That(requiredFunctionCall.Arguments, Is.Not.Null.Or.Empty);
+            });
             JsonElement argumentsJson = JsonDocument.Parse(requiredFunctionCall.Arguments).RootElement;
             Assert.That(argumentsJson, Is.Not.Null);
             Assert.That(argumentsJson.ValueKind, Is.EqualTo(JsonValueKind.Object));
@@ -148,9 +151,12 @@ public class FunctionsTests : AssistantsTestBase
             }
             else if (requiredFunctionCall.Name == preferredAirlineForSeasonFunction.Name)
             {
-                Assert.That(argumentProperties.Count, Is.EqualTo(1));
-                Assert.That(argumentProperties[0].Name, Is.EqualTo("season"));
-                Assert.That(argumentProperties[0].Value.GetString(), Is.EqualTo("fall"));
+                Assert.That(argumentProperties, Has.Count.EqualTo(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(argumentProperties[0].Name, Is.EqualTo("season"));
+                    Assert.That(argumentProperties[0].Value.GetString(), Is.EqualTo("fall"));
+                });
             }
         }
 

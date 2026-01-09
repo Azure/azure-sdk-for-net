@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricInternetGatewayRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternetGatewayRuleName, data);
             NetworkFabricInternetGatewayRuleResource result = lro.Value;
             NetworkFabricInternetGatewayRuleData resourceData = result.Data;
-            Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayRuleName);
+            Assert.That(TestEnvironment.InternetGatewayRuleName, Is.EqualTo(resourceData.Name));
             TestContext.Out.WriteLine($"Create operation succeeded on id: {resourceData.Id}");
 
             // invoke the get operation
             result = await collection.GetAsync(TestEnvironment.InternetGatewayRuleName);
 
             resourceData = result.Data;
-            Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayRuleName);
+            Assert.That(TestEnvironment.InternetGatewayRuleName, Is.EqualTo(resourceData.Name));
             TestContext.Out.WriteLine($"Get Operation succeeded on id: {resourceData.Id}");
 
             /*

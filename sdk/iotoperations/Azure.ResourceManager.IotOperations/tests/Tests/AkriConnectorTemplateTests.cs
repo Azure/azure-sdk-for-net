@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
             var createdTemplate = response.Value;
 
             // Assertions
-            Assert.IsNotNull(createdTemplate);
-            Assert.IsNotNull(createdTemplate.Data);
-            Assert.IsNotNull(createdTemplate.Data.Properties);
+            Assert.That(createdTemplate, Is.Not.Null);
+            Assert.That(createdTemplate.Data, Is.Not.Null);
+            Assert.That(createdTemplate.Data.Properties, Is.Not.Null);
 
             // Delete AkriConnectorTemplate
             await createdTemplate.DeleteAsync(WaitUntil.Completed);

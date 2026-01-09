@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [TestCase("hub1", TestNamespace, TestType, TestEvent)]
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(hub, ns, TestSocketId, type, ev, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
         [TestCase]
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, "/ns2", TestSocketId, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
         [TestCase]
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, TestKey.ConnectionId, new string[] { "abc" }, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
         [TestCase]
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, null, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase]
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, null, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase]
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "Delete", origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase]
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(type: WebPubSubEventType.User, eventName: "ev1", connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, WebPubSubEventType.User, "ev1", TestKey.ConnectionId, ValidSignature, Constants.ContentTypes.JsonContentType, origin: new string[] { TestOrigin }, payload: new byte[] {1});
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase("OPTIONS", "abc.com", new string[] { "abc.com" })]
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{allowHost};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: requestHost);
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [TestCase("OPTIONS", "abc.com")]
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{allowedHost};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: new string[] { testhost });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{TestOrigin};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, TestType, TestEvent, TestKey.ConnectionId, new string[] { signatures }, httpMethod: "GET", origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [TestCase("application/xml", HttpStatusCode.BadRequest)]
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var dispatcher = SetupDispatcher(TestHub, TestNamespace, WebPubSubEventType.User, Constants.Events.MessageEvent, connectionString: TestConnectionString);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestNamespace, TestSocketId, WebPubSubEventType.User, Constants.Events.MessageEvent, TestKey.ConnectionId, ValidSignature, contentType: mediaType, payload: Encoding.UTF8.GetBytes("Hello"));
             var response = await dispatcher.ExecuteAsync(request).ConfigureAwait(false);
-            Assert.AreEqual(expectedCode, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(expectedCode));
         }
 
         private static WebPubSubForSocketIOTriggerDispatcher SetupDispatcher(string hub = TestHub, string @namespace = "/", WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null)

@@ -29,9 +29,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             var collection = resourceGroup.GetUserAssignedIdentities();
             var userAssignedIdentity = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
 
-            Assert.NotNull(userAssignedIdentity.Data.TenantId);
-            Assert.NotNull(userAssignedIdentity.Data.ClientId);
-            Assert.NotNull(userAssignedIdentity.Data.PrincipalId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(userAssignedIdentity.Data.TenantId, Is.Not.Null);
+                Assert.That(userAssignedIdentity.Data.ClientId, Is.Not.Null);
+                Assert.That(userAssignedIdentity.Data.PrincipalId, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -45,12 +48,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
 
             UserAssignedIdentityResource userAssignedIdentity2 = await collection.GetAsync(name);
 
-            Assert.AreEqual(userAssignedIdentity.Data.Id, userAssignedIdentity2.Data.Id);
-            Assert.AreEqual(userAssignedIdentity.Data.Name, userAssignedIdentity2.Data.Name);
-            Assert.AreEqual(userAssignedIdentity.Data.ResourceType, userAssignedIdentity2.Data.ResourceType);
-            Assert.AreEqual(userAssignedIdentity.Data.TenantId, userAssignedIdentity2.Data.TenantId);
-            Assert.AreEqual(userAssignedIdentity.Data.ClientId, userAssignedIdentity2.Data.ClientId);
-            Assert.AreEqual(userAssignedIdentity.Data.PrincipalId, userAssignedIdentity2.Data.PrincipalId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(userAssignedIdentity2.Data.Id, Is.EqualTo(userAssignedIdentity.Data.Id));
+                Assert.That(userAssignedIdentity2.Data.Name, Is.EqualTo(userAssignedIdentity.Data.Name));
+                Assert.That(userAssignedIdentity2.Data.ResourceType, Is.EqualTo(userAssignedIdentity.Data.ResourceType));
+                Assert.That(userAssignedIdentity2.Data.TenantId, Is.EqualTo(userAssignedIdentity.Data.TenantId));
+                Assert.That(userAssignedIdentity2.Data.ClientId, Is.EqualTo(userAssignedIdentity.Data.ClientId));
+                Assert.That(userAssignedIdentity2.Data.PrincipalId, Is.EqualTo(userAssignedIdentity.Data.PrincipalId));
+            });
         }
 
         [RecordedTest]
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
                 count++;
             }
 
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.Search.Documents.Tests.Models
 
             CorsOptions sut = CorsOptions.DeserializeCorsOptions(doc.RootElement);
 
-            CollectionAssert.AreEqual(sut.AllowedOrigins, new[] { "*" });
-            Assert.IsNull(sut.MaxAgeInSeconds);
+            Assert.That(new[] { "*" }, Is.EqualTo(sut.AllowedOrigins).AsCollection);
+            Assert.That(sut.MaxAgeInSeconds, Is.Null);
         }
     }
 }

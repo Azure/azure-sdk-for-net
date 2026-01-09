@@ -45,10 +45,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new CheckpointPosition("121");
             var second = new CheckpointPosition("121");
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -61,10 +64,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new CheckpointPosition("44", 121);
             var second = new CheckpointPosition("44", 121);
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -78,10 +84,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new CheckpointPosition("10");
             var second = new CheckpointPosition("121");
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -95,10 +104,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new CheckpointPosition("121");
             var second = new CheckpointPosition("121", 10);
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -112,10 +124,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new CheckpointPosition("10");
             var second = new CheckpointPosition("121");
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>

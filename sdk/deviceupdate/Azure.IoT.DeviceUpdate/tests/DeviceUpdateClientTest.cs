@@ -25,11 +25,11 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -40,11 +40,11 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -61,7 +61,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 
@@ -73,11 +73,11 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -94,7 +94,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
         {
             DeviceUpdateClient client = CreateClient();
             Response response = await client.GetUpdateAsync(TestEnvironment.UpdateProvider, TestEnvironment.UpdateName, TestEnvironment.UpdateVersion);
-            Assert.IsNotNull(response.Content);
+            Assert.That(response.Content, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -117,7 +117,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 
@@ -129,11 +129,11 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter, Is.GreaterThan(0));
         }
 
         [RecordedTest]
@@ -150,7 +150,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 

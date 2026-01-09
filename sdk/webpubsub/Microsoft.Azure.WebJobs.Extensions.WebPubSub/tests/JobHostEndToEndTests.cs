@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var task = host.GetJobHost().CallAsync(nameof(WebPubSubFuncs_GlobalConnection) + "." + nameof(WebPubSubFuncs_GlobalConnection.TestWebPubSubTriggerInvalid), args);
             var exception = Assert.ThrowsAsync<FunctionInvocationException>(() => task);
-            Assert.AreEqual($"Exception while executing function: {nameof(WebPubSubFuncs_GlobalConnection)}.{nameof(WebPubSubFuncs_GlobalConnection.TestWebPubSubTriggerInvalid)}", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo($"Exception while executing function: {nameof(WebPubSubFuncs_GlobalConnection)}.{nameof(WebPubSubFuncs_GlobalConnection.TestWebPubSubTriggerInvalid)}"));
         }
 
         [TestCase]
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var host = TestHelpers.NewHost(typeof(WebPubSubFuncs_GlobalConnection));
             var task = host.GetJobHost().CallAsync(nameof(WebPubSubFuncs_GlobalConnection) + "." + nameof(WebPubSubFuncs_GlobalConnection.TestWebPubSubInputConnection));
             var exception = Assert.ThrowsAsync<FunctionIndexingException>(() => task);
-            Assert.AreEqual($"Error indexing method '{nameof(WebPubSubFuncs_GlobalConnection)}.{nameof(WebPubSubFuncs_GlobalConnection.TestWebPubSubInputConnection)}'", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo($"Error indexing method '{nameof(WebPubSubFuncs_GlobalConnection)}.{nameof(WebPubSubFuncs_GlobalConnection.TestWebPubSubInputConnection)}'"));
         }
 
         [TestCaseSource(nameof(FuncConfigurationWithGlobalConnection))]
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var task = host.GetJobHost().CallAsync(nameof(WebPubSubMissingHubFuncs) + "." + nameof(WebPubSubMissingHubFuncs.TestWebPubSubOutputMissingHub));
             var exception = Assert.ThrowsAsync<FunctionIndexingException>(() => task);
-            Assert.AreEqual($"Error indexing method '{nameof(WebPubSubMissingHubFuncs)}.{nameof(WebPubSubMissingHubFuncs.TestWebPubSubOutputMissingHub)}'", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo($"Error indexing method '{nameof(WebPubSubMissingHubFuncs)}.{nameof(WebPubSubMissingHubFuncs.TestWebPubSubOutputMissingHub)}'"));
         }
 
         private static WebPubSubTriggerEvent CreateTestTriggerEvent()
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 WebPubSubConnectionContext connectionContext)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual(TestContext, connectionContext);
+                Assert.That(connectionContext, Is.EqualTo(TestContext));
             }
 
             public static void TestWebPubSubTriggerInvalid(
@@ -152,14 +152,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 [WebPubSubConnection(Hub = "chat", UserId = "aaa")] WebPubSubConnection connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUri.AbsoluteUri);
+                Assert.That(connection.BaseUri.AbsoluteUri, Is.EqualTo("wss://abc/client/hubs/chat"));
             }
 
             public static void TestMqttInputConnection(
                 [WebPubSubConnection(Hub = "chat", UserId = "aaa", ClientProtocol = WebPubSubClientProtocol.Mqtt)] WebPubSubConnection connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("wss://abc/clients/mqtt/hubs/chat", connection.BaseUri.AbsoluteUri);
+                Assert.That(connection.BaseUri.AbsoluteUri, Is.EqualTo("wss://abc/clients/mqtt/hubs/chat"));
             }
 
             public static async Task TestWebPubSubOutput(
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
     [WebPubSubConnection(Hub = "chat", UserId = "aaa", Connection = "LocalConnection")] WebPubSubConnection connection)
             {
                 // Valid case use default url for verification.
-                Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUri.AbsoluteUri);
+                Assert.That(connection.BaseUri.AbsoluteUri, Is.EqualTo("wss://abc/client/hubs/chat"));
             }
 
             public static async Task TestWebPubSubOutput(

@@ -15,7 +15,6 @@ using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using static Moq.It;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
@@ -49,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             _consumerClientMock.Setup(c => c.FullyQualifiedNamespace).Returns(_namespace);
             _consumerClientMock.Setup(client => client.GetPartitionsAsync())
                 .Returns(() => Task.FromResult(_partitions.Select(p => p.Id).ToArray()));
-            _consumerClientMock.Setup(client => client.GetPartitionPropertiesAsync(IsAny<string>()))
+            _consumerClientMock.Setup(client => client.GetPartitionPropertiesAsync(It.IsAny<string>()))
                 .Returns((string id) => Task.FromResult(_partitions.SingleOrDefault(p => p.Id == id)));
 
             this._mockCheckpointStore = new Mock<BlobCheckpointStoreInternal>(MockBehavior.Strict);
@@ -97,17 +96,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.EventCount);
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(0));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(1));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // Partition got its first message (no checkpoint, LastEnqueued == 0)
             this._checkpoints = new EventProcessorCheckpoint[0];
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(1, metrics.EventCount);
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(1));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(1));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // No instances assigned to process events on partition (no checkpoint, LastEnqueued > 0)
             this._checkpoints = new EventProcessorCheckpoint[0];
@@ -121,9 +120,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(6, metrics.EventCount);
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(6));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(1));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // Checkpointing is ahead of partition info and invalid (SequenceNumber > LastEnqueued)
             this._checkpoints = new EventProcessorCheckpoint[]
@@ -138,9 +137,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.EventCount);
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(0));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(1));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -163,9 +162,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.EventCount);
-            Assert.AreEqual(3, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(0));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(3));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // Messages processed, Messages in queue
             this._checkpoints = new EventProcessorCheckpoint[]
@@ -184,9 +183,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(30, metrics.EventCount);
-            Assert.AreEqual(3, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(30));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(3));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // One invalid sample
             this._checkpoints = new EventProcessorCheckpoint[]
@@ -205,9 +204,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(20, metrics.EventCount);
-            Assert.AreEqual(3, metrics.PartitionCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.EventCount, Is.EqualTo(20));
+            Assert.That(metrics.PartitionCount, Is.EqualTo(3));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -227,9 +226,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.EventCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(1));
+            Assert.That(metrics.EventCount, Is.EqualTo(1));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
             AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, _errorMessage);
 
             // Generic Exception
@@ -246,9 +245,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.EventCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(1));
+            Assert.That(metrics.EventCount, Is.EqualTo(1));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
             AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, _errorMessage);
 
             _loggerProvider.ClearAllLogMessages();
@@ -257,12 +256,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         private void AssertGetCheckpointAsyncErrorLogs(string partitionId, string message)
         {
             var logs = _loggerProvider.GetAllLogMessages().ToList();
-            Assert.That(logs.Any(l =>
-                    l.Level == LogLevel.Debug),
-                $"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_eventHubName}', partition '{partitionId}': {message}");
-            Assert.That(logs.Any(l =>
-                    l.Level == LogLevel.Warning),
-                $"Encountered an exception while getting checkpoints for Event Hub '{_eventHubName}' used for scaling. Error: {message}");
+            Assert.Multiple(() =>
+            {
+                Assert.That(logs.Any(l =>
+                                l.Level == LogLevel.Debug),
+                            $"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_eventHubName}', partition '{partitionId}': {message}");
+                Assert.That(logs.Any(l =>
+                        l.Level == LogLevel.Warning),
+                    $"Encountered an exception while getting checkpoints for Event Hub '{_eventHubName}' used for scaling. Error: {message}");
+            });
         }
 
         [TestCase(false, 0, -1, -1, 0)] // Microsoft.Azure.Functions.Worker.Extensions.EventHubs < 5.0.0, auto created checkpoint, no events sent
@@ -302,7 +304,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             };
 
             var metrics = await _metricsProvider.GetMetricsAsync();
-            Assert.AreEqual(expectedUnprocessedMessageCount, metrics.EventCount);
+            Assert.That(metrics.EventCount, Is.EqualTo(expectedUnprocessedMessageCount));
         }
 
         private Task<EventProcessorCheckpoint> WaitTillCancelled(CancellationToken ct, string partition)
@@ -355,7 +357,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(3, metrics.PartitionCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(3));
             var logs = _loggerProvider.GetAllLogMessages().ToList();
 
             AssertGetCheckpointAsyncErrorLogs("0", _errorMessage);

@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Check
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing2
-                Assert.AreEqual(1000, (int)await searchClient.GetDocumentCountAsync());
+                Assert.That((int)await searchClient.GetDocumentCountAsync(), Is.EqualTo(1000));
                 #endregion
 
                 // Too many
@@ -144,7 +144,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
                 catch (RequestFailedException ex)
                 {
-                    Assert.AreEqual(400, ex.Status);
+                    Assert.That(ex.Status, Is.EqualTo(400));
                 }
             }
             finally
@@ -186,7 +186,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 await WaitForDocumentCountAsync(searchClient, 100000);
 
                 // Check
-                Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
+                Assert.That((int)await searchClient.GetDocumentCountAsync(), Is.EqualTo(100000));
             }
             finally
             {

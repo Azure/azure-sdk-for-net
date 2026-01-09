@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         public void Constructor_Success()
         {
             ServiceBusAttribute attribute = new ServiceBusAttribute("testqueue");
-            Assert.AreEqual("testqueue", attribute.QueueOrTopicName);
+            Assert.That(attribute.QueueOrTopicName, Is.EqualTo("testqueue"));
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var lro = await dedicatedHost.UpdateAsync(WaitUntil.Completed, update);
             DedicatedHostResource updatedHost = lro.Value;
 
-            Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);
+            Assert.That(updatedHost.Data.AutoReplaceOnFailure, Is.EqualTo(updatedAutoReplaceOnFailure));
         }
 
         [RecordedTest]
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             DedicatedHostResource updated = await host.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updated.Data.Tags);
+            Assert.That(updated.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

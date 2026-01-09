@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Tests
             string filename = Path.GetFileName(GetSessionFilePath());
             bool isAsyncFile = filename == "ValidateFilenameAsync.json";
             bool isSyncFile = filename == "ValidateFilename.json";
-            Assert.IsTrue(isAsyncFile || isSyncFile);
+            Assert.That(isAsyncFile || isSyncFile, Is.True);
         }
     }
 }

@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
             IotOperationsBrokerAuthorizationResource createdBrokerAuthorization = resp.Value;
 
-            Assert.IsNotNull(createdBrokerAuthorization);
-            Assert.IsNotNull(createdBrokerAuthorization.Data);
-            Assert.IsNotNull(createdBrokerAuthorization.Data.Properties);
+            Assert.That(createdBrokerAuthorization, Is.Not.Null);
+            Assert.That(createdBrokerAuthorization.Data, Is.Not.Null);
+            Assert.That(createdBrokerAuthorization.Data.Properties, Is.Not.Null);
 
             // Delete BrokerAuthorization
             await createdBrokerAuthorization.DeleteAsync(WaitUntil.Completed);

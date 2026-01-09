@@ -27,8 +27,8 @@ namespace Azure.AI.Personalizer.Tests
             DateTime start = new DateTime(properties.StartTime.Value.Year, properties.StartTime.Value.Month, properties.StartTime.Value.Day);
             DateTime end = new DateTime(properties.EndTime.Value.Year, properties.EndTime.Value.Month, properties.EndTime.Value.Day);
             DateTime expectedDefault = DateTime.MinValue;
-            Assert.AreEqual(expectedDefault, start);
-            Assert.AreEqual(expectedDefault, start);
+            Assert.That(start, Is.EqualTo(expectedDefault));
+            Assert.That(start, Is.EqualTo(expectedDefault));
         }
 
         private async Task DeleteLogs(PersonalizerAdministrationClient client)

@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusReceivedMessage secondMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
-                Assert.NotNull(secondMessage);
+                Assert.That(secondMessage, Is.Not.Null);
                 await receiver.CompleteMessageAsync(secondMessage);
             };
         }
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 }
                 #endregion
                 var bytes = await receiver.GetSessionStateAsync();
-                Assert.AreEqual(state, bytes.ToArray());
+                Assert.That(bytes.ToArray(), Is.EqualTo(state));
             };
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #endregion
 
             receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #endregion
 
             receivedMessage = await receiverA.ReceiveMessageAsync();
-            Assert.IsNull(receivedMessage);
+            Assert.That(receivedMessage, Is.Null);
         }
     }
 }

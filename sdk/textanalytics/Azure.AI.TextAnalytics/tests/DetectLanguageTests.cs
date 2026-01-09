@@ -94,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string document = SingleSpanish;
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(document, "COLOMBIA"));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidCountryHint, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidCountryHint));
         }
 
         [RecordedTest]
@@ -134,9 +134,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results);
 
-            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
-            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
-            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].PrimaryLanguage.Name, Is.EqualTo("English"));
+                Assert.That(results[1].PrimaryLanguage.Name, Is.EqualTo("French"));
+                Assert.That(results[2].PrimaryLanguage.Name, Is.EqualTo("Spanish"));
+            });
         }
 
         [RecordedTest]
@@ -155,9 +158,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
 
-            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
-            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
-            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].PrimaryLanguage.Name, Is.EqualTo("English"));
+                Assert.That(results[1].PrimaryLanguage.Name, Is.EqualTo("French"));
+                Assert.That(results[2].PrimaryLanguage.Name, Is.EqualTo("Spanish"));
+            });
         }
 
         [RecordedTest]
@@ -170,10 +176,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results);
 
-            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
-            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
-            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
-            Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].PrimaryLanguage.Name, Is.EqualTo("English"));
+                Assert.That(results[1].PrimaryLanguage.Name, Is.EqualTo("French"));
+                Assert.That(results[2].PrimaryLanguage.Name, Is.EqualTo("Spanish"));
+                Assert.That(results[3].PrimaryLanguage.Name, Is.EqualTo("(Unknown)"));
+            });
         }
 
         [RecordedTest]
@@ -192,10 +201,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ValidateBatchDocumentsResult(results, includeStatistics: true);
 
-            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
-            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
-            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
-            Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(results[0].PrimaryLanguage.Name, Is.EqualTo("English"));
+                Assert.That(results[1].PrimaryLanguage.Name, Is.EqualTo("French"));
+                Assert.That(results[2].PrimaryLanguage.Name, Is.EqualTo("Spanish"));
+                Assert.That(results[3].PrimaryLanguage.Name, Is.EqualTo("(Unknown)"));
+            });
         }
 
         [RecordedTest]
@@ -211,13 +223,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(documents);
 
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!results[0].HasError, Is.True);
+                Assert.That(!results[2].HasError, Is.True);
+            });
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].PrimaryLanguage.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -228,7 +243,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.DetectLanguageBatchAsync(documents, options: new TextAnalyticsRequestOptions() { ModelVersion = "2019-10-01" }));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -240,9 +255,9 @@ namespace Azure.AI.TextAnalytics.Tests
             DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(documents, options: new TextAnalyticsRequestOptions() { ModelVersion = "2019-10-01" });
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[0].HasError);
+            Assert.That(results[0].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].PrimaryLanguage.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -253,7 +268,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
 
             ValidateBatchDocumentsResult(results);
-            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+            Assert.That(results[0].PrimaryLanguage.Name, Is.EqualTo("English"));
         }
 
         [RecordedTest]
@@ -264,16 +279,22 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer."));
         }
 
         private void ValidateInDocumenResult(DetectedLanguage language)
         {
-            Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
-            Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
-            Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
-            Assert.LessOrEqual(language.ConfidenceScore, 1.0);
-            Assert.IsNotNull(language.Warnings);
+            Assert.Multiple(() =>
+            {
+                Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
+                Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                Assert.That(language.ConfidenceScore, Is.GreaterThanOrEqualTo(0.0));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(language.ConfidenceScore, Is.LessThanOrEqualTo(1.0));
+                Assert.That(language.Warnings, Is.Not.Null);
+            });
         }
 
         private void ValidateBatchDocumentsResult(DetectLanguageResultCollection results, bool includeStatistics = default)
@@ -282,33 +303,45 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (includeStatistics)
             {
-                Assert.IsNotNull(results.Statistics);
-                Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.Greater(results.Statistics.TransactionCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+                Assert.That(results.Statistics, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(results.Statistics.DocumentCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.TransactionCount, Is.GreaterThan(0));
+                    Assert.That(results.Statistics.InvalidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(results.Statistics.ValidDocumentCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
             else
-                Assert.IsNull(results.Statistics);
+                Assert.That(results.Statistics, Is.Null);
 
-            Assert.Greater(results.Count, 0);
+            Assert.That(results.Count, Is.GreaterThan(0));
             foreach (DetectLanguageResult languageInDocument in results)
             {
-                Assert.That(languageInDocument.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(languageInDocument.HasError);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(languageInDocument.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(languageInDocument.HasError, Is.False);
 
-                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(languageInDocument.Statistics);
+                    //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                    Assert.That(languageInDocument.Statistics, Is.Not.Null);
+                });
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(languageInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(languageInDocument.Statistics.TransactionCount, 0);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(languageInDocument.Statistics.CharacterCount, Is.GreaterThanOrEqualTo(0));
+                        Assert.That(languageInDocument.Statistics.TransactionCount, Is.GreaterThan(0));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(0, languageInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, languageInDocument.Statistics.TransactionCount);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(languageInDocument.Statistics.CharacterCount, Is.EqualTo(0));
+                        Assert.That(languageInDocument.Statistics.TransactionCount, Is.EqualTo(0));
+                    });
                 }
 
                 ValidateInDocumenResult(languageInDocument.PrimaryLanguage);

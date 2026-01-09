@@ -18,11 +18,14 @@ public class ClientResultExceptionTests
 
         ClientResultException exception = new ClientResultException(response);
 
-        Assert.AreEqual(response.Status, exception.Status);
-        Assert.AreEqual(response, exception.GetRawResponse());
-        Assert.AreEqual(
-            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}",
-            exception.Message);
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception.Status, Is.EqualTo(response.Status));
+            Assert.That(exception.GetRawResponse(), Is.EqualTo(response));
+            Assert.That(
+                exception.Message,
+                Is.EqualTo($"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}"));
+        });
     }
 
     [Test]
@@ -32,11 +35,14 @@ public class ClientResultExceptionTests
 
         ClientResultException exception = await ClientResultException.CreateAsync(response);
 
-        Assert.AreEqual(response.Status, exception.Status);
-        Assert.AreEqual(response, exception.GetRawResponse());
-        Assert.AreEqual(
-            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}",
-            exception.Message);
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception.Status, Is.EqualTo(response.Status));
+            Assert.That(exception.GetRawResponse(), Is.EqualTo(response));
+            Assert.That(
+                exception.Message,
+                Is.EqualTo($"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}"));
+        });
     }
 
     [Test]
@@ -47,9 +53,12 @@ public class ClientResultExceptionTests
 
         ClientResultException exception = new ClientResultException(message, response);
 
-        Assert.AreEqual(response.Status, exception.Status);
-        Assert.AreEqual(response, exception.GetRawResponse());
-        Assert.AreEqual(message, exception.Message);
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception.Status, Is.EqualTo(response.Status));
+            Assert.That(exception.GetRawResponse(), Is.EqualTo(response));
+            Assert.That(exception.Message, Is.EqualTo(message));
+        });
     }
 
     [Test]
@@ -59,9 +68,12 @@ public class ClientResultExceptionTests
 
         ClientResultException exception = new ClientResultException(message);
 
-        Assert.AreEqual(0, exception.Status);
-        Assert.IsNull(exception.GetRawResponse());
-        Assert.AreEqual(message, exception.Message);
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception.Status, Is.EqualTo(0));
+            Assert.That(exception.GetRawResponse(), Is.Null);
+            Assert.That(exception.Message, Is.EqualTo(message));
+        });
     }
 
     [Test]
@@ -74,11 +86,14 @@ public class ClientResultExceptionTests
 
         ClientResultException exception = new ClientResultException(response);
 
-        Assert.AreEqual(response.Status, exception.Status);
-        Assert.AreEqual(response, exception.GetRawResponse());
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception.Status, Is.EqualTo(response.Status));
+            Assert.That(exception.GetRawResponse(), Is.EqualTo(response));
 
-        // Accessing Content would throw if it hadn't been buffered.
-        Assert.AreEqual(content, response.Content.ToArray());
+            // Accessing Content would throw if it hadn't been buffered.
+            Assert.That(response.Content.ToArray(), Is.EqualTo(content));
+        });
     }
 
     #region

@@ -16,7 +16,7 @@ namespace TestProjects.Spector.Tests.Http.Authentication.Union
         public Task Authentication_Union_validKey() => Test(async (host) =>
         {
             Response response = await new UnionClient(host, new AzureKeyCredential("valid-key"), null).ValidKeyAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -25,7 +25,7 @@ namespace TestProjects.Spector.Tests.Http.Authentication.Union
             var options = new UnionClientOptions();
             options.AddPolicy(new OAuth2TestHelper.MockBearerTokenAuthenticationPolicy(new OAuth2TestHelper.MockCredential(), new string[] { "https://security.microsoft.com/.default" }, options.Transport), HttpPipelinePosition.PerCall);
             Response response = await new UnionClient(host, new OAuth2TestHelper.MockCredential(), options).ValidTokenAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

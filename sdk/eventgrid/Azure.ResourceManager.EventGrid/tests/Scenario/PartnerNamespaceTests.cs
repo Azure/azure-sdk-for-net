@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string partnerNamespaceName = Recording.GenerateAssetName("PartnerNamespace");
             await CreatePartnerNamespace(_resourceGroup, partnerNamespaceName);
             bool flag = await _partnerNamespaceCollection.ExistsAsync(partnerNamespaceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -64,15 +64,18 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await CreatePartnerNamespace(_resourceGroup, partnerNamespaceName);
             // Get all partner namespaces created within a resourceGroup
             var list = await _partnerNamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidatePartnerNamespace(list.First(item => item.Data.Name == partnerNamespaceName), partnerNamespaceName);
-            Assert.NotNull(list);
-            Assert.GreaterOrEqual(list.Count, 1);
-            Assert.AreEqual(list.FirstOrDefault().Data.Name, partnerNamespaceName);
+            Assert.That(list, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
+                Assert.That(partnerNamespaceName, Is.EqualTo(list.FirstOrDefault().Data.Name));
+            });
             // Get all partner namespaces created within the subscription irrespective of the resourceGroup
             var namespacesInAzureSubscription = await DefaultSubscription.GetPartnerNamespacesAsync().ToEnumerableAsync();
-            Assert.NotNull(namespacesInAzureSubscription);
-            Assert.GreaterOrEqual(namespacesInAzureSubscription.Count, 1);
+            Assert.That(namespacesInAzureSubscription, Is.Not.Null);
+            Assert.That(namespacesInAzureSubscription.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -87,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await topic.UpdateAsync(WaitUntil.Completed, patch);
             // Retrieve the updated partner namespace
             var updatedTopic = await _partnerNamespaceCollection.GetAsync(partnerNamespaceName);
-            Assert.IsNotNull(updatedTopic.Value);
+            Assert.That(updatedTopic.Value, Is.Not.Null);
         }
 
         [Test]
@@ -96,7 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string topicName = Recording.GenerateAssetName("PartnerNamespace");
             var topic = await CreatePartnerNamespace(_resourceGroup, topicName);
             var keys = await topic.GetSharedAccessKeysAsync();
-            Assert.IsNotNull(keys);
+            Assert.That(keys, Is.Not.Null);
         }
 
         [Test]
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string topicName = Recording.GenerateAssetName("PartnerNamespace");
             var namespaceResource = await CreatePartnerNamespace(_resourceGroup, topicName);
             var newKey = await namespaceResource.RegenerateKeyAsync(new PartnerNamespaceRegenerateKeyContent("key1"));
-            Assert.IsNotNull(newKey);
+            Assert.That(newKey, Is.Not.Null);
         }
 
         [Test]
@@ -114,11 +117,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string partnerNamespaceName = Recording.GenerateAssetName("PartnerNamespace");
             var partnerNamespace = await CreatePartnerNamespace(_resourceGroup, partnerNamespaceName);
             bool flag = await _partnerNamespaceCollection.ExistsAsync(partnerNamespaceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await partnerNamespace.DeleteAsync(WaitUntil.Completed);
             flag = await _partnerNamespaceCollection.ExistsAsync(partnerNamespaceName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [TestCase(false)]
@@ -132,15 +135,18 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // AddTag
             await partnerNamespace.AddTagAsync("addtagkey", "addtagvalue");
             partnerNamespace = await _partnerNamespaceCollection.GetAsync(partnerNamespaceName);
-            Assert.AreEqual(1, partnerNamespace.Data.Tags.Count);
+            Assert.That(partnerNamespace.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = partnerNamespace.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await partnerNamespace.RemoveTagAsync("addtagkey");
             partnerNamespace = await _partnerNamespaceCollection.GetAsync(partnerNamespaceName);
-            Assert.AreEqual(0, partnerNamespace.Data.Tags.Count);
+            Assert.That(partnerNamespace.Data.Tags.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -157,9 +163,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var response = await partnerNamespace.GetPartnerNamespacePrivateLinkResourceAsync(privateLinkResourceName);
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
-            Assert.AreEqual(privateLinkResourceName, response.Value.Data.Name);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(privateLinkResourceName));
 
             // Cleanup
             await partnerNamespace.DeleteAsync(WaitUntil.Completed);
@@ -167,15 +173,18 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private void ValidatePartnerNamespace(PartnerNamespaceResource partnerNamespace, string partnerNamespaceName)
         {
-            Assert.IsNotNull(partnerNamespace);
-            Assert.IsNotNull(partnerNamespace.Data.Id);
-            Assert.AreEqual(partnerNamespaceName, partnerNamespace.Data.Name);
-            Assert.IsTrue(partnerNamespace.Data.IsLocalAuthDisabled);
-            Assert.AreEqual(_resourceGroup.Data.Location, partnerNamespace.Data.Location);
-            Assert.AreEqual(PartnerTopicRoutingMode.ChannelNameHeader, partnerNamespace.Data.PartnerTopicRoutingMode);
-            Assert.AreEqual(EventGridPublicNetworkAccess.Enabled, partnerNamespace.Data.PublicNetworkAccess);
-            Assert.AreEqual("Succeeded", partnerNamespace.Data.ProvisioningState.ToString());
-            Assert.AreEqual("Microsoft.EventGrid/partnerNamespaces", partnerNamespace.Data.ResourceType.ToString());
+            Assert.That(partnerNamespace, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(partnerNamespace.Data.Id, Is.Not.Null);
+                Assert.That(partnerNamespace.Data.Name, Is.EqualTo(partnerNamespaceName));
+                Assert.That(partnerNamespace.Data.IsLocalAuthDisabled, Is.True);
+                Assert.That(partnerNamespace.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));
+                Assert.That(partnerNamespace.Data.PartnerTopicRoutingMode, Is.EqualTo(PartnerTopicRoutingMode.ChannelNameHeader));
+                Assert.That(partnerNamespace.Data.PublicNetworkAccess, Is.EqualTo(EventGridPublicNetworkAccess.Enabled));
+                Assert.That(partnerNamespace.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(partnerNamespace.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerNamespaces"));
+            });
         }
     }
 }

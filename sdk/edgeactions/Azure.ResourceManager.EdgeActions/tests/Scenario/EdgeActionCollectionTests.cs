@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EdgeActions.Tests.Scenario
             EdgeActionCollection collection = rg.GetEdgeActions();
 
             bool exists = await collection.ExistsAsync("nonexistent-edgeaction");
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
     }
 }

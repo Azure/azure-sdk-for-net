@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             string externalSecuritySolutionsName = "";
             var externalSecuritySolutions = await _externalSecuritySolutionCollection.GetAsync( externalSecuritySolutionsName);
-            Assert.IsNotNull(externalSecuritySolutions);
+            Assert.That(externalSecuritySolutions, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task List()
         {
             var list = await DefaultSubscription.GetExternalSecuritySolutionsAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
 
         [RecordedTest]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");
             var list = await ascLocation.Value.GetExternalSecuritySolutionsByHomeRegionAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

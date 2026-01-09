@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
 
             using var jsonDocumentCreate = JsonDocument.Parse(GetContentFromResponse(createResponse));
             JsonElement createBodyJson = jsonDocumentCreate.RootElement;
-            Assert.AreEqual("mysubCollection", createBodyJson.GetProperty("name").GetString());
+            Assert.That(createBodyJson.GetProperty("name").GetString(), Is.EqualTo("mysubCollection"));
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             Response getResponse = await client.GetCollectionAsync(new());
             using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(getResponse));
             JsonElement getBodyJson = jsonDocumentGet.RootElement;
-            Assert.AreEqual("myCollection1", getBodyJson.GetProperty("name").GetString());
+            Assert.That(getBodyJson.GetProperty("name").GetString(), Is.EqualTo("myCollection1"));
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);

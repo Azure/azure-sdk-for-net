@@ -30,15 +30,15 @@ namespace Azure.Communication.CallingServer
                 string playAudioUri = "https://localhost/bot-hold-music-2.wav";
                 var targets = new CommunicationIdentifier[] { targetUser };
                 var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(ngrok)).ConfigureAwait(false);
-                Assert.NotNull(callResponse);
-                Assert.NotNull(callResponse.Value);
+                Assert.That(callResponse, Is.Not.Null);
+                Assert.That(callResponse.Value, Is.Not.Null);
                 var callConnection = callResponse.Value.CallConnection;
                 callConnectionId = callConnection.CallConnectionId;
                 var playResponse = await callConnection.GetCallMedia().PlayAsync(
                     new FileSource(new Uri(playAudioUri)) { PlaySourceId = "playSourceId"},
                     new CommunicationUserIdentifier[] { targetUser });
-                Assert.NotNull(playResponse);
-                Assert.AreEqual(202, playResponse.Status);
+                Assert.That(playResponse, Is.Not.Null);
+                Assert.That(playResponse.Status, Is.EqualTo(202));
             }
             catch (RequestFailedException ex)
             {

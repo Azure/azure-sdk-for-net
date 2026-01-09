@@ -16,9 +16,12 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.Repeatability
         {
             var response = await new RepeatabilityClient(host, null).ImmediateSuccessAsync();
 
-            Assert.AreEqual(204, response.Status);
-            Assert.IsTrue(response.Headers.TryGetValue("repeatability-result", out var headerValue));
-            Assert.AreEqual("accepted", headerValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo(204));
+                Assert.That(response.Headers.TryGetValue("repeatability-result", out var headerValue), Is.True);
+                Assert.That(headerValue, Is.EqualTo("accepted"));
+            });
         });
 
         [Test]
@@ -27,10 +30,10 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.Repeatability
             var methods = typeof(RepeatabilityClient).GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(m => m.Name.StartsWith("ImmediateSuccess"));
 
-            Assert.IsNotEmpty(methods);
+            Assert.That(methods, Is.Not.Empty);
             foreach (var m in methods)
             {
-                Assert.False(m.GetParameters().Any(p => p.Name == "repeatabilityRequestId" || p.Name == "repeatabilityFirstSent"));
+                Assert.That(m.GetParameters().Any(p => p.Name == "repeatabilityRequestId" || p.Name == "repeatabilityFirstSent"), Is.False);
             }
         }
     }

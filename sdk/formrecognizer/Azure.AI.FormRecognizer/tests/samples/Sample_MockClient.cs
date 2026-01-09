@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:DocumentAnalysisUseMocks
             bool isExpensive = await IsExpensiveAsync(fakeModelId, fakeDocumentUri, mockClient.Object);
-            Assert.IsTrue(isExpensive);
+            Assert.That(isExpensive, Is.True);
             #endregion
         }
 
@@ -133,8 +133,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 }
             }
 
-            Assert.AreEqual(1, oldModelIds.Count);
-            Assert.AreEqual("groceries", oldModelIds[0]);
+            Assert.That(oldModelIds, Has.Count.EqualTo(1));
+            Assert.That(oldModelIds[0], Is.EqualTo("groceries"));
         }
     }
 }

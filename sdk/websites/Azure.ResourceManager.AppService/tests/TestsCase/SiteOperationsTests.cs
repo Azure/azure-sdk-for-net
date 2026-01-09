@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 count++;
             }
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
         }
         //Manual operation needed to create website/hybridconnection resource, get it from existing one.
         [TestCase]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             {
                 count++;
             }
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
         }
     }
 }

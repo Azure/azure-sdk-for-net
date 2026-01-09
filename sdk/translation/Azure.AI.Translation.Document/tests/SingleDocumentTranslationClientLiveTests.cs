@@ -65,7 +65,7 @@ namespace Azure.AI.Translation.Document.Tests
             var response = await client.TranslateAsync("hi", content).ConfigureAwait(false);
             var requestString = File.ReadAllText(filePath);
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
-            Assert.AreNotEqual(requestString, responseString);
+            Assert.That(responseString, Is.Not.EqualTo(requestString));
         }
 
         [RecordedTest]
@@ -91,7 +91,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             var outputString = Encoding.UTF8.GetString(response.Value.ToArray());
 
-            Assert.IsTrue(outputString.ToLowerInvariant().Contains("test"), $"'{outputString}' does not contain glossary 'test'");
+            Assert.That(outputString.ToLowerInvariant(), Does.Contain("test"), $"'{outputString}' does not contain glossary 'test'");
         }
 
         [RecordedTest]
@@ -120,7 +120,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(400, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(400));
             }
         }
     }

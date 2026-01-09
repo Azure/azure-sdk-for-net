@@ -14,29 +14,29 @@ namespace Azure.Search.Documents.Tests.Models
         public void StringConstructorTests()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new SynonymMap(null, (string)null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentException>(() => new SynonymMap(string.Empty, (string)null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new SynonymMap("test", (string)null));
-            Assert.AreEqual("synonyms", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonyms"));
 
             ex = Assert.Throws<ArgumentException>(() => new SynonymMap("test", string.Empty));
-            Assert.AreEqual("synonyms", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonyms"));
         }
 
         [Test]
         public void TextReaderConstructorTests()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new SynonymMap(null, (TextReader)null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentException>(() => new SynonymMap(string.Empty, (TextReader)null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("name"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new SynonymMap("test", (TextReader)null));
-            Assert.AreEqual("reader", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("reader"));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Tests.Models
             using StringReader reader = new StringReader("ms,msft=>Microsoft\naz=>Azure");
 
             SynonymMap map = new SynonymMap("test", reader);
-            Assert.AreEqual("ms,msft=>Microsoft\naz=>Azure", map.Synonyms);
+            Assert.That(map.Synonyms, Is.EqualTo("ms,msft=>Microsoft\naz=>Azure"));
         }
 
         [TestCase(null, null)]
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void ParsesETag(string value, string expected)
         {
             SynonymMap sut = new SynonymMap(null, null, null, null, value, serializedAdditionalRawData: null);
-            Assert.AreEqual(expected, sut.ETag?.ToString());
+            Assert.That(sut.ETag?.ToString(), Is.EqualTo(expected));
         }
     }
 }

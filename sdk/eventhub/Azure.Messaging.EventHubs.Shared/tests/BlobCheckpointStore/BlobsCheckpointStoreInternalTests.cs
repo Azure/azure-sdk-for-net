@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             mockLog.Verify(m => m.ClaimOwnershipStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
             mockLog.Verify(m => m.ClaimOwnershipComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
         }
@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
         }
@@ -269,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
 
             mockLog.Verify(m => m.OwnershipNotClaimable(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.ConditionNotMet.ToString()))));
         }
@@ -312,18 +312,24 @@ namespace Azure.Messaging.EventHubs.Tests
                 client.UploadAsyncCallback = (_, _, _, conditions, _, _, _, _) =>
                 {
                     uploadBlobCalled = true;
-                    Assert.That(conditions.IfNoneMatch, Is.EqualTo(new ETag("*")), "The IfNoneMatch condition should be set.");
-                    Assert.That(conditions.IfMatch, Is.Null, "The IfMatch condition should be null.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(conditions.IfNoneMatch, Is.EqualTo(new ETag("*")), "The IfNoneMatch condition should be set.");
+                        Assert.That(conditions.IfMatch, Is.Null, "The IfMatch condition should be null.");
+                    });
                 };
             });
 
             var target = new BlobCheckpointStoreInternal(mockBlobContainerClient);
 
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
-            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            Assert.That(result, Is.EquivalentTo(partitionOwnership));
 
-            Assert.That(setMetadataCalled, "SetMetadata should have been called.");
-            Assert.That(uploadBlobCalled, "UploadBlob should have been called.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(setMetadataCalled, "SetMetadata should have been called.");
+                Assert.That(uploadBlobCalled, "UploadBlob should have been called.");
+            });
         }
 
         /// <summary>
@@ -390,13 +396,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
 
-            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+                Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+            });
 
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was not set.");
-            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was not set.");
+                Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            });
         }
 
         /// <summary>
@@ -459,12 +471,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
 
-            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+                Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+            });
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was not set.");
-            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was not set.");
+                Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            });
         }
 
          /// <summary>
@@ -496,12 +514,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
 
-            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+                Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+            });
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.SequenceNumber, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
-            Assert.That(expectedOffset, Is.EqualTo(blobCheckpoint.Offset), "Checkpoint sequence number did not have the correct value.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(blobCheckpoint.SequenceNumber, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
+                Assert.That(expectedOffset, Is.EqualTo(blobCheckpoint.Offset), "Checkpoint sequence number did not have the correct value.");
+            });
         }
 
         /// <summary>
@@ -602,8 +626,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
-            Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
+                Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+            });
         }
 
         /// <summary>
@@ -879,8 +906,11 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () => await checkpointStore.ListOwnershipAsync("ns", "eh", "cg", cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
-            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+                Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+            });
         }
 
         /// <summary>
@@ -910,10 +940,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await checkpointStore.ListOwnershipAsync("ns", "eh", "cg", cancellationSource.Token);
 
-            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
-            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
-            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
-            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+                Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+                Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+                Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            });
         }
 
         /// <summary>
@@ -971,8 +1004,11 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
-            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+                Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+            });
         }
 
         /// <summary>
@@ -1014,8 +1050,11 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
-            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+                Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+            });
         }
 
         /// <summary>
@@ -1077,10 +1116,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpointStore = new BlobCheckpointStoreInternal(mockContainerClient);
             await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token);
 
-            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
-            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
-            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
-            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+                Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+                Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+                Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            });
         }
 
         /// <summary>
@@ -1158,10 +1200,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await checkpointStore.GetCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, cancellationSource.Token);
 
-            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
-            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
-            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
-            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+                Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+                Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+                Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            });
         }
 
         /// <summary>
@@ -1215,8 +1260,11 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
-            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+                Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+            });
         }
 
         /// <summary>
@@ -1281,10 +1329,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token);
 
-            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
-            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
-            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
-            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+                Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+                Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+                Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            });
         }
 
         /// <summary>
@@ -1317,10 +1368,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpointStore = new BlobCheckpointStoreInternal(mockContainerClient);
             await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token);
 
-            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
-            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
-            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
-            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+                Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+                Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+                Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+            });
         }
 
         /// <summary>
@@ -1383,13 +1437,19 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("14", false)));
-            Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("14", false)));
+                Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
 
-            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+                Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+            });
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That("14", Is.EqualTo(blobCheckpoint.Offset), "Checkpoint offset did not have the correct value.");
-            Assert.That(960182, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(blobCheckpoint.Offset, Is.EqualTo("14"), "Checkpoint offset did not have the correct value.");
+                Assert.That(blobCheckpoint.SequenceNumber, Is.EqualTo(960182), "Checkpoint sequence number did not have the correct value.");
+            });
         }
 
         /// <summary>
@@ -1425,8 +1485,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
-            Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
+                Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+            });
         }
 
         /// <summary>

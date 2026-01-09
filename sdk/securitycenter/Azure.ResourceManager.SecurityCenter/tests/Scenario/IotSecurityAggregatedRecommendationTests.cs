@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             string aggregatedRecommendationName = "";
             var aggregatedRecommendation = await _iotSecurityAggregatedRecommendationCollection.GetAsync(aggregatedRecommendationName);
-            Assert.NotNull(aggregatedRecommendation);
+            Assert.That(aggregatedRecommendation, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var list = await _iotSecurityAggregatedRecommendationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Tests.Models
                 purviewEnabled: null,
                 etag: value,
                 serializedAdditionalRawData: null);
-            Assert.AreEqual(expected, sut.ETag?.ToString());
+            Assert.That(sut.ETag?.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Tests.Models
             SearchIndex sut = new SearchIndex("test");
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => sut.Fields = null);
-            Assert.AreEqual("value", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("value"));
         }
 
         [Test]

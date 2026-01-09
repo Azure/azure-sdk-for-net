@@ -30,7 +30,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport(client);
 
             // Assert - Reference counting should be disabled for direct HttpClient constructor
-            Assert.IsFalse(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.False,
                 "Reference counting should be disabled when using direct HttpClient constructor");
 
             // Update should not throw, but should be a no-op
@@ -47,7 +48,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport(handler);
 
             // Assert - Reference counting should be disabled for direct HttpMessageHandler constructor
-            Assert.IsFalse(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.False,
                 "Reference counting should be disabled when using direct HttpMessageHandler constructor");
 
             // Update should not throw, but should be a no-op
@@ -64,7 +66,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport(clientFactory);
 
             // Assert - Reference counting should be enabled and updates should work
-            Assert.IsTrue(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.True,
                 "Reference counting should be enabled when using client factory constructor");
             Assert.DoesNotThrow(() => transport.Update(new HttpPipelineTransportOptions()));
         }
@@ -79,7 +82,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport(handlerFactory);
 
             // Assert - Reference counting should be enabled and updates should work
-            Assert.IsTrue(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.True,
                 "Reference counting should be enabled when using handler factory constructor");
             Assert.DoesNotThrow(() => transport.Update(new HttpPipelineTransportOptions()));
         }
@@ -91,7 +95,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport();
 
             // Assert - Default constructor should enable reference counting and updates via factory
-            Assert.IsTrue(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.True,
                 "Reference counting should be enabled when using default constructor");
             Assert.DoesNotThrow(() => transport.Update(new HttpPipelineTransportOptions()));
         }
@@ -110,7 +115,7 @@ namespace Azure.Core.Tests
             // Act & Assert - This should not throw even though we're not managing ref counts
             await ProcessSyncOrAsync(transport, message);
 
-            Assert.AreEqual(200, message.Response.Status);
+            Assert.That(message.Response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -129,7 +134,7 @@ namespace Azure.Core.Tests
             await ProcessSyncOrAsync(transport, message);
 
             // Assert - Should succeed with ref counting
-            Assert.AreEqual(200, message.Response.Status);
+            Assert.That(message.Response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -165,7 +170,7 @@ namespace Azure.Core.Tests
                     request.Uri.Reset(new Uri("https://example.com"));
                     var message = new HttpMessage(request, ResponseClassifier.Shared);
                     await ProcessSyncOrAsync(transport, message);
-                    Assert.AreEqual(200, message.Response.Status);
+                    Assert.That(message.Response.Status, Is.EqualTo(200));
                 }));
             }
 
@@ -177,7 +182,7 @@ namespace Azure.Core.Tests
             await Task.WhenAll(tasks);
 
             // Assert - All requests should complete successfully
-            Assert.AreEqual(5, responseCount, "All 5 requests should have completed");
+            Assert.That(responseCount, Is.EqualTo(5), "All 5 requests should have completed");
         }
 
         [Test]
@@ -188,7 +193,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport(client);
 
             // Act & Assert - Update should not throw for direct client, but should be a no-op
-            Assert.IsFalse(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.False,
                 "Reference counting should be disabled for direct client constructor");
             Assert.DoesNotThrow(() => transport.Update(new HttpPipelineTransportOptions()));
         }
@@ -201,7 +207,8 @@ namespace Azure.Core.Tests
             using var transport = new HttpClientTransport(clientFactory);
 
             // Act & Assert - Reference counting should be enabled and updates should succeed
-            Assert.IsTrue(transport.IsRefCountingEnabled,
+            Assert.That(transport.IsRefCountingEnabled,
+                Is.True,
                 "Reference counting should be enabled when using client factory");
             Assert.DoesNotThrow(() => transport.Update(new HttpPipelineTransportOptions()));
         }
@@ -223,7 +230,7 @@ namespace Azure.Core.Tests
             // Assert - Subsequent requests should throw
             var ex = await AssertThrowsAsync<ObjectDisposedException>(
                 async () => await ProcessSyncOrAsync(transport, message));
-            Assert.AreEqual(nameof(HttpClientTransport), ex.ObjectName);
+            Assert.That(ex.ObjectName, Is.EqualTo(nameof(HttpClientTransport)));
         }
 
         [Test]
@@ -254,7 +261,7 @@ namespace Azure.Core.Tests
                         request.Uri.Reset(new Uri("https://example.com"));
                         var message = new HttpMessage(request, ResponseClassifier.Shared);
                         await ProcessSyncOrAsync(transport, message);
-                        Assert.AreEqual(200, message.Response.Status);
+                        Assert.That(message.Response.Status, Is.EqualTo(200));
                         await Task.Delay(1); // Small delay between requests
                     }
                 }));
@@ -271,7 +278,7 @@ namespace Azure.Core.Tests
             await Task.WhenAll(tasks);
 
             // Assert - Should have created multiple clients due to updates
-            Assert.GreaterOrEqual(updateCount, 4, "Should have created multiple clients due to updates");
+            Assert.That(updateCount, Is.GreaterThanOrEqualTo(4), "Should have created multiple clients due to updates");
         }
 
         #region Helper Methods

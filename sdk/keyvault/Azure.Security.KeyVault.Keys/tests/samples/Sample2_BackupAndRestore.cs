@@ -82,12 +82,15 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
         private void AssertKeysEqual(KeyProperties exp, KeyProperties act)
         {
-            Assert.AreEqual(exp.Name, act.Name);
-            Assert.AreEqual(exp.Version, act.Version);
-            Assert.AreEqual(exp.Managed, act.Managed);
-            Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
-            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
-            Assert.AreEqual(exp.NotBefore, act.NotBefore);
+            Assert.Multiple(() =>
+            {
+                Assert.That(act.Name, Is.EqualTo(exp.Name));
+                Assert.That(act.Version, Is.EqualTo(exp.Version));
+                Assert.That(act.Managed, Is.EqualTo(exp.Managed));
+                Assert.That(act.RecoveryLevel, Is.EqualTo(exp.RecoveryLevel));
+                Assert.That(act.ExpiresOn, Is.EqualTo(exp.ExpiresOn));
+                Assert.That(act.NotBefore, Is.EqualTo(exp.NotBefore));
+            });
         }
     }
 }

@@ -41,13 +41,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (client, this.Recording);
 
             IList<PipelineResource> pipelines = await client.GetPipelinesByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(pipelines.Count, 1);
+            Assert.That(pipelines, Is.Not.Empty);
 
             foreach (var expectedPipeline in pipelines)
             {
                 PipelineResource actualPipeline = await client.GetPipelineAsync(expectedPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Name, actualPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Id, actualPipeline.Id);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualPipeline.Name, Is.EqualTo(expectedPipeline.Name));
+                    Assert.That(actualPipeline.Id, Is.EqualTo(expectedPipeline.Id));
+                });
             }
         }
 
@@ -75,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             PipelineResource pipeline = await client.GetPipelineAsync (newPipelineName);
-            Assert.AreEqual (newPipelineName, pipeline.Name);
+            Assert.That(pipeline.Name, Is.EqualTo(newPipelineName));
 
             PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync (newPipelineName);
             await operation.WaitForCompletionResponseAsync();
@@ -89,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposablePipeline pipeline = await DisposablePipeline.Create (client, this.Recording);
 
             CreateRunResponse runResponse = await client.CreatePipelineRunAsync (pipeline.Name);
-            Assert.NotNull(runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.Not.Null);
         }
     }
 }

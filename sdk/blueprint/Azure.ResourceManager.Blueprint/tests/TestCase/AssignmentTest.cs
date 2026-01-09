@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
             AssignmentCollection collection = Client.GetAssignments(scopeId);
             var input = ResourceDataHelpers.GetAssignmentData(blueprintResource.Id);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, assignmentName, input)).Value;
-            Assert.AreEqual(assignmentName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(assignmentName));
             //Get
             var resource2 = (await collection.GetAsync(assignmentName)).Value;
             ResourceDataHelpers.AssertAssignmentData(resource.Data, resource2.Data);
@@ -57,10 +57,14 @@ namespace Azure.ResourceManager.Blueprint.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exist
-            Assert.IsTrue(await collection.ExistsAsync(assignmentName));
-            Assert.IsFalse(await collection.ExistsAsync(assignmentName + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
+                //4.Exist
+                Assert.That((bool)await collection.ExistsAsync(assignmentName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(assignmentName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

@@ -102,8 +102,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                 PropertyInfo matchingProperty = typeof(ClientLibraryInformation)
                     .GetProperty(expectedNames[property.Key], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
-                Assert.That(matchingProperty, Is.Not.Null, $"The property, { property.Key }, was not found.");
-                Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for { property.Key } should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(matchingProperty, Is.Not.Null, $"The property, {property.Key}, was not found.");
+                    Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for {property.Key} should match.");
+                });
             }
         }
 
@@ -124,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
-                Assert.That(expectedNames.Contains(property.Key), Is.True, $"The property, { property.Key }, was not found.");
+                Assert.That(expectedNames, Does.Contain(property.Key), $"The property, {property.Key}, was not found.");
             }
         }
 

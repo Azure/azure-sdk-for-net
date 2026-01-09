@@ -26,8 +26,8 @@ namespace Azure.Monitor.Ingestion.Tests
             }
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
-            Assert.AreEqual(1, x.Length);
-            Assert.AreEqual(10, x[0].Logs.Count);
+            Assert.That(x, Has.Length.EqualTo(1));
+            Assert.That(x[0].Logs.Count, Is.EqualTo(10));
         }
 
         [Test]
@@ -46,9 +46,12 @@ namespace Azure.Monitor.Ingestion.Tests
             }
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
-            Assert.AreEqual(2, x.Length);
-            Assert.Greater(x[0].Logs.Count, 10000);
-            Assert.Less(x[1].Logs.Count, 10000);
+            Assert.That(x, Has.Length.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(x[0].Logs.Count, Is.GreaterThan(10000));
+                Assert.That(x[1].Logs.Count, Is.LessThan(10000));
+            });
         }
 
         [Test]
@@ -96,26 +99,29 @@ namespace Azure.Monitor.Ingestion.Tests
             };
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
-            Assert.AreEqual(2, x.Length);
-            Assert.AreEqual(1, x[0].Logs.Count);
-            Assert.AreEqual(hasItemAfterLargeItem ? 3 : 2, x[1].Logs.Count);
+            Assert.That(x, Has.Length.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(x[0].Logs.Count, Is.EqualTo(1));
+                Assert.That(x[1].Logs.Count, Is.EqualTo(hasItemAfterLargeItem ? 3 : 2));
+            });
         }
 
         [TestCaseSource(nameof(GetValidateBatchThresholdCases))]
         public void ValidateBatchThreshold(ValidateBatchThresholdCase testCase)
         {
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(testCase.ItemsToExport).ToArray();
-            Assert.AreEqual(testCase.ExpectedBatchIds.Length, x.Length);
+            Assert.That(x, Has.Length.EqualTo(testCase.ExpectedBatchIds.Length));
             foreach (var (expectedBatch, batch) in testCase.ExpectedBatchIds.Zip(x, ValueTuple.Create))
             {
-                CollectionAssert.AreEqual(
-                    expectedBatch,
+                Assert.That(
                     batch.Logs
                         .Select(log => ((BinaryData)log).ToObjectFromJson<Dictionary<string, string>>())
-                        .Select(dict => dict.Single().Key));
+                        .Select(dict => dict.Single().Key),
+                    Is.EqualTo(expectedBatch).AsCollection);
             }
 
-            Assert.AreEqual(testCase.ExpectedMaxSerializedItemSize, x.Max(b => b.LogsData.ToMemory().Length));
+            Assert.That(x.Max(b => b.LogsData.ToMemory().Length), Is.EqualTo(testCase.ExpectedMaxSerializedItemSize));
         }
 
         public static IEnumerable<ValidateBatchThresholdCase> GetValidateBatchThresholdCases()

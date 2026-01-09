@@ -59,14 +59,17 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorOperation = await resourceGroup.GetSecurityConnectors().CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
 
-            Assert.IsNotNull(securityConnectorOperation);
-            Assert.AreEqual(true, securityConnectorOperation.HasCompleted);
-            Assert.AreEqual(data.EnvironmentName, securityConnectorOperation.Value.Data.EnvironmentName.Value);
+            Assert.That(securityConnectorOperation, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(securityConnectorOperation.HasCompleted, Is.EqualTo(true));
+                Assert.That(securityConnectorOperation.Value.Data.EnvironmentName.Value, Is.EqualTo(data.EnvironmentName));
+            });
 
             // setup devops
             var devopsConfigurationResource = securityConnectorOperation.Value.GetDevOpsConfiguration();
 
-            Assert.IsFalse(devopsConfigurationResource.HasData);
+            Assert.That(devopsConfigurationResource.HasData, Is.False);
 
             var devOpsConfigurationData = new DevOpsConfigurationData()
             {
@@ -94,13 +97,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     throw;
                 }
              });
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("TokenExchangeFailed", ex.ErrorCode);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ErrorCode, Is.EqualTo("TokenExchangeFailed"));
 
             var deleteLro = await devopsConfigurationResource.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsNotNull(deleteLro);
-            Assert.IsTrue(deleteLro.HasCompleted);
+            Assert.That(deleteLro, Is.Not.Null);
+            Assert.That(deleteLro.HasCompleted, Is.True);
         }
 
         [RecordedTest]
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             DevOpsConfigurationResource devops = await Client.GetDevOpsConfigurationResource(repositoryResourceId).GetAsync();
 
             var operation = await devops.UpdateAsync(WaitUntil.Completed, new DevOpsConfigurationData());
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(DevOpsAutoDiscovery.Disabled, operation.Value.Data.Properties.AutoDiscovery);
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Disabled));
         }
 
         [RecordedTest]
@@ -126,33 +129,45 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(DevOpsAutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Disabled));
+            });
 
             var onboardedOrg = await devopsConfigurationResource.Value.GetDevOpsOrgs().GetAsync("dfdsdktests");
 
-            Assert.AreEqual("dfdsdktests", onboardedOrg.Value.Data.Name);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedOrg.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedOrg.Value.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedOrg.Value.Data.Name, Is.EqualTo("dfdsdktests"));
+                Assert.That(onboardedOrg.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(onboardedOrg.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedProject = await onboardedOrg.Value.GetDevOpsProjects().GetAsync("ContosoSDKDfd");
-            Assert.IsTrue(onboardedProject.Value.HasData);
-            Assert.AreEqual("ContosoSDKDfd", onboardedProject.Value.Data.Name);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedProject.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedProject.Value.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedProject.Value.HasData, Is.True);
+                Assert.That(onboardedProject.Value.Data.Name, Is.EqualTo("ContosoSDKDfd"));
+                Assert.That(onboardedProject.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(onboardedProject.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedRepo = await onboardedProject.Value.GetDevOpsRepositories().GetAsync("TestApp0");
-            Assert.IsTrue(onboardedRepo.Value.HasData);
-            Assert.AreEqual("TestApp0", onboardedRepo.Value.Data.Name);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedRepo.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedRepo.Value.Data.Properties.OnboardingState);
-            Assert.AreEqual(ActionableRemediationState.None, onboardedRepo.Value.Data.Properties.ActionableRemediation.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedRepo.Value.HasData, Is.True);
+                Assert.That(onboardedRepo.Value.Data.Name, Is.EqualTo("TestApp0"));
+                Assert.That(onboardedRepo.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(onboardedRepo.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+                Assert.That(onboardedRepo.Value.Data.Properties.ActionableRemediation.State, Is.EqualTo(ActionableRemediationState.None));
+            });
         }
 
         [RecordedTest]
@@ -162,35 +177,47 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(DevOpsAutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Disabled));
+            });
 
             var onboardedOrgs = await devopsConfigurationResource.Value.GetDevOpsOrgs().GetAllAsync().ToEnumerableAsync();
             var onboardedOrg = onboardedOrgs.Where(org => org.Data.Name.Equals("dfdsdktests")).FirstOrDefault();
 
-            Assert.AreEqual("dfdsdktests", onboardedOrg.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedOrg.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedOrg.Data.Name, Is.EqualTo("dfdsdktests"));
+                Assert.That(onboardedOrg.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedProjects = await onboardedOrg.GetDevOpsProjects().GetAllAsync().ToEnumerableAsync();
             var onboardedProject = onboardedProjects.Where(project => project.Data.Name.Equals("ContosoSDKDfd")).FirstOrDefault();
-            Assert.IsTrue(onboardedProject.HasData);
-            Assert.AreEqual("ContosoSDKDfd", onboardedProject.Data.Name);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedProject.Data.Properties.ProvisioningState);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedProject.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedProject.HasData, Is.True);
+                Assert.That(onboardedProject.Data.Name, Is.EqualTo("ContosoSDKDfd"));
+                Assert.That(onboardedProject.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(onboardedProject.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedRepos = await onboardedProject.GetDevOpsRepositories().GetAllAsync().ToEnumerableAsync();
             var onboardedRepo = onboardedRepos.Where(project => project.Data.Name.Equals("TestApp0")).FirstOrDefault();
 
-            Assert.IsTrue(onboardedRepo.HasData);
-            Assert.AreEqual("TestApp0", onboardedRepo.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedRepo.Data.Properties.OnboardingState);
-            Assert.AreEqual(ActionableRemediationState.None, onboardedRepo.Data.Properties.ActionableRemediation.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedRepo.HasData, Is.True);
+                Assert.That(onboardedRepo.Data.Name, Is.EqualTo("TestApp0"));
+                Assert.That(onboardedRepo.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+                Assert.That(onboardedRepo.Data.Properties.ActionableRemediation.State, Is.EqualTo(ActionableRemediationState.None));
+            });
         }
 
         [RecordedTest]
@@ -200,19 +227,25 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+            });
 
             var azureDevOpsOrgs = await devopsConfigurationResource.Value.GetAvailableDevOpsOrgsAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(azureDevOpsOrgs.Count > 0);
-            Assert.IsTrue(azureDevOpsOrgs.FirstOrDefault().HasData);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, azureDevOpsOrgs.FirstOrDefault().Data.Properties.OnboardingState);
+            Assert.That(azureDevOpsOrgs.Count, Is.GreaterThan(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(azureDevOpsOrgs.FirstOrDefault().HasData, Is.True);
+                Assert.That(azureDevOpsOrgs.FirstOrDefault().Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -239,8 +272,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     }
                 }
             });
-            Assert.IsNotNull(operation);
-            Assert.AreEqual(InheritFromParentState.Enabled, operation.Value.Data.Properties.ActionableRemediation.InheritFromParentState);
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.Value.Data.Properties.ActionableRemediation.InheritFromParentState, Is.EqualTo(InheritFromParentState.Enabled));
         }
 
         [RecordedTest]
@@ -250,24 +283,33 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(DevOpsAutoDiscovery.Enabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Enabled));
+            });
 
             var onboardedOwner = await devopsConfigurationResource.Value.GetSecurityConnectorGitHubOwners().GetAsync("dfdsdktests");
 
-            Assert.AreEqual("dfdsdktests", onboardedOwner.Value.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedOwner.Value.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedOwner.Value.Data.Name, Is.EqualTo("dfdsdktests"));
+                Assert.That(onboardedOwner.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedRepo = await onboardedOwner.Value.GetSecurityConnectorGitHubRepositories().GetAsync("TestApp0");
-            Assert.IsTrue(onboardedRepo.Value.HasData);
-            Assert.AreEqual("TestApp0", onboardedRepo.Value.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedRepo.Value.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedRepo.Value.HasData, Is.True);
+                Assert.That(onboardedRepo.Value.Data.Name, Is.EqualTo("TestApp0"));
+                Assert.That(onboardedRepo.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -277,27 +319,36 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(DevOpsAutoDiscovery.Enabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Enabled));
+            });
 
             var onboardedOwners = await devopsConfigurationResource.Value.GetSecurityConnectorGitHubOwners().GetAllAsync().ToEnumerableAsync();
             var onboardedOwner = onboardedOwners.Where(org => org.Data.Name.Equals("dfdsdktests")).FirstOrDefault();
 
-            Assert.AreEqual("dfdsdktests", onboardedOwner.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedOwner.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedOwner.Data.Name, Is.EqualTo("dfdsdktests"));
+                Assert.That(onboardedOwner.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedRepos = await onboardedOwner.GetSecurityConnectorGitHubRepositories().GetAllAsync().ToEnumerableAsync();
             var onboardedRepo = onboardedRepos.Where(project => project.Data.Name.Equals("TestApp0")).FirstOrDefault();
 
-            Assert.IsTrue(onboardedRepo.HasData);
-            Assert.AreEqual("TestApp0", onboardedRepo.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedRepo.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedRepo.HasData, Is.True);
+                Assert.That(onboardedRepo.Data.Name, Is.EqualTo("TestApp0"));
+                Assert.That(onboardedRepo.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -307,19 +358,25 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+            });
 
             var gitHubOwners = await devopsConfigurationResource.Value.GetAvailableGitHubOwnersAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(gitHubOwners.Count > 0);
-            Assert.IsTrue(gitHubOwners.FirstOrDefault().HasData);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, gitHubOwners.FirstOrDefault().Data.Properties.OnboardingState);
+            Assert.That(gitHubOwners.Count, Is.GreaterThan(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(gitHubOwners.FirstOrDefault().HasData, Is.True);
+                Assert.That(gitHubOwners.FirstOrDefault().Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -329,24 +386,33 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(DevOpsAutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Disabled));
+            });
 
             var onboardedGroup = await devopsConfigurationResource.Value.GetSecurityConnectorGitLabGroups().GetAsync("dfdsdktests");
 
-            Assert.AreEqual("dfdsdktests", onboardedGroup.Value.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedGroup.Value.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedGroup.Value.Data.Name, Is.EqualTo("dfdsdktests"));
+                Assert.That(onboardedGroup.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedProject = await onboardedGroup.Value.GetSecurityConnectorGitLabProjects().GetAsync("testapp0");
-            Assert.IsTrue(onboardedProject.Value.HasData);
-            Assert.AreEqual("testapp0", onboardedProject.Value.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedProject.Value.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedProject.Value.HasData, Is.True);
+                Assert.That(onboardedProject.Value.Data.Name, Is.EqualTo("testapp0"));
+                Assert.That(onboardedProject.Value.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -356,27 +422,36 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
-            Assert.AreEqual(DevOpsAutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.AutoDiscovery, Is.EqualTo(DevOpsAutoDiscovery.Disabled));
+            });
 
             var onboardedGroups = await devopsConfigurationResource.Value.GetSecurityConnectorGitLabGroups().GetAllAsync().ToEnumerableAsync();
             var onboardedGroup = onboardedGroups.Where(org => org.Data.Name.Equals("dfdsdktests")).FirstOrDefault();
 
-            Assert.AreEqual("dfdsdktests", onboardedGroup.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedGroup.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedGroup.Data.Name, Is.EqualTo("dfdsdktests"));
+                Assert.That(onboardedGroup.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
 
             var onboardedProjects = await onboardedGroup.GetSecurityConnectorGitLabProjects().GetAllAsync().ToEnumerableAsync();
             var onboardedProject = onboardedProjects.Where(project => project.Data.Name.Equals("testapp0")).FirstOrDefault();
 
-            Assert.IsTrue(onboardedProject.HasData);
-            Assert.AreEqual("testapp0", onboardedProject.Data.Name);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, onboardedProject.Data.Properties.OnboardingState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(onboardedProject.HasData, Is.True);
+                Assert.That(onboardedProject.Data.Name, Is.EqualTo("testapp0"));
+                Assert.That(onboardedProject.Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -386,19 +461,25 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+            });
 
             var gitLabGroups = await devopsConfigurationResource.Value.GetAvailableGitLabGroupsAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(gitLabGroups.Count > 0);
-            Assert.IsTrue(gitLabGroups.FirstOrDefault().HasData);
-            Assert.AreEqual(ResourceOnboardingState.Onboarded, gitLabGroups.FirstOrDefault().Data.Properties.OnboardingState);
+            Assert.That(gitLabGroups.Count, Is.GreaterThan(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(gitLabGroups.FirstOrDefault().HasData, Is.True);
+                Assert.That(gitLabGroups.FirstOrDefault().Data.Properties.OnboardingState, Is.EqualTo(ResourceOnboardingState.Onboarded));
+            });
         }
 
         [RecordedTest]
@@ -408,21 +489,24 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-            Assert.IsNotNull(securityConnectorResponse);
+            Assert.That(securityConnectorResponse, Is.Not.Null);
 
             // setup devops
             var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(devopsConfigurationResource.Value.HasData, Is.True);
+                Assert.That(devopsConfigurationResource.Value.Data.Properties.ProvisioningState, Is.EqualTo(DevOpsProvisioningState.Succeeded));
+            });
 
             var onboardedSubGroups = await devopsConfigurationResource.Value.GetSecurityConnectorGitLabGroups().GetGitLabSubgroupsAsync("dfdsdktests").ToEnumerableAsync();
 
-            Assert.IsTrue(onboardedSubGroups.Count == 2);
+            Assert.That(onboardedSubGroups, Has.Count.EqualTo(2));
 
             var testSubgroup = onboardedSubGroups.Where(s => s.Data?.Properties?.FullyQualifiedName?.Contains("testsubgroupNested") == true).FirstOrDefault();
-            Assert.IsNotNull(testSubgroup);
-            Assert.AreEqual("dfdsdktests$testsubgroup1$testsubgroupNested", testSubgroup.Data.Properties.FullyQualifiedName);
+            Assert.That(testSubgroup, Is.Not.Null);
+            Assert.That(testSubgroup.Data.Properties.FullyQualifiedName, Is.EqualTo("dfdsdktests$testsubgroup1$testsubgroupNested"));
         }
     }
 }

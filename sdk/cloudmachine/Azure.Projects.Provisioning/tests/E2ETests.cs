@@ -90,7 +90,7 @@ public class E2ETests
         {
             testContainer.UploadBlob("test", BinaryData.FromString("test"));
             BlobDownloadResult result = testContainer.GetBlobClient("test").DownloadContent();
-            Assert.AreEqual("test", result.Content.ToString());
+            Assert.That(result.Content.ToString(), Is.EqualTo("test"));
         }
         finally
         {
@@ -116,13 +116,13 @@ public class E2ETests
             project.Storage.WhenUploaded((file) =>
             {
                 string downloaded = file.Download().ToString();
-                Assert.AreEqual("hello world", downloaded);
+                Assert.That(downloaded, Is.EqualTo("hello world"));
                 Interlocked.Increment(ref done);
             });
 
             uploadedPath = project.Storage.Upload(BinaryData.FromString("hello world"));
             string downloaded = project.Storage.Download(uploadedPath).ToString();
-            Assert.AreEqual("hello world", downloaded);
+            Assert.That(downloaded, Is.EqualTo("hello world"));
             while (Interlocked.Read(ref done)==0);
         }
         finally

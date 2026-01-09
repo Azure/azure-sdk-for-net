@@ -27,10 +27,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
             var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            Assert.That(first, Is.EqualTo((object)second), "The default Equals comparison is incorrect.");
+            Assert.That(first, Is.EqualTo(second), "The IEquatable comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -45,10 +48,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "999", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
             var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "888", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -63,10 +69,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
             var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("1974-12-09T21:30:00Z"), lastReceivedTime: now);
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -81,10 +90,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new LastEnqueuedEventProperties(lastSequenceNumber: 333, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
             var second = new LastEnqueuedEventProperties(lastSequenceNumber: 444, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>
@@ -99,10 +111,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
             var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffsetString: "887", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now.AddHours(1));
 
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+                Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+                Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+                Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+            });
         }
 
         /// <summary>

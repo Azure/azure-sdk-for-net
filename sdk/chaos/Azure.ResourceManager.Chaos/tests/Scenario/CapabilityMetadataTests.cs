@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             var targetTypeResponse = await this.TargetTypeCollection.GetAsync(TestConstants.VmssTargetName).ConfigureAwait(false);
             var capabilityTypeCollection = targetTypeResponse.Value.GetAllChaosCapabilityMetadata();
             var list = await capabilityTypeCollection.GetAllAsync().ToListAsync().ConfigureAwait(false);
-            Assert.IsTrue(list.Any());
+            Assert.That(list.Any(), Is.True);
         }
 
         [TestCase]
@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.Chaos.Tests
             var targetTypeResponse = await this.TargetTypeCollection.GetAsync(TestConstants.VmssTargetName).ConfigureAwait(false);
             var capabilityTypeCollection = targetTypeResponse.Value.GetAllChaosCapabilityMetadata();
             var capabilityResponse = await capabilityTypeCollection.GetAsync(TestConstants.VmssShutdownCapabilityName).ConfigureAwait(false);
-            Assert.AreEqual(TestConstants.VmssShutdownCapabilityName, capabilityResponse.Value.Data.Name);
-            Assert.AreEqual(200, targetTypeResponse.GetRawResponse().Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(capabilityResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssShutdownCapabilityName));
+                Assert.That(targetTypeResponse.GetRawResponse().Status, Is.EqualTo(200));
+            });
         }
     }
 }

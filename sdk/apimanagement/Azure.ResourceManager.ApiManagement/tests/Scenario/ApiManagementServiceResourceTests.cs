@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             apiManagementService = await apiManagementService.GetAsync();
-            Assert.NotNull(apiManagementService.Data.Name);
+            Assert.That(apiManagementService.Data.Name, Is.Not.Null);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetAvailableApiManagementServiceSkusAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var status = await apiManagementService.GetNetworkStatusByLocationAsync(AzureLocation.WestUS2.DisplayName);
-            Assert.GreaterOrEqual(status.Value.ConnectivityStatus.Count, 0);
+            Assert.That(status.Value.ConnectivityStatus.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var status = await apiManagementService.GetNetworkStatusesAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(status.Count, 0);
+            Assert.That(status.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetOutboundNetworkDependenciesEndpointsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetProductsByTagsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetRegionsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByApiAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByGeoAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByOperationAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByProductAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByRequestAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsBySubscriptionAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByTimeAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'", TimeSpan.FromMinutes(15)).ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetReportsByUserAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var result = (await apiManagementService.GetSsoTokenAsync()).Value;
-            Assert.NotNull(result.RedirectUri);
+            Assert.That(result.RedirectUri, Is.Not.Null);
         }
 
         [Test]
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var list = await apiManagementService.GetTagResourcesAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var apiManagementService = await GetApiManagementServiceAsync();
             var result = (await apiManagementService.GetTenantAccessInfoAsync(AccessName.TenantAccess)).Value;
-            Assert.NotNull(result.Data.Name);
+            Assert.That(result.Data.Name, Is.Not.Null);
         }
 
         [Test]

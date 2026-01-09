@@ -245,10 +245,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var partitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
 
                 Assert.That(partitionProperties, Is.Not.Null, "The properties should have been created.");
-                Assert.That(partitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
-                Assert.That(partitionProperties.ProducerGroupId.HasValue, Is.True, "The producer group identifier should have a value.");
-                Assert.That(partitionProperties.OwnerLevel.HasValue, Is.True, "The owner level should have a value.");
-                Assert.That(partitionProperties.LastPublishedSequenceNumber.HasValue, Is.True, "The last published sequence number should have a value.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
+                    Assert.That(partitionProperties.ProducerGroupId.HasValue, Is.True, "The producer group identifier should have a value.");
+                    Assert.That(partitionProperties.OwnerLevel.HasValue, Is.True, "The owner level should have a value.");
+                    Assert.That(partitionProperties.LastPublishedSequenceNumber.HasValue, Is.True, "The last published sequence number should have a value.");
+                });
             }
         }
 
@@ -281,10 +284,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var partitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
                 Assert.That(partitionProperties, Is.Not.Null, "The properties should have been created.");
-                Assert.That(partitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
-                Assert.That(partitionProperties.ProducerGroupId.HasValue, Is.True, "The producer group identifier should have a value.");
-                Assert.That(partitionProperties.OwnerLevel.HasValue, Is.True, "The owner level should have a value.");
-                Assert.That(partitionProperties.LastPublishedSequenceNumber.HasValue, Is.True, "The last published sequence number should have a value.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
+                    Assert.That(partitionProperties.ProducerGroupId.HasValue, Is.True, "The producer group identifier should have a value.");
+                    Assert.That(partitionProperties.OwnerLevel.HasValue, Is.True, "The owner level should have a value.");
+                    Assert.That(partitionProperties.LastPublishedSequenceNumber.HasValue, Is.True, "The last published sequence number should have a value.");
+                });
             }
         }
 
@@ -492,17 +498,23 @@ namespace Azure.Messaging.EventHubs.Tests
                 secondBatch.TryAdd(EventGenerator.CreateEvents(1).First());
                 secondBatch.TryAdd(EventGenerator.CreateEvents(1).First());
 
-                Assert.That(firstBatch.StartingPublishedSequenceNumber.HasValue, Is.False, "Batches should start out as unpublished with no sequence number, the first batch was incorrect.");
-                Assert.That(secondBatch.StartingPublishedSequenceNumber.HasValue, Is.False, "Batches should start out as unpublished with no sequence number, the second batch was incorrect.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(firstBatch.StartingPublishedSequenceNumber.HasValue, Is.False, "Batches should start out as unpublished with no sequence number, the first batch was incorrect.");
+                    Assert.That(secondBatch.StartingPublishedSequenceNumber.HasValue, Is.False, "Batches should start out as unpublished with no sequence number, the second batch was incorrect.");
+                });
 
                 await producer.SendAsync(firstBatch, cancellationSource.Token);
                 await producer.SendAsync(secondBatch, cancellationSource.Token);
 
-                Assert.That(firstBatch.StartingPublishedSequenceNumber.HasValue, "Batches should be sequenced after publishing, the first batch was incorrect.");
-                Assert.That(firstBatch.StartingPublishedSequenceNumber, Is.EqualTo(eventSequenceNumber + 1), "Batches should be sequenced after publishing, the first batch was incorrect.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(firstBatch.StartingPublishedSequenceNumber.HasValue, "Batches should be sequenced after publishing, the first batch was incorrect.");
+                    Assert.That(firstBatch.StartingPublishedSequenceNumber, Is.EqualTo(eventSequenceNumber + 1), "Batches should be sequenced after publishing, the first batch was incorrect.");
 
-                Assert.That(secondBatch.StartingPublishedSequenceNumber.HasValue, "Batches should be sequenced after publishing, the second batch was incorrect.");
-                Assert.That(secondBatch.StartingPublishedSequenceNumber, Is.EqualTo(eventSequenceNumber + 1 + firstBatch.Count), "Batches should be sequenced after publishing, the second batch was incorrect.");
+                    Assert.That(secondBatch.StartingPublishedSequenceNumber.HasValue, "Batches should be sequenced after publishing, the second batch was incorrect.");
+                    Assert.That(secondBatch.StartingPublishedSequenceNumber, Is.EqualTo(eventSequenceNumber + 1 + firstBatch.Count), "Batches should be sequenced after publishing, the second batch was incorrect.");
+                });
             }
         }
 
@@ -535,10 +547,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 await producer.SendAsync(events, sendOptions, cancellationSource.Token);
 
                 var updatedPartitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
-                Assert.That(updatedPartitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
-                Assert.That(updatedPartitionProperties.ProducerGroupId, Is.EqualTo(initialPartitionProperties.ProducerGroupId), "The producer group identifier should not have changed.");
-                Assert.That(updatedPartitionProperties.OwnerLevel, Is.EqualTo(initialPartitionProperties.OwnerLevel), "The owner level should not have changed.");
-                Assert.That(updatedPartitionProperties.LastPublishedSequenceNumber, Is.GreaterThan(initialPartitionProperties.LastPublishedSequenceNumber), "The last published sequence number should have increased.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(updatedPartitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
+                    Assert.That(updatedPartitionProperties.ProducerGroupId, Is.EqualTo(initialPartitionProperties.ProducerGroupId), "The producer group identifier should not have changed.");
+                    Assert.That(updatedPartitionProperties.OwnerLevel, Is.EqualTo(initialPartitionProperties.OwnerLevel), "The owner level should not have changed.");
+                    Assert.That(updatedPartitionProperties.LastPublishedSequenceNumber, Is.GreaterThan(initialPartitionProperties.LastPublishedSequenceNumber), "The last published sequence number should have increased.");
+                });
             }
         }
 
@@ -575,10 +590,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 await producer.SendAsync(batch, cancellationSource.Token);
 
                 var updatedPartitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
-                Assert.That(updatedPartitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
-                Assert.That(updatedPartitionProperties.ProducerGroupId, Is.EqualTo(initialPartitionProperties.ProducerGroupId), "The producer group identifier should not have changed.");
-                Assert.That(updatedPartitionProperties.OwnerLevel, Is.EqualTo(initialPartitionProperties.OwnerLevel), "The owner level should not have changed.");
-                Assert.That(updatedPartitionProperties.LastPublishedSequenceNumber, Is.GreaterThan(initialPartitionProperties.LastPublishedSequenceNumber), "The last published sequence number should have increased.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(updatedPartitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
+                    Assert.That(updatedPartitionProperties.ProducerGroupId, Is.EqualTo(initialPartitionProperties.ProducerGroupId), "The producer group identifier should not have changed.");
+                    Assert.That(updatedPartitionProperties.OwnerLevel, Is.EqualTo(initialPartitionProperties.OwnerLevel), "The owner level should not have changed.");
+                    Assert.That(updatedPartitionProperties.LastPublishedSequenceNumber, Is.GreaterThan(initialPartitionProperties.LastPublishedSequenceNumber), "The last published sequence number should have increased.");
+                });
             }
         }
 
@@ -677,14 +695,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 partitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
                 Assert.That(partitionProperties, Is.Not.Null, "The properties should have been created.");
-                Assert.That(partitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
-                Assert.That(partitionProperties.ProducerGroupId.HasValue, Is.True, "The producer group identifier should have a value.");
-                Assert.That(partitionProperties.OwnerLevel.HasValue, Is.True, "The owner level should have a value.");
-                Assert.That(partitionProperties.LastPublishedSequenceNumber.HasValue, Is.True, "The last published sequence number should have a value.");
+                Assert.Multiple(async () =>
+                {
+                    Assert.That(partitionProperties.IsIdempotentPublishingEnabled, Is.True, "Idempotent publishing should be enabled.");
+                    Assert.That(partitionProperties.ProducerGroupId.HasValue, Is.True, "The producer group identifier should have a value.");
+                    Assert.That(partitionProperties.OwnerLevel.HasValue, Is.True, "The owner level should have a value.");
+                    Assert.That(partitionProperties.LastPublishedSequenceNumber.HasValue, Is.True, "The last published sequence number should have a value.");
 
-                // Ensure that the state supports publishing.
+                    // Ensure that the state supports publishing.
 
-                Assert.That(async () => await producer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token), Throws.Nothing);
+                });
             }
         }
 

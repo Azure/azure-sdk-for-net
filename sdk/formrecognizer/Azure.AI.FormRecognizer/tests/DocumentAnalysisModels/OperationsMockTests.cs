@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -161,9 +161,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var operation = new AnalyzeDocumentOperation("prebuilt-businessCard/analyzeResults/642ca81c-7d23-4fc9-a7a0-183d85a84664", client);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-            Assert.AreEqual("InvalidSomething", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("Invalid Something."));
-            Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidSomething"));
+                Assert.That(ex.Message, Does.Contain("Invalid Something."));
+            });
+            Assert.That(ex.Message, Does.Contain("AdditionInformation"));
         }
 
         [Test]
@@ -188,7 +191,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -228,9 +231,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var operation = new BuildDocumentModelOperation("31534618802_bc949c32-9281-4d00-a9c9-ef0080bb1b2a", client);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-            Assert.AreEqual("InvalidSomething", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("Invalid Something."));
-            Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidSomething"));
+                Assert.That(ex.Message, Does.Contain("Invalid Something."));
+            });
+            Assert.That(ex.Message, Does.Contain("AdditionInformation"));
         }
 
         [Test]
@@ -256,7 +262,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -296,9 +302,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var operation = new CopyDocumentModelToOperation("31534618802_bc949c32-9281-4d00-a9c9-ef0080bb1b2a", client);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-            Assert.AreEqual("InvalidSomething", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("Invalid Something."));
-            Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidSomething"));
+                Assert.That(ex.Message, Does.Contain("Invalid Something."));
+            });
+            Assert.That(ex.Message, Does.Contain("AdditionInformation"));
         }
 
         [Test]
@@ -350,7 +359,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -406,7 +415,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.UpdateStatusAsync();
             await sameOperation.UpdateStatusAsync();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(3));
             AssertRequestsAreEqual(mockTransport.Requests[1], mockTransport.Requests[2]);
         }
 
@@ -425,9 +434,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void AssertRequestsAreEqual(MockRequest left, MockRequest right)
         {
-            Assert.AreEqual(left.Uri.ToString(), right.Uri.ToString());
-            Assert.AreEqual(left.Method, right.Method);
-            Assert.AreEqual(GetString(left.Content), GetString(right.Content));
+            Assert.Multiple(() =>
+            {
+                Assert.That(right.Uri.ToString(), Is.EqualTo(left.Uri.ToString()));
+                Assert.That(right.Method, Is.EqualTo(left.Method));
+                Assert.That(GetString(right.Content), Is.EqualTo(GetString(left.Content)));
+            });
 
             var leftHeaders = left.Headers.ToDictionary(h => h.Name, h => h.Value);
             var rightHeaders = right.Headers.ToDictionary(h => h.Name, h => h.Value);
@@ -436,7 +448,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             leftHeaders.Remove("x-ms-client-request-id");
             rightHeaders.Remove("x-ms-client-request-id");
 
-            CollectionAssert.AreEquivalent(leftHeaders, rightHeaders);
+            Assert.That(rightHeaders, Is.EquivalentTo(leftHeaders));
         }
     }
 }

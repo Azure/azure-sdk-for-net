@@ -22,10 +22,13 @@ namespace Azure.Core.Tests
             MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
             await task;
 
-            Assert.True(request.TryGetHeader("x-ms-client-request-id", out string requestId));
-            Assert.True(request.TryGetHeader("x-ms-return-client-request-id", out string returnRequestId));
-            Assert.AreEqual(request.ClientRequestId, requestId);
-            Assert.AreEqual("true", returnRequestId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.TryGetHeader("x-ms-client-request-id", out string requestId), Is.True);
+                Assert.That(request.TryGetHeader("x-ms-return-client-request-id", out string returnRequestId), Is.True);
+                Assert.That(requestId, Is.EqualTo(request.ClientRequestId));
+                Assert.That(returnRequestId, Is.EqualTo("true"));
+            });
         }
 
         [Test]
@@ -36,9 +39,12 @@ namespace Azure.Core.Tests
             policy.Setup(p => p.OnReceivedResponse(It.IsAny<HttpMessage>()))
                 .Callback<HttpMessage>(message =>
                 {
-                    Assert.AreEqual("ExternalClientId",message.Request.ClientRequestId);
-                    Assert.True(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId));
-                    Assert.AreEqual("ExternalClientId", requestId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(message.Request.ClientRequestId, Is.EqualTo("ExternalClientId"));
+                        Assert.That(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId), Is.True);
+                        Assert.That(requestId, Is.EqualTo("ExternalClientId"));
+                    });
                 }).Verifiable();
 
             var transport = new MockTransport(new MockResponse(200));
@@ -65,7 +71,7 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
             }
 
-            Assert.AreEqual(transport.SingleRequest.ClientRequestId, "custom-id");
+            Assert.That(transport.SingleRequest.ClientRequestId, Is.EqualTo("custom-id"));
         }
 
         [Test]
@@ -79,7 +85,7 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
             }
 
-            Assert.AreEqual(transport.SingleRequest.ClientRequestId, "nested-custom-id");
+            Assert.That(transport.SingleRequest.ClientRequestId, Is.EqualTo("nested-custom-id"));
         }
 
         [Test]
@@ -93,8 +99,8 @@ namespace Azure.Core.Tests
                 await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
             }
 
-            Assert.IsNotEmpty(transport.SingleRequest.ClientRequestId);
-            Assert.AreNotEqual("custom-id", transport.SingleRequest.ClientRequestId);
+            Assert.That(transport.SingleRequest.ClientRequestId, Is.Not.Empty);
+            Assert.That(transport.SingleRequest.ClientRequestId, Is.Not.EqualTo("custom-id"));
         }
 
         [Test]

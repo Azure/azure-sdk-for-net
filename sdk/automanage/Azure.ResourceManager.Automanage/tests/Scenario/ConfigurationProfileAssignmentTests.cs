@@ -28,11 +28,14 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             // fetch assignment
             var assignment = await ArmClient.GetAutomanageVmConfigurationProfileAssignmentAsync(vmId, "default");
 
-            // assert
-            Assert.True(assignment.Value.HasData);
-            Assert.NotNull(assignment.Value.Data.Name);
-            Assert.NotNull(assignment.Value.Data.Id);
-            Assert.AreEqual(vmId, assignment.Value.Data.Properties.TargetId);
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(assignment.Value.HasData, Is.True);
+                Assert.That(assignment.Value.Data.Name, Is.Not.Null);
+                Assert.That(assignment.Value.Data.Id, Is.Not.Null);
+                Assert.That(assignment.Value.Data.Properties.TargetId, Is.EqualTo(vmId));
+            });
         }
 
         [TestCase]
@@ -50,10 +53,13 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
             var assignment = await CreateAssignment(vmId, profileId);
 
-            // assert
-            Assert.True(assignment.HasData);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(assignment.HasData, Is.True);
+                Assert.That(assignment.Data.Name, Is.Not.Null);
+                Assert.That(assignment.Data.Id, Is.Not.Null);
+            });
         }
 
         [TestCase]
@@ -77,10 +83,13 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             // create assignment between custom profile and VM
             var assignment = await CreateAssignment(vmId, profile.Id);
 
-            // assert
-            Assert.True(assignment.HasData);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(assignment.HasData, Is.True);
+                Assert.That(assignment.Data.Name, Is.Not.Null);
+                Assert.That(assignment.Data.Id, Is.Not.Null);
+            });
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             ArmOperation<AppComplianceReportWebhookResource> createResponse = await webhooks.CreateOrUpdateAsync(WaitUntil.Completed, webhookName, webhookData);
             // Create webhook: verify result
             AppComplianceReportWebhookResource webhook = createResponse.Value;
-            Assert.AreEqual(webhook.Data.Properties.PayloadUri, new Uri("https://example1.com"));
+            Assert.That(new Uri("https://example1.com"), Is.EqualTo(webhook.Data.Properties.PayloadUri));
 
             // Patch webhook
             // Patch webhook: prepare data
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             //Patch webhook: send request
             AppComplianceReportWebhookResource patchResult = await appComplianceReportWebhook.UpdateAsync(webhookPatchData);
             //Patch webhook: verify result
-            Assert.AreEqual(patchResult.Data.Properties.PayloadUri, new Uri("https://example2.com"));
+            Assert.That(new Uri("https://example2.com"), Is.EqualTo(patchResult.Data.Properties.PayloadUri));
 
             // Get webhook
             // Get webhook: send request
             AppComplianceReportWebhookResource getResult = await appComplianceReportWebhook.GetAsync();
             // Get webhook: verify result
-            Assert.IsNotNull(getResult.Data.Id);
+            Assert.That(getResult.Data.Id, Is.Not.Null);
 
             // Delete webhook
             // Delete webhook: send request
             var operation = await appComplianceReportWebhook.DeleteAsync(WaitUntil.Completed);
             // Delete webhook: verify result
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

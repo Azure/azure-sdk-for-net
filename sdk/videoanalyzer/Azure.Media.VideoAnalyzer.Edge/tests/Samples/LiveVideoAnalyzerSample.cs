@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         [Test]
         public void TestSample()
         {
-            Assert.True(true);
+            Assert.That(true, Is.True);
         }
     }
 }

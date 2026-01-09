@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _problemClassificationCollection.ExistsAsync(_existProblemClassificationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _problemClassificationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateProblemClassification(list.FirstOrDefault(item => item.Data.Name == _existProblemClassificationName).Data);
         }
 
@@ -71,9 +71,12 @@ namespace Azure.ResourceManager.Support.Tests
 
         private void ValidateProblemClassification(ProblemClassificationData supportAzureService)
         {
-            Assert.IsNotNull(supportAzureService);
-            Assert.IsNotEmpty(supportAzureService.Id);
-            Assert.IsNotEmpty(supportAzureService.DisplayName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportAzureService, Is.Not.Null);
+                Assert.That((string)supportAzureService.Id, Is.Not.Empty);
+            });
+            Assert.That(supportAzureService.DisplayName, Is.Not.Empty);
         }
     }
 }

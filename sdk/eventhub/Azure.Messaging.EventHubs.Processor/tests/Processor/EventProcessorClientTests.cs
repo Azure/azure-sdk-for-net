@@ -129,16 +129,19 @@ namespace Azure.Messaging.EventHubs.Tests
                                     string constructorDescription)
             {
                 Assert.That(actual, Is.Not.Null, $"The processor options should have been created for the { constructorDescription } constructor.");
-                Assert.That(actual.ConnectionOptions.TransportType, Is.EqualTo(expected.ConnectionOptions.TransportType), $"The connection options are incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.RetryOptions.MaximumRetries, Is.EqualTo(expected.RetryOptions.MaximumRetries), $"The retry options are incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier), $"The identifier is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime), $"The maximum wait time is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties), $"The last event tracking flag is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition), $"The default starting position is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval), $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval), $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount), $"The prefetch count is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes), $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actual.ConnectionOptions.TransportType, Is.EqualTo(expected.ConnectionOptions.TransportType), $"The connection options are incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.RetryOptions.MaximumRetries, Is.EqualTo(expected.RetryOptions.MaximumRetries), $"The retry options are incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier), $"The identifier is incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime), $"The maximum wait time is incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties), $"The last event tracking flag is incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition), $"The default starting position is incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval), $"The load balancing interval is incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval), $"The ownership expiration interval incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount), $"The prefetch count is incorrect for the {constructorDescription} constructor.");
+                    Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes), $"The prefetch byte size is incorrect for the {constructorDescription} constructor.");
+                });
             }
 
             var clientOptions = new EventProcessorClientOptions
@@ -226,41 +229,41 @@ namespace Azure.Messaging.EventHubs.Tests
             // Connection String constructor
 
             EventProcessorClient processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", default(EventProcessorClientOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
 
             // Connection String and Event Hub Name constructor
 
             processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123", "theHub", default(EventProcessorClientOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
 
             // Namespace constructor
 
             processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), default(EventProcessorClientOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
 
             // SAS constructor
 
             processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorClientOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
 
             // Named Key constructor
 
             processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), default(EventProcessorClientOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
 
             // Internal testing constructor (Token)
 
             processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), default(EventProcessorOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
             // Internal testing constructor (Shared Key)
 
             processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), default(EventProcessorOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
 
             // Internal testing constructor (SAS)
 
             processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorOptions));
-            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            Assert.That(processorClient.ClientDiagnostics, Is.Not.Null, "The diagnostics should have been set.");
         }
 
         /// <summary>
@@ -457,7 +460,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
             Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
-            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+            Assert.That(((AggregateException)capturedException).InnerExceptions, Has.Count.EqualTo(1), "There should have been a single validation exception.");
 
             var innerException = ((AggregateException)capturedException).InnerExceptions.First();
             Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
@@ -953,7 +956,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(capturedEventArgs.Count, Is.EqualTo(eventBatch.Length), "The event handler should have been fired for each event in the batch.");
+            Assert.That(capturedEventArgs, Has.Count.EqualTo(eventBatch.Length), "The event handler should have been fired for each event in the batch.");
 
             for (var index = 0; index < eventBatch.Length; ++index)
             {
@@ -1112,10 +1115,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 capturedException = (ex as AggregateException);
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(capturedException, Is.Not.Null, "An aggregate exception should have been thrown to contain each observed exception.");
-            Assert.That(capturedException.Message, Does.StartWith(Resources.AggregateEventProcessingExceptionMessage), "The error message should reflect the aggregate.");
-            Assert.That(capturedException.InnerExceptions.Count, Is.EqualTo(exceptionCount), "The aggregate should contain all of the processing exceptions.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(capturedException, Is.Not.Null, "An aggregate exception should have been thrown to contain each observed exception.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(capturedException.Message, Does.StartWith(Resources.AggregateEventProcessingExceptionMessage), "The error message should reflect the aggregate.");
+                Assert.That(capturedException.InnerExceptions, Has.Count.EqualTo(exceptionCount), "The aggregate should contain all of the processing exceptions.");
+            });
             Assert.That(capturedException.InnerExceptions.Any(ex => ex.Message != exceptionMessage), Is.False, "The aggregate should contain only the exceptions observed during processing.");
 
             cancellationSource.Cancel();
@@ -1239,8 +1248,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.True, "The cancellation token should have been signaled.");
-            Assert.That(processedEventsCount, Is.EqualTo(1), "The event handler should not have been triggered after cancellation.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.True, "The cancellation token should have been signaled.");
+                Assert.That(processedEventsCount, Is.EqualTo(1), "The event handler should not have been triggered after cancellation.");
+            });
 
             cancellationSource.Cancel();
         }
@@ -1310,9 +1322,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been injected for the partition.");
+                Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been injected for the partition.");
+            });
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(startingPosition), "The injected checkpoint should have respected the value that the initialization event handler set.");
 
             cancellationSource.Cancel();
@@ -1350,9 +1365,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been found for the partition.");
+                Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been found for the partition.");
+            });
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(checkpointStartingPosition), "The natural checkpoint should have respected the value that the initialization event handler set.");
 
             cancellationSource.Cancel();
@@ -1383,8 +1401,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(checkpoint, Is.Null, "No handler was registered for the partition; no checkpoint should have been injected.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(checkpoint, Is.Null, "No handler was registered for the partition; no checkpoint should have been injected.");
+            });
 
             cancellationSource.Cancel();
         }
@@ -1618,19 +1639,25 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(processorOptions, Is.Not.Null, "The processor options should have been created.");
             Assert.That(processorOptions.ConnectionOptions, Is.Not.SameAs(clientOptions.ConnectionOptions), "The connection options should have been copied.");
-            Assert.That(processorOptions.ConnectionOptions.TransportType, Is.EqualTo(clientOptions.ConnectionOptions.TransportType), "The connection options should have been set.");
-            Assert.That(processorOptions.RetryOptions, Is.Not.SameAs(clientOptions.RetryOptions), "The retry options should have been copied.");
-            Assert.That(processorOptions.RetryOptions.MaximumRetries, Is.EqualTo(clientOptions.RetryOptions.MaximumRetries), "The retry options should have been set.");
-            Assert.That(processorOptions.Identifier, Is.EqualTo(clientOptions.Identifier), "The identifier should have been set.");
-            Assert.That(processorOptions.MaximumWaitTime, Is.EqualTo(clientOptions.MaximumWaitTime), "The maximum wait time should have been set.");
-            Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flag for last event tracking should have been set.");
-            Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
-            Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
-            Assert.That(processorOptions.PrefetchSizeInBytes, Is.EqualTo(clientOptions.PrefetchSizeInBytes), "The prefetch byte size should have been set.");
-            Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(clientOptions.LoadBalancingUpdateInterval), "The load balancing interval should have been set.");
-            Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(clientOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.ConnectionOptions.TransportType, Is.EqualTo(clientOptions.ConnectionOptions.TransportType), "The connection options should have been set.");
+                Assert.That(processorOptions.RetryOptions, Is.Not.SameAs(clientOptions.RetryOptions), "The retry options should have been copied.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(processorOptions.RetryOptions.MaximumRetries, Is.EqualTo(clientOptions.RetryOptions.MaximumRetries), "The retry options should have been set.");
+                Assert.That(processorOptions.Identifier, Is.EqualTo(clientOptions.Identifier), "The identifier should have been set.");
+                Assert.That(processorOptions.MaximumWaitTime, Is.EqualTo(clientOptions.MaximumWaitTime), "The maximum wait time should have been set.");
+                Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flag for last event tracking should have been set.");
+                Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
+                Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
+                Assert.That(processorOptions.PrefetchSizeInBytes, Is.EqualTo(clientOptions.PrefetchSizeInBytes), "The prefetch byte size should have been set.");
+                Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(clientOptions.LoadBalancingUpdateInterval), "The load balancing interval should have been set.");
+                Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(clientOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should have been set.");
 
-            Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
+                Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
+            });
         }
 
         /// <summary>

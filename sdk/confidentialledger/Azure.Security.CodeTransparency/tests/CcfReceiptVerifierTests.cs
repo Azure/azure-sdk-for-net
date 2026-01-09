@@ -38,7 +38,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var assembly = Assembly.GetExecutingAssembly();
             string mustExistFilename = "receipt.cose";
             string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(mustExistFilename));
-            Assert.IsNotNull(resourceName);
+            Assert.That(resourceName, Is.Not.Null);
             _fileQualifierPrefix = resourceName.Split(new String[] { mustExistFilename }, StringSplitOptions.None)[0];
         }
 
@@ -71,7 +71,7 @@ namespace Azure.Security.CodeTransparency.Tests
             Response<JwksDocument> key = client.GetPublicKeys();
 
             var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
-            StringAssert.Contains(expected: "KID mismatch", exception.Message);
+            Assert.That(exception.Message, Does.Contain("KID mismatch"));
 #endif
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Security.CodeTransparency.Tests
             Response<JwksDocument> key = client.GetPublicKeys();
 
             var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
-            StringAssert.Contains(expected: "Claim digest mismatch", exception.Message);
+            Assert.That(exception.Message, Does.Contain("Claim digest mismatch"));
 #endif
         }
     }

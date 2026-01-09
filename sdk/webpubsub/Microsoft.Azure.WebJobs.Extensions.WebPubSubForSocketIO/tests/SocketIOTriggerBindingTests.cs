@@ -93,20 +93,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var provider = triggerData.ValueProvider;
             var result = await provider.GetValueAsync();
-            Assert.AreEqual(triggerEvent.Request, result);
+            Assert.That(result, Is.EqualTo(triggerEvent.Request));
 
             var bindingData = triggerData.BindingData;
-            Assert.AreEqual("ns", bindingData[NamespaceBindingName]);
-            Assert.AreEqual("sid", bindingData[SocketIdBindingName]);
-            Assert.AreEqual(((SocketIOConnectRequest)triggerEvent.Request).Claims, bindingData[ClaimsBindingName]);
-            Assert.AreEqual(((SocketIOConnectRequest)triggerEvent.Request).Query, bindingData[QueryBindingName]);
-            Assert.AreEqual(((SocketIOConnectRequest)triggerEvent.Request).Headers, bindingData[HeadersBindingName]);
-            Assert.AreEqual(((SocketIOConnectRequest)triggerEvent.Request).ClientCertificates, bindingData[ClientCertificatesBindingName]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(bindingData[NamespaceBindingName], Is.EqualTo("ns"));
+                Assert.That(bindingData[SocketIdBindingName], Is.EqualTo("sid"));
+                Assert.That(bindingData[ClaimsBindingName], Is.EqualTo(((SocketIOConnectRequest)triggerEvent.Request).Claims));
+                Assert.That(bindingData[QueryBindingName], Is.EqualTo(((SocketIOConnectRequest)triggerEvent.Request).Query));
+                Assert.That(bindingData[HeadersBindingName], Is.EqualTo(((SocketIOConnectRequest)triggerEvent.Request).Headers));
+                Assert.That(bindingData[ClientCertificatesBindingName], Is.EqualTo(((SocketIOConnectRequest)triggerEvent.Request).ClientCertificates));
+            });
 
             // Test JOBject
             provider = new SocketIOTriggerValueProvider(GetParameterOrFirst(typeof(SocketIOTriggerBindingTests), nameof(ConnectObj)), triggerEvent);
             result = await provider.GetValueAsync();
-            Assert.AreEqual(JObject.FromObject(triggerEvent.Request), result);
+            Assert.That(result, Is.EqualTo(JObject.FromObject(triggerEvent.Request)));
         }
 
         [TestCase]
@@ -126,15 +129,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var provider = triggerData.ValueProvider;
             var result = await provider.GetValueAsync();
-            Assert.AreEqual(triggerEvent.Request, result);
+            Assert.That(result, Is.EqualTo(triggerEvent.Request));
 
             var bindingData = triggerData.BindingData;
-            Assert.AreEqual("ns", bindingData[NamespaceBindingName]);
-            Assert.AreEqual("sid", bindingData[SocketIdBindingName]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(bindingData[NamespaceBindingName], Is.EqualTo("ns"));
+                Assert.That(bindingData[SocketIdBindingName], Is.EqualTo("sid"));
+            });
 
             provider = new SocketIOTriggerValueProvider(GetParameterOrFirst(typeof(SocketIOTriggerBindingTests), nameof(ConnectedObj)), triggerEvent);
             result = await provider.GetValueAsync();
-            Assert.AreEqual(JObject.FromObject(triggerEvent.Request), result);
+            Assert.That(result, Is.EqualTo(JObject.FromObject(triggerEvent.Request)));
         }
 
         [TestCase]
@@ -154,16 +160,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var provider = triggerData.ValueProvider;
             var result = await provider.GetValueAsync();
-            Assert.AreEqual(triggerEvent.Request, result);
+            Assert.That(result, Is.EqualTo(triggerEvent.Request));
 
             var bindingData = triggerData.BindingData;
-            Assert.AreEqual("ns", bindingData[NamespaceBindingName]);
-            Assert.AreEqual("sid", bindingData[SocketIdBindingName]);
-            Assert.AreEqual("reason", bindingData[ReasonBindingName]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(bindingData[NamespaceBindingName], Is.EqualTo("ns"));
+                Assert.That(bindingData[SocketIdBindingName], Is.EqualTo("sid"));
+                Assert.That(bindingData[ReasonBindingName], Is.EqualTo("reason"));
+            });
 
             provider = new SocketIOTriggerValueProvider(GetParameterOrFirst(typeof(SocketIOTriggerBindingTests), nameof(DisconnectObj)), triggerEvent);
             result = await provider.GetValueAsync();
-            Assert.AreEqual(JObject.FromObject(triggerEvent.Request), result);
+            Assert.That(result, Is.EqualTo(JObject.FromObject(triggerEvent.Request)));
         }
 
         [TestCase]
@@ -183,17 +192,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var provider = triggerData.ValueProvider;
             var result = await provider.GetValueAsync();
-            Assert.AreEqual(triggerEvent.Request, result);
+            Assert.That(result, Is.EqualTo(triggerEvent.Request));
 
             var bindingData = triggerData.BindingData;
-            Assert.AreEqual("ns", bindingData[NamespaceBindingName]);
-            Assert.AreEqual("sid", bindingData[SocketIdBindingName]);
-            Assert.AreEqual("param1", bindingData["paramKey1"]);
-            Assert.AreEqual(2, bindingData["paramKey2"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(bindingData[NamespaceBindingName], Is.EqualTo("ns"));
+                Assert.That(bindingData[SocketIdBindingName], Is.EqualTo("sid"));
+                Assert.That(bindingData["paramKey1"], Is.EqualTo("param1"));
+                Assert.That(bindingData["paramKey2"], Is.EqualTo(2));
+            });
 
             provider = new SocketIOTriggerValueProvider(GetParameterOrFirst(typeof(SocketIOTriggerBindingTests), nameof(MessageObj)), triggerEvent);
             result = await provider.GetValueAsync();
-            Assert.AreEqual(JObject.FromObject(triggerEvent.Request), result);
+            Assert.That(result, Is.EqualTo(JObject.FromObject(triggerEvent.Request)));
         }
 
         [TestCaseSource(nameof(InvalidTriggerBindingsParameters))]
@@ -203,7 +215,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var provider = new SocketIOTriggerValueProvider(parameter, triggerEvent);
             var result = await provider.GetValueAsync();
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         public static IEnumerable<object[]> InvalidTriggerBindingsParameters

@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void Collection(string value)
         {
             SearchFieldDataType type = SearchFieldDataType.Collection(value);
-            Assert.AreEqual("Collection(Edm.String)", type.ToString());
+            Assert.That(type.ToString(), Is.EqualTo("Collection(Edm.String)"));
         }
 
         [TestCase("Edm.String", false)]
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void IsCollection(string value, bool expected)
         {
             SearchFieldDataType type = value;
-            Assert.AreEqual(expected, type.IsCollection);
+            Assert.That(type.IsCollection, Is.EqualTo(expected));
         }
     }
 }

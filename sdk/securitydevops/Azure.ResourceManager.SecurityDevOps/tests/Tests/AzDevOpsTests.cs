@@ -58,10 +58,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             var azureDevOpsConnector = (await azureDevOpsConnectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, connectorData)).Value;
 
-            Assert.IsNotNull(azureDevOpsConnector);
-            Assert.AreEqual(ProvisioningState.Succeeded, azureDevOpsConnector.Data.Properties.ProvisioningState);
-            Assert.AreEqual(connectorName, azureDevOpsConnector.Data.Name);
-            Assert.AreEqual(TestEnvironment.Location, azureDevOpsConnector.Data.Location.Name);
+            Assert.That(azureDevOpsConnector, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(azureDevOpsConnector.Data.Properties.ProvisioningState, Is.EqualTo(ProvisioningState.Succeeded));
+                Assert.That(azureDevOpsConnector.Data.Name, Is.EqualTo(connectorName));
+                Assert.That(azureDevOpsConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
+            });
         }
 
         [Test]
@@ -69,12 +72,15 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
         public async Task GetAzureDevOpsConnectors()
         {
             var connectors = await (await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup)).Value.GetAzureDevOpsConnectors().ToEnumerableAsync();
-            Assert.IsNotNull(connectors);
-            Assert.AreEqual(1, connectors.Count);
+            Assert.That(connectors, Is.Not.Null);
+            Assert.That(connectors, Has.Count.EqualTo(1));
 
             var connector = connectors[0];
-            Assert.AreEqual("secdevops-ado1830", connector.Data.Name);
-            Assert.AreEqual(TestEnvironment.Location, connector.Data.Location.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connector.Data.Name, Is.EqualTo("secdevops-ado1830"));
+                Assert.That(connector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
+            });
         }
 
         [Test]
@@ -89,9 +95,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             AzureDevOpsConnectorResource azDevopsConnector = await Client.GetAzureDevOpsConnectorResource(adoConnectorId).GetAsync();
 
-            Assert.IsNotNull(azDevopsConnector);
-            Assert.AreEqual(adoConnectorId.Name, azDevopsConnector.Data.Name);
-            Assert.AreEqual(TestEnvironment.Location, azDevopsConnector.Data.Location.Name);
+            Assert.That(azDevopsConnector, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(azDevopsConnector.Data.Name, Is.EqualTo(adoConnectorId.Name));
+                Assert.That(azDevopsConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
+            });
         }
 
         [Test]
@@ -108,9 +117,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             var azureDevOpsRepos = await azDevopsConnector.GetAzureDevOpsReposByConnectorAsync().ToEnumerableAsync();
 
-            Assert.AreEqual(2, azureDevOpsRepos.Count);
-            Assert.AreEqual("ARepo", azureDevOpsRepos[0].Data.Name);
-            Assert.AreEqual("AnotherRepo", azureDevOpsRepos[1].Data.Name);
+            Assert.That(azureDevOpsRepos, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(azureDevOpsRepos[0].Data.Name, Is.EqualTo("ARepo"));
+                Assert.That(azureDevOpsRepos[1].Data.Name, Is.EqualTo("AnotherRepo"));
+            });
         }
 
         [Test]
@@ -125,7 +137,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             // Get connector and verify it exists
             AzureDevOpsConnectorResource azDevopsConnector = await Client.GetAzureDevOpsConnectorResource(adoConnectorId).GetAsync();
-            Assert.IsNotNull(azDevopsConnector);
+            Assert.That(azDevopsConnector, Is.Not.Null);
 
             // Delete
             await azDevopsConnector.DeleteAsync(WaitUntil.Completed);
@@ -138,8 +150,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual(404, e.Status);
-                Assert.AreEqual("ResourceNotFound", e.ErrorCode);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(e.Status, Is.EqualTo(404));
+                    Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound"));
+                });
             }
         }
     }

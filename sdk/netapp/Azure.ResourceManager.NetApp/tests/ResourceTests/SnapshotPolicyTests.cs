@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create snapshotPolicy
             var snapshotPolicyName = Recording.GenerateAssetName("snapshotPolicy-");
             SnapshotPolicyResource snapshotPolicyResource1 = await CreateSnapshotPolicy(DefaultLocationString, snapshotPolicyName);
-            Assert.AreEqual(snapshotPolicyName, snapshotPolicyResource1.Id.Name);
+            Assert.That(snapshotPolicyResource1.Id.Name, Is.EqualTo(snapshotPolicyName));
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
             snapshotPolicyResource1.Data.MonthlySchedule.Should().BeEquivalentTo(_monthlySchedule);
             snapshotPolicyResource1.Data.MonthlySchedule.Should().BeEquivalentTo(_monthlySchedule);
@@ -96,17 +96,20 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyResource2.Data.MonthlySchedule.Should().BeEquivalentTo(_monthlySchedule);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotPolicyCollection.GetAsync(snapshotPolicyName + "1"); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsTrue(await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName));
-            Assert.IsFalse(await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName), Is.True);
+                Assert.That((bool)await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName + "1"), Is.False);
+            });
 
             //delete snapshotPolicy
             await snapshotPolicyResource1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            Assert.IsFalse(await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName));
+            Assert.That((bool)await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName), Is.False);
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotPolicyCollection.GetAsync(snapshotPolicyName); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -117,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var snapshotPolicyName2 = Recording.GenerateAssetName("snapshotPolicy-");
             SnapshotPolicyResource snapshotPolicyResource1 = await CreateSnapshotPolicy(DefaultLocationString, snapshotPolicyName);
             SnapshotPolicyResource snapshotPolicyResource2 = await CreateSnapshotPolicy(DefaultLocationString, snapshotPolicyName2);
-            Assert.AreEqual(snapshotPolicyName, snapshotPolicyResource1.Id.Name);
+            Assert.That(snapshotPolicyResource1.Id.Name, Is.EqualTo(snapshotPolicyName));
             snapshotPolicyResource1.Data.HourlySchedule.Should().BeEquivalentTo(_hourlySchedule);
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
             snapshotPolicyResource1.Data.MonthlySchedule.Should().BeEquivalentTo(_monthlySchedule);
@@ -140,9 +143,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyResource4.Should().BeEquivalentTo(snapshotPolicyGetResource2);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotPolicyCollection.GetAsync(snapshotPolicyName + "1"); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsTrue(await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName));
-            Assert.IsFalse(await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName), Is.True);
+                Assert.That((bool)await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName + "1"), Is.False);
+            });
         }
 
         [RecordedTest]
@@ -151,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create CapacityPool
             var snapshotPolicyName = Recording.GenerateAssetName("snapshotPolicy-");
             SnapshotPolicyResource snapshotPolicyResource1 = await CreateSnapshotPolicy(DefaultLocationString, snapshotPolicyName);
-            Assert.AreEqual(snapshotPolicyName, snapshotPolicyResource1.Id.Name);
+            Assert.That(snapshotPolicyResource1.Id.Name, Is.EqualTo(snapshotPolicyName));
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
 
             //Update with patch
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create CapacityPool
             var snapshotPolicyName = Recording.GenerateAssetName("snapshotPolicy-");
             SnapshotPolicyResource snapshotPolicyResource1 = await CreateSnapshotPolicy(DefaultLocationString, snapshotPolicyName);
-            Assert.AreEqual(snapshotPolicyName, snapshotPolicyResource1.Id.Name);
+            Assert.That(snapshotPolicyResource1.Id.Name, Is.EqualTo(snapshotPolicyName));
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocationString, NetAppFileServiceLevel.Premium, _poolSize);
@@ -190,10 +196,13 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Validate if created properly
             NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
-            Assert.IsNotNull(snapshotVolumeResource.Data.DataProtection);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Backup);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(snapshotPolicyProperties.SnapshotPolicyId, snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId);
+            Assert.That(snapshotVolumeResource.Data.DataProtection, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(snapshotVolumeResource.Data.DataProtection.Backup, Is.Null);
+                Assert.That(snapshotVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId, Is.EqualTo(snapshotPolicyProperties.SnapshotPolicyId));
+            });
 
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(40000);
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create CapacityPool
             var snapshotPolicyName = Recording.GenerateAssetName("snapshotPolicy-");
             SnapshotPolicyResource snapshotPolicyResource1 = await CreateSnapshotPolicy(DefaultLocationString, snapshotPolicyName);
-            Assert.AreEqual(snapshotPolicyName, snapshotPolicyResource1.Id.Name);
+            Assert.That(snapshotPolicyResource1.Id.Name, Is.EqualTo(snapshotPolicyName));
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocationString, NetAppFileServiceLevel.Premium, _poolSize);
@@ -220,15 +229,18 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Validate if created properly
             NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
-            Assert.IsNotNull(snapshotVolumeResource.Data.DataProtection);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Backup);
-            Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Replication);
-            Assert.AreEqual(snapshotPolicyProperties.SnapshotPolicyId, snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId);
+            Assert.That(snapshotVolumeResource.Data.DataProtection, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(snapshotVolumeResource.Data.DataProtection.Backup, Is.Null);
+                Assert.That(snapshotVolumeResource.Data.DataProtection.Replication, Is.Null);
+                Assert.That(snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId, Is.EqualTo(snapshotPolicyProperties.SnapshotPolicyId));
+            });
 
             //List volumes
             //List<SnapshotPolicyResource> snapshotPoliciesList = await _snapshotPolicyCollection.GetAllAsync().ToEnumerableAsync();
             List<NetAppVolumeResource> volumesList = await snapshotPolicyResource1.GetVolumesAsync().ToEnumerableAsync();
-            Assert.IsNotNull(volumesList);
+            Assert.That(volumesList, Is.Not.Null);
             volumesList.Should().HaveCount(1);
             volumesList[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);

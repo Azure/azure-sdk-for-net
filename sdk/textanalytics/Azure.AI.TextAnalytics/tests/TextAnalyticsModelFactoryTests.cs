@@ -89,11 +89,11 @@ namespace Azure.AI.TextAnalytics.Tests
                 recognizeLinkedEntitiesActionResults,
                 analyzeSentimentActionResults);
 
-            CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
-            CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
-            CollectionAssert.AreEquivalent(recognizePiiEntitiesActionResults, actionsResult.RecognizePiiEntitiesResults);
-            CollectionAssert.AreEquivalent(recognizeLinkedEntitiesActionResults, actionsResult.RecognizeLinkedEntitiesResults);
-            CollectionAssert.AreEquivalent(analyzeSentimentActionResults, actionsResult.AnalyzeSentimentResults);
+            Assert.That(actionsResult.ExtractKeyPhrasesResults, Is.EquivalentTo(extractKeyPhrasesActionResults));
+            Assert.That(actionsResult.RecognizeEntitiesResults, Is.EquivalentTo(recognizeEntitiesActionResults));
+            Assert.That(actionsResult.RecognizePiiEntitiesResults, Is.EquivalentTo(recognizePiiEntitiesActionResults));
+            Assert.That(actionsResult.RecognizeLinkedEntitiesResults, Is.EquivalentTo(recognizeLinkedEntitiesActionResults));
+            Assert.That(actionsResult.AnalyzeSentimentResults, Is.EquivalentTo(analyzeSentimentActionResults));
 
             actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
                 extractKeyPhrasesActionResults,
@@ -108,17 +108,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 extractiveSummarizeActionResults,
                 abstractiveSummarizeActionResults);
 
-            CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
-            CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
-            CollectionAssert.AreEquivalent(recognizePiiEntitiesActionResults, actionsResult.RecognizePiiEntitiesResults);
-            CollectionAssert.AreEquivalent(recognizeLinkedEntitiesActionResults, actionsResult.RecognizeLinkedEntitiesResults);
-            CollectionAssert.AreEquivalent(analyzeSentimentActionResults, actionsResult.AnalyzeSentimentResults);
-            CollectionAssert.AreEquivalent(recognizeCustomEntitiesActionResults, actionsResult.RecognizeCustomEntitiesResults);
-            CollectionAssert.AreEquivalent(singleLabelClassifyActionResults, actionsResult.SingleLabelClassifyResults);
-            CollectionAssert.AreEquivalent(multiLabelClassifyActionResults, actionsResult.MultiLabelClassifyResults);
-            CollectionAssert.AreEquivalent(analyzeHealthcareEntitiesActionResults, actionsResult.AnalyzeHealthcareEntitiesResults);
-            CollectionAssert.AreEquivalent(extractiveSummarizeActionResults, actionsResult.ExtractiveSummarizeResults);
-            CollectionAssert.AreEquivalent(abstractiveSummarizeActionResults, actionsResult.AbstractiveSummarizeResults);
+            Assert.That(actionsResult.ExtractKeyPhrasesResults, Is.EquivalentTo(extractKeyPhrasesActionResults));
+            Assert.That(actionsResult.RecognizeEntitiesResults, Is.EquivalentTo(recognizeEntitiesActionResults));
+            Assert.That(actionsResult.RecognizePiiEntitiesResults, Is.EquivalentTo(recognizePiiEntitiesActionResults));
+            Assert.That(actionsResult.RecognizeLinkedEntitiesResults, Is.EquivalentTo(recognizeLinkedEntitiesActionResults));
+            Assert.That(actionsResult.AnalyzeSentimentResults, Is.EquivalentTo(analyzeSentimentActionResults));
+            Assert.That(actionsResult.RecognizeCustomEntitiesResults, Is.EquivalentTo(recognizeCustomEntitiesActionResults));
+            Assert.That(actionsResult.SingleLabelClassifyResults, Is.EquivalentTo(singleLabelClassifyActionResults));
+            Assert.That(actionsResult.MultiLabelClassifyResults, Is.EquivalentTo(multiLabelClassifyActionResults));
+            Assert.That(actionsResult.AnalyzeHealthcareEntitiesResults, Is.EquivalentTo(analyzeHealthcareEntitiesActionResults));
+            Assert.That(actionsResult.ExtractiveSummarizeResults, Is.EquivalentTo(extractiveSummarizeActionResults));
+            Assert.That(actionsResult.AbstractiveSummarizeResults, Is.EquivalentTo(abstractiveSummarizeActionResults));
         }
         #endregion Action Result Models
     }

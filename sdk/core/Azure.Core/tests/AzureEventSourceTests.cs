@@ -52,15 +52,21 @@ namespace Azure.Core.Tests
                 LogEvent(es1);
                 LogEvent(es2);
 
-                Assert.AreEqual("Azure-Corez", es0.Name);
-                Assert.AreEqual("Azure-Corez-1", es1.Name);
-                Assert.AreEqual("Azure-Corez-2", es2.Name);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(es0.Name, Is.EqualTo("Azure-Corez"));
+                    Assert.That(es1.Name, Is.EqualTo("Azure-Corez-1"));
+                    Assert.That(es2.Name, Is.EqualTo("Azure-Corez-2"));
 
-                Assert.AreEqual(3, events.Count);
+                    Assert.That(events, Has.Count.EqualTo(3));
+                });
 
-                Assert.AreEqual("Azure-Corez", events[0].EventSource.Name);
-                Assert.AreEqual("Azure-Corez-1", events[1].EventSource.Name);
-                Assert.AreEqual("Azure-Corez-2", events[2].EventSource.Name);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(events[0].EventSource.Name, Is.EqualTo("Azure-Corez"));
+                    Assert.That(events[1].EventSource.Name, Is.EqualTo("Azure-Corez-1"));
+                    Assert.That(events[2].EventSource.Name, Is.EqualTo("Azure-Corez-2"));
+                });
             }
             finally
             {
@@ -73,7 +79,7 @@ namespace Azure.Core.Tests
         public void SetsTraits()
         {
             using var es = new TestEventSource();
-            Assert.AreEqual("true", es.GetTrait("AzureEventSource"));
+            Assert.That(es.GetTrait("AzureEventSource"), Is.EqualTo("true"));
         }
 
         public class TestAssemblyLoadContext : AssemblyLoadContext

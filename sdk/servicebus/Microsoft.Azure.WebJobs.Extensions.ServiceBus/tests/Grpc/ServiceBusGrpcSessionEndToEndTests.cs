@@ -47,9 +47,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -110,9 +110,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.That(provider.ActionsCache, Is.Empty);
         }
 
         [Test]
@@ -131,18 +131,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
 
             var receiver = await client.AcceptNextSessionAsync(FirstQueueScope.QueueName);
             var abandonedMessage = (await receiver.ReceiveMessagesAsync(1)).Single();
-            Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
-            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.TimeSpan, abandonedMessage.ApplicationProperties["timespan"]);
-            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Uri, abandonedMessage.ApplicationProperties["uri"]);
-            Assert.That(abandonedMessage.ApplicationProperties["datetime"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeNow).Within(TimeSpan.FromMilliseconds(1)));
-            Assert.That(abandonedMessage.ApplicationProperties["datetimeoffset"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeOffsetNow).Within(TimeSpan.FromMilliseconds(1)));
-            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Guid, abandonedMessage.ApplicationProperties["guid"]);
-            Assert.IsEmpty(provider.ActionsCache);
+            Assert.Multiple(() =>
+            {
+                Assert.That(abandonedMessage.Body.ToString(), Is.EqualTo("foobar"));
+                Assert.That(abandonedMessage.ApplicationProperties["timespan"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.TimeSpan));
+                Assert.That(abandonedMessage.ApplicationProperties["uri"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.Uri));
+                Assert.That(abandonedMessage.ApplicationProperties["datetime"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeNow).Within(TimeSpan.FromMilliseconds(1)));
+                Assert.That(abandonedMessage.ApplicationProperties["datetimeoffset"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeOffsetNow).Within(TimeSpan.FromMilliseconds(1)));
+                Assert.That(abandonedMessage.ApplicationProperties["guid"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.Guid));
+                Assert.That(provider.ActionsCache, Is.Empty);
+            });
         }
 
         [Test]
@@ -161,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
         }
 
@@ -182,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
         }
 
@@ -202,9 +205,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
-            Assert.IsEmpty(provider.SessionActionsCache);
+            Assert.That(provider.SessionActionsCache, Is.Empty);
         }
 
         [Test]
@@ -223,7 +226,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
         }
 
@@ -233,7 +236,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Complete(new CompleteRequest() { Locktoken = message.LockToken }, new MockServerCallContext());
                 _waitHandle1.Set();
             }
@@ -246,7 +249,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage[] messages)
             {
                 var message = messages.Single();
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Complete(new CompleteRequest() { Locktoken = message.LockToken }, new MockServerCallContext());
                 _waitHandle1.Set();
             }
@@ -258,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusClient client)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Deadletter(
                     new DeadletterRequest()
                     {
@@ -271,10 +274,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var receiver = client.CreateReceiver(FirstQueueScope.QueueName, new ServiceBusReceiverOptions {SubQueue = SubQueue.DeadLetter});
                 var deadletterMessage = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual("foobar", deadletterMessage.Body.ToString());
-                Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
-                Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
-                Assert.AreEqual(42, deadletterMessage.ApplicationProperties["key"]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deadletterMessage.Body.ToString(), Is.EqualTo("foobar"));
+                    Assert.That(deadletterMessage.DeadLetterErrorDescription, Is.EqualTo("description"));
+                    Assert.That(deadletterMessage.DeadLetterReason, Is.EqualTo("reason"));
+                    Assert.That(deadletterMessage.ApplicationProperties["key"], Is.EqualTo(42));
+                });
                 _waitHandle1.Set();
             }
         }
@@ -285,7 +291,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Defer(
                     new DeferRequest
                     {
@@ -295,8 +301,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new MockServerCallContext());
                 var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { message.SequenceNumber })).Single();
-                Assert.AreEqual("foobar", deferredMessage.Body.ToString());
-                Assert.IsTrue((bool)deferredMessage.ApplicationProperties["key"]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deferredMessage.Body.ToString(), Is.EqualTo("foobar"));
+                    Assert.That((bool)deferredMessage.ApplicationProperties["key"], Is.True);
+                });
                 _waitHandle1.Set();
             }
         }
@@ -307,7 +316,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.RenewMessageLock(
                     new RenewMessageLockRequest
                     {
@@ -324,7 +333,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.SetSessionState(
                     new SetSessionStateRequest
                     {
@@ -339,8 +348,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         SessionId = message.SessionId,
                     },
                     new MockServerCallContext());
-                Assert.IsNotEmpty(test.SessionState);
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(test.SessionState, Is.Not.Empty);
+                    Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
+                });
                 _waitHandle1.Set();
             }
         }
@@ -352,7 +364,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 byte[] predefinedData = { 0x48, 0x65 };
-                Assert.AreEqual(predefinedData, message.Body.ToArray());
+                Assert.That(message.Body.ToArray(), Is.EqualTo(predefinedData));
                 await SettlementService.SetSessionState(
                     new SetSessionStateRequest
                     {
@@ -367,8 +379,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         SessionId = message.SessionId,
                     },
                     new MockServerCallContext());
-                Assert.IsNotEmpty(test.SessionState);
-                Assert.AreEqual(predefinedData, message.Body.ToArray());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(test.SessionState, Is.Not.Empty);
+                    Assert.That(message.Body.ToArray(), Is.EqualTo(predefinedData));
+                });
                 _waitHandle1.Set();
             }
         }
@@ -379,7 +394,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.ReleaseSession(
                     new ReleaseSessionRequest
                     {
@@ -387,7 +402,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     },
                     new MockServerCallContext()
                 );
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 _waitHandle1.Set();
             }
         }
@@ -398,7 +413,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 // Check when the session lock is set to expire
                 var lockedUntil = message.LockedUntil;
 
@@ -426,7 +441,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Abandon(
                     new AbandonRequest
                     {

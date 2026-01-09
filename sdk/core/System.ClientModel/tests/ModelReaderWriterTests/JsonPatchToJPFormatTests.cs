@@ -15,9 +15,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.property"u8, "value");
 
-            Assert.IsTrue(jp.Contains("$.property"u8));
+            Assert.Multiple(() =>
+            {
+                Assert.That(jp.Contains("$.property"u8), Is.True);
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/property\",\"value\":\"value\"}]", jp.ToString());
+                Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/property\",\"value\":\"value\"}]"));
+            });
         }
 
         [Test]
@@ -28,9 +31,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.property"u8, "value");
             jp.Set("$.x.y.property2"u8, "value");
 
-            Assert.IsTrue(jp.Contains("$.property"u8));
+            Assert.Multiple(() =>
+            {
+                Assert.That(jp.Contains("$.property"u8), Is.True);
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/property\",\"value\":\"value\"},{\"op\":\"add\",\"path\":\"/x\",\"value\":{\"y\":{\"property2\":\"value\"}}}]", jp.ToString());
+                Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/property\",\"value\":\"value\"},{\"op\":\"add\",\"path\":\"/x\",\"value\":{\"y\":{\"property2\":\"value\"}}}]"));
+            });
         }
 
         [Test]
@@ -40,7 +46,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$"u8, "value");
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/-\",\"value\":\"value\"}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/-\",\"value\":\"value\"}]"));
         }
 
         [Test]
@@ -50,7 +56,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.x[0].y"u8, "value");
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/x\",\"value\":[{\"y\":\"value\"}]}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/x\",\"value\":[{\"y\":\"value\"}]}]"));
         }
 
         [Test]
@@ -60,7 +66,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$.x[0].y"u8, "value");
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/x\",\"value\":[{\"y\":[\"value\"]}]}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/x\",\"value\":[{\"y\":[\"value\"]}]}]"));
         }
 
         [Test]
@@ -70,9 +76,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.property"u8, "value2");
 
-            Assert.IsTrue(jp.Contains("$.property"u8));
+            Assert.Multiple(() =>
+            {
+                Assert.That(jp.Contains("$.property"u8), Is.True);
 
-            Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/property\",\"value\":\"value2\"}]", jp.ToString());
+                Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/property\",\"value\":\"value2\"}]"));
+            });
         }
 
         [Test]
@@ -83,9 +92,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Set("$.property"u8, "value2");
             jp.Set("$.x.y.property2"u8, "value2");
 
-            Assert.IsTrue(jp.Contains("$.property"u8));
+            Assert.Multiple(() =>
+            {
+                Assert.That(jp.Contains("$.property"u8), Is.True);
 
-            Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/property\",\"value\":\"value2\"},{\"op\":\"replace\",\"path\":\"/x/y/property2\",\"value\":\"value2\"}]", jp.ToString());
+                Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/property\",\"value\":\"value2\"},{\"op\":\"replace\",\"path\":\"/x/y/property2\",\"value\":\"value2\"}]"));
+            });
         }
 
         [Test]
@@ -95,7 +107,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.x[0].y"u8, "value2");
 
-            Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/x/0/y\",\"value\":\"value2\"}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"replace\",\"path\":\"/x/0/y\",\"value\":\"value2\"}]"));
         }
 
         [Test]
@@ -105,7 +117,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$.x[0].y"u8, "value");
 
-            Assert.AreEqual("[]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[]"));
         }
 
         [Test]
@@ -115,7 +127,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Set("$['a~b/c']"u8, "v");
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/a~0b~1c\",\"value\":\"v\"}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/a~0b~1c\",\"value\":\"v\"}]"));
         }
 
         [Test]
@@ -125,7 +137,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Append("$"u8, 5);
 
-            Assert.AreEqual("[{\"op\":\"add\",\"path\":\"/-\",\"value\":5}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"add\",\"path\":\"/-\",\"value\":5}]"));
         }
 
         [Test]
@@ -135,7 +147,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Remove("$.property"u8);
 
-            Assert.AreEqual("[{\"op\":\"remove\",\"path\":\"/property\"}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"remove\",\"path\":\"/property\"}]"));
         }
 
         [Test]
@@ -145,7 +157,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Remove("$.x[0]"u8);
 
-            Assert.AreEqual("[{\"op\":\"remove\",\"path\":\"/x/0\"}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"remove\",\"path\":\"/x/0\"}]"));
         }
 
         [Test]
@@ -155,7 +167,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             jp.Remove("$.x[0].y"u8);
 
-            Assert.AreEqual("[{\"op\":\"remove\",\"path\":\"/x/0/y\"}]", jp.ToString());
+            Assert.That(jp.ToString(), Is.EqualTo("[{\"op\":\"remove\",\"path\":\"/x/0/y\"}]"));
         }
     }
 }

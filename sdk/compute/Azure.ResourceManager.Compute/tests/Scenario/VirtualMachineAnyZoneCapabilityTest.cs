@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
             input.Placement = new VirtualMachinePlacement() { ZonePlacementPolicy = "Any" };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource virtualMachine = lro.Value;
-            Assert.AreEqual(vmName, virtualMachine.Data.Name);
+            Assert.That(virtualMachine.Data.Name, Is.EqualTo(vmName));
         }
     }
 }

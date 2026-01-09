@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleDefinition1 != null)
             {
                 var roleDefinition2 = await roleDefinition1.GetAsync();
-                Assert.AreEqual(roleDefinition2.Value.Data.Name, roleDefinition1.Data.Name);
+                Assert.That(roleDefinition1.Data.Name, Is.EqualTo(roleDefinition2.Value.Data.Name));
             }
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
                 await roleDefinition1.DeleteAsync(WaitUntil.Completed);
                 roleDefinitions = await collection.GetAllAsync().ToEnumerableAsync();
                 var roleDefinition2 = roleDefinitions.FirstOrDefault();
-                Assert.AreNotEqual(roleDefinition2.Data.Name, roleDefinition1.Data.Name);
+                Assert.That(roleDefinition1.Data.Name, Is.Not.EqualTo(roleDefinition2.Data.Name));
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 var data = roleDefinition1.Data;
                 var roleDefinition2 = await roleDefinition1.UpdateAsync(WaitUntil.Completed, data);
-                Assert.AreEqual(roleDefinition2.Value.Data.Name, roleDefinition1.Data.Name);
+                Assert.That(roleDefinition1.Data.Name, Is.EqualTo(roleDefinition2.Value.Data.Name));
             }
         }
     }

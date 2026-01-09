@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleEligibilityScheduleRequest1 != null)
             {
                 var roleEligibilityScheduleRequest2 = await roleEligibilityScheduleRequest1.GetAsync();
-                Assert.AreEqual(roleEligibilityScheduleRequest2.Value.Data.Name, roleEligibilityScheduleRequest1.Data.Name);
+                Assert.That(roleEligibilityScheduleRequest1.Data.Name, Is.EqualTo(roleEligibilityScheduleRequest2.Value.Data.Name));
             }
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 var data = roleEligibilityScheduleRequest1.Data;
                 var roleEligibilityScheduleRequest2 = await roleEligibilityScheduleRequest1.UpdateAsync(WaitUntil.Completed, data);
-                Assert.AreEqual(roleEligibilityScheduleRequest2.Value.Data.Name, roleEligibilityScheduleRequest1.Data.Name);
+                Assert.That(roleEligibilityScheduleRequest1.Data.Name, Is.EqualTo(roleEligibilityScheduleRequest2.Value.Data.Name));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 var data = roleEligibilityScheduleRequest1.Data;
                 var roleEligibilityScheduleRequest2 = await roleEligibilityScheduleRequest1.ValidateAsync(data);
-                Assert.AreEqual(roleEligibilityScheduleRequest2.Value.Data.Name, roleEligibilityScheduleRequest1.Data.Name);
+                Assert.That(roleEligibilityScheduleRequest1.Data.Name, Is.EqualTo(roleEligibilityScheduleRequest2.Value.Data.Name));
             }
         }
 

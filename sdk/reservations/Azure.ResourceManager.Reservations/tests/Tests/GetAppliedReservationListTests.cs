@@ -28,10 +28,13 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var response = await Subscription.GetAppliedReservationsAsync();
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsNotNull(response.Value.ReservationOrderIds);
-            Assert.IsNotNull(response.Value.ReservationOrderIds.Value);
-            Assert.AreEqual(127, response.Value.ReservationOrderIds.Value.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.ReservationOrderIds, Is.Not.Null);
+            });
+            Assert.That(response.Value.ReservationOrderIds.Value, Is.Not.Null);
+            Assert.That(response.Value.ReservationOrderIds.Value, Has.Count.EqualTo(127));
         }
     }
 }

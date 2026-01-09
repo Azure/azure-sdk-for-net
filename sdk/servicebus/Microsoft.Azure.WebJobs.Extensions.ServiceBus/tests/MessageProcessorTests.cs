@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 await _processor.CompleteProcessingMessageAsync(actions, message, result, CancellationToken.None);
             });
 
-            Assert.AreSame(functionException, ex);
+            Assert.That(ex, Is.SameAs(functionException));
         }
 
         [Test]

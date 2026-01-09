@@ -12,14 +12,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
         public void QueryKnowledgeBaseOptionsProjectNameNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new QuestionAnsweringProject(null, null));
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
         }
 
         [Test]
         public void QueryKnowledgeBaseOptionsDeploymentNameNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new QuestionAnsweringProject("projectName", null));
-            Assert.AreEqual("deploymentName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("deploymentName"));
         }
     }
 }

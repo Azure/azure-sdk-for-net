@@ -37,12 +37,15 @@ namespace Azure.Messaging.EventHubs.Tests
             EventHubsRetryOptions clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.Mode, Is.EqualTo(options.Mode), "The mode of the clone should match.");
-            Assert.That(clone.MaximumRetries, Is.EqualTo(options.MaximumRetries), "The maximum retry limit of the clone should match.");
-            Assert.That(clone.Delay, Is.EqualTo(options.Delay), "The delay of the clone should match.");
-            Assert.That(clone.MaximumDelay, Is.EqualTo(options.MaximumDelay), "The maximum delay of the clone should match.");
-            Assert.That(clone.TryTimeout, Is.EqualTo(options.TryTimeout), "The per-try of the clone should match.");
-            Assert.That(clone.CustomRetryPolicy, Is.SameAs(options.CustomRetryPolicy), "The custom retry policy should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.Mode, Is.EqualTo(options.Mode), "The mode of the clone should match.");
+                Assert.That(clone.MaximumRetries, Is.EqualTo(options.MaximumRetries), "The maximum retry limit of the clone should match.");
+                Assert.That(clone.Delay, Is.EqualTo(options.Delay), "The delay of the clone should match.");
+                Assert.That(clone.MaximumDelay, Is.EqualTo(options.MaximumDelay), "The maximum delay of the clone should match.");
+                Assert.That(clone.TryTimeout, Is.EqualTo(options.TryTimeout), "The per-try of the clone should match.");
+                Assert.That(clone.CustomRetryPolicy, Is.SameAs(options.CustomRetryPolicy), "The custom retry policy should match.");
+            });
         }
 
         /// <summary>
@@ -65,8 +68,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var policy = options.ToRetryPolicy();
             Assert.That(policy, Is.Not.Null, "The policy should not be null.");
-            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The options should produce a basic retry policy.");
-            Assert.That(((BasicRetryPolicy)policy).Options, Is.SameAs(options), "The options should have been used for the retry policy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The options should produce a basic retry policy.");
+                Assert.That(((BasicRetryPolicy)policy).Options, Is.SameAs(options), "The options should have been used for the retry policy.");
+            });
             Assert.That(policy, Is.Not.SameAs(options.CustomRetryPolicy), "The custom retry policy should not have been used, since it was not populated.");
         }
 

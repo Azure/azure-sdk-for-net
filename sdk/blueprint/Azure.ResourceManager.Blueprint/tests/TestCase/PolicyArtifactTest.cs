@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Tests
             //CreateOrUpdate(policy assignment Artifact)
             var policyAssignmentArtifactInput = ResourceDataHelpers.GetPolicyAssignmentArtifactData();
             var policyAssignmentArtifactResource = (await artifactCollection.CreateOrUpdateAsync(WaitUntil.Completed, policyArtifactName, policyAssignmentArtifactInput)).Value;
-            Assert.AreEqual(policyArtifactName, policyAssignmentArtifactResource.Data.Name);
+            Assert.That(policyAssignmentArtifactResource.Data.Name, Is.EqualTo(policyArtifactName));
             //Get
             var policy2 = (await artifactCollection.GetAsync(policyArtifactName)).Value;
             ResourceDataHelpers.AssertArtifactData(policyAssignmentArtifactResource.Data, policy2.Data);
@@ -52,10 +52,14 @@ namespace Azure.ResourceManager.Blueprint.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exist
-            Assert.IsTrue(await artifactCollection.ExistsAsync(policyArtifactName));
-            Assert.IsFalse(await artifactCollection.ExistsAsync(policyArtifactName + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(2));
+                //4.Exist
+                Assert.That((bool)await artifactCollection.ExistsAsync(policyArtifactName), Is.True);
+                Assert.That((bool)await artifactCollection.ExistsAsync(policyArtifactName + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await artifactCollection.ExistsAsync(null));
             //Resouece operation

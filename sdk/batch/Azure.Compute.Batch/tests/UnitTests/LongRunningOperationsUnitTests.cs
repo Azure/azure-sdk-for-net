@@ -91,11 +91,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeallocateNodeOperation deallocateNodeOperation = new DeallocateNodeOperation(batchClient, NodeId + ";" + poolId);
             await deallocateNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deallocateNodeOperation.HasCompleted);
-            Assert.IsTrue(deallocateNodeOperation.HasValue);
-            Assert.IsFalse(deallocateNodeOperation.GetRawResponse().IsError);
-            Assert.AreEqual(BatchNodeState.Deallocated, deallocateNodeOperation.Value.State);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deallocateNodeOperation.HasCompleted, Is.True);
+                Assert.That(deallocateNodeOperation.HasValue, Is.True);
+                Assert.That(deallocateNodeOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(deallocateNodeOperation.Value.State, Is.EqualTo(BatchNodeState.Deallocated));
+            });
         }
 
         [Test]
@@ -131,9 +134,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeallocateNodeOperation deallocateNodeOperation = new DeallocateNodeOperation(batchClient, NodeId + ";" + poolId);
             await deallocateNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deallocateNodeOperation.HasCompleted);
-            Assert.IsFalse(deallocateNodeOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deallocateNodeOperation.HasCompleted, Is.True);
+                Assert.That(deallocateNodeOperation.HasValue, Is.False);
+            });
         }
 
         [Test]
@@ -188,7 +194,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(ex.Status, 500);
+                Assert.That(ex.Status, Is.EqualTo(500));
                 // Assert
                 Assert.Pass();
             }
@@ -246,7 +252,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(ex.Status, 429);
+                Assert.That(ex.Status, Is.EqualTo(429));
                 // Assert
                 Assert.Pass();
             }
@@ -295,9 +301,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeleteJobOperation deleteJobOperation = new DeleteJobOperation(batchClient, JobId);
             await deleteJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deleteJobOperation.HasCompleted);
-            Assert.IsTrue(deleteJobOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deleteJobOperation.HasCompleted, Is.True);
+                Assert.That(deleteJobOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -345,9 +354,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeleteJobOperation deleteJobOperation = new DeleteJobOperation(batchClient, JobId);
             await deleteJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deleteJobOperation.HasCompleted);
-            Assert.IsTrue(deleteJobOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deleteJobOperation.HasCompleted, Is.True);
+                Assert.That(deleteJobOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -394,10 +406,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeleteJobOperation deleteJobOperation = new DeleteJobOperation(batchClient, JobId);
             await deleteJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deleteJobOperation.HasCompleted);
-            Assert.IsTrue(deleteJobOperation.HasValue);
-            Assert.IsTrue(deleteJobOperation.Value);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deleteJobOperation.HasCompleted, Is.True);
+                Assert.That(deleteJobOperation.HasValue, Is.True);
+                Assert.That(deleteJobOperation.Value, Is.True);
+            });
         }
 
         [Test]
@@ -443,9 +458,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeleteJobScheduleOperation deleteJobScheduleOperation = new DeleteJobScheduleOperation(batchClient, JobId);
             await deleteJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deleteJobScheduleOperation.HasCompleted);
-            Assert.IsTrue(deleteJobScheduleOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deleteJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(deleteJobScheduleOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -491,10 +509,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             TerminateJobScheduleOperation terminateJobScheduleOperation = new TerminateJobScheduleOperation(batchClient, JobId);
             await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
-            Assert.IsTrue(terminateJobScheduleOperation.HasValue);
-            Assert.IsTrue(terminateJobScheduleOperation.Value);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(terminateJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobScheduleOperation.HasValue, Is.True);
+                Assert.That(terminateJobScheduleOperation.Value, Is.True);
+            });
         }
 
         [Test]
@@ -540,10 +561,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             TerminateJobScheduleOperation terminateJobScheduleOperation = new TerminateJobScheduleOperation(batchClient, JobId);
             await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
-            Assert.IsTrue(terminateJobScheduleOperation.HasValue);
-            Assert.IsTrue(terminateJobScheduleOperation.Value);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(terminateJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobScheduleOperation.HasValue, Is.True);
+                Assert.That(terminateJobScheduleOperation.Value, Is.True);
+            });
         }
 
         [Test]
@@ -589,10 +613,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             TerminateJobScheduleOperation terminateJobScheduleOperation = new TerminateJobScheduleOperation(batchClient, JobId);
             await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
-            Assert.IsTrue(terminateJobScheduleOperation.HasValue);
-            Assert.IsTrue(terminateJobScheduleOperation.Value);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(terminateJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobScheduleOperation.HasValue, Is.True);
+                Assert.That(terminateJobScheduleOperation.Value, Is.True);
+            });
         }
 
         [Test]
@@ -638,9 +665,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeleteJobScheduleOperation deleteJobScheduleOperation = new DeleteJobScheduleOperation(batchClient, JobId);
             await deleteJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deleteJobScheduleOperation.HasCompleted);
-            Assert.IsTrue(deleteJobScheduleOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deleteJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(deleteJobScheduleOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -688,9 +718,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeleteJobScheduleOperation deleteJobScheduleOperation = new DeleteJobScheduleOperation(batchClient, JobId);
             await deleteJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deleteJobScheduleOperation.HasCompleted);
-            Assert.IsTrue(deleteJobScheduleOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deleteJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(deleteJobScheduleOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -771,9 +804,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeletePoolOperation deletePoolOperation = new DeletePoolOperation(batchClient, PoolID);
             await deletePoolOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deletePoolOperation.HasCompleted);
-            Assert.IsTrue(deletePoolOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deletePoolOperation.HasCompleted, Is.True);
+                Assert.That(deletePoolOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -891,9 +927,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeletePoolOperation deletePoolOperation = new DeletePoolOperation(batchClient, PoolID);
             await deletePoolOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deletePoolOperation.HasCompleted);
-            Assert.IsTrue(deletePoolOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deletePoolOperation.HasCompleted, Is.True);
+                Assert.That(deletePoolOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -1012,9 +1051,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DeletePoolOperation deletePoolOperation = new DeletePoolOperation(batchClient, PoolID);
             await deletePoolOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(deletePoolOperation.HasCompleted);
-            Assert.IsTrue(deletePoolOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(deletePoolOperation.HasCompleted, Is.True);
+                Assert.That(deletePoolOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -1060,10 +1102,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             DisableJobOperation disableJobOperation = new DisableJobOperation(batchClient, JobId);
             await disableJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(disableJobOperation.HasCompleted);
-            Assert.IsTrue(disableJobOperation.HasValue);
-            Assert.AreEqual(disableJobOperation.Value.State, BatchJobState.Active);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(disableJobOperation.HasCompleted, Is.True);
+                Assert.That(disableJobOperation.HasValue, Is.True);
+                Assert.That(BatchJobState.Active, Is.EqualTo(disableJobOperation.Value.State));
+            });
         }
 
         [Test]
@@ -1109,10 +1154,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             EnableJobOperation enableJobOperation = new EnableJobOperation(batchClient, JobId);
             await enableJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(enableJobOperation.HasCompleted);
-            Assert.IsTrue(enableJobOperation.HasValue);
-            Assert.AreEqual(enableJobOperation.Value.State, BatchJobState.Active);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(enableJobOperation.HasCompleted, Is.True);
+                Assert.That(enableJobOperation.HasValue, Is.True);
+                Assert.That(BatchJobState.Active, Is.EqualTo(enableJobOperation.Value.State));
+            });
         }
 
         [Test]
@@ -1159,11 +1207,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             RebootNodeOperation rebootNodeOperation = new RebootNodeOperation(batchClient, NodeId + ";" + poolId);
             await rebootNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(rebootNodeOperation.HasCompleted);
-            Assert.IsTrue(rebootNodeOperation.HasValue);
-            Assert.IsFalse(rebootNodeOperation.GetRawResponse().IsError);
-            Assert.AreEqual(BatchNodeState.Idle, rebootNodeOperation.Value.State);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(rebootNodeOperation.HasCompleted, Is.True);
+                Assert.That(rebootNodeOperation.HasValue, Is.True);
+                Assert.That(rebootNodeOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(rebootNodeOperation.Value.State, Is.EqualTo(BatchNodeState.Idle));
+            });
         }
 
         [Test]
@@ -1210,11 +1261,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             ReimageNodeOperation reimageNodeOperation = new ReimageNodeOperation(batchClient, NodeId + ";" + poolId);
             await reimageNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(reimageNodeOperation.HasCompleted);
-            Assert.IsTrue(reimageNodeOperation.HasValue);
-            Assert.IsFalse(reimageNodeOperation.GetRawResponse().IsError);
-            Assert.AreEqual(BatchNodeState.Idle, reimageNodeOperation.Value.State);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(reimageNodeOperation.HasCompleted, Is.True);
+                Assert.That(reimageNodeOperation.HasValue, Is.True);
+                Assert.That(reimageNodeOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(reimageNodeOperation.Value.State, Is.EqualTo(BatchNodeState.Idle));
+            });
         }
 
         [Test]
@@ -1333,11 +1387,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             RemoveNodesOperation removeNodesOperation = new RemoveNodesOperation(batchClient, NodeId + ";" + PoolID);
             await removeNodesOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(removeNodesOperation.HasCompleted);
-            Assert.IsTrue(removeNodesOperation.HasValue);
-            Assert.IsFalse(removeNodesOperation.GetRawResponse().IsError);
-            Assert.AreEqual(AllocationState.Steady, removeNodesOperation.Value.AllocationState);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(removeNodesOperation.HasCompleted, Is.True);
+                Assert.That(removeNodesOperation.HasValue, Is.True);
+                Assert.That(removeNodesOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(removeNodesOperation.Value.AllocationState, Is.EqualTo(AllocationState.Steady));
+            });
         }
 
         [Test]
@@ -1456,9 +1513,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             RemoveNodesOperation removeNodesOperation = new RemoveNodesOperation(batchClient, NodeId + ";" + PoolID);
             await removeNodesOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(removeNodesOperation.HasCompleted);
-            Assert.IsFalse(removeNodesOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(removeNodesOperation.HasCompleted, Is.True);
+                Assert.That(removeNodesOperation.HasValue, Is.False);
+            });
         }
 
         [Test]
@@ -1577,11 +1637,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             ResizePoolOperation resizePoolOperation = new ResizePoolOperation(batchClient, NodeId + ";" + PoolID);
             await resizePoolOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(resizePoolOperation.HasCompleted);
-            Assert.IsTrue(resizePoolOperation.HasValue);
-            Assert.IsFalse(resizePoolOperation.GetRawResponse().IsError);
-            Assert.AreEqual(AllocationState.Steady, resizePoolOperation.Value.AllocationState);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(resizePoolOperation.HasCompleted, Is.True);
+                Assert.That(resizePoolOperation.HasValue, Is.True);
+                Assert.That(resizePoolOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(resizePoolOperation.Value.AllocationState, Is.EqualTo(AllocationState.Steady));
+            });
         }
 
         [Test]
@@ -1627,11 +1690,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             StartNodeOperation startNodeOperation = new StartNodeOperation(batchClient, NodeId + ";" + PoolID);
             await startNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(startNodeOperation.HasCompleted);
-            Assert.IsTrue(startNodeOperation.HasValue);
-            Assert.IsFalse(startNodeOperation.GetRawResponse().IsError);
-            Assert.AreEqual(BatchNodeState.Idle, startNodeOperation.Value.State);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(startNodeOperation.HasCompleted, Is.True);
+                Assert.That(startNodeOperation.HasValue, Is.True);
+                Assert.That(startNodeOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(startNodeOperation.Value.State, Is.EqualTo(BatchNodeState.Idle));
+            });
         }
 
         [Test]
@@ -1750,11 +1816,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             StopPoolResizeOperation stopPoolResizeOperation = new StopPoolResizeOperation(batchClient, NodeId + ";" + PoolID);
             await stopPoolResizeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(stopPoolResizeOperation.HasCompleted);
-            Assert.IsTrue(stopPoolResizeOperation.HasValue);
-            Assert.IsFalse(stopPoolResizeOperation.GetRawResponse().IsError);
-            Assert.AreEqual(AllocationState.Steady, stopPoolResizeOperation.Value.AllocationState);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(stopPoolResizeOperation.HasCompleted, Is.True);
+                Assert.That(stopPoolResizeOperation.HasValue, Is.True);
+                Assert.That(stopPoolResizeOperation.GetRawResponse().IsError, Is.False);
+                Assert.That(stopPoolResizeOperation.Value.AllocationState, Is.EqualTo(AllocationState.Steady));
+            });
         }
 
         [Test]
@@ -1873,9 +1942,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             StopPoolResizeOperation stopPoolResizeOperation = new StopPoolResizeOperation(batchClient, NodeId + ";" + PoolID);
             await stopPoolResizeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(stopPoolResizeOperation.HasCompleted);
-            Assert.IsFalse(stopPoolResizeOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(stopPoolResizeOperation.HasCompleted, Is.True);
+                Assert.That(stopPoolResizeOperation.HasValue, Is.False);
+            });
         }
 
         [Test]
@@ -1921,9 +1993,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             TerminateJobOperation terminateJobOperation = new TerminateJobOperation(batchClient, JobId);
             await terminateJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(terminateJobOperation.HasCompleted);
-            Assert.IsTrue(terminateJobOperation.HasValue);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(terminateJobOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobOperation.HasValue, Is.True);
+            });
         }
 
         [Test]
@@ -1970,10 +2045,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             TerminateJobOperation terminateJobOperation = new TerminateJobOperation(batchClient, JobId);
             await terminateJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.IsTrue(terminateJobOperation.HasCompleted);
-            Assert.IsTrue(terminateJobOperation.HasValue);
-            Assert.IsTrue(terminateJobOperation.Value);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(terminateJobOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobOperation.HasValue, Is.True);
+                Assert.That(terminateJobOperation.Value, Is.True);
+            });
         }
     }
 }

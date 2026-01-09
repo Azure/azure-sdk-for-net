@@ -67,8 +67,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 #endregion
 
                 SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
-                Assert.AreEqual(indexName, createdIndex.Name);
-                Assert.AreEqual(searchIndex.Fields.Count, createdIndex.Fields.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                    Assert.That(createdIndex.Fields.Count, Is.EqualTo(searchIndex.Fields.Count));
+                });
             }
             finally
             {

@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
 
             var identityProviderContract = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, IdentityProviderType.Facebook, identityProviderCreateParameters)).Value;
-            Assert.NotNull(identityProviderContract);
-            Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.IdentityProviderType);
+            Assert.That(identityProviderContract, Is.Not.Null);
+            Assert.That(identityProviderContract.Data.IdentityProviderType, Is.EqualTo(IdentityProviderType.Facebook));
 
             // list
             var listIdentityProviders = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(listIdentityProviders.Count, 1);
+            Assert.That(listIdentityProviders.Count, Is.GreaterThanOrEqualTo(1));
 
             // patch identity provider
             string patchedSecret = Recording.GenerateAssetName("clientSecret");
@@ -72,15 +72,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get to check it was patched
             identityProviderContract = await collection.GetAsync(IdentityProviderType.Facebook);
-            Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.IdentityProviderType);
-            Assert.IsNull(identityProviderContract.Data.ClientSecret);
+            Assert.Multiple(() =>
+            {
+                Assert.That(identityProviderContract.Data.IdentityProviderType, Is.EqualTo(IdentityProviderType.Facebook));
+                Assert.That(identityProviderContract.Data.ClientSecret, Is.Null);
+            });
 
             var secret = (await identityProviderContract.GetSecretsAsync()).Value;
 
             // delete the identity provider
             await identityProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await collection.ExistsAsync(IdentityProviderType.Facebook)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 RemediationDescription = "Encrypt store by...",
             };
             var customAssessmentAutomation = await _customAssessmentAutomationCollection.CreateOrUpdateAsync(WaitUntil.Completed, customAssessmentAutomationName,data);
-            Assert.IsNotNull(customAssessmentAutomation);
+            Assert.That(customAssessmentAutomation, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var list = await _customAssessmentAutomationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

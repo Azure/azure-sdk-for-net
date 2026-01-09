@@ -24,8 +24,8 @@ namespace Azure.Generator.Tests.Visitors
             var model = new ModelProvider(inputType);
             var updatedModel = visitor.InvokePreVisitModel(inputType, model);
 
-            Assert.IsNotNull(updatedModel);
-            Assert.AreEqual("Samples.Models", updatedModel!.Type.Namespace);
+            Assert.That(updatedModel, Is.Not.Null);
+            Assert.That(updatedModel!.Type.Namespace, Is.EqualTo("Samples.Models"));
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Azure.Generator.Tests.Visitors
             var enumProvider = EnumProvider.Create(inputEnum);
             var updatedEnum = visitor.InvokePreVisitEnum(inputEnum, enumProvider);
 
-            Assert.IsNotNull(updatedEnum);
-            Assert.AreEqual("Samples.Models", updatedEnum!.Type.Namespace);
+            Assert.That(updatedEnum, Is.Not.Null);
+            Assert.That(updatedEnum!.Type.Namespace, Is.EqualTo("Samples.Models"));
         }
 
         [Test]
@@ -60,8 +60,8 @@ namespace Azure.Generator.Tests.Visitors
             var enumProvider = EnumProvider.Create(inputEnum);
             var updatedEnum = visitor.InvokeVisitType(enumProvider);
 
-            Assert.IsNotNull(updatedEnum);
-            Assert.AreEqual("Samples", updatedEnum!.Type.Namespace);
+            Assert.That(updatedEnum, Is.Not.Null);
+            Assert.That(updatedEnum!.Type.Namespace, Is.EqualTo("Samples"));
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace Azure.Generator.Tests.Visitors
             var model = new ModelProvider(inputType);
             var updatedModel = visitor.InvokePreVisitModel(inputType, model);
 
-            Assert.IsNotNull(updatedModel);
-            Assert.AreEqual("Samples", updatedModel!.Type.Namespace);
+            Assert.That(updatedModel, Is.Not.Null);
+            Assert.That(updatedModel!.Type.Namespace, Is.EqualTo("Samples"));
         }
 
         [Test]
@@ -86,8 +86,8 @@ namespace Azure.Generator.Tests.Visitors
 
             var updatedType = visitor.InvokeVisitType(type);
 
-            Assert.IsNotNull(updatedType);
-            Assert.AreEqual("Samples", updatedType!.Type.Namespace);
+            Assert.That(updatedType, Is.Not.Null);
+            Assert.That(updatedType!.Type.Namespace, Is.EqualTo("Samples"));
         }
 
         [Test]
@@ -102,8 +102,8 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.SetCustomCodeView(model, new TestTypeProvider());
             var updatedModel = visitor.InvokePreVisitModel(inputType, model);
 
-            Assert.IsNotNull(updatedModel);
-            Assert.AreEqual("Samples", updatedModel!.Type.Namespace);
+            Assert.That(updatedModel, Is.Not.Null);
+            Assert.That(updatedModel!.Type.Namespace, Is.EqualTo("Samples"));
         }
 
         [Test]
@@ -115,8 +115,8 @@ namespace Azure.Generator.Tests.Visitors
             var model = new ModelProvider(inputType);
             var updatedModel = visitor.InvokePreVisitModel(inputType, model);
 
-            Assert.IsNotNull(updatedModel);
-            Assert.AreEqual("Samples", updatedModel!.Type.Namespace);
+            Assert.That(updatedModel, Is.Not.Null);
+            Assert.That(updatedModel!.Type.Namespace, Is.EqualTo("Samples"));
         }
 
         private class TestNamespaceVisitor : NamespaceVisitor

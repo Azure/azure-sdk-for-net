@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Network.Tests
             // create
             DdosProtectionPlanResource ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData(TestEnvironment.Location))).WaitForCompletionAsync();
 
-            Assert.True(await container.ExistsAsync(name));
+            Assert.That((bool)await container.ExistsAsync(name), Is.True);
 
             var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
-            Assert.IsEmpty(ddosProtectionPlanData.Tags);
+            Assert.That(ddosProtectionPlanData.Tags, Is.Empty);
 
             // update
             var data = new DdosProtectionPlanData(TestEnvironment.Location);
@@ -103,20 +103,23 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await ddosProtectionPlan.DeleteAsync(WaitUntil.Completed);
 
-            Assert.False(await container.ExistsAsync(name));
+            Assert.That((bool)await container.ExistsAsync(name), Is.False);
 
             ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(ddosProtectionPlans);
+            Assert.That(ddosProtectionPlans, Is.Empty);
 
             // list all
             ddosProtectionPlans = await _subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
-            Assert.IsEmpty(ddosProtectionPlans);
+            Assert.That(ddosProtectionPlans, Is.Empty);
         }
 
         private void ValidateCommon(DdosProtectionPlanData data, string name)
         {
-            Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(data.Name, Is.EqualTo(name));
+                Assert.That(data.Location.Name, Is.EqualTo(TestEnvironment.Location));
+            });
         }
     }
 }

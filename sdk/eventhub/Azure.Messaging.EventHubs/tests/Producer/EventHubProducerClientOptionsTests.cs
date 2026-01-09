@@ -43,13 +43,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
-            Assert.That(clone.EnableIdempotentPartitions, Is.EqualTo(options.EnableIdempotentPartitions), "The flag to enable idempotent publishing should have been copied.");
-            Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
-            Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
-            Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.PartitionOptions, Is.Not.SameAs(options.PartitionOptions), "The partitions options of the clone should be a copy, not the same instance.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
+                Assert.That(clone.EnableIdempotentPartitions, Is.EqualTo(options.EnableIdempotentPartitions), "The flag to enable idempotent publishing should have been copied.");
+                Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
+                Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
+                Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
+                Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
+                Assert.That(clone.PartitionOptions, Is.Not.SameAs(options.PartitionOptions), "The partitions options of the clone should be a copy, not the same instance.");
+            });
             Assert.That(clone.PartitionOptions.Keys, Is.EquivalentTo(options.PartitionOptions.Keys), "The partition options of the clone should contain the same items");
 
             foreach (var key in options.PartitionOptions.Keys)

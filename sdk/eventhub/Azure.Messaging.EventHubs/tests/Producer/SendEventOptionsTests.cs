@@ -32,8 +32,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
             Assert.That(clone, Is.TypeOf<SendEventOptions>(), "The clone should be a SendEventOptions instance.");
             Assert.That(clone, Is.Not.SameAs(options), "The clone should not the same reference as the options.");
-            Assert.That(clone.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the clone should match.");
-            Assert.That(clone.PartitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the clone should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the clone should match.");
+                Assert.That(clone.PartitionKey, Is.EqualTo(options.PartitionKey), "The partition key of the clone should match.");
+            });
         }
     }
 }

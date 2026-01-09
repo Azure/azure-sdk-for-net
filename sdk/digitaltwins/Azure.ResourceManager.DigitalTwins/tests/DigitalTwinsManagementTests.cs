@@ -35,9 +35,12 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
 
             DigitalTwinsDescriptionResource digitalTwinsResource = createAdtInstanceResponse.Value;
 
-            // Ensure names of instance are equal
-            Assert.AreEqual(digitalTwinsInstanceName, digitalTwinsResource.Data.Name);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, digitalTwinsResource.Data.Identity.ManagedServiceIdentityType);
+            Assert.Multiple(() =>
+            {
+                // Ensure names of instance are equal
+                Assert.That(digitalTwinsResource.Data.Name, Is.EqualTo(digitalTwinsInstanceName));
+                Assert.That(digitalTwinsResource.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            });
 
             // Create an egress endpoint
             string endpointName = Recording.GenerateAssetName("sdkTestEndpoint");
@@ -57,13 +60,19 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
 
             DigitalTwinsEndpointResource endpointResource = createEndpointResponse.Value;
 
-            // Ensure endpoint configuration was stored correctly
-            Assert.AreEqual(endpointName, endpointResource.Data.Name);
-            Assert.AreEqual(DigitalTwinsAuthenticationType.IdentityBased, endpointResource.Data.Properties.AuthenticationType);
+            Assert.Multiple(() =>
+            {
+                // Ensure endpoint configuration was stored correctly
+                Assert.That(endpointResource.Data.Name, Is.EqualTo(endpointName));
+                Assert.That(endpointResource.Data.Properties.AuthenticationType, Is.EqualTo(DigitalTwinsAuthenticationType.IdentityBased));
+            });
             Assert.IsAssignableFrom<DigitalTwinsEventHubProperties>(endpointResource.Data.Properties);
             DigitalTwinsEventHubProperties eventHubEndpointProperties = (DigitalTwinsEventHubProperties)endpointResource.Data.Properties;
-            Assert.AreEqual(eventHubNamespaceUri, eventHubEndpointProperties.EndpointUri);
-            Assert.AreEqual(eventHubName, eventHubEndpointProperties.EntityPath);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventHubEndpointProperties.EndpointUri, Is.EqualTo(eventHubNamespaceUri));
+                Assert.That(eventHubEndpointProperties.EntityPath, Is.EqualTo(eventHubName));
+            });
         }
     }
 }

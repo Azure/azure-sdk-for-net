@@ -121,7 +121,7 @@ namespace Azure.Identity.Tests
             }))
             {
                 var credential = new WorkloadIdentityCredential(options);
-                Assert.IsNotNull(credential);
+                Assert.That(credential, Is.Not.Null);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Identity.Tests
 
             // Should not throw when proxy is enabled but env vars are not set
             var credential = new WorkloadIdentityCredential(options);
-            Assert.IsNotNull(credential);
+            Assert.That(credential, Is.Not.Null);
         }
 
         [Test]

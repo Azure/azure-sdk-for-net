@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
             DeviceUpdateInstanceResource instance = await CreateInstance(account, instanceName);
-            Assert.AreEqual(instanceName, instance.Data.Name);
+            Assert.That(instance.Data.Name, Is.EqualTo(instanceName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, null, instance.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, instanceName, null));
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

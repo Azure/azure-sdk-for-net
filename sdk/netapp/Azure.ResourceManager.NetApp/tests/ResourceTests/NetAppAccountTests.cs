@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 count++;
             }
-            Assert.IsTrue(count > 1);
+            Assert.That(count, Is.GreaterThan(1));
         }
 
         [RecordedTest]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
             NetAppAccountResource account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters())).Value;
-            Assert.AreEqual(accountName, account1.Id.Name);
+            Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyNetAppAccountProperties(account1, true);
             AssertNetAppAccountEqual(account1, await account1.GetAsync());
 
@@ -70,17 +70,20 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyNetAppAccountProperties(account2, true);
             AssertNetAppAccountEqual(account1, account2);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await netAppAccountCollection.GetAsync(accountName + "1"); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsTrue(await netAppAccountCollection.ExistsAsync(accountName));
-            Assert.IsFalse(await netAppAccountCollection.ExistsAsync(accountName + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(404));
+                Assert.That((bool)await netAppAccountCollection.ExistsAsync(accountName), Is.True);
+                Assert.That((bool)await netAppAccountCollection.ExistsAsync(accountName + "1"), Is.False);
+            });
 
             //delete storage account
             await account1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            Assert.IsFalse(await netAppAccountCollection.ExistsAsync(accountName));
+            Assert.That((bool)await netAppAccountCollection.ExistsAsync(accountName), Is.False);
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await netAppAccountCollection.GetAsync(accountName); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -91,32 +94,32 @@ namespace Azure.ResourceManager.NetApp.Tests
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, AzureLocation.NorthEurope);
             NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
             NetAppAccountResource account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(activeDirectory: ActiveDirectory1, location: AzureLocation.NorthEurope))).Value;
-            Assert.AreEqual(accountName, account1.Id.Name);
+            Assert.That(account1.Id.Name, Is.EqualTo(accountName));
             VerifyNetAppAccountProperties(account1, true, location: AzureLocation.NorthEurope);
             AssertNetAppAccountEqual(account1, await account1.GetAsync());
-            Assert.IsNotEmpty(account1.Data.ActiveDirectories);
-            Assert.NotNull(account1.Data.ActiveDirectories[0]);
+            Assert.That(account1.Data.ActiveDirectories, Is.Not.Empty);
+            Assert.That(account1.Data.ActiveDirectories[0], Is.Not.Null);
 
             //validate if created successfully
             NetAppAccountResource account2 = await netAppAccountCollection.GetAsync(accountName);
             VerifyNetAppAccountProperties(account2, true, location: AzureLocation.NorthEurope);
             AssertNetAppAccountEqual(account1, account2);
             //Validate ActiveDirectory
-            Assert.IsNotEmpty(account2.Data.ActiveDirectories);
-            Assert.NotNull(account2.Data.ActiveDirectories[0]);
+            Assert.That(account2.Data.ActiveDirectories, Is.Not.Empty);
+            Assert.That(account2.Data.ActiveDirectories[0], Is.Not.Null);
             account2.Data.ActiveDirectories[0].Should().BeEquivalentTo(account1.Data.ActiveDirectories[0]);
 
             //remove ad
             account1.Data.ActiveDirectories.Clear();
             account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, account1.Data)).Value;
-            Assert.IsEmpty(account1.Data.ActiveDirectories);
+            Assert.That(account1.Data.ActiveDirectories, Is.Empty);
 
             //delete NetApp account
             await account1.DeleteAsync(WaitUntil.Completed);
             //validate if deleted successfully
-            Assert.IsFalse(await netAppAccountCollection.ExistsAsync(accountName));
+            Assert.That((bool)await netAppAccountCollection.ExistsAsync(accountName), Is.False);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await netAppAccountCollection.GetAsync(accountName); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -196,7 +199,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 if (account.Id.Name == accountName2)
                     account4 = account;
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
             VerifyNetAppAccountProperties(account3, true);
             VerifyNetAppAccountProperties(account4, true);
         }
@@ -231,8 +234,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
             VerifyNetAppAccountProperties(account3, true);
             VerifyNetAppAccountProperties(account4, true);
-            Assert.AreEqual(account1.Id.ResourceGroupName, _resourceGroup.Id.Name);
-            Assert.AreEqual(account2.Id.ResourceGroupName, resourceGroup2.Id.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_resourceGroup.Id.Name, Is.EqualTo(account1.Id.ResourceGroupName));
+                Assert.That(resourceGroup2.Id.Name, Is.EqualTo(account2.Id.ResourceGroupName));
+            });
 
             await account1.DeleteAsync(WaitUntil.Completed);
             await account2.DeleteAsync(WaitUntil.Completed);

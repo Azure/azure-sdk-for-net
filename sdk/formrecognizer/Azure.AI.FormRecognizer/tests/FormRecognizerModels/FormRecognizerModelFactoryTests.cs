@@ -28,8 +28,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var accountProperties = FormRecognizerModelFactory.AccountProperties(customModelCount, customModelLimit);
 
-            Assert.AreEqual(customModelCount, accountProperties.CustomModelCount);
-            Assert.AreEqual(customModelLimit, accountProperties.CustomModelLimit);
+            Assert.Multiple(() =>
+            {
+                Assert.That(accountProperties.CustomModelCount, Is.EqualTo(customModelCount));
+                Assert.That(accountProperties.CustomModelLimit, Is.EqualTo(customModelLimit));
+            });
         }
 
         [Test]
@@ -37,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var boundingBox = FormRecognizerModelFactory.FieldBoundingBox(ListOfPoints);
 
-            CollectionAssert.AreEqual(ListOfPoints, boundingBox.Points);
+            Assert.That(boundingBox.Points, Is.EqualTo(ListOfPoints).AsCollection);
         }
 
         [Test]
@@ -45,8 +48,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var boundingBox = FormRecognizerModelFactory.FieldBoundingBox(null);
 
-            Assert.IsNotNull(boundingBox.Points);
-            Assert.IsEmpty(boundingBox.Points);
+            Assert.That(boundingBox.Points, Is.Not.Null);
+            Assert.That(boundingBox.Points, Is.Empty);
         }
 
         [Test]
@@ -68,18 +71,27 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var customFormModel = FormRecognizerModelFactory.CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, modelName, properties);
 
-            Assert.AreEqual(modelId, customFormModel.ModelId);
-            Assert.AreEqual(modelName, customFormModel.ModelName);
-            Assert.AreEqual(status, customFormModel.Status);
-            Assert.AreEqual(trainingStartedOn, customFormModel.TrainingStartedOn);
-            Assert.AreEqual(trainingCompletedOn, customFormModel.TrainingCompletedOn);
-            Assert.AreEqual(properties, customFormModel.Properties);
-            Assert.AreNotSame(submodels, customFormModel.Submodels);
-            Assert.AreEqual(submodels, customFormModel.Submodels);
-            Assert.AreNotSame(trainingDocuments, customFormModel.TrainingDocuments);
-            Assert.AreEqual(trainingDocuments, customFormModel.TrainingDocuments);
-            Assert.AreNotSame(errors, customFormModel.Errors);
-            Assert.AreEqual(errors, customFormModel.Errors);
+            Assert.Multiple(() =>
+            {
+                Assert.That(customFormModel.ModelId, Is.EqualTo(modelId));
+                Assert.That(customFormModel.ModelName, Is.EqualTo(modelName));
+                Assert.That(customFormModel.Status, Is.EqualTo(status));
+                Assert.That(customFormModel.TrainingStartedOn, Is.EqualTo(trainingStartedOn));
+                Assert.That(customFormModel.TrainingCompletedOn, Is.EqualTo(trainingCompletedOn));
+                Assert.That(customFormModel.Properties, Is.EqualTo(properties));
+                Assert.That(customFormModel.Submodels, Is.Not.SameAs(submodels));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(customFormModel.Submodels, Is.EqualTo(submodels));
+                Assert.That(customFormModel.TrainingDocuments, Is.Not.SameAs(trainingDocuments));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(customFormModel.TrainingDocuments, Is.EqualTo(trainingDocuments));
+                Assert.That(customFormModel.Errors, Is.Not.SameAs(errors));
+            });
+            Assert.That(customFormModel.Errors, Is.EqualTo(errors));
         }
 
         [Test]
@@ -91,9 +103,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var customFormModelField = FormRecognizerModelFactory.CustomFormModelField(name, label, accuracy);
 
-            Assert.AreEqual(name, customFormModelField.Name);
-            Assert.AreEqual(label, customFormModelField.Label);
-            Assert.AreEqual(accuracy, customFormModelField.Accuracy);
+            Assert.Multiple(() =>
+            {
+                Assert.That(customFormModelField.Name, Is.EqualTo(name));
+                Assert.That(customFormModelField.Label, Is.EqualTo(label));
+                Assert.That(customFormModelField.Accuracy, Is.EqualTo(accuracy));
+            });
         }
 
         [Test]
@@ -108,12 +123,15 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var customFormModelInfo = FormRecognizerModelFactory.CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status, modelName, properties);
 
-            Assert.AreEqual(modelId, customFormModelInfo.ModelId);
-            Assert.AreEqual(modelName, customFormModelInfo.ModelName);
-            Assert.AreEqual(properties, customFormModelInfo.Properties);
-            Assert.AreEqual(trainingStartedOn, customFormModelInfo.TrainingStartedOn);
-            Assert.AreEqual(trainingCompletedOn, customFormModelInfo.TrainingCompletedOn);
-            Assert.AreEqual(status, customFormModelInfo.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(customFormModelInfo.ModelId, Is.EqualTo(modelId));
+                Assert.That(customFormModelInfo.ModelName, Is.EqualTo(modelName));
+                Assert.That(customFormModelInfo.Properties, Is.EqualTo(properties));
+                Assert.That(customFormModelInfo.TrainingStartedOn, Is.EqualTo(trainingStartedOn));
+                Assert.That(customFormModelInfo.TrainingCompletedOn, Is.EqualTo(trainingCompletedOn));
+                Assert.That(customFormModelInfo.Status, Is.EqualTo(status));
+            });
         }
 
         [Test]
@@ -123,7 +141,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var customFormModelProperties = FormRecognizerModelFactory.CustomFormModelProperties(isComposedModel);
 
-            Assert.AreEqual(isComposedModel, customFormModelProperties.IsComposedModel);
+            Assert.That(customFormModelProperties.IsComposedModel, Is.EqualTo(isComposedModel));
         }
 
         [Test]
@@ -138,11 +156,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var customFormSubmodel = FormRecognizerModelFactory.CustomFormSubmodel(formType, accuracy, fields, modelId);
 
-            Assert.AreEqual(modelId, customFormSubmodel.ModelId);
-            Assert.AreEqual(formType, customFormSubmodel.FormType);
-            Assert.AreEqual(accuracy, customFormSubmodel.Accuracy);
-            Assert.AreNotSame(fields, customFormSubmodel.Fields);
-            Assert.AreEqual(fields, customFormSubmodel.Fields);
+            Assert.Multiple(() =>
+            {
+                Assert.That(customFormSubmodel.ModelId, Is.EqualTo(modelId));
+                Assert.That(customFormSubmodel.FormType, Is.EqualTo(formType));
+                Assert.That(customFormSubmodel.Accuracy, Is.EqualTo(accuracy));
+                Assert.That(customFormSubmodel.Fields, Is.Not.SameAs(fields));
+            });
+            Assert.That(customFormSubmodel.Fields, Is.EqualTo(fields));
         }
 
         [Test]
@@ -157,11 +178,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldData = FormRecognizerModelFactory.FieldData(boundingBox, pageNumber, text, fieldElements);
 
-            Assert.AreEqual(boundingBox, fieldData.BoundingBox);
-            Assert.AreEqual(pageNumber, fieldData.PageNumber);
-            Assert.AreEqual(text, fieldData.Text);
-            Assert.AreNotSame(fieldElements, fieldData.FieldElements);
-            Assert.AreEqual(fieldElements, fieldData.FieldElements);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldData.BoundingBox, Is.EqualTo(boundingBox));
+                Assert.That(fieldData.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(fieldData.Text, Is.EqualTo(text));
+                Assert.That(fieldData.FieldElements, Is.Not.SameAs(fieldElements));
+            });
+            Assert.That(fieldData.FieldElements, Is.EqualTo(fieldElements));
         }
 
         [Test]
@@ -171,8 +195,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithStringValueType(value);
 
-            Assert.AreEqual(FieldValueType.String, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.String));
+                Assert.That(fieldValue.AsString(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
@@ -192,8 +219,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithInt64ValueType(value);
 
-            Assert.AreEqual(FieldValueType.Int64, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsInt64());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Int64));
+                Assert.That(fieldValue.AsInt64(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
@@ -213,8 +243,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithFloatValueType(value);
 
-            Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsFloat());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Float));
+                Assert.That(fieldValue.AsFloat(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -234,8 +267,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithDateValueType(value);
 
-            Assert.AreEqual(FieldValueType.Date, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsDate());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Date));
+                Assert.That(fieldValue.AsDate(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -255,8 +291,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithTimeValueType(value);
 
-            Assert.AreEqual(FieldValueType.Time, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsTime());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Time));
+                Assert.That(fieldValue.AsTime(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -276,8 +315,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithPhoneNumberValueType(value);
 
-            Assert.AreEqual(FieldValueType.PhoneNumber, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsPhoneNumber());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
+                Assert.That(fieldValue.AsPhoneNumber(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -299,9 +341,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithListValueType(value);
 
-            Assert.AreEqual(FieldValueType.List, fieldValue.ValueType);
-            Assert.AreNotSame(value, fieldValue.AsList());
-            Assert.AreEqual(value, fieldValue.AsList());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.List));
+                Assert.That(fieldValue.AsList(), Is.Not.SameAs(value));
+            });
+            Assert.That(fieldValue.AsList(), Is.EqualTo(value));
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -323,9 +368,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithDictionaryValueType(value);
 
-            Assert.AreEqual(FieldValueType.Dictionary, fieldValue.ValueType);
-            Assert.AreNotSame(value, fieldValue.AsDictionary());
-            Assert.AreEqual(value, fieldValue.AsDictionary());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Dictionary));
+                Assert.That(fieldValue.AsDictionary(), Is.Not.SameAs(value));
+            });
+            Assert.That(fieldValue.AsDictionary(), Is.EqualTo(value));
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -344,8 +392,11 @@ namespace Azure.AI.FormRecognizer.Tests
             var value = SelectionMarkState.Selected;
             var fieldValue = FormRecognizerModelFactory.FieldValueWithSelectionMarkValueType(value);
 
-            Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsSelectionMarkState());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.SelectionMark));
+                Assert.That(fieldValue.AsSelectionMarkState(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -364,8 +415,11 @@ namespace Azure.AI.FormRecognizer.Tests
             var value = "BRA";
             var fieldValue = FormRecognizerModelFactory.FieldValueWithCountryRegionValueType(value);
 
-            Assert.AreEqual(FieldValueType.CountryRegion, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsCountryRegion());
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.CountryRegion));
+                Assert.That(fieldValue.AsCountryRegion(), Is.EqualTo(value));
+            });
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -389,11 +443,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formField = FormRecognizerModelFactory.FormField(name, labelData, valueData, value, confidence);
 
-            Assert.AreEqual(name, formField.Name);
-            Assert.AreEqual(labelData, formField.LabelData);
-            Assert.AreEqual(valueData, formField.ValueData);
-            Assert.AreEqual(value, formField.Value);
-            Assert.AreEqual(confidence, formField.Confidence);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formField.Name, Is.EqualTo(name));
+                Assert.That(formField.LabelData, Is.EqualTo(labelData));
+                Assert.That(formField.ValueData, Is.EqualTo(valueData));
+                Assert.That(formField.Value, Is.EqualTo(value));
+                Assert.That(formField.Confidence, Is.EqualTo(confidence));
+            });
         }
 
         [Test]
@@ -409,12 +466,18 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formLine = FormRecognizerModelFactory.FormLine(boundingBox, pageNumber, text, words, appearance);
 
-            Assert.AreEqual(boundingBox, formLine.BoundingBox);
-            Assert.AreEqual(pageNumber, formLine.PageNumber);
-            Assert.AreEqual(text, formLine.Text);
-            Assert.AreNotSame(words, formLine.Words);
-            Assert.AreEqual(words, formLine.Words);
-            Assert.AreEqual(appearance, formLine.Appearance);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formLine.BoundingBox, Is.EqualTo(boundingBox));
+                Assert.That(formLine.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(formLine.Text, Is.EqualTo(text));
+                Assert.That(formLine.Words, Is.Not.SameAs(words));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(formLine.Words, Is.EqualTo(words));
+                Assert.That(formLine.Appearance, Is.EqualTo(appearance));
+            });
         }
 
         [Test]
@@ -435,17 +498,26 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formPage = FormRecognizerModelFactory.FormPage(pageNumber, width, height, textAngle, unit, lines, tables, selectionMarks);
 
-            Assert.AreEqual(pageNumber, formPage.PageNumber);
-            Assert.AreEqual(width, formPage.Width);
-            Assert.AreEqual(height, formPage.Height);
-            Assert.AreEqual(textAngle, formPage.TextAngle);
-            Assert.AreEqual(unit, formPage.Unit);
-            Assert.AreNotSame(lines, formPage.Lines);
-            Assert.AreEqual(lines, formPage.Lines);
-            Assert.AreNotSame(tables, formPage.Tables);
-            Assert.AreEqual(tables, formPage.Tables);
-            Assert.AreNotSame(selectionMarks, formPage.SelectionMarks);
-            Assert.AreEqual(selectionMarks, formPage.SelectionMarks);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formPage.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(formPage.Width, Is.EqualTo(width));
+                Assert.That(formPage.Height, Is.EqualTo(height));
+                Assert.That(formPage.TextAngle, Is.EqualTo(textAngle));
+                Assert.That(formPage.Unit, Is.EqualTo(unit));
+                Assert.That(formPage.Lines, Is.Not.SameAs(lines));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(formPage.Lines, Is.EqualTo(lines));
+                Assert.That(formPage.Tables, Is.Not.SameAs(tables));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(formPage.Tables, Is.EqualTo(tables));
+                Assert.That(formPage.SelectionMarks, Is.Not.SameAs(selectionMarks));
+            });
+            Assert.That(formPage.SelectionMarks, Is.EqualTo(selectionMarks));
         }
 
         [Test]
@@ -457,8 +529,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formPageCollection = FormRecognizerModelFactory.FormPageCollection(list);
 
-            Assert.AreNotSame(list, formPageCollection);
-            Assert.AreEqual(list, formPageCollection);
+            Assert.That(formPageCollection, Is.Not.SameAs(list));
+            Assert.That(formPageCollection, Is.EqualTo(list));
         }
 
         [Test]
@@ -469,8 +541,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formPageRange = FormRecognizerModelFactory.FormPageRange(firstPageNumber, lastPageNumber);
 
-            Assert.AreEqual(firstPageNumber, formPageRange.FirstPageNumber);
-            Assert.AreEqual(lastPageNumber, formPageRange.LastPageNumber);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formPageRange.FirstPageNumber, Is.EqualTo(firstPageNumber));
+                Assert.That(formPageRange.LastPageNumber, Is.EqualTo(lastPageNumber));
+            });
         }
 
         [Test]
@@ -481,8 +556,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formRecognizerError = FormRecognizerModelFactory.FormRecognizerError(errorCode, message);
 
-            Assert.AreEqual(errorCode, formRecognizerError.ErrorCode);
-            Assert.AreEqual(message, formRecognizerError.Message);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formRecognizerError.ErrorCode, Is.EqualTo(errorCode));
+                Assert.That(formRecognizerError.Message, Is.EqualTo(message));
+            });
         }
 
         [Test]
@@ -496,11 +574,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formSelectionMark = FormRecognizerModelFactory.FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
 
-            Assert.AreEqual(boundingBox, formSelectionMark.BoundingBox);
-            Assert.AreEqual(pageNumber, formSelectionMark.PageNumber);
-            Assert.AreEqual(text, formSelectionMark.Text);
-            Assert.AreEqual(confidence, formSelectionMark.Confidence);
-            Assert.AreEqual(state, formSelectionMark.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formSelectionMark.BoundingBox, Is.EqualTo(boundingBox));
+                Assert.That(formSelectionMark.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(formSelectionMark.Text, Is.EqualTo(text));
+                Assert.That(formSelectionMark.Confidence, Is.EqualTo(confidence));
+                Assert.That(formSelectionMark.State, Is.EqualTo(state));
+            });
         }
 
         [Test]
@@ -516,12 +597,18 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formTable = FormRecognizerModelFactory.FormTable(pageNumber, columnCount, rowCount, cells, boundingBox);
 
-            Assert.AreEqual(pageNumber, formTable.PageNumber);
-            Assert.AreEqual(columnCount, formTable.ColumnCount);
-            Assert.AreEqual(rowCount, formTable.RowCount);
-            Assert.AreNotSame(cells, formTable.Cells);
-            Assert.AreEqual(cells, formTable.Cells);
-            Assert.AreEqual(boundingBox, formTable.BoundingBox);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formTable.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(formTable.ColumnCount, Is.EqualTo(columnCount));
+                Assert.That(formTable.RowCount, Is.EqualTo(rowCount));
+                Assert.That(formTable.Cells, Is.Not.SameAs(cells));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(formTable.Cells, Is.EqualTo(cells));
+                Assert.That(formTable.BoundingBox, Is.EqualTo(boundingBox));
+            });
         }
 
         [Test]
@@ -543,18 +630,21 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formTable = FormRecognizerModelFactory.FormTableCell(boundingBox, pageNumber, text, columnIndex, rowIndex, columnSpan, rowSpan, isHeader, isFooter, confidence, fieldElements);
 
-            CollectionAssert.AreEqual(ListOfPoints, formTable.BoundingBox.Points);
-            Assert.AreEqual(pageNumber, formTable.PageNumber);
-            Assert.AreEqual(text, formTable.Text);
-            Assert.AreEqual(columnIndex, formTable.ColumnIndex);
-            Assert.AreEqual(rowIndex, formTable.RowIndex);
-            Assert.AreEqual(columnSpan, formTable.ColumnSpan);
-            Assert.AreEqual(rowSpan, formTable.RowSpan);
-            Assert.AreEqual(isHeader, formTable.IsHeader);
-            Assert.AreEqual(isFooter, formTable.IsFooter);
-            Assert.AreEqual(confidence, formTable.Confidence);
-            Assert.AreNotSame(fieldElements, formTable.FieldElements);
-            Assert.AreEqual(fieldElements, formTable.FieldElements);
+            Assert.That(formTable.BoundingBox.Points, Is.EqualTo(ListOfPoints).AsCollection);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formTable.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(formTable.Text, Is.EqualTo(text));
+                Assert.That(formTable.ColumnIndex, Is.EqualTo(columnIndex));
+                Assert.That(formTable.RowIndex, Is.EqualTo(rowIndex));
+                Assert.That(formTable.ColumnSpan, Is.EqualTo(columnSpan));
+                Assert.That(formTable.RowSpan, Is.EqualTo(rowSpan));
+                Assert.That(formTable.IsHeader, Is.EqualTo(isHeader));
+                Assert.That(formTable.IsFooter, Is.EqualTo(isFooter));
+                Assert.That(formTable.Confidence, Is.EqualTo(confidence));
+                Assert.That(formTable.FieldElements, Is.Not.SameAs(fieldElements));
+            });
+            Assert.That(formTable.FieldElements, Is.EqualTo(fieldElements));
         }
 
         [Test]
@@ -567,10 +657,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var formWord = FormRecognizerModelFactory.FormWord(boundingBox, pageNumber, text, confidence);
 
-            Assert.AreEqual(boundingBox, formWord.BoundingBox);
-            Assert.AreEqual(pageNumber, formWord.PageNumber);
-            Assert.AreEqual(text, formWord.Text);
-            Assert.AreEqual(confidence, formWord.Confidence);
+            Assert.Multiple(() =>
+            {
+                Assert.That(formWord.BoundingBox, Is.EqualTo(boundingBox));
+                Assert.That(formWord.PageNumber, Is.EqualTo(pageNumber));
+                Assert.That(formWord.Text, Is.EqualTo(text));
+                Assert.That(formWord.Confidence, Is.EqualTo(confidence));
+            });
         }
 
         [Test]
@@ -588,14 +681,20 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = FormRecognizerModelFactory.RecognizedForm(formType, pageRange, fields, pages, modelId, confidence);
 
-            Assert.AreEqual(formType, recognizedForm.FormType);
-            Assert.AreEqual(modelId, recognizedForm.ModelId);
-            Assert.AreEqual(confidence, recognizedForm.FormTypeConfidence.Value);
-            Assert.AreEqual(pageRange, recognizedForm.PageRange);
-            Assert.AreNotSame(fields, recognizedForm.Fields);
-            Assert.AreEqual(fields, recognizedForm.Fields);
-            Assert.AreNotSame(pages, recognizedForm.Pages);
-            Assert.AreEqual(pages, recognizedForm.Pages);
+            Assert.Multiple(() =>
+            {
+                Assert.That(recognizedForm.FormType, Is.EqualTo(formType));
+                Assert.That(recognizedForm.ModelId, Is.EqualTo(modelId));
+                Assert.That(recognizedForm.FormTypeConfidence.Value, Is.EqualTo(confidence));
+                Assert.That(recognizedForm.PageRange, Is.EqualTo(pageRange));
+                Assert.That(recognizedForm.Fields, Is.Not.SameAs(fields));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(recognizedForm.Fields, Is.EqualTo(fields));
+                Assert.That(recognizedForm.Pages, Is.Not.SameAs(pages));
+            });
+            Assert.That(recognizedForm.Pages, Is.EqualTo(pages));
         }
 
         [Test]
@@ -607,8 +706,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedFormCollection = FormRecognizerModelFactory.RecognizedFormCollection(list);
 
-            Assert.AreNotSame(list, recognizedFormCollection);
-            Assert.AreEqual(list, recognizedFormCollection);
+            Assert.That(recognizedFormCollection, Is.Not.SameAs(list));
+            Assert.That(recognizedFormCollection, Is.EqualTo(list));
         }
 
         [Test]
@@ -619,8 +718,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var textAppearance = FormRecognizerModelFactory.TextAppearance(name, confidence);
 
-            Assert.AreEqual(name, textAppearance.StyleName);
-            Assert.AreEqual(confidence, textAppearance.StyleConfidence);
+            Assert.Multiple(() =>
+            {
+                Assert.That(textAppearance.StyleName, Is.EqualTo(name));
+                Assert.That(textAppearance.StyleConfidence, Is.EqualTo(confidence));
+            });
         }
 
         [Test]
@@ -635,11 +737,17 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var trainingDocumentInfo = FormRecognizerModelFactory.TrainingDocumentInfo(name, pageCount, errors, status);
 
-            Assert.AreEqual(name, trainingDocumentInfo.Name);
-            Assert.AreEqual(pageCount, trainingDocumentInfo.PageCount);
-            Assert.AreNotSame(errors, trainingDocumentInfo.Errors);
-            Assert.AreEqual(errors, trainingDocumentInfo.Errors);
-            Assert.AreEqual(status, trainingDocumentInfo.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(trainingDocumentInfo.Name, Is.EqualTo(name));
+                Assert.That(trainingDocumentInfo.PageCount, Is.EqualTo(pageCount));
+                Assert.That(trainingDocumentInfo.Errors, Is.Not.SameAs(errors));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(trainingDocumentInfo.Errors, Is.EqualTo(errors));
+                Assert.That(trainingDocumentInfo.Status, Is.EqualTo(status));
+            });
         }
     }
 }

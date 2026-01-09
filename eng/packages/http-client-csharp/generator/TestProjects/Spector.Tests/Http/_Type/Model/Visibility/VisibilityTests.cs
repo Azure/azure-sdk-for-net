@@ -18,12 +18,15 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Visibility
         public Task Models_ReadOnlyRoundTrip() => Test(async (host) =>
         {
             var response = await new VisibilityClient(host, null).PutReadOnlyModelAsync(new ReadOnlyModel());
-            Assert.AreEqual(3, response.Value.OptionalNullableIntList.Count);
-            Assert.AreEqual(1, response.Value.OptionalNullableIntList[0]);
-            Assert.AreEqual(2, response.Value.OptionalNullableIntList[1]);
-            Assert.AreEqual(3, response.Value.OptionalNullableIntList[2]);
-            Assert.AreEqual("value1", response.Value.OptionalStringRecord["k1"]);
-            Assert.AreEqual("value2", response.Value.OptionalStringRecord["k2"]);
+            Assert.That(response.Value.OptionalNullableIntList.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.OptionalNullableIntList[0], Is.EqualTo(1));
+                Assert.That(response.Value.OptionalNullableIntList[1], Is.EqualTo(2));
+                Assert.That(response.Value.OptionalNullableIntList[2], Is.EqualTo(3));
+                Assert.That(response.Value.OptionalStringRecord["k1"], Is.EqualTo("value1"));
+                Assert.That(response.Value.OptionalStringRecord["k2"], Is.EqualTo("value2"));
+            });
         });
 
         [SpectorTest]
@@ -32,9 +35,12 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Visibility
             var property = HasProperty(typeof(VisibilityModel), "ReadProp", BindingFlags.Public | BindingFlags.Instance);
             var listProperty = HasProperty(typeof(ReadOnlyModel), "OptionalNullableIntList", BindingFlags.Public | BindingFlags.Instance);
 
-            Assert.Null(property.SetMethod);
-            Assert.Null(listProperty.SetMethod);
-            Assert.AreEqual(typeof(IReadOnlyList<int>), listProperty.PropertyType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.SetMethod, Is.Null);
+                Assert.That(listProperty.SetMethod, Is.Null);
+                Assert.That(listProperty.PropertyType, Is.EqualTo(typeof(IReadOnlyList<int>)));
+            });
         }
 
         [SpectorTest]
@@ -43,21 +49,24 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Visibility
             var requiredStringList = HasProperty(typeof(VisibilityModel), nameof(VisibilityModel.ReadProp), BindingFlags.Public | BindingFlags.Instance);
             var requiredIntList = HasProperty(typeof(ReadOnlyModel), nameof(ReadOnlyModel.OptionalNullableIntList), BindingFlags.Public | BindingFlags.Instance);
 
-            Assert.Null(requiredIntList.SetMethod);
-            Assert.Null(requiredStringList.SetMethod);
+            Assert.Multiple(() =>
+            {
+                Assert.That(requiredIntList.SetMethod, Is.Null);
+                Assert.That(requiredStringList.SetMethod, Is.Null);
+            });
         }
 
         [SpectorTest]
         public void ReadOnlyPropertiesAreDeserialized()
         {
             var model = ModelReaderWriter.Read<VisibilityModel>(BinaryData.FromString("{\"readProp\":\"abc\"}"));
-            Assert.AreEqual("abc", model!.ReadProp);
+            Assert.That(model!.ReadProp, Is.EqualTo("abc"));
         }
 
         private static PropertyInfo HasProperty(Type type, string name, BindingFlags bindingFlags)
         {
             var parameterInfo = type.GetProperties(bindingFlags).FirstOrDefault(p => p.Name == name);
-            Assert.NotNull(parameterInfo, $"Property '{name}' is not found");
+            Assert.That(parameterInfo, Is.Not.Null, $"Property '{name}' is not found");
             return parameterInfo!;
         }
     }

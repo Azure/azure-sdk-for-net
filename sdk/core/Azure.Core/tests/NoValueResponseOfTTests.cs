@@ -19,9 +19,9 @@ namespace Azure.Core.Tests
         public void ThrowsWhenValueIsAccessed()
         {
             var target = new NoValueResponse<string>(new MockResponse(200));
-            Assert.IsFalse(target.HasValue);
+            Assert.That(target.HasValue, Is.False);
             var exception = Assert.Throws<InvalidOperationException>(() => { var val = target.Value; });
-            Assert.AreEqual(target.GetStatusMessage(), exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(target.GetStatusMessage()));
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
         {
             var response = new MockResponse(200);
             var target = new NoValueResponse<string>(response);
-            Assert.AreEqual(response, target.GetRawResponse());
+            Assert.That(target.GetRawResponse(), Is.EqualTo(response));
         }
     }
 }

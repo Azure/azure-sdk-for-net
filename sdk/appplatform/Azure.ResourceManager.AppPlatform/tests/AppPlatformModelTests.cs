@@ -18,8 +18,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var jsonElement = JsonDocument.Parse($"{{\"serviceId\":\"{rawId}\"}}").RootElement;
             var properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(jsonElement);
 
-            Assert.AreEqual(new Guid(guid), properties.ServiceId);
-            Assert.AreEqual(rawId, properties.ServiceInstanceId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.ServiceId, Is.EqualTo(new Guid(guid)));
+                Assert.That(properties.ServiceInstanceId, Is.EqualTo(rawId));
+            });
         }
 
         [Test]
@@ -29,8 +32,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var jsonElement = JsonDocument.Parse("{}").RootElement;
             var properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(jsonElement);
 
-            Assert.IsNull(properties.ServiceId);
-            Assert.IsNull(properties.ServiceInstanceId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.ServiceId, Is.Null);
+                Assert.That(properties.ServiceInstanceId, Is.Null);
+            });
         }
 
         [Test]
@@ -40,8 +46,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var jsonElement = JsonDocument.Parse("{\"serviceId\":null}").RootElement;
             var properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(jsonElement);
 
-            Assert.IsNull(properties.ServiceId);
-            Assert.IsNull(properties.ServiceInstanceId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.ServiceId, Is.Null);
+                Assert.That(properties.ServiceInstanceId, Is.Null);
+            });
         }
 
         [Test]
@@ -57,7 +66,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
                 Assert.Fail("Should throw exception");
             }
             catch (FormatException) { }
-            Assert.AreEqual("1232dcf", properties.ServiceInstanceId);
+            Assert.That(properties.ServiceInstanceId, Is.EqualTo("1232dcf"));
         }
     }
 }

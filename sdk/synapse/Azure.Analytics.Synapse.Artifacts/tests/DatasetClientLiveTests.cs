@@ -43,8 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await foreach (var expectedDataset in client.GetDatasetsByWorkspaceAsync())
             {
                 DatasetResource actualDataset = await client.GetDatasetAsync(expectedDataset.Name);
-                Assert.AreEqual(expectedDataset.Name, actualDataset.Name);
-                Assert.AreEqual(expectedDataset.Id, actualDataset.Id);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualDataset.Name, Is.EqualTo(expectedDataset.Name));
+                    Assert.That(actualDataset.Id, Is.EqualTo(expectedDataset.Id));
+                });
             }
         }
 
@@ -56,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string datasetName = Recording.GenerateId("Dataset", 16);
             DatasetCreateOrUpdateDatasetOperation operation = await client.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
             DatasetResource dataset = await operation.WaitForCompletionAsync();
-            Assert.AreEqual(datasetName, dataset.Name);
+            Assert.That(dataset.Name, Is.EqualTo(datasetName));
         }
 
         [RecordedTest]
@@ -70,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             DatasetDeleteDatasetOperation deleteOperation = await client.StartDeleteDatasetAsync(datasetName);
             Response response = await deleteOperation.WaitForCompletionResponseAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
     }
 }

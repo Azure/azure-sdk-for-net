@@ -56,20 +56,23 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             try
             {
                 Response<PlaywrightWorkspaceQuotaResource> getResponse = await _quotaCollection.GetAsync(PlaywrightQuotaName.ExecutionMinutes);
-                Assert.IsNotNull(getResponse, "The response should not be null.");
-                Assert.IsNotNull(getResponse.Value, "The response value should not be null.");
+                Assert.That(getResponse, Is.Not.Null, "The response should not be null.");
+                Assert.That(getResponse.Value, Is.Not.Null, "The response value should not be null.");
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status, "Expected a 404 status code.");
-                Assert.AreEqual("NotFound", ex.ErrorCode, "Expected the error code to be 'NotFound'.");
-                StringAssert.Contains(
-                    "The data was not found. Please check the request and try again.",
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Status, Is.EqualTo(404), "Expected a 404 status code.");
+                    Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"), "Expected the error code to be 'NotFound'.");
+                });
+                Assert.That(
                     ex.Message,
+                    Does.Contain("The data was not found. Please check the request and try again."),
                     "The error message did not match the expected text."
                 );
 
-                Assert.IsTrue(ex.Message.Contains("NotFound"), "The error message should contain 'NotFound'.");
+                Assert.That(ex.Message, Does.Contain("NotFound"), "The error message should contain 'NotFound'.");
                 return;
             }
 
@@ -84,20 +87,23 @@ namespace Azure.ResourceManager.Playwright.Tests.Scenario
             try
             {
                 List<PlaywrightWorkspaceQuotaResource> allQuotas = await _workspaceResource.GetAllPlaywrightWorkspaceQuota().GetAllAsync().ToEnumerableAsync();
-                Assert.IsNotNull(allQuotas, "The response should not be null.");
-                Assert.IsNotEmpty(allQuotas, "The response list should not be empty.");
+                Assert.That(allQuotas, Is.Not.Null, "The response should not be null.");
+                Assert.That(allQuotas, Is.Not.Empty, "The response list should not be empty.");
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status, "Expected a 404 status code.");
-                Assert.AreEqual("NotFound", ex.ErrorCode, "Expected the error code to be 'NotFound'.");
-                StringAssert.Contains(
-                    "The data was not found. Please check the request and try again.",
+                Assert.Multiple(() =>
+                {
+                    Assert.That(ex.Status, Is.EqualTo(404), "Expected a 404 status code.");
+                    Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"), "Expected the error code to be 'NotFound'.");
+                });
+                Assert.That(
                     ex.Message,
+                    Does.Contain("The data was not found. Please check the request and try again."),
                     "The error message did not match the expected text."
                 );
 
-                Assert.IsTrue(ex.Message.Contains("NotFound"), "The error message should contain 'NotFound'.");
+                Assert.That(ex.Message, Does.Contain("NotFound"), "The error message should contain 'NotFound'.");
                 return;
             }
 

@@ -13,21 +13,21 @@ namespace TestProjects.Spector.Tests.Http.Server.Versions.NotVersioned
         public Task WithoutApiVersion() => Test(async (host) =>
         {
             var response = await new NotVersionedClient(host, null).WithoutApiVersionAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task WithQueryApiVersion() => Test(async (host) =>
         {
             var response = await new NotVersionedClient(host, null).WithQueryApiVersionAsync("v1.0");
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task WithPathApiVersion() => Test(async (host) =>
         {
             var response = await new NotVersionedClient(host, null).WithPathApiVersionAsync("v1.0");
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
     }
 }

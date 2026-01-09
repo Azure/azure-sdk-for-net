@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // Use first StorageAppliance in list
             var firstStorageAppliance = listByResourceGroup[0].Data;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Get
             var getResult = await collection.GetAsync(storageApplianceName);
-            Assert.AreEqual(storageApplianceName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(storageApplianceName));
 
             // Update
             NetworkCloudStorageApplianceResource storageAppliance = Client.GetNetworkCloudStorageApplianceResource(new ResourceIdentifier(firstStorageAppliance.Id));
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 patch.Tags.Add(key, originalTags[key]);
             }
             ArmOperation<NetworkCloudStorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             patch.Tags.Remove(testKey);
             updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags), "tag reversion failed");
 
             // List by Subscription
             var listBySubscription = new List<NetworkCloudStorageApplianceResource>();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
         }
     }
 }

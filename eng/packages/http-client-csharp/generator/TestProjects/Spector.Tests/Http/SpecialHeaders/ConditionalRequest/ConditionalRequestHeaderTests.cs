@@ -16,7 +16,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
         {
             ETag ifMatch = new ETag("valid");
             Response response = await new ConditionalRequestClient(host, null).PostIfMatchAsync(ifMatch);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -24,7 +24,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
         {
             ETag ifNoneMatch = new ETag("invalid");
             Response response = await new ConditionalRequestClient(host, null).PostIfNoneMatchAsync(ifNoneMatch);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -35,7 +35,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
             {
                 IfModifiedSince = ifModifiedSince
             });
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -46,7 +46,7 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
             {
                 IfUnmodifiedSince = ifUnmodifiedSince
             });
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

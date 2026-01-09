@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             FrontDoorRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
             FrontDoorRouteResource afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
-            Assert.AreEqual(afdRouteName, afdRoute.Data.Name);
+            Assert.That(afdRoute.Data.Name, Is.EqualTo(afdRouteName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetFrontDoorRoutes().CreateOrUpdateAsync(WaitUntil.Completed, null, afdRoute.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetFrontDoorRoutes().CreateOrUpdateAsync(WaitUntil.Completed, afdRouteName, null));
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

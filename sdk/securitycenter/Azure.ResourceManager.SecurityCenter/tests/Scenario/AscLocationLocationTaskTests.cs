@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             bool flag  = await _subscriptionSecurityTaskCollection.ExistsAsync(_existTaskName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -48,17 +48,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _subscriptionSecurityTaskCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAscLocationLocationTaskResource(list.First(item=>item.Data.Name == _existTaskName));
         }
 
         private void ValidateAscLocationLocationTaskResource(SubscriptionSecurityTaskResource task)
         {
-            Assert.IsNotNull(task);
-            Assert.AreEqual(_existTaskName, task.Data.Name);
-            Assert.AreEqual("Active", task.Data.State);
-            Assert.AreEqual("NA", task.Data.SubState);
-            Assert.AreEqual("Microsoft.Security/locations/centralus/tasks", task.Data.ResourceType.ToString());
+            Assert.That(task, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(task.Data.Name, Is.EqualTo(_existTaskName));
+                Assert.That(task.Data.State, Is.EqualTo("Active"));
+                Assert.That(task.Data.SubState, Is.EqualTo("NA"));
+                Assert.That(task.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/locations/centralus/tasks"));
+            });
         }
     }
 }

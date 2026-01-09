@@ -18,7 +18,7 @@ namespace TestProjects.Spector.Tests.Http.Authentication.Oauth2
             var options = new OAuth2ClientOptions();
             options.AddPolicy(new MockBearerTokenAuthenticationPolicy(new MockCredential(),  new string[] { "https://security.microsoft.com/.default" }, options.Transport), HttpPipelinePosition.PerCall);
             Response response = await new OAuth2Client(host, new MockCredential(), options).ValidAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -28,7 +28,7 @@ namespace TestProjects.Spector.Tests.Http.Authentication.Oauth2
             options.AddPolicy(new MockBearerTokenAuthenticationPolicy(new MockCredential(),  new string[] { "https://security.microsoft.com/.default" }, options.Transport), HttpPipelinePosition.PerCall);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(() => new OAuth2Client(host, new MockCredential(), options).InvalidAsync());
-            Assert.AreEqual(403, exception!.Status);
+            Assert.That(exception!.Status, Is.EqualTo(403));
             return Task.CompletedTask;
         });
     }

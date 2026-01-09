@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var encrypted = encryptor.TransformFinalBlock(CEK, 0, CEK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(EK, encrypted);
+                Assert.That(encrypted, Is.EqualTo(EK).AsCollection);
             }
 
             using (var decryptor = kw.CreateDecryptor(KEK))
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock(EK, 0, EK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(CEK, decrypted);
+                Assert.That(decrypted, Is.EqualTo(CEK).AsCollection);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var encrypted = encryptor.TransformFinalBlock(CEK, 0, CEK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(EK, encrypted);
+                Assert.That(encrypted, Is.EqualTo(EK).AsCollection);
             }
 
             using (var decryptor = kw.CreateDecryptor(KEK))
@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock(EK, 0, EK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(CEK, decrypted);
+                Assert.That(decrypted, Is.EqualTo(CEK).AsCollection);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var encrypted = encryptor.TransformFinalBlock(CEK, 0, CEK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(EK, encrypted);
+                Assert.That(encrypted, Is.EqualTo(EK).AsCollection);
             }
 
             using (var decryptor = kw.CreateDecryptor(KEK))
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock(EK, 0, EK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(CEK, decrypted);
+                Assert.That(decrypted, Is.EqualTo(CEK).AsCollection);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var encrypted = encryptor.TransformFinalBlock(CEK, 0, CEK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(EK, encrypted);
+                Assert.That(encrypted, Is.EqualTo(EK).AsCollection);
             }
 
             using (var decryptor = kw.CreateDecryptor(KEK))
@@ -112,7 +112,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock(EK, 0, EK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(CEK, decrypted);
+                Assert.That(decrypted, Is.EqualTo(CEK).AsCollection);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var encrypted = encryptor.TransformFinalBlock(CEK, 0, CEK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(EK, encrypted);
+                Assert.That(encrypted, Is.EqualTo(EK).AsCollection);
             }
 
             using (var decryptor = kw.CreateDecryptor(KEK))
@@ -139,7 +139,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock(EK, 0, EK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(CEK, decrypted);
+                Assert.That(decrypted, Is.EqualTo(CEK).AsCollection);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var encrypted = encryptor.TransformFinalBlock(CEK, 0, CEK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(EK, encrypted);
+                Assert.That(encrypted, Is.EqualTo(EK).AsCollection);
             }
 
             using (var decryptor = kw.CreateDecryptor(KEK))
@@ -166,7 +166,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock(EK, 0, EK.Length);
 
                 // Assert
-                CollectionAssert.AreEqual(CEK, decrypted);
+                Assert.That(decrypted, Is.EqualTo(CEK).AsCollection);
             }
         }
     }

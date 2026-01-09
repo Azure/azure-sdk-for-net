@@ -30,7 +30,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var instance = activator.CreateInstance(typeof(object), name);
 
             // Assert
-            Assert.IsInstanceOf<AzureKeyVaultXmlDecryptor>(instance);
+            Assert.That(instance, Is.InstanceOf<AzureKeyVaultXmlDecryptor>());
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             // Act & Assert
             const string name = "Microsoft.AspNet.DataProtection.TypeForwardingActivatorTests+NonExistentClassWithParameterlessCtor, Microsoft.AspNet.DataProtection.Tests";
             var ex = Assert.Throws<FileNotFoundException>(() => activator.CreateInstance(typeof(object), name));
-            Assert.IsNotNull(ex);
-            StringAssert.Contains("Microsoft.AspNet.DataProtection.Test", ex.Message);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Message, Does.Contain("Microsoft.AspNet.DataProtection.Test"));
         }
 
         [TestCase(typeof(GenericType<GenericType<ClassWithParameterlessCtor>>))]
@@ -63,9 +63,12 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var activator = new DecryptorTypeForwardingActivator(null);
             var name = type.AssemblyQualifiedName;
 
-            // Act & Assert
-            Assert.IsNotNull(name);
-            Assert.IsInstanceOf(type, activator.CreateInstance(typeof(object), name));
+            Assert.Multiple(() =>
+            {
+                // Act & Assert
+                Assert.That(name, Is.Not.Null);
+                Assert.That(activator.CreateInstance(typeof(object), name), Is.InstanceOf(type));
+            });
         }
 
         [TestCase(typeof(GenericType<>))]
@@ -77,7 +80,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var name = type.AssemblyQualifiedName;
 
             // Act & Assert
-            Assert.IsNotNull(name);
+            Assert.That(name, Is.Not.Null);
             Assert.Throws<ArgumentException>(() => activator.CreateInstance(typeof(object), name));
         }
 
@@ -92,7 +95,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             "System.Tuple`1[[System.Tuple`1[[Some.Type, Microsoft.AspNetCore.DataProtection, Culture=neutral]], mscorlib, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Culture=neutral, PublicKeyToken=b77a5c561934e089")]
         public void ParsesFullyQualifiedTypeName(string typeName, string expected)
         {
-            Assert.AreEqual(expected, new MockTypeForwardingActivator().Parse(typeName));
+            Assert.That(new MockTypeForwardingActivator().Parse(typeName), Is.EqualTo(expected));
         }
 
         [TestCase(typeof(List<string>))]
@@ -100,7 +103,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         public void CreateInstance_DoesNotForwardingTypesExternalTypes(Type type)
         {
             new DecryptorTypeForwardingActivator(null).CreateInstance(typeof(object), type.AssemblyQualifiedName, out var forwarded);
-            Assert.False(forwarded, "Should not have forwarded types that are not in Microsoft.AspNetCore.DataProjection");
+            Assert.That(forwarded, Is.False, "Should not have forwarded types that are not in Microsoft.AspNetCore.DataProjection");
         }
 
         [TestCaseSource(nameof(AssemblyVersions))]
@@ -120,9 +123,12 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             assemblyName.Version = newVersion;
             var newName = $"{typeName}, {assemblyName}";
 
-            Assert.AreNotEqual(typeInfo.AssemblyQualifiedName, newName);
-            Assert.IsInstanceOf<ClassWithParameterlessCtor>(activator.CreateInstance(typeof(object), newName, out var forwarded));
-            Assert.True(forwarded);
+            Assert.Multiple(() =>
+            {
+                Assert.That(newName, Is.Not.EqualTo(typeInfo.AssemblyQualifiedName));
+                Assert.That(activator.CreateInstance(typeof(object), newName, out var forwarded), Is.InstanceOf<ClassWithParameterlessCtor>());
+                Assert.That(forwarded, Is.True);
+            });
         }
 
         public static IEnumerable<Version[]> AssemblyVersions

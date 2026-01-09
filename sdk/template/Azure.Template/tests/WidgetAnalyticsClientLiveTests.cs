@@ -39,7 +39,7 @@ namespace Azure.Template.Tests
             var widgets = widgetsClient.GetWidgetsAsync();
             await foreach (var widget in widgets)
             {
-                Assert.IsNotNull(widget);
+                Assert.That(widget, Is.Not.Null);
             }
         }
     }

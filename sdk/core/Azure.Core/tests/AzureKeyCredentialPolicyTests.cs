@@ -22,8 +22,11 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, keyPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader(header, out var key));
-            Assert.AreEqual(keyValue, key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(transport.SingleRequest.TryGetHeader(header, out var key), Is.True);
+                Assert.That(key, Is.EqualTo(keyValue));
+            });
         }
 
         [Test]
@@ -37,8 +40,11 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, keyPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader(header, out var key));
-            Assert.AreEqual($"{prefix} {keyValue}", key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(transport.SingleRequest.TryGetHeader(header, out var key), Is.True);
+                Assert.That(key, Is.EqualTo($"{prefix} {keyValue}"));
+            });
         }
 
         [Test]
@@ -57,8 +63,11 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.True(transport.Requests[0].TryGetHeader(header, out var key));
-            Assert.AreEqual(keyValue, key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(transport.Requests[0].TryGetHeader(header, out var key), Is.True);
+                Assert.That(key, Is.EqualTo(keyValue));
+            });
         }
 
         [Test]
@@ -78,8 +87,11 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.True(transport.Requests[0].TryGetHeader(header, out var key));
-            Assert.AreEqual($"{prefix} {keyValue}", key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(transport.Requests[0].TryGetHeader(header, out var key), Is.True);
+                Assert.That(key, Is.EqualTo($"{prefix} {keyValue}"));
+            });
         }
     }
 }

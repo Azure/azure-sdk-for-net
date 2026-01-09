@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
-            Assert.AreEqual(accountName, account.Data.Name);
+            Assert.That(account.Data.Name, Is.EqualTo(accountName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, null, account.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, null));
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
                     count++;
                 }
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

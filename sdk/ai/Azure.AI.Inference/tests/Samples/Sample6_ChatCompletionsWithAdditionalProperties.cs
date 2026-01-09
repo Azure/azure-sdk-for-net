@@ -47,9 +47,9 @@ namespace Azure.AI.Inference.Tests.Samples
             catch (Exception e)
             {
                 exceptionThrown = true;
-                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
+                Assert.That(e.Message, Does.Contain("Extra inputs are not permitted"));
             }
-            Assert.IsTrue(exceptionThrown);
+            Assert.That(exceptionThrown, Is.True);
 #endif
             #endregion
         }
@@ -91,9 +91,9 @@ namespace Azure.AI.Inference.Tests.Samples
             catch (Exception e)
             {
                 exceptionThrown = true;
-                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
+                Assert.That(e.Message, Does.Contain("Extra inputs are not permitted"));
             }
-            Assert.IsTrue(exceptionThrown);
+            Assert.That(exceptionThrown, Is.True);
 #endif
             #endregion
         }

@@ -58,8 +58,11 @@ namespace Azure.Identity.Tests
             {
                 if (options.OidcRequestUri.Contains(req.Uri.Host))
                 {
-                    Assert.That(req.Headers.TryGetValue("Authorization", out var authHeader), Is.True);
-                    Assert.That(authHeader, Does.Contain("mytoken"));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(req.Headers.TryGetValue("Authorization", out var authHeader), Is.True);
+                        Assert.That(authHeader, Does.Contain("mytoken"));
+                    });
                     resp.SetContent("""{"oidcToken": "myoidcToken"}""");
                 }
             };
@@ -78,7 +81,7 @@ namespace Azure.Identity.Tests
             }))
             {
                 var options = new AzurePipelinesCredentialOptions();
-                Assert.AreEqual("mockCollectionUri", options.OidcRequestUri);
+                Assert.That(options.OidcRequestUri, Is.EqualTo("mockCollectionUri"));
             }
         }
 
@@ -94,7 +97,7 @@ namespace Azure.Identity.Tests
 
                 AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
 
-                Assert.AreEqual("mockToken", token.Token);
+                Assert.That(token.Token, Is.EqualTo("mockToken"));
             }
         }
 

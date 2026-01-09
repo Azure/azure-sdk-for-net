@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                     CreateRegistryEndpointResourceData()
                 );
                 var createdEndpoint = createOperation.Value;
-                Assert.IsNotNull(createdEndpoint);
-                Assert.IsNotNull(createdEndpoint.Data);
-                Assert.IsNotNull(createdEndpoint.Data.Properties);
+                Assert.That(createdEndpoint, Is.Not.Null);
+                Assert.That(createdEndpoint.Data, Is.Not.Null);
+                Assert.That(createdEndpoint.Data.Properties, Is.Not.Null);
 
                 // Delete RegistryEndpoint
                 await createdEndpoint.DeleteAsync(WaitUntil.Completed);

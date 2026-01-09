@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     StringBuilder message = new StringBuilder();
                     if (e.Result != null)
                     {
-                        Assert.IsFalse(e.Result.Succeeded);
+                        Assert.That(e.Result.Succeeded, Is.False);
                         message.AppendLine($"key {e.Result.Key} failed with {e.Result.Status}: {e.Result.ErrorMessage}");
                     }
                     if (e.Exception != null)
@@ -273,7 +273,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -295,7 +295,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await DelayAsync(TimeSpan.FromMilliseconds(500));
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -332,9 +332,12 @@ namespace Azure.Search.Documents.Tests
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), 1000);
 
-            Assert.AreEqual(1, failures.Count);
-            Assert.AreEqual("Fake", failures[0].Key);
-            Assert.AreEqual(404, failures[0].Status);
+            Assert.That(failures.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(failures[0].Key, Is.EqualTo("Fake"));
+                Assert.That(failures[0].Status, Is.EqualTo(404));
+            });
         }
 
         [Test]
@@ -384,12 +387,18 @@ namespace Azure.Search.Documents.Tests
             int expectedPendingQueueSize = 1001 - BatchSize;
 
             await ConditionallyDelayAsync(() => (pending.Count == expectedPendingQueueSize), TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(250), 5);
-            Assert.AreEqual(expectedPendingQueueSize, pending.Count);
-            Assert.AreEqual(0, removeFailedCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pending.Count, Is.EqualTo(expectedPendingQueueSize));
+                Assert.That(removeFailedCount, Is.EqualTo(0));
+            });
 
             await indexer.FlushAsync();
-            Assert.AreEqual(0, pending.Count);
-            Assert.AreEqual(0, removeFailedCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pending.Count, Is.EqualTo(0));
+                Assert.That(removeFailedCount, Is.EqualTo(0));
+            });
         }
         #endregion
 
@@ -417,7 +426,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
 
-            Assert.IsTrue(customAccessorInvoked);
+            Assert.That(customAccessorInvoked, Is.True);
         }
 
         public class LessSimpleDocument
@@ -497,7 +506,7 @@ namespace Azure.Search.Documents.Tests
             }
             catch (InvalidOperationException ex)
             {
-                StringAssert.Contains(nameof(Hotel), ex.Message);
+                Assert.That(ex.Message, Does.Contain(nameof(Hotel)));
             }
         }
         #endregion
@@ -520,7 +529,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
 
             await DelayAsync(TimeSpan.FromSeconds(5), EventDelay);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -590,7 +599,7 @@ namespace Azure.Search.Documents.Tests
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
 
             await DelayAsync(TimeSpan.FromMilliseconds(500), EventDelay);
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -616,7 +625,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await submitted;
             await DelayAsync(TimeSpan.FromMilliseconds(500), EventDelay);
-            Assert.AreEqual(data.Length - BatchSize, pending.Count);
+            Assert.That(pending.Count, Is.EqualTo(data.Length - BatchSize));
 
             await DelayAsync(TimeSpan.FromSeconds(5), EventDelay);
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -664,7 +673,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
 
             await DelayAsync(TimeSpan.FromSeconds(3), EventDelay);
-            Assert.Zero((int)await resources.GetSearchClient().GetDocumentCountAsync());
+            Assert.That((int)await resources.GetSearchClient().GetDocumentCountAsync(), Is.Zero);
         }
         #endregion
 
@@ -708,11 +717,11 @@ namespace Azure.Search.Documents.Tests
 
             await indexer.UploadDocumentsAsync(data);
             await DelayAsync(EventDelay, EventDelay);
-            Assert.AreEqual(data.Length, pending.Count);
+            Assert.That(pending.Count, Is.EqualTo(data.Length));
 
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.Zero(pending.Count);
+            Assert.That(pending.Count, Is.Zero);
         }
         #endregion
 
@@ -756,7 +765,7 @@ namespace Azure.Search.Documents.Tests
 
             await indexer.UploadDocumentsAsync(data);
             await DelayAsync(TimeSpan.FromMilliseconds(500), EventDelay);
-            Assert.AreEqual(data.Length, pending.Count);
+            Assert.That(pending.Count, Is.EqualTo(data.Length));
 
             await ((IAsyncDisposable)indexer).DisposeAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -868,7 +877,7 @@ namespace Azure.Search.Documents.Tests
             ConcurrentQueue<IndexDocumentsAction<SimpleDocument>> failures = TrackFailures(indexer);
             await indexer.MergeDocumentsAsync(data);
             await indexer.FlushAsync();
-            Assert.AreEqual(data.Length, failures.Count);
+            Assert.That(failures.Count, Is.EqualTo(data.Length));
         }
 
         [Test]
@@ -939,7 +948,7 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionAdded += e => { adds++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await DelayAsync(EventDelay, EventDelay);
-            Assert.AreEqual(data.Length, adds);
+            Assert.That(adds, Is.EqualTo(data.Length));
         }
 
         [Test]
@@ -957,7 +966,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.LessOrEqual(data.Length, sent);
+            Assert.That(data, Has.Length.LessThanOrEqualTo(sent));
         }
 
         [Test]
@@ -975,7 +984,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.LessOrEqual(data.Length, completed);
+            Assert.That(data, Has.Length.LessThanOrEqualTo(completed));
         }
 
         [Test]
@@ -993,7 +1002,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.MergeDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
-            Assert.AreEqual(data.Length, failed);
+            Assert.That(failed, Is.EqualTo(data.Length));
         }
 
         [Test]
@@ -1022,10 +1031,13 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
 
-            Assert.IsTrue(added, "ActionAddedAsync was not fired!");
-            Assert.IsTrue(sent, "ActionSentAsync was not fired!");
-            Assert.IsTrue(completed, "ActionCompletedAsync was not fired!");
-            Assert.IsTrue(failed, "ActionFailedAsync was not fired!");
+            Assert.Multiple(() =>
+            {
+                Assert.That(added, Is.True, "ActionAddedAsync was not fired!");
+                Assert.That(sent, Is.True, "ActionSentAsync was not fired!");
+                Assert.That(completed, Is.True, "ActionCompletedAsync was not fired!");
+                Assert.That(failed, Is.True, "ActionFailedAsync was not fired!");
+            });
         }
         #endregion
 
@@ -1035,10 +1047,13 @@ namespace Azure.Search.Documents.Tests
         {
             Type eventSourceType = typeof(AzureSearchDocumentsEventSource);
 
-            Assert.NotNull(eventSourceType);
-            Assert.AreEqual("Azure-Search-Documents", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("ecf8d17a-8cd1-5cb8-7adb-5d7d3221a642"), EventSource.GetGuid(eventSourceType));
-            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventSourceType, Is.Not.Null);
+                Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Search-Documents"));
+                Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("ecf8d17a-8cd1-5cb8-7adb-5d7d3221a642")));
+                Assert.That(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"), Is.Not.Empty);
+            });
         }
         #endregion
 
@@ -1064,34 +1079,37 @@ namespace Azure.Search.Documents.Tests
 
             List<EventWrittenEventArgs> eventData = listener.EventData.ToList();
 
-            Assert.AreEqual(10, eventData.Count);
-            Assert.AreEqual("PendingQueueResized", eventData[0].EventName);         // 1. All events are pushed into the pending queue.
-            Assert.AreEqual(512, eventData[0].GetProperty<int>("queueSize"));
-            Assert.AreEqual("PublishingDocuments", eventData[1].EventName);         // 2. Documents are being published.
-            Assert.IsTrue(eventData[1].GetProperty<bool>("flush"));
-            Assert.AreEqual("PendingQueueResized", eventData[2].EventName);         // 3. All events are pulled out of the pending queue.
-            Assert.AreEqual(0, eventData[2].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[3].EventName);              // 4. A batch is created for submission and contains all events.
-            Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
-            Assert.AreEqual(512, eventData[3].GetProperty<int>("batchSize"));
-            Assert.AreEqual("BatchActionPayloadTooLarge", eventData[4].EventName);  // 5. Service responded to the index request with a 'payload too large' exception.
-            Assert.AreEqual(EventLevel.Warning, eventData[4].Level);                //    This event is logged at 'Warning' level.
-            Assert.AreEqual(512, eventData[4].GetProperty<int>("batchActionCount"));
-            Assert.AreEqual("BatchActionCountUpdated", eventData[5].EventName);     // 6. Batch is split up and default action count is updated.
-            Assert.AreEqual(EventLevel.Warning, eventData[5].Level);                //    This event is logged at 'Warning' level.
-            Assert.NotNull(eventData[5].GetProperty<string>("endPoint"));
-            Assert.AreEqual(512, eventData[5].GetProperty<int>("oldBatchCount"));
-            Assert.AreEqual(256, eventData[5].GetProperty<int>("newBatchCount"));
-            Assert.AreEqual("RetryQueueResized", eventData[6].EventName);           // 7. Second part of the batch is pushed into the retry queue.
-            Assert.AreEqual(256, eventData[6].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[7].EventName);              // 8. First part of the batch is submitted.
-            Assert.NotNull(eventData[7].GetProperty<string>("endPoint"));
-            Assert.AreEqual(256, eventData[7].GetProperty<int>("batchSize"));
-            Assert.AreEqual("RetryQueueResized", eventData[8].EventName);           // 9. Remaining events are pulled out of the retry queue.
-            Assert.AreEqual(0, eventData[8].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[9].EventName);              // 10. Second part of the batch is submitted.
-            Assert.NotNull(eventData[9].GetProperty<string>("endPoint"));
-            Assert.AreEqual(256, eventData[9].GetProperty<int>("batchSize"));
+            Assert.That(eventData.Count, Is.EqualTo(10));
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventData[0].EventName, Is.EqualTo("PendingQueueResized"));         // 1. All events are pushed into the pending queue.
+                Assert.That(eventData[0].GetProperty<int>("queueSize"), Is.EqualTo(512));
+                Assert.That(eventData[1].EventName, Is.EqualTo("PublishingDocuments"));         // 2. Documents are being published.
+                Assert.That(eventData[1].GetProperty<bool>("flush"), Is.True);
+                Assert.That(eventData[2].EventName, Is.EqualTo("PendingQueueResized"));         // 3. All events are pulled out of the pending queue.
+                Assert.That(eventData[2].GetProperty<int>("queueSize"), Is.EqualTo(0));
+                Assert.That(eventData[3].EventName, Is.EqualTo("BatchSubmitted"));              // 4. A batch is created for submission and contains all events.
+                Assert.That(eventData[3].GetProperty<string>("endPoint"), Is.Not.Null);
+                Assert.That(eventData[3].GetProperty<int>("batchSize"), Is.EqualTo(512));
+                Assert.That(eventData[4].EventName, Is.EqualTo("BatchActionPayloadTooLarge"));  // 5. Service responded to the index request with a 'payload too large' exception.
+                Assert.That(eventData[4].Level, Is.EqualTo(EventLevel.Warning));                //    This event is logged at 'Warning' level.
+                Assert.That(eventData[4].GetProperty<int>("batchActionCount"), Is.EqualTo(512));
+                Assert.That(eventData[5].EventName, Is.EqualTo("BatchActionCountUpdated"));     // 6. Batch is split up and default action count is updated.
+                Assert.That(eventData[5].Level, Is.EqualTo(EventLevel.Warning));                //    This event is logged at 'Warning' level.
+                Assert.That(eventData[5].GetProperty<string>("endPoint"), Is.Not.Null);
+                Assert.That(eventData[5].GetProperty<int>("oldBatchCount"), Is.EqualTo(512));
+                Assert.That(eventData[5].GetProperty<int>("newBatchCount"), Is.EqualTo(256));
+                Assert.That(eventData[6].EventName, Is.EqualTo("RetryQueueResized"));           // 7. Second part of the batch is pushed into the retry queue.
+                Assert.That(eventData[6].GetProperty<int>("queueSize"), Is.EqualTo(256));
+                Assert.That(eventData[7].EventName, Is.EqualTo("BatchSubmitted"));              // 8. First part of the batch is submitted.
+                Assert.That(eventData[7].GetProperty<string>("endPoint"), Is.Not.Null);
+                Assert.That(eventData[7].GetProperty<int>("batchSize"), Is.EqualTo(256));
+                Assert.That(eventData[8].EventName, Is.EqualTo("RetryQueueResized"));           // 9. Remaining events are pulled out of the retry queue.
+                Assert.That(eventData[8].GetProperty<int>("queueSize"), Is.EqualTo(0));
+                Assert.That(eventData[9].EventName, Is.EqualTo("BatchSubmitted"));              // 10. Second part of the batch is submitted.
+                Assert.That(eventData[9].GetProperty<string>("endPoint"), Is.Not.Null);
+                Assert.That(eventData[9].GetProperty<int>("batchSize"), Is.EqualTo(256));
+            });
 
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
         }
@@ -1114,7 +1132,7 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
-            Assert.AreEqual(5, client.Submissions.Count);
+            Assert.That(client.Submissions.Count, Is.EqualTo(5));
         }
 
         [Test]
@@ -1151,7 +1169,7 @@ namespace Azure.Search.Documents.Tests
 
                 // Batch will be split at the 4th document.
                 // So, 3 documents will be sent before any are submitted, but 3 submissions will be made before the last 2 are sent
-                Assert.AreEqual((sent <= 3) ? 0 : 3, completed);
+                Assert.That(completed, Is.EqualTo((sent <= 3) ? 0 : 3));
 
                 return Task.CompletedTask;
             };
@@ -1162,7 +1180,7 @@ namespace Azure.Search.Documents.Tests
 
                 // Batch will be split at the 4th document.
                 // So, 3 documents will be submitted after 3 are sent, and the last 2 submissions will be made after all 5 are sent
-                Assert.AreEqual((completed <= 3) ? 3 : 5, sent);
+                Assert.That(sent, Is.EqualTo((completed <= 3) ? 3 : 5));
 
                 return Task.CompletedTask;
             };
@@ -1171,8 +1189,11 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
 
-            Assert.AreEqual(5, sent);
-            Assert.AreEqual(5, completed);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sent, Is.EqualTo(5));
+                Assert.That(completed, Is.EqualTo(5));
+            });
         }
 
         [Test]
@@ -1209,7 +1230,7 @@ namespace Azure.Search.Documents.Tests
                 sent++;
 
                 // Batch will not be split. So, no document will be submitted before all are sent.
-                Assert.AreEqual(0, completed);
+                Assert.That(completed, Is.EqualTo(0));
 
                 return Task.CompletedTask;
             };
@@ -1219,7 +1240,7 @@ namespace Azure.Search.Documents.Tests
                 completed++;
 
                 // Batch will not be split. So, all documents will be sent before any are submitted.
-                Assert.AreEqual(5, sent);
+                Assert.That(sent, Is.EqualTo(5));
 
                 return Task.CompletedTask;
             };
@@ -1228,8 +1249,11 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
 
-            Assert.AreEqual(5, sent);
-            Assert.AreEqual(5, completed);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sent, Is.EqualTo(5));
+                Assert.That(completed, Is.EqualTo(5));
+            });
         }
 
         [Test]
@@ -1254,7 +1278,7 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionSent += e => { sent++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
-            Assert.Less(1, sent);
+            Assert.That(1, Is.LessThan(sent));
         }
 
         [Test]
@@ -1280,7 +1304,7 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionSent += e => { attempts++; return Task.CompletedTask; };
             await indexer.MergeOrUploadDocumentsAsync(data);
             await indexer.FlushAsync();
-            Assert.AreEqual(6, attempts);
+            Assert.That(attempts, Is.EqualTo(6));
         }
 
         [Test]
@@ -1312,13 +1336,14 @@ namespace Azure.Search.Documents.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.IsTrue(
+                Assert.That(
                     2000 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 10000,
+                    Is.True,
                     $"Expected a delay between 2000ms and 10000ms, not {watch.ElapsedMilliseconds}");
             }
             else
             {
-                Assert.IsTrue(watch.ElapsedMilliseconds < 1000);
+                Assert.That(watch.ElapsedMilliseconds, Is.LessThan(1000));
             }
         }
 
@@ -1349,8 +1374,9 @@ namespace Azure.Search.Documents.Tests
             await indexer.FlushAsync();
             watch.Stop();
 
-            Assert.IsTrue(
+            Assert.That(
                 watch.Elapsed <= TimeSpan.FromSeconds(30),
+                Is.True,
                 $"Expected a max delay of 30s, not {watch.Elapsed}");
         }
         #endregion

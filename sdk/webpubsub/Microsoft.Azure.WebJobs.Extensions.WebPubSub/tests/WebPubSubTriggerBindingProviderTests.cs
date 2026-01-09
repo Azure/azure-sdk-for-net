@@ -37,8 +37,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var attribute = new WebPubSubTriggerAttribute("%testhub%", WebPubSubEventType.System, "testevent");
             var resolvedAttr = _provider.GetResolvedAttribute(attribute);
-            Assert.AreEqual(resolvedAttr.Hub, TestHub);
-            Assert.AreEqual(resolvedAttr.EventName, "testevent");
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.Hub, Is.EqualTo(TestHub));
+                Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
+            });
         }
 
         [TestCase]
@@ -46,8 +49,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var attribute = new WebPubSubTriggerAttribute("defaulthub", WebPubSubEventType.System, "testevent");
             var resolvedAttr = _provider.GetResolvedAttribute(attribute);
-            Assert.AreEqual(resolvedAttr.Hub, "defaulthub");
-            Assert.AreEqual(resolvedAttr.EventName, "testevent");
+            Assert.Multiple(() =>
+            {
+                Assert.That(resolvedAttr.Hub, Is.EqualTo("defaulthub"));
+                Assert.That(resolvedAttr.EventName, Is.EqualTo("testevent"));
+            });
         }
 
         [TestCase]
@@ -65,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
             var binding = await _provider.TryCreateAsync(context);
 
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         public static void TestFunc(

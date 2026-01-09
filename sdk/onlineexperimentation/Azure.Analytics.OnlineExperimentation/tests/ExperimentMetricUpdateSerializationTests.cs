@@ -150,16 +150,19 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             var categoriesEmitted = document.RootElement.TryGetProperty("categories", out var categoriesElement);
             if (originalCategories.IsUndefined)
             {
-                Assert.IsFalse(categoriesEmitted);
+                Assert.That(categoriesEmitted, Is.False);
             }
             else
             {
-                Assert.IsTrue(categoriesEmitted);
-                Assert.AreEqual(JsonValueKind.Array, categoriesElement.ValueKind);
-                Assert.AreEqual(originalCategories.Count, categoriesElement.GetArrayLength());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(categoriesEmitted, Is.True);
+                    Assert.That(categoriesElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
+                    Assert.That(categoriesElement.GetArrayLength(), Is.EqualTo(originalCategories.Count));
+                });
                 for (int i = 0; i < originalCategories.Count; i++)
                 {
-                    Assert.AreEqual(originalCategories[i], categoriesElement[i].GetString());
+                    Assert.That(categoriesElement[i].GetString(), Is.EqualTo(originalCategories[i]));
                 }
             }
         }

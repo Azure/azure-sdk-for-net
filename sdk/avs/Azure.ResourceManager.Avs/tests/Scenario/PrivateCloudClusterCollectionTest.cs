@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Tests
         {
             var collection = await GetPrivateCloudClusterCollectionAsync();
             AvsPrivateCloudClusterResource result = await collection.GetAsync(CLUSTER1_NAME);
-            Assert.AreEqual(result.Data.Name, CLUSTER1_NAME);
+            Assert.That(result.Data.Name, Is.EqualTo(CLUSTER1_NAME));
         }
 
         [TestCase]

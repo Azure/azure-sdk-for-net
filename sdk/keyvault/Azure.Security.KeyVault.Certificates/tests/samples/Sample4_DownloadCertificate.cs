@@ -67,10 +67,10 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             Debug.WriteLine($"Signature verified: {verified}");
-        #endregion
+            #endregion
 #pragma warning restore SYSLIB0057 // New APIs are not supported on all versions of .NET
 
-            Assert.IsTrue(verified);
+            Assert.That(verified, Is.True);
 
             DeleteCertificateOperation deleteOperation = client.StartDeleteCertificate(certificateName);
             while (!deleteOperation.HasCompleted)

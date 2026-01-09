@@ -89,10 +89,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
             Assert.That(handlerEvents.Select(item => item.PartitionId).Distinct().Count(), Is.EqualTo(partitionCount), "All partitions should have received events.");
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
@@ -125,8 +128,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -196,10 +202,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
             // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
@@ -231,10 +240,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.PartitionKey, Is.Not.Null.And.Not.Empty, $"The event read at index: [{ index }] should have a partition key set.");
-                Assert.That(keyHash.Contains(readEvents[index].Event.PartitionKey), Is.True, $"The event read at index: [{ index }] should have a known partition key.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.PartitionKey, Is.Not.Null.And.Not.Empty, $"The event read at index: [{index}] should have a partition key set.");
+                    Assert.That(keyHash, Does.Contain(readEvents[index].Event.PartitionKey), $"The event read at index: [{index}] should have a known partition key.");
+                });
             }
         }
 
@@ -304,10 +316,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
             // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
@@ -339,8 +354,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -417,10 +435,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
             // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
@@ -452,8 +473,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -532,10 +556,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
             // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
@@ -567,8 +594,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -633,10 +663,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
             Assert.That(handlerEvents.Select(item => item.PartitionId).Distinct().Count(), Is.EqualTo(partitionCount), "All partitions should have received events.");
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
@@ -669,8 +702,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -765,10 +801,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"The handler did not receive all events after it was idle.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(expectedCount), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(expectedCount), "All events should have been sent.");
+            });
 
             // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
             // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
@@ -800,8 +839,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -857,13 +899,16 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.EnqueueEventsAsync(lastEventSet, cancellationSource.Token);
             await producer.FlushAsync(cancellationSource.Token);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Read back the events and ensure all were successfully published.
 
@@ -953,14 +998,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Interlocked.Increment(ref flushCount);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerInvokedAfterFlush, Is.False, "The handler should not have been invoked after the FlushAsync call completed.");
-            Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerInvokedAfterFlush, Is.False, "The handler should not have been invoked after the FlushAsync call completed.");
+                Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Read back the events and ensure all were successfully published.
 
@@ -990,8 +1038,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -1057,14 +1108,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Interlocked.Increment(ref flushCount);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerInvokedAfterFlush, Is.False, "The handler should not have been invoked after the FlushAsync call completed.");
-            Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerInvokedAfterFlush, Is.False, "The handler should not have been invoked after the FlushAsync call completed.");
+                Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Read back the events and ensure all were successfully published.
 
@@ -1094,8 +1148,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -1154,14 +1211,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Interlocked.Increment(ref closeCount);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the CloseAsync call completed.");
-            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the CloseAsync call completed.");
+                Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Read back the events and ensure all were successfully published.
 
@@ -1187,8 +1247,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -1253,14 +1316,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Interlocked.Increment(ref closeCount);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the FlushAsync call completed.");
-            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the FlushAsync call completed.");
+                Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count), "All events should have been sent.");
+            });
 
             // Read back the events and ensure all were successfully published.
 
@@ -1286,8 +1352,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -1323,12 +1392,15 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.EnqueueEventsAsync(events, cancellationSource.Token);
             await producer.CloseAsync(flush: false, cancellationSource.Token);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+            });
         }
 
         /// <summary>
@@ -1369,12 +1441,15 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.EnqueueEventsAsync(events, cancellationSource.Token);
             await producer.CloseAsync(flush: false, cancellationSource.Token);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+            });
         }
 
         /// <summary>
@@ -1458,14 +1533,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Interlocked.Increment(ref closeCount);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the CloseAsync call completed.");
-            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
-            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count + 1), "All events should have been sent.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the CloseAsync call completed.");
+                Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(handlerEvents, Has.Count.EqualTo(events.Count + 1), "All events should have been sent.");
+            });
 
             // Read back the events and ensure all were successfully published.
 
@@ -1491,8 +1569,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                    Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                });
             }
         }
 
@@ -1543,12 +1624,15 @@ namespace Azure.Messaging.EventHubs.Tests
             await Task.Delay(TimeSpan.FromSeconds(2), cancellationSource.Token);
             await producer.CloseAsync(flush: false, cancellationSource.Token);
 
-            // Ensure that publishing completed with the expected state.
+            Assert.Multiple(() =>
+            {
+                // Ensure that publishing completed with the expected state.
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
-            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
-            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+                Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+                Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+            });
         }
 
         /// <summary>
@@ -1570,9 +1654,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = await producer.GetEventHubPropertiesAsync();
 
             Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-            Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
-            Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-            Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
+                Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
+                Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+            });
         }
 
         /// <summary>
@@ -1597,11 +1684,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionProperties = await producer.GetPartitionPropertiesAsync(partition, cancellation.Token);
 
             Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
-            Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
-            Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
-            Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
-            Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-            Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
+                Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
+                Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
+                Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
+                Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+            });
         }
 
         /// <summary>
@@ -1619,8 +1709,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitions = await producer.GetPartitionIdsAsync();
 
             Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-            Assert.That(properties.PartitionIds, Is.Not.Null, "A set of partition identifiers for the properties should have been returned.");
-            Assert.That(partitions, Is.Not.Null, "A set of partition identifiers should have been returned.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.PartitionIds, Is.Not.Null, "A set of partition identifiers for the properties should have been returned.");
+                Assert.That(partitions, Is.Not.Null, "A set of partition identifiers should have been returned.");
+            });
             Assert.That(partitions, Is.EquivalentTo(properties.PartitionIds), "The partition identifiers returned directly should match those returned with properties.");
         }
 

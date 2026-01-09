@@ -78,14 +78,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableSqlScript singleScript = await DisposableSqlScript.Create (client, Recording);
 
             IList<SqlScriptResource> scripts = await client.GetSqlScriptsByWorkspaceAsync ().ToListAsync();
-            Assert.GreaterOrEqual (scripts.Count, 1);
+            Assert.That(scripts, Is.Not.Empty);
 
             foreach (SqlScriptResource script in scripts)
             {
                 SqlScriptResource actualScript = await client.GetSqlScriptAsync (script.Name);
-                Assert.AreEqual (actualScript.Name, script.Name);
-                Assert.AreEqual (actualScript.Id, script.Id);
-                Assert.AreEqual (actualScript.Type, script.Type);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(script.Name, Is.EqualTo(actualScript.Name));
+                    Assert.That(script.Id, Is.EqualTo(actualScript.Id));
+                    Assert.That(script.Type, Is.EqualTo(actualScript.Type));
+                });
             }
         }
 
@@ -113,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             SqlScriptResource sparkJob = await client.GetSqlScriptAsync (newScriptName);
-            Assert.AreEqual (newScriptName, sparkJob.Name);
+            Assert.That(sparkJob.Name, Is.EqualTo(newScriptName));
 
             SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync (newScriptName);
             await deleteOperation.WaitForCompletionResponseAsync();

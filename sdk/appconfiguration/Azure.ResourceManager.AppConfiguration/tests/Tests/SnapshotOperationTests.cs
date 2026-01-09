@@ -69,8 +69,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             AppConfigurationSnapshotResource snapshot = await Snapshot.GetAsync();
 
-            Assert.IsTrue(snapshot.Data.Name.Equals(SnapshotName));
-            Assert.IsTrue(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(snapshot.Data.Name, Is.EqualTo(SnapshotName));
+                Assert.That(snapshot.Data.Filters.FirstOrDefault().Key, Is.EqualTo("key1/*"));
+            });
         }
     }
 }

@@ -91,8 +91,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var result = await certClient.GetConstitutionAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("digest"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain("digest"));
+            });
         }
 #endif
 
@@ -104,7 +107,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
             var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId, new()).ConfigureAwait(false);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         #region LedgerTransactions
@@ -117,9 +120,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.NotNull(operation.Id);
-            Assert.That(stringResult, Does.Contain("Committed"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(operation.Id, Is.Not.Null);
+                Assert.That(stringResult, Does.Contain("Committed"));
+            });
             Assert.That(stringResult, Does.Contain(operation.Id));
         }
 
@@ -133,8 +139,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("contents"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain("contents"));
+            });
         }
 
         [RecordedTest]
@@ -144,7 +153,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             await foreach (var entry in Client.GetLedgerEntriesAsync())
             {
-                Assert.NotNull(entry);
+                Assert.That(entry, Is.Not.Null);
             }
         }
 
@@ -157,8 +166,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string stringResult = tuple.StringResult;
             Response response = await Client.GetLedgerEntryAsync(transactionId);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
-            Assert.That(stringResult, Does.Contain(transactionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(transactionId));
+            });
         }
 
         [RecordedTest]
@@ -172,8 +184,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             var result = await Client.GetReceiptAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(transactionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(transactionId));
+            });
         }
 
         [RecordedTest]
@@ -187,8 +202,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             var result = await Client.GetTransactionStatusAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(transactionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(transactionId));
+            });
         }
         #endregion
 
@@ -199,8 +217,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var result = await Client.GetConstitutionAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("digest"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain("digest"));
+            });
         }
 
         [RecordedTest]
@@ -220,8 +241,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var result = await Client.GetEnclaveQuotesAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("enclaveQuotes"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain("enclaveQuotes"));
+            });
         }
         #endregion
 
@@ -235,8 +259,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var result = await Client.GetUserAsync(objId, new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(objId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(objId));
+            });
         }
 
 #if API_V3
@@ -252,14 +279,17 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 RequestContent.Create(new { assignedRole = "Reader" }));
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(userId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(userId));
+            });
 
             await GetUser(userId);
 
             await Client.DeleteUserAsync(userId);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
 #if API_V3
@@ -276,8 +306,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 RequestContent.Create(new { assignedRole = "Reader" }));
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(userId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(userId));
+            });
 
             HashSet<string> users = [];
             await foreach (BinaryData page in Client.GetUsersAsync())
@@ -289,7 +322,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 }
             }
 
-            Assert.IsTrue(users.Contains(userId), "GetUsers endpoint does not contain expected reader");
+            Assert.That(users, Does.Contain(userId), "GetUsers endpoint does not contain expected reader");
             await Client.DeleteUserAsync(userId);
         }
 
@@ -303,8 +336,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 RequestContent.Create(new { assignedRoles = new List<string> { "Reader" } }));
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(userId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(userId));
+            });
 
             HashSet<string> users = [];
             await foreach (BinaryData page in Client.GetLedgerUsersAsync())
@@ -317,7 +353,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 }
             }
 
-            Assert.IsTrue(users.Contains(userId), "GetLedgerUsers endpoint does not contain expected reader");
+            Assert.That(users, Does.Contain(userId), "GetLedgerUsers endpoint does not contain expected reader");
             await Client.DeleteLedgerUserAsync(userId);
         }
         #endregion
@@ -331,7 +367,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
                 string functionId = functiondata.GetProperty("id").ToString();
                 Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
-                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+                Assert.That(deleteResult.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
 
             // Deploy JS App
@@ -340,10 +376,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
 
-            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
+            Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.Created));
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test.js");
-            Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
+            Assert.That(resp.Status, Is.EqualTo((int)HttpStatusCode.OK));
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -373,12 +409,15 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 ReturnExceptionDetails = false
             };
 
-            Assert.AreEqual(expectedRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
-            Assert.AreEqual(expectedRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
-            Assert.AreEqual(expectedRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
-            Assert.AreEqual(expectedRuntimeOptions.MaxHeapBytes, runtimeOptions.MaxHeapBytes);
-            Assert.AreEqual(expectedRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
-            Assert.AreEqual(expectedRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
+            Assert.Multiple(() =>
+            {
+                Assert.That(runtimeOptions.LogExceptionDetails, Is.EqualTo(expectedRuntimeOptions.LogExceptionDetails));
+                Assert.That(runtimeOptions.MaxCachedInterpreters, Is.EqualTo(expectedRuntimeOptions.MaxCachedInterpreters));
+                Assert.That(runtimeOptions.MaxExecutionTimeMs, Is.EqualTo(expectedRuntimeOptions.MaxExecutionTimeMs));
+                Assert.That(runtimeOptions.MaxHeapBytes, Is.EqualTo(expectedRuntimeOptions.MaxHeapBytes));
+                Assert.That(runtimeOptions.MaxStackBytes, Is.EqualTo(expectedRuntimeOptions.MaxStackBytes));
+                Assert.That(runtimeOptions.ReturnExceptionDetails, Is.EqualTo(expectedRuntimeOptions.ReturnExceptionDetails));
+            });
 
             var updateJSRuntimeOptions = new RuntimeOptions
             {
@@ -394,22 +433,25 @@ namespace Azure.Security.ConfidentialLedger.Tests
             RequestContent runtimeOptionsContent = RequestContent.Create(jsRuntimeOptionsPayload);
 
             result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
 
             runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
-            Assert.AreEqual(updateJSRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
-            Assert.AreEqual(updateJSRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
-            Assert.AreEqual(updateJSRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
-            Assert.AreEqual(updateJSRuntimeOptions.MaxHeapBytes, runtimeOptions.MaxHeapBytes);
-            Assert.AreEqual(updateJSRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
-            Assert.AreEqual(updateJSRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
+            Assert.Multiple(() =>
+            {
+                Assert.That(runtimeOptions.LogExceptionDetails, Is.EqualTo(updateJSRuntimeOptions.LogExceptionDetails));
+                Assert.That(runtimeOptions.MaxCachedInterpreters, Is.EqualTo(updateJSRuntimeOptions.MaxCachedInterpreters));
+                Assert.That(runtimeOptions.MaxExecutionTimeMs, Is.EqualTo(updateJSRuntimeOptions.MaxExecutionTimeMs));
+                Assert.That(runtimeOptions.MaxHeapBytes, Is.EqualTo(updateJSRuntimeOptions.MaxHeapBytes));
+                Assert.That(runtimeOptions.MaxStackBytes, Is.EqualTo(updateJSRuntimeOptions.MaxStackBytes));
+                Assert.That(runtimeOptions.ReturnExceptionDetails, Is.EqualTo(updateJSRuntimeOptions.ReturnExceptionDetails));
+            });
 
             // Revert Runtime Options
             string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(expectedRuntimeOptions);
             runtimeOptionsContent = RequestContent.Create(restoreJsRuntimeOptionsPayload);
 
             result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
         #endregion
 
@@ -434,19 +476,22 @@ namespace Azure.Security.ConfidentialLedger.Tests
             try
             {
                 Response result = await Client.CreateUserDefinedRoleAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)));
-                Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
 
                 result = await Client.GetUserDefinedRoleAsync(roleName);
 
                 RolesParam roleData = JsonSerializer.Deserialize<RolesParam>(result.Content.ToString());
-                // Validate Fetched RoleData with Added Role Data
-                Assert.AreEqual(rolesParam.Roles[0].RoleName, roleData.Roles[0].RoleName);
-                Assert.AreEqual(rolesParam.Roles[0].RoleActions[0], roleData.Roles[0].RoleActions[0]);
+                Assert.Multiple(() =>
+                {
+                    // Validate Fetched RoleData with Added Role Data
+                    Assert.That(roleData.Roles[0].RoleName, Is.EqualTo(rolesParam.Roles[0].RoleName));
+                    Assert.That(roleData.Roles[0].RoleActions[0], Is.EqualTo(rolesParam.Roles[0].RoleActions[0]));
+                });
             }
             finally
             {
                 Response result = await Client.DeleteUserDefinedRoleAsync(roleName);
-                Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
             }
         }
         #endregion
@@ -460,7 +505,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string tags = "tags1,tags2";
 
             Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.OK));
 
             await PostLedgerEntry();
             var tuple = await GetFirstTransactionIdFromGetEntries();
@@ -468,8 +513,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string stringResult = tuple.StringResult;
             Response response = await Client.GetLedgerEntryAsync(transactionId);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
-            Assert.That(stringResult, Does.Contain(transactionId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.That(stringResult, Does.Contain(transactionId));
+            });
         }
         #endregion
 
@@ -491,17 +539,17 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 try
                 {
                     userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
-                    Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
+                    Assert.That(userFunctionResult.Status, Is.EqualTo((int)HttpStatusCode.Created));
                     userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
 
                     var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
                     // Validate Fetched user function with Added function Id
-                    Assert.AreEqual(functionId, functionData.Id);
+                    Assert.That(functionData.Id, Is.EqualTo(functionId));
                 }
                 finally
                 {
                     Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
-                    Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+                    Assert.That(deleteResult.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
                 }
             }
             else
@@ -509,12 +557,15 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 try
                 {
                     userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
-                    Assert.AreEqual(HttpStatusCode.BadRequest, userFunctionResult.Status);
+                    Assert.That(userFunctionResult.Status, Is.EqualTo(HttpStatusCode.BadRequest));
                 }
                 catch (RequestFailedException ex)
                 {
-                    Assert.AreEqual((int)HttpStatusCode.BadRequest, ex.Status);
-                    Assert.That(ex.Message, Does.Contain("User defined functions cannot be created when user defined endpoints are defined. Please apply an empty application bundle for user defined endpoints and retry"));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.BadRequest));
+                        Assert.That(ex.Message, Does.Contain("User defined functions cannot be created when user defined endpoints are defined. Please apply an empty application bundle for user defined endpoints and retry"));
+                    });
                 }
             }
         }

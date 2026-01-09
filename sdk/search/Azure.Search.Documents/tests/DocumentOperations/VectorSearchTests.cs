@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Tests
             params string[] expectedKeys)
         {
             List<SearchResult<T>> docs = await response.GetResultsAsync().ToListAsync();
-            CollectionAssert.AreEquivalent(expectedKeys, docs.Select(keyAccessor));
+            Assert.That(docs.Select(keyAccessor), Is.EquivalentTo(expectedKeys));
         }
 
         [Test]
@@ -131,21 +131,27 @@ namespace Azure.Search.Documents.Tests
                         QueryLanguage = QueryLanguage.EnUs
                     });
 
-            Assert.NotNull(response.SemanticSearch.Answers);
-            Assert.AreEqual(1, response.SemanticSearch.Answers.Count);
-            Assert.AreEqual("9", response.SemanticSearch.Answers[0].Key);
-            Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
-            Assert.NotNull(response.SemanticSearch.Answers[0].Text);
+            Assert.That(response.SemanticSearch.Answers, Is.Not.Null);
+            Assert.That(response.SemanticSearch.Answers.Count, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.SemanticSearch.Answers[0].Key, Is.EqualTo("9"));
+                Assert.That(response.SemanticSearch.Answers[0].Highlights, Is.Not.Null);
+                Assert.That(response.SemanticSearch.Answers[0].Text, Is.Not.Null);
+            });
 
             await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
 
-                Assert.NotNull(result.SemanticSearch.Captions);
+                Assert.That(result.SemanticSearch.Captions, Is.Not.Null);
 
                 var caption = result.SemanticSearch.Captions.FirstOrDefault();
-                Assert.NotNull(caption.Highlights, "Caption highlight is null");
-                Assert.NotNull(caption.Text, "Caption text is null");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(caption.Highlights, Is.Not.Null, "Caption highlight is null");
+                    Assert.That(caption.Text, Is.Not.Null, "Caption text is null");
+                });
             }
 
             await AssertKeysEqual(
@@ -188,8 +194,11 @@ namespace Azure.Search.Documents.Tests
 
             // Get the document
             Response<SearchDocument> response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
-            Assert.AreEqual(document["id"], response.Value["id"]);
-            Assert.AreEqual(document["name"], response.Value["name"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value["id"], Is.EqualTo(document["id"]));
+                Assert.That(response.Value["name"], Is.EqualTo(document["name"]));
+            });
 
             // Update created index to add vector field
 
@@ -214,8 +223,11 @@ namespace Azure.Search.Documents.Tests
 
             // Update index
             SearchIndex updatedIndex = await indexClient.CreateOrUpdateIndexAsync(createdIndex);
-            Assert.AreEqual(indexName, updatedIndex.Name);
-            Assert.AreEqual(3, updatedIndex.Fields.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedIndex.Name, Is.EqualTo(indexName));
+                Assert.That(updatedIndex.Fields.Count, Is.EqualTo(3));
+            });
 
             // Update document to add vector field's data
 
@@ -230,11 +242,14 @@ namespace Azure.Search.Documents.Tests
 
             // Get the document
             response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
-            Assert.AreEqual(document["id"], response.Value["id"]);
-            Assert.AreEqual(document["name"], response.Value["name"]);
-            Assert.IsNotNull(response.Value["descriptionVector"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value["id"], Is.EqualTo(document["id"]));
+                Assert.That(response.Value["name"], Is.EqualTo(document["name"]));
+                Assert.That(response.Value["descriptionVector"], Is.Not.Null);
 
-            Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
+                Assert.That(createdIndex.Name, Is.EqualTo(updatedIndex.Name));
+            });
         }
 
         [Test]
@@ -270,8 +285,11 @@ namespace Azure.Search.Documents.Tests
             // Update index
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequestParameter"));
+            });
         }
 
         [Test]
@@ -306,11 +324,14 @@ namespace Azure.Search.Documents.Tests
                     docsPerPageCount++;
                     totalDocsCount++;
                 }
-                Assert.LessOrEqual(docsPerPageCount, 50);
+                Assert.That(docsPerPageCount, Is.LessThanOrEqualTo(50));
             }
 
-            Assert.LessOrEqual(totalDocsCount, 100);
-            Assert.GreaterOrEqual(pageCount, 2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(totalDocsCount, Is.LessThanOrEqualTo(100));
+                Assert.That(pageCount, Is.GreaterThanOrEqualTo(2));
+            });
         }
 
         [Test]
@@ -346,8 +367,11 @@ namespace Azure.Search.Documents.Tests
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                async () => await indexClient.CreateIndexAsync(index));
 
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequestParameter"));
+            });
         }
 
         [Test]
@@ -381,9 +405,12 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsTrue(createdIndex.Fields[1].IsStored);
-            Assert.IsFalse(createdIndex.Fields[1].IsHidden);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                Assert.That(createdIndex.Fields[1].IsStored, Is.True);
+                Assert.That(createdIndex.Fields[1].IsHidden, Is.False);
+            });
         }
 
         [Test]
@@ -417,9 +444,12 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsTrue(createdIndex.Fields[1].IsStored);
-            Assert.IsTrue(createdIndex.Fields[1].IsHidden);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                Assert.That(createdIndex.Fields[1].IsStored, Is.True);
+                Assert.That(createdIndex.Fields[1].IsHidden, Is.True);
+            });
         }
 
         [Test]
@@ -453,16 +483,22 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsFalse(createdIndex.Fields[1].IsStored);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                Assert.That(createdIndex.Fields[1].IsStored, Is.False);
+            });
 
             createdIndex.Fields[1].IsStored = true;
 
             // Update index
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("OperationNotAllowed", ex.ErrorCode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Status, Is.EqualTo(400));
+                Assert.That(ex.ErrorCode, Is.EqualTo("OperationNotAllowed"));
+            });
         }
 
         [Test]
@@ -496,13 +532,19 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsTrue(createdIndex.Fields[1].IsHidden);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                Assert.That(createdIndex.Fields[1].IsHidden, Is.True);
+            });
 
             createdIndex.Fields[1].IsHidden = false;
             SearchIndex updatedIndex = await indexClient.CreateOrUpdateIndexAsync(createdIndex);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsFalse(createdIndex.Fields[1].IsHidden);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                Assert.That(createdIndex.Fields[1].IsHidden, Is.False);
+            });
         }
 
         [Test]
@@ -534,8 +576,11 @@ namespace Azure.Search.Documents.Tests
             await indexClient.CreateIndexAsync(index);
 
             SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.AreEqual(index.Fields.Count, createdIndex.Fields.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+                Assert.That(createdIndex.Fields.Count, Is.EqualTo(index.Fields.Count));
+            });
         }
 
         private class Model

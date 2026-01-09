@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var solutionId = "apollo-48996ff7-002f-47c1-85b2-df138843d5d5";
             var selfHelpData = await DefaultTenantResource.GetSelfHelpSolutionByIdAsync(solutionId);
 
-            Assert.IsNotNull(selfHelpData);
+            Assert.That(selfHelpData, Is.Not.Null);
         }
     }
 }

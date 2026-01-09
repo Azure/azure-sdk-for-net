@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new ConversationAnalysisClient(null, (AzureKeyCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new ConversationAnalysisClient(endpoint, (AzureKeyCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new ConversationAnalysisClient(null, (TokenCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new ConversationAnalysisClient(endpoint, (TokenCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
     }
 }

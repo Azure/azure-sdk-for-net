@@ -39,11 +39,14 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<ExplicitInterfaceModel>();
 
-            Assert.AreEqual("cat", model.Category);
-            Assert.AreEqual("name", model.Name);
-            Assert.AreEqual(1234, model.Priority);
-            Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
-            Assert.AreEqual("name", ((ITableEntity)model).RowKey);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.Category, Is.EqualTo("cat"));
+                Assert.That(model.Name, Is.EqualTo("name"));
+                Assert.That(model.Priority, Is.EqualTo(1234));
+                Assert.That(((ITableEntity)model).PartitionKey, Is.EqualTo("cat"));
+                Assert.That(((ITableEntity)model).RowKey, Is.EqualTo("name"));
+            });
         }
 
         [Test]
@@ -51,11 +54,14 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<TableEntity>();
 
-            Assert.AreEqual("cat", model["Category"]);
-            Assert.AreEqual("name", model["Name"]);
-            Assert.AreEqual(1234, model["Priority"]);
-            Assert.AreEqual("cat", model.PartitionKey);
-            Assert.AreEqual("name", model.RowKey);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model["Category"], Is.EqualTo("cat"));
+                Assert.That(model["Name"], Is.EqualTo("name"));
+                Assert.That(model["Priority"], Is.EqualTo(1234));
+                Assert.That(model.PartitionKey, Is.EqualTo("cat"));
+                Assert.That(model.RowKey, Is.EqualTo("name"));
+            });
         }
 
         [Test]
@@ -63,11 +69,14 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<CustomIDictionary>();
 
-            Assert.AreEqual("cat", model.Category);
-            Assert.AreEqual("name", model.Name);
-            Assert.AreEqual(1234, model.Priority);
-            Assert.AreEqual("cat", model.PartitionKey);
-            Assert.AreEqual("name", model.RowKey);
+            Assert.Multiple(() =>
+            {
+                Assert.That(model.Category, Is.EqualTo("cat"));
+                Assert.That(model.Name, Is.EqualTo("name"));
+                Assert.That(model.Priority, Is.EqualTo(1234));
+                Assert.That(model.PartitionKey, Is.EqualTo("cat"));
+                Assert.That(model.RowKey, Is.EqualTo("name"));
+            });
         }
 
         [Test]
@@ -77,11 +86,14 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var model in models)
             {
-                Assert.AreEqual("cat", model.Category);
-                Assert.AreEqual("name", model.Name);
-                Assert.AreEqual(1234, model.Priority);
-                Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
-                Assert.AreEqual("name", ((ITableEntity)model).RowKey);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(model.Category, Is.EqualTo("cat"));
+                    Assert.That(model.Name, Is.EqualTo("name"));
+                    Assert.That(model.Priority, Is.EqualTo(1234));
+                    Assert.That(((ITableEntity)model).PartitionKey, Is.EqualTo("cat"));
+                    Assert.That(((ITableEntity)model).RowKey, Is.EqualTo("name"));
+                });
             }
         }
 
@@ -92,9 +104,12 @@ namespace Azure.Data.Tables.Tests
 
             new TablesTypeBinder().Serialize(sourceModel, dictionary);
 
-            Assert.AreEqual("cat", dictionary["Category"]);
-            Assert.AreEqual("cat", dictionary["PartitionKey"]);
-            Assert.AreEqual("name", dictionary["RowKey"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dictionary["Category"], Is.EqualTo("cat"));
+                Assert.That(dictionary["PartitionKey"], Is.EqualTo("cat"));
+                Assert.That(dictionary["RowKey"], Is.EqualTo("name"));
+            });
         }
 
         private class ExplicitInterfaceModel : ITableEntity

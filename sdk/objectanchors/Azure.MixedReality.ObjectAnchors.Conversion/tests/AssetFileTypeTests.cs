@@ -21,9 +21,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         [Test]
         public void Equality()
         {
-            Assert.True(new AssetFileType(".foo").Equals(new AssetFileType(".FOO")));
-            Assert.False(new AssetFileType(".foo").Equals(new AssetFileType(".bar")));
-            Assert.False(new AssetFileType(".foo").Equals(".bar"));
+            Assert.That(new AssetFileType(".foo"), Is.EqualTo(new AssetFileType(".FOO")));
+            Assert.Multiple(() =>
+            {
+                Assert.That(new AssetFileType(".foo").Equals(new AssetFileType(".bar")), Is.False);
+                Assert.That(new AssetFileType(".foo").Equals(".bar"), Is.False);
+            });
         }
 
         [Test]
@@ -36,7 +39,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             int actualHashCode = assetFileType.GetHashCode();
 
             // Assert
-            Assert.AreEqual(string.Empty.GetHashCode(), actualHashCode);
+            Assert.That(actualHashCode, Is.EqualTo(string.Empty.GetHashCode()));
         }
     }
 }

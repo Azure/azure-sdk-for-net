@@ -78,14 +78,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableNotebook notebook = await DisposableNotebook.Create (client, this.Recording);
 
             IList<NotebookResource> notebooks = await client.GetNotebooksByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(notebooks.Count, 1);
+            Assert.That(notebooks, Is.Not.Empty);
 
             foreach (var expectedNotebook in notebooks)
             {
                 NotebookResource actualNotebook = await client.GetNotebookAsync(expectedNotebook.Name);
-                Assert.AreEqual(expectedNotebook.Name, actualNotebook.Name);
-                Assert.AreEqual(expectedNotebook.Id, actualNotebook.Id);
-                Assert.AreEqual(expectedNotebook.Properties.BigDataPool?.ReferenceName, actualNotebook.Properties.BigDataPool?.ReferenceName);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualNotebook.Name, Is.EqualTo(expectedNotebook.Name));
+                    Assert.That(actualNotebook.Id, Is.EqualTo(expectedNotebook.Id));
+                    Assert.That(actualNotebook.Properties.BigDataPool?.ReferenceName, Is.EqualTo(expectedNotebook.Properties.BigDataPool?.ReferenceName));
+                });
             }
         }
 
@@ -113,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             NotebookResource notebook = await client.GetNotebookAsync (newNotebookName);
-            Assert.AreEqual (newNotebookName, notebook.Name);
+            Assert.That(notebook.Name, Is.EqualTo(newNotebookName));
 
             NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync (newNotebookName);
             await operation.WaitForCompletionResponseAsync();
@@ -127,7 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             await using DisposableNotebook notebook = await DisposableNotebook.Create (client, this.Recording);
             AsyncPageable<NotebookResource> summary = client.GetNotebookSummaryByWorkSpaceAsync ();
-            Assert.GreaterOrEqual((await summary.ToListAsync()).Count, 1);
+            Assert.That((await summary.ToListAsync()), Is.Not.Empty);
         }
     }
 }

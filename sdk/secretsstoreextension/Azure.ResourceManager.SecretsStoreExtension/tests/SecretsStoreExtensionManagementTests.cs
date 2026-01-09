@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         {
             ResourceGroupCollection rgs = DefaultSubscription.GetResourceGroups();
             Response<ResourceGroupResource> rgrResponse = await rgs.GetAsync(TestEnvironment.ClusterResourceGroup);
-            Assert.IsTrue(rgrResponse.HasValue);
+            Assert.That(rgrResponse.HasValue, Is.True);
             return rgrResponse.Value;
         }
 

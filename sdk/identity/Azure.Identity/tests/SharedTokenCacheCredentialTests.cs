@@ -76,11 +76,14 @@ namespace Azure.Identity.Tests
                 Accounts = new List<IAccount> { new MockAccount("nonexpecteduser@mockdomain.com") },
                 ExtendedSilentAuthFactory = (_, _, account, _, _, _) =>
                 {
-                    Assert.AreEqual(ExpectedUsername, account.Username);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(account.Username, Is.EqualTo(ExpectedUsername));
 
-                    Assert.AreEqual(expectedEnvironment, account.Environment);
+                        Assert.That(account.Environment, Is.EqualTo(expectedEnvironment));
 
-                    Assert.AreEqual(expectedHomeId, account.HomeAccountId.Identifier);
+                        Assert.That(account.HomeAccountId.Identifier, Is.EqualTo(expectedHomeId));
+                    });
 
                     acquireTokenSilentCalled = true;
 
@@ -92,7 +95,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.IsTrue(acquireTokenSilentCalled);
+            Assert.That(acquireTokenSilentCalled, Is.True);
         }
 
         [Test]
@@ -111,7 +114,7 @@ namespace Azure.Identity.Tests
 
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsTrue(cacheDelegateCalled);
+            Assert.That(cacheDelegateCalled, Is.True);
         }
 
         [Test]
@@ -130,9 +133,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -151,9 +157,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -172,9 +181,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -200,9 +212,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -227,9 +242,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -249,28 +267,28 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(SharedTokenCacheCredential.NoAccountsInCacheMessage));
 
             // with username
             var credential2 = InstrumentClient(new SharedTokenCacheCredential(null, ExpectedUsername, null, null, mockMsalClient));
 
             var ex2 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential2.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex2.Message);
+            Assert.That(ex2.Message, Is.EqualTo(SharedTokenCacheCredential.NoAccountsInCacheMessage));
 
             // with tenantId
             var credential3 = InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), null, null, null, mockMsalClient));
 
             var ex3 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential3.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex3.Message);
+            Assert.That(ex3.Message, Is.EqualTo(SharedTokenCacheCredential.NoAccountsInCacheMessage));
 
             // with tenantId and username
             var credential4 = InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), ExpectedUsername, null, null, mockMsalClient));
 
             var ex4 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential4.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex4.Message);
+            Assert.That(ex4.Message, Is.EqualTo(SharedTokenCacheCredential.NoAccountsInCacheMessage));
 
             await Task.CompletedTask;
         }
@@ -297,7 +315,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(ex.Message, SharedTokenCacheCredential.MultipleAccountsInCacheMessage);
+            Assert.That(ex.Message, Is.EqualTo(SharedTokenCacheCredential.MultipleAccountsInCacheMessage));
 
             await Task.CompletedTask;
         }
@@ -325,9 +343,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(
-                ex.Message,
-                $"SharedTokenCacheCredential authentication unavailable. No account matching the specified username: {ExpectedUsername} was found in the cache.");
+            Assert.That(
+ex.Message,
+                Is.EqualTo(                $"SharedTokenCacheCredential authentication unavailable. No account matching the specified username: {ExpectedUsername} was found in the cache."));
 
             await Task.CompletedTask;
         }
@@ -356,9 +374,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(
-                $"SharedTokenCacheCredential authentication unavailable. No account matching the specified tenantId: {tenantId} was found in the cache.",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo($"SharedTokenCacheCredential authentication unavailable. No account matching the specified tenantId: {tenantId} was found in the cache."));
 
             await Task.CompletedTask;
         }
@@ -387,9 +405,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(
-                $"SharedTokenCacheCredential authentication unavailable. No account matching the specified username: {ExpectedUsername} tenantId: {tenantId} was found in the cache.",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo($"SharedTokenCacheCredential authentication unavailable. No account matching the specified username: {ExpectedUsername} tenantId: {tenantId} was found in the cache."));
 
             await Task.CompletedTask;
         }
@@ -418,9 +436,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(
-                ex.Message,
-                $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified username: {ExpectedUsername} were found in the cache.");
+            Assert.That(
+ex.Message,
+                Is.EqualTo(                $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified username: {ExpectedUsername} were found in the cache."));
 
             await Task.CompletedTask;
         }
@@ -449,9 +467,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(
-                ex.Message,
-                $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified tenantId: {mockuserGuestTenantId} were found in the cache.");
+            Assert.That(
+                $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified tenantId: {mockuserGuestTenantId} were found in the cache.",
+                Is.EqualTo(ex.Message));
 
             await Task.CompletedTask;
         }
@@ -480,9 +498,9 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(
-                ex.Message,
-                $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified username: {ExpectedUsername} tenantId: {mockuserTenantId} were found in the cache.");
+            Assert.That(
+                $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified username: {ExpectedUsername} tenantId: {mockuserTenantId} were found in the cache.",
+                Is.EqualTo(ex.Message));
 
             await Task.CompletedTask;
         }
@@ -518,9 +536,12 @@ namespace Azure.Identity.Tests
 
             var token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -543,7 +564,7 @@ namespace Azure.Identity.Tests
             var expErrorMessage =
                 $"SharedTokenCacheCredential authentication unavailable. Token acquisition failed for user {ExpectedUsername}. Ensure that you have authenticated with a developer tool that supports Azure single sign on.";
 
-            Assert.AreEqual(expErrorMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(expErrorMessage));
 
             await Task.CompletedTask;
         }
@@ -570,9 +591,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -601,9 +625,12 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken, token.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expToken));
 
-            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
+                Assert.That(token.ExpiresOn, Is.EqualTo(expExpiresOn));
+            });
         }
 
         [Test]
@@ -613,7 +640,7 @@ namespace Azure.Identity.Tests
 
             var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { ClientId = clientId });
 
-            Assert.AreEqual(clientId, credential.Client.ClientId);
+            Assert.That(credential.Client.ClientId, Is.EqualTo(clientId));
         }
 
         [Test]
@@ -629,8 +656,11 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await credential.GetTokenAsync(context);
 
-            Assert.AreEqual(expectedToken, token.Token);
-            Assert.AreEqual(expiresOn, token.ExpiresOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(expectedToken));
+                Assert.That(token.ExpiresOn, Is.EqualTo(expiresOn));
+            });
         }
     }
 }

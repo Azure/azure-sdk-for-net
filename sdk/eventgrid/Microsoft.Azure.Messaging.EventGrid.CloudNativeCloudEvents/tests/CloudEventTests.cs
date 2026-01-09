@@ -84,31 +84,34 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                 if (inputAttributes.Contains(TraceParentHeaderName) &&
                     inputAttributes.Contains(TraceStateHeaderName))
                 {
-                    Assert.AreEqual(
-                        inputEnum.Current[TraceParentHeaderName],
-                        cloudEvent[TraceParentHeaderName]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(
+                                            cloudEvent[TraceParentHeaderName],
+                                            Is.EqualTo(inputEnum.Current[TraceParentHeaderName]));
 
-                    Assert.AreEqual(
-                        inputEnum.Current[TraceStateHeaderName],
-                        cloudEvent[TraceStateHeaderName]);
+                        Assert.That(
+                            cloudEvent[TraceStateHeaderName],
+                            Is.EqualTo(inputEnum.Current[TraceStateHeaderName]));
+                    });
                 }
                 else if (inputAttributes.Contains(TraceParentHeaderName))
                 {
-                    Assert.AreEqual(
-                        inputEnum.Current[TraceParentHeaderName],
-                        cloudEvent[TraceParentHeaderName]);
+                    Assert.That(
+                        cloudEvent[TraceParentHeaderName],
+                        Is.EqualTo(inputEnum.Current[TraceParentHeaderName]));
                 }
                 else if (inputAttributes.Contains(TraceStateHeaderName))
                 {
-                    Assert.AreEqual(
-                        inputEnum.Current[TraceStateHeaderName],
-                       cloudEvent[TraceStateHeaderName]);
+                    Assert.That(
+                        cloudEvent[TraceStateHeaderName],
+                       Is.EqualTo(inputEnum.Current[TraceStateHeaderName]));
                 }
                 else
                 {
-                    Assert.AreEqual(
-                       activity.Id,
-                       cloudEvent[TraceParentHeaderName]);
+                    Assert.That(
+                       cloudEvent[TraceParentHeaderName],
+                       Is.EqualTo(activity.Id));
                 }
             }
         }

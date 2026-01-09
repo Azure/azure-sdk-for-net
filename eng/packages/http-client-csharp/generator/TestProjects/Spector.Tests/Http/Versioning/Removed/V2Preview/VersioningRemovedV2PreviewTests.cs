@@ -15,8 +15,11 @@ namespace TestProjects.Spector.Tests.Http.Versioning.Removed.V2Preview
         {
             var model = new ModelV3("123");
             var response = await new RemovedClient(host).ModelV3Async(model);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("123", response.Value.Id);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Id, Is.EqualTo("123"));
+            });
         });
     }
 }

@@ -27,8 +27,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             ValidateContosoReceiptAnalyzeResult(operation.Value);
         }
@@ -43,8 +46,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             ValidateContosoReceiptAnalyzeResult(operation.Value);
         }
@@ -59,22 +65,28 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 
-            Assert.That(operation.HasCompleted);
-            Assert.That(operation.HasValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasCompleted);
+                Assert.That(operation.HasValue);
+            });
 
             var result = operation.Value;
 
             ValidateGenericAnalyzeResult(operation.Value, "prebuilt-receipt");
 
-            Assert.That(result.Content, Is.Empty);
-            Assert.That(result.Paragraphs, Is.Empty);
-            Assert.That(result.Tables, Is.Empty);
-            Assert.That(result.Figures, Is.Empty);
-            Assert.That(result.Sections, Is.Empty);
-            Assert.That(result.KeyValuePairs, Is.Empty);
-            Assert.That(result.Styles, Is.Empty);
-            Assert.That(result.Languages, Is.Empty);
-            Assert.That(result.Documents, Is.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Content, Is.Empty);
+                Assert.That(result.Paragraphs, Is.Empty);
+                Assert.That(result.Tables, Is.Empty);
+                Assert.That(result.Figures, Is.Empty);
+                Assert.That(result.Sections, Is.Empty);
+                Assert.That(result.KeyValuePairs, Is.Empty);
+                Assert.That(result.Styles, Is.Empty);
+                Assert.That(result.Languages, Is.Empty);
+                Assert.That(result.Documents, Is.Empty);
+            });
 
             var page = result.Pages.Single();
 
@@ -140,9 +152,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         private void ValidateGenericAnalyzeResult(AnalyzeResult analyzeResult, string modelId)
         {
-            Assert.That(analyzeResult.ModelId, Is.EqualTo(modelId));
-            Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(analyzeResult.ModelId, Is.EqualTo(modelId));
+                Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
+                Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
+            });
 
             for (int pageNumber = 1; pageNumber <= analyzeResult.Pages.Count; pageNumber++)
             {
@@ -163,8 +178,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
                 foreach (var region in document.BoundingRegions)
                 {
-                    Assert.That(region.PageNumber, Is.EqualTo(expectedPageNumber++));
-                    Assert.That(region.Polygon.Count, Is.EqualTo(8));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(region.PageNumber, Is.EqualTo(expectedPageNumber++));
+                        Assert.That(region.Polygon, Has.Count.EqualTo(8));
+                    });
                 }
 
                 Assert.That(document.Confidence, Is.GreaterThanOrEqualTo(0f));
@@ -184,8 +202,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var documentSpan = document.Spans.Single();
 
-            Assert.That(documentSpan.Offset, Is.EqualTo(0));
-            Assert.That(documentSpan.Length, Is.EqualTo(analyzeResult.Content.Length));
+            Assert.Multiple(() =>
+            {
+                Assert.That(documentSpan.Offset, Is.EqualTo(0));
+                Assert.That(documentSpan.Length, Is.EqualTo(analyzeResult.Content.Length));
+            });
 
             var merchantAddressField = document.Fields["MerchantAddress"];
             var merchantNameField = document.Fields["MerchantName"];
@@ -194,12 +215,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var transactionTimeField = document.Fields["TransactionTime"];
             var totalField = document.Fields["Total"];
 
-            Assert.That(merchantAddressField.FieldType, Is.EqualTo(DocumentFieldType.Address));
-            Assert.That(merchantNameField.FieldType, Is.EqualTo(DocumentFieldType.String));
-            Assert.That(merchantPhoneNumberField.FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
-            Assert.That(transactionDateField.FieldType, Is.EqualTo(DocumentFieldType.Date));
-            Assert.That(transactionTimeField.FieldType, Is.EqualTo(DocumentFieldType.Time));
-            Assert.That(totalField.FieldType, Is.EqualTo(DocumentFieldType.Currency));
+            Assert.Multiple(() =>
+            {
+                Assert.That(merchantAddressField.FieldType, Is.EqualTo(DocumentFieldType.Address));
+                Assert.That(merchantNameField.FieldType, Is.EqualTo(DocumentFieldType.String));
+                Assert.That(merchantPhoneNumberField.FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
+                Assert.That(transactionDateField.FieldType, Is.EqualTo(DocumentFieldType.Date));
+                Assert.That(transactionTimeField.FieldType, Is.EqualTo(DocumentFieldType.Time));
+                Assert.That(totalField.FieldType, Is.EqualTo(DocumentFieldType.Currency));
+            });
 
             var merchantAddress = merchantAddressField.ValueAddress;
             var merchantName = merchantNameField.ValueString;
@@ -208,37 +232,43 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var transactionTime = transactionTimeField.ValueTime.Value;
             var total = totalField.ValueCurrency;
 
-            Assert.That(merchantAddress.City, Is.EqualTo("Redmond"));
-            Assert.That(merchantAddress.CountryRegion, Is.Null);
-            Assert.That(merchantAddress.HouseNumber, Is.EqualTo("123"));
-            Assert.That(merchantAddress.PoBox, Is.Null);
-            Assert.That(merchantAddress.PostalCode, Is.EqualTo("98052"));
-            Assert.That(merchantAddress.Road, Is.EqualTo("Main Street"));
-            Assert.That(merchantAddress.State, Is.EqualTo("WA"));
-            Assert.That(merchantAddress.StreetAddress, Is.EqualTo("123 Main Street"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(merchantAddress.City, Is.EqualTo("Redmond"));
+                Assert.That(merchantAddress.CountryRegion, Is.Null);
+                Assert.That(merchantAddress.HouseNumber, Is.EqualTo("123"));
+                Assert.That(merchantAddress.PoBox, Is.Null);
+                Assert.That(merchantAddress.PostalCode, Is.EqualTo("98052"));
+                Assert.That(merchantAddress.Road, Is.EqualTo("Main Street"));
+                Assert.That(merchantAddress.State, Is.EqualTo("WA"));
+                Assert.That(merchantAddress.StreetAddress, Is.EqualTo("123 Main Street"));
 
-            Assert.That(merchantName, Is.EqualTo("Contoso"));
-            Assert.That(merchantPhoneNumber, Is.EqualTo("+11234567890"));
+                Assert.That(merchantName, Is.EqualTo("Contoso"));
+                Assert.That(merchantPhoneNumber, Is.EqualTo("+11234567890"));
 
-            Assert.That(transactionDate.Year, Is.EqualTo(2019));
-            Assert.That(transactionDate.Month, Is.EqualTo(6));
-            Assert.That(transactionDate.Day, Is.EqualTo(10));
+                Assert.That(transactionDate.Year, Is.EqualTo(2019));
+                Assert.That(transactionDate.Month, Is.EqualTo(6));
+                Assert.That(transactionDate.Day, Is.EqualTo(10));
 
-            Assert.That(transactionTime.Hours, Is.EqualTo(13));
-            Assert.That(transactionTime.Minutes, Is.EqualTo(59));
-            Assert.That(transactionTime.Seconds, Is.EqualTo(0));
+                Assert.That(transactionTime.Hours, Is.EqualTo(13));
+                Assert.That(transactionTime.Minutes, Is.EqualTo(59));
+                Assert.That(transactionTime.Seconds, Is.EqualTo(0));
 
-            Assert.That(total.Amount, Is.EqualTo(1203.39).Within(0.0001));
-            Assert.That(total.CurrencyCode, Is.EqualTo("USD"));
-            Assert.That(total.CurrencySymbol, Is.EqualTo("$"));
+                Assert.That(total.Amount, Is.EqualTo(1203.39).Within(0.0001));
+                Assert.That(total.CurrencyCode, Is.EqualTo("USD"));
+                Assert.That(total.CurrencySymbol, Is.EqualTo("$"));
+            });
         }
 
         private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)
         {
             var span = spans.Single();
 
-            Assert.That(span.Offset, Is.EqualTo(0));
-            Assert.That(span.Length, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(span.Offset, Is.EqualTo(0));
+                Assert.That(span.Length, Is.EqualTo(0));
+            });
         }
     }
 }

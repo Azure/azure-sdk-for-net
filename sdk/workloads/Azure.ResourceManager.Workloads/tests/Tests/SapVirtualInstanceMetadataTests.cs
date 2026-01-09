@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                     AzureLocation.EastUS2,
                     new SapAvailabilityZoneDetailsContent(
                         AzureLocation.EastUS2, SapProductType.S4Hana, SapDatabaseType.Hana));
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("Sap Availability Zone Details Response : " + getObjectAsString(response.Value));
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                         SapDatabaseType.Hana,
                         SapDeploymentType.ThreeTier,
                         "Standard_M32ts"));
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("sap Disk Configurations Response : " + getObjectAsString(response.Value));
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 await subscription.SapSupportedSkuAsync(
                     AzureLocation.EastUS2,
                     request);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("sap Supported Skus Response : " + getObjectAsString(response.Value));
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 await subscription.SapSizingRecommendationsAsync(
                     AzureLocation.EastUS2,
                     request);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("sap Sizing Recommendations Response : " + getObjectAsString(response.Value));
         }
     }

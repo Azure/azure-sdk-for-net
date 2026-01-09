@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Tests.Utilities
         public void CommaJoin(IEnumerable<string> source, string expected)
         {
             string actual = source.CommaJoin();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

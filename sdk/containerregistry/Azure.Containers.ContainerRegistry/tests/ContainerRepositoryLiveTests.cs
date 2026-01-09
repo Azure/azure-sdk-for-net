@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContainerRepositoryProperties properties = await repository.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(_repositoryName, properties.Name);
+            Assert.That(properties.Name, Is.EqualTo(_repositoryName));
         }
 
         [RecordedTest, NonParallelizable]
@@ -52,18 +52,24 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     CanDelete = false,
                 });
 
-            // Assert
-            Assert.IsFalse(properties.CanList);
-            Assert.IsFalse(properties.CanRead);
-            Assert.IsFalse(properties.CanWrite);
-            Assert.IsFalse(properties.CanDelete);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(properties.CanList, Is.False);
+                Assert.That(properties.CanRead, Is.False);
+                Assert.That(properties.CanWrite, Is.False);
+                Assert.That(properties.CanDelete, Is.False);
+            });
 
             ContainerRepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
 
-            Assert.IsFalse(updatedProperties.CanList);
-            Assert.IsFalse(updatedProperties.CanRead);
-            Assert.IsFalse(updatedProperties.CanWrite);
-            Assert.IsFalse(updatedProperties.CanDelete);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedProperties.CanList, Is.False);
+                Assert.That(updatedProperties.CanRead, Is.False);
+                Assert.That(updatedProperties.CanWrite, Is.False);
+                Assert.That(updatedProperties.CanDelete, Is.False);
+            });
 
             // Cleanup
             await repository.UpdatePropertiesAsync(originalProperties);
@@ -103,7 +109,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 var repositories = client.GetRepositoryNamesAsync();
-                Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not deleted.");
+                Assert.That(await repositories.ContainsAsync(repositoryId), Is.True, $"Test set-up failed: Repository {repositoryId} was not deleted.");
 
                 var repository = client.GetRepository(repositoryId);
 
@@ -148,8 +154,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.IsNotNull(latest);
-            Assert.AreEqual(_repositoryName, latest.RepositoryName);
+            Assert.That(latest, Is.Not.Null);
+            Assert.That(latest.RepositoryName, Is.EqualTo(_repositoryName));
         }
 
         [RecordedTest]
@@ -169,7 +175,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             int pageCount = await pages.CountAsync();
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
         }
 
         [RecordedTest]
@@ -216,14 +222,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     firstPage = page;
                 }
 
-                Assert.LessOrEqual(page.Values.Count, pageSize);
+                Assert.That(page.Values, Has.Count.LessThanOrEqualTo(pageSize));
                 pageCount++;
             }
 
             // Assert
-            Assert.AreNotEqual(null, firstPage);
-            Assert.AreEqual(secondDigest, firstPage.Values[0].Digest);
-            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+            Assert.That(firstPage, Is.Not.EqualTo(null));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstPage.Values[0].Digest, Is.EqualTo(secondDigest));
+                Assert.That(pageCount, Is.GreaterThanOrEqualTo(minExpectedPages));
+            });
         }
 
         [RecordedTest]
@@ -252,13 +261,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 int i = 0;
                 await foreach (ArtifactManifestProperties manifest in manifests)
                 {
-                    Assert.AreEqual(repositoryId, manifest.RepositoryName);
-                    Assert.AreEqual(1, manifest.Tags.Count);
-                    Assert.AreEqual(tags[i], manifest.Tags[0]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(manifest.RepositoryName, Is.EqualTo(repositoryId));
+                        Assert.That(manifest.Tags, Has.Count.EqualTo(1));
+                    });
+                    Assert.That(manifest.Tags[0], Is.EqualTo(tags[i]));
                     i++;
                 }
 
-                Assert.AreEqual(2, i);
+                Assert.That(i, Is.EqualTo(2));
             }
             finally
             {

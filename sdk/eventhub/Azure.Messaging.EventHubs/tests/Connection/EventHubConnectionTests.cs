@@ -296,8 +296,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+                Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -315,8 +318,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+                Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -362,9 +368,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new ReadableOptionsMock(fakeConnection);
             var options = connection.Options;
 
-            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
-            Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
-            Assert.That(options.CustomEndpointAddress, Is.Not.Null, "The custom endpoint address should have been implicitly set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+                Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
+                Assert.That(options.CustomEndpointAddress, Is.Not.Null, "The custom endpoint address should have been implicitly set.");
+            });
             Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the connection string endpoint.");
         }
 
@@ -382,9 +391,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new ReadableOptionsMock(fakeConnection, constructorOptions);
             var options = connection.Options;
 
-            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
-            Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
-            Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the explicitly provided value.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+                Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
+                Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the explicitly provided value.");
+            });
         }
 
         /// <summary>
@@ -609,8 +621,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+                Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -628,8 +643,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+                Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
+            });
         }
 
         /// <summary>
@@ -816,12 +834,18 @@ namespace Azure.Messaging.EventHubs.Tests
             connection.CreateTransportProducer(null, expectedIdentifier, expectedFeatures, expectedPartitionOptions, expectedRetry);
 
             Assert.That(transportClient.CreateProducerCalledWith, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
-            Assert.That(transportClient.CreateProducerCalledWith.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should match.");
-            Assert.That(transportClient.CreateProducerCalledWith.Features, Is.EqualTo(expectedFeatures), "The features should match.");
-            Assert.That(transportClient.CreateProducerCalledWith.PartitionOptions, Is.Not.Null, "The partition options should have been specified.");
-            Assert.That(transportClient.CreateProducerCalledWith.PartitionOptions, Is.SameAs(expectedPartitionOptions), "The partition options should match.");
-            Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.Not.Null, "The retry policy should have been specified.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
+                Assert.That(transportClient.CreateProducerCalledWith.Identifier, Is.EqualTo(expectedIdentifier), "The identifier should match.");
+                Assert.That(transportClient.CreateProducerCalledWith.Features, Is.EqualTo(expectedFeatures), "The features should match.");
+                Assert.That(transportClient.CreateProducerCalledWith.PartitionOptions, Is.Not.Null, "The partition options should have been specified.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(transportClient.CreateProducerCalledWith.PartitionOptions, Is.SameAs(expectedPartitionOptions), "The partition options should match.");
+                Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.Not.Null, "The retry policy should have been specified.");
+            });
             Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.SameAs(expectedRetry), "The retry policies should match.");
         }
 
@@ -848,15 +872,18 @@ namespace Azure.Messaging.EventHubs.Tests
             connection.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedIdentifier, expectedPosition, expectedRetryPolicy, expectedTrackLastEnqueued, expectedInvalidateConsumerWhenPartitionIsStolen, expectedOwnerLevel, expectedPrefetch);
             (var actualConsumerGroup, var actualPartition, var actualIdentifier, EventPosition actualPosition, var actualRetry, var actualTrackLastEnqueued, var actualInvalidateConsumerWhenPartitionIsStolen, var actualOwnerLevel, var actualPrefetch) = transportClient.CreateConsumerCalledWith;
 
-            Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
-            Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer group should match.");
-            Assert.That(actualIdentifier, Is.EqualTo(expectedIdentifier), "The identifier should match.");
-            Assert.That(actualPosition.OffsetString, Is.EqualTo(expectedPosition.OffsetString), "The event position to receive should match.");
-            Assert.That(actualRetry, Is.SameAs(expectedRetryPolicy), "The retryPolicy should match.");
-            Assert.That(actualOwnerLevel, Is.EqualTo(expectedOwnerLevel), "The owner levels should match.");
-            Assert.That(actualPrefetch, Is.EqualTo(expectedPrefetch), "The prefetch counts should match.");
-            Assert.That(actualTrackLastEnqueued, Is.EqualTo(expectedTrackLastEnqueued), "The flag for tracking the last enqueued event should match.");
-            Assert.That(actualInvalidateConsumerWhenPartitionIsStolen, Is.EqualTo(expectedInvalidateConsumerWhenPartitionIsStolen), "The flag for invalidating the consumer on a stolen partition should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
+                Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer group should match.");
+                Assert.That(actualIdentifier, Is.EqualTo(expectedIdentifier), "The identifier should match.");
+                Assert.That(actualPosition.OffsetString, Is.EqualTo(expectedPosition.OffsetString), "The event position to receive should match.");
+                Assert.That(actualRetry, Is.SameAs(expectedRetryPolicy), "The retryPolicy should match.");
+                Assert.That(actualOwnerLevel, Is.EqualTo(expectedOwnerLevel), "The owner levels should match.");
+                Assert.That(actualPrefetch, Is.EqualTo(expectedPrefetch), "The prefetch counts should match.");
+                Assert.That(actualTrackLastEnqueued, Is.EqualTo(expectedTrackLastEnqueued), "The flag for tracking the last enqueued event should match.");
+                Assert.That(actualInvalidateConsumerWhenPartitionIsStolen, Is.EqualTo(expectedInvalidateConsumerWhenPartitionIsStolen), "The flag for invalidating the consumer on a stolen partition should match.");
+            });
         }
 
         /// <summary>
@@ -913,8 +940,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var uri = new Uri(resource, UriKind.Absolute);
 
-            Assert.That(uri.AbsolutePath.StartsWith("/"), Is.True, "The resource path have been normalized to begin with a trailing slash.");
-            Assert.That(uri.AbsolutePath.EndsWith("/"), Is.False, "The resource path have been normalized to not end with a trailing slash.");
+            Assert.That(uri.AbsolutePath, Does.StartWith("/"), "The resource path have been normalized to begin with a trailing slash.");
+            Assert.That(uri.AbsolutePath, Does.Not.EndWith("/"), "The resource path have been normalized to not end with a trailing slash.");
         }
 
         /// <summary>
@@ -936,8 +963,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var uri = new Uri(resource, UriKind.Absolute);
 
-            Assert.That(uri.Host, Is.EqualTo(fullyQualifiedNamespace), "The resource should match the host.");
-            Assert.That(uri.AbsolutePath, Is.EqualTo(expectedPath), "The resource path should match the Event Hub path.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(uri.Host, Is.EqualTo(fullyQualifiedNamespace), "The resource should match the host.");
+                Assert.That(uri.AbsolutePath, Is.EqualTo(expectedPath), "The resource path should match the Event Hub path.");
+            });
         }
 
         /// <summary>

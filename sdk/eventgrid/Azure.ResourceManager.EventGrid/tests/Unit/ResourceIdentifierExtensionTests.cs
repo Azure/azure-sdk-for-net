@@ -15,9 +15,12 @@ namespace Azure.ResourceManager.EventGrid.Tests.Unit
             var scope = new ResourceIdentifier(rawId);
             var parentPart = scope.Parent.SubstringAfterProviderNamespace();
             var actualParentName = (string.IsNullOrEmpty(parentPart) ? string.Empty : $"{parentPart}/") + scope.ResourceType.GetLastType();
-            Assert.AreEqual(ns, scope.ResourceType.Namespace);
-            Assert.AreEqual(parentName, actualParentName);
-            Assert.AreEqual(name, scope.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(scope.ResourceType.Namespace, Is.EqualTo(ns));
+                Assert.That(actualParentName, Is.EqualTo(parentName));
+                Assert.That(scope.Name, Is.EqualTo(name));
+            });
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             // Create a DataFactory
             string dataFactoryName = Recording.GenerateAssetName($"adf-element-");
             DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            Assert.IsNotNull(dataFactory.Data.Id);
+            Assert.That(dataFactory.Data.Id, Is.Not.Null);
             return dataFactory;
         }
 
@@ -48,10 +48,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var jsonCon = JsonSerializer.Deserialize<DataFactoryElementTestCollection>(response);
 
             DataFactoryElement<string> element = jsonCon.JsonProperties.JsonTypeProperties.ConnectionString.ToString();
-            Assert.IsNotNull(linkedService);
-            Assert.IsNotNull(element);
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkedService, Is.Not.Null);
+                Assert.That(element, Is.Not.Null);
+            });
             AssertStringDataFactoryElement(element, "**********", DataFactoryElementKind.Literal);
-            Assert.AreEqual("**********", element.ToString());
+            Assert.That(element.ToString(), Is.EqualTo("**********"));
         }
 
         [Test]
@@ -73,10 +76,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var jsonCon = JsonSerializer.Deserialize<DataFactoryElementTestCollection>(response);
 
             DataFactoryElement<string> element = jsonCon.JsonProperties.JsonTypeProperties.ConnectionString.ToString();
-            Assert.IsNotNull(linkedService);
-            Assert.IsNotNull(element);
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkedService, Is.Not.Null);
+                Assert.That(element, Is.Not.Null);
+            });
             AssertStringDataFactoryElement(element, connectionStringExpected, DataFactoryElementKind.Literal);
-            Assert.AreEqual(connectionStringExpected, element.ToString());
+            Assert.That(element.ToString(), Is.EqualTo(connectionStringExpected));
         }
 
         [Test]
@@ -112,13 +118,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             DataFactoryElement<string> elementContainer = jsonCon.JsonProperties.JsonTypeProperties.Location.Container.ToString();
             DataFactoryElement<string> elementFileName = jsonCon.JsonProperties.JsonTypeProperties.Location.FileName.ToString();
-            Assert.IsNotNull(elementContainer);
-            Assert.IsNotNull(elementFileName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(elementContainer, Is.Not.Null);
+                Assert.That(elementFileName, Is.Not.Null);
+            });
             AssertStringDataFactoryElement(elementContainer, "@guid()", DataFactoryElementKind.Literal);
-            Assert.AreEqual("@guid()", elementContainer.ToString());
+            Assert.That(elementContainer.ToString(), Is.EqualTo("@guid()"));
 
             AssertStringDataFactoryElement(elementFileName, "@utcnow()", DataFactoryElementKind.Literal);
-            Assert.AreEqual("@utcnow()", elementFileName.ToString());
+            Assert.That(elementFileName.ToString(), Is.EqualTo("@utcnow()"));
         }
 
         [Test]
@@ -142,16 +151,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var jsonCon = JsonSerializer.Deserialize<DataFactoryElementTestCollection>(response);
 
             DataFactoryElement<string> element = jsonCon.JsonProperties.JsonTypeProperties.ConnectionString.ToString();
-            Assert.IsNotNull(linkedService);
-            Assert.IsNotNull(element);
+            Assert.Multiple(() =>
+            {
+                Assert.That(linkedService, Is.Not.Null);
+                Assert.That(element, Is.Not.Null);
+            });
             AssertStringDataFactoryElement(element, "AzureSDKTest", DataFactoryElementKind.Literal);
-            Assert.AreEqual("AzureSDKTest", element.ToString());
+            Assert.That(element.ToString(), Is.EqualTo("AzureSDKTest"));
         }
 
         private static void AssertStringDataFactoryElement(DataFactoryElement<string> dfe, string expectedValue, DataFactoryElementKind expectedKind)
         {
-            Assert.AreEqual(expectedKind, dfe.Kind);
-            Assert.AreEqual(expectedValue, dfe.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(dfe.Kind, Is.EqualTo(expectedKind));
+                Assert.That(dfe.ToString(), Is.EqualTo(expectedValue));
+            });
         }
     }
 }

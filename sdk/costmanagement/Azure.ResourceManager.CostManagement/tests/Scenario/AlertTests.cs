@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         public async Task GetAll()
         {
             var list = await _alertCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

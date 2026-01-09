@@ -38,16 +38,16 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             };
             //Create
             Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data), new());
-            Assert.AreEqual(201, createResponse.Status);
+            Assert.That(createResponse.Status, Is.EqualTo(201));
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
-            Assert.AreEqual(200, getResponse.Status);
+            Assert.That(getResponse.Status, Is.EqualTo(200));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
             JsonElement getBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("datasources/test-datasources3", getBodyJson.GetProperty("id").GetString());
+            Assert.That(getBodyJson.GetProperty("id").GetString(), Is.EqualTo("datasources/test-datasources3"));
             //Delete
             Response deleteResponse = await client.DeleteAsync(new());
-            Assert.AreEqual(200, deleteResponse.Status);
+            Assert.That(deleteResponse.Status, Is.EqualTo(200));
         }
         [RecordedTest]
         public async Task GetScans()
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             using var jsonDocument = JsonDocument.Parse(fetchResponseList.Current);
             JsonElement fetchBodyJson = jsonDocument.RootElement;
             await fetchResponseList.DisposeAsync();
-            Assert.AreEqual("datasources/test-datasource1014/scans/test-scan1014", fetchBodyJson.GetProperty("id").GetString());
+            Assert.That(fetchBodyJson.GetProperty("id").GetString(), Is.EqualTo("datasources/test-datasource1014/scans/test-scan1014"));
         }
         private static BinaryData GetContentFromResponse(Response r)
         {

@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful deployment.");
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Assert.That(operation.GetRawResponse().Status, Is.EqualTo(200), "Expected the status to indicate successful deployment.");
         }
     }
 }

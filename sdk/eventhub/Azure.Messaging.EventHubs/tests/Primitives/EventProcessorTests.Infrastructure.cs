@@ -91,9 +91,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.InvokeReadLastEnqueuedEventProperties(partitionId), Is.EqualTo(lastEventProperties), "The last enqueued properties should have been returned.");
+                Assert.That(mockProcessor.Object.InvokeReadLastEnqueuedEventProperties(partitionId), Is.EqualTo(lastEventProperties), "The last enqueued properties should have been returned.");
+            });
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
             cancellationSource.Cancel();
@@ -165,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ToStringResultContainsTheProcessorIdentifier()
         {
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default) { CallBase = true };
-            Assert.That(mockProcessor.Object.ToString().Contains(mockProcessor.Object.Identifier), Is.True, "ToString should return a value containing the event processor identifier");
+            Assert.That(mockProcessor.Object.ToString(), Does.Contain(mockProcessor.Object.Identifier), "ToString should return a value containing the event processor identifier");
         }
 
         /// <summary>
@@ -277,8 +280,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var loadBalancer = GetLoadBalancer(mockProcessor.Object);
 
             Assert.That(loadBalancer, Is.Not.Null, "The load balancer should have been created.");
-            Assert.That(loadBalancer.LoadBalanceInterval, Is.EqualTo(options.LoadBalancingUpdateInterval), "The load balancing interval was incorrect.");
-            Assert.That(loadBalancer.OwnershipExpirationInterval, Is.EqualTo(options.PartitionOwnershipExpirationInterval), "The ownership expiration interval is incorrect.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(loadBalancer.LoadBalanceInterval, Is.EqualTo(options.LoadBalancingUpdateInterval), "The load balancing interval was incorrect.");
+                Assert.That(loadBalancer.OwnershipExpirationInterval, Is.EqualTo(options.PartitionOwnershipExpirationInterval), "The ownership expiration interval is incorrect.");
+            });
         }
     }
 }

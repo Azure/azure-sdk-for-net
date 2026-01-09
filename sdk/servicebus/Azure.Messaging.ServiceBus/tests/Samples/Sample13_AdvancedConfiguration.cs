@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             });
             #endregion
 
-            Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, client.TransportType);
+            Assert.That(client.TransportType, Is.EqualTo(ServiceBusTransportType.AmqpWebSockets));
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             });
             #endregion
 
-            Assert.AreEqual(10, receiver.PrefetchCount);
+            Assert.That(receiver.PrefetchCount, Is.EqualTo(10));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             });
             #endregion
 
-            Assert.AreEqual(10, processor.PrefetchCount);
+            Assert.That(processor.PrefetchCount, Is.EqualTo(10));
         }
 
         [Test]

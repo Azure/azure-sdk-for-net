@@ -43,9 +43,9 @@ namespace Azure.AI.Translation.Document.Tests
             var response = await client.TranslateAsync("hi", content, "en").ConfigureAwait(false);
             var requestString = File.ReadAllText(filePath);
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
-            Assert.IsNotEmpty(responseString);
-            Assert.IsNotNull(responseString);
-            Assert.AreNotEqual(requestString, responseString);
+            Assert.That(responseString, Is.Not.Empty);
+            Assert.That(responseString, Is.Not.Null);
+            Assert.That(responseString, Is.Not.EqualTo(requestString));
         }
     }
 }

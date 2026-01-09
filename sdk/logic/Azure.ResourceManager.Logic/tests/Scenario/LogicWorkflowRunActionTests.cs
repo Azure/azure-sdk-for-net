@@ -42,24 +42,27 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateRunData(LogicWorkflowRunActionResource actual)
         {
-            Assert.AreEqual("Response", actual.Data.Name);
-            Assert.NotNull(actual.Data.StartOn);
-            Assert.NotNull(actual.Data.EndOn);
-            Assert.AreEqual("Skipped", actual.Data.Status.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Data.Name, Is.EqualTo("Response"));
+                Assert.That(actual.Data.StartOn, Is.Not.Null);
+                Assert.That(actual.Data.EndOn, Is.Not.Null);
+                Assert.That(actual.Data.Status.ToString(), Is.EqualTo("Skipped"));
+            });
         }
 
         [RecordedTest]
         public async Task Exist()
         {
             bool flag = await _runActionCollection.ExistsAsync("Response");
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
         public async Task Get()
         {
             var runAction = await _runActionCollection.GetAsync("Response");
-            Assert.IsNotNull(runAction);
+            Assert.That(runAction, Is.Not.Null);
             ValidateRunData(runAction);
         }
 
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task GetAll()
         {
             var list = await _runActionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateRunData(list.FirstOrDefault());
         }
     }

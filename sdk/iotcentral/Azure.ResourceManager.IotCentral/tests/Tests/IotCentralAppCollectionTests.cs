@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
 
             // Check that the created app exists.
             var iotCentralAppExists = await appsCollection.ExistsAsync(appName, CancellationToken.None);
-            Assert.True(iotCentralAppExists);
+            Assert.That((bool)iotCentralAppExists, Is.True);
         }
     }
 }

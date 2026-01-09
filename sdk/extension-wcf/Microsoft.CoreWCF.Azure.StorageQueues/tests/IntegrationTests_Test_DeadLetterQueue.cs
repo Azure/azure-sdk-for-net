@@ -39,12 +39,12 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             await queue.SendMessageAsync(inputMessage);
 
             var testService = host.Services.GetRequiredService<TestService>();
-            Assert.False(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)), Is.False);
             var connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
 
             QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, Startup_ReceiveBinaryMessage_Success.DlqQueueName, QueueMessageEncoding.Base64);
             QueueMessage message = await queueClient.ReceiveMessageAsync();
-            Assert.AreEqual(inputMessage, message.MessageText);
+            Assert.That(message.MessageText, Is.EqualTo(inputMessage));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ApiVersion.H
         public Task Azure_ClientGenerator_Core_ApiVersion_Header() => Test(async (host) =>
         {
             var response = await new HeaderClient(host, null).HeaderApiVersionAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
     }
 }

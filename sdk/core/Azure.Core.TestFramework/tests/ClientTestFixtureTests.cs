@@ -33,7 +33,7 @@ namespace Azure.Core.TestFramework.Tests
             var fixture = new ClientTestFixtureAttribute(versions);
             var versionArray = fixture.GetType().GetField("_serviceVersions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(fixture) as object[];
             var max = ClientTestFixtureAttribute.GetMax(versionArray);
-            Assert.AreEqual(expected.ToString(), max.ToString());
+            Assert.That(max.ToString(), Is.EqualTo(expected.ToString()));
         }
 
         [Test]

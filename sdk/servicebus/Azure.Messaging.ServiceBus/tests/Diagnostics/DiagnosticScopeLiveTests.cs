@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var peeked = await receiver.PeekMessageAsync();
                 var peekScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PeekActivityName);
                 AssertCommonTags(peekScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                Assert.AreEqual(sendActivities[0].ParentId, peekScope.LinkedActivities.First().ParentId);
+                Assert.That(peekScope.LinkedActivities.First().ParentId, Is.EqualTo(sendActivities[0].ParentId));
 
                 var remaining = numMessages;
                 List<ServiceBusReceivedMessage> receivedMsgs = new List<ServiceBusReceivedMessage>();
@@ -76,10 +76,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(receiveScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                     var receiveLinkedActivities = receiveScope.LinkedActivities;
-                    Assert.Greater(receiveLinkedActivities.Count, 0);
+                    Assert.That(receiveLinkedActivities.Count, Is.GreaterThan(0));
                     for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
-                        Assert.AreEqual(sendActivities[i].ParentId, receiveLinkedActivities[i].ParentId);
+                        Assert.That(receiveLinkedActivities[i].ParentId, Is.EqualTo(sendActivities[i].ParentId));
                     }
                     remaining -= received.Count;
                 }
@@ -90,25 +90,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.CompleteMessageAsync(completed);
                 var completeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.CompleteActivityName);
                 AssertCommonTags(completeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                Assert.AreEqual(sendActivities[msgIndex].ParentId, completeScope.LinkedActivities.First().ParentId);
+                Assert.That(completeScope.LinkedActivities.First().ParentId, Is.EqualTo(sendActivities[msgIndex].ParentId));
 
                 var deferred = receivedMsgs[++msgIndex];
                 await receiver.DeferMessageAsync(deferred);
                 var deferredScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeferActivityName);
                 AssertCommonTags(deferredScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                Assert.AreEqual(sendActivities[msgIndex].ParentId, deferredScope.LinkedActivities.First().ParentId);
+                Assert.That(deferredScope.LinkedActivities.First().ParentId, Is.EqualTo(sendActivities[msgIndex].ParentId));
 
                 var deadLettered = receivedMsgs[++msgIndex];
                 await receiver.DeadLetterMessageAsync(deadLettered);
                 var deadLetterScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeadLetterActivityName);
                 AssertCommonTags(deadLetterScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                Assert.AreEqual(sendActivities[msgIndex].ParentId, deadLetterScope.LinkedActivities.First().ParentId);
+                Assert.That(deadLetterScope.LinkedActivities.First().ParentId, Is.EqualTo(sendActivities[msgIndex].ParentId));
 
                 var abandoned = receivedMsgs[++msgIndex];
                 await receiver.AbandonMessageAsync(abandoned);
                 var abandonScope = _listener.AssertAndRemoveScope(DiagnosticProperty.AbandonActivityName);
                 AssertCommonTags(abandonScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                Assert.AreEqual(sendActivities[msgIndex].ParentId, abandonScope.LinkedActivities.First().ParentId);
+                Assert.That(abandonScope.LinkedActivities.First().ParentId, Is.EqualTo(sendActivities[msgIndex].ParentId));
 
                 var receiveDeferMsg = await receiver.ReceiveDeferredMessageAsync(deferred.SequenceNumber);
                 var receiveDeferScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveDeferredActivityName);
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                     // get state
                     var getState = await sessionReceiver.GetSessionStateAsync();
-                    Assert.AreEqual(state.ToArray(), getState.ToArray());
+                    Assert.That(getState.ToArray(), Is.EqualTo(state.ToArray()));
                     var getStateScope = _listener.AssertAndRemoveScope(DiagnosticProperty.GetSessionStateActivityName);
                     AssertCommonTags(getStateScope.Activity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace);
                 }
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var msg in msgs)
                 {
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
-                    Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
+                    Assert.That(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.Not.Null);
 
                     var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
                     AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
@@ -156,8 +156,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(scheduleScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
 
                     var linkedActivities = scheduleScope.LinkedActivities;
-                    Assert.AreEqual(1, linkedActivities.Count);
-                    Assert.AreEqual(messageScope.Activity.Id, linkedActivities[0].ParentId);
+                    Assert.That(linkedActivities, Has.Count.EqualTo(1));
+                    Assert.That(linkedActivities[0].ParentId, Is.EqualTo(messageScope.Activity.Id));
 
                     await sender.CancelScheduledMessageAsync(seq);
                     var cancelScope = _listener.AssertAndRemoveScope(DiagnosticProperty.CancelActivityName);
@@ -200,10 +200,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     if (scope.Name == DiagnosticProperty.ProcessMessageActivityName)
                     {
-                        Assert.IsNotNull(messageActivities);
-                        Assert.AreEqual(
-                            messageActivities[messageProcessedCt].Traceparent,
-                            scope.Activity.ParentId);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(messageActivities, Is.Not.Null);
+                            Assert.That(
+                                scope.Activity.ParentId,
+                                Is.EqualTo(messageActivities[messageProcessedCt].Traceparent));
+                        });
                         callbackExecuted = true;
                     }
                 });
@@ -240,10 +243,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
-                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
+                    Assert.That(processScope.Activity.ParentId, Is.EqualTo(messageActivities[i].Traceparent));
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
-                Assert.IsTrue(callbackExecuted);
+                Assert.That(callbackExecuted, Is.True);
             };
         }
 
@@ -259,10 +262,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     if (scope.Name == DiagnosticProperty.ProcessSessionMessageActivityName)
                     {
-                        Assert.IsNotNull(messageActivities);
-                        Assert.AreEqual(
-                            messageActivities[messageProcessedCt].Traceparent,
-                            scope.Activity.ParentId);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(messageActivities, Is.Not.Null);
+                            Assert.That(
+                                scope.Activity.ParentId,
+                                Is.EqualTo(messageActivities[messageProcessedCt].Traceparent));
+                        });
                         callbackExecuted = true;
                     }
                 });
@@ -300,10 +306,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
-                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
+                    Assert.That(processScope.Activity.ParentId, Is.EqualTo(messageActivities[i].Traceparent));
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
-                Assert.IsTrue(callbackExecuted);
+                Assert.That(callbackExecuted, Is.True);
             }
         }
 
@@ -332,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
 
                 // default rule + our added rules
-                Assert.AreEqual(101, ruleCount);
+                Assert.That(ruleCount, Is.EqualTo(101));
 
                 // two get rule scopes (1st scope for the initial 100 rules, 2nd scope for the final rule)
                 _listener.AssertAndRemoveScope(DiagnosticProperty.GetRulesActivityName);
@@ -345,7 +351,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             IList<Activity> messageActivities = new List<Activity>();
             foreach (var msg in msgs)
             {
-                Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
+                Assert.That(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.Not.Null);
                 var messageScope = _listener.AssertAndRemoveScope(DiagnosticProperty.MessageActivityName);
                 messageActivities.Add(messageScope.Activity);
                 AssertCommonTags(messageScope.Activity, sender.EntityPath, sender.FullyQualifiedNamespace);
@@ -357,7 +363,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var sendLinkedActivities = sendScope.LinkedActivities;
             for (int i = 0; i < sendLinkedActivities.Count; i++)
             {
-                Assert.AreEqual(messageActivities[i].Id, sendLinkedActivities[i].ParentId);
+                Assert.That(sendLinkedActivities[i].ParentId, Is.EqualTo(messageActivities[i].Id));
             }
             return sendLinkedActivities.ToArray();
         }
@@ -365,9 +371,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         private void AssertCommonTags(Activity activity, string entityName, string fullyQualifiedNamespace)
         {
             var tags = activity.Tags;
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, entityName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, fullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, entityName)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, fullyQualifiedNamespace)));
+            Assert.That(tags, Has.Member(new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext)));
         }
     }
 }

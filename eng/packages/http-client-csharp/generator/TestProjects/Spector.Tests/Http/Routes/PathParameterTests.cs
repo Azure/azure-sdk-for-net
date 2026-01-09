@@ -14,35 +14,35 @@ namespace TestProjects.Spector.Tests.Http.Routes
         public Task InInterface() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetInInterfaceClient().FixedAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Fixed() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).FixedAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task PathAnnotationOnly() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetPathParametersClient().AnnotationOnlyAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task PathExplicit() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetPathParametersClient().ExplicitAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task PathTemplateOnly() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetPathParametersClient().TemplateOnlyAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -51,7 +51,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
             var response = await new RoutesClient(host, null).GetPathParametersClient()
                 .GetPathParametersReservedExpansionClient()
                 .AnnotationAsync("foo/bar baz");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -60,14 +60,14 @@ namespace TestProjects.Spector.Tests.Http.Routes
             var response = await new RoutesClient(host, null).GetPathParametersClient()
                 .GetPathParametersReservedExpansionClient()
                 .TemplateAsync("foo/bar baz");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Explicit() => Test(async (host) =>
         {
             var response = await new RoutesClient(host, null).GetPathParametersClient().ExplicitAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -78,7 +78,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetPathParametersLabelExpansionClient()
                 .GetPathParametersLabelExpansionExplodeClient()
                 .ArrayAsync(["a, b"]);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -89,7 +89,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetPathParametersLabelExpansionClient()
                 .GetPathParametersLabelExpansionStandardClient()
                 .ArrayAsync(["a", "b"]);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -100,7 +100,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetPathParametersLabelExpansionClient()
                 .GetPathParametersLabelExpansionExplodeClient()
                 .PrimitiveAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -111,7 +111,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetPathParametersLabelExpansionClient()
                 .GetPathParametersLabelExpansionExplodeClient()
                 .PrimitiveAsync("a");
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -122,7 +122,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetPathParametersLabelExpansionClient()
                 .GetPathParametersLabelExpansionExplodeClient()
                 .RecordAsync(new Dictionary<string, int> {{"a", 1}, {"b", 2}});
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -133,7 +133,7 @@ namespace TestProjects.Spector.Tests.Http.Routes
                 .GetPathParametersLabelExpansionClient()
                 .GetPathParametersLabelExpansionStandardClient()
                 .RecordAsync(new Dictionary<string, int> {{"a", 1}, {"b", 2}});
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

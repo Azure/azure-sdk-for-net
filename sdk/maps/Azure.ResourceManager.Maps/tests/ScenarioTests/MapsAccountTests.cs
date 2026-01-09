@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Maps.Tests
             // Now delete the account
             await account.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await mapCollection.ExistsAsync(accountName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
 
         [RecordedTest]
@@ -67,9 +67,12 @@ namespace Azure.ResourceManager.Maps.Tests
             newParameters.Tags.Add("key3", "value3");
             newParameters.Tags.Add("key4", "value4");
             var updatedAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
-            Assert.AreEqual(2, updatedAccount.Data.Tags.Count);
-            Assert.AreEqual("value3", updatedAccount.Data.Tags["key3"]);
-            Assert.AreEqual("value4", updatedAccount.Data.Tags["key4"]);
+            Assert.That(updatedAccount.Data.Tags, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedAccount.Data.Tags["key3"], Is.EqualTo("value3"));
+                Assert.That(updatedAccount.Data.Tags["key4"], Is.EqualTo("value4"));
+            });
         }
 
         [RecordedTest]
@@ -100,14 +103,14 @@ namespace Azure.ResourceManager.Maps.Tests
             var mapCollection = resourceGroup.GetMapsAccounts();
 
             var accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(accounts.Count, 0);
+            Assert.That(accounts.Count, Is.EqualTo(0));
 
             // Create accounts
             await CreateDefaultMapsAccount(mapCollection);
             await CreateDefaultMapsAccount(mapCollection);
 
             accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, accounts.Count);
+            Assert.That(accounts, Has.Count.EqualTo(2));
 
             VerifyAccountProperties(accounts.First().Data, true, MapsSkuName.G2);
             VerifyAccountProperties(accounts.Skip(1).First().Data, true, MapsSkuName.G2);
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.Maps.Tests
 
             var accounts = await DefaultSubscription.GetMapsAccountsAsync().ToEnumerableAsync();
 
-            Assert.GreaterOrEqual(accounts.Count, 2);
+            Assert.That(accounts, Has.Count.GreaterThanOrEqualTo(2));
 
             var account1 = accounts.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName1.Data.Name));
@@ -150,13 +153,16 @@ namespace Azure.ResourceManager.Maps.Tests
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
-            Assert.NotNull(keys);
+            Assert.That(keys, Is.Not.Null);
 
-            // Validate Key1
-            Assert.NotNull(keys.PrimaryKey);
+            Assert.Multiple(() =>
+            {
+                // Validate Key1
+                Assert.That(keys.PrimaryKey, Is.Not.Null);
 
-            // Validate Key2
-            Assert.NotNull(keys.SecondaryKey);
+                // Validate Key2
+                Assert.That(keys.SecondaryKey, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -170,19 +176,19 @@ namespace Azure.ResourceManager.Maps.Tests
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
-            Assert.NotNull(keys);
+            Assert.That(keys, Is.Not.Null);
             var key2 = keys.SecondaryKey;
-            Assert.NotNull(key2);
+            Assert.That(key2, Is.Not.Null);
 
             // Regenerate keys and verify that keys change
             var regenKeys = (await newAccount.RegenerateKeysAsync(new MapsKeySpecification(MapsKeyType.Secondary))).Value;
             var key2Regen = regenKeys.SecondaryKey;
-            Assert.NotNull(key2Regen);
+            Assert.That(key2Regen, Is.Not.Null);
 
             // Validate key was regenerated
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(key2, key2Regen);
+                Assert.That(key2Regen, Is.Not.EqualTo(key2));
             }
         }
     }

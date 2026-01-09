@@ -18,8 +18,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             CertificateOperationProperties properties = new CertificateOperationProperties(new Uri(vaultUri), "test");
 
-            Assert.AreEqual("test", properties.Name);
-            Assert.AreEqual(expected, properties.Id.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo("test"));
+                Assert.That(properties.Id.ToString(), Is.EqualTo(expected));
+            });
         }
     }
 }

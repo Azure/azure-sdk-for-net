@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
                 // Get the updated ledger
                 _ledgerResource = await GetLedgerByName(LedgerName);
 
-                Assert.True(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
-                    .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
+                Assert.That(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
+                    .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())), Is.True);
             }
             catch (Exception)
             {
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             // Get the updated ledger
             _ledgerResource = await GetLedgerByName(LedgerName);
 
-            Assert.False(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
-                .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
+            Assert.That(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
+                .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())), Is.False);
         }
 
         /// <summary>

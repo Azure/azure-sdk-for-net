@@ -48,37 +48,40 @@ namespace Azure.Messaging.EventHubs.Tests
             message.Properties.GroupSequence = 3;
             message.Properties.ReplyToGroupId = "7";
 
-            // Validate that the properties are present.
+            Assert.Multiple(() =>
+            {
+                // Validate that the properties are present.
 
-            Assert.That(systemProps.ContainsKey(Properties.MessageIdName), Is.True, "The message identifier should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.UserIdName), Is.True, "The user identifier should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.ToName), Is.True, "The \"to\" property should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.SubjectName), Is.True, "The subject should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.ReplyToName), Is.True, "The \"reply to\" property should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.CorrelationIdName), Is.True, "The correlation identifier should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.ContentTypeName), Is.True, "The content type should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.ContentEncodingName), Is.True, "The content encoding should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.AbsoluteExpiryTimeName), Is.True, "The expiration time should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.CreationTimeName), Is.True, "The creation time should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.GroupIdName), Is.True, "The group identifier should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.GroupSequenceName), Is.True, "The group sequence should be included.");
-            Assert.That(systemProps.ContainsKey(Properties.ReplyToGroupIdName), Is.True, "The reply-to group identifier should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.MessageIdName), Is.True, "The message identifier should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.UserIdName), Is.True, "The user identifier should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.ToName), Is.True, "The \"to\" property should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.SubjectName), Is.True, "The subject should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.ReplyToName), Is.True, "The \"reply to\" property should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.CorrelationIdName), Is.True, "The correlation identifier should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.ContentTypeName), Is.True, "The content type should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.ContentEncodingName), Is.True, "The content encoding should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.AbsoluteExpiryTimeName), Is.True, "The expiration time should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.CreationTimeName), Is.True, "The creation time should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.GroupIdName), Is.True, "The group identifier should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.GroupSequenceName), Is.True, "The group sequence should be included.");
+                Assert.That(systemProps.ContainsKey(Properties.ReplyToGroupIdName), Is.True, "The reply-to group identifier should be included.");
 
-            // Validate that the properties match.
+                // Validate that the properties match.
 
-            Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier should match.");
-            Assert.That(systemProps[Properties.UserIdName], Is.EqualTo(message.Properties.UserId), "The user identifier should match.");
-            Assert.That(systemProps[Properties.ToName], Is.EqualTo(message.Properties.To.ToString()), "The \"to\" property should match.");
-            Assert.That(systemProps[Properties.SubjectName], Is.EqualTo(message.Properties.Subject), "The subject should match.");
-            Assert.That(systemProps[Properties.ReplyToName], Is.EqualTo(message.Properties.ReplyTo.ToString()), "The \"reply to\" property should match.");
-            Assert.That(systemProps[Properties.CorrelationIdName], Is.EqualTo(message.Properties.CorrelationId.ToString()), "The correlation identifier should match.");
-            Assert.That(systemProps[Properties.ContentTypeName], Is.EqualTo(message.Properties.ContentType), "The content type should match.");
-            Assert.That(systemProps[Properties.ContentEncodingName], Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
-            Assert.That(systemProps[Properties.AbsoluteExpiryTimeName], Is.EqualTo(message.Properties.AbsoluteExpiryTime), "The expiration time should match.");
-            Assert.That(systemProps[Properties.CreationTimeName], Is.EqualTo(message.Properties.CreationTime), "The creation time should match.");
-            Assert.That(systemProps[Properties.GroupIdName], Is.EqualTo(message.Properties.GroupId), "The group identifier should match.");
-            Assert.That(systemProps[Properties.GroupSequenceName], Is.EqualTo(message.Properties.GroupSequence), "The group sequence should match.");
-            Assert.That(systemProps[Properties.ReplyToGroupIdName], Is.EqualTo(message.Properties.ReplyToGroupId), "The reply-to group identifier should match.");
+                Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier should match.");
+                Assert.That(systemProps[Properties.UserIdName], Is.EqualTo(message.Properties.UserId), "The user identifier should match.");
+                Assert.That(systemProps[Properties.ToName], Is.EqualTo(message.Properties.To.ToString()), "The \"to\" property should match.");
+                Assert.That(systemProps[Properties.SubjectName], Is.EqualTo(message.Properties.Subject), "The subject should match.");
+                Assert.That(systemProps[Properties.ReplyToName], Is.EqualTo(message.Properties.ReplyTo.ToString()), "The \"reply to\" property should match.");
+                Assert.That(systemProps[Properties.CorrelationIdName], Is.EqualTo(message.Properties.CorrelationId.ToString()), "The correlation identifier should match.");
+                Assert.That(systemProps[Properties.ContentTypeName], Is.EqualTo(message.Properties.ContentType), "The content type should match.");
+                Assert.That(systemProps[Properties.ContentEncodingName], Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
+                Assert.That(systemProps[Properties.AbsoluteExpiryTimeName], Is.EqualTo(message.Properties.AbsoluteExpiryTime), "The expiration time should match.");
+                Assert.That(systemProps[Properties.CreationTimeName], Is.EqualTo(message.Properties.CreationTime), "The creation time should match.");
+                Assert.That(systemProps[Properties.GroupIdName], Is.EqualTo(message.Properties.GroupId), "The group identifier should match.");
+                Assert.That(systemProps[Properties.GroupSequenceName], Is.EqualTo(message.Properties.GroupSequence), "The group sequence should match.");
+                Assert.That(systemProps[Properties.ReplyToGroupIdName], Is.EqualTo(message.Properties.ReplyToGroupId), "The reply-to group identifier should match.");
+            });
         }
 
         /// <summary>
@@ -103,8 +106,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var key in message.MessageAnnotations.Keys)
             {
-                Assert.That(systemProps.ContainsKey(key), Is.True, $"The delivery annotation key, { key }, should be included.");
-                Assert.That(systemProps[key], Is.EqualTo(message.MessageAnnotations[key]), $"The delivery annotation key, { key }, should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(systemProps.ContainsKey(key), Is.True, $"The delivery annotation key, {key}, should be included.");
+                    Assert.That(systemProps[key], Is.EqualTo(message.MessageAnnotations[key]), $"The delivery annotation key, {key}, should match.");
+                });
             }
         }
 
@@ -131,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Key counts are correct.
 
-            Assert.That(systemProps.Count, Is.EqualTo(expectedKeys.Count), "The number of items was incorrect.");
+            Assert.That(systemProps, Has.Count.EqualTo(expectedKeys.Count), "The number of items was incorrect.");
 
             // Expected keys are returned by ContainsKey.
 
@@ -148,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var key in systemProps.Keys)
             {
-                Assert.That(expectedKeys.Contains(key), $"The key, { key }, was in the properties but is unexpected.");
+                Assert.That(expectedKeys, Does.Contain(key), $"The key, {key}, was in the properties but is unexpected.");
             }
         }
 
@@ -180,21 +186,27 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Count
 
-            Assert.That(systemProps.Count, Is.EqualTo(expectedValues.Count), "The number of items was incorrect.");
+            Assert.That(systemProps, Has.Count.EqualTo(expectedValues.Count), "The number of items was incorrect.");
 
-            // System property values are correct.
+            Assert.Multiple(() =>
+            {
+                // System property values are correct.
 
-            Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier did not match when read through the indexer.");
-            Assert.That(systemProps.TryGetValue(Properties.MessageIdName, out var messageId), Is.True, "The message identifier was not contained when read through TryGetValue.");
-            Assert.That(messageId, Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier did not match when read through TryGetValue.");
+                Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier did not match when read through the indexer.");
+                Assert.That(systemProps.TryGetValue(Properties.MessageIdName, out var messageId), Is.True, "The message identifier was not contained when read through TryGetValue.");
+                Assert.That(messageId, Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier did not match when read through TryGetValue.");
+            });
 
             // Message annotation values are correct.
 
             foreach (var key in message.MessageAnnotations.Keys)
             {
-                Assert.That(systemProps[key], Is.EqualTo(message.MessageAnnotations[key]), $"The message annotation, { key }, did not match when read through the indexer.");
-                Assert.That(systemProps.TryGetValue(key, out var currentValue), Is.True, $"The message annotation, { key }, was not contained when read through TryGetValue.");
-                Assert.That(currentValue, Is.EqualTo(message.MessageAnnotations[key]), $"The message annotation, { key }, did not match when read through TryGetValue.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(systemProps[key], Is.EqualTo(message.MessageAnnotations[key]), $"The message annotation, {key}, did not match when read through the indexer.");
+                    Assert.That(systemProps.TryGetValue(key, out var currentValue), Is.True, $"The message annotation, {key}, was not contained when read through TryGetValue.");
+                    Assert.That(currentValue, Is.EqualTo(message.MessageAnnotations[key]), $"The message annotation, {key}, did not match when read through TryGetValue.");
+                });
             }
 
             // Unexpected values are not returned.
@@ -206,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var value in systemProps.Values)
             {
-                Assert.That(expectedValues.Contains(value), Is.True, $"The value, { value }, was in the properties but is unexpected.");
+                Assert.That(expectedValues, Does.Contain(value), $"The value, {value}, was in the properties but is unexpected.");
             }
         }
 
@@ -225,19 +237,25 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedValue = message.GetEnqueuedTime(default);
 
-            Assert.That(systemProps[systemKey], Is.EqualTo(expectedValue), "The enqueued time did not match when read through the indexer.");
-            Assert.That(systemProps.TryGetValue(systemKey, out var enqueueTime), Is.True, "The enqueued time was not contained when read through TryGetValue.");
-            Assert.That(enqueueTime, Is.EqualTo(expectedValue), "The enqueued time did not match when read through TryGetValue.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(systemProps[systemKey], Is.EqualTo(expectedValue), "The enqueued time did not match when read through the indexer.");
+                Assert.That(systemProps.TryGetValue(systemKey, out var enqueueTime), Is.True, "The enqueued time was not contained when read through TryGetValue.");
+                Assert.That(enqueueTime, Is.EqualTo(expectedValue), "The enqueued time did not match when read through TryGetValue.");
+            });
 
             // Message annotation values are correct.
 
             var key = systemProps.Keys.Single();
-            Assert.That(key, Is.EqualTo(systemKey), "The key should be the same as the enqueued time key.");
-            Assert.That(systemProps[key], Is.EqualTo(expectedValue), $"The message annotation, {key}, did not match when read through the indexer.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(key, Is.EqualTo(systemKey), "The key should be the same as the enqueued time key.");
+                Assert.That(systemProps[key], Is.EqualTo(expectedValue), $"The message annotation, {key}, did not match when read through the indexer.");
 
-            // Value set should contain the enqueued time.
+                // Value set should contain the enqueued time.
 
-            Assert.That(systemProps.Values.Single(), Is.EqualTo(expectedValue), "The enqueued time did not match when read through the Values set.");
+                Assert.That(systemProps.Values.Single(), Is.EqualTo(expectedValue), "The enqueued time did not match when read through the Values set.");
+            });
         }
 
         /// <summary>
@@ -258,19 +276,25 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedValue = message.GetSequenceNumber(default);
 
-            Assert.That(systemProps[systemKey], Is.EqualTo(expectedValue), "The sequence number did not match when read through the indexer.");
-            Assert.That(systemProps.TryGetValue(systemKey, out var enqueueTime), Is.True, "The sequence number was not contained when read through TryGetValue.");
-            Assert.That(enqueueTime, Is.EqualTo(expectedValue), "The sequence number did not match when read through TryGetValue.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(systemProps[systemKey], Is.EqualTo(expectedValue), "The sequence number did not match when read through the indexer.");
+                Assert.That(systemProps.TryGetValue(systemKey, out var enqueueTime), Is.True, "The sequence number was not contained when read through TryGetValue.");
+                Assert.That(enqueueTime, Is.EqualTo(expectedValue), "The sequence number did not match when read through TryGetValue.");
+            });
 
             // Message annotation values are correct.
 
             var key = systemProps.Keys.Single();
-            Assert.That(key, Is.EqualTo(systemKey), "The key should be the same as the sequence number key.");
-            Assert.That(systemProps[key], Is.EqualTo(expectedValue), $"The message annotation, {key}, did not match when read through the indexer.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(key, Is.EqualTo(systemKey), "The key should be the same as the sequence number key.");
+                Assert.That(systemProps[key], Is.EqualTo(expectedValue), $"The message annotation, {key}, did not match when read through the indexer.");
 
-            // Value set should contain the sequence number.
+                // Value set should contain the sequence number.
 
-            Assert.That(systemProps.Values.Single(), Is.EqualTo(expectedValue), "The sequence number did not match when read through the Values set.");
+                Assert.That(systemProps.Values.Single(), Is.EqualTo(expectedValue), "The sequence number did not match when read through the Values set.");
+            });
         }
 
         /// <summary>
@@ -303,14 +327,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Count
 
-            Assert.That(systemProps.Count, Is.EqualTo(expectedItems.Count), "The number of items was incorrect.");
+            Assert.That(systemProps, Has.Count.EqualTo(expectedItems.Count), "The number of items was incorrect.");
 
             // Enumerated Values match the expected set.
 
            foreach (var item in systemProps)
             {
-                Assert.That(expectedItems.ContainsKey(item.Key), Is.True, $"The item with key, { item.Key }, was in the properties but is unexpected.");
-                Assert.That(item.Value, Is.EqualTo(expectedItems[item.Key]), $"The item with key, { item.Key }, did not match the expected value.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(expectedItems.ContainsKey(item.Key), Is.True, $"The item with key, {item.Key}, was in the properties but is unexpected.");
+                    Assert.That(item.Value, Is.EqualTo(expectedItems[item.Key]), $"The item with key, {item.Key}, did not match the expected value.");
+                });
             }
         }
 

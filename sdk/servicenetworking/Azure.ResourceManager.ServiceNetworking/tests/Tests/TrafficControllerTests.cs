@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Testing DELETE Operation
             var frontendDelete = await frontendGet.DeleteAsync(WaitUntil.Completed);
             var deleteResponse = frontendDelete.WaitForCompletionResponse();
-            Assert.AreEqual(deleteResponse.IsError, false);
+            Assert.That(deleteResponse.IsError, Is.EqualTo(false));
             //Deleting Traffic Controller
             await DeleteFrontendResource(rgResource, tc);
             await DeleteTrafficControllerAsync(tc);

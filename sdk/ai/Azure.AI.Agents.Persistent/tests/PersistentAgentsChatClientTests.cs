@@ -80,11 +80,14 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             ChatResponse response = await chatClient.GetResponseAsync(messages);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Messages);
-            Assert.GreaterOrEqual(response.Messages.Count, 1);
-            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
-            Assert.IsNotNull(response.ConversationId);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
+                Assert.That(response.ConversationId, Is.Not.Null);
+            });
         }
 
         [RecordedTest]
@@ -159,15 +162,15 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             await foreach (ChatResponseUpdate update in chatClient.GetStreamingResponseAsync(messages, options))
             {
-                Assert.IsNotNull(update);
-                Assert.IsNotNull(update.ConversationId);
+                Assert.That(update, Is.Not.Null);
+                Assert.That(update.ConversationId, Is.Not.Null);
                 if (update.Contents.Any(c => (optionsType == ChatOptionsTestType.WithTools && c is FunctionCallContent) || c is TextContent))
                 {
                     receivedUpdate = true;
                 }
             }
 
-            Assert.IsTrue(receivedUpdate, "No valid streaming update received.");
+            Assert.That(receivedUpdate, Is.True, "No valid streaming update received.");
         }
 
         [RecordedTest]
@@ -221,11 +224,14 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
 
-            Assert.NotZero(annotations.Count);
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Messages);
-            Assert.GreaterOrEqual(response.Messages.Count, 1);
-            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
+            Assert.Multiple(() =>
+            {
+                Assert.That(annotations, Is.Not.Empty);
+                Assert.That(response, Is.Not.Null);
+            });
+            Assert.That(response.Messages, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Empty);
+            Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
         }
 
         [RecordedTest]
@@ -279,9 +285,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
 
                 ChatResponse response = await chatClient.GetResponseAsync(messages, new ChatOptions { ConversationId = thread.Id });
-                Assert.IsNotNull(response);
-                Assert.GreaterOrEqual(response.Messages.Count, 1);
-                Assert.IsTrue(response.Messages[0].Contents.Any(c => c is TextContent tc && tc.Text.Contains("bar")));
+                Assert.That(response, Is.Not.Null);
+                Assert.That(response.Messages, Is.Not.Empty);
+                Assert.That(response.Messages[0].Contents.Any(c => c is TextContent tc && tc.Text.Contains("bar")), Is.True);
             }
             else
             {
@@ -330,17 +336,17 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             ChatResponse response = await chatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"), chatOptions);
 
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Messages);
-            Assert.GreaterOrEqual(response.Messages.Count, 1);
-            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Null);
+            Assert.That(response.Messages, Is.Not.Empty);
+            Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
 
             List<string> functionNames = response.Messages[0].Contents
                 .OfType<FunctionCallContent>()
                 .Select(c => c.Name)
                 .ToList();
 
-            Assert.Contains("GetFavouriteWord", functionNames);
+            Assert.That(functionNames, Does.Contain("GetFavouriteWord"));
         }
 
         [RecordedTest]
@@ -350,10 +356,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
 
-            Assert.IsNotNull(chatClient.GetService(typeof(ChatClientMetadata)));
-            Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsClient)));
-            Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsChatClient)));
-            Assert.IsNull(chatClient.GetService(typeof(string)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(chatClient.GetService(typeof(ChatClientMetadata)), Is.Not.Null);
+                Assert.That(chatClient.GetService(typeof(PersistentAgentsClient)), Is.Not.Null);
+                Assert.That(chatClient.GetService(typeof(PersistentAgentsChatClient)), Is.Not.Null);
+                Assert.That(chatClient.GetService(typeof(string)), Is.Null);
+            });
             Assert.Throws<ArgumentNullException>(() => chatClient.GetService(null));
         }
 
@@ -371,11 +380,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             IChatClient nonThrowingChatClient = client.AsIChatClient(FakeAgentId, FakeThreadId, throwOnContentErrors: false);
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(() => throwingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word")));
-            Assert.IsTrue(exception.Message.Contains("wrong-connection-id"));
+            Assert.That(exception.Message, Does.Contain("wrong-connection-id"));
 
             var response = await nonThrowingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"));
             var errorContent = response.Messages.SelectMany(m => m.Contents).OfType<ErrorContent>().Single();
-            Assert.IsTrue(errorContent.Message.Contains("wrong-connection-id"));
+            Assert.That(errorContent.Message, Does.Contain("wrong-connection-id"));
         }
 
         [RecordedTest]
@@ -448,7 +457,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             await nonThrowingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"));
 
-            Assert.IsTrue(expectedCancelRunInvoked == cancelRunInvoked);
+            Assert.That(expectedCancelRunInvoked, Is.EqualTo(cancelRunInvoked));
         }
 
         [RecordedTest]
@@ -499,9 +508,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 // Drain the stream to force all requests.
             }
 
-            Assert.IsTrue(sawGetAgent, "Expected agent GET request.");
-            Assert.IsTrue(sawCreateThread, "Expected thread create request.");
-            Assert.IsTrue(sawCreateRunStreaming, "Expected run create streaming request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(sawGetAgent, Is.True, "Expected agent GET request.");
+                Assert.That(sawCreateThread, Is.True, "Expected thread create request.");
+                Assert.That(sawCreateRunStreaming, Is.True, "Expected run create streaming request.");
+            });
         }
 
         [RecordedTest]
@@ -588,9 +600,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 // Drain the stream.
             }
 
-            Assert.IsTrue(sawGetAgent, "Expected agent GET request.");
-            Assert.IsTrue(sawGetRuns, "Expected runs list request.");
-            Assert.IsTrue(sawSubmitToolOutputs, "Expected submit tool outputs request.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(sawGetAgent, Is.True, "Expected agent GET request.");
+                Assert.That(sawGetRuns, Is.True, "Expected runs list request.");
+                Assert.That(sawSubmitToolOutputs, Is.True, "Expected submit tool outputs request.");
+            });
         }
 
         private static void AssertMeaiUserAgentHeaderPresent(MockRequest request)
@@ -602,8 +617,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                 userAgents = hasHeader ? new[] { singleUserAgent } : Array.Empty<string>();
             }
 
-            Assert.IsTrue(hasHeader, "Expected User-Agent header.");
-            Assert.IsTrue(userAgents.Any(ua => ua?.Contains("MEAI", StringComparison.Ordinal) is true), "Expected User-Agent to contain 'MEAI'.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(hasHeader, Is.True, "Expected User-Agent header.");
+                Assert.That(userAgents.Any(ua => ua?.Contains("MEAI", StringComparison.Ordinal) is true), Is.True, "Expected User-Agent to contain 'MEAI'.");
+            });
         }
 
         #region Helpers

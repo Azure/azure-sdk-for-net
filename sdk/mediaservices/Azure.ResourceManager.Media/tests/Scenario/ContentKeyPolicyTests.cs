@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.Media.Tests
         {
             string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             var contentKey = await CreateDefaultContentKey(contentKeyPolicyName);
-            Assert.IsNotNull(contentKey);
-            Assert.AreEqual(contentKeyPolicyName, contentKey.Data.Name);
-            Assert.AreEqual(1, contentKey.Data.Options.Count);
+            Assert.That(contentKey, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentKey.Data.Name, Is.EqualTo(contentKeyPolicyName));
+                Assert.That(contentKey.Data.Options, Has.Count.EqualTo(1));
+            });
         }
 
         [Test]
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Media.Tests
             string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             await CreateDefaultContentKey(contentKeyPolicyName);
             bool flag = await contentKeyPolicyCollection.ExistsAsync(contentKeyPolicyName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -66,9 +69,12 @@ namespace Azure.ResourceManager.Media.Tests
             string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             await CreateDefaultContentKey(contentKeyPolicyName);
             var contentKey = await contentKeyPolicyCollection.GetAsync(contentKeyPolicyName);
-            Assert.IsNotNull(contentKey);
-            Assert.AreEqual(contentKeyPolicyName, contentKey.Value.Data.Name);
-            Assert.AreEqual(1, contentKey.Value.Data.Options.Count);
+            Assert.That(contentKey, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentKey.Value.Data.Name, Is.EqualTo(contentKeyPolicyName));
+                Assert.That(contentKey.Value.Data.Options, Has.Count.EqualTo(1));
+            });
         }
 
         [Test]
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.Media.Tests
             string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             await CreateDefaultContentKey(contentKeyPolicyName);
             var list = await contentKeyPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
         }
 
         [Test]
@@ -88,11 +94,11 @@ namespace Azure.ResourceManager.Media.Tests
             string contentKeyPolicyName = Recording.GenerateAssetName("contentKeyPolicy");
             var contentKey = await CreateDefaultContentKey(contentKeyPolicyName);
             bool flag = await contentKeyPolicyCollection.ExistsAsync(contentKeyPolicyName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await contentKey.DeleteAsync(WaitUntil.Completed);
             flag = await contentKeyPolicyCollection.ExistsAsync(contentKeyPolicyName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

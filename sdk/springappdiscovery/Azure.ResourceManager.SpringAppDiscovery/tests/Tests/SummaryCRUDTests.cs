@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
 
             //judge a site exist or not
-            Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
+            Assert.That((bool)await siteColletion.ExistsAsync(siteName), Is.True);
 
             //get a site
             Response<SpringBootSiteResource> getSiteResponse = await siteColletion.GetAsync(siteName);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 summaryCount++;
             }
-            Assert.True(summaryCount > 0);
+            Assert.That(summaryCount, Is.GreaterThan(0));
 
             //get a summary
             Response<SpringBootSiteSummaryResource> getSummaryReponse = await summaryCollection.GetAsync("default", CancellationToken.None);
-            Assert.IsNotNull(getSummaryReponse.Value);
+            Assert.That(getSummaryReponse.Value, Is.Not.Null);
         }
     }
 }

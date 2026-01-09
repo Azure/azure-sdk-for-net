@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 expectedClusterData.PublicIPType ?? KustoClusterPublicIPType.IPv4, actualClusterData.PublicIPType
             );
             AssertEquality(KustoClusterState.Running, actualClusterData.State);
-            Assert.IsNull(actualClusterData.VirtualClusterGraduationProperties);
+            Assert.That(actualClusterData.VirtualClusterGraduationProperties, Is.Null);
 
             AssertEquality(expectedClusterData.Identity, actualClusterData.Identity, IdentityEquals);
             AssertEquality(
@@ -127,25 +127,27 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             if (systemAssigned)
             {
-                Assert.IsNotNull(actual.PrincipalId);
+                Assert.That(actual.PrincipalId, Is.Not.Null);
             }
             else
             {
-                Assert.IsNull(actual.PrincipalId);
+                Assert.That(actual.PrincipalId, Is.Null);
             }
 
             AssertEquality(Guid.Parse(TE.KustoTenantId), actual.TenantId);
             AssertEquality(expected.ManagedServiceIdentityType, actual.ManagedServiceIdentityType);
 
-            CollectionAssert.AreEqual(
-                expected.UserAssignedIdentities.Keys.Select(rId => rId.ToString().ToLower()).ToList(),
-                actual.UserAssignedIdentities.Keys.Select(rId => rId.ToString().ToLower()).ToList()
+            Assert.That(
+                actual.UserAssignedIdentities.Keys.Select(rId => rId.ToString().ToLower()).ToList(),
+                Is.EqualTo(expected.UserAssignedIdentities.Keys.Select(rId => rId.ToString().ToLower()).ToList()).AsCollection
             );
-            CollectionAssert.AllItemsAreNotNull(
-                actual.UserAssignedIdentities.Values.Select(identity => identity.ClientId)
+            Assert.That(
+                actual.UserAssignedIdentities.Values.Select(identity => identity.ClientId),
+                Is.All.Not.Null
             );
-            CollectionAssert.AllItemsAreNotNull(
-                actual.UserAssignedIdentities.Values.Select(identity => identity.PrincipalId)
+            Assert.That(
+                actual.UserAssignedIdentities.Values.Select(identity => identity.PrincipalId),
+                Is.All.Not.Null
             );
         }
 
@@ -169,9 +171,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         )
         {
             AssertEquality(expected.Count, actual.Count);
-            CollectionAssert.AreEqual(
-                expected.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList(),
-                actual.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList()
+            Assert.That(
+                actual.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList(),
+                Is.EqualTo(expected.Select(trustedExternalTenant => trustedExternalTenant.Value).ToList()).AsCollection
             );
         }
 

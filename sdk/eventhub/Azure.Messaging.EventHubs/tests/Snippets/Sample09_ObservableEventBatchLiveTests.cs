@@ -168,9 +168,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
 
             var contains = observableBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
-            Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
 
-            Assert.That(observableBatch.Count, Is.GreaterThan(0), "Events were not successfully added to the batch");
+                Assert.That(observableBatch.Count, Is.GreaterThan(0), "Events were not successfully added to the batch");
+            });
             Assert.That(observableBatch.Count, Is.EqualTo(observableBatch.Events.Count), "The observable batch events are out of sync with the event batch data");
 
             // Check implicit casting by verifying batch can be sent using built in

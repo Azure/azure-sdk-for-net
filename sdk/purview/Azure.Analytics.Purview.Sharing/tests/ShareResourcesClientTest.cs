@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             List<BinaryData> listResponse = await client.GetAllShareResourcesAsync(null, null, null).ToEnumerableAsync();
 
-            Assert.Greater(listResponse.Count, 0);
+            Assert.That(listResponse, Is.Not.Empty);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             var mockTransport = new MockTransport((request) =>
             {
-                Assert.AreEqual(100, request.Uri.Port);
+                Assert.That(request.Uri.Port, Is.EqualTo(100));
                 return new MockResponse(200);
             });
             var options = new EventGridPublisherClientOptions

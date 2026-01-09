@@ -15,9 +15,12 @@ namespace Azure.Maps.Rendering.Tests
 
             // Get tile X, Y index by coordinate, zoom and tile size information
             var tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
-            Assert.AreEqual(550, tileIndex.X);
-            Assert.AreEqual(335, tileIndex.Y);
-            Assert.AreEqual(zoom, tileIndex.Z);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tileIndex.X, Is.EqualTo(550));
+                Assert.That(tileIndex.Y, Is.EqualTo(335));
+                Assert.That(tileIndex.Z, Is.EqualTo(zoom));
+            });
         }
 
         [Test]
@@ -26,10 +29,13 @@ namespace Azure.Maps.Rendering.Tests
             int tileX = 200, tileY = 137, tileSize = 512, zoom = 11;
 
             var boundingBox = MapsRenderingClient.TileXYToBoundingBox(new MapTileIndex(tileX, tileY, zoom), tileSize);
-            Assert.AreEqual(-144.84375, boundingBox.West);
-            Assert.AreEqual(82.448764055958122, boundingBox.South);
-            Assert.AreEqual(-144.66796875, boundingBox.East);
-            Assert.AreEqual(82.471828856584551, boundingBox.North);
+            Assert.Multiple(() =>
+            {
+                Assert.That(boundingBox.West, Is.EqualTo(-144.84375));
+                Assert.That(boundingBox.South, Is.EqualTo(82.448764055958122));
+                Assert.That(boundingBox.East, Is.EqualTo(-144.66796875));
+                Assert.That(boundingBox.North, Is.EqualTo(82.471828856584551));
+            });
         }
     }
 }

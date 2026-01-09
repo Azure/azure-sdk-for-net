@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             string storageAccountId = await GetStorageAccountId();
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             var metricAlert = (await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName, metricAlertData)).Value;
-            Assert.AreEqual(metricAlertName, metricAlert.Data.Name);
+            Assert.That(metricAlert.Data.Name, Is.EqualTo(metricAlertName));
         }
 
         [TestCase]
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName1, metricAlertData);
             _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName2, metricAlertData);
 
-            Assert.GreaterOrEqual(metricAlertCollection.GetAllAsync().ToEnumerableAsync().Result.Count, 2);
+            Assert.That(metricAlertCollection.GetAllAsync().ToEnumerableAsync().Result, Has.Count.GreaterThanOrEqualTo(2));
         }
     }
 }

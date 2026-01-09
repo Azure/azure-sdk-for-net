@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
 
                 if (exp.Properties.IsEnabled != null && act.Properties.IsEnabled != null)
                 {
-                    Assert.AreEqual(exp.Properties.IsEnabled, act.Properties.IsEnabled);
+                    Assert.That(act.Properties.IsEnabled, Is.EqualTo(exp.Properties.IsEnabled));
                 }
 
                 AreEqual(exp.Properties.Scopes, act.Properties.Scopes);
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null && act != null)
             {
-                Assert.AreEqual(exp.Count, act.Count);
+                Assert.That(act, Has.Count.EqualTo(exp.Count));
 
                 foreach (var value in exp)
                 {
-                    Assert.Contains(value, (System.Collections.ICollection)act);
+                    Assert.That((System.Collections.ICollection)act, Does.Contain(value));
                 }
             }
         }
@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.False(exp == null || act == null);
-                Assert.AreEqual(exp.Count, act.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(exp == null || act == null, Is.False);
+                    Assert.That(act, Has.Count.EqualTo(exp.Count));
+                });
                 foreach (AlertProcessingRuleCondition actCond in act)
                 {
                     AlertProcessingRuleCondition expCond = exp.Where(condition => condition.Field.Equals(actCond.Field)).FirstOrDefault();
@@ -61,8 +64,11 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.AreEqual(exp.Field, act.Field);
-                Assert.AreEqual(exp.Operator, act.Operator);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(act.Field, Is.EqualTo(exp.Field));
+                    Assert.That(act.Operator, Is.EqualTo(exp.Operator));
+                });
             }
         }
     }

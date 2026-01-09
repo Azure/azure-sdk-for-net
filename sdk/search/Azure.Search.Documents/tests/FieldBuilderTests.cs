@@ -191,21 +191,21 @@ namespace Azure.Search.Documents.Tests
             string fieldName)
         {
             var fields = new FieldMap(BuildForType(modelType));
-            Assert.AreEqual(expectedDataType, fields[fieldName].Type);
+            Assert.That(fields[fieldName].Type, Is.EqualTo(expectedDataType));
         }
 
         [TestCaseSource(nameof(ComplexTypeTestData))]
         public void ReportsComplexTypedProperties(Type modelType, string fieldName)
         {
             var fields = new FieldMap(BuildForType(modelType));
-            Assert.AreEqual(SearchFieldDataType.Complex, fields[fieldName].Type);
+            Assert.That(fields[fieldName].Type, Is.EqualTo(SearchFieldDataType.Complex));
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
         public void ReportsNullableInt32Properties(Type modelType)
         {
             var fields = new FieldMap(BuildForType(modelType));
-            Assert.AreEqual(SearchFieldDataType.Int32, fields[nameof(ReflectableModel.NullableInt)].Type);
+            Assert.That(fields[nameof(ReflectableModel.NullableInt)].Type, Is.EqualTo(SearchFieldDataType.Int32));
         }
 
         [TestCaseSource(nameof(CollectionTypeTestData))]
@@ -215,7 +215,7 @@ namespace Azure.Search.Documents.Tests
             string fieldName)
         {
             var fields = new FieldMap(BuildForType(modelType));
-            Assert.AreEqual(SearchFieldDataType.Collection(expectedElementDataType), fields[fieldName].Type);
+            Assert.That(fields[fieldName].Type, Is.EqualTo(SearchFieldDataType.Collection(expectedElementDataType)));
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
@@ -367,12 +367,15 @@ namespace Azure.Search.Documents.Tests
         {
             var fieldMap = new FieldMap(BuildForType(modelType));
 
-            Assert.IsTrue(fieldMap.ContainsKey("id"));
-            Assert.IsTrue(fieldMap.ContainsKey("myProperty"));
-            Assert.IsTrue(fieldMap.ContainsKey("inner"));
-            Assert.IsTrue(fieldMap.ContainsKey("inner/name"));
-            Assert.IsTrue(fieldMap.ContainsKey("innerCollection"));
-            Assert.IsTrue(fieldMap.ContainsKey("innerCollection/name"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldMap.ContainsKey("id"), Is.True);
+                Assert.That(fieldMap.ContainsKey("myProperty"), Is.True);
+                Assert.That(fieldMap.ContainsKey("inner"), Is.True);
+                Assert.That(fieldMap.ContainsKey("inner/name"), Is.True);
+                Assert.That(fieldMap.ContainsKey("innerCollection"), Is.True);
+                Assert.That(fieldMap.ContainsKey("innerCollection/name"), Is.True);
+            });
         }
 
         [Test]
@@ -380,10 +383,13 @@ namespace Azure.Search.Documents.Tests
         {
             var fieldMap = new FieldMap(BuildForType(typeof(RecursiveModel)));
 
-            Assert.IsTrue(fieldMap.ContainsKey(nameof(RecursiveModel.Data)));
-            Assert.IsTrue(fieldMap.ContainsKey(nameof(RecursiveModel.Next)));
-            Assert.IsTrue(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.Data)));
-            Assert.IsFalse(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.RecursiveReference)));
+            Assert.Multiple(() =>
+            {
+                Assert.That(fieldMap.ContainsKey(nameof(RecursiveModel.Data)), Is.True);
+                Assert.That(fieldMap.ContainsKey(nameof(RecursiveModel.Next)), Is.True);
+                Assert.That(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.Data)), Is.True);
+                Assert.That(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.RecursiveReference)), Is.False);
+            });
         }
 
         [Test]
@@ -443,9 +449,9 @@ namespace Azure.Search.Documents.Tests
                 "which does not map to an Azure Search data type. Please use a supported data type or mark the property with " +
                 "[FieldBuilderIgnore] and define the field by creating a SearchField object. See https://aka.ms/azsdk/net/search/fieldbuilder for more information.";
 
-            Assert.AreEqual(nameof(modelType), e.ParamName);
-            StringAssert.StartsWith(expectedErrorMessage, e.Message);
-            Assert.AreEqual("https://aka.ms/azsdk/net/search/fieldbuilder", e.HelpLink);
+            Assert.That(e.ParamName, Is.EqualTo(nameof(modelType)));
+            Assert.That(e.Message, Does.StartWith(expectedErrorMessage));
+            Assert.That(e.HelpLink, Is.EqualTo("https://aka.ms/azsdk/net/search/fieldbuilder"));
         }
 
         [TestCase(typeof(int))]
@@ -468,8 +474,8 @@ namespace Azure.Search.Documents.Tests
                 $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
                 $"class or struct with public properties.";
 
-            Assert.AreEqual(nameof(modelType), e.ParamName);
-            StringAssert.StartsWith(expectedErrorMessage, e.Message);
+            Assert.That(e.ParamName, Is.EqualTo(nameof(modelType)));
+            Assert.That(e.Message, Does.StartWith(expectedErrorMessage));
         }
 
         [Test]
@@ -481,15 +487,15 @@ namespace Azure.Search.Documents.Tests
                 switch (field.Name)
                 {
                     case nameof(ModelWithSpatialProperties.ID):
-                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.String));
                         break;
 
                     case nameof(ModelWithSpatialProperties.GeographyPoint):
-                        Assert.AreEqual(SearchFieldDataType.GeographyPoint, field.Type);
+                        Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.GeographyPoint));
                         break;
 
                     default:
-                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.Complex), $"Unexpected type for field '{field.Name}'");
                         break;
                 }
             }
@@ -504,20 +510,20 @@ namespace Azure.Search.Documents.Tests
                 switch (field.Name)
                 {
                     case nameof(ModelWithVectorProperty.ID):
-                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.String));
                         break;
 
                     case nameof(ModelWithVectorProperty.TitleVector):
-                        Assert.AreEqual(SearchFieldDataType.Collection(SearchFieldDataType.Single), field.Type);
-                        Assert.AreEqual(1536, field.VectorSearchDimensions);
-                        Assert.AreEqual("test-config", field.VectorSearchProfileName);
-                        Assert.IsTrue(field.IsStored);
-                        Assert.AreEqual(VectorEncodingFormat.PackedBit, field.VectorEncodingFormat);
-                        Assert.IsFalse(field.IsHidden);
+                        Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.Collection(SearchFieldDataType.Single)));
+                        Assert.That(field.VectorSearchDimensions, Is.EqualTo(1536));
+                        Assert.That(field.VectorSearchProfileName, Is.EqualTo("test-config"));
+                        Assert.That(field.IsStored, Is.True);
+                        Assert.That(field.VectorEncodingFormat, Is.EqualTo(VectorEncodingFormat.PackedBit));
+                        Assert.That(field.IsHidden, Is.False);
                         break;
 
                     default:
-                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.Complex), $"Unexpected type for field '{field.Name}'");
                         break;
                 }
             }
@@ -581,11 +587,11 @@ namespace Azure.Search.Documents.Tests
 
                     if (expectedFieldNames.Contains(fieldNameFromModel))
                     {
-                        Assert.IsTrue(result, $"Expected true for field {fieldNameFromModel}.");
+                        Assert.That(result, Is.True, $"Expected true for field {fieldNameFromModel}.");
                     }
                     else
                     {
-                        Assert.IsFalse(result, $"Expected false for field {fieldNameFromModel}.");
+                        Assert.That(result, Is.False, $"Expected false for field {fieldNameFromModel}.");
                     }
                 }
             }

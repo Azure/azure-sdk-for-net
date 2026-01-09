@@ -38,12 +38,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorClient client = CreateInstrumentedClient(getResponse);
             MetricFeedback feedback = await client.GetFeedbackAsync(FakeGuid);
 
-            Assert.That(feedback.Id, Is.EqualTo(FakeGuid));
-            Assert.That(feedback.CreatedOn, Is.EqualTo(DateTimeOffset.Parse("2021-01-01T00:00:00.000Z")));
-            Assert.That(feedback.UserPrincipal, Is.EqualTo("fake@email.com"));
-            Assert.That(feedback.MetricId, Is.EqualTo(FakeGuid));
-            Assert.That(feedback.DimensionKey.TryGetValue("city", out string city));
-            Assert.That(city, Is.EqualTo("Delhi"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(feedback.Id, Is.EqualTo(FakeGuid));
+                Assert.That(feedback.CreatedOn, Is.EqualTo(DateTimeOffset.Parse("2021-01-01T00:00:00.000Z")));
+                Assert.That(feedback.UserPrincipal, Is.EqualTo("fake@email.com"));
+                Assert.That(feedback.MetricId, Is.EqualTo(FakeGuid));
+                Assert.That(feedback.DimensionKey.TryGetValue("city", out string city));
+                Assert.That(city, Is.EqualTo("Delhi"));
+            });
         }
     }
 }

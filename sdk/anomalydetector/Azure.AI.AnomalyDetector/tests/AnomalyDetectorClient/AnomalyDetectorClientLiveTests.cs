@@ -37,13 +37,16 @@ namespace Azure.AI.AnomalyDetector.Tests
             var response = await client.GetUnivariateClient().DetectUnivariateEntireSeriesAsync(request.ToRequestContent());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Assert.IsNotNull(result.GetProperty("expectedValues"));
-            Assert.IsNotNull(result.GetProperty("upperMargins"));
-            Assert.IsNotNull(result.GetProperty("lowerMargins"));
-            Assert.IsNotNull(result.GetProperty("isAnomaly"));
-            Assert.IsNotNull(result.GetProperty("isPositiveAnomaly"));
-            Assert.IsNotNull(result.GetProperty("isNegativeAnomaly"));
-            Assert.IsNotNull(result.GetProperty("severity"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.GetProperty("expectedValues"), Is.Not.Null);
+                Assert.That(result.GetProperty("upperMargins"), Is.Not.Null);
+                Assert.That(result.GetProperty("lowerMargins"), Is.Not.Null);
+                Assert.That(result.GetProperty("isAnomaly"), Is.Not.Null);
+                Assert.That(result.GetProperty("isPositiveAnomaly"), Is.Not.Null);
+                Assert.That(result.GetProperty("isNegativeAnomaly"), Is.Not.Null);
+                Assert.That(result.GetProperty("severity"), Is.Not.Null);
+            });
         }
 
         [Test]
@@ -56,15 +59,18 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.Sensitivity = 95;
             var result = await client.GetUnivariateClient().DetectUnivariateLastPointAsync(request);
 
-            Assert.IsNotNull(result.Value.ExpectedValue);
-            Assert.IsNotNull(result.Value.IsAnomaly);
-            Assert.IsNotNull(result.Value.IsNegativeAnomaly);
-            Assert.IsNotNull(result.Value.IsPositiveAnomaly);
-            Assert.IsNotNull(result.Value.LowerMargin);
-            Assert.IsNotNull(result.Value.Period);
-            Assert.IsNotNull(result.Value.SuggestedWindow);
-            Assert.IsNotNull(result.Value.UpperMargin);
-            Assert.IsNotNull(result.Value.Severity);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Value.ExpectedValue, Is.Not.Null);
+                Assert.That(result.Value.IsAnomaly, Is.Not.Null);
+                Assert.That(result.Value.IsNegativeAnomaly, Is.Not.Null);
+                Assert.That(result.Value.IsPositiveAnomaly, Is.Not.Null);
+                Assert.That(result.Value.LowerMargin, Is.Not.Null);
+                Assert.That(result.Value.Period, Is.Not.Null);
+                Assert.That(result.Value.SuggestedWindow, Is.Not.Null);
+                Assert.That(result.Value.UpperMargin, Is.Not.Null);
+                Assert.That(result.Value.Severity, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -79,9 +85,12 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.Period = 0;
             var result = await client.GetUnivariateClient().DetectUnivariateChangePointAsync(request);
 
-            Assert.IsNotNull(result.Value.Period);
-            Assert.IsNotNull(result.Value.IsChangePoint);
-            Assert.IsNotNull(result.Value.ConfidenceScores);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Value.Period, Is.Not.Null);
+                Assert.That(result.Value.IsChangePoint, Is.Not.Null);
+                Assert.That(result.Value.ConfidenceScores, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -95,7 +104,7 @@ namespace Azure.AI.AnomalyDetector.Tests
                 model_number++;
             }
 
-            Assert.IsTrue(model_number >= 0);
+            Assert.That(model_number, Is.GreaterThanOrEqualTo(0));
         }
     }
 }

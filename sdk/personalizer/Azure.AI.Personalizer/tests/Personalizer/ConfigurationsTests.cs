@@ -39,21 +39,27 @@ namespace Azure.AI.Personalizer.Tests
         private async Task GetProperties(PersonalizerAdministrationClient client, PersonalizerServiceProperties properties)
         {
             PersonalizerServiceProperties result = await client.GetPersonalizerPropertiesAsync();
-            Assert.AreEqual(properties.DefaultReward, result.DefaultReward);
-            Assert.True(Math.Abs(properties.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
-            Assert.AreEqual(properties.ModelExportFrequency, result.ModelExportFrequency);
-            Assert.AreEqual(properties.RewardAggregation, result.RewardAggregation);
-            Assert.AreEqual(properties.RewardWaitTime, result.RewardWaitTime);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.DefaultReward, Is.EqualTo(properties.DefaultReward));
+                Assert.That(Math.Abs(properties.ExplorationPercentage - result.ExplorationPercentage), Is.LessThan(1e-3));
+                Assert.That(result.ModelExportFrequency, Is.EqualTo(properties.ModelExportFrequency));
+                Assert.That(result.RewardAggregation, Is.EqualTo(properties.RewardAggregation));
+                Assert.That(result.RewardWaitTime, Is.EqualTo(properties.RewardWaitTime));
+            });
         }
 
         private async Task UpdateProperties(PersonalizerAdministrationClient client, PersonalizerServiceProperties properties)
         {
             PersonalizerServiceProperties result = await client.UpdatePersonalizerPropertiesAsync(properties);
-            Assert.AreEqual(properties.DefaultReward, result.DefaultReward);
-            Assert.True(Math.Abs(properties.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
-            Assert.AreEqual(properties.ModelExportFrequency, result.ModelExportFrequency);
-            Assert.AreEqual(properties.RewardAggregation, result.RewardAggregation);
-            Assert.AreEqual(properties.RewardWaitTime, result.RewardWaitTime);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.DefaultReward, Is.EqualTo(properties.DefaultReward));
+                Assert.That(Math.Abs(properties.ExplorationPercentage - result.ExplorationPercentage), Is.LessThan(1e-3));
+                Assert.That(result.ModelExportFrequency, Is.EqualTo(properties.ModelExportFrequency));
+                Assert.That(result.RewardAggregation, Is.EqualTo(properties.RewardAggregation));
+                Assert.That(result.RewardWaitTime, Is.EqualTo(properties.RewardWaitTime));
+            });
             await Delay(60000);
         }
 
@@ -64,19 +70,19 @@ namespace Azure.AI.Personalizer.Tests
                 arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
             );
             PersonalizerPolicy updatedPolicy = await client.UpdatePersonalizerPolicyAsync(newPolicy);
-            Assert.NotNull(updatedPolicy);
-            Assert.AreEqual(newPolicy.Arguments, updatedPolicy.Arguments);
+            Assert.That(updatedPolicy, Is.Not.Null);
+            Assert.That(updatedPolicy.Arguments, Is.EqualTo(newPolicy.Arguments));
             await Delay(30000);
             PersonalizerPolicy policy = await client.GetPersonalizerPolicyAsync();
             // Only checking the first 190 chars because the epsilon has a float rounding addition when applied
-            Assert.AreEqual(newPolicy.Arguments, policy.Arguments.Substring(0,190));
+            Assert.That(policy.Arguments.Substring(0, 190), Is.EqualTo(newPolicy.Arguments));
         }
 
         private async Task ResetPolicy(PersonalizerAdministrationClient client)
         {
             PersonalizerPolicy policy = await client.ResetPersonalizerPolicyAsync();
-            Assert.AreEqual("--cb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::",
-            policy.Arguments);
+            Assert.That(policy.Arguments,
+            Is.EqualTo("--cb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"));
         }
     }
 }

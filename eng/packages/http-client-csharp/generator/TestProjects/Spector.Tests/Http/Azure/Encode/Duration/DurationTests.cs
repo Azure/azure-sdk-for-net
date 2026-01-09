@@ -15,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Encode.Duration
         {
             var request = new DurationModel(new TimeSpan(1, 2, 59, 59, 500));
             var response = await new DurationClient(host, null).DurationConstantAsync(request);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

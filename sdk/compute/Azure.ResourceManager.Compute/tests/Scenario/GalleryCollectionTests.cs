@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             GalleryResource gallery = lro.Value;
-            Assert.AreEqual(name, gallery.Data.Name);
+            Assert.That(gallery.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -60,8 +60,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             GalleryResource gallery = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.Multiple(async () =>
+            {
+                Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
@@ -82,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
 
         [TestCase]
@@ -106,8 +109,11 @@ namespace Azure.ResourceManager.Compute.Tests
                     gallery2 = gallery;
             }
 
-            Assert.NotNull(gallery1);
-            Assert.NotNull(gallery2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(gallery1, Is.Not.Null);
+                Assert.That(gallery2, Is.Not.Null);
+            });
         }
     }
 }

@@ -15,11 +15,14 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
             var dog = new Dog("Rex", true, "German Shepherd");
             var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdateDogAsAnimalAsync(dog);
             dog = response1.Value as Dog;
-            Assert.IsNotNull(dog);
-            Assert.AreEqual("Rex", dog!.Name);
-            Assert.AreEqual("German Shepherd", dog.Breed);
-            Assert.IsTrue(dog.Trained);
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
+            Assert.That(dog, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dog!.Name, Is.EqualTo("Rex"));
+                Assert.That(dog.Breed, Is.EqualTo("German Shepherd"));
+                Assert.That(dog.Trained, Is.True);
+                Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            });
         });
 
         [SpectorTest]
@@ -28,10 +31,13 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
             var pet = new Pet("Buddy", true);
             var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdatePetAsAnimalAsync(pet);
             pet = response1.Value as Pet;
-            Assert.IsNotNull(pet);
-            Assert.AreEqual("Buddy", pet!.Name);
-            Assert.IsTrue(pet.Trained);
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
+            Assert.That(pet, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pet!.Name, Is.EqualTo("Buddy"));
+                Assert.That(pet.Trained, Is.True);
+                Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            });
         });
 
         [SpectorTest]
@@ -40,11 +46,14 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
             var dog = new Dog("Rex", true, "German Shepherd");
             var response1 = await new HierarchyBuildingClient(host, null).GetDogOperationsClient().UpdateDogAsDogAsync(dog);
             dog = response1.Value as Dog;
-            Assert.IsNotNull(dog);
-            Assert.AreEqual("Rex", dog!.Name);
-            Assert.AreEqual("German Shepherd", dog.Breed);
-            Assert.IsTrue(dog.Trained);
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
+            Assert.That(dog, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dog!.Name, Is.EqualTo("Rex"));
+                Assert.That(dog.Breed, Is.EqualTo("German Shepherd"));
+                Assert.That(dog.Trained, Is.True);
+                Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            });
         });
 
         [SpectorTest]
@@ -53,11 +62,14 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
             var dog = new Dog("Rex", true, "German Shepherd");
             var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdateDogAsAnimalAsync(dog);
             dog = response1.Value as Dog;
-            Assert.IsNotNull(dog);
-            Assert.AreEqual("Rex", dog!.Name);
-            Assert.AreEqual("German Shepherd", dog.Breed);
-            Assert.IsTrue(dog.Trained);
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
+            Assert.That(dog, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dog!.Name, Is.EqualTo("Rex"));
+                Assert.That(dog.Breed, Is.EqualTo("German Shepherd"));
+                Assert.That(dog.Trained, Is.True);
+                Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            });
         });
 
         [SpectorTest]
@@ -66,10 +78,13 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
             var pet = new Pet("Buddy", true);
             var response1 = await new HierarchyBuildingClient(host, null).GetPetOperationsClient().UpdatePetAsPetAsync(pet);
             pet = response1.Value as Pet;
-            Assert.IsNotNull(pet);
-            Assert.AreEqual("Buddy", pet!.Name);
-            Assert.IsTrue(pet.Trained);
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
+            Assert.That(pet, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pet!.Name, Is.EqualTo("Buddy"));
+                Assert.That(pet.Trained, Is.True);
+                Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            });
         });
     }
 }

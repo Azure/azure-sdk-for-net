@@ -33,8 +33,11 @@ namespace Azure.Core.Tests
             var credential = new AzureNamedKeyCredential(expectedName, expectedKey);
             var (name, key) = credential;
 
-            Assert.AreEqual(expectedName, name);
-            Assert.AreEqual(expectedKey, key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(name, Is.EqualTo(expectedName));
+                Assert.That(key, Is.EqualTo(expectedKey));
+            });
         }
 
         [Test]
@@ -44,7 +47,7 @@ namespace Azure.Core.Tests
             var expectedKey = "real-key";
             var credential = new AzureNamedKeyCredential(expectedName, expectedKey);
 
-            Assert.AreEqual(expectedName, credential.Name);
+            Assert.That(credential.Name, Is.EqualTo(expectedName));
         }
 
         [Test]
@@ -78,11 +81,14 @@ namespace Azure.Core.Tests
             credential.Update(expectedName, expectedKey);
 #endif
             (string name, string key) = credential;
-            #endregion
+            Assert.Multiple(() =>
+            {
+                #endregion
 
-            Assert.AreEqual(expectedName, credential.Name);
-            Assert.AreEqual(expectedName, name);
-            Assert.AreEqual(expectedKey, key);
+                Assert.That(credential.Name, Is.EqualTo(expectedName));
+                Assert.That(name, Is.EqualTo(expectedName));
+                Assert.That(key, Is.EqualTo(expectedKey));
+            });
         }
 
         [Test]
@@ -97,9 +103,12 @@ namespace Azure.Core.Tests
 
             var (name, key) = credential;
 
-            Assert.AreEqual(expectedName, credential.Name);
-            Assert.AreEqual(expectedName, name);
-            Assert.AreEqual(expectedKey, key);
+            Assert.Multiple(() =>
+            {
+                Assert.That(credential.Name, Is.EqualTo(expectedName));
+                Assert.That(name, Is.EqualTo(expectedName));
+                Assert.That(key, Is.EqualTo(expectedKey));
+            });
         }
     }
 }

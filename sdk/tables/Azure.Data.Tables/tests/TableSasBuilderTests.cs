@@ -41,15 +41,18 @@ namespace Azure.Data.Tables.Tests
             // Act
             var tableSasBuilder = new TableSasBuilder(uri);
 
-            // Assert
-            Assert.AreEqual(TableSasProtocol.Https, tableSasBuilder.Protocol);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero), tableSasBuilder.ExpiresOn);
-            Assert.AreEqual("", tableSasBuilder.Identifier);
-            Assert.AreEqual(TableSasIPRange.Parse("168.1.5.60-168.1.5.70"), tableSasBuilder.IPRange);
-            Assert.AreEqual("rw", tableSasBuilder.Permissions);
-            Assert.AreEqual(TableSasProtocol.Https, tableSasBuilder.Protocol);
-            Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), tableSasBuilder.StartsOn);
-            Assert.AreEqual("2015-04-05", tableSasBuilder.Version);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(tableSasBuilder.Protocol, Is.EqualTo(TableSasProtocol.Https));
+                Assert.That(tableSasBuilder.ExpiresOn, Is.EqualTo(new DateTimeOffset(2015, 4, 30, 2, 23, 26, TimeSpan.Zero)));
+                Assert.That(tableSasBuilder.Identifier, Is.EqualTo(""));
+                Assert.That(tableSasBuilder.IPRange, Is.EqualTo(TableSasIPRange.Parse("168.1.5.60-168.1.5.70")));
+                Assert.That(tableSasBuilder.Permissions, Is.EqualTo("rw"));
+            });
+            Assert.That(tableSasBuilder.Protocol, Is.EqualTo(TableSasProtocol.Https));
+            Assert.That(tableSasBuilder.StartsOn, Is.EqualTo(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero)));
+            Assert.That(tableSasBuilder.Version, Is.EqualTo("2015-04-05"));
         }
 
         [Test]
@@ -62,12 +65,15 @@ namespace Azure.Data.Tables.Tests
         {
             var tableSasBuilder = new TableSasBuilder(tableName, permissionsString, DateTimeOffset.Now);
 
-            Assert.AreEqual(permissionsString.ToLowerInvariant(), tableSasBuilder.Permissions);
+            Assert.That(tableSasBuilder.Permissions, Is.EqualTo(permissionsString.ToLowerInvariant()));
 
             tableSasBuilder.SetPermissions(permissions);
 
-            Assert.AreEqual(permissionsString.ToLowerInvariant(), tableSasBuilder.Permissions);
-            Assert.AreEqual(tableName, tableSasBuilder.TableName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tableSasBuilder.Permissions, Is.EqualTo(permissionsString.ToLowerInvariant()));
+                Assert.That(tableSasBuilder.TableName, Is.EqualTo(tableName));
+            });
         }
 
         [Test]
@@ -81,9 +87,12 @@ namespace Azure.Data.Tables.Tests
             };
             tableSasBuilder.SetPermissions(TableSasPermissions.Read);
 
-            Assert.AreEqual("table", tableSasBuilder.TableName);
-            Assert.AreEqual("r", tableSasBuilder.Permissions);
-            Assert.AreEqual(now.AddHours(1), tableSasBuilder.ExpiresOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tableSasBuilder.TableName, Is.EqualTo("table"));
+                Assert.That(tableSasBuilder.Permissions, Is.EqualTo("r"));
+                Assert.That(tableSasBuilder.ExpiresOn, Is.EqualTo(now.AddHours(1)));
+            });
         }
     }
 }

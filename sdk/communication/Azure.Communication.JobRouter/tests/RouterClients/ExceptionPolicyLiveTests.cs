@@ -43,27 +43,30 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(exceptionPolicyId, rules));
             AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
 
-            Assert.NotNull(createExceptionPolicyResponse.Value);
+            Assert.That(createExceptionPolicyResponse.Value, Is.Not.Null);
 
             var exceptionPolicy = createExceptionPolicyResponse.Value;
 
-            Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
-            Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
+            Assert.That(exceptionPolicy.Id, Is.EqualTo(exceptionPolicyId));
+            Assert.That(exceptionPolicy.Id, Is.EqualTo(exceptionPolicyId));
             Assert.DoesNotThrow(() =>
             {
                 var exceptionRule = exceptionPolicy.ExceptionRules.First();
 
-                Assert.AreEqual(exceptionRuleId, exceptionRule.Id);
-                Assert.IsTrue(exceptionRule.Trigger.GetType() == typeof(QueueLengthExceptionTrigger));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(exceptionRule.Id, Is.EqualTo(exceptionRuleId));
+                    Assert.That(exceptionRule.Trigger.GetType(), Is.EqualTo(typeof(QueueLengthExceptionTrigger)));
+                });
                 var trigger = exceptionRule.Trigger as QueueLengthExceptionTrigger;
-                Assert.NotNull(trigger);
-                Assert.AreEqual(1, trigger!.Threshold);
+                Assert.That(trigger, Is.Not.Null);
+                Assert.That(trigger!.Threshold, Is.EqualTo(1));
 
                 var actions = exceptionRule.Actions;
-                Assert.AreEqual(1, actions.Count);
+                Assert.That(actions, Has.Count.EqualTo(1));
                 var cancelAction = actions.FirstOrDefault() as CancelExceptionAction;
-                Assert.NotNull(cancelAction);
-                Assert.AreEqual($"CancelledDueToMaxQueueLengthReached", cancelAction!.DispositionCode);
+                Assert.That(cancelAction, Is.Not.Null);
+                Assert.That(cancelAction!.DispositionCode, Is.EqualTo($"CancelledDueToMaxQueueLengthReached"));
             });
 
             // with name
@@ -74,12 +77,15 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = exceptionPolicyName
                 });
 
-            Assert.NotNull(createExceptionPolicyResponse.Value);
+            Assert.That(createExceptionPolicyResponse.Value, Is.Not.Null);
 
             exceptionPolicy = createExceptionPolicyResponse.Value;
 
-            Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
-            Assert.AreEqual(exceptionPolicyName, exceptionPolicy.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(exceptionPolicy.Id, Is.EqualTo(exceptionPolicyId));
+                Assert.That(exceptionPolicy.Name, Is.EqualTo(exceptionPolicyName));
+            });
         }
 
         [Test]
@@ -127,32 +133,41 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(exceptionPolicyId, rules));
 
             AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
-            Assert.NotNull(createExceptionPolicyResponse.Value);
+            Assert.That(createExceptionPolicyResponse.Value, Is.Not.Null);
 
             var exceptionPolicy = createExceptionPolicyResponse.Value;
 
-            Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
+            Assert.That(exceptionPolicy.Id, Is.EqualTo(exceptionPolicyId));
             Assert.DoesNotThrow(() =>
             {
                 var exceptionRule = exceptionPolicy.ExceptionRules.First();
 
-                Assert.AreEqual(exceptionRuleId, exceptionRule.Id);
-                Assert.IsTrue(exceptionRule.Trigger.GetType() == typeof(QueueLengthExceptionTrigger));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(exceptionRule.Id, Is.EqualTo(exceptionRuleId));
+                    Assert.That(exceptionRule.Trigger.GetType(), Is.EqualTo(typeof(QueueLengthExceptionTrigger)));
+                });
                 var trigger = exceptionRule.Trigger as QueueLengthExceptionTrigger;
-                Assert.NotNull(trigger);
-                Assert.AreEqual(1, trigger!.Threshold);
+                Assert.That(trigger, Is.Not.Null);
+                Assert.That(trigger!.Threshold, Is.EqualTo(1));
 
                 var actions = exceptionRule.Actions;
-                Assert.AreEqual(2, actions.Count);
+                Assert.That(actions, Has.Count.EqualTo(2));
                 var reclassifyExceptionAction = actions.FirstOrDefault() as ReclassifyExceptionAction;
-                Assert.NotNull(reclassifyExceptionAction);
-                Assert.AreEqual(classificationPolicyId, reclassifyExceptionAction?.ClassificationPolicyId);
-                Assert.AreEqual(labelsToUpsert.FirstOrDefault().Key, reclassifyExceptionAction?.LabelsToUpsert.FirstOrDefault().Key);
-                Assert.AreEqual(labelsToUpsert.FirstOrDefault().Value.Value as string, reclassifyExceptionAction?.LabelsToUpsert.FirstOrDefault().Value.Value as string);
+                Assert.That(reclassifyExceptionAction, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(reclassifyExceptionAction?.ClassificationPolicyId, Is.EqualTo(classificationPolicyId));
+                    Assert.That(reclassifyExceptionAction?.LabelsToUpsert.FirstOrDefault().Key, Is.EqualTo(labelsToUpsert.FirstOrDefault().Key));
+                    Assert.That(reclassifyExceptionAction?.LabelsToUpsert.FirstOrDefault().Value.Value as string, Is.EqualTo(labelsToUpsert.FirstOrDefault().Value.Value as string));
+                });
                 var manualReclassifyExceptionAction = actions.LastOrDefault() as ManualReclassifyExceptionAction;
-                Assert.NotNull(manualReclassifyExceptionAction);
-                Assert.AreEqual(queueId, manualReclassifyExceptionAction?.QueueId);
-                Assert.AreEqual(1, manualReclassifyExceptionAction?.Priority);
+                Assert.That(manualReclassifyExceptionAction, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(manualReclassifyExceptionAction?.QueueId, Is.EqualTo(queueId));
+                    Assert.That(manualReclassifyExceptionAction?.Priority, Is.EqualTo(1));
+                });
             });
 
             // with name
@@ -163,12 +178,15 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = exceptionPolicyName
                 });
 
-            Assert.NotNull(createExceptionPolicyResponse.Value);
+            Assert.That(createExceptionPolicyResponse.Value, Is.Not.Null);
 
             exceptionPolicy = createExceptionPolicyResponse.Value;
 
-            Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
-            Assert.AreEqual(exceptionPolicyName, exceptionPolicy.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(exceptionPolicy.Id, Is.EqualTo(exceptionPolicyId));
+                Assert.That(exceptionPolicy.Name, Is.EqualTo(exceptionPolicyName));
+            });
         }
 
         #endregion Exception Policy Tests

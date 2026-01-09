@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
             InstrumentClient(new ClientAssertionCredential(TenantId, ClientId, () => expectedClientAssertion, options as ClientAssertionCredentialOptions));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
+            Assert.That(token.Token, Is.EqualTo(expectedToken), "Should be the expected token value");
         }
     }
 }

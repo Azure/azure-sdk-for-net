@@ -88,9 +88,12 @@ public class RealtimeTests : RealtimeTestFixtureBase
             }
             else if (update is ConversationSessionConfiguredUpdate sessionConfiguredUpdate)
             {
-                Assert.That(sessionConfiguredUpdate.OutputAudioFormat == sessionOptions.OutputAudioFormat);
-                Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(TurnDetectionKind.Disabled));
-                Assert.That(sessionConfiguredUpdate.MaxOutputTokens.NumericValue, Is.EqualTo(sessionOptions.MaxOutputTokens.NumericValue));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sessionConfiguredUpdate.OutputAudioFormat, Is.EqualTo(sessionOptions.OutputAudioFormat));
+                    Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(TurnDetectionKind.Disabled));
+                    Assert.That(sessionConfiguredUpdate.MaxOutputTokens.NumericValue, Is.EqualTo(sessionOptions.MaxOutputTokens.NumericValue));
+                });
             }
             else if (update is ResponseFinishedUpdate)
             {
@@ -103,11 +106,14 @@ public class RealtimeTests : RealtimeTestFixtureBase
                 .Where(update => update is not null)
                 .ToList();
 
-        Assert.That(GetReceivedUpdates<ConversationSessionStartedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<ResponseStartedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<ResponseFinishedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<OutputStreamingStartedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<OutputStreamingFinishedUpdate>(), Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(GetReceivedUpdates<ConversationSessionStartedUpdate>(), Has.Count.EqualTo(1));
+            Assert.That(GetReceivedUpdates<ResponseStartedUpdate>(), Has.Count.EqualTo(1));
+            Assert.That(GetReceivedUpdates<ResponseFinishedUpdate>(), Has.Count.EqualTo(1));
+            Assert.That(GetReceivedUpdates<OutputStreamingStartedUpdate>(), Has.Count.EqualTo(1));
+            Assert.That(GetReceivedUpdates<OutputStreamingFinishedUpdate>(), Has.Count.EqualTo(1));
+        });
     }
 
     [Test]
@@ -187,8 +193,11 @@ public class RealtimeTests : RealtimeTestFixtureBase
             }
         }
 
-        Assert.That(responseBuilder.ToString(), Is.Not.Null.Or.Empty);
-        Assert.That(gotResponseDone, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(responseBuilder.ToString(), Is.Not.Null.Or.Empty);
+            Assert.That(gotResponseDone, Is.True);
+        });
 
         if (!client.GetType().IsSubclassOf(typeof(RealtimeClient)))
         {
@@ -238,9 +247,12 @@ public class RealtimeTests : RealtimeTestFixtureBase
 
             if (update is ConversationSessionConfiguredUpdate sessionConfiguredUpdate)
             {
-                Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(TurnDetectionKind.Disabled));
-                Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Text), Is.True);
-                Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Audio), Is.False);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(TurnDetectionKind.Disabled));
+                    Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Text), Is.True);
+                    Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Audio), Is.False);
+                });
                 gotSessionConfigured = true;
             }
 
@@ -259,8 +271,8 @@ public class RealtimeTests : RealtimeTestFixtureBase
 
             if (update is ResponseFinishedUpdate responseFinishedUpdate)
             {
-                Assert.That(responseFinishedUpdate.CreatedItems.Count, Is.EqualTo(1));
-                Assert.That(responseFinishedUpdate.CreatedItems[0].MessageContentParts.Count, Is.EqualTo(1));
+                Assert.That(responseFinishedUpdate.CreatedItems, Has.Count.EqualTo(1));
+                Assert.That(responseFinishedUpdate.CreatedItems[0].MessageContentParts, Has.Count.EqualTo(1));
                 Assert.That(responseFinishedUpdate.CreatedItems[0].MessageContentParts[0].Text, Does.Contain("coconut"));
                 Assert.That(responseFinishedUpdate.CreatedItems[0].MessageContentParts[0].Text, Does.Not.Contain("banana"));
                 gotResponseFinished = true;
@@ -337,12 +349,15 @@ public class RealtimeTests : RealtimeTestFixtureBase
         {
             if (update is ConversationSessionStartedUpdate sessionStartedUpdate)
             {
-                Assert.That(sessionStartedUpdate.SessionId, Is.Not.Null.And.Not.Empty);
-                Assert.That(sessionStartedUpdate.Model, Is.Not.Null.And.Not.Empty);
-                Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Text));
-                Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Audio));
-                Assert.That(sessionStartedUpdate.Voice.ToString(), Is.Not.Null.And.Not.Empty);
-                Assert.That(sessionStartedUpdate.Temperature, Is.GreaterThan(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sessionStartedUpdate.SessionId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(sessionStartedUpdate.Model, Is.Not.Null.And.Not.Empty);
+                    Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Text));
+                    Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Audio));
+                    Assert.That(sessionStartedUpdate.Voice.ToString(), Is.Not.Null.And.Not.Empty);
+                    Assert.That(sessionStartedUpdate.Temperature, Is.GreaterThan(0));
+                });
             }
 
             if (update is InputAudioTranscriptionFinishedUpdate inputTranscriptionCompletedUpdate)
@@ -476,8 +491,11 @@ public class RealtimeTests : RealtimeTestFixtureBase
 
             if (update is InputAudioTranscriptionFinishedUpdate inputTranscriptionFinishedUpdate)
             {
-                Assert.That(gotInputTranscriptionCompleted, Is.False);
-                Assert.That(inputTranscriptionFinishedUpdate.Transcript, Is.Not.Null.And.Not.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(gotInputTranscriptionCompleted, Is.False);
+                    Assert.That(inputTranscriptionFinishedUpdate.Transcript, Is.Not.Null.And.Not.Empty);
+                });
                 gotInputTranscriptionCompleted = true;
                 await Task.Delay(TimeSpan.FromMilliseconds(500), CancellationToken);
                 await session.StartResponseAsync(CancellationToken);
@@ -486,26 +504,35 @@ public class RealtimeTests : RealtimeTestFixtureBase
 
             if (update is ResponseStartedUpdate responseStartedUpdate)
             {
-                Assert.That(responseExpected, Is.True);
-                Assert.That(gotInputTranscriptionCompleted, Is.True);
-                Assert.That(gotResponseFinished, Is.False);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(responseExpected, Is.True);
+                    Assert.That(gotInputTranscriptionCompleted, Is.True);
+                    Assert.That(gotResponseFinished, Is.False);
+                });
                 gotResponseStarted = true;
             }
 
             if (update is ResponseFinishedUpdate responseFinishedUpdate)
             {
-                Assert.That(responseExpected, Is.True);
-                Assert.That(gotInputTranscriptionCompleted, Is.True);
-                Assert.That(gotResponseStarted, Is.True);
-                Assert.That(gotResponseFinished, Is.False);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(responseExpected, Is.True);
+                    Assert.That(gotInputTranscriptionCompleted, Is.True);
+                    Assert.That(gotResponseStarted, Is.True);
+                    Assert.That(gotResponseFinished, Is.False);
+                });
                 gotResponseFinished = true;
                 break;
             }
         }
 
-        Assert.IsTrue(gotInputTranscriptionCompleted);
-        Assert.IsTrue(gotResponseStarted);
-        Assert.IsTrue(gotResponseFinished);
+        Assert.Multiple(() =>
+        {
+            Assert.That(gotInputTranscriptionCompleted, Is.True);
+            Assert.That(gotResponseStarted, Is.True);
+            Assert.That(gotResponseFinished, Is.True);
+        });
     }
 
     [Test]

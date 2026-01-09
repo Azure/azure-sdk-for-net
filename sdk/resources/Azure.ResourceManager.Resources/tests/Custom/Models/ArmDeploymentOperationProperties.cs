@@ -36,7 +36,7 @@ public class ArmDeploymentOperationPropertiesTests
                    """;
         var jsonDocument = JsonDocument.Parse(json);
         var deploymentOperations = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(jsonDocument.RootElement);
-        Assert.AreEqual("Conflict", deploymentOperations.StatusCode);
+        Assert.That(deploymentOperations.StatusCode, Is.EqualTo("Conflict"));
     }
 
     [Test]
@@ -66,6 +66,6 @@ public class ArmDeploymentOperationPropertiesTests
                    """;
         var jsonDocument = JsonDocument.Parse(json);
         var deploymentOperations = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(jsonDocument.RootElement);
-        Assert.AreEqual("429", deploymentOperations.StatusCode);
+        Assert.That(deploymentOperations.StatusCode, Is.EqualTo("429"));
     }
 }

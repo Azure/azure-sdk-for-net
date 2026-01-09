@@ -17,45 +17,51 @@ namespace TestProjects.Spector.Tests.Http.Azure.Versioning.PreviewVersion.V2
         {
             /* verify Widget has all properties including color (added in preview). */
             var properties = typeof(Widget).GetProperties();
-            Assert.IsNotNull(properties);
-            Assert.AreEqual(3, properties.Length);
-            Assert.IsNotNull(typeof(Widget).GetProperty("Id"));
-            Assert.IsNotNull(typeof(Widget).GetProperty("Name"));
-            Assert.IsNotNull(typeof(Widget).GetProperty("Color"));
+            Assert.That(properties, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties, Has.Length.EqualTo(3));
+                Assert.That(typeof(Widget).GetProperty("Id"), Is.Not.Null);
+                Assert.That(typeof(Widget).GetProperty("Name"), Is.Not.Null);
+                Assert.That(typeof(Widget).GetProperty("Color"), Is.Not.Null);
+            });
 
             /* verify PreviewVersionClient has all methods. */
             var methods = typeof(PreviewVersionClient).GetMethods();
 
             /* check getWidget method exists. */
             var getWidgetMethods = methods.Where(m => m.Name == "GetWidget" || m.Name == "GetWidgetAsync");
-            Assert.AreEqual(4, getWidgetMethods.Count());
+            Assert.That(getWidgetMethods.Count(), Is.EqualTo(4));
 
             /* check updateWidgetColor method exists (preview only operation). */
             var updateColorMethods = methods.Where(m => m.Name == "UpdateWidgetColor" || m.Name == "UpdateWidgetColorAsync");
-            Assert.AreEqual(2, updateColorMethods.Count());
+            Assert.That(updateColorMethods.Count(), Is.EqualTo(2));
 
             /* check getWidgets/listWidgets method exists. */
             var getWidgetsMethods = methods.Where(m => m.Name == "GetWidgets" || m.Name == "GetWidgetsAsync");
-            Assert.AreEqual(4, getWidgetsMethods.Count());
+            Assert.That(getWidgetsMethods.Count(), Is.EqualTo(4));
 
             /* verify ServiceVersion enum has all versions. */
             var serviceVersionEnum = typeof(PreviewVersionClientOptions.ServiceVersion);
-            Assert.IsTrue(serviceVersionEnum.IsEnum);
+            Assert.That(serviceVersionEnum.IsEnum, Is.True);
             var enumNames = serviceVersionEnum.GetEnumNames();
-            Assert.AreEqual(3, enumNames.Length);
-            Assert.IsTrue(enumNames.Contains("V2024_01_01"));
-            Assert.IsTrue(enumNames.Contains("V2024_06_01"));
-            Assert.IsTrue(enumNames.Contains("V2024_12_01_Preview"));
+            Assert.That(enumNames, Has.Length.EqualTo(3));
+            Assert.That(enumNames, Does.Contain("V2024_01_01"));
+            Assert.That(enumNames, Does.Contain("V2024_06_01"));
+            Assert.That(enumNames, Does.Contain("V2024_12_01_Preview"));
         }
 
         [SpectorTest]
         public Task Azure_Versioning_PreviewVersion_getWidget() => Test(async (host) =>
         {
             var response = await new PreviewVersionClient(host, new PreviewVersionClientOptions(PreviewVersionClientOptions.ServiceVersion.V2024_12_01_Preview)).GetWidgetAsync("widget-123");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("widget-123", response.Value.Id);
-            Assert.AreEqual("Sample Widget", response.Value.Name);
-            Assert.AreEqual("blue", response.Value.Color);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Id, Is.EqualTo("widget-123"));
+                Assert.That(response.Value.Name, Is.EqualTo("Sample Widget"));
+                Assert.That(response.Value.Color, Is.EqualTo("blue"));
+            });
         });
 
         [SpectorTest]
@@ -63,17 +69,23 @@ namespace TestProjects.Spector.Tests.Http.Azure.Versioning.PreviewVersion.V2
         {
             var content = global::Azure.Core.RequestContent.Create(new { color = "red" });
             var response = await new PreviewVersionClient(host, new PreviewVersionClientOptions(PreviewVersionClientOptions.ServiceVersion.V2024_12_01_Preview)).UpdateWidgetColorAsync("widget-123", content);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task Azure_Versioning_PreviewVersion_listWidgets() => Test(async (host) =>
         {
             var response = await new PreviewVersionClient(host, new PreviewVersionClientOptions(PreviewVersionClientOptions.ServiceVersion.V2024_06_01)).GetWidgetsAsync(name: "test");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(1, response.Value.Widgets.Count);
-            Assert.AreEqual("widget-1", response.Value.Widgets[0].Id);
-            Assert.AreEqual("test", response.Value.Widgets[0].Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Widgets.Count, Is.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Widgets[0].Id, Is.EqualTo("widget-1"));
+                Assert.That(response.Value.Widgets[0].Name, Is.EqualTo("test"));
+            });
         });
     }
 }

@@ -61,12 +61,15 @@ public class AssistantsTests : AssistantsTestBase
         // List the assistants again to ensure it's reporting the one new matching assistant
         listResponse = await client.GetAssistantsAsync();
         AssertSuccessfulResponse(listResponse);
-        Assert.That(
-            listResponse.Value.Data.Where(assistant => assistant.Metadata?.Contains(TestMetadataPair) == true).Count(),
-            Is.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                    listResponse.Value.Data.Where(assistant => assistant.Metadata?.Contains(TestMetadataPair) == true).Count(),
+                    Is.EqualTo(1));
 
-        // We shouldn't have the metadata K/V we'll add via modification yet
-        Assert.That(retrievalResponse.Value.Metadata.ContainsKey("modification_key"), Is.False);
+            // We shouldn't have the metadata K/V we'll add via modification yet
+            Assert.That(retrievalResponse.Value.Metadata.ContainsKey("modification_key"), Is.False);
+        });
 
         // Now modify the assistant by adding a k/v
         Response<Assistant> modificationResponse = await client.UpdateAssistantAsync(
@@ -107,7 +110,7 @@ public class AssistantsTests : AssistantsTestBase
         AssertSuccessfulResponse(threadCreationResponse);
         AssistantThread thread = threadCreationResponse.Value;
         EnsuredThreadDeletions.Add((client, thread.Id));
-        Assert.That(thread.Metadata.Contains(TestMetadataPair));
+        Assert.That(thread.Metadata, Does.Contain(TestMetadataPair));
 
         Response<AssistantThread> retrievalResponse = await client.GetThreadAsync(thread.Id);
         AssertSuccessfulResponse(retrievalResponse);
@@ -234,50 +237,59 @@ public class AssistantsTests : AssistantsTestBase
         }
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
-        Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
-        Assert.That(run.AssistantId, Is.EqualTo(assistant.Id));
-        Assert.That(run.ThreadId, Is.EqualTo(thread.Id));
+        Assert.Multiple(() =>
+        {
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
+            Assert.That(run.AssistantId, Is.EqualTo(assistant.Id));
+            Assert.That(run.ThreadId, Is.EqualTo(thread.Id));
+        });
 
         // List the messages on the thread, now updated from the completed run
         Response<PageableList<ThreadMessage>> messageListResponse = await client.GetMessagesAsync(thread.Id);
         AssertSuccessfulResponse(messageListResponse);
         IReadOnlyList<ThreadMessage> messages = messageListResponse.Value.Data;
-        Assert.That(messages.Count, Is.EqualTo(2));
+        Assert.That(messages, Has.Count.EqualTo(2));
 
-        // Messages are in reverse order: the *second* index should be the assistant response
-        Assert.That(messages[1].Role, Is.EqualTo(MessageRole.User));
-        Assert.That(messages[1].Id, Is.EqualTo(userMessage.Id));
-        Assert.That(messages[1].CreatedAt, Is.GreaterThanOrEqualTo(thread.CreatedAt));
-        Assert.That(messages[1].ContentItems, Is.Not.Null.Or.Empty);
-        Assert.That(
-            (messages[1].ContentItems[0] as MessageTextContent).Text,
-            Is.EqualTo((userMessage.ContentItems[0] as MessageTextContent).Text));
+        Assert.Multiple(() =>
+        {
+            // Messages are in reverse order: the *second* index should be the assistant response
+            Assert.That(messages[1].Role, Is.EqualTo(MessageRole.User));
+            Assert.That(messages[1].Id, Is.EqualTo(userMessage.Id));
+            Assert.That(messages[1].CreatedAt, Is.GreaterThanOrEqualTo(thread.CreatedAt));
+            Assert.That(messages[1].ContentItems, Is.Not.Null.Or.Empty);
+            Assert.That(
+                (messages[1].ContentItems[0] as MessageTextContent).Text,
+                Is.EqualTo((userMessage.ContentItems[0] as MessageTextContent).Text));
 
-        // Messages are in reverse order: the second index should be the assistant response
-        Assert.That(messages[0].Role, Is.EqualTo(MessageRole.Assistant));
-        Assert.That(messages[0].AssistantId, Is.EqualTo(assistant.Id));
-        Assert.That(messages[0].RunId, Is.EqualTo(run.Id));
-        Assert.That(messages[0].ContentItems, Is.Not.Null.Or.Empty);
-        Assert.That(
-            (messages[0].ContentItems[0] as MessageTextContent).Text,
-            Is.Not.Null.Or.Empty);
-        Assert.That(messages[0].CreatedAt, Is.GreaterThan(messages[1].CreatedAt));
+            // Messages are in reverse order: the second index should be the assistant response
+            Assert.That(messages[0].Role, Is.EqualTo(MessageRole.Assistant));
+            Assert.That(messages[0].AssistantId, Is.EqualTo(assistant.Id));
+            Assert.That(messages[0].RunId, Is.EqualTo(run.Id));
+            Assert.That(messages[0].ContentItems, Is.Not.Null.Or.Empty);
+            Assert.That(
+                (messages[0].ContentItems[0] as MessageTextContent).Text,
+                Is.Not.Null.Or.Empty);
+            Assert.That(messages[0].CreatedAt, Is.GreaterThan(messages[1].CreatedAt));
+        });
 
         // Get the steps associated with the run
         Response<PageableList<RunStep>> runStepsResponse = await client.GetRunStepsAsync(run);
         AssertSuccessfulResponse(runStepsResponse);
         IReadOnlyList<RunStep> runSteps = runStepsResponse.Value.Data;
 
-        Assert.That(runSteps.Count, Is.EqualTo(1));
-        Assert.That(runSteps[0].RunId, Is.EqualTo(run.Id));
-        Assert.That(runSteps[0].AssistantId, Is.EqualTo(assistant.Id));
-        Assert.That(runSteps[0].ThreadId, Is.EqualTo(thread.Id));
-        Assert.That(runSteps[0].Status, Is.EqualTo(RunStepStatus.Completed));
-        Assert.That(runSteps[0].CancelledAt.HasValue, Is.False);
-        Assert.That(runSteps[0].CreatedAt, Is.GreaterThanOrEqualTo(thread.CreatedAt));
-        Assert.That(runSteps[0].ExpiredAt.HasValue, Is.False);
-        Assert.That(runSteps[0].FailedAt.HasValue, Is.False);
-        Assert.That(runSteps[0].LastError, Is.Null);
+        Assert.That(runSteps, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(runSteps[0].RunId, Is.EqualTo(run.Id));
+            Assert.That(runSteps[0].AssistantId, Is.EqualTo(assistant.Id));
+            Assert.That(runSteps[0].ThreadId, Is.EqualTo(thread.Id));
+            Assert.That(runSteps[0].Status, Is.EqualTo(RunStepStatus.Completed));
+            Assert.That(runSteps[0].CancelledAt.HasValue, Is.False);
+            Assert.That(runSteps[0].CreatedAt, Is.GreaterThanOrEqualTo(thread.CreatedAt));
+            Assert.That(runSteps[0].ExpiredAt.HasValue, Is.False);
+            Assert.That(runSteps[0].FailedAt.HasValue, Is.False);
+            Assert.That(runSteps[0].LastError, Is.Null);
+        });
 
         // The only step for the run should have created the assistant message
         RunStepMessageCreationDetails stepDetails = runSteps[0].StepDetails as RunStepMessageCreationDetails;

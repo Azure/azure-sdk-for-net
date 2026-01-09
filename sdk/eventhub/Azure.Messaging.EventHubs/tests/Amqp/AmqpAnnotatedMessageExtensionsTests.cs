@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of AmqpAnnotatedMessage is not being cloned.");
+                Assert.That(knownMembers, Does.Contain(property.Name), $"The property: {property.Name} of AmqpAnnotatedMessage is not being cloned.");
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of AmqpMessageHeader is not being cloned.");
+                Assert.That(knownMembers, Does.Contain(property.Name), $"The property: {property.Name} of AmqpMessageHeader is not being cloned.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of AmqpMessageProperties is not being cloned.");
+                Assert.That(knownMembers, Does.Contain(property.Name), $"The property: {property.Name} of AmqpMessageProperties is not being cloned.");
             }
         }
 
@@ -124,55 +124,73 @@ namespace Azure.Messaging.EventHubs.Tests
             var source = CreateFullyPopulatedDataBodyMessage();
             var clone = source.Clone();
 
-            // Body
+            Assert.Multiple(() =>
+            {
+                // Body
 
-            Assert.That(ReferenceEquals(clone.Body, source.Body), Is.False, "The message body should not be the same instance.");
-            Assert.That(source.Body.TryGetData(out var sourceBody), Is.True, "The source should have a data body.");
-            Assert.That(clone.Body.TryGetData(out var cloneBody), Is.True, "The clone should have a data body.");
-            Assert.That(cloneBody, Is.EquivalentTo(sourceBody), "The body data should match.");
+                Assert.That(ReferenceEquals(clone.Body, source.Body), Is.False, "The message body should not be the same instance.");
+                Assert.That(source.Body.TryGetData(out var sourceBody), Is.True, "The source should have a data body.");
+                Assert.That(clone.Body.TryGetData(out var cloneBody), Is.True, "The clone should have a data body.");
+                Assert.That(cloneBody, Is.EquivalentTo(sourceBody), "The body data should match.");
 
-            // Header
+                // Header
 
-            Assert.That(ReferenceEquals(clone.Header, source.Header), Is.False, "The message header should not be the same instance.");
-            Assert.That(clone.Header, Is.Not.Null, "The message header should not be null.");
+                Assert.That(ReferenceEquals(clone.Header, source.Header), Is.False, "The message header should not be the same instance.");
+                Assert.That(clone.Header, Is.Not.Null, "The message header should not be null.");
+            });
 
             foreach (var headerProperty in typeof(AmqpMessageHeader).GetProperties(BindingFlags.Public | BindingFlags.GetProperty))
             {
                 Assert.That(headerProperty.GetValue(clone), Is.EqualTo(headerProperty.GetValue(source)), $"The header property: { headerProperty.Name } should match.");
             }
 
-            // Properties
+            Assert.Multiple(() =>
+            {
+                // Properties
 
-            Assert.That(ReferenceEquals(clone.Properties, source.Properties), Is.False, "The message properties should not be the same instance.");
-            Assert.That(clone.Properties, Is.Not.Null, "The message properties should not be null.");
+                Assert.That(ReferenceEquals(clone.Properties, source.Properties), Is.False, "The message properties should not be the same instance.");
+                Assert.That(clone.Properties, Is.Not.Null, "The message properties should not be null.");
+            });
 
             foreach (var propertiesProperty in typeof(AmqpMessageProperties).GetProperties(BindingFlags.Public | BindingFlags.GetProperty))
             {
                 Assert.That(propertiesProperty.GetValue(clone), Is.EqualTo(propertiesProperty.GetValue(source)), $"The message property: { propertiesProperty.Name } should match.");
             }
 
-            // Footer
+            Assert.Multiple(() =>
+            {
+                // Footer
 
-            Assert.That(ReferenceEquals(clone.Footer, source.Footer), Is.False, "The message footer should not be the same instance.");
-            Assert.That(clone.Footer, Is.Not.Null, "The message footer should not be null.");
-            Assert.That(clone.Footer, Is.EquivalentTo(source.Footer), "The message footer items should match.");
+                Assert.That(ReferenceEquals(clone.Footer, source.Footer), Is.False, "The message footer should not be the same instance.");
+                Assert.That(clone.Footer, Is.Not.Null, "The message footer should not be null.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.Footer, Is.EquivalentTo(source.Footer), "The message footer items should match.");
 
-            // Delivery Annotations
+                // Delivery Annotations
 
-            Assert.That(ReferenceEquals(clone.DeliveryAnnotations, source.DeliveryAnnotations), Is.False, "The message delivery annotations should not be the same instance.");
-            Assert.That(clone.DeliveryAnnotations, Is.Not.Null, "The message delivery annotations should not be null.");
-            Assert.That(clone.DeliveryAnnotations, Is.EquivalentTo(source.DeliveryAnnotations), "The message delivery annotation items should match.");
+                Assert.That(ReferenceEquals(clone.DeliveryAnnotations, source.DeliveryAnnotations), Is.False, "The message delivery annotations should not be the same instance.");
+                Assert.That(clone.DeliveryAnnotations, Is.Not.Null, "The message delivery annotations should not be null.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.DeliveryAnnotations, Is.EquivalentTo(source.DeliveryAnnotations), "The message delivery annotation items should match.");
 
-            // Message Annotations
+                // Message Annotations
 
-            Assert.That(ReferenceEquals(clone.MessageAnnotations, source.MessageAnnotations), Is.False, "The message annotations should not be the same instance.");
-            Assert.That(clone.MessageAnnotations, Is.Not.Null, "The message annotations should not be null.");
-            Assert.That(clone.MessageAnnotations, Is.EquivalentTo(source.MessageAnnotations), "The message annotations items should match.");
+                Assert.That(ReferenceEquals(clone.MessageAnnotations, source.MessageAnnotations), Is.False, "The message annotations should not be the same instance.");
+                Assert.That(clone.MessageAnnotations, Is.Not.Null, "The message annotations should not be null.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.MessageAnnotations, Is.EquivalentTo(source.MessageAnnotations), "The message annotations items should match.");
 
-            // ApplicationProperties
+                // ApplicationProperties
 
-            Assert.That(ReferenceEquals(clone.ApplicationProperties, source.ApplicationProperties), Is.False, "The application properties should not be the same instance.");
-            Assert.That(clone.ApplicationProperties, Is.Not.Null, "The application properties should not be null.");
+                Assert.That(ReferenceEquals(clone.ApplicationProperties, source.ApplicationProperties), Is.False, "The application properties should not be the same instance.");
+                Assert.That(clone.ApplicationProperties, Is.Not.Null, "The application properties should not be null.");
+            });
             Assert.That(clone.ApplicationProperties, Is.EquivalentTo(source.ApplicationProperties), "The application property items should match.");
         }
 
@@ -189,22 +207,25 @@ namespace Azure.Messaging.EventHubs.Tests
             var source = new AmqpAnnotatedMessage(body);
             var clone = source.Clone();
 
-            // Body
+            Assert.Multiple(() =>
+            {
+                // Body
 
-            Assert.That(ReferenceEquals(clone.Body, source.Body), Is.False, "The message body should not be the same instance.");
-            Assert.That(source.Body.TryGetSequence(out var sourceBody), Is.True, "The source should have a sequence body.");
-            Assert.That(clone.Body.TryGetSequence(out var cloneBody), Is.True, "The clone should have a sequence body.");
-            Assert.That(cloneBody, Is.EquivalentTo(sourceBody), "The body data should match.");
+                Assert.That(ReferenceEquals(clone.Body, source.Body), Is.False, "The message body should not be the same instance.");
+                Assert.That(source.Body.TryGetSequence(out var sourceBody), Is.True, "The source should have a sequence body.");
+                Assert.That(clone.Body.TryGetSequence(out var cloneBody), Is.True, "The clone should have a sequence body.");
+                Assert.That(cloneBody, Is.EquivalentTo(sourceBody), "The body data should match.");
 
-            // Other sections
+                // Other sections
 
-            Assert.That(clone.HasSection(AmqpMessageSection.Body), Is.True, "The body should be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.Header), Is.False, "The header should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.Properties), Is.False, "The properties should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.Footer), Is.False, "The footer should be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.False, "The delivery annotations should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.MessageAnnotations), Is.False, "The message annotations should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The application properties should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Body), Is.True, "The body should be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Header), Is.False, "The header should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Properties), Is.False, "The properties should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Footer), Is.False, "The footer should be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.False, "The delivery annotations should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.MessageAnnotations), Is.False, "The message annotations should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The application properties should not be populated.");
+            });
         }
 
         /// <summary>
@@ -221,23 +242,26 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var clone = source.Clone();
 
-            // Body
+            Assert.Multiple(() =>
+            {
+                // Body
 
-            Assert.That(ReferenceEquals(clone.Body, source.Body), Is.False, "The message body should not be the same instance.");
-            Assert.That(source.Body.TryGetValue(out var sourceBody), Is.True, "The source should have a value body.");
-            Assert.That(clone.Body.TryGetValue(out var cloneBody), Is.True, "The clone should have a value body.");
-            Assert.That(cloneBody, Is.EqualTo(sourceBody), "The body data should match.");
+                Assert.That(ReferenceEquals(clone.Body, source.Body), Is.False, "The message body should not be the same instance.");
+                Assert.That(source.Body.TryGetValue(out var sourceBody), Is.True, "The source should have a value body.");
+                Assert.That(clone.Body.TryGetValue(out var cloneBody), Is.True, "The clone should have a value body.");
+                Assert.That(cloneBody, Is.EqualTo(sourceBody), "The body data should match.");
 
-            // Other sections
+                // Other sections
 
-            Assert.That(clone.HasSection(AmqpMessageSection.Body), Is.True, "The body should be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.Footer), Is.True, "The footer should be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.ApplicationProperties), Is.True, "The application properties should be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Body), Is.True, "The body should be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Footer), Is.True, "The footer should be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.ApplicationProperties), Is.True, "The application properties should be populated.");
 
-            Assert.That(clone.HasSection(AmqpMessageSection.Header), Is.False, "The header should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.Properties), Is.False, "The properties should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.False, "The delivery annotations should not be populated.");
-            Assert.That(clone.HasSection(AmqpMessageSection.MessageAnnotations), Is.False, "The message annotations should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Header), Is.False, "The header should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.Properties), Is.False, "The properties should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.DeliveryAnnotations), Is.False, "The delivery annotations should not be populated.");
+                Assert.That(clone.HasSection(AmqpMessageSection.MessageAnnotations), Is.False, "The message annotations should not be populated.");
+            });
         }
 
         /// <summary>
@@ -304,14 +328,17 @@ namespace Azure.Messaging.EventHubs.Tests
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
 
-            Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
-            Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
-            Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
-            Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
-            Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(lastOffset), "The last offset should match.");
-            Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
-            Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+                Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
+                Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
+                Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
+                Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
+                Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(lastOffset), "The last offset should match.");
+                Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
+                Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
+            });
         }
 
         /// <summary>
@@ -341,15 +368,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { (ReadOnlyMemory<byte>)Array.Empty<byte>() }));
             message.PopulateFromEventProperties(properties, sequenceNumber, offset, enqueueTime, partitionKey, lastSequence, lastOffset, lastEnqueue, lastRetrieve);
 
-            Assert.That(message.ApplicationProperties, Is.EquivalentTo(properties), "The application properties should match.");
-            Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
-            Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
-            Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
-            Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
-            Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(lastOffset), "The last offset should match.");
-            Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
-            Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.ApplicationProperties, Is.EquivalentTo(properties), "The application properties should match.");
+                Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+                Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
+                Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
+                Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
+                Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
+                Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(lastOffset), "The last offset should match.");
+                Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
+                Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
+            });
         }
 
         /// <summary>
@@ -370,14 +400,17 @@ namespace Azure.Messaging.EventHubs.Tests
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
 
-            Assert.That(message.GetSequenceNumber(sequenceNumber), Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(message.GetOffset(offset), Is.EqualTo(offset), "The offset should match.");
-            Assert.That(message.GetEnqueuedTime(enqueueTime), Is.EqualTo(enqueueTime), "The enqueue time should match.");
-            Assert.That(message.GetPartitionKey(partitionKey), Is.EqualTo(partitionKey), "The partition key should match.");
-            Assert.That(message.GetLastPartitionSequenceNumber(lastSequence), Is.EqualTo(lastSequence), "The last sequence number should match.");
-            Assert.That(message.GetLastPartitionOffset(lastOffset), Is.EqualTo(lastOffset), "The last offset should match.");
-            Assert.That(message.GetLastPartitionEnqueuedTime(lastEnqueue), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
-            Assert.That(message.GetLastPartitionPropertiesRetrievalTime(lastRetrieve), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.GetSequenceNumber(sequenceNumber), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+                Assert.That(message.GetOffset(offset), Is.EqualTo(offset), "The offset should match.");
+                Assert.That(message.GetEnqueuedTime(enqueueTime), Is.EqualTo(enqueueTime), "The enqueue time should match.");
+                Assert.That(message.GetPartitionKey(partitionKey), Is.EqualTo(partitionKey), "The partition key should match.");
+                Assert.That(message.GetLastPartitionSequenceNumber(lastSequence), Is.EqualTo(lastSequence), "The last sequence number should match.");
+                Assert.That(message.GetLastPartitionOffset(lastOffset), Is.EqualTo(lastOffset), "The last offset should match.");
+                Assert.That(message.GetLastPartitionEnqueuedTime(lastEnqueue), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
+                Assert.That(message.GetLastPartitionPropertiesRetrievalTime(lastRetrieve), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
+            });
         }
 
         /// <summary>
@@ -390,14 +423,17 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
 
-            Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
-            Assert.That(message.GetOffset(), Is.EqualTo(null), "The offset should match.");
-            Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
-            Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
-            Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");
-            Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(null), "The last offset should match.");
-            Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(null), "The last enqueue time should match.");
-            Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(null), "The last retrieve time should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
+                Assert.That(message.GetOffset(), Is.EqualTo(null), "The offset should match.");
+                Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
+                Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
+                Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");
+                Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(null), "The last offset should match.");
+                Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(null), "The last enqueue time should match.");
+                Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(null), "The last retrieve time should match.");
+            });
         }
 
         /// <summary>

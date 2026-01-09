@@ -53,53 +53,56 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await sender.SendMessageAsync(msg);
                 var receivedMsg = await receiver.ReceiveMessageAsync();
 
-                Assert.IsInstanceOf(typeof(byte), receivedMsg.ApplicationProperties["byte"]);
-                Assert.IsInstanceOf(typeof(sbyte), receivedMsg.ApplicationProperties["sbyte"]);
-                Assert.IsInstanceOf(typeof(char), receivedMsg.ApplicationProperties["char"]);
-                Assert.IsInstanceOf(typeof(short), receivedMsg.ApplicationProperties["short"]);
-                Assert.IsInstanceOf(typeof(ushort), receivedMsg.ApplicationProperties["ushort"]);
-                Assert.IsInstanceOf(typeof(int), receivedMsg.ApplicationProperties["int"]);
-                Assert.IsInstanceOf(typeof(uint), receivedMsg.ApplicationProperties["uint"]);
-                Assert.IsInstanceOf(typeof(long), receivedMsg.ApplicationProperties["long"]);
-                Assert.IsInstanceOf(typeof(ulong), receivedMsg.ApplicationProperties["ulong"]);
-                Assert.IsInstanceOf(typeof(float), receivedMsg.ApplicationProperties["float"]);
-                Assert.IsInstanceOf(typeof(double), receivedMsg.ApplicationProperties["double"]);
-                Assert.IsInstanceOf(typeof(decimal), receivedMsg.ApplicationProperties["decimal"]);
-                Assert.IsInstanceOf(typeof(bool), receivedMsg.ApplicationProperties["bool"]);
-                Assert.IsInstanceOf(typeof(Guid), receivedMsg.ApplicationProperties["Guid"]);
-                Assert.IsInstanceOf(typeof(string), receivedMsg.ApplicationProperties["string"]);
-                Assert.IsInstanceOf(typeof(Uri), receivedMsg.ApplicationProperties["Uri"]);
-                Assert.IsInstanceOf(typeof(DateTime), receivedMsg.ApplicationProperties["DateTime"]);
-                Assert.IsInstanceOf(typeof(DateTimeOffset), receivedMsg.ApplicationProperties["DateTimeOffset"]);
-                Assert.IsInstanceOf(typeof(TimeSpan), receivedMsg.ApplicationProperties["TimeSpan"]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(receivedMsg.ApplicationProperties["byte"], Is.InstanceOf(typeof(byte)));
+                    Assert.That(receivedMsg.ApplicationProperties["sbyte"], Is.InstanceOf(typeof(sbyte)));
+                    Assert.That(receivedMsg.ApplicationProperties["char"], Is.InstanceOf(typeof(char)));
+                    Assert.That(receivedMsg.ApplicationProperties["short"], Is.InstanceOf(typeof(short)));
+                    Assert.That(receivedMsg.ApplicationProperties["ushort"], Is.InstanceOf(typeof(ushort)));
+                    Assert.That(receivedMsg.ApplicationProperties["int"], Is.InstanceOf(typeof(int)));
+                    Assert.That(receivedMsg.ApplicationProperties["uint"], Is.InstanceOf(typeof(uint)));
+                    Assert.That(receivedMsg.ApplicationProperties["long"], Is.InstanceOf(typeof(long)));
+                    Assert.That(receivedMsg.ApplicationProperties["ulong"], Is.InstanceOf(typeof(ulong)));
+                    Assert.That(receivedMsg.ApplicationProperties["float"], Is.InstanceOf(typeof(float)));
+                    Assert.That(receivedMsg.ApplicationProperties["double"], Is.InstanceOf(typeof(double)));
+                    Assert.That(receivedMsg.ApplicationProperties["decimal"], Is.InstanceOf(typeof(decimal)));
+                    Assert.That(receivedMsg.ApplicationProperties["bool"], Is.InstanceOf(typeof(bool)));
+                    Assert.That(receivedMsg.ApplicationProperties["Guid"], Is.InstanceOf(typeof(Guid)));
+                    Assert.That(receivedMsg.ApplicationProperties["string"], Is.InstanceOf(typeof(string)));
+                    Assert.That(receivedMsg.ApplicationProperties["Uri"], Is.InstanceOf(typeof(Uri)));
+                    Assert.That(receivedMsg.ApplicationProperties["DateTime"], Is.InstanceOf(typeof(DateTime)));
+                    Assert.That(receivedMsg.ApplicationProperties["DateTimeOffset"], Is.InstanceOf(typeof(DateTimeOffset)));
+                    Assert.That(receivedMsg.ApplicationProperties["TimeSpan"], Is.InstanceOf(typeof(TimeSpan)));
 
-                Assert.IsNull(receivedMsg.ApplicationProperties["null"]);
+                    Assert.That(receivedMsg.ApplicationProperties["null"], Is.Null);
+                });
                 var bytes = receivedMsg.GetRawAmqpMessage().ToBytes();
 
                 var copyReceivedMessage = ServiceBusReceivedMessage.FromAmqpMessage(
                     AmqpAnnotatedMessage.FromBytes(bytes),
                     BinaryData.FromBytes(receivedMsg.LockTokenGuid.ToByteArray()));
 
-                Assert.AreEqual(receivedMsg.LockToken, copyReceivedMessage.LockToken);
-                Assert.IsInstanceOf(typeof(byte), copyReceivedMessage.ApplicationProperties["byte"]);
-                Assert.IsInstanceOf(typeof(sbyte), copyReceivedMessage.ApplicationProperties["sbyte"]);
-                Assert.IsInstanceOf(typeof(char), copyReceivedMessage.ApplicationProperties["char"]);
-                Assert.IsInstanceOf(typeof(short), copyReceivedMessage.ApplicationProperties["short"]);
-                Assert.IsInstanceOf(typeof(ushort), copyReceivedMessage.ApplicationProperties["ushort"]);
-                Assert.IsInstanceOf(typeof(int), copyReceivedMessage.ApplicationProperties["int"]);
-                Assert.IsInstanceOf(typeof(uint), copyReceivedMessage.ApplicationProperties["uint"]);
-                Assert.IsInstanceOf(typeof(long), copyReceivedMessage.ApplicationProperties["long"]);
-                Assert.IsInstanceOf(typeof(ulong), copyReceivedMessage.ApplicationProperties["ulong"]);
-                Assert.IsInstanceOf(typeof(float), copyReceivedMessage.ApplicationProperties["float"]);
-                Assert.IsInstanceOf(typeof(double), copyReceivedMessage.ApplicationProperties["double"]);
-                Assert.IsInstanceOf(typeof(decimal), copyReceivedMessage.ApplicationProperties["decimal"]);
-                Assert.IsInstanceOf(typeof(bool), copyReceivedMessage.ApplicationProperties["bool"]);
-                Assert.IsInstanceOf(typeof(Guid), copyReceivedMessage.ApplicationProperties["Guid"]);
-                Assert.IsInstanceOf(typeof(string), copyReceivedMessage.ApplicationProperties["string"]);
-                Assert.IsInstanceOf(typeof(Uri), copyReceivedMessage.ApplicationProperties["Uri"]);
-                Assert.IsInstanceOf(typeof(DateTime), copyReceivedMessage.ApplicationProperties["DateTime"]);
-                Assert.IsInstanceOf(typeof(DateTimeOffset), copyReceivedMessage.ApplicationProperties["DateTimeOffset"]);
-                Assert.IsInstanceOf(typeof(TimeSpan), copyReceivedMessage.ApplicationProperties["TimeSpan"]);
+                Assert.That(copyReceivedMessage.LockToken, Is.EqualTo(receivedMsg.LockToken));
+                Assert.That(copyReceivedMessage.ApplicationProperties["byte"], Is.InstanceOf(typeof(byte)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["sbyte"], Is.InstanceOf(typeof(sbyte)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["char"], Is.InstanceOf(typeof(char)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["short"], Is.InstanceOf(typeof(short)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["ushort"], Is.InstanceOf(typeof(ushort)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["int"], Is.InstanceOf(typeof(int)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["uint"], Is.InstanceOf(typeof(uint)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["long"], Is.InstanceOf(typeof(long)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["ulong"], Is.InstanceOf(typeof(ulong)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["float"], Is.InstanceOf(typeof(float)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["double"], Is.InstanceOf(typeof(double)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["decimal"], Is.InstanceOf(typeof(decimal)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["bool"], Is.InstanceOf(typeof(bool)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["Guid"], Is.InstanceOf(typeof(Guid)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["string"], Is.InstanceOf(typeof(string)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["Uri"], Is.InstanceOf(typeof(Uri)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["DateTime"], Is.InstanceOf(typeof(DateTime)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["DateTimeOffset"], Is.InstanceOf(typeof(DateTimeOffset)));
+                Assert.That(copyReceivedMessage.ApplicationProperties["TimeSpan"], Is.InstanceOf(typeof(TimeSpan)));
             }
         }
 
@@ -118,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveMessageAsync();
                 await receiver.CompleteMessageAsync(receivedMaxSizeMessage);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
+                Assert.That(receivedMaxSizeMessage.Body.ToArray(), Is.EqualTo(maxPayload));
             }
         }
 
@@ -134,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await client.CreateSender(scope.QueueName).SendMessageAsync(maxSizeMessage);
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.IsNotNull(receivedMessage);
+                Assert.That(receivedMessage, Is.Not.Null);
                 await receiver.CompleteMessageAsync(receivedMessage);
             }
         }
@@ -164,53 +167,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
                 AmqpAnnotatedMessage rawReceived = received.GetRawAmqpMessage();
-                Assert.IsNotNull(rawReceived.Header.DeliveryCount);
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
-                Assert.IsTrue(rawReceived.DeliveryAnnotations.Count > 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(rawReceived.Header.DeliveryCount, Is.Not.Null);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.True);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.True);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName), Is.True);
+                    Assert.That(rawReceived.DeliveryAnnotations.Count > 0, Is.True);
+                });
 
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
                 AmqpAnnotatedMessage rawSend = toSend.GetRawAmqpMessage();
 
-                // verify that all system set properties have been cleared out
-                Assert.IsNull(rawSend.Header.DeliveryCount);
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.ScheduledEnqueueTimeUtcName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName));
-                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
-                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
-                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute));
+                Assert.Multiple(() =>
+                {
+                    // verify that all system set properties have been cleared out
+                    Assert.That(rawSend.Header.DeliveryCount, Is.Null);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName), Is.False);
+                });
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName), Is.False);
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName), Is.False);
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.ScheduledEnqueueTimeUtcName), Is.False);
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName), Is.False);
+                Assert.That(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader), Is.False);
+                Assert.That(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader), Is.False);
+                Assert.That(toSend.ApplicationProperties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute), Is.False);
 
                 // delivery annotations only apply to a single hop so they are cleared
-                Assert.AreEqual(0, rawSend.DeliveryAnnotations.Count);
+                Assert.That(rawSend.DeliveryAnnotations.Count, Is.EqualTo(0));
 
                 AssertMessagesEqual(toSend, received);
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()));
-                    Assert.AreEqual(received.ContentType, sentMessage.ContentType);
-                    Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()), Is.True);
+                        Assert.That(sentMessage.ContentType, Is.EqualTo(received.ContentType));
+                        Assert.That(sentMessage.CorrelationId, Is.EqualTo(received.CorrelationId));
+                    });
                     Assert.AreEqual(received.Subject, sentMessage.Subject);
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
-                    Assert.AreEqual(received.MessageId, sentMessage.MessageId);
-                    Assert.AreEqual(received.PartitionKey, sentMessage.PartitionKey);
-                    Assert.AreEqual((string)received.ApplicationProperties["testProp"], (string)sentMessage.ApplicationProperties["testProp"]);
-                    Assert.AreEqual(received.ReplyTo, sentMessage.ReplyTo);
-                    Assert.AreEqual(received.ReplyToSessionId, sentMessage.ReplyToSessionId);
-                    Assert.AreEqual(received.SessionId, sentMessage.SessionId);
-                    Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
-                    Assert.AreEqual(received.To, sentMessage.To);
-                    Assert.AreEqual(received.TransactionPartitionKey, sentMessage.TransactionPartitionKey);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sentMessage.MessageId, Is.EqualTo(received.MessageId));
+                        Assert.That(sentMessage.PartitionKey, Is.EqualTo(received.PartitionKey));
+                        Assert.That((string)sentMessage.ApplicationProperties["testProp"], Is.EqualTo((string)received.ApplicationProperties["testProp"]));
+                        Assert.That(sentMessage.ReplyTo, Is.EqualTo(received.ReplyTo));
+                        Assert.That(sentMessage.ReplyToSessionId, Is.EqualTo(received.ReplyToSessionId));
+                        Assert.That(sentMessage.SessionId, Is.EqualTo(received.SessionId));
+                        Assert.That(sentMessage.TimeToLive, Is.EqualTo(received.TimeToLive));
+                        Assert.That(sentMessage.To, Is.EqualTo(received.To));
+                        Assert.That(sentMessage.TransactionPartitionKey, Is.EqualTo(received.TransactionPartitionKey));
+                    });
                 }
             }
         }
@@ -232,9 +247,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
 
-                Assert.AreEqual(TimeSpan.FromDays(100), received.TimeToLive);
-                Assert.AreEqual(received.GetRawAmqpMessage().Properties.CreationTime + TimeSpan.FromDays(100),
-                    received.ExpiresAt);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(received.TimeToLive, Is.EqualTo(TimeSpan.FromDays(100)));
+                    Assert.That(received.ExpiresAt,
+                        Is.EqualTo(received.GetRawAmqpMessage().Properties.CreationTime + TimeSpan.FromDays(100)));
+                });
             }
         }
 
@@ -258,9 +276,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
 
-                Assert.AreEqual(TimeSpan.FromDays(100), received.TimeToLive);
-                Assert.AreEqual(received.GetRawAmqpMessage().Properties.CreationTime + TimeSpan.FromDays(100),
-                    received.ExpiresAt);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(received.TimeToLive, Is.EqualTo(TimeSpan.FromDays(100)));
+                    Assert.That(received.ExpiresAt,
+                        Is.EqualTo(received.GetRawAmqpMessage().Properties.CreationTime + TimeSpan.FromDays(100)));
+                });
             }
         }
 
@@ -293,49 +314,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await receiver.DeferMessageAsync(received);
                 received = await receiver.PeekMessageAsync();
                 AmqpAnnotatedMessage rawReceived = received.GetRawAmqpMessage();
-                Assert.IsNotNull(rawReceived.Header.DeliveryCount);
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
-                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(rawReceived.Header.DeliveryCount, Is.Not.Null);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.True);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.True);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName), Is.True);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName), Is.True);
+                    Assert.That(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName), Is.True);
+                });
 
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
                 AmqpAnnotatedMessage rawSend = toSend.GetRawAmqpMessage();
 
-                // verify that all system set properties have been cleared out
-                Assert.IsNull(rawSend.Header.DeliveryCount);
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
-                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.ScheduledEnqueueTimeUtcName));
-                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
-                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+                Assert.Multiple(() =>
+                {
+                    // verify that all system set properties have been cleared out
+                    Assert.That(rawSend.Header.DeliveryCount, Is.Null);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName), Is.False);
+                    Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName), Is.False);
+                });
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName), Is.False);
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName), Is.False);
+                Assert.That(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.ScheduledEnqueueTimeUtcName), Is.False);
+                Assert.That(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader), Is.False);
+                Assert.That(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader), Is.False);
 
                 AssertMessagesEqual(toSend, received);
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()));
-                    Assert.AreEqual(received.ContentType, sentMessage.ContentType);
-                    Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()), Is.True);
+                        Assert.That(sentMessage.ContentType, Is.EqualTo(received.ContentType));
+                        Assert.That(sentMessage.CorrelationId, Is.EqualTo(received.CorrelationId));
+                    });
                     Assert.AreEqual(received.Subject, sentMessage.Subject);
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
-                    Assert.AreEqual(received.MessageId, sentMessage.MessageId);
-                    Assert.AreEqual(received.PartitionKey, sentMessage.PartitionKey);
-                    Assert.AreEqual((string)received.ApplicationProperties["testProp"], (string)sentMessage.ApplicationProperties["testProp"]);
-                    Assert.AreEqual(received.ReplyTo, sentMessage.ReplyTo);
-                    Assert.AreEqual(received.ReplyToSessionId, sentMessage.ReplyToSessionId);
-                    Assert.AreEqual(received.SessionId, sentMessage.SessionId);
-                    Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
-                    Assert.AreEqual(received.To, sentMessage.To);
-                    Assert.AreEqual(received.TransactionPartitionKey, sentMessage.TransactionPartitionKey);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sentMessage.MessageId, Is.EqualTo(received.MessageId));
+                        Assert.That(sentMessage.PartitionKey, Is.EqualTo(received.PartitionKey));
+                        Assert.That((string)sentMessage.ApplicationProperties["testProp"], Is.EqualTo((string)received.ApplicationProperties["testProp"]));
+                        Assert.That(sentMessage.ReplyTo, Is.EqualTo(received.ReplyTo));
+                        Assert.That(sentMessage.ReplyToSessionId, Is.EqualTo(received.ReplyToSessionId));
+                        Assert.That(sentMessage.SessionId, Is.EqualTo(received.SessionId));
+                        Assert.That(sentMessage.TimeToLive, Is.EqualTo(received.TimeToLive));
+                        Assert.That(sentMessage.To, Is.EqualTo(received.To));
+                        Assert.That(sentMessage.TransactionPartitionKey, Is.EqualTo(received.TransactionPartitionKey));
+                    });
                 }
             }
         }
@@ -362,9 +395,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
                 var receivedBody = received.Body.ToObject<TestBody>(serializer);
-                Assert.AreEqual(testBody.A, receivedBody.A);
-                Assert.AreEqual(testBody.B, receivedBody.B);
-                Assert.AreEqual(testBody.C, receivedBody.C);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(receivedBody.A, Is.EqualTo(testBody.A));
+                    Assert.That(receivedBody.B, Is.EqualTo(testBody.B));
+                    Assert.That(receivedBody.C, Is.EqualTo(testBody.C));
+                });
             }
         }
 
@@ -399,14 +435,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 {
                     bodyEnum.MoveNext();
                     var bytes = data.ToArray();
-                    Assert.AreEqual(bytes, bodyEnum.Current.ToArray());
+                    Assert.That(bodyEnum.Current.ToArray(), Is.EqualTo(bytes));
                     if (ct++ == 0)
                     {
-                        Assert.AreEqual(bytes, received.Body.ToMemory().Slice(0, 100).ToArray());
+                        Assert.That(received.Body.ToMemory().Slice(0, 100).ToArray(), Is.EqualTo(bytes));
                     }
                     else
                     {
-                        Assert.AreEqual(bytes, received.Body.ToMemory().Slice(100, 100).ToArray());
+                        Assert.That(received.Body.ToMemory().Slice(100, 100).ToArray(), Is.EqualTo(bytes));
                     }
                 }
             }
@@ -473,7 +509,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
                 received.GetRawAmqpMessage().Body.TryGetValue(out var receivedData);
-                Assert.AreEqual(value, receivedData);
+                Assert.That(receivedData, Is.EqualTo(value));
 
                 Assert.That(
                     () => received.Body,
@@ -481,7 +517,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var sendable = new ServiceBusMessage(received);
                 sendable.GetRawAmqpMessage().Body.TryGetValue(out var sendData);
-                Assert.AreEqual(value, sendData);
+                Assert.That(sendData, Is.EqualTo(value));
             }
         }
 
@@ -521,7 +557,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     foreach (object elem in seq)
                     {
                         innerEnum.MoveNext();
-                        Assert.AreEqual(elem, innerEnum.Current);
+                        Assert.That(innerEnum.Current, Is.EqualTo(elem));
                     }
                 }
 
@@ -531,7 +567,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var sendable = new ServiceBusMessage(received);
                 sendable.GetRawAmqpMessage().Body.TryGetSequence(out var sendData);
-                Assert.AreEqual(sequence, sendData);
+                Assert.That(sendData, Is.EqualTo(sequence));
             }
         }
 
@@ -555,7 +591,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual(guid.ToString(), received.MessageId);
+                Assert.That(received.MessageId, Is.EqualTo(guid.ToString()));
             }
         }
 
@@ -622,48 +658,51 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var received = (await receiver.ReceiveMessageAsync()).GetRawAmqpMessage();
 
                 received.Body.TryGetValue(out var body);
-                Assert.AreEqual("body", body);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(body, Is.EqualTo("body"));
 
-                Assert.AreEqual(TimeSpan.FromSeconds(50), received.Header.TimeToLive);
+                    Assert.That(received.Header.TimeToLive, Is.EqualTo(TimeSpan.FromSeconds(50)));
 
-                // the broker will disregard the value set for delivery count
-                Assert.AreEqual(1, received.Header.DeliveryCount);
-                Assert.IsTrue(received.Header.Durable);
-                Assert.IsTrue(received.Header.FirstAcquirer);
-                Assert.AreEqual(1, received.Header.Priority);
+                    // the broker will disregard the value set for delivery count
+                    Assert.That(received.Header.DeliveryCount, Is.EqualTo(1));
+                    Assert.That(received.Header.Durable, Is.True);
+                    Assert.That(received.Header.FirstAcquirer, Is.True);
+                    Assert.That(received.Header.Priority, Is.EqualTo(1));
 
-                Assert.AreEqual("compress", received.Properties.ContentEncoding);
-                Assert.AreEqual("application/json", received.Properties.ContentType);
-                Assert.AreEqual(new AmqpMessageId("correlationId"), received.Properties.CorrelationId);
-                Assert.AreEqual("groupId", received.Properties.GroupId);
-                Assert.AreEqual(5, received.Properties.GroupSequence);
-                Assert.AreEqual(new AmqpMessageId("messageId"), received.Properties.MessageId);
-                Assert.AreEqual(new AmqpAddress("replyTo"), received.Properties.ReplyTo);
-                Assert.AreEqual("replyToGroupId", received.Properties.ReplyToGroupId);
-                Assert.AreEqual("subject", received.Properties.Subject);
-                Assert.AreEqual(new AmqpAddress("to"), received.Properties.To);
-                Assert.AreEqual(new byte[] { 1, 2, 3 }, received.Properties.UserId.Value.ToArray());
+                    Assert.That(received.Properties.ContentEncoding, Is.EqualTo("compress"));
+                    Assert.That(received.Properties.ContentType, Is.EqualTo("application/json"));
+                    Assert.That(received.Properties.CorrelationId, Is.EqualTo(new AmqpMessageId("correlationId")));
+                    Assert.That(received.Properties.GroupId, Is.EqualTo("groupId"));
+                    Assert.That(received.Properties.GroupSequence, Is.EqualTo(5));
+                    Assert.That(received.Properties.MessageId, Is.EqualTo(new AmqpMessageId("messageId")));
+                    Assert.That(received.Properties.ReplyTo, Is.EqualTo(new AmqpAddress("replyTo")));
+                    Assert.That(received.Properties.ReplyToGroupId, Is.EqualTo("replyToGroupId"));
+                    Assert.That(received.Properties.Subject, Is.EqualTo("subject"));
+                    Assert.That(received.Properties.To, Is.EqualTo(new AmqpAddress("to")));
+                    Assert.That(received.Properties.UserId.Value.ToArray(), Is.EqualTo(new byte[] { 1, 2, 3 }));
 
-                // since TTL was set these were overriden - provide some buffer since the Now time is
-                Assert.That(received.Properties.CreationTime, Is.EqualTo(now).Within(TimeSpan.FromSeconds(1)));
-                Assert.That(received.Properties.AbsoluteExpiryTime, Is.EqualTo(now.Add(TimeSpan.FromSeconds(50))).Within(TimeSpan.FromSeconds(1)));
+                    // since TTL was set these were overriden - provide some buffer since the Now time is
+                    Assert.That(received.Properties.CreationTime, Is.EqualTo(now).Within(TimeSpan.FromSeconds(1)));
+                    Assert.That(received.Properties.AbsoluteExpiryTime, Is.EqualTo(now.Add(TimeSpan.FromSeconds(50))).Within(TimeSpan.FromSeconds(1)));
 
-                // application properties
-                Assert.AreEqual(received.ApplicationProperties["applicationKey1"], "applicationVal1");
-                Assert.AreEqual(received.ApplicationProperties["applicationKey2"], "applicationVal2");
+                    // application properties
+                    Assert.That(received.ApplicationProperties["applicationKey1"], Is.EqualTo("applicationVal1"));
+                    Assert.That(received.ApplicationProperties["applicationKey2"], Is.EqualTo("applicationVal2"));
 
-                // message annotations
-                Assert.IsNull(received.MessageAnnotations["messageAnnotationKey1"]);
-                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey2"], "messageAnnotationVal2");
+                    // message annotations
+                    Assert.That(received.MessageAnnotations["messageAnnotationKey1"], Is.Null);
+                    Assert.That(received.MessageAnnotations["messageAnnotationKey2"], Is.EqualTo("messageAnnotationVal2"));
 
-                // delivery annotations
-                Assert.IsNull(received.DeliveryAnnotations["deliveryAnnotationKey1"]);
-                Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey2"], "deliveryAnnotationVal2");
+                    // delivery annotations
+                    Assert.That(received.DeliveryAnnotations["deliveryAnnotationKey1"], Is.Null);
+                    Assert.That(received.DeliveryAnnotations["deliveryAnnotationKey2"], Is.EqualTo("deliveryAnnotationVal2"));
 
-                // footer
-                Assert.AreEqual("footerVal1", received.Footer["footerKey1"]);
-                Assert.AreEqual("footerVal2", received.Footer["footerKey2"]);
-                Assert.IsNull(received.Footer["footerKey3"]);
+                    // footer
+                    Assert.That(received.Footer["footerKey1"], Is.EqualTo("footerVal1"));
+                    Assert.That(received.Footer["footerKey2"], Is.EqualTo("footerVal2"));
+                    Assert.That(received.Footer["footerKey3"], Is.Null);
+                });
             }
         }
 
@@ -694,10 +733,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var received = (await receiver.ReceiveMessageAsync()).GetRawAmqpMessage();
 
                 received.Body.TryGetValue(out var body);
-                Assert.AreEqual("body", body);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(body, Is.EqualTo("body"));
 
-                Assert.AreEqual(expiry.ToUnixTimeSeconds(), received.Properties.AbsoluteExpiryTime.Value.ToUnixTimeSeconds());
-                Assert.AreEqual(creation.ToUnixTimeSeconds(), received.Properties.CreationTime.Value.ToUnixTimeSeconds());
+                    Assert.That(received.Properties.AbsoluteExpiryTime.Value.ToUnixTimeSeconds(), Is.EqualTo(expiry.ToUnixTimeSeconds()));
+                    Assert.That(received.Properties.CreationTime.Value.ToUnixTimeSeconds(), Is.EqualTo(creation.ToUnixTimeSeconds()));
+                });
             }
         }
 
@@ -743,19 +785,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
                     AmqpAnnotatedMessage.FromBytes(serializedBytes),
                     BinaryData.FromBytes(received.LockTokenGuid.ToByteArray()));
-                Assert.AreEqual(received.ContentType, deserialized.ContentType);
-                Assert.AreEqual(received.CorrelationId, deserialized.CorrelationId);
-                Assert.AreEqual(received.Subject, deserialized.Subject);
-                Assert.AreEqual(received.MessageId, deserialized.MessageId);
-                Assert.AreEqual(received.PartitionKey, deserialized.PartitionKey);
-                Assert.AreEqual(received.ApplicationProperties["testProp"], deserialized.ApplicationProperties["testProp"]);
-                Assert.AreEqual(received.ReplyTo, deserialized.ReplyTo);
-                Assert.AreEqual(received.ReplyToSessionId, deserialized.ReplyToSessionId);
-                Assert.AreEqual(received.ScheduledEnqueueTime, deserialized.ScheduledEnqueueTime);
-                Assert.AreEqual(received.SessionId, deserialized.SessionId);
-                Assert.AreEqual(received.TimeToLive, deserialized.TimeToLive);
-                Assert.AreEqual(received.To, deserialized.To);
-                Assert.AreEqual(received.LockTokenGuid, deserialized.LockTokenGuid);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(deserialized.ContentType, Is.EqualTo(received.ContentType));
+                    Assert.That(deserialized.CorrelationId, Is.EqualTo(received.CorrelationId));
+                    Assert.That(deserialized.Subject, Is.EqualTo(received.Subject));
+                    Assert.That(deserialized.MessageId, Is.EqualTo(received.MessageId));
+                    Assert.That(deserialized.PartitionKey, Is.EqualTo(received.PartitionKey));
+                    Assert.That(deserialized.ApplicationProperties["testProp"], Is.EqualTo(received.ApplicationProperties["testProp"]));
+                    Assert.That(deserialized.ReplyTo, Is.EqualTo(received.ReplyTo));
+                    Assert.That(deserialized.ReplyToSessionId, Is.EqualTo(received.ReplyToSessionId));
+                    Assert.That(deserialized.ScheduledEnqueueTime, Is.EqualTo(received.ScheduledEnqueueTime));
+                    Assert.That(deserialized.SessionId, Is.EqualTo(received.SessionId));
+                    Assert.That(deserialized.TimeToLive, Is.EqualTo(received.TimeToLive));
+                    Assert.That(deserialized.To, Is.EqualTo(received.To));
+                    Assert.That(deserialized.LockTokenGuid, Is.EqualTo(received.LockTokenGuid));
+                });
             }
         }
 

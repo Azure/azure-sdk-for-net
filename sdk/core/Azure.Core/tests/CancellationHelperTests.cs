@@ -18,9 +18,9 @@ namespace Azure.Core.Tests
             var ex = (TaskCanceledException) CancellationHelper.CreateOperationCanceledException(new Exception("test"), cts.Token);
 
 #if NETCOREAPP2_1_OR_GREATER
-            Assert.IsTrue(ex.CancellationToken.IsCancellationRequested);
+            Assert.That(ex.CancellationToken.IsCancellationRequested, Is.True);
 #else
-            Assert.IsFalse(ex.CancellationToken.IsCancellationRequested);
+            Assert.That(ex.CancellationToken.IsCancellationRequested, Is.False);
 #endif
         }
     }

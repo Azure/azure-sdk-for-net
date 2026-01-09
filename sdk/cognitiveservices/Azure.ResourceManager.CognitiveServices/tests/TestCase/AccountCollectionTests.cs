@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             CognitiveServicesAccountResource account1 = lro.Value;
-            Assert.AreEqual(name, account1.Data.Name);
+            Assert.That(account1.Data.Name, Is.EqualTo(name));
             //2.Get
             CognitiveServicesAccountResource account2 = await container.GetAsync(name);
             ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
@@ -48,10 +48,14 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
-            //4Exists
-            Assert.IsTrue(await container.ExistsAsync(name));
-            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+
+            Assert.Multiple(async () =>
+            {
+                Assert.That(count, Is.GreaterThanOrEqualTo(1));
+                //4Exists
+                Assert.That((bool)await container.ExistsAsync(name), Is.True);
+                Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
+            });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

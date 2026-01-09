@@ -54,11 +54,14 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(pipeline.Requests, Is.Not.Empty);
 
         var request = pipeline.Requests[0];
-        Assert.That(request.Method, Is.EqualTo(HttpMethod.Post));
-        Assert.That(request.Uri?.GetLeftPart(UriPartial.Authority), Is.EqualTo(endpoint.GetLeftPart(UriPartial.Authority)));
-        Assert.That(request.Headers.GetValueOrDefault("api-key")?.FirstOrDefault(), Is.EqualTo(apiKey));
-        Assert.That(request.Headers.GetValueOrDefault("User-Agent")?.FirstOrDefault(), Does.Contain("azsdk-net-AI.OpenAI/"));
-        Assert.That(request.Content, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.Method, Is.EqualTo(HttpMethod.Post));
+            Assert.That(request.Uri?.GetLeftPart(UriPartial.Authority), Is.EqualTo(endpoint.GetLeftPart(UriPartial.Authority)));
+            Assert.That(request.Headers.GetValueOrDefault("api-key")?.FirstOrDefault(), Is.EqualTo(apiKey));
+            Assert.That(request.Headers.GetValueOrDefault("User-Agent")?.FirstOrDefault(), Does.Contain("azsdk-net-AI.OpenAI/"));
+            Assert.That(request.Content, Is.Not.Null);
+        });
         var jsonString = request.Content.ToString();
         Assert.That(jsonString, Is.Not.Null.Or.Empty);
         Assert.That(jsonString, Does.Contain("\"messages\"").And.Contain("\"model\"").And.Contain(model));
@@ -87,17 +90,20 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         };
         BinaryData serialized = ModelReaderWriter.Write(source);
         JsonNode serializedNode = JsonNode.Parse(serialized)!;
-        Assert.That(serializedNode["type"]!.ToString(), Is.EqualTo("azure_search"));
-        Assert.That(serializedNode["parameters"]?["authentication"]?["type"]?.ToString(), Is.EqualTo("api_key"));
-        Assert.That(serializedNode["parameters"]?["authentication"]?["key"]?.ToString(), Does.Contain("test"));
-        Assert.That(serializedNode["parameters"]?["index_name"]?.ToString(), Is.EqualTo("index-name-here"));
-        Assert.That(serializedNode["parameters"]?["fields_mapping"]?["content_fields"]?[0]?.ToString(), Is.EqualTo("hello"));
-        Assert.That(serializedNode["parameters"]?["fields_mapping"]?["title_field"]?.ToString(), Is.EqualTo("hi"));
-        Assert.That(bool.TryParse(serializedNode["parameters"]?["allow_partial_result"]?.ToString(), out bool parsed) && parsed == true);
-        Assert.That(serializedNode["parameters"]?["query_type"]?.ToString(), Is.EqualTo("simple"));
-        Assert.That(serializedNode["parameters"]?["include_contexts"]?[0]?.ToString(), Is.EqualTo("citations"));
-        Assert.That(serializedNode["parameters"]?["include_contexts"]?[1]?.ToString(), Is.EqualTo("all_retrieved_documents"));
-        Assert.That(serializedNode["parameters"]?["embedding_dependency"]?["type"]?.ToString(), Is.EqualTo("endpoint"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(serializedNode["type"]!.ToString(), Is.EqualTo("azure_search"));
+            Assert.That(serializedNode["parameters"]?["authentication"]?["type"]?.ToString(), Is.EqualTo("api_key"));
+            Assert.That(serializedNode["parameters"]?["authentication"]?["key"]?.ToString(), Does.Contain("test"));
+            Assert.That(serializedNode["parameters"]?["index_name"]?.ToString(), Is.EqualTo("index-name-here"));
+            Assert.That(serializedNode["parameters"]?["fields_mapping"]?["content_fields"]?[0]?.ToString(), Is.EqualTo("hello"));
+            Assert.That(serializedNode["parameters"]?["fields_mapping"]?["title_field"]?.ToString(), Is.EqualTo("hi"));
+            Assert.That(bool.TryParse(serializedNode["parameters"]?["allow_partial_result"]?.ToString(), out bool parsed) && parsed == true);
+            Assert.That(serializedNode["parameters"]?["query_type"]?.ToString(), Is.EqualTo("simple"));
+            Assert.That(serializedNode["parameters"]?["include_contexts"]?[0]?.ToString(), Is.EqualTo("citations"));
+            Assert.That(serializedNode["parameters"]?["include_contexts"]?[1]?.ToString(), Is.EqualTo("all_retrieved_documents"));
+            Assert.That(serializedNode["parameters"]?["embedding_dependency"]?["type"]?.ToString(), Is.EqualTo("endpoint"));
+        });
 
         ChatCompletionOptions options = new();
 #if !AZURE_OPENAI_GA
@@ -111,8 +117,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         IReadOnlyList<ChatDataSource> sourcesFromOptions = options.GetDataSources();
         Assert.That(sourcesFromOptions, Has.Count.EqualTo(1));
-        Assert.That(sourcesFromOptions[0], Is.InstanceOf<ElasticsearchChatDataSource>());
-        Assert.That(((ElasticsearchChatDataSource)sourcesFromOptions[0]).IndexName, Is.EqualTo("my-index-name"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(sourcesFromOptions[0], Is.InstanceOf<ElasticsearchChatDataSource>());
+            Assert.That(((ElasticsearchChatDataSource)sourcesFromOptions[0]).IndexName, Is.EqualTo("my-index-name"));
+        });
 #else
         options.AddDataSource(new AzureSearchChatDataSource()
         {
@@ -173,8 +182,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
         {
             _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
-            Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
-            Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
+            Assert.Multiple(() =>
+            {
+                Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
+                Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
+            });
         }
 
         await AssertExpectedSerializationAsync(false, false);
@@ -304,8 +316,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             ClientResult protocolResult = await client.CompleteChatAsync(requestContent, noThrowOptions);
             PipelineResponse response = protocolResult.GetRawResponse();
             bool responseHasRequestId = response.Headers.TryGetValue("x-ms-client-request-id", out string? requestIdFromResponse);
-            Assert.That(responseHasRequestId, Is.True);
-            Assert.That(requestIdFromResponse, Is.EqualTo(clientRequestId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseHasRequestId, Is.True);
+                Assert.That(requestIdFromResponse, Is.EqualTo(clientRequestId));
+            });
             switch (response.Status)
             {
                 case 200:
@@ -321,10 +336,13 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             clientRequestId = null;
         }
 
-        Assert.That(observed200Delay.HasValue, Is.True);
-        Assert.That(observed429Delay.HasValue, Is.True);
-        Assert.That(failureCount, Is.EqualTo(4));
-        Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.GreaterThan(expectedDelayMilliseconds));
+        Assert.Multiple(() =>
+        {
+            Assert.That(observed200Delay.HasValue, Is.True);
+            Assert.That(observed429Delay.HasValue, Is.True);
+            Assert.That(failureCount, Is.EqualTo(4));
+            Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.GreaterThan(expectedDelayMilliseconds));
+        });
         Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.LessThan(3 * expectedDelayMilliseconds + 2 * observed200Delay!.Value.TotalMilliseconds));
     }
 
@@ -362,12 +380,18 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             });
 
         Assert.That(response, Is.Not.Null);
-        Assert.That(response.Id, Is.Not.Null.Or.Empty);
-        Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero)));
-        Assert.That(response.FinishReason, Is.Not.Null.Or.Empty);
-        Assert.That(response.Content, Is.Not.Null.Or.Empty);
-        Assert.That(response.Content.Count, Is.EqualTo(1));
-        Assert.That(response.Usage, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero)));
+            Assert.That(response.FinishReason, Is.Not.Null.Or.Empty);
+            Assert.That(response.Content, Is.Not.Null.Or.Empty);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Content, Has.Count.EqualTo(1));
+            Assert.That(response.Usage, Is.Not.Null);
+        });
         Assert.That(response.Usage.InputTokenCount, Is.GreaterThan(10));
         Assert.That(response.Usage.OutputTokenCount, Is.GreaterThan(10));
         Assert.That(response.Usage.TotalTokenCount, Is.GreaterThan(20));
@@ -376,12 +400,15 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         {
             Assert.That(logProb, Is.Not.Null);
             Assert.That(logProb.TopLogProbabilities, Is.Not.Null.Or.Empty);
-            Assert.That(logProb.TopLogProbabilities.Count, Is.EqualTo(3));
+            Assert.That(logProb.TopLogProbabilities, Has.Count.EqualTo(3));
         }
 
         ChatMessageContentPart content = response.Content[0];
-        Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-        Assert.That(content.Text, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+            Assert.That(content.Text, Is.Not.Null.Or.Empty);
+        });
         Assert.That(content.Text, Does
             .Contain("Fahrenheit")
             .Or.Contain("Celsius")
@@ -413,20 +440,29 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         ChatCompletion chatCompletion = chatCompletionResult;
         RequestContentFilterResult promptFilterResult = chatCompletion.GetRequestContentFilterResult();
         Assert.That(promptFilterResult, Is.Not.Null);
-        Assert.That(promptFilterResult.Sexual?.Filtered, Is.False);
-        Assert.That(promptFilterResult.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        Assert.Multiple(() =>
+        {
+            Assert.That(promptFilterResult.Sexual?.Filtered, Is.False);
+            Assert.That(promptFilterResult.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        });
         ResponseContentFilterResult responseFilterResult = chatCompletion.GetResponseContentFilterResult();
         Assert.That(responseFilterResult, Is.Not.Null);
         Assert.That(responseFilterResult.Hate?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
         if (responseFilterResult.ProtectedMaterialCode is not null)
         {
-            Assert.That(responseFilterResult.ProtectedMaterialCode.Detected, Is.False);
-            Assert.That(responseFilterResult.ProtectedMaterialCode.Filtered, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseFilterResult.ProtectedMaterialCode.Detected, Is.False);
+                Assert.That(responseFilterResult.ProtectedMaterialCode.Filtered, Is.False);
+            });
         }
         if (responseFilterResult.ProtectedMaterialText is not null)
         {
-            Assert.That(responseFilterResult.ProtectedMaterialText.Detected, Is.False);
-            Assert.That(responseFilterResult.ProtectedMaterialText.Filtered, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseFilterResult.ProtectedMaterialText.Detected, Is.False);
+                Assert.That(responseFilterResult.ProtectedMaterialText.Filtered, Is.False);
+            });
         }
     }
 
@@ -457,21 +493,33 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         ChatCompletion chatCompletion = chatCompletionResult.Value;
         Assert.That(chatCompletion, Is.Not.Null);
-        Assert.That(chatCompletion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
-        Assert.That(chatCompletion.Content, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(chatCompletion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
+            Assert.That(chatCompletion.Content, Is.Not.Null.Or.Empty);
+        });
 
         var content = chatCompletion.Content[0];
-        Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-        Assert.That(content.Text, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+            Assert.That(content.Text, Is.Not.Null.Or.Empty);
+        });
 
         ChatMessageContext context = chatCompletion.GetMessageContext();
-        Assert.IsNotNull(context);
-        Assert.That(context.Intent, Is.Not.Null.Or.Empty);
-        Assert.That(context.Citations, Has.Count.GreaterThan(0));
-        Assert.That(context.Citations[0].FilePath, Is.Not.Null.Or.Empty);
-        Assert.That(context.Citations[0].Content, Is.Not.Null.Or.Empty);
-        Assert.That(context.Citations[0].ChunkId, Is.Not.Null.Or.Empty);
-        Assert.That(context.Citations[0].Title, Is.Not.Null.Or.Empty);
+        Assert.That(context, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.Intent, Is.Not.Null.Or.Empty);
+            Assert.That(context.Citations, Has.Count.GreaterThan(0));
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.Citations[0].FilePath, Is.Not.Null.Or.Empty);
+            Assert.That(context.Citations[0].Content, Is.Not.Null.Or.Empty);
+            Assert.That(context.Citations[0].ChunkId, Is.Not.Null.Or.Empty);
+            Assert.That(context.Citations[0].Title, Is.Not.Null.Or.Empty);
+        });
     }
 
     [RecordedTest]
@@ -511,14 +559,20 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         };
         ChatCompletion completion = await client.CompleteChatAsync(messages, options)!;
         Assert.That(completion, Is.Not.Null);
-        Assert.That(completion.Refusal, Is.Null.Or.Empty);
-        Assert.That(completion.Content?.Count, Is.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(completion.Refusal, Is.Null.Or.Empty);
+            Assert.That(completion.Content?.Count, Is.EqualTo(1));
+        });
         JsonDocument contentDocument = null!;
         Assert.DoesNotThrow(() => contentDocument = JsonDocument.Parse(completion!.Content![0].Text));
-        Assert.IsTrue(contentDocument.RootElement.TryGetProperty("answer", out JsonElement answerProperty));
-        Assert.IsTrue(answerProperty.ValueKind == JsonValueKind.String);
-        Assert.IsTrue(contentDocument.RootElement.TryGetProperty("steps", out JsonElement stepsProperty));
-        Assert.IsTrue(stepsProperty.ValueKind == JsonValueKind.Array);
+        Assert.Multiple(() =>
+        {
+            Assert.That(contentDocument.RootElement.TryGetProperty("answer", out JsonElement answerProperty), Is.True);
+            Assert.That(answerProperty.ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(contentDocument.RootElement.TryGetProperty("steps", out JsonElement stepsProperty), Is.True);
+            Assert.That(stepsProperty.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        });
     }
 
     [RecordedTest]
@@ -539,8 +593,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         UserSecurityContext retrievedUserSecurityContext = options.GetUserSecurityContext();
         Assert.That(retrievedUserSecurityContext, Is.Not.Null);
-        Assert.That(retrievedUserSecurityContext.EndUserId, Is.EqualTo(userId));
-        Assert.That(retrievedUserSecurityContext.SourceIP, Is.EqualTo(sourceIP));
+        Assert.Multiple(() =>
+        {
+            Assert.That(retrievedUserSecurityContext.EndUserId, Is.EqualTo(userId));
+            Assert.That(retrievedUserSecurityContext.SourceIP, Is.EqualTo(sourceIP));
+        });
 
         ChatCompletion completion = await client.CompleteChatAsync([ChatMessage.CreateUserMessage("Hello, world!")]);
         Assert.That(completion, Is.Not.Null);
@@ -644,12 +701,15 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
 
         string allText = builder.ToString();
-        Assert.That(allText, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(allText, Is.Not.Null.Or.Empty);
 
-        Assert.That(usage, Is.Not.Null);
+            Assert.That(usage, Is.Not.Null);
 
-        Assert.That(foundPromptFilter, Is.True);
-        Assert.That(foundResponseFilter, Is.True);
+            Assert.That(foundPromptFilter, Is.True);
+            Assert.That(foundResponseFilter, Is.True);
+        });
     }
 
     [RecordedTest]
@@ -682,7 +742,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         ChatClient client = GetTestClient();
 
         AsyncCollectionResult<StreamingChatCompletionUpdate> chatUpdates = client.CompleteChatStreamingAsync(messages, options);
-        Assert.IsNotNull(chatUpdates);
+        Assert.That(chatUpdates, Is.Not.Null);
 
         await foreach (StreamingChatCompletionUpdate update in chatUpdates)
         {
@@ -696,21 +756,30 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
 
         string allText = builder.ToString();
-        Assert.That(allText, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(allText, Is.Not.Null.Or.Empty);
 
-        // Assert.That(usage, Is.Not.Null);
+            // Assert.That(usage, Is.Not.Null);
 
-        // TODO FIXME: When using data sources, the service does not appear to return request nor response filtering information
-        //Assert.That(foundPromptFilter, Is.True);
-        //Assert.That(foundResponseFilter, Is.True);
+            // TODO FIXME: When using data sources, the service does not appear to return request nor response filtering information
+            //Assert.That(foundPromptFilter, Is.True);
+            //Assert.That(foundResponseFilter, Is.True);
 
-        Assert.That(contexts, Has.Count.EqualTo(1));
-        Assert.That(contexts[0].Intent, Is.Not.Null.Or.Empty);
-        Assert.That(contexts[0].Citations, Has.Count.GreaterThan(0));
-        Assert.That(contexts[0].Citations[0].Content, Is.Not.Null.Or.Empty);
-        Assert.That(contexts[0].Citations[0].FilePath, Is.Not.Null.Or.Empty);
-        Assert.That(contexts[0].Citations[0].ChunkId, Is.Not.Null.Or.Empty);
-        Assert.That(contexts[0].Citations[0].Title, Is.Not.Null.Or.Empty);
+            Assert.That(contexts, Has.Count.EqualTo(1));
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(contexts[0].Intent, Is.Not.Null.Or.Empty);
+            Assert.That(contexts[0].Citations, Has.Count.GreaterThan(0));
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(contexts[0].Citations[0].Content, Is.Not.Null.Or.Empty);
+            Assert.That(contexts[0].Citations[0].FilePath, Is.Not.Null.Or.Empty);
+            Assert.That(contexts[0].Citations[0].ChunkId, Is.Not.Null.Or.Empty);
+            Assert.That(contexts[0].Citations[0].Title, Is.Not.Null.Or.Empty);
+        });
     }
 
     [RecordedTest]
@@ -761,10 +830,13 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
 
         string fullContent = contentBuilder.ToString();
-        Assert.That(fullContent.ToLowerInvariant(), Does.Contain("banana"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(fullContent.ToLowerInvariant(), Does.Contain("banana"));
 
-        Assert.That(promptFilterResults, Has.Count.GreaterThan(0));
-        Assert.That(responseFilterResults, Has.Count.GreaterThan(0));
+            Assert.That(promptFilterResults, Has.Count.GreaterThan(0));
+            Assert.That(responseFilterResults, Has.Count.GreaterThan(0));
+        });
 
         Assert.That(responseFilterResults.Any(filterResult
             => filterResult.CustomBlocklists?.BlocklistFilterStatuses?
@@ -820,8 +892,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         _ = await client.CompleteChatAsync("Hello, world!");
 
-        Assert.That(observedHeaders?.TryGetValue("test_header_key", out string? observedHeaderValue) == true && observedHeaderValue == "test_header_value");
-        Assert.That(observedRequestUri?.AbsoluteUri, Does.Contain("test_query_parameter_key=test_query_parameter_value"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(observedHeaders?.TryGetValue("test_header_key", out string? observedHeaderValue) == true && observedHeaderValue == "test_header_value");
+            Assert.That(observedRequestUri?.AbsoluteUri, Does.Contain("test_query_parameter_key=test_query_parameter_value"));
+        });
     }
 
 #if NET
@@ -895,40 +970,55 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             RequestContentFilterResult promptFilter = update.GetRequestContentFilterResult();
             if (promptFilter?.SelfHarm != null)
             {
-                Assert.That(promptFilter.SelfHarm.Filtered, Is.False);
-                Assert.That(promptFilter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(promptFilter.SelfHarm.Filtered, Is.False);
+                    Assert.That(promptFilter.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                });
                 foundPromptFilter = true;
             }
         }
         else
         {
-            Assert.That(update.CompletionId, Is.Not.Null.Or.Empty);
-            Assert.That(update.CreatedAt, Is.GreaterThan(new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero)));
-            Assert.That(update.FinishReason, Is.Null.Or.EqualTo(ChatFinishReason.Stop));
+            Assert.Multiple(() =>
+            {
+                Assert.That(update.CompletionId, Is.Not.Null.Or.Empty);
+                Assert.That(update.CreatedAt, Is.GreaterThan(new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero)));
+                Assert.That(update.FinishReason, Is.Null.Or.EqualTo(ChatFinishReason.Stop));
+            });
             if (update.Usage != null)
             {
                 Assert.That(usage, Is.Null);
                 usage = update.Usage;
-                Assert.That(update.Usage.InputTokenCount, Is.GreaterThanOrEqualTo(0));
-                Assert.That(update.Usage.OutputTokenCount, Is.GreaterThanOrEqualTo(0));
-                Assert.That(update.Usage.TotalTokenCount, Is.GreaterThanOrEqualTo(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(update.Usage.InputTokenCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(update.Usage.OutputTokenCount, Is.GreaterThanOrEqualTo(0));
+                    Assert.That(update.Usage.TotalTokenCount, Is.GreaterThanOrEqualTo(0));
+                });
             }
 
-            Assert.That(update.Model, Is.Not.Null);
-            Assert.That(update.Role, Is.Null.Or.EqualTo(ChatMessageRole.Assistant));
-            Assert.That(update.ContentUpdate, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(update.Model, Is.Not.Null);
+                Assert.That(update.Role, Is.Null.Or.EqualTo(ChatMessageRole.Assistant));
+                Assert.That(update.ContentUpdate, Is.Not.Null);
 
-            Assert.That(update.ContentTokenLogProbabilities, Is.Not.Null);
+                Assert.That(update.ContentTokenLogProbabilities, Is.Not.Null);
+            });
             foreach (var logProb in update.ContentTokenLogProbabilities)
             {
                 Assert.That(logProb.TopLogProbabilities, Is.Not.Null);
-                Assert.That(logProb.TopLogProbabilities.Count, Is.EqualTo(1));
+                Assert.That(logProb.TopLogProbabilities, Has.Count.EqualTo(1));
             }
 
             foreach (ChatMessageContentPart part in update.ContentUpdate)
             {
-                Assert.That(part.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-                Assert.That(part.Text, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(part.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+                    Assert.That(part.Text, Is.Not.Null);
+                });
 
                 builder.Append(part.Text);
             }
@@ -938,8 +1028,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
                 ResponseContentFilterResult responseFilter = update.GetResponseContentFilterResult();
                 if (responseFilter?.Violence != null)
                 {
-                    Assert.That(responseFilter.Violence.Filtered, Is.False);
-                    Assert.That(responseFilter.Violence.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(responseFilter.Violence.Filtered, Is.False);
+                        Assert.That(responseFilter.Violence.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    });
                     foundResponseFilter = true;
                 }
             }

@@ -49,18 +49,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the existing settings on the service
             var portalSignInSettings = ApiServiceResource.GetApiManagementPortalSignInSetting();
             portalSignInSettings = await portalSignInSettings.GetAsync();
-            Assert.NotNull(portalSignInSettings);
+            Assert.That(portalSignInSettings, Is.Not.Null);
 
             // disable portal signIn
             portalSignInSettings.Data.IsRedirectEnabled = false;
             portalSignInSettings = (await portalSignInSettings.CreateOrUpdateAsync(WaitUntil.Completed, portalSignInSettings.Data)).Value;
 
-            Assert.NotNull(portalSignInSettings);
-            Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
+            Assert.That(portalSignInSettings, Is.Not.Null);
+            Assert.That(portalSignInSettings.Data.IsRedirectEnabled, Is.False);
 
             portalSignInSettings = await portalSignInSettings.GetAsync();
-            Assert.NotNull(portalSignInSettings);
-            Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
+            Assert.That(portalSignInSettings, Is.Not.Null);
+            Assert.That(portalSignInSettings.Data.IsRedirectEnabled, Is.False);
         }
     }
 }

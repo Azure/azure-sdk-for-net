@@ -66,8 +66,11 @@ namespace Azure.Identity.Tests
                 }
 
                 result = TenantIdResolverBase.Default.Resolve(tenantId, context, TenantIdResolverBase.AllTenants);
-                Assert.AreEqual(expectedresult, result);
-                Assert.AreEqual(expectedEvents, messages);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result, Is.EqualTo(expectedresult));
+                    Assert.That(messages, Is.EqualTo(expectedEvents));
+                });
             }
             finally
             {
@@ -100,13 +103,13 @@ namespace Azure.Identity.Tests
             {
                 var resolvedTenantId = TenantIdResolverBase.Default.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants);
 
-                Assert.AreEqual(tokenRequestContext.TenantId ?? tenantId, resolvedTenantId);
+                Assert.That(resolvedTenantId, Is.EqualTo(tokenRequestContext.TenantId ?? tenantId));
             }
             else
             {
                 var ex = Assert.Throws<AuthenticationFailedException>(() => TenantIdResolverBase.Default.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants));
 
-                StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {tokenRequestContext.TenantId}", ex.Message);
+                Assert.That(ex.Message, Does.Contain($"The current credential is not configured to acquire tokens for tenant {tokenRequestContext.TenantId}"));
             }
         }
 
@@ -126,10 +129,13 @@ namespace Azure.Identity.Tests
             var result2 = TenantIdResolverBase.Default.Resolve(upperCaseTenantId, contextWithLowerCase, TenantIdResolverBase.AllTenants);
             var result3 = TenantIdResolverBase.Default.Resolve(mixedCaseTenantId, contextWithLowerCase, TenantIdResolverBase.AllTenants);
 
-            // All should resolve to the context tenant ID as that takes precedence
-            Assert.AreEqual(upperCaseTenantId, result1);
-            Assert.AreEqual(lowerCaseTenantId, result2);
-            Assert.AreEqual(lowerCaseTenantId, result3);
+            Assert.Multiple(() =>
+            {
+                // All should resolve to the context tenant ID as that takes precedence
+                Assert.That(result1, Is.EqualTo(upperCaseTenantId));
+                Assert.That(result2, Is.EqualTo(lowerCaseTenantId));
+                Assert.That(result3, Is.EqualTo(lowerCaseTenantId));
+            });
         }
 
         [Test]
@@ -146,10 +152,13 @@ namespace Azure.Identity.Tests
             var result2 = TenantIdResolverBase.Default.Resolve(mixedCaseAdfs, contextWithHint, TenantIdResolverBase.AllTenants);
             var result3 = TenantIdResolverBase.Default.Resolve(lowerCaseAdfs, contextWithHint, TenantIdResolverBase.AllTenants);
 
-            // For ADFS, the explicit tenant ID should be returned regardless of case
-            Assert.AreEqual(upperCaseAdfs, result1);
-            Assert.AreEqual(mixedCaseAdfs, result2);
-            Assert.AreEqual(lowerCaseAdfs, result3);
+            Assert.Multiple(() =>
+            {
+                // For ADFS, the explicit tenant ID should be returned regardless of case
+                Assert.That(result1, Is.EqualTo(upperCaseAdfs));
+                Assert.That(result2, Is.EqualTo(mixedCaseAdfs));
+                Assert.That(result3, Is.EqualTo(lowerCaseAdfs));
+            });
         }
 
         [Test]
@@ -166,7 +175,7 @@ namespace Azure.Identity.Tests
             // the additionally allowed tenant (lowercase) in a case-insensitive manner
             var result = TenantIdResolverBase.Default.Resolve(explicitTenantId, contextWithUpperCase, additionallyAllowedTenants);
 
-            Assert.AreEqual(upperCaseContextTenant, result);
+            Assert.That(result, Is.EqualTo(upperCaseContextTenant));
         }
     }
 }

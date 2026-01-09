@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             ArmOperation<AppComplianceReportEvidenceResource> response = await appComplianceReportEvidence.UpdateAsync(WaitUntil.Completed, data);
             // Create evidence: verify result
             AppComplianceReportEvidenceResource evidenceResource = response.Value;
-            Assert.AreEqual(evidenceName, evidenceResource.Data.Name);
+            Assert.That(evidenceResource.Data.Name, Is.EqualTo(evidenceName));
 
             // Get evidence
             // Get evidence: send request
             AppComplianceReportEvidenceResource getResult = await appComplianceReportEvidence.GetAsync();
             // Get evidence: verify result
-            Assert.AreEqual(evidenceName, getResult.Data.Name);
+            Assert.That(getResult.Data.Name, Is.EqualTo(evidenceName));
 
             // download evidence current ppe cannot download evidence
             EvidenceFileDownloadRequestContent content = new EvidenceFileDownloadRequestContent();
             EvidenceFileDownloadResult download = await appComplianceReportEvidence.DownloadAsync(content);
-            Assert.IsNotNull(download);
+            Assert.That(download, Is.Not.Null);
 
             // Delete evidence
             // Delete evidence: send request
             var operation = await appComplianceReportEvidence.DeleteAsync(WaitUntil.Completed);
             // Delete evidence: verify result
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

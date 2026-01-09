@@ -161,7 +161,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
                 #endregion Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Query
 #if !SNIPPET
-                Assert.IsTrue(found, "No luxury hotels were found in index");
+                Assert.That(found, Is.True, "No luxury hotels were found in index");
 #endif
             }
             finally

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             var rackSkuName = listBySubscription[0].Data.Name;
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             ResourceIdentifier rackSkuResourceId = NetworkCloudRackSkuResource.CreateResourceIdentifier(subscriptionId, rackSkuName);
             NetworkCloudRackSkuResource rackSkuResource = Client.GetNetworkCloudRackSkuResource(rackSkuResourceId);
             NetworkCloudRackSkuResource getResult = await rackSkuResource.GetAsync();
-            Assert.AreEqual(rackSkuName, getResult.Data.Name);
+            Assert.That(getResult.Data.Name, Is.EqualTo(rackSkuName));
         }
     }
 }

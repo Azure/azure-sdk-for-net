@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await CreateApiServiceAsync();
             var list = await ApiServiceResource.GetContentTypesAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(0));
         }
     }
 }

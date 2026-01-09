@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] original = new byte[] { 0, 1, 2, 3 };
             byte[] actual = original.Take(original.Length);
 
-            Assert.AreSame(original, actual);
+            Assert.That(actual, Is.SameAs(original));
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] original = new byte[] { 0, 1, 2, 3 };
             byte[] actual = original.Take(original.Length - 1);
 
-            Assert.AreNotSame(original, actual);
-            CollectionAssert.AreEqual(new byte[] { 0, 1, 2 }, actual);
+            Assert.That(actual, Is.Not.SameAs(original));
+            Assert.That(actual, Is.EqualTo(new byte[] { 0, 1, 2 }).AsCollection);
         }
 
         [Test]
@@ -50,8 +50,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] original = new byte[] { 0, 1, 2, 3 };
             byte[] actual = original.Take(1, original.Length - 1);
 
-            Assert.AreNotSame(original, actual);
-            CollectionAssert.AreEqual(new byte[] { 1, 2, 3 }, actual);
+            Assert.That(actual, Is.Not.SameAs(original));
+            Assert.That(actual, Is.EqualTo(new byte[] { 1, 2, 3 }).AsCollection);
         }
     }
 }

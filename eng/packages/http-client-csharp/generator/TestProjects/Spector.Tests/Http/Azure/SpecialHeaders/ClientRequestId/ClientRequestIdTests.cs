@@ -19,7 +19,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.SpecialHeaders.ClientRequestId
             using (HttpPipeline.CreateClientRequestIdScope("9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"))
             {
                 var response = await new XmsClientRequestIdClient(host, new XmsClientRequestIdClientOptions()).GetAsync();
-                Assert.AreEqual(204, response.Status);
+                Assert.That(response.Status, Is.EqualTo(204));
             }
         });
     }

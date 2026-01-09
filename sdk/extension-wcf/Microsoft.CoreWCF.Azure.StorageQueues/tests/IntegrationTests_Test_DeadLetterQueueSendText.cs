@@ -39,13 +39,13 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             string inputMessage = @"<s:Envelope xmlns:s=""http://www.w3.org/2003/05/soap-envelope"" xmlns:a=""http://www.w3.org/2005/08/addressing""><s:Header><a:Action s:mustUnderstand=""1"">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=""http://tempuri.org/""><name>test</name></Create></s:Body></s:Envelope>";
             var receipt = await queue.SendMessageAsync(inputMessage);
             var testService = host.Services.GetRequiredService<TestService>();
-            Assert.False(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.False);
             var connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
             QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, Startup_BinaryServiceQueueTextClientQueue.DlqQueueName, QueueMessageEncoding.None);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             var response = await queueClient.ReceiveMessageAsync(default, cts.Token);
-            Assert.NotNull(response.Value);
-            Assert.AreEqual(inputMessage, response.Value.MessageText);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.MessageText, Is.EqualTo(inputMessage));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [RecordedTest]
         public void TestOperation()
         {
-            Assert.IsTrue(true);
+            Assert.That(true, Is.True);
         }
 
         #region Helpers

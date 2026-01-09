@@ -74,17 +74,26 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         Assert.That(response.OutputItems?.Count, Is.EqualTo(2));
         FileSearchCallResponseItem? fileSearchCall = response?.OutputItems?[0] as FileSearchCallResponseItem;
         Assert.That(fileSearchCall, Is.Not.Null);
-        Assert.That(fileSearchCall?.Status, Is.EqualTo(FileSearchCallStatus.Completed));
-        Assert.That(fileSearchCall?.Queries, Has.Count.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(fileSearchCall?.Status, Is.EqualTo(FileSearchCallStatus.Completed));
+            Assert.That(fileSearchCall?.Queries, Has.Count.GreaterThan(0));
+        });
         MessageResponseItem? message = response?.OutputItems?[1] as MessageResponseItem;
         Assert.That(message, Is.Not.Null);
         ResponseContentPart? messageContentPart = message?.Content?.FirstOrDefault();
         Assert.That(messageContentPart, Is.Not.Null);
-        Assert.That(messageContentPart?.Text, Does.Contain("pizza"));
-        Assert.That(messageContentPart?.OutputTextAnnotations, Is.Not.Null.And.Not.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(messageContentPart?.Text, Does.Contain("pizza"));
+            Assert.That(messageContentPart?.OutputTextAnnotations, Is.Not.Null.And.Not.Empty);
+        });
         FileCitationMessageAnnotation? citationAnnotation = messageContentPart!.OutputTextAnnotations[0] as FileCitationMessageAnnotation;
-        Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
-        Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
+            Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
+        });
 
         await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
         {
@@ -211,9 +220,13 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
                 finalResponseText = responseCompletedUpdate.Response.GetOutputText();
             }
         }
-        Assert.That(deltaTextSegments, Has.Count.GreaterThan(0));
-        Assert.That(finalResponseText, Is.Not.Null.And.Not.Empty);
-        Assert.That(string.Join(string.Empty, deltaTextSegments), Is.EqualTo(finalResponseText));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(deltaTextSegments, Has.Count.GreaterThan(0));
+            Assert.That(finalResponseText, Is.Not.Null.And.Not.Empty);
+            Assert.That(string.Join(string.Empty, deltaTextSegments), Is.EqualTo(finalResponseText));
+        });
     }
 
     [RecordedTest]
@@ -258,14 +271,17 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         }
 
         ResponseResult response = await client.CreateResponseAsync(options);
-        Assert.That(response.Id, Is.Not.Null.And.Not.Empty);
-        Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-        // Assert.That(response.Status, Is.EqualTo(ResponsesStatus.Completed));
-        Assert.That(response.Model, Is.Not.Null.And.Not.Empty);
-        Assert.That(response.PreviousResponseId, Is.Null);
-        // Observed: input may not exist on normal responses
-        // Assert.That(response.Input.Count, Is.EqualTo(1));
-        Assert.That(response.OutputItems.Count, Is.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            // Assert.That(response.Status, Is.EqualTo(ResponsesStatus.Completed));
+            Assert.That(response.Model, Is.Not.Null.And.Not.Empty);
+            Assert.That(response.PreviousResponseId, Is.Null);
+            // Observed: input may not exist on normal responses
+            // Assert.That(response.Input.Count, Is.EqualTo(1));
+            Assert.That(response.OutputItems, Has.Count.EqualTo(1));
+        });
     }
 
     [RecordedTest]
@@ -293,22 +309,34 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
 
         ResponseResult response = await client.CreateResponseAsync(options);
         Assert.That(response, Is.Not.Null);
-        Assert.That(response.Id, Is.Not.Null);
-        Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-        Assert.That(response.MaxOutputTokenCount, Is.Null);
-        Assert.That(response.Model, Does.StartWith("o3-mini"));
-        Assert.That(response.Usage, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Id, Is.Not.Null);
+            Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            Assert.That(response.MaxOutputTokenCount, Is.Null);
+            Assert.That(response.Model, Does.StartWith("o3-mini"));
+            Assert.That(response.Usage, Is.Not.Null);
+        });
         Assert.That(response.Usage.OutputTokenDetails, Is.Not.Null);
-        Assert.That(response.Usage.OutputTokenDetails.ReasoningTokenCount, Is.GreaterThan(0));
-        Assert.That(response.Metadata, Is.Not.Null.Or.Empty);
-        Assert.That(response.Metadata["superfluous_key"], Is.EqualTo("superfluous_value"));
-        Assert.That(response.OutputItems, Has.Count.EqualTo(2));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Usage.OutputTokenDetails.ReasoningTokenCount, Is.GreaterThan(0));
+            Assert.That(response.Metadata, Is.Not.Null.Or.Empty);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Metadata["superfluous_key"], Is.EqualTo("superfluous_value"));
+            Assert.That(response.OutputItems, Has.Count.EqualTo(2));
+        });
         ReasoningResponseItem? reasoningItem = response.OutputItems?[0] as ReasoningResponseItem;
         MessageResponseItem? messageItem = response.OutputItems?[1] as MessageResponseItem;
-        Assert.That(reasoningItem?.SummaryParts, Is.Not.Null);
-        Assert.That(reasoningItem?.GetSummaryText(), Is.Not.Null.And.Not.Empty);
-        Assert.That(reasoningItem?.Id, Is.Not.Null.And.Not.Empty);
-        Assert.That(messageItem?.Content?.FirstOrDefault()?.Text, Has.Length.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(reasoningItem?.SummaryParts, Is.Not.Null);
+            Assert.That(reasoningItem?.GetSummaryText(), Is.Not.Null.And.Not.Empty);
+            Assert.That(reasoningItem?.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(messageItem?.Content?.FirstOrDefault()?.Text, Has.Length.GreaterThan(0));
+        });
     }
 
     [RecordedTest]
@@ -535,8 +563,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
 
         Assert.That(response, Is.Not.Null);
         Assert.That(response.OutputItems, Is.Not.Null.And.Not.Empty);
-        Assert.That(response.OutputItems?[0], Is.InstanceOf<MessageResponseItem>());
-        Assert.That((response?.OutputItems?[0] as MessageResponseItem)?.Content, Is.Not.Null.And.Not.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.OutputItems?[0], Is.InstanceOf<MessageResponseItem>());
+            Assert.That((response?.OutputItems?[0] as MessageResponseItem)?.Content, Is.Not.Null.And.Not.Empty);
+        });
         Assert.That((response?.OutputItems?[0] as MessageResponseItem)?.Content[0].Text, Does.StartWith("Arr, matey"));
 
         ResponseResult retrievedResponse = await client.GetResponseAsync(response?.Id);
@@ -555,22 +586,28 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
 
         if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
         {
-            Assert.That(listedItems, Has.Count.EqualTo(1));
-            Assert.That((listedItems[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+            Assert.Multiple(() =>
+            {
+                Assert.That(listedItems, Has.Count.EqualTo(1));
+                Assert.That((listedItems[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+            });
         }
         else
         {
             Assert.That(listedItems, Has.Count.EqualTo(2));
             MessageResponseItem? systemOrDeveloperMessage = listedItems?[1] as MessageResponseItem;
             Assert.That(systemOrDeveloperMessage, Is.Not.Null);
-            Assert.That(systemOrDeveloperMessage?.Role, Is.EqualTo(instructionMethod switch
+            Assert.Multiple(() =>
             {
-                ResponsesTestInstructionMethod.DeveloperMessage => MessageRole.Developer,
-                ResponsesTestInstructionMethod.SystemMessage => MessageRole.System,
-                _ => throw new ArgumentException()
-            }));
-            Assert.That(systemOrDeveloperMessage?.Content?.FirstOrDefault()?.Text, Is.EqualTo(instructions));
-            Assert.That((listedItems?[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+                Assert.That(systemOrDeveloperMessage?.Role, Is.EqualTo(instructionMethod switch
+                {
+                    ResponsesTestInstructionMethod.DeveloperMessage => MessageRole.Developer,
+                    ResponsesTestInstructionMethod.SystemMessage => MessageRole.System,
+                    _ => throw new ArgumentException()
+                }));
+                Assert.That(systemOrDeveloperMessage?.Content?.FirstOrDefault()?.Text, Is.EqualTo(instructions));
+                Assert.That((listedItems?[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+            });
         }
     }
 
@@ -636,10 +673,13 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
 
         ResponseResult response = await client.CreateResponseAsync(options);
 
-        Assert.That(
-            response?.TextOptions?.TextFormat?.Kind,
-            Is.EqualTo(ResponseTextFormatKind.JsonSchema));
-        Assert.That(response?.OutputItems, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                    response?.TextOptions?.TextFormat?.Kind,
+                    Is.EqualTo(ResponseTextFormatKind.JsonSchema));
+            Assert.That(response?.OutputItems, Has.Count.EqualTo(1));
+        });
         MessageResponseItem? message = response?.OutputItems?[0] as MessageResponseItem;
         Assert.That(message?.Content, Has.Count.EqualTo(1));
         Assert.That(message?.Content[0].Text, Is.Not.Null.And.Not.Empty);
@@ -674,9 +714,12 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         Assert.That(response.OutputItems, Has.Count.EqualTo(1));
         FunctionCallResponseItem? functionCall = response.OutputItems?[0] as FunctionCallResponseItem;
         Assert.That(functionCall, Is.Not.Null);
-        Assert.That(functionCall?.Id, Has.Length.GreaterThan(0));
-        Assert.That(functionCall?.FunctionName, Is.EqualTo("get_weather_at_location"));
-        Assert.That(functionCall?.FunctionArguments, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(functionCall?.Id, Has.Length.GreaterThan(0));
+            Assert.That(functionCall?.FunctionName, Is.EqualTo("get_weather_at_location"));
+            Assert.That(functionCall?.FunctionArguments, Is.Not.Null);
+        });
 
         Assert.DoesNotThrow(() =>
         {
@@ -691,8 +734,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         Assert.That(turn2Response.OutputItems?.Count, Is.EqualTo(1));
         MessageResponseItem? turn2Message = turn2Response?.OutputItems?[0] as MessageResponseItem;
         Assert.That(turn2Message, Is.Not.Null);
-        Assert.That(turn2Message?.Role, Is.EqualTo(MessageRole.Assistant));
-        Assert.That(turn2Message?.Content, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(turn2Message?.Role, Is.EqualTo(MessageRole.Assistant));
+            Assert.That(turn2Message?.Content, Has.Count.EqualTo(1));
+        });
         Assert.That(turn2Message?.Content?[0].Text, Does.Contain("22"));
     }
 
@@ -722,8 +768,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
             response?.IncompleteStatusDetails?.Reason,
             Is.EqualTo(ResponseIncompleteStatusReason.MaxOutputTokens));
         MessageResponseItem? message = response?.OutputItems?.FirstOrDefault() as MessageResponseItem;
-        Assert.That(message?.Content?.FirstOrDefault(), Is.Not.Null);
-        Assert.That(message?.Status, Is.EqualTo(MessageStatus.Incomplete));
+        Assert.Multiple(() =>
+        {
+            Assert.That(message?.Content?.FirstOrDefault(), Is.Not.Null);
+            Assert.That(message?.Status, Is.EqualTo(MessageStatus.Incomplete));
+        });
     }
 
     [RecordedTest]
@@ -782,8 +831,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(response.ToolChoice, Is.Not.Null);
-        Assert.That(response.ToolChoice.Kind, Is.EqualTo(ResponseToolChoiceKind.Function));
-        Assert.That(response.ToolChoice.FunctionName, Is.EqualTo(toolChoice.FunctionName));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.ToolChoice.Kind, Is.EqualTo(ResponseToolChoiceKind.Function));
+            Assert.That(response.ToolChoice.FunctionName, Is.EqualTo(toolChoice.FunctionName));
+        });
 
         FunctionCallResponseItem? functionCall = response.OutputItems.FirstOrDefault() as FunctionCallResponseItem;
         Assert.That(functionCall, Is.Not.Null);
@@ -820,8 +872,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
             @"{""type"":""message"",""role"":""potato"",""potato_details"":{""cultivar"":""russet""}}",
             potatoMessage =>
             {
-                Assert.That(potatoMessage.Role, Is.EqualTo(MessageRole.Unknown));
-                Assert.That(potatoMessage.Content, Has.Count.EqualTo(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(potatoMessage.Role, Is.EqualTo(MessageRole.Unknown));
+                    Assert.That(potatoMessage.Content, Has.Count.EqualTo(0));
+                });
             });
     }
 
@@ -863,14 +918,17 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [Category("Smoke")]
     public void ToolSerialization()
     {
-        Assert.That(
-            ModelReaderWriter.Read<ResponseTool>(
-                BinaryData.FromString(@"{""type"": ""file_search""}")),
-            Is.InstanceOf<ResponseTool>());
-        Assert.That(
-            ModelReaderWriter.Read<ResponseTool>(
-                BinaryData.FromString(@"{""type"": ""something_else""}")),
-            Is.InstanceOf<ResponseTool>());
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                    ModelReaderWriter.Read<ResponseTool>(
+                        BinaryData.FromString(@"{""type"": ""file_search""}")),
+                    Is.InstanceOf<ResponseTool>());
+            Assert.That(
+                ModelReaderWriter.Read<ResponseTool>(
+                    BinaryData.FromString(@"{""type"": ""something_else""}")),
+                Is.InstanceOf<ResponseTool>());
+        });
     }
 
     [RecordedTest]
@@ -881,16 +939,22 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
             @"{""type"":""input_text"",""text"":""hello""}",
             textPart =>
             {
-                Assert.That(textPart.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
-                Assert.That(textPart.Text, Is.EqualTo("hello"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(textPart.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
+                    Assert.That(textPart.Text, Is.EqualTo("hello"));
+                });
             });
 
         AssertSerializationRoundTrip<ResponseContentPart>(
             @"{""type"":""potato"",""potato_details"":{""cultivar"":""russet""}}",
             potatoPart =>
             {
-                Assert.That(potatoPart.Kind, Is.EqualTo(ResponseContentPartKind.Unknown));
-                Assert.That(potatoPart.Text, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(potatoPart.Kind, Is.EqualTo(ResponseContentPartKind.Unknown));
+                    Assert.That(potatoPart.Text, Is.Null);
+                });
             });
     }
 
@@ -900,7 +964,7 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     {
         AssertSerializationRoundTrip<ResponseTextFormat>(
             @"{""type"":""text""}",
-            textFormat => Assert.That(textFormat.Kind == ResponseTextFormatKind.Text));
+            textFormat => Assert.That(textFormat.Kind, Is.EqualTo(ResponseTextFormatKind.Text)));
     }
 
     public override ResponsesClient GetTestClient(TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
@@ -933,8 +997,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
             instanceAssertionsAction.Invoke(deserializedValue!);
         });
         BinaryData reserializedBytes = ModelReaderWriter.Write(deserializedValue!);
-        Assert.That(reserializedBytes.ToMemory().IsEmpty, Is.False);
-        Assert.That(reserializedBytes.ToString(), Is.EqualTo(serializedJson));
+        Assert.Multiple(() =>
+        {
+            Assert.That(reserializedBytes.ToMemory().IsEmpty, Is.False);
+            Assert.That(reserializedBytes.ToString(), Is.EqualTo(serializedJson));
+        });
     }
 
     private static readonly string s_GetWeatherAtLocationToolName = "get_weather_at_location";

@@ -143,7 +143,7 @@ namespace Azure.Core.Tests
             output.Seek(0, SeekOrigin.Begin);
             string result = new StreamReader(output).ReadToEnd();
 
-            Assert.AreEqual("--test_boundary\r\n\r\n--test_boundary--\r\n", result);
+            Assert.That(result, Is.EqualTo("--test_boundary\r\n\r\n--test_boundary--\r\n"));
         }
 
         [Test]
@@ -162,10 +162,10 @@ namespace Azure.Core.Tests
             output.Seek(0, SeekOrigin.Begin);
             string result = new StreamReader(output).ReadToEnd();
 
-            Assert.AreEqual(
-                "--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
-                + "Content-Disposition: form-data\r\n\r\nHello World\r\n--test_boundary--\r\n",
-                result);
+            Assert.That(
+                result,
+                Is.EqualTo("--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
+                + "Content-Disposition: form-data\r\n\r\nHello World\r\n--test_boundary--\r\n"));
         }
 
         [Test]
@@ -185,12 +185,12 @@ namespace Azure.Core.Tests
             output.Seek(0, SeekOrigin.Begin);
             string result = new StreamReader(output).ReadToEnd();
 
-            Assert.AreEqual(
-                "--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n" +
+            Assert.That(
+                result,
+                Is.EqualTo("--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n" +
                 "Content-Disposition: form-data\r\n\r\nHello World - 1\r\n" +
                  "--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n" +
-                "Content-Disposition: form-data\r\n\r\nHello World - 2\r\n--test_boundary--\r\n",
-                result);
+                "Content-Disposition: form-data\r\n\r\nHello World - 2\r\n--test_boundary--\r\n"));
         }
 
         [Test]
@@ -209,10 +209,10 @@ namespace Azure.Core.Tests
             output.Seek(0, SeekOrigin.Begin);
             string result = new StreamReader(output).ReadToEnd();
 
-            Assert.AreEqual(
-                "--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
-                + "Content-Disposition: form-data; name=test_name\r\n\r\nHello World\r\n--test_boundary--\r\n",
-                result);
+            Assert.That(
+                result,
+                Is.EqualTo("--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
+                + "Content-Disposition: form-data; name=test_name\r\n\r\nHello World\r\n--test_boundary--\r\n"));
         }
 
         [Test]
@@ -231,12 +231,12 @@ namespace Azure.Core.Tests
             output.Seek(0, SeekOrigin.Begin);
             string result = new StreamReader(output).ReadToEnd();
 
-            Assert.AreEqual(
-                "--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
+            Assert.That(
+                result,
+                Is.EqualTo("--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
                 + "Content-Disposition: form-data; name=test_name; "
                 + "filename=test_file_name\r\n\r\n"
-                + "Hello World\r\n--test_boundary--\r\n",
-                result);
+                + "Hello World\r\n--test_boundary--\r\n"));
         }
 
         [Test]
@@ -255,10 +255,10 @@ namespace Azure.Core.Tests
             output.Seek(0, SeekOrigin.Begin);
             string result = new StreamReader(output).ReadToEnd();
 
-            Assert.AreEqual(
-                "--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
-                + "Content-Disposition: form-data; name=\"test name\"\r\n\r\nHello World\r\n--test_boundary--\r\n",
-                result);
+            Assert.That(
+                result,
+                Is.EqualTo("--test_boundary\r\nContent-Type: text/plain; charset=utf-8\r\n"
+                + "Content-Disposition: form-data; name=\"test name\"\r\n\r\nHello World\r\n--test_boundary--\r\n"));
         }
 
         [Test]
@@ -275,10 +275,10 @@ namespace Azure.Core.Tests
             var innerContent = new MockContent();
             content.Add(innerContent);
             content.Dispose();
-            Assert.AreEqual(1, innerContent.DisposeCount);
+            Assert.That(innerContent.DisposeCount, Is.EqualTo(1));
             content.Dispose();
             // Inner content is discarded after first dispose.
-            Assert.AreEqual(1, innerContent.DisposeCount);
+            Assert.That(innerContent.DisposeCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -290,10 +290,10 @@ namespace Azure.Core.Tests
             var mock = new MockContent();
             inner.Add(mock);
             outer.Dispose();
-            Assert.AreEqual(1, mock.DisposeCount);
+            Assert.That(mock.DisposeCount, Is.EqualTo(1));
             outer.Dispose();
             // Inner content is discarded after first dispose.
-            Assert.AreEqual(1, mock.DisposeCount);
+            Assert.That(mock.DisposeCount, Is.EqualTo(1));
         }
 
         private class MockContent : RequestContent

@@ -89,21 +89,24 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             await client.StartAsync();
 
             var connArg = await connectedTcs.Task.OrTimeout();
-            Assert.AreEqual("conn", connArg.ConnectionId);
-            Assert.AreEqual("user", connArg.UserId);
-            Assert.AreEqual("conn", client.ConnectionId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(connArg.ConnectionId, Is.EqualTo("conn"));
+                Assert.That(connArg.UserId, Is.EqualTo("user"));
+                Assert.That(client.ConnectionId, Is.EqualTo("conn"));
+            });
 
             var serArg = await serverMessageTcs.Task.OrTimeout();
-            Assert.NotNull(serArg.Message);
+            Assert.That(serArg.Message, Is.Not.Null);
 
             var groupArg = await groupMessageTcs.Task.OrTimeout();
-            Assert.NotNull(groupArg.Message);
+            Assert.That(groupArg.Message, Is.Not.Null);
 
             var disconArg = await disconnectedTcs.Task.OrTimeout();
-            Assert.AreEqual("reason", disconArg.DisconnectedMessage.Reason);
+            Assert.That(disconArg.DisconnectedMessage.Reason, Is.EqualTo("reason"));
 
             var stopArg = await stoppedTcs.Task.OrTimeout();
-            Assert.NotNull(stopArg);
+            Assert.That(stopArg, Is.Not.Null);
 
             IEnumerable<WebSocketReadResult> GetTestData()
             {
@@ -186,9 +189,12 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 
             var rst2 = await tcs.VerifyCalledTimesAsync(2).OrTimeout();
             groupSet.Add(rst2.Group);
-            Assert.That(rst2.Exception, Is.InstanceOf<SendMessageFailedException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(rst2.Exception, Is.InstanceOf<SendMessageFailedException>());
 
-            Assert.That(groupSet, Has.Member("group1"));
+                Assert.That(groupSet, Has.Member("group1"));
+            });
             Assert.That(groupSet, Has.Member("group2"));
         }
 

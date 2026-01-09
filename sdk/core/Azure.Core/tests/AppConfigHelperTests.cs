@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
 
                 actual = AppContextSwitchHelper.GetConfigValue(switchName, envVarName);
 
-                Assert.AreEqual(expected, actual);
+                Assert.That(actual, Is.EqualTo(expected));
             }
             finally
             {

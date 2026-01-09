@@ -22,7 +22,7 @@ namespace Azure.Generator.Tests
 
             var result = ConfigurationExtensions.UseModelNamespace(options);
 
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

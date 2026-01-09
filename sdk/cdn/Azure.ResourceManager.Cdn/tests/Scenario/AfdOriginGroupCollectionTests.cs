@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
-            Assert.AreEqual(afdOriginGroupName, afdOriginGroupInstance.Data.Name);
+            Assert.That(afdOriginGroupInstance.Data.Name, Is.EqualTo(afdOriginGroupName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, null, afdOriginGroupInstance.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, afdOriginGroupName, null));
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

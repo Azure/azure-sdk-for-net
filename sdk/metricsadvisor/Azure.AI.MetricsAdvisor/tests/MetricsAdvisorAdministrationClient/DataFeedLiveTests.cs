@@ -202,8 +202,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
             AzureDataExplorerDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataExplorerDataFeedSource;
 
-            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+                Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            });
         }
 
         [RecordedTest]
@@ -253,8 +256,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
             AzureDataLakeStorageDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
-            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+                Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            });
         }
 
         [RecordedTest]
@@ -308,8 +314,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
             SqlServerDataFeedSource createdDataSource = createdDataFeed.DataSource as SqlServerDataFeedSource;
 
-            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+                Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            });
         }
 
         [RecordedTest]
@@ -471,8 +480,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             AzureDataExplorerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+                Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            });
         }
 
         [RecordedTest]
@@ -526,8 +538,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             AzureDataLakeStorageDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+                Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            });
         }
 
         [RecordedTest]
@@ -585,8 +600,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             SqlServerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+                Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+            });
         }
 
         [RecordedTest]
@@ -652,18 +670,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            Assert.That(updatedDataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
-            Assert.That(updatedDataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
-            Assert.That(updatedDataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
-            Assert.That(updatedDataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
-            Assert.That(updatedDataFeed.Schema.TimestampColumn, Is.Empty);
-            Assert.That(updatedDataFeed.Description, Is.Empty);
-            Assert.That(updatedDataFeed.RollupSettings.RollupType, Is.EqualTo(DataFeedRollupType.NoRollupNeeded));
-            Assert.That(updatedDataFeed.RollupSettings.AutoRollupMethod, Is.EqualTo(DataFeedAutoRollupMethod.None));
-            Assert.That(updatedDataFeed.RollupSettings.RollupIdentificationValue, Is.Null);
-            Assert.That(updatedDataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.SmartFilling));
-            Assert.That(updatedDataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
-            Assert.That(updatedDataFeed.ActionLinkTemplate, Is.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
+                Assert.That(updatedDataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
+                Assert.That(updatedDataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
+                Assert.That(updatedDataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
+                Assert.That(updatedDataFeed.Schema.TimestampColumn, Is.Empty);
+                Assert.That(updatedDataFeed.Description, Is.Empty);
+                Assert.That(updatedDataFeed.RollupSettings.RollupType, Is.EqualTo(DataFeedRollupType.NoRollupNeeded));
+                Assert.That(updatedDataFeed.RollupSettings.AutoRollupMethod, Is.EqualTo(DataFeedAutoRollupMethod.None));
+                Assert.That(updatedDataFeed.RollupSettings.RollupIdentificationValue, Is.Null);
+                Assert.That(updatedDataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.SmartFilling));
+                Assert.That(updatedDataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
+                Assert.That(updatedDataFeed.ActionLinkTemplate, Is.Empty);
+            });
         }
 
         [RecordedTest]
@@ -719,8 +740,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             AzureDataExplorerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataExplorerDataFeedSource.AuthenticationType.Basic));
-            Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataExplorerDataFeedSource.AuthenticationType.Basic));
+                Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -751,8 +775,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             AzureDataLakeStorageDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic));
-            Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic));
+                Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -783,8 +810,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             SqlServerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(SqlServerDataFeedSource.AuthenticationType.Basic));
-            Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedDataSource.Authentication, Is.EqualTo(SqlServerDataFeedSource.AuthenticationType.Basic));
+                Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+            });
         }
 
         [RecordedTest]
@@ -798,22 +828,34 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (DataFeed dataFeed in adminClient.GetDataFeedsAsync())
             {
-                Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(dataFeed.Name, Is.Not.Null.And.Not.Empty);
-                Assert.That(dataFeed.Description, Is.Not.Null);
-                Assert.That(dataFeed.Status, Is.Not.Null);
-                Assert.That(dataFeed.Status, Is.Not.EqualTo(default(DataFeedStatus)));
-                Assert.That(dataFeed.AccessMode, Is.Not.Null);
-                Assert.That(dataFeed.AccessMode, Is.Not.EqualTo(default(DataFeedAccessMode)));
-                Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null);
-                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
-                Assert.That(dataFeed.Administrators, Is.Not.Null);
-                Assert.That(dataFeed.Viewers, Is.Not.Null);
-                Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
-                Assert.That(dataFeed.CreatedOn, Is.Not.Null);
-                Assert.That(dataFeed.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(dataFeed.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(dataFeed.Description, Is.Not.Null);
+                    Assert.That(dataFeed.Status, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dataFeed.Status, Is.Not.EqualTo(default(DataFeedStatus)));
+                    Assert.That(dataFeed.AccessMode, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dataFeed.AccessMode, Is.Not.EqualTo(default(DataFeedAccessMode)));
+                    Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null);
+                    Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+                    Assert.That(dataFeed.Administrators, Is.Not.Null);
+                    Assert.That(dataFeed.Viewers, Is.Not.Null);
+                    Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
+                    Assert.That(dataFeed.CreatedOn, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dataFeed.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
 
-                Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
+                    Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
+                });
                 Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.Not.Null);
                 Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.Not.EqualTo(default(DataFeedMissingDataPointFillType)));
 
@@ -844,10 +886,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
                 {
                     Assert.That(metric, Is.Not.Null);
-                    Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
-                    Assert.That(metric.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(metric.DisplayName, Is.Not.Null.And.Not.Empty);
-                    Assert.That(metric.Description, Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
+                        Assert.That(metric.Name, Is.Not.Null.And.Not.Empty);
+                        Assert.That(metric.DisplayName, Is.Not.Null.And.Not.Empty);
+                        Assert.That(metric.Description, Is.Not.Null);
+                    });
                 }
 
                 Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null);
@@ -855,18 +900,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 foreach (DataFeedDimension dimensionColumn in dataFeed.Schema.DimensionColumns)
                 {
                     Assert.That(dimensionColumn, Is.Not.Null);
-                    Assert.That(dimensionColumn.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(dimensionColumn.DisplayName, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(dimensionColumn.Name, Is.Not.Null.And.Not.Empty);
+                        Assert.That(dimensionColumn.DisplayName, Is.Not.Null.And.Not.Empty);
+                    });
                 }
 
-                Assert.That(dataFeed.Schema.TimestampColumn, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dataFeed.Schema.TimestampColumn, Is.Not.Null);
 
-                Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-                Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.Not.EqualTo(default(DateTimeOffset)));
-                Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.Not.Null);
-                Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.Not.Null);
-                Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.Not.Null);
-                Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.Not.Null);
+                    Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.Not.EqualTo(default(DateTimeOffset)));
+                    Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.Not.Null);
+                    Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.Not.Null);
+                    Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.Not.Null);
+                    Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.Not.Null);
+                });
 
                 ValidateGenericDataSource(dataFeed.DataSource, dataFeed.IsAdministrator.Value);
 
@@ -1001,17 +1055,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
             Assert.That(dataFeed, Is.Not.Null);
-            Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
-            Assert.That(dataFeed.Description, Is.EqualTo(expectedDescription));
-            Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
-            Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
-            Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null.And.Empty);
-            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
-            Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Single(), Is.EqualTo(dataFeed.Creator));
-            Assert.That(dataFeed.Viewers, Is.Not.Null.And.Empty);
-            Assert.That(dataFeed.IsAdministrator, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
+                Assert.That(dataFeed.Description, Is.EqualTo(expectedDescription));
+                Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
+                Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
+                Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null.And.Empty);
+                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Administrators, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Administrators.Single(), Is.EqualTo(dataFeed.Creator));
+                Assert.That(dataFeed.Viewers, Is.Not.Null.And.Empty);
+                Assert.That(dataFeed.IsAdministrator, Is.True);
+            });
 
             if (expectedId != null)
             {
@@ -1019,126 +1079,174 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
-            Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
-            Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.PreviousValue));
-            Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.Null);
+                Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.PreviousValue));
+                Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.Null);
 
-            Assert.That(dataFeed.Granularity, Is.Not.Null);
-            Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Daily));
-            Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Null);
+                Assert.That(dataFeed.Granularity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Daily));
+                Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Null);
 
-            Assert.That(dataFeed.Schema, Is.Not.Null);
+                Assert.That(dataFeed.Schema, Is.Not.Null);
+            });
             Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
 
             DataFeedMetric metric = dataFeed.Schema.MetricColumns.Single();
 
             Assert.That(metric, Is.Not.Null);
-            Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric.Name, Is.EqualTo("cost"));
-            Assert.That(metric.DisplayName, Is.EqualTo("cost"));
-            Assert.That(metric.Description, Is.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(metric.Name, Is.EqualTo("cost"));
+                Assert.That(metric.DisplayName, Is.EqualTo("cost"));
+                Assert.That(metric.Description, Is.Empty);
 
-            Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null.And.Empty);
-            Assert.That(dataFeed.Schema.TimestampColumn, Is.Empty);
+                Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null.And.Empty);
+                Assert.That(dataFeed.Schema.TimestampColumn, Is.Empty);
 
-            Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
-            Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
-            Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
-            Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
-            Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
+                Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
+                Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
+                Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
+                Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
+                Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
+            });
         }
 
         private void ValidateDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedName, DateTimeOffset expectedIngestionStartsOn)
         {
             Assert.That(dataFeed, Is.Not.Null);
-            Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
-            Assert.That(dataFeed.Description, Is.EqualTo("This data feed was created to test the .NET client."));
-            Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
-            Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
-            Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
-            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
+                Assert.That(dataFeed.Description, Is.EqualTo("This data feed was created to test the .NET client."));
+                Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
+                Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
+                Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
+                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
-            Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
+                Assert.That(dataFeed.Administrators, Is.Not.Null);
+            });
+            Assert.That(dataFeed.Administrators, Has.Count.EqualTo(2));
             Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
-            Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
-            Assert.That(dataFeed.Viewers, Is.Not.Null);
-            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
-            Assert.That(dataFeed.IsAdministrator, Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
+                Assert.That(dataFeed.Viewers, Is.Not.Null);
+            });
+            Assert.That(dataFeed.Viewers, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
+                Assert.That(dataFeed.IsAdministrator, Is.True);
+            });
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
-            Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
-            Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.CustomValue));
-            Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.EqualTo(45.0));
+                Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.CustomValue));
+                Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.EqualTo(45.0));
 
-            Assert.That(dataFeed.Granularity, Is.Not.Null);
-            Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Custom));
-            Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.EqualTo(3000));
+                Assert.That(dataFeed.Granularity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Custom));
+                Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.EqualTo(3000));
 
-            Assert.That(dataFeed.Schema, Is.Not.Null);
+                Assert.That(dataFeed.Schema, Is.Not.Null);
+            });
             Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
-            Assert.That(dataFeed.Schema.MetricColumns.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.Schema.MetricColumns, Has.Count.EqualTo(2));
 
             DataFeedMetric metric0 = dataFeed.Schema.MetricColumns[0];
             DataFeedMetric metric1 = dataFeed.Schema.MetricColumns[1];
 
             Assert.That(metric0, Is.Not.Null);
-            Assert.That(metric0.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric0.Name, Is.EqualTo("cost"));
-            Assert.That(metric0.DisplayName, Is.EqualTo("costDisplayName"));
-            Assert.That(metric0.Description, Is.EqualTo("costDescription"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(metric0.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(metric0.Name, Is.EqualTo("cost"));
+                Assert.That(metric0.DisplayName, Is.EqualTo("costDisplayName"));
+                Assert.That(metric0.Description, Is.EqualTo("costDescription"));
 
-            Assert.That(metric1, Is.Not.Null);
-            Assert.That(metric1.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric1.Name, Is.EqualTo("revenue"));
-            Assert.That(metric1.DisplayName, Is.EqualTo("revenueDisplayName"));
-            Assert.That(metric1.Description, Is.EqualTo("revenueDescription"));
+                Assert.That(metric1, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(metric1.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(metric1.Name, Is.EqualTo("revenue"));
+                Assert.That(metric1.DisplayName, Is.EqualTo("revenueDisplayName"));
+                Assert.That(metric1.Description, Is.EqualTo("revenueDescription"));
 
-            Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null);
-            Assert.That(dataFeed.Schema.DimensionColumns.Count, Is.EqualTo(2));
+                Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null);
+            });
+            Assert.That(dataFeed.Schema.DimensionColumns, Has.Count.EqualTo(2));
 
             var sortedDimensionColumns = dataFeed.Schema.DimensionColumns.OrderBy(column => column.Name).ToList();
 
-            Assert.That(sortedDimensionColumns[0].Name, Is.EqualTo("category"));
-            Assert.That(sortedDimensionColumns[0].DisplayName, Is.EqualTo("categoryDisplayName"));
-            Assert.That(sortedDimensionColumns[1].Name, Is.EqualTo("city"));
-            Assert.That(sortedDimensionColumns[1].DisplayName, Is.EqualTo("city"));
-            Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("timestamp"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sortedDimensionColumns[0].Name, Is.EqualTo("category"));
+                Assert.That(sortedDimensionColumns[0].DisplayName, Is.EqualTo("categoryDisplayName"));
+                Assert.That(sortedDimensionColumns[1].Name, Is.EqualTo("city"));
+                Assert.That(sortedDimensionColumns[1].DisplayName, Is.EqualTo("city"));
+                Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("timestamp"));
 
-            Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(expectedIngestionStartsOn));
-            Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(30)));
-            Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(80)));
-            Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(10)));
-            Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(5));
+                Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(expectedIngestionStartsOn));
+                Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(30)));
+                Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(80)));
+                Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(10)));
+                Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(5));
+            });
         }
 
         private void ValidateUpdatedDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedId, string expectedName)
         {
             var ingestionStartTime = DateTimeOffset.Parse("2020-09-21T00:00:00Z");
 
-            Assert.That(dataFeed.Id, Is.EqualTo(expectedId));
-            Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
-            Assert.That(dataFeed.Description, Is.EqualTo("This data feed was updated to test the .NET client."));
-            Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
-            Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
-            Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%datafeed/%metric"));
-            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Id, Is.EqualTo(expectedId));
+                Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
+                Assert.That(dataFeed.Description, Is.EqualTo("This data feed was updated to test the .NET client."));
+                Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
+                Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
+                Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%datafeed/%metric"));
+                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
-            // In the SetOptionalMembers method, we may or may not add a new admin (fake@admin.com) depending on whether
-            // the data feed instance used for the Update call was created from scratch or from a GetDataFeed operation:
-            // - If the data feed to update was created from scratch, we didn't update the admins list (count = 1).
-            // - If the data feed to update was created from a GetDataFeed operation, we added a new fake admin (count = 2).
+                // In the SetOptionalMembers method, we may or may not add a new admin (fake@admin.com) depending on whether
+                // the data feed instance used for the Update call was created from scratch or from a GetDataFeed operation:
+                // - If the data feed to update was created from scratch, we didn't update the admins list (count = 1).
+                // - If the data feed to update was created from a GetDataFeed operation, we added a new fake admin (count = 2).
 
-            Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
+                Assert.That(dataFeed.Administrators, Is.Not.Null);
+            });
+            Assert.That(dataFeed.Administrators, Has.Count.EqualTo(1).Or.EqualTo(2));
             Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
 
             if (dataFeed.Administrators.Count == 2)
@@ -1147,40 +1255,55 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             Assert.That(dataFeed.Viewers, Is.Not.Null);
-            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.Viewers, Has.Count.EqualTo(1));
             Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
-            Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
-            Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.NoFilling));
-            Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.Null);
+                Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.NoFilling));
+                Assert.That(dataFeed.MissingDataPointFillSettings.CustomFillValue, Is.Null);
 
-            Assert.That(dataFeed.Granularity, Is.Not.Null);
-            Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Daily));
-            Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Null);
+                Assert.That(dataFeed.Granularity, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Daily));
+                Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.Null);
 
-            Assert.That(dataFeed.Schema, Is.Not.Null);
+                Assert.That(dataFeed.Schema, Is.Not.Null);
+            });
             Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
 
             DataFeedMetric metric = dataFeed.Schema.MetricColumns.Single();
 
             Assert.That(metric, Is.Not.Null);
-            Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric.Name, Is.EqualTo("cost"));
-            Assert.That(metric.DisplayName, Is.EqualTo("cost"));
-            Assert.That(metric.Description, Is.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(metric.Name, Is.EqualTo("cost"));
+                Assert.That(metric.DisplayName, Is.EqualTo("cost"));
+                Assert.That(metric.Description, Is.Empty);
 
-            Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null.And.Empty);
-            Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("updatedTimestampColumn"));
+                Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null.And.Empty);
+                Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("updatedTimestampColumn"));
 
-            Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
-            Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(40)));
-            Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(90)));
-            Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(20)));
-            Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(6));
+                Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
+                Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(40)));
+                Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(90)));
+                Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(20)));
+                Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(6));
+            });
         }
 
         private void ValidateGenericDataSource(DataFeedSource dataSource, bool isAdmin)
@@ -1195,15 +1318,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.ApplicationId, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.AzureCloud, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.ApplicationId, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.AzureCloud, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.ApplicationId, Is.Null);
-                    Assert.That(specificDataSource.AzureCloud, Is.Null);
-                    Assert.That(specificDataSource.Query, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.ApplicationId, Is.Null);
+                        Assert.That(specificDataSource.AzureCloud, Is.Null);
+                        Assert.That(specificDataSource.Query, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.AzureBlob)
@@ -1214,13 +1343,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.Container, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.BlobTemplate, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Container, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.BlobTemplate, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.Container, Is.Null);
-                    Assert.That(specificDataSource.BlobTemplate, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Container, Is.Null);
+                        Assert.That(specificDataSource.BlobTemplate, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.AzureCosmosDb)
@@ -1231,15 +1366,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.SqlQuery, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.CollectionId, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.SqlQuery, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.CollectionId, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.SqlQuery, Is.Null);
-                    Assert.That(specificDataSource.Database, Is.Null);
-                    Assert.That(specificDataSource.CollectionId, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.SqlQuery, Is.Null);
+                        Assert.That(specificDataSource.Database, Is.Null);
+                        Assert.That(specificDataSource.CollectionId, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.AzureDataExplorer)
@@ -1265,17 +1406,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.AccountName, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.FileSystemName, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.DirectoryTemplate, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.FileTemplate, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.AccountName, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.FileSystemName, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.DirectoryTemplate, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.FileTemplate, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.AccountName, Is.Null);
-                    Assert.That(specificDataSource.FileSystemName, Is.Null);
-                    Assert.That(specificDataSource.DirectoryTemplate, Is.Null);
-                    Assert.That(specificDataSource.FileTemplate, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.AccountName, Is.Null);
+                        Assert.That(specificDataSource.FileSystemName, Is.Null);
+                        Assert.That(specificDataSource.DirectoryTemplate, Is.Null);
+                        Assert.That(specificDataSource.FileTemplate, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.AzureEventHubs)
@@ -1301,13 +1448,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.Table, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Table, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.Table, Is.Null);
-                    Assert.That(specificDataSource.Query, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Table, Is.Null);
+                        Assert.That(specificDataSource.Query, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.InfluxDb)
@@ -1318,15 +1471,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Username, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Username, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.Database, Is.Null);
-                    Assert.That(specificDataSource.Username, Is.Null);
-                    Assert.That(specificDataSource.Query, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Database, Is.Null);
+                        Assert.That(specificDataSource.Username, Is.Null);
+                        Assert.That(specificDataSource.Query, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.LogAnalytics)
@@ -1337,17 +1496,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.WorkspaceId, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.ClientId, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.TenantId, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.WorkspaceId, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.ClientId, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.TenantId, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.WorkspaceId, Is.Null);
-                    Assert.That(specificDataSource.Query, Is.Null);
-                    Assert.That(specificDataSource.ClientId, Is.Null);
-                    Assert.That(specificDataSource.TenantId, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.WorkspaceId, Is.Null);
+                        Assert.That(specificDataSource.Query, Is.Null);
+                        Assert.That(specificDataSource.ClientId, Is.Null);
+                        Assert.That(specificDataSource.TenantId, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.MongoDb)
@@ -1358,13 +1523,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
-                    Assert.That(specificDataSource.Command, Is.Not.Null.And.Not.Empty);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Database, Is.Not.Null.And.Not.Empty);
+                        Assert.That(specificDataSource.Command, Is.Not.Null.And.Not.Empty);
+                    });
                 }
                 else
                 {
-                    Assert.That(specificDataSource.Database, Is.Null);
-                    Assert.That(specificDataSource.Command, Is.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(specificDataSource.Database, Is.Null);
+                        Assert.That(specificDataSource.Command, Is.Null);
+                    });
                 }
             }
             else if (sourceType == DataFeedSourceKind.MySql)
@@ -1459,119 +1630,158 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 var concreteDataSource = dataSource as AzureApplicationInsightsDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureApplicationInsights));
-                Assert.That(concreteDataSource.ApplicationId, Is.EqualTo(DataSourceAppId));
-                Assert.That(concreteDataSource.AzureCloud, Is.EqualTo(DataSourceCloud));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureApplicationInsights));
+                    Assert.That(concreteDataSource.ApplicationId, Is.EqualTo(DataSourceAppId));
+                    Assert.That(concreteDataSource.AzureCloud, Is.EqualTo(DataSourceCloud));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.AzureBlob))
             {
                 var concreteDataSource = dataSource as AzureBlobDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureBlob));
-                Assert.That(concreteDataSource.Container, Is.EqualTo(DataSourceContainer));
-                Assert.That(concreteDataSource.BlobTemplate, Is.EqualTo(DataSourceTemplate));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureBlob));
+                    Assert.That(concreteDataSource.Container, Is.EqualTo(DataSourceContainer));
+                    Assert.That(concreteDataSource.BlobTemplate, Is.EqualTo(DataSourceTemplate));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.AzureCosmosDb))
             {
                 var concreteDataSource = dataSource as AzureCosmosDbDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureCosmosDb));
-                Assert.That(concreteDataSource.SqlQuery, Is.EqualTo(DataSourceQuery));
-                Assert.That(concreteDataSource.Database, Is.EqualTo(DataSourceDatabase));
-                Assert.That(concreteDataSource.CollectionId, Is.EqualTo(DataSourceCollectionId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureCosmosDb));
+                    Assert.That(concreteDataSource.SqlQuery, Is.EqualTo(DataSourceQuery));
+                    Assert.That(concreteDataSource.Database, Is.EqualTo(DataSourceDatabase));
+                    Assert.That(concreteDataSource.CollectionId, Is.EqualTo(DataSourceCollectionId));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.AzureDataExplorer))
             {
                 var concreteDataSource = dataSource as AzureDataExplorerDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataExplorer));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataExplorer));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.AzureDataLakeStorage))
             {
                 var concreteDataSource = dataSource as AzureDataLakeStorageDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataLakeStorage));
-                Assert.That(concreteDataSource.AccountName, Is.EqualTo(DataSourceAccount));
-                Assert.That(concreteDataSource.FileSystemName, Is.EqualTo(DataSourceFileSystem));
-                Assert.That(concreteDataSource.DirectoryTemplate, Is.EqualTo(DataSourceDirectory));
-                Assert.That(concreteDataSource.FileTemplate, Is.EqualTo(DataSourceFile));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataLakeStorage));
+                    Assert.That(concreteDataSource.AccountName, Is.EqualTo(DataSourceAccount));
+                    Assert.That(concreteDataSource.FileSystemName, Is.EqualTo(DataSourceFileSystem));
+                    Assert.That(concreteDataSource.DirectoryTemplate, Is.EqualTo(DataSourceDirectory));
+                    Assert.That(concreteDataSource.FileTemplate, Is.EqualTo(DataSourceFile));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.AzureEventHubs))
             {
                 var concreteDataSource = dataSource as AzureEventHubsDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureEventHubs));
-                Assert.That(concreteDataSource.ConsumerGroup, Is.EqualTo(DataSourceConsumerGroup));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureEventHubs));
+                    Assert.That(concreteDataSource.ConsumerGroup, Is.EqualTo(DataSourceConsumerGroup));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.AzureTable))
             {
                 var concreteDataSource = dataSource as AzureTableDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureTable));
-                Assert.That(concreteDataSource.Table, Is.EqualTo(DataSourceTable));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureTable));
+                    Assert.That(concreteDataSource.Table, Is.EqualTo(DataSourceTable));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.InfluxDb))
             {
                 var concreteDataSource = dataSource as InfluxDbDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.InfluxDb));
-                Assert.That(concreteDataSource.Database, Is.EqualTo(DataSourceDatabase));
-                Assert.That(concreteDataSource.Username, Is.EqualTo(DataSourceUsername));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.InfluxDb));
+                    Assert.That(concreteDataSource.Database, Is.EqualTo(DataSourceDatabase));
+                    Assert.That(concreteDataSource.Username, Is.EqualTo(DataSourceUsername));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.LogAnalytics))
             {
                 var concreteDataSource = dataSource as LogAnalyticsDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.LogAnalytics));
-                Assert.That(concreteDataSource.WorkspaceId, Is.EqualTo(DataSourceWorkspaceId));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
-                Assert.That(concreteDataSource.ClientId, Is.EqualTo(DataSourceClientId));
-                Assert.That(concreteDataSource.TenantId, Is.EqualTo(DataSourceTenantId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.LogAnalytics));
+                    Assert.That(concreteDataSource.WorkspaceId, Is.EqualTo(DataSourceWorkspaceId));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                    Assert.That(concreteDataSource.ClientId, Is.EqualTo(DataSourceClientId));
+                    Assert.That(concreteDataSource.TenantId, Is.EqualTo(DataSourceTenantId));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.MongoDb))
             {
                 var concreteDataSource = dataSource as MongoDbDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.MongoDb));
-                Assert.That(concreteDataSource.Database, Is.EqualTo(DataSourceDatabase));
-                Assert.That(concreteDataSource.Command, Is.EqualTo(DataSourceCommand));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.MongoDb));
+                    Assert.That(concreteDataSource.Database, Is.EqualTo(DataSourceDatabase));
+                    Assert.That(concreteDataSource.Command, Is.EqualTo(DataSourceCommand));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.MySql))
             {
                 var concreteDataSource = dataSource as MySqlDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.MySql));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.MySql));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.PostgreSql))
             {
                 var concreteDataSource = dataSource as PostgreSqlDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.PostgreSql));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.PostgreSql));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else if (expectedKind == nameof(DataFeedSourceKind.SqlServer))
             {
                 var concreteDataSource = dataSource as SqlServerDataFeedSource;
 
                 Assert.That(concreteDataSource, Is.Not.Null);
-                Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.SqlServer));
-                Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.SqlServer));
+                    Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
+                });
             }
             else
             {

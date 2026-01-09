@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
         public async Task GetChangesBySubscription()
         {
             var list = await DefaultSubscription.GetChangesBySubscriptionAsync(_startTime, _endTime).ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDetectedChangeData(list.FirstOrDefault());
-            Assert.AreEqual(list.FirstOrDefault().ResourceType, "Microsoft.ChangeAnalysis/changes");
+            Assert.That(list.FirstOrDefault().ResourceType, Is.EqualTo("Microsoft.ChangeAnalysis/changes"));
         }
 
         [RecordedTest]
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
         {
             var resourceGroup = await CreateResourceGroup();
             var list = await resourceGroup.GetChangesByResourceGroupAsync(_startTime, _endTime).ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
 
         [RecordedTest]
@@ -54,15 +54,18 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
             string changeId = subscriptionChanges.FirstOrDefault().Id.ToString();
             string resourceId = changeId.Substring(0, changeId.IndexOf("/providers/Microsoft.ChangeAnalysis/"));
             var list = await tenant.GetResourceChangesAsync(resourceId, _startTime, _endTime).ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDetectedChangeData(list.FirstOrDefault());
-            Assert.AreEqual(list.FirstOrDefault().ResourceType, "Microsoft.ChangeAnalysis/resourceChanges");
+            Assert.That(list.FirstOrDefault().ResourceType, Is.EqualTo("Microsoft.ChangeAnalysis/resourceChanges"));
         }
 
         private void ValidateDetectedChangeData(DetectedChangeData detectedChange)
         {
-            Assert.IsNotNull(detectedChange.Id);
-            Assert.IsNotNull(detectedChange.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(detectedChange.Id, Is.Not.Null);
+                Assert.That(detectedChange.Name, Is.Not.Null);
+            });
         }
     }
 }

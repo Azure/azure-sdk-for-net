@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void ParsesETag(string value, string expected)
         {
             SearchIndexerDataSourceConnection sut = new(null, null, SearchIndexerDataSourceType.AzureBlob, connectionString: null, null, null, null, value, null, serializedAdditionalRawData: null);
-            Assert.AreEqual(expected, sut.ETag?.ToString());
+            Assert.That(sut.ETag?.ToString(), Is.EqualTo(expected));
         }
     }
 }

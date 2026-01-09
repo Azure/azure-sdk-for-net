@@ -831,8 +831,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed), "The iterator should have indicated the consumer was closed.");
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
-            Assert.That(receivedEvents, Is.False, "There should have been no events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
+                Assert.That(receivedEvents, Is.False, "There should have been no events received.");
+            });
         }
 
         /// <summary>
@@ -873,8 +876,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "The iterator should have indicated the token was not active.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            });
         }
 
         /// <summary>
@@ -914,8 +920,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "The iterator should have indicated the token was not active.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            });
         }
 
         /// <summary>
@@ -955,8 +964,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.Nothing, "The iterator should not have been canceled.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            });
         }
 
         /// <summary>
@@ -996,8 +1008,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Expected; no action needed.
             }
 
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
-            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 5), "Publishing should have stopped when the iterator was canceled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+                Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 5), "Publishing should have stopped when the iterator was canceled.");
+            });
         }
 
         /// <summary>
@@ -1037,8 +1052,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Expected; no action needed.
             }
 
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
-            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 5), "Publishing should have stopped when the iterator was canceled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+                Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * 5), "Publishing should have stopped when the iterator was canceled.");
+            });
         }
 
         /// <summary>
@@ -1085,8 +1103,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Expected; no action needed.
             }
 
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
-            Assert.That(iteration, Is.EqualTo(expectedEvents).Within(lastMaximumCount * 2), "Publishing should have stopped when the exception was thrown.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+                Assert.That(iteration, Is.EqualTo(expectedEvents).Within(lastMaximumCount * 2), "Publishing should have stopped when the exception was thrown.");
+            });
         }
 
         /// <summary>
@@ -1124,8 +1145,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EquivalentTo(events), "The received events should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EquivalentTo(events), "The received events should match the published events.");
+            });
         }
 
         /// <summary>
@@ -1195,9 +1219,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }, cancellation.Token);
 
             await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(firstSubscriberEvents, Is.EquivalentTo(events), "The received events for the first subscriber should match the published events.");
-            Assert.That(secondSubscriberEvents, Is.EquivalentTo(events), "The received events for the second subscriber should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(firstSubscriberEvents, Is.EquivalentTo(events), "The received events for the first subscriber should match the published events.");
+                Assert.That(secondSubscriberEvents, Is.EquivalentTo(events), "The received events for the second subscriber should match the published events.");
+            });
         }
 
         /// <summary>
@@ -1234,8 +1261,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EquivalentTo(events), "The received events should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EquivalentTo(events), "The received events should match the published events.");
+            });
         }
 
         /// <summary>
@@ -1303,9 +1333,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }, cancellation.Token);
 
             await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(firstSubscriberEvents, Is.EquivalentTo(events), "The received events for the first subscriber should match the published events.");
-            Assert.That(secondSubscriberEvents, Is.EquivalentTo(events), "The received events for the second subscriber should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(firstSubscriberEvents, Is.EquivalentTo(events), "The received events for the first subscriber should match the published events.");
+                Assert.That(secondSubscriberEvents, Is.EquivalentTo(events), "The received events for the second subscriber should match the published events.");
+            });
         }
 
         /// <summary>
@@ -1348,11 +1381,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            // Because there is some non-determinism in the timing of the receive loop, the exact count of empty events cannot be predicted.  There
-            // should be at least one total, but no more than one for each published event.
+            Assert.Multiple(() =>
+            {
+                // Because there is some non-determinism in the timing of the receive loop, the exact count of empty events cannot be predicted.  There
+                // should be at least one total, but no more than one for each published event.
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents.Count, Is.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * 2), "There should be empty events present due to the wait time.");
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Has.Count.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * 2), "There should be empty events present due to the wait time.");
+            });
             Assert.That(receivedEvents.Where(item => item != null), Is.EquivalentTo(events), "The received events should match the published events when empty events are removed.");
         }
 
@@ -1384,8 +1420,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.TypeOf(exceptionType), "An exception during receive should be propagated by the iterator.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -1415,8 +1454,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "Cancellation should be surfaced as a TaskCanceledException");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -1447,10 +1489,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(expectedPartition, EventPosition.FromOffset("12"), cancellation.Token))
             {
-                Assert.That(partitionEvent.Partition.PartitionId, Is.EqualTo(expectedPartition), $"The event in position: { actualCount } was not associated with the expected partition.");
-                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: { actualCount } was not associated with the expected namespace.");
-                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: { actualCount } was not associated with the expected Event Hub name.");
-                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: { actualCount } was not associated with the expected consumer group.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitionEvent.Partition.PartitionId, Is.EqualTo(expectedPartition), $"The event in position: {actualCount} was not associated with the expected partition.");
+                    Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: {actualCount} was not associated with the expected namespace.");
+                    Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: {actualCount} was not associated with the expected Event Hub name.");
+                    Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: {actualCount} was not associated with the expected consumer group.");
+                });
 
                 if (++actualCount >= events.Count)
                 {
@@ -1458,8 +1503,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(actualCount, Is.EqualTo(events.Count), "The number events read did not match the number expected.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(actualCount, Is.EqualTo(events.Count), "The number events read did not match the number expected.");
+            });
         }
 
         /// <summary>
@@ -1625,8 +1673,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed), "The iterator should have indicated the consumer was closed.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            });
         }
 
         /// <summary>
@@ -1667,8 +1718,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "The iterator should have indicated the token was not active.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            });
         }
 
         /// <summary>
@@ -1708,8 +1762,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "The iterator should have indicated the token was not active.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            });
         }
 
         /// <summary>
@@ -1749,8 +1806,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.Nothing, "The iterator should not have been canceled.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+            });
         }
 
         /// <summary>
@@ -1799,8 +1859,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await Task.Delay(250);
 
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents).Within(2), "There should have been the expected number events received.");
-            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * thresholdModifier), "Publishing should have stopped when the iterator was canceled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents).Within(2), "There should have been the expected number events received.");
+                Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * thresholdModifier), "Publishing should have stopped when the iterator was canceled.");
+            });
         }
 
         /// <summary>
@@ -1849,8 +1912,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await Task.Delay(250);
 
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
-            Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * thresholdModifier), "Publishing should have stopped when the iterator was canceled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents), "There should have been the expected number events received.");
+                Assert.That(transportConsumer.PublishIndex, Is.EqualTo(expectedEvents).Within(transportConsumer.LastMaximumMessageCount * thresholdModifier), "Publishing should have stopped when the iterator was canceled.");
+            });
         }
 
         /// <summary>
@@ -1903,8 +1969,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await Task.Delay(250);
 
-            Assert.That(receivedEvents, Is.EqualTo(expectedEvents).Within(2), "There should have been the expected number events received.");
-            Assert.That(iteration, Is.EqualTo(expectedEvents).Within(lastMaximumCount * 2), "Publishing should have stopped when the exception was thrown.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(receivedEvents, Is.EqualTo(expectedEvents).Within(2), "There should have been the expected number events received.");
+                Assert.That(iteration, Is.EqualTo(expectedEvents).Within(lastMaximumCount * 2), "Publishing should have stopped when the exception was thrown.");
+            });
         }
 
         /// <summary>
@@ -1948,8 +2017,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(actualCount, Is.EqualTo(expectedEventCount), "The received event count should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(actualCount, Is.EqualTo(expectedEventCount), "The received event count should match the published events.");
+            });
 
             var expectedEvents = events
               .Select(item => Encoding.UTF8.GetString(item.EventBody.ToArray()))
@@ -2032,9 +2104,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }, cancellation.Token);
 
             await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(firstSubscriberCount, Is.EqualTo(expectedEventCount), "The received event count for the first subscriber should match the published events.");
-            Assert.That(secondSubcriberCount, Is.EqualTo(expectedEventCount), "The received event count for the second subscriber should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(firstSubscriberCount, Is.EqualTo(expectedEventCount), "The received event count for the first subscriber should match the published events.");
+                Assert.That(secondSubcriberCount, Is.EqualTo(expectedEventCount), "The received event count for the second subscriber should match the published events.");
+            });
 
             firstSubscriberEvents = firstSubscriberEvents
                 .OrderBy(item => item)
@@ -2049,8 +2124,11 @@ namespace Azure.Messaging.EventHubs.Tests
               .OrderBy(item => item)
               .ToList();
 
-            Assert.That(firstSubscriberEvents, Is.EquivalentTo(expectedEvents), "The received events for the first subscriber should match the published events.");
-            Assert.That(secondSubscriberEvents, Is.EquivalentTo(expectedEvents), "The received events for the second subscriber should match the published events.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSubscriberEvents, Is.EquivalentTo(expectedEvents), "The received events for the first subscriber should match the published events.");
+                Assert.That(secondSubscriberEvents, Is.EquivalentTo(expectedEvents), "The received events for the second subscriber should match the published events.");
+            });
         }
 
         /// <summary>
@@ -2092,11 +2170,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            // Because there is a random delay in the receive loop, the exact count of empty events cannot be predicted.  There
-            // should be at least one total, but no more than one for each published event.
+            Assert.Multiple(() =>
+            {
+                // Because there is a random delay in the receive loop, the exact count of empty events cannot be predicted.  There
+                // should be at least one total, but no more than one for each published event.
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents.Count, Is.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * thresholdModifier), "There should be empty events present due to the wait time.");
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Has.Count.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * thresholdModifier), "There should be empty events present due to the wait time.");
+            });
             Assert.That(receivedEvents.Where(item => item != null).Count(), Is.EqualTo(expectedEventCount), "The received event count should match the published events when empty events are removed.");
 
             // Validate that each message received appeared in the source set once.
@@ -2110,7 +2191,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceMessage in events.Select(item => Encoding.UTF8.GetString(item.EventBody.ToArray())))
             {
-                Assert.That(receivedEventMessages.Contains(sourceMessage), $"The message: { sourceMessage } was not received.");
+                Assert.That(receivedEventMessages, Does.Contain(sourceMessage), $"The message: {sourceMessage} was not received.");
             }
         }
 
@@ -2154,8 +2235,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents.Keys.Count, Is.EqualTo(partitions.Length), "The number of partitions should match those returned by the connection.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents.Keys, Has.Count.EqualTo(partitions.Length), "The number of partitions should match those returned by the connection.");
+            });
 
             foreach (var partition in partitions)
             {
@@ -2188,10 +2272,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync(cancellation.Token))
             {
-                Assert.That(partitions, Contains.Item(partitionEvent.Partition.PartitionId), $"The event in position: { actualCount } was read from an unexpected partition: { partitionEvent.Partition.PartitionId }");
-                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: { actualCount } was not associated with the expected namespace.");
-                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: { actualCount } was not associated with the expected Event Hub name.");
-                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: { actualCount } was not associated with the expected consumer group.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partitions, Contains.Item(partitionEvent.Partition.PartitionId), $"The event in position: {actualCount} was read from an unexpected partition: {partitionEvent.Partition.PartitionId}");
+                    Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: {actualCount} was not associated with the expected namespace.");
+                    Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: {actualCount} was not associated with the expected Event Hub name.");
+                    Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: {actualCount} was not associated with the expected consumer group.");
+                });
 
                 if (++actualCount >= expectedCount)
                 {
@@ -2199,8 +2286,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(actualCount, Is.EqualTo(expectedCount), "The number events read across all partitions did not match the number expected.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(actualCount, Is.EqualTo(expectedCount), "The number events read across all partitions did not match the number expected.");
+            });
         }
 
         /// <summary>
@@ -2231,8 +2321,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.TypeOf(exceptionType), "An exception during receive should be propagated by the iterator.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -2262,8 +2355,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "Cancellation should be surfaced as a TaskCanceledException");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -2293,8 +2389,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             Assert.That(async () => await invoke(), Throws.TypeOf(exception.GetType()), "The enumerator should surface the exception.");
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -2341,9 +2440,12 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             Assert.That(async () => await invoke(), Throws.TypeOf(exception.GetType()), "The enumerator should surface the exception.");
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receiveCalls, Is.AtLeast(expectedReceiveCalls - partitions.Length - 1).And.AtMost(expectedReceiveCalls), "The retry policy should have been applied.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receiveCalls, Is.AtLeast(expectedReceiveCalls - partitions.Length - 1).And.AtMost(expectedReceiveCalls), "The retry policy should have been applied.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -2388,9 +2490,12 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             Assert.That(async () => await invoke(), Throws.TypeOf(exception.GetType()), "The enumerator should surface the exception.");
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            Assert.That(receiveCalls, Is.AtLeast(1).And.AtMost(partitions.Length), "The retry policy should have been respected.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                Assert.That(receiveCalls, Is.AtLeast(1).And.AtMost(partitions.Length), "The retry policy should have been respected.");
+                Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            });
         }
 
         /// <summary>
@@ -2492,8 +2597,11 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellation.Cancel();
 
             Assert.That(async () => await publishingTask, Throws.Nothing, "There should be no exception when publishing completes.");
-            Assert.That(publishedEvents.Count, Is.EqualTo(events.Count), "All of the events should have been published.");
-            Assert.That(capturedException, Is.Null, "The captured exception should be null.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(publishedEvents, Has.Count.EqualTo(events.Count), "All of the events should have been published.");
+                Assert.That(capturedException, Is.Null, "The captured exception should be null.");
+            });
 
             for (var index = 0; index < events.Count; ++index)
             {
@@ -2572,8 +2680,11 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellation.Cancel();
 
             Assert.That(async () => await publishingTask, Throws.Nothing, "There should be no exception when publishing completes.");
-            Assert.That(publishedEvents.Count, Is.EqualTo(forceErrorAt), "All of the events before failure should have been published.");
-            Assert.That(capturedException, Is.InstanceOf<EventHubsException>().And.Property("IsTransient").EqualTo(false), "The captured exception should be be a non-retriable Event Hubs exception.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(publishedEvents, Has.Count.EqualTo(forceErrorAt), "All of the events before failure should have been published.");
+                Assert.That(capturedException, Is.InstanceOf<EventHubsException>().And.Property("IsTransient").EqualTo(false), "The captured exception should be be a non-retriable Event Hubs exception.");
+            });
 
             for (var index = 0; index < forceErrorAt; ++index)
             {

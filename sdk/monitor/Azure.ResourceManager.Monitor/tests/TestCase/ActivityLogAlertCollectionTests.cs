@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("global", subID);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var alert = lro.Value;
-            Assert.AreEqual(name, alert.Data.Name);
+            Assert.That(alert.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.That(count, Is.GreaterThanOrEqualTo(2));
         }
     }
 }

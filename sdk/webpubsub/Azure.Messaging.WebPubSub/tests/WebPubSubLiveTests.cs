@@ -53,10 +53,13 @@ namespace Azure.Rest.WebPubSub.Tests
             await client.LifetimeTask.OrTimeout();
             var frames = client.ReceivedFrames;
 
-            Assert.AreEqual(3, frames.Count);
-            Assert.AreEqual(textContent, frames[0].MessageAsString);
-            Assert.AreEqual(jsonContent.ToString(), frames[1].MessageAsString);
-            CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
+            Assert.That(frames, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(frames[0].MessageAsString, Is.EqualTo(textContent));
+                Assert.That(frames[1].MessageAsString, Is.EqualTo(jsonContent.ToString()));
+            });
+            Assert.That(frames[2].MessageBytes, Is.EquivalentTo(binaryContent.ToArray()));
         }
 
         [Ignore("Ignore until live test is supported")]
@@ -89,10 +92,13 @@ namespace Azure.Rest.WebPubSub.Tests
             await client.LifetimeTask.OrTimeout();
             var frames = client.ReceivedFrames;
 
-            Assert.AreEqual(3, frames.Count);
-            Assert.AreEqual(textContent, frames[0].MessageAsString);
-            Assert.AreEqual(jsonContent.ToString(), frames[1].MessageAsString);
-            CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
+            Assert.That(frames, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(frames[0].MessageAsString, Is.EqualTo(textContent));
+                Assert.That(frames[1].MessageAsString, Is.EqualTo(jsonContent.ToString()));
+            });
+            Assert.That(frames[2].MessageBytes, Is.EquivalentTo(binaryContent.ToArray()));
         }
 
         [Ignore("Ignore until live test is supported")]
@@ -124,31 +130,35 @@ namespace Azure.Rest.WebPubSub.Tests
             await client.LifetimeTask.OrTimeout();
             var frames = client.ReceivedFrames;
 
-            Assert.AreEqual(4, frames.Count);
+            Assert.That(frames, Has.Count.EqualTo(4));
             // first message must be the "connected" message
             var connected = JsonSerializer.Deserialize<ConnectedMessage>(frames[0].MessageAsString, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-            Assert.NotNull(connected);
-            Assert.AreEqual("connected", connected.Event);
-            Assert.AreEqual(JsonSerializer.Serialize(new {
-                type = "message",
-                from = "server",
-                dataType = "text",
-                data = textContent
-            }), frames[1].MessageAsString);
-            Assert.AreEqual(JsonSerializer.Serialize(new
+            Assert.That(connected, Is.Not.Null);
+            Assert.Multiple(() =>
             {
-                type = "message",
-                from = "server",
-                dataType = "json",
-                data = jsonContent
-            }), frames[2].MessageAsString);
-            CollectionAssert.AreEquivalent(JsonSerializer.Serialize(new
+                Assert.That(connected.Event, Is.EqualTo("connected"));
+                Assert.That(frames[1].MessageAsString, Is.EqualTo(JsonSerializer.Serialize(new
+                {
+                    type = "message",
+                    from = "server",
+                    dataType = "text",
+                    data = textContent
+                })));
+                Assert.That(frames[2].MessageAsString, Is.EqualTo(JsonSerializer.Serialize(new
+                {
+                    type = "message",
+                    from = "server",
+                    dataType = "json",
+                    data = jsonContent
+                })));
+            });
+            Assert.That(frames[3].MessageBytes, Is.EquivalentTo(JsonSerializer.Serialize(new
             {
                 type = "message",
                 from = "server",
                 dataType = "binary",
                 data = Convert.ToBase64String(binaryContent.ToArray())
-            }), frames[3].MessageBytes);
+            })));
         }
 
         private sealed class ConnectedMessage

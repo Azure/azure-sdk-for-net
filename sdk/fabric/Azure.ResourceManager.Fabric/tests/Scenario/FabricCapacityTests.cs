@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
             // Assert
             var result = await _fabricCapacityCollection.GetAsync(capacityName);
-            Assert.IsNotNull(result?.Value?.Data);
+            Assert.That(result?.Value?.Data, Is.Not.Null);
             AssertTrackedResource(capacity.Data, result.Value.Data);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = await _fabricCapacityCollection.GetAsync(TestEnvironment.CapacityName);
 
             // Assert
-            Assert.IsNotNull(result?.Value?.Data);
+            Assert.That(result?.Value?.Data, Is.Not.Null);
             AssertFabricCapacity(result.Value.Data);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
         {
             // Act & Assert
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _fabricCapacityCollection.GetAsync(TestEnvironment.CapacityName + "1"));
-            Assert.AreEqual(ex.Status, StatusCodes.Status404NotFound);
+            Assert.That(ex.Status, Is.EqualTo(StatusCodes.Status404NotFound));
         }
 
         [TestCase]
@@ -85,9 +85,12 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             };
             var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
-            // Assert
-            Assert.IsNotNull(result?.Value);
-            Assert.IsFalse(result.Value.IsNameAvailable);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result?.Value, Is.Not.Null);
+                Assert.That(result.Value.IsNameAvailable, Is.False);
+            });
         }
 
         [TestCase]
@@ -102,9 +105,12 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             };
             var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
-            // Assert
-            Assert.IsNotNull(result?.Value);
-            Assert.IsTrue(result.Value.IsNameAvailable);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result?.Value, Is.Not.Null);
+                Assert.That(result.Value.IsNameAvailable, Is.True);
+            });
         }
 
         [TestCase]
@@ -114,14 +120,14 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             // Setup
             var capacityName = "azsdktestcapacity";
             var capacity = await CreateFabricCapacityAsync(capacityName);
-            Assert.IsTrue(await _fabricCapacityCollection.ExistsAsync(capacityName));
+            Assert.That((bool)await _fabricCapacityCollection.ExistsAsync(capacityName), Is.True);
 
             // Act
             await capacity.DeleteAsync(WaitUntil.Completed);
 
             // Assert
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _fabricCapacityCollection.GetAsync(capacityName));
-            Assert.AreEqual(ex.Status, StatusCodes.Status404NotFound);
+            Assert.That(ex.Status, Is.EqualTo(StatusCodes.Status404NotFound));
         }
 
         [TestCase]
@@ -134,7 +140,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = fabricCapacities.ToEnumerableAsync().Result;
 
             // Assert
-            Assert.IsTrue(result.Any(capacity => capacity.Data.Name.Equals(TestEnvironment.CapacityName)));
+            Assert.That(result.Any(capacity => capacity.Data.Name.Equals(TestEnvironment.CapacityName)), Is.True);
         }
 
         [TestCase]
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = await fabricCapacities.ToEnumerableAsync();
 
             // Assert
-            Assert.IsTrue(result.Any(capacity => capacity.Data.Name.Equals(TestEnvironment.CapacityName)));
+            Assert.That(result.Any(capacity => capacity.Data.Name.Equals(TestEnvironment.CapacityName)), Is.True);
         }
 
         [TestCase]
@@ -157,13 +163,16 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var skus = Subscription.GetSkusFabricCapacitiesAsync();
             var result = await skus.ToEnumerableAsync();
 
-            // Assert
-            Assert.IsTrue(result.Any(sku => sku.Name.Equals("F2")));
-            Assert.IsTrue(result.Any(sku => sku.Name.Equals("F8")));
-            Assert.IsTrue(result.Any(sku => sku.Name.Equals("F64")));
-            Assert.IsTrue(result.Any(sku => sku.Name.Equals("F128")));
-            Assert.IsTrue(result.Any(sku => sku.Name.Equals("F512")));
-            Assert.IsTrue(result.All(sku => sku.ResourceType == "Capacities"));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result.Any(sku => sku.Name.Equals("F2")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F8")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F64")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F128")), Is.True);
+                Assert.That(result.Any(sku => sku.Name.Equals("F512")), Is.True);
+                Assert.That(result.All(sku => sku.ResourceType == "Capacities"), Is.True);
+            });
         }
 
         [TestCase]
@@ -178,14 +187,17 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var skus = fabricCapacity.GetSkusForCapacityAsync();
             var result = await skus.ToEnumerableAsync();
 
-            // Assert
-            Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F2")));
-            Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F8")));
-            Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F64")));
-            Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F128")));
-            Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F512")));
-            Assert.IsTrue(result.All(sku => sku.ResourceType == ResourceType));
-            Assert.IsTrue(result.All(sku => sku.Sku.Tier == FabricSkuTier.Fabric));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F2")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F8")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F64")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F128")), Is.True);
+                Assert.That(result.Any(sku => sku.Sku.Name.Equals("F512")), Is.True);
+                Assert.That(result.All(sku => sku.ResourceType == ResourceType), Is.True);
+                Assert.That(result.All(sku => sku.Sku.Tier == FabricSkuTier.Fabric), Is.True);
+            });
         }
 
         [TestCase]
@@ -208,7 +220,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var result = await fabricCapacity.UpdateAsync(WaitUntil.Completed, fabricCapacityPatch);
 
             // Assert
-            Assert.AreEqual(result.Value.Data.Sku.Name, "F8");
+            Assert.That(result.Value.Data.Sku.Name, Is.EqualTo("F8"));
 
             // Revert
             await fabricCapacity.UpdateAsync(WaitUntil.Completed, new FabricCapacityPatch()
@@ -232,28 +244,34 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             // Act
             var suspendResult = await fabricCapacity.SuspendAsync(WaitUntil.Completed);
             fabricCapacity = (await fabricCapacities.GetAsync(TestEnvironment.CapacityName)).Value;
-            Assert.AreEqual(fabricCapacity.Data.Properties.State, FabricResourceState.Paused);
+            Assert.That(FabricResourceState.Paused, Is.EqualTo(fabricCapacity.Data.Properties.State));
 
             var resumeResult = await fabricCapacity.ResumeAsync(WaitUntil.Completed);
             fabricCapacity = (await fabricCapacities.GetAsync(TestEnvironment.CapacityName)).Value;
-            Assert.AreEqual(fabricCapacity.Data.Properties.State, FabricResourceState.Active);
+            Assert.That(FabricResourceState.Active, Is.EqualTo(fabricCapacity.Data.Properties.State));
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.Multiple(() =>
+            {
+                Assert.That(r2.Name, Is.EqualTo(r1.Name));
+                Assert.That(r2.Id, Is.EqualTo(r1.Id));
+                Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+                Assert.That(r2.Location, Is.EqualTo(r1.Location));
+                Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
+            });
         }
 
         private void AssertFabricCapacity(FabricCapacityData data)
         {
-            Assert.AreEqual(data.Name, TestEnvironment.CapacityName);
-            Assert.AreEqual(data.Id, TestEnvironment.CapacityId);
-            Assert.AreEqual(data.Location.Name, TestEnvironment.CapacityLocation);
-            Assert.AreEqual(data.ResourceType, ResourceType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(TestEnvironment.CapacityName, Is.EqualTo(data.Name));
+                Assert.That(TestEnvironment.CapacityId, Is.EqualTo(data.Id));
+                Assert.That(TestEnvironment.CapacityLocation, Is.EqualTo(data.Location.Name));
+                Assert.That(ResourceType, Is.EqualTo(data.ResourceType));
+            });
         }
     }
 }

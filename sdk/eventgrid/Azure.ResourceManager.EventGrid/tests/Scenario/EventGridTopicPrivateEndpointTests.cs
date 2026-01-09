@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Retrieve the Event Grid topic
             var getTopicResponse = await _topicCollection.GetAsync(existingTopicName);
-            Assert.NotNull(getTopicResponse.Value, "Expected to find the Event Grid topic.");
+            Assert.That(getTopicResponse.Value, Is.Not.Null, "Expected to find the Event Grid topic.");
 
             // Grab its Private Endpoint Connection collection
             var pecCollection = getTopicResponse.Value.GetEventGridTopicPrivateEndpointConnections();
 
             // List all PECs
             var privateEndpointConnections = await pecCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(privateEndpointConnections, "No Private Endpoint Connections found for the topic.");
+            Assert.That(privateEndpointConnections, Is.Not.Empty, "No Private Endpoint Connections found for the topic.");
 
             // Find the test PEC
             var testPec = privateEndpointConnections
                 .FirstOrDefault(conn => conn.Data.Name.Contains("sdk-eventgrid-test-pec"));
-            Assert.NotNull(testPec, "Expected to find a PEC named 'sdk-eventgrid-test-pec'.");
+            Assert.That(testPec, Is.Not.Null, "Expected to find a PEC named 'sdk-eventgrid-test-pec'.");
 
             // Verify key fields on the retrieved PEC
-            Assert.NotNull(testPec.Data.PrivateEndpoint, "PEC must reference a Private Endpoint.");
-            Assert.IsNotEmpty(testPec.Data.PrivateEndpoint.Id.ToString(), "PEC's PrivateEndpoint.Id should not be empty.");
+            Assert.That(testPec.Data.PrivateEndpoint, Is.Not.Null, "PEC must reference a Private Endpoint.");
+            Assert.That(testPec.Data.PrivateEndpoint.Id.ToString(), Is.Not.Empty, "PEC's PrivateEndpoint.Id should not be empty.");
 
             // Retrieve that one PEC directly
             var getSpecificPecResponse = await pecCollection.GetAsync(testPec.Data.Name);
-            Assert.AreEqual(testPec.Data.Name, getSpecificPecResponse.Value.Data.Name, "Fetched PEC name mismatch.");
+            Assert.That(getSpecificPecResponse.Value.Data.Name, Is.EqualTo(testPec.Data.Name), "Fetched PEC name mismatch.");
 
             // Check its ConnectionState details
             var connectionState = getSpecificPecResponse.Value.Data.ConnectionState;
-            Assert.NotNull(connectionState, "ConnectionState should be populated on a PEC.");
-            Assert.IsNotEmpty(connectionState.Status.ToString(), "ConnectionState.Status should not be empty.");
+            Assert.That(connectionState, Is.Not.Null, "ConnectionState should be populated on a PEC.");
+            Assert.That(connectionState.Status.ToString(), Is.Not.Empty, "ConnectionState.Status should not be empty.");
         }
 
         [Test]
@@ -74,23 +74,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Retrieve the topic
             var getTopicResponse = await _topicCollection.GetAsync(existingTopicName);
-            Assert.NotNull(getTopicResponse.Value, "Expected to find the Event Grid topic.");
+            Assert.That(getTopicResponse.Value, Is.Not.Null, "Expected to find the Event Grid topic.");
 
             // Grab its PEC collection
             var pecCollection = getTopicResponse.Value.GetEventGridTopicPrivateEndpointConnections();
 
             // List them
             var allPecs = await pecCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(allPecs, "Expected at least one Private Endpoint Connection.");
+            Assert.That(allPecs, Is.Not.Empty, "Expected at least one Private Endpoint Connection.");
 
             // Pick the one we want to update
             var targetPec = allPecs
                 .FirstOrDefault(conn => conn.Data.PrivateEndpoint.Id.ToString().Contains("sdk-eventgrid-test-pec"));
-            Assert.NotNull(targetPec, "PEC 'sdk-eventgrid-test-pec' not found.");
+            Assert.That(targetPec, Is.Not.Null, "PEC 'sdk-eventgrid-test-pec' not found.");
 
             // Fetch it by name
             var getPecResponse = await pecCollection.GetAsync(targetPec.Data.Name);
-            Assert.AreEqual(targetPec.Data.Name, getPecResponse.Value.Data.Name, "Fetched PEC name mismatch.");
+            Assert.That(getPecResponse.Value.Data.Name, Is.EqualTo(targetPec.Data.Name), "Fetched PEC name mismatch.");
 
             // Prepare the update payload (approve)
             var approvePayload = new EventGridPrivateEndpointConnectionData
@@ -104,17 +104,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Send the update
             var updatePecResponse = await getPecResponse.Value.UpdateAsync(WaitUntil.Completed, approvePayload);
-            Assert.AreEqual(targetPec.Data.Name, updatePecResponse.Value.Data.Name, "PEC name changed after update.");
-            Assert.AreEqual(
-                EventGridPrivateEndpointPersistedConnectionStatus.Approved,
-                updatePecResponse.Value.Data.ConnectionState.Status,
-                "PEC ConnectionState.Status was not set to Approved."
-            );
-            Assert.AreEqual(
-                "Re-approved via SDK test",
-                updatePecResponse.Value.Data.ConnectionState.Description,
-                "PEC ConnectionState.Description did not match."
-            );
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatePecResponse.Value.Data.Name, Is.EqualTo(targetPec.Data.Name), "PEC name changed after update.");
+                Assert.That(
+                    updatePecResponse.Value.Data.ConnectionState.Status,
+                    Is.EqualTo(EventGridPrivateEndpointPersistedConnectionStatus.Approved),
+                    "PEC ConnectionState.Status was not set to Approved."
+                );
+                Assert.That(
+                    updatePecResponse.Value.Data.ConnectionState.Description,
+                    Is.EqualTo("Re-approved via SDK test"),
+                    "PEC ConnectionState.Description did not match."
+                );
+            });
         }
     }
 }

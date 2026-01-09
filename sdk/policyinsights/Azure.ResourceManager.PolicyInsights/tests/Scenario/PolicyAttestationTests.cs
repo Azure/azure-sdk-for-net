@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // Exist
             var flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getattestation = await policyAttestationCollection.GetAsync(attestationName);
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // GetAll
             var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAttestation(list.FirstOrDefault(item => attestationName == item.Data.Name).Data, attestationName);
 
             // Delete
             await attestation.DeleteAsync(WaitUntil.Completed);
             flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [RecordedTest]
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // Exist
             var flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getattestation = await policyAttestationCollection.GetAsync(attestationName);
@@ -119,24 +119,27 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // GetAll
             var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAttestation(list.FirstOrDefault().Data, attestationName);
 
             // Delete
             await attestation.DeleteAsync(WaitUntil.Completed);
             flag = await policyAttestationCollection.ExistsAsync(attestationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         private void ValidateAttestation(PolicyAttestationData attestation, string attestationName)
         {
-            Assert.IsNotNull(attestation);
-            Assert.IsNotEmpty(attestation.Id);
-            Assert.AreEqual(attestationName, attestation.Name);
-            Assert.AreEqual(".NET SDK Test", attestation.Comments);
-            Assert.AreEqual("Compliant", attestation.ComplianceState.ToString());
-            Assert.AreEqual("Test Owner", attestation.Owner);
-            Assert.AreEqual(2, attestation.Evidence.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(attestation, Is.Not.Null);
+                Assert.That((string)attestation.Id, Is.Not.Empty);
+            });
+            Assert.That(attestation.Name, Is.EqualTo(attestationName));
+            Assert.That(attestation.Comments, Is.EqualTo(".NET SDK Test"));
+            Assert.That(attestation.ComplianceState.ToString(), Is.EqualTo("Compliant"));
+            Assert.That(attestation.Owner, Is.EqualTo("Test Owner"));
+            Assert.That(attestation.Evidence, Has.Count.EqualTo(2));
         }
     }
 }

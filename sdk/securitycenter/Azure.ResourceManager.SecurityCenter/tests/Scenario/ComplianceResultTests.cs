@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             var flag = await _complianceResultCollection.ExistsAsync(_existComplianceResultName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -48,16 +48,19 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task GetAll()
         {
             var list = await _complianceResultCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateComplianceResult(list.First(item => item.Data.Name == _existComplianceResultName));
         }
 
         private void ValidateComplianceResult(ComplianceResultResource complianceResult)
         {
-            Assert.IsNotNull(complianceResult);
-            Assert.IsNotNull(complianceResult.Data.Id);
-            Assert.AreEqual(_existComplianceResultName, complianceResult.Data.Name);
-            Assert.AreEqual("Microsoft.Security/complianceResults", complianceResult.Data.ResourceType.ToString());
+            Assert.That(complianceResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(complianceResult.Data.Id, Is.Not.Null);
+                Assert.That(complianceResult.Data.Name, Is.EqualTo(_existComplianceResultName));
+                Assert.That(complianceResult.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/complianceResults"));
+            });
         }
     }
 }

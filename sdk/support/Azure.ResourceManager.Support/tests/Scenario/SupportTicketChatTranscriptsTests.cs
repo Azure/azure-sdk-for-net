@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportTicketChatTranscriptCollection.ExistsAsync(_existSupportTicketChatTranscriptsName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -46,15 +46,18 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task GetAll()
         {
             var list = await _supportTicketChatTranscriptCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateSupportTicketChatTranscriptsData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketChatTranscriptsName).Data);
         }
 
         private void ValidateSupportTicketChatTranscriptsData(ChatTranscriptDetailData supportTicketChatTranscript)
         {
-            Assert.IsNotNull(supportTicketChatTranscript);
-            Assert.IsNotEmpty(supportTicketChatTranscript.Id);
-            Assert.AreEqual(supportTicketChatTranscript.Name, _existSupportTicketChatTranscriptsName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(supportTicketChatTranscript, Is.Not.Null);
+                Assert.That((string)supportTicketChatTranscript.Id, Is.Not.Empty);
+            });
+            Assert.That(supportTicketChatTranscript.Name, Is.EqualTo(_existSupportTicketChatTranscriptsName));
         }
     }
 }

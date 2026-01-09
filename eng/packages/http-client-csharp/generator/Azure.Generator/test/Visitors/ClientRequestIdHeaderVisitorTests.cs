@@ -61,9 +61,12 @@ namespace Azure.Generator.Tests.Visitors
 
             foreach (var serviceMethod in serviceMethods)
             {
-                Assert.AreEqual(expectedInitialCount, serviceMethod.Parameters.Count);
-                Assert.AreEqual(includeReturnClientRequestId, serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"));
-                Assert.AreEqual(includeXMsClientRequestId, serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
+                Assert.That(serviceMethod.Parameters, Has.Count.EqualTo(expectedInitialCount));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"), Is.EqualTo(includeReturnClientRequestId));
+                    Assert.That(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"), Is.EqualTo(includeXMsClientRequestId));
+                });
             }
 
             var generator = MockHelpers.LoadMockGenerator(
@@ -83,14 +86,17 @@ namespace Azure.Generator.Tests.Visitors
                 var restClientMethod = client.RestClient.Methods.First(m => m.Signature.Name == $"Create{serviceMethod.Name}Request");
 
                 visitor.InvokeVisit((restClientMethod as ScmMethodProvider)!);
-                Assert.AreEqual(1, serviceMethod.Parameters.Count);
-                Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"));
-                Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
-                Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "some-other-parameter"));
+                Assert.That(serviceMethod.Parameters, Has.Count.EqualTo(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"), Is.False);
+                    Assert.That(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"), Is.False);
+                    Assert.That(serviceMethod.Parameters.Any(p => p.SerializedName == "some-other-parameter"), Is.True);
+                });
 
                 // Verify x-ms-client-request-id is added back in method body if specified and was present
                 bool shouldAddBack = addBackXMsClientRequestId && includeXMsClientRequestId;
-                Assert.AreEqual(shouldAddBack, restClientMethod.BodyStatements!.ToDisplayString().Contains("request.Headers.SetValue(\"x-ms-client-request-id\", request.ClientRequestId);"));
+                Assert.That(restClientMethod.BodyStatements!.ToDisplayString().Contains("request.Headers.SetValue(\"x-ms-client-request-id\", request.ClientRequestId);"), Is.EqualTo(shouldAddBack));
             }
         }
 
@@ -129,15 +135,15 @@ namespace Azure.Generator.Tests.Visitors
             var methodCollection = client.GetMethodCollectionByOperation(operation);
 
             // Verify initial state
-            Assert.AreEqual(1, serviceMethod.Parameters.Count);
+            Assert.That(serviceMethod.Parameters, Has.Count.EqualTo(1));
             var originalParameter = serviceMethod.Parameters[0];
 
             // Act
             visitor.InvokePreVisit(serviceMethod, client, methodCollection);
 
             // Verify no changes
-            Assert.AreEqual(1, serviceMethod.Parameters.Count);
-            Assert.AreSame(originalParameter, serviceMethod.Parameters[0]);
+            Assert.That(serviceMethod.Parameters, Has.Count.EqualTo(1));
+            Assert.That(serviceMethod.Parameters[0], Is.SameAs(originalParameter));
         }
 
         [Test]
@@ -160,21 +166,27 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
-            Assert.IsNotNull(responseModelProvider);
+            Assert.That(responseModelProvider, Is.Not.Null);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
             visitor.InvokePreVisit(serviceMethod, clientProvider!, methodCollection);
 
-            Assert.AreEqual(1, serviceMethod.Parameters.Count);
-            Assert.AreSame(serviceMethodParameters.Last(), serviceMethod.Parameters[0]);
+            Assert.That(serviceMethod.Parameters, Has.Count.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceMethod.Parameters[0], Is.SameAs(serviceMethodParameters.Last()));
 
-            Assert.AreEqual(1, serviceMethod.Operation.Parameters.Count);
-            Assert.AreSame(operationParameters.Last(), serviceMethod.Operation.Parameters[0]);
+                Assert.That(serviceMethod.Operation.Parameters, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(serviceMethod.Operation.Parameters[0], Is.SameAs(operationParameters.Last()));
 
-            Assert.AreNotSame(serviceMethodParameters[0], serviceMethod.Parameters[0]);
+                Assert.That(serviceMethod.Parameters[0], Is.Not.SameAs(serviceMethodParameters[0]));
+            });
         }
 
         private static List<InputMethodParameter> CreateMethodParameters(

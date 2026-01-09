@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
                 waitUntil: WaitUntil.Completed,
                 spaceAllocation: spaceAllocationVar);
 
-            Assert.IsFalse(lro.WaitForCompletionResponse().IsError);
+            Assert.That(lro.WaitForCompletionResponse().IsError, Is.False);
         }
 
         [TestCase]
@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         {
             StorageCacheResource scr = await this.CreateOrUpdateStorageCache();
             ArmOperation operation = await scr.EnableDebugInfoAsync(WaitUntil.Completed);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
+            Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);
             operation = await scr.FlushAsync(WaitUntil.Completed);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
+            Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);
             operation = await scr.StopAsync(WaitUntil.Completed);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
+            Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);
             operation = await scr.StartAsync(WaitUntil.Completed);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
+            Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);
             operation = await scr.UpgradeFirmwareAsync(WaitUntil.Completed);
-            Assert.IsFalse(operation.WaitForCompletionResponse().IsError);
+            Assert.That(operation.WaitForCompletionResponse().IsError, Is.False);
         }
     }
 }

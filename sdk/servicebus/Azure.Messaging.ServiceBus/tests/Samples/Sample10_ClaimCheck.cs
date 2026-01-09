@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         await receiver.CompleteMessageAsync(receivedMessage);
                         await blobClient.DeleteAsync();
 #if !SNIPPET
-                        Assert.AreEqual(body, messageBody.ToArray());
+                        Assert.That(messageBody.ToArray(), Is.EqualTo(body));
 #endif
                     }
                     #endregion

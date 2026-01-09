@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Network.Tests
                 }
             })).WaitForCompletionAsync();
 
-            Assert.True(await container.ExistsAsync(name));
+            Assert.That((bool)await container.ExistsAsync(name), Is.True);
 
             var prefixData = prefix.Data;
             ValidateCommon(prefixData, name);
-            Assert.IsEmpty(prefixData.Tags);
+            Assert.That(prefixData.Tags, Is.Empty);
 
             prefixData.Tags.Add("tag1", "value1");
             prefixData.Tags.Add("tag2", "value2");
@@ -108,18 +108,21 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await prefix.DeleteAsync(WaitUntil.Completed);
 
-            Assert.False(await container.ExistsAsync(name));
+            Assert.That((bool)await container.ExistsAsync(name), Is.False);
 
             prefixes = await container.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(prefixes);
+            Assert.That(prefixes, Is.Empty);
         }
 
         private void ValidateCommon(PublicIPPrefixData data, string name)
         {
-            Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(28, data.PrefixLength);
-            Assert.AreEqual(PublicIPPrefixSkuName.Standard, data.Sku.Name);
-            Assert.AreEqual(NetworkIPVersion.IPv4, data.PublicIPAddressVersion);
+            Assert.Multiple(() =>
+            {
+                Assert.That(data.Name, Is.EqualTo(name));
+                Assert.That(data.PrefixLength, Is.EqualTo(28));
+                Assert.That(data.Sku.Name, Is.EqualTo(PublicIPPrefixSkuName.Standard));
+                Assert.That(data.PublicIPAddressVersion, Is.EqualTo(NetworkIPVersion.IPv4));
+            });
         }
     }
 }

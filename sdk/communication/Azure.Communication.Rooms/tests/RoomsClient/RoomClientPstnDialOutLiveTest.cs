@@ -68,9 +68,12 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
                 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
-                // Assert
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
-                Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
+                Assert.Multiple(() =>
+                {
+                    // Assert
+                    Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
+                    Assert.That(createRoomResponse.GetRawResponse().Status, Is.EqualTo(201));
+                });
                 ValidateRoom(createCommunicationRoom);
                 var createdRoomId = createCommunicationRoom.Id;
 
@@ -78,9 +81,12 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
                 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 
-                // Assert:
-                Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
-                Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
+                Assert.Multiple(() =>
+                {
+                    // Assert:
+                    Assert.That(getCommunicationRoom.Id, Is.EqualTo(createdRoomId));
+                    Assert.That(getRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                });
                 ValidateRoom(getCommunicationRoom);
 
                 // Act: Update Room
@@ -95,16 +101,19 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-                // Assert:
-                Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
-                Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+                Assert.Multiple(() =>
+                {
+                    // Assert:
+                    Assert.That(updateCommunicationRoom.Id, Is.EqualTo(createdRoomId));
+                    Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                });
                 ValidateRoom(updateCommunicationRoom);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 
                 // Assert:
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             }
             catch (RequestFailedException ex)
             {
@@ -140,9 +149,12 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
                 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
-                // Assert
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
-                Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
+                Assert.Multiple(() =>
+                {
+                    // Assert
+                    Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
+                    Assert.That(createRoomResponse.GetRawResponse().Status, Is.EqualTo(201));
+                });
                 ValidateRoom(createCommunicationRoom, roomCreateOptions);
 
                 // Act: Get Room
@@ -150,9 +162,12 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
                 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 
-                // Assert:
-                Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
-                Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
+                Assert.Multiple(() =>
+                {
+                    // Assert:
+                    Assert.That(getCommunicationRoom.Id, Is.EqualTo(createdRoomId));
+                    Assert.That(getRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                });
                 ValidateRoom(getCommunicationRoom, roomCreateOptions);
 
                 // Act: Update Room
@@ -168,16 +183,19 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-                // Assert:
-                Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
-                Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+                Assert.Multiple(() =>
+                {
+                    // Assert:
+                    Assert.That(updateCommunicationRoom.Id, Is.EqualTo(createdRoomId));
+                    Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                });
                 ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 
                 // Assert:
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             }
             catch (RequestFailedException ex)
             {
@@ -226,7 +244,7 @@ namespace Azure.Communication.Rooms.Test
                 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
+                Assert.That(createRoomResponse.GetRawResponse().Status, Is.EqualTo(201));
                 ValidateRoom(createCommunicationRoom);
 
                 var createdRoomId = createCommunicationRoom.Id;
@@ -236,7 +254,7 @@ namespace Azure.Communication.Rooms.Test
                 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
+                Assert.That(getRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
                 ValidateRoom(getCommunicationRoom);
 
                 // Act Update Room
@@ -252,19 +270,19 @@ namespace Azure.Communication.Rooms.Test
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+                Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
                 ValidateRoom(updateCommunicationRoom);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 
                 // Assert
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
 
                 // Get Deleted Room
                 RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-                Assert.NotNull(ex);
-                Assert.AreEqual(404, ex?.Status);
+                Assert.That(ex, Is.Not.Null);
+                Assert.That(ex?.Status, Is.EqualTo(404));
             }
             catch (RequestFailedException ex)
             {
@@ -316,7 +334,7 @@ namespace Azure.Communication.Rooms.Test
                 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
+                Assert.That(createRoomResponse.GetRawResponse().Status, Is.EqualTo(201));
                 ValidateRoom(createCommunicationRoom, roomCreateOptions);
 
                 // Act: Get Room
@@ -325,7 +343,7 @@ namespace Azure.Communication.Rooms.Test
                 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
+                Assert.That(getRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
                 ValidateRoom(getCommunicationRoom, roomCreateOptions);
 
                 // Act Update Room
@@ -343,19 +361,19 @@ namespace Azure.Communication.Rooms.Test
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+                Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
                 ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 
                 // Assert
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
 
                 // Get Deleted Room
                 RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-                Assert.NotNull(ex);
-                Assert.AreEqual(404, ex?.Status);
+                Assert.That(ex, Is.Not.Null);
+                Assert.That(ex?.Status, Is.EqualTo(404));
             }
             catch (RequestFailedException ex)
             {
@@ -378,7 +396,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(options: null);
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value);
         }
 
@@ -392,7 +410,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(new CreateRoomOptions());
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value);
         }
 
@@ -417,7 +435,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(roomCreateOptions);
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
@@ -442,7 +460,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(roomCreateOptions);
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value);
         }
 
@@ -468,7 +486,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(roomCreateOptions);
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
@@ -497,7 +515,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(roomCreateOptions);
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value);
         }
 
@@ -527,7 +545,7 @@ namespace Azure.Communication.Rooms.Test
             var createdRoom = await roomsClient.CreateRoomAsync(roomCreateOptions);
 
             // Assert
-            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            Assert.That(createdRoom.GetRawResponse().Status, Is.EqualTo(201));
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
@@ -547,8 +565,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -568,8 +586,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -587,8 +605,8 @@ namespace Azure.Communication.Rooms.Test
             };
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -608,8 +626,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -628,8 +646,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -650,8 +668,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(roomCreateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -669,8 +687,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync("invalid_id"));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -696,9 +714,12 @@ namespace Azure.Communication.Rooms.Test
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-            // Assert:
-            Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
-            Assert.AreEqual(createRoomResponse.Value.Id, updateCommunicationRoom.Id);
+            Assert.Multiple(() =>
+            {
+                // Assert:
+                Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(updateCommunicationRoom.Id, Is.EqualTo(createRoomResponse.Value.Id));
+            });
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
@@ -727,10 +748,13 @@ namespace Azure.Communication.Rooms.Test
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-            // Assert:
-            Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
-            Assert.AreEqual(createRoomResponse.Value.Id, updateCommunicationRoom.Id);
-            Assert.AreEqual(updateCommunicationRoom.PstnDialOutEnabled, roomCreateOptions.PstnDialOutEnabled); // PSTN Enabled Dial-Out remains unchanged as in the room create operation
+            Assert.Multiple(() =>
+            {
+                // Assert:
+                Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(updateCommunicationRoom.Id, Is.EqualTo(createRoomResponse.Value.Id));
+                Assert.That(roomCreateOptions.PstnDialOutEnabled, Is.EqualTo(updateCommunicationRoom.PstnDialOutEnabled)); // PSTN Enabled Dial-Out remains unchanged as in the room create operation
+            });
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
@@ -755,10 +779,13 @@ namespace Azure.Communication.Rooms.Test
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-            // Assert:
-            Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
-            Assert.AreEqual(createRoomResponse.Value.Id, updateCommunicationRoom.Id);
-            Assert.AreEqual(updateCommunicationRoom.PstnDialOutEnabled, roomCreateOptions.PstnDialOutEnabled); // PSTN Enabled Dial-Out remains unchanged as in the room create operation
+            Assert.Multiple(() =>
+            {
+                // Assert:
+                Assert.That(updateRoomResponse.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(updateCommunicationRoom.Id, Is.EqualTo(createRoomResponse.Value.Id));
+                Assert.That(roomCreateOptions.PstnDialOutEnabled, Is.EqualTo(updateCommunicationRoom.PstnDialOutEnabled)); // PSTN Enabled Dial-Out remains unchanged as in the room create operation
+            });
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
@@ -785,8 +812,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -814,8 +841,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -842,8 +869,8 @@ namespace Azure.Communication.Rooms.Test
             };
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -871,8 +898,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -898,8 +925,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -925,8 +952,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -952,8 +979,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(404, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
@@ -983,8 +1010,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
-            Assert.NotNull(ex);
-            Assert.AreEqual(404, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -999,8 +1026,8 @@ namespace Azure.Communication.Rooms.Test
             };
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.AddOrUpdateParticipantsAsync(createRoomResponse.Value.Id, participants: roomParticipants));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -1076,7 +1103,7 @@ namespace Azure.Communication.Rooms.Test
                 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
                 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+                Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
 
                 var createdRoomId = createCommunicationRoom.Id;
                 participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Consumer };
@@ -1091,19 +1118,22 @@ namespace Azure.Communication.Rooms.Test
                 };
 
                 Response addOrUpdateParticipantsResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, toAddOrUpdateCommunicationUsers);
-                Assert.AreEqual(200, addOrUpdateParticipantsResponse.Status);
+                Assert.That(addOrUpdateParticipantsResponse.Status, Is.EqualTo(200));
 
                 AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
                 List<RoomParticipant> addOrUpdateRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
                 // Assert
-                Assert.AreEqual(3, addOrUpdateRoomParticipantsResult.Count, "Expected Room participants count to be 3");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Presenter), "Expected participants to contain Presenter");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Consumer), "Expected participants to contain Consumer");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Attendee), "Expected participants to contain Attendee");
+                Assert.That(addOrUpdateRoomParticipantsResult, Has.Count.EqualTo(3), "Expected Room participants count to be 3");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.True, "Expected participants to contain user1 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.True, "Expected participants to contain user2 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Presenter), Is.True, "Expected participants to contain Presenter");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Consumer), Is.True, "Expected participants to contain Consumer");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.Role == ParticipantRole.Attendee), Is.True, "Expected participants to contain Attendee");
+                });
 
                 // Arrange: Remove participants
                 List<CommunicationIdentifier> toRemoveCommunicationUsers = new List<CommunicationIdentifier>
@@ -1116,14 +1146,17 @@ namespace Azure.Communication.Rooms.Test
                 AsyncPageable<RoomParticipant> existingParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
                 List<RoomParticipant> removeRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
-                // Assert
-                Assert.AreEqual(200, removeParticipantsResponse.Status);
-                Assert.AreEqual(1, removeRoomParticipantsResult.Count, "Expected Room participants count to be 1 after removal");
-                Assert.IsTrue(removeRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
+                Assert.Multiple(() =>
+                {
+                    // Assert
+                    Assert.That(removeParticipantsResponse.Status, Is.EqualTo(200));
+                    Assert.That(removeRoomParticipantsResult, Has.Count.EqualTo(1), "Expected Room participants count to be 1 after removal");
+                });
+                Assert.That(removeRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add or update.");
 
                 // Clean up
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             }
             catch (RequestFailedException ex)
             {
@@ -1186,20 +1219,26 @@ namespace Azure.Communication.Rooms.Test
                 List<RoomParticipant> roomParticipantsResult = await roomParticipants.ToEnumerableAsync();
 
                 // Assert
-                Assert.AreEqual(3, roomParticipantsResult.Count, "Expected Room participants count to be 3");
-                Assert.IsTrue(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add or update.");
-                Assert.IsTrue(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add or update.");
-                Assert.IsTrue(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
-                Assert.IsTrue(roomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
-                    "Expected participant1 to have Presenter role.");
-                Assert.IsTrue(roomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                    "Expected participant2 to have Attendee role.");
-                Assert.IsTrue(roomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
-                   "Expected participant3 to have Presenter role.");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+                Assert.That(roomParticipantsResult, Has.Count.EqualTo(3), "Expected Room participants count to be 3");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.True, "Expected participants to contain user1 after add or update.");
+                    Assert.That(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.True, "Expected participants to contain user2 after add or update.");
+                    Assert.That(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add or update.");
+                    Assert.That(roomParticipantsResult.Any(
+                        x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                        Is.True,
+                        "Expected participant1 to have Presenter role.");
+                    Assert.That(roomParticipantsResult.Any(
+                        x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                        Is.True,
+                        "Expected participant2 to have Attendee role.");
+                    Assert.That(roomParticipantsResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                       Is.True,
+                       "Expected participant3 to have Presenter role.");
+                    Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
+                });
 
                 // Arrange
                 // participant1 should be updated to Attendee which is default
@@ -1218,30 +1257,37 @@ namespace Azure.Communication.Rooms.Test
 
                 // Act
                 Response addOrUpdateParticipantsResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, toAddOrUpdateCommunicationUsers);
-                Assert.AreEqual(200, addOrUpdateParticipantsResponse.Status);
+                Assert.That(addOrUpdateParticipantsResponse.Status, Is.EqualTo(200));
 
                 AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
                 List<RoomParticipant> addOrUpdateRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
                 // Assert
-                Assert.AreEqual(4, addOrUpdateRoomParticipantsResult.Count, "Expected Room participants count to be 4");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), "Expected participants to contain user4 after add or update.");
+                Assert.That(addOrUpdateRoomParticipantsResult, Has.Count.EqualTo(4), "Expected Room participants count to be 4");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.True, "Expected participants to contain user1 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.True, "Expected participants to contain user2 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), Is.True, "Expected participants to contain user4 after add or update.");
 
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant1 to have Attendee role.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Consumer)),
-                    "Expected participant2 to have Consumer role.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
-                  "Expected participant3 to have Presenter role.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant4 to have Attendee role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                       Is.True,
+                       "Expected participant1 to have Attendee role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                        x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Consumer)),
+                        Is.True,
+                        "Expected participant2 to have Consumer role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                      x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                      Is.True,
+                      "Expected participant3 to have Presenter role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                       Is.True,
+                       "Expected participant4 to have Attendee role.");
+                });
 
                 // Act Remove participants
                 List<CommunicationIdentifier> toRemoveCommunicationUsers = new List<CommunicationIdentifier>
@@ -1253,23 +1299,31 @@ namespace Azure.Communication.Rooms.Test
                 AsyncPageable<RoomParticipant> allParticipantsAfterDelete = roomsClient.GetParticipantsAsync(createdRoomId);
                 List<RoomParticipant> allParticipantsAfterDeleteResult = await allParticipantsAfterDelete.ToEnumerableAsync();
 
-                // Assert
-                Assert.AreEqual(200, removeParticipantsResponse.Status);
-                Assert.AreEqual(2, allParticipantsAfterDeleteResult.Count, "Expected Room participants count to be 2");
-                Assert.IsFalse(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add and update.");
-                Assert.IsFalse(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add and update.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add and update.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), "Expected participants to contain user4 after add and update.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
-                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
-                  "Expected participant3 to have Presenter role.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant4 to have Attendee role.");
+                Assert.Multiple(() =>
+                {
+                    // Assert
+                    Assert.That(removeParticipantsResponse.Status, Is.EqualTo(200));
+                    Assert.That(allParticipantsAfterDeleteResult, Has.Count.EqualTo(2), "Expected Room participants count to be 2");
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.False, "Expected participants to contain user1 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.False, "Expected participants to contain user2 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), Is.True, "Expected participants to contain user4 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(
+                      x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                      Is.True,
+                      "Expected participant3 to have Presenter role.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                       Is.True,
+                       "Expected participant4 to have Attendee role.");
+                });
 
                 // Clean up
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             }
             catch (RequestFailedException ex)
             {
@@ -1307,9 +1361,12 @@ namespace Azure.Communication.Rooms.Test
             AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createRoomResponse.Value.Id);
             List<RoomParticipant> removeRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
-            // Assert
-            Assert.AreEqual(removeParticipantResponse.Status, 200);
-            Assert.AreEqual(removeRoomParticipantsResult.Count, 0);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(removeParticipantResponse.Status, Is.EqualTo(200));
+                Assert.That(removeRoomParticipantsResult.Count, Is.EqualTo(0));
+            });
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -1332,8 +1389,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -1348,10 +1405,10 @@ namespace Azure.Communication.Rooms.Test
             Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 
             // Assert:
-            Assert.AreEqual(204, deleteRoomResponse.Status);
+            Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-            Assert.NotNull(ex);
-            Assert.AreEqual(404, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(AuthenticationVersionSource))]
@@ -1370,8 +1427,8 @@ namespace Azure.Communication.Rooms.Test
 
             // Act and Assert:
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(invalidRoomId));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(400));
         }
 
         [TestCase(ServiceVersion.V2025_03_13)]
@@ -1418,20 +1475,26 @@ namespace Azure.Communication.Rooms.Test
                 List<RoomParticipant> roomParticipantsResult = await roomParticipants.ToEnumerableAsync();
 
                 // Assert
-                Assert.AreEqual(3, roomParticipantsResult.Count, "Expected Room participants count to be 3");
-                Assert.IsTrue(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add or update.");
-                Assert.IsTrue(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add or update.");
-                Assert.IsTrue(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
-                Assert.IsTrue(roomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
-                    "Expected participant1 to have Presenter role.");
-                Assert.IsTrue(roomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                    "Expected participant2 to have Attendee role.");
-                Assert.IsTrue(roomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
-                   "Expected participant3 to have Presenter role.");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+                Assert.That(roomParticipantsResult, Has.Count.EqualTo(3), "Expected Room participants count to be 3");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.True, "Expected participants to contain user1 after add or update.");
+                    Assert.That(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.True, "Expected participants to contain user2 after add or update.");
+                    Assert.That(roomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add or update.");
+                    Assert.That(roomParticipantsResult.Any(
+                        x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                        Is.True,
+                        "Expected participant1 to have Presenter role.");
+                    Assert.That(roomParticipantsResult.Any(
+                        x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                        Is.True,
+                        "Expected participant2 to have Attendee role.");
+                    Assert.That(roomParticipantsResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
+                       Is.True,
+                       "Expected participant3 to have Presenter role.");
+                    Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
+                });
 
                 // Arrange
                 // participant1 should be updated to Attendee which is default
@@ -1450,30 +1513,37 @@ namespace Azure.Communication.Rooms.Test
 
                 // Act
                 Response addOrUpdateParticipantsResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, toAddOrUpdateCommunicationUsers);
-                Assert.AreEqual(200, addOrUpdateParticipantsResponse.Status);
+                Assert.That(addOrUpdateParticipantsResponse.Status, Is.EqualTo(200));
 
                 AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
                 List<RoomParticipant> addOrUpdateRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
                 // Assert
-                Assert.AreEqual(4, addOrUpdateRoomParticipantsResult.Count, "Expected Room participants count to be 4");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), "Expected participants to contain user4 after add or update.");
+                Assert.That(addOrUpdateRoomParticipantsResult, Has.Count.EqualTo(4), "Expected Room participants count to be 4");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.True, "Expected participants to contain user1 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.True, "Expected participants to contain user2 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add or update.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), Is.True, "Expected participants to contain user4 after add or update.");
 
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant1 to have Attendee role.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
-                    "Expected participant2 to have Consumer role.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
-                  "Expected participant3 to have Presenter role.");
-                Assert.IsTrue(addOrUpdateRoomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant4 to have Attendee role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                       Is.True,
+                       "Expected participant1 to have Attendee role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                        x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
+                        Is.True,
+                        "Expected participant2 to have Consumer role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                      x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
+                      Is.True,
+                      "Expected participant3 to have Presenter role.");
+                    Assert.That(addOrUpdateRoomParticipantsResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                       Is.True,
+                       "Expected participant4 to have Attendee role.");
+                });
 
                 // Act Remove participants
                 List<CommunicationIdentifier> toRemoveCommunicationUsers = new List<CommunicationIdentifier>
@@ -1485,23 +1555,31 @@ namespace Azure.Communication.Rooms.Test
                 AsyncPageable<RoomParticipant> allParticipantsAfterDelete = roomsClient.GetParticipantsAsync(createdRoomId);
                 List<RoomParticipant> allParticipantsAfterDeleteResult = await allParticipantsAfterDelete.ToEnumerableAsync();
 
-                // Assert
-                Assert.AreEqual(200, removeParticipantsResponse.Status);
-                Assert.AreEqual(2, allParticipantsAfterDeleteResult.Count, "Expected Room participants count to be 2");
-                Assert.IsFalse(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected participants to contain user1 after add and update.");
-                Assert.IsFalse(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected participants to contain user2 after add and update.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add and update.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), "Expected participants to contain user4 after add and update.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
-                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
-                  "Expected participant3 to have Presenter role.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant4 to have Attendee role.");
+                Assert.Multiple(() =>
+                {
+                    // Assert
+                    Assert.That(removeParticipantsResponse.Status, Is.EqualTo(200));
+                    Assert.That(allParticipantsAfterDeleteResult, Has.Count.EqualTo(2), "Expected Room participants count to be 2");
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), Is.False, "Expected participants to contain user1 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), Is.False, "Expected participants to contain user2 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), Is.True, "Expected participants to contain user3 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), Is.True, "Expected participants to contain user4 after add and update.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(
+                      x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Collaborator)),
+                      Is.True,
+                      "Expected participant3 to have Presenter role.");
+                    Assert.That(allParticipantsAfterDeleteResult.Any(
+                       x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                       Is.True,
+                       "Expected participant4 to have Attendee role.");
+                });
 
                 // Clean up
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
-                Assert.AreEqual(204, deleteRoomResponse.Status);
+                Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
             }
             catch (RequestFailedException ex)
             {
@@ -1516,22 +1594,28 @@ namespace Azure.Communication.Rooms.Test
 
         private void ValidateRoom(CommunicationRoom? room)
         {
-            Assert.NotNull(room);
-            Assert.NotNull(room?.Id);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.ValidFrom);
-            Assert.NotNull(room?.ValidUntil);
-            Assert.NotNull(room?.PstnDialOutEnabled);
+            Assert.That(room, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(room?.Id, Is.Not.Null);
+                Assert.That(room?.CreatedAt, Is.Not.Null);
+                Assert.That(room?.ValidFrom, Is.Not.Null);
+                Assert.That(room?.ValidUntil, Is.Not.Null);
+                Assert.That(room?.PstnDialOutEnabled, Is.Not.Null);
+            });
         }
 
         private void ValidateRoom(CommunicationRoom? room, CreateRoomOptions roomCreateOptions)
         {
-            Assert.NotNull(room);
-            Assert.NotNull(room?.Id);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.ValidFrom);
-            Assert.NotNull(room?.ValidUntil);
-            Assert.AreEqual(room?.PstnDialOutEnabled, roomCreateOptions.PstnDialOutEnabled.HasValue ? roomCreateOptions?.PstnDialOutEnabled : false);
+            Assert.That(room, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(room?.Id, Is.Not.Null);
+                Assert.That(room?.CreatedAt, Is.Not.Null);
+                Assert.That(room?.ValidFrom, Is.Not.Null);
+                Assert.That(room?.ValidUntil, Is.Not.Null);
+                Assert.That(roomCreateOptions.PstnDialOutEnabled.HasValue ? roomCreateOptions?.PstnDialOutEnabled : false, Is.EqualTo(room?.PstnDialOutEnabled));
+            });
             Console.Write("Room Id: " + room?.Id);
             Console.Write("CreatedAt: " + room?.CreatedAt);
             Console.Write("ValidFrom: " + room?.ValidFrom);
@@ -1541,12 +1625,15 @@ namespace Azure.Communication.Rooms.Test
 
         private void ValidateRoom(CommunicationRoom? room, UpdateRoomOptions roomUpdateOptions)
         {
-            Assert.NotNull(room);
-            Assert.NotNull(room?.Id);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.CreatedAt);
-            Assert.NotNull(room?.ValidFrom);
-            Assert.AreEqual(room?.PstnDialOutEnabled, roomUpdateOptions.PstnDialOutEnabled.HasValue ? roomUpdateOptions.PstnDialOutEnabled : room?.PstnDialOutEnabled);
+            Assert.That(room, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(room?.Id, Is.Not.Null);
+                Assert.That(room?.CreatedAt, Is.Not.Null);
+            });
+            Assert.That(room?.CreatedAt, Is.Not.Null);
+            Assert.That(room?.ValidFrom, Is.Not.Null);
+            Assert.That(roomUpdateOptions.PstnDialOutEnabled.HasValue ? roomUpdateOptions.PstnDialOutEnabled : room?.PstnDialOutEnabled, Is.EqualTo(room?.PstnDialOutEnabled));
         }
     }
 }

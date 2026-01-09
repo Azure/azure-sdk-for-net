@@ -18,9 +18,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         public void MCPApproval(string trust, bool isAlways, bool isNever)
         {
             var approval = new MCPApproval(trust);
-            Assert.AreEqual(approval.AlwaysRequireApproval, isAlways);
-            Assert.AreEqual(approval.NeverRequireApproval, isNever);
-            Assert.IsNull(approval.PerToolApproval);
+            Assert.Multiple(() =>
+            {
+                Assert.That(isAlways, Is.EqualTo(approval.AlwaysRequireApproval));
+                Assert.That(isNever, Is.EqualTo(approval.NeverRequireApproval));
+                Assert.That(approval.PerToolApproval, Is.Null);
+            });
         }
 
         [Test]
@@ -33,8 +36,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                     serializedAdditionalRawData: null
                 )
             );
-            Assert.False(approval.AlwaysRequireApproval);
-            Assert.False(approval.NeverRequireApproval);
+            Assert.Multiple(() =>
+            {
+                Assert.That(approval.AlwaysRequireApproval, Is.False);
+                Assert.That(approval.NeverRequireApproval, Is.False);
+            });
             AssertMcpListsEqual(["foo", "bar"], ["baz"], approval.PerToolApproval);
         }
 
@@ -42,7 +48,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public void MCPApprovalRaisesString()
         {
             ArgumentException exc = Assert.Throws<ArgumentException>(() => new MCPApproval("test"));
-            Assert.That(exc.Message.StartsWith("The parameter \"requireApproval\" may be only \"always\" or \"never\"."), $"Unexpected message {exc.Message}");
+            Assert.That(exc.Message, Does.StartWith("The parameter \"requireApproval\" may be only \"always\" or \"never\"."), $"Unexpected message {exc.Message}");
         }
 
         [Test]
@@ -56,9 +62,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 perTool = new MCPApprovalPerTool();
             }
             var mcp = new MCPApproval(perToolApproval: perTool);
-            Assert.True(mcp.AlwaysRequireApproval);
-            Assert.False(mcp.NeverRequireApproval);
-            Assert.IsNull(mcp.PerToolApproval);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mcp.AlwaysRequireApproval, Is.True);
+                Assert.That(mcp.NeverRequireApproval, Is.False);
+                Assert.That(mcp.PerToolApproval, Is.Null);
+            });
         }
 
         [Test]
@@ -75,12 +84,12 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (isAlwaysEmpty)
             {
                 AssertListEqual(mcp.PerToolApproval.Never.ToolNames, ["foo", "bar"], "Expected Always request approvals on");
-                Assert.IsNull(mcp.PerToolApproval.Always);
+                Assert.That(mcp.PerToolApproval.Always, Is.Null);
             }
             else
             {
                 AssertListEqual(mcp.PerToolApproval.Always.ToolNames, ["foo", "bar"], "Expected Always request approvals on");
-                Assert.IsNull(mcp.PerToolApproval.Never);
+                Assert.That(mcp.PerToolApproval.Never, Is.Null);
             }
         }
 
@@ -94,25 +103,31 @@ namespace Azure.AI.Agents.Persistent.Tests
                 RequireApproval = new MCPApproval(trust)
             };
             MCPApproval returned = mcpRes.RequireApproval;
-            Assert.AreEqual(returned.AlwaysRequireApproval, isAlways);
-            Assert.AreEqual(returned.NeverRequireApproval, isNever);
-            Assert.IsNull(returned.PerToolApproval);
+            Assert.Multiple(() =>
+            {
+                Assert.That(isAlways, Is.EqualTo(returned.AlwaysRequireApproval));
+                Assert.That(isNever, Is.EqualTo(returned.NeverRequireApproval));
+                Assert.That(returned.PerToolApproval, Is.Null);
+            });
         }
 
         [Test]
         public void MCPToolResourceApprovalsNull()
         {
             var mcpRes = new MCPToolResource();
-            Assert.IsNull(mcpRes.RequireApproval);
+            Assert.That(mcpRes.RequireApproval, Is.Null);
             mcpRes.RequireApproval = new("never");
             MCPApproval returned = mcpRes.RequireApproval;
-            Assert.IsNotNull(returned);
-            Assert.AreEqual(returned.AlwaysRequireApproval, false);
-            Assert.AreEqual(returned.NeverRequireApproval, true);
-            Assert.IsNull(returned.PerToolApproval);
+            Assert.That(returned, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returned.AlwaysRequireApproval, Is.EqualTo(false));
+                Assert.That(returned.NeverRequireApproval, Is.EqualTo(true));
+                Assert.That(returned.PerToolApproval, Is.Null);
+            });
             mcpRes.RequireApproval = null;
             returned = mcpRes.RequireApproval;
-            Assert.IsNull(mcpRes.RequireApproval);
+            Assert.That(mcpRes.RequireApproval, Is.Null);
         }
 
         [Test]
@@ -127,8 +142,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                 ))
             };
             MCPApproval returned = mcpRes.RequireApproval;
-            Assert.False(returned.AlwaysRequireApproval);
-            Assert.False(returned.NeverRequireApproval);
+            Assert.Multiple(() =>
+            {
+                Assert.That(returned.AlwaysRequireApproval, Is.False);
+                Assert.That(returned.NeverRequireApproval, Is.False);
+            });
             AssertMcpListsEqual(["foo", "bar"], ["baz"], returned.PerToolApproval);
         }
 
@@ -142,8 +160,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             FunctionToolDefinition func1 = new(name: name1, description: description1);
             FunctionToolDefinition func2 = new(name: name2, description: description2);
             bool shouldBeEqual = string.Equals(name1, name2);
-            Assert.AreEqual(shouldBeEqual, func1.Equals(func2));
-            Assert.AreEqual(shouldBeEqual, func1.GetHashCode() == func2.GetHashCode());
+            Assert.Multiple(() =>
+            {
+                Assert.That(func1.Equals(func2), Is.EqualTo(shouldBeEqual));
+                Assert.That(func1.GetHashCode() == func2.GetHashCode(), Is.EqualTo(shouldBeEqual));
+            });
         }
 
         #region helpers

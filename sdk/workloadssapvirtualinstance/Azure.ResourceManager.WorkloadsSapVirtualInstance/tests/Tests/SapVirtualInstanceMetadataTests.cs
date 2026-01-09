@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                     _location,
                     new SapAvailabilityZoneDetailsContent(
                         _location, SapProductType.S4Hana, SapDatabaseType.Hana));
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("Sap Availability Zone Details Response : " + getObjectAsString(response.Value));
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                         SapDatabaseType.Hana,
                         SapDeploymentType.ThreeTier,
                         "Standard_M32ts"));
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("sap Disk Configurations Response : " + getObjectAsString(response.Value));
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 await subscription.GetSapSupportedSkuSapVirtualInstanceAsync(
                     _location,
                     request);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("sap Supported Skus Response : " + getObjectAsString(response.Value));
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 await subscription.GetSizingRecommendationsSapVirtualInstanceAsync(
                     _location,
                     request);
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
             Console.WriteLine("sap Sizing Recommendations Response : " + getObjectAsString(response.Value));
         }
     }

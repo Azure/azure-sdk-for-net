@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             string adoAuthName = AuthenticationName.Default.ToString();
             var collection = managedInstance.GetManagedInstanceAzureADOnlyAuthentications();
@@ -58,18 +58,21 @@ namespace Azure.ResourceManager.Sql.Tests
             var adoAuth = await collection.CreateOrUpdateAsync(WaitUntil.Completed, AuthenticationName.Default, data);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(adoAuthName));
+            Assert.That((bool)collection.Exists(adoAuthName), Is.True);
 
             // 3.Get
             var getadoAuth = await collection.GetAsync(adoAuthName);
-            Assert.IsNotNull(getadoAuth.Value.Data);
+            Assert.That(getadoAuth.Value.Data, Is.Not.Null);
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(list, Is.Not.Empty);
 
-            // 5.GetIfExist
-            Assert.IsTrue(await collection.ExistsAsync(adoAuthName));
+                // 5.GetIfExist
+                Assert.That((bool)await collection.ExistsAsync(adoAuthName), Is.True);
+            });
         }
     }
 }

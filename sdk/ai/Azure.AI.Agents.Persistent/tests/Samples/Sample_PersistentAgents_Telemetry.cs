@@ -59,7 +59,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
 
             AsyncPageable<PersistentThreadMessage> messagesList = client.Messages.GetMessagesAsync(thread.Id);
             List<PersistentThreadMessage> messagesOne = await messagesList.ToListAsync();
-            Assert.AreEqual(message.Id, messagesOne[0].Id);
+            Assert.That(messagesOne[0].Id, Is.EqualTo(message.Id));
 
             ThreadRun run = await client.Runs.CreateRunAsync(
                 thread.Id,
@@ -73,9 +73,9 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             }
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress);
-            Assert.AreEqual(
-                RunStatus.Completed,
+            Assert.That(
                 run.Status,
+                Is.EqualTo(RunStatus.Completed),
                 run.LastError?.Message);
 
             AsyncPageable<PersistentThreadMessage> messages
@@ -152,7 +152,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             // Intermission: listing messages will retrieve the message just added
 
             List<PersistentThreadMessage> messagesList = [.. client.Messages.GetMessages(thread.Id)];
-            Assert.AreEqual(message.Id, messagesList[0].Id);
+            Assert.That(messagesList[0].Id, Is.EqualTo(message.Id));
 
             ThreadRun run = client.Runs.CreateRun(
                 thread.Id,
@@ -166,9 +166,9 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             }
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress);
-            Assert.AreEqual(
-                RunStatus.Completed,
+            Assert.That(
                 run.Status,
+                Is.EqualTo(RunStatus.Completed),
                 run.LastError?.Message);
 
             Pageable<PersistentThreadMessage> messages
@@ -237,7 +237,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
 
             AsyncPageable<PersistentThreadMessage> messagesList = client.Messages.GetMessagesAsync(thread.Id);
             List<PersistentThreadMessage> messagesOne = await messagesList.ToListAsync();
-            Assert.AreEqual(message.Id, messagesOne[0].Id);
+            Assert.That(messagesOne[0].Id, Is.EqualTo(message.Id));
 
             ThreadRun run = await client.Runs.CreateRunAsync(
                 thread.Id,
@@ -251,9 +251,9 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             }
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress);
-            Assert.AreEqual(
-                RunStatus.Completed,
+            Assert.That(
                 run.Status,
+                Is.EqualTo(RunStatus.Completed),
                 run.LastError?.Message);
 
             AsyncPageable<PersistentThreadMessage> messages
@@ -323,7 +323,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             // Intermission: listing messages will retrieve the message just added
 
             List<PersistentThreadMessage> messagesList = [.. client.Messages.GetMessages(thread.Id)];
-            Assert.AreEqual(message.Id, messagesList[0].Id);
+            Assert.That(messagesList[0].Id, Is.EqualTo(message.Id));
 
             ThreadRun run = client.Runs.CreateRun(
                 thread.Id,
@@ -337,9 +337,9 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             }
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress);
-            Assert.AreEqual(
-                RunStatus.Completed,
+            Assert.That(
                 run.Status,
+                Is.EqualTo(RunStatus.Completed),
                 run.LastError?.Message);
 
             Pageable<PersistentThreadMessage> messages

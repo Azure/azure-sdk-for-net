@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
             })).Value;
 
-            Assert.True(await collection.ExistsAsync(name));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
 
             var applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
             ValidateCommon(applicationSecurityGroupData, name);
-            Assert.IsEmpty(applicationSecurityGroupData.Tags);
+            Assert.That(applicationSecurityGroupData.Tags, Is.Empty);
 
             applicationSecurityGroupData.Tags.Add("tag1", "value1");
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
@@ -104,20 +104,23 @@ namespace Azure.ResourceManager.Network.Tests
             // delete
             await applicationSecurityGroup.DeleteAsync(WaitUntil.Completed);
 
-            Assert.False(await collection.ExistsAsync(name));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.False);
 
             applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(applicationSecurityGroups);
+            Assert.That(applicationSecurityGroups, Is.Empty);
 
             // list all
             applicationSecurityGroups = await _subscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
-            Assert.IsEmpty(applicationSecurityGroups);
+            Assert.That(applicationSecurityGroups, Is.Empty);
         }
 
         private void ValidateCommon(ApplicationSecurityGroupData data, string name)
         {
-            Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(data.Name, Is.EqualTo(name));
+                Assert.That(data.Location.ToString(), Is.EqualTo(TestEnvironment.Location));
+            });
         }
     }
 }

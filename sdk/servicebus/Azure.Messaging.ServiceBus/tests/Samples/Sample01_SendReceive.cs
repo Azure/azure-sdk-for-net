@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Console.WriteLine(body);
                 #endregion
                 #endregion
-                Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo("Hello world!"));
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // get the message body as a string
                 string body = peekedMessage.Body.ToString();
-                Assert.AreEqual("Hello world!", peekedMessage.Body.ToString());
+                Assert.That(peekedMessage.Body.ToString(), Is.EqualTo("Hello world!"));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     sentMessagesEnum.MoveNext();
-                    Assert.AreEqual(sentMessagesEnum.Current.Body.ToString(), receivedMessage.Body.ToString());
+                    Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(sentMessagesEnum.Current.Body.ToString()));
                 }
             }
         }
@@ -235,13 +235,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create a receiver that we can use to peek the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
-                Assert.IsNotNull(await receiver.PeekMessageAsync());
+                Assert.That(await receiver.PeekMessageAsync(), Is.Not.Null);
 
                 // cancel the scheduled messaged, thereby deleting from the service
                 #region Snippet:ServiceBusCancelScheduled
                 await sender.CancelScheduledMessageAsync(seq);
                 #endregion
-                Assert.IsNull(await receiver.PeekMessageAsync());
+                Assert.That(await receiver.PeekMessageAsync(), Is.Null);
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string body = receivedMessage.Body.ToString();
                 Console.WriteLine(body);
                 #endregion
-                Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo("Hello world!"));
             }
         }
 

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             SelfHelpNameAvailabilityContent resourceData = CreateNameAvailabilityResource("sampleName");
 
             var checkNameAvailabilityData = await Client.CheckSelfHelpNameAvailabilityAsync(checkNameScope, resourceData);
-            Assert.NotNull(checkNameAvailabilityData);
-            Assert.IsTrue(checkNameAvailabilityData.Value.IsNameAvailable);
+            Assert.That(checkNameAvailabilityData, Is.Not.Null);
+            Assert.That(checkNameAvailabilityData.Value.IsNameAvailable, Is.True);
         }
 
         [Test]
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             SelfHelpDiagnosticData resourceData = CreateDiagnosticResourceData(scope);
 
             var createDiagnosticData = await Client.GetSelfHelpDiagnostics(scope).CreateOrUpdateAsync(WaitUntil.Started, insightsResourceName, resourceData);
-            Assert.NotNull(createDiagnosticData);
+            Assert.That(createDiagnosticData, Is.Not.Null);
 
             SelfHelpNameAvailabilityContent data = CreateNameAvailabilityResource(insightsResourceName);
 
             var checkNameAvailabilityData = await Client.CheckSelfHelpNameAvailabilityAsync(checkNameScope, data);
-            Assert.NotNull(checkNameAvailabilityData);
-            Assert.IsFalse(checkNameAvailabilityData.Value.IsNameAvailable);
+            Assert.That(checkNameAvailabilityData, Is.Not.Null);
+            Assert.That(checkNameAvailabilityData.Value.IsNameAvailable, Is.False);
         }
 
         private SelfHelpNameAvailabilityContent CreateNameAvailabilityResource(string name)

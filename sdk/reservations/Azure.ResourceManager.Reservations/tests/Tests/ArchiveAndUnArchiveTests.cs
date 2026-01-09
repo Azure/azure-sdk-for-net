@@ -44,20 +44,20 @@ namespace Azure.ResourceManager.Reservations.Tests
             // Archiving a 'Expired' RI
             var cancelledReservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Expired));
             var response1 = await cancelledReservation.ArchiveAsync();
-            Assert.AreEqual(200, response1.Status);
+            Assert.That(response1.Status, Is.EqualTo(200));
 
             // Unarchiving
             var response2 = await cancelledReservation.UnarchiveAsync();
-            Assert.AreEqual(200, response2.Status);
+            Assert.That(response2.Status, Is.EqualTo(200));
 
             // Archiving a 'Expired' RI
             var failedReservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Expired));
             var response3 = await failedReservation.ArchiveAsync();
-            Assert.AreEqual(200, response3.Status);
+            Assert.That(response3.Status, Is.EqualTo(200));
 
             // Unarchiving
             var response4 = await failedReservation.UnarchiveAsync();
-            Assert.AreEqual(200, response4.Status);
+            Assert.That(response4.Status, Is.EqualTo(200));
         }
     }
 }

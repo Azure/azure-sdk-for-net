@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
             }
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(500, response.Status);
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(501));
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(501, response.Status);
+            Assert.That(response.Status, Is.EqualTo(501));
         }
 
         [Test]
@@ -78,29 +78,35 @@ namespace Azure.Core.Tests
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
-            Assert.GreaterOrEqual(message.ProcessingStartTime, beforeSend);
-            Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.ProcessingStartTime, Is.GreaterThanOrEqualTo(beforeSend));
+                Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(0));
+            });
             await gate.Cycle();
-            Assert.IsTrue(mockPolicy.ShouldRetryCalled);
+            Assert.That(mockPolicy.ShouldRetryCalled, Is.True);
             mockPolicy.ShouldRetryCalled = false;
 
             var exception = new IOException();
             await mockTransport.RequestGate.CycleWithException(exception);
-            Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
+            Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(1));
 
             await gate.Cycle();
-            Assert.AreSame(exception, mockPolicy.LastException);
+            Assert.That(mockPolicy.LastException, Is.SameAs(exception));
             mockPolicy.LastException = null;
 
-            Assert.IsTrue(mockPolicy.ShouldRetryCalled);
+            Assert.That(mockPolicy.ShouldRetryCalled, Is.True);
             mockPolicy.ShouldRetryCalled = false;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             await task.TimeoutAfterDefault();
-            Assert.IsFalse(mockPolicy.ShouldRetryCalled);
-            Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
-            Assert.IsNull(mockPolicy.LastException);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockPolicy.ShouldRetryCalled, Is.False);
+                Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(2));
+                Assert.That(mockPolicy.LastException, Is.Null);
+            });
         }
 
         [Test]
@@ -115,29 +121,32 @@ namespace Azure.Core.Tests
             RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
-            Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
+            Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(0));
 
             await gate.Cycle();
-            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
+            Assert.That(mockPolicy.OnRequestSentCalled, Is.True);
             mockPolicy.OnRequestSentCalled = false;
 
             var exception = new IOException();
             await mockTransport.RequestGate.CycleWithException(exception);
-            Assert.AreEqual(1, message.ProcessingContext.RetryNumber);
+            Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(1));
 
             await gate.Cycle();
-            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
+            Assert.That(mockPolicy.OnRequestSentCalled, Is.True);
             mockPolicy.OnRequestSentCalled = false;
 
-            Assert.AreSame(exception, mockPolicy.LastException);
+            Assert.That(mockPolicy.LastException, Is.SameAs(exception));
             mockPolicy.LastException = null;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             await task.TimeoutAfterDefault();
-            Assert.IsTrue(mockPolicy.OnRequestSentCalled);
-            Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
-            Assert.IsNull(mockPolicy.LastException);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mockPolicy.OnRequestSentCalled, Is.True);
+                Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(2));
+                Assert.That(mockPolicy.LastException, Is.Null);
+            });
         }
 
         [Test]
@@ -156,7 +165,7 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -175,8 +184,11 @@ namespace Azure.Core.Tests
 
             message = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(2, message.ProcessingContext.RetryNumber);
-            Assert.AreEqual(200, message.Response.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.ProcessingContext.RetryNumber, Is.EqualTo(2));
+                Assert.That(message.Response.Status, Is.EqualTo(200));
+            });
         }
 
         [Test]
@@ -194,9 +206,12 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.CycleWithException(new IOException());
 
             AggregateException exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
-            StringAssert.StartsWith("Retry failed after 2 tries.", exception.Message);
-            Assert.IsInstanceOf<InvalidOperationException>(exception.InnerExceptions[0]);
-            Assert.IsInstanceOf<IOException>(exception.InnerExceptions[1]);
+            Assert.That(exception.Message, Does.StartWith("Retry failed after 2 tries."));
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<InvalidOperationException>());
+                Assert.That(exception.InnerExceptions[1], Is.InstanceOf<IOException>());
+            });
         }
 
         [Test]
@@ -234,8 +249,8 @@ namespace Azure.Core.Tests
             }
 
             AggregateException exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
-            StringAssert.StartsWith("Retry failed after 4 tries.", exception.Message);
-            CollectionAssert.AreEqual(exceptions, exception.InnerExceptions);
+            Assert.That(exception.Message, Does.StartWith("Retry failed after 4 tries."));
+            Assert.That(exception.InnerExceptions, Is.EqualTo(exceptions).AsCollection);
         }
 
         [Test]
@@ -257,8 +272,11 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(TimeSpan.FromSeconds(25), retryDelay);
-            Assert.AreEqual(501, response.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromSeconds(25)));
+                Assert.That(response.Status, Is.EqualTo(501));
+            });
         }
 
         [Test]
@@ -281,8 +299,11 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.Less(TimeSpan.FromHours(4), retryDelay);
-            Assert.AreEqual(501, response.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(TimeSpan.FromHours(4), Is.LessThan(retryDelay));
+                Assert.That(response.Status, Is.EqualTo(501));
+            });
         }
 
         [Test]
@@ -304,8 +325,11 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.Less(TimeSpan.Zero, retryDelay);
-            Assert.AreEqual(501, response.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(TimeSpan.Zero, Is.LessThan(retryDelay));
+                Assert.That(response.Status, Is.EqualTo(501));
+            });
         }
 
         [Theory]
@@ -329,8 +353,11 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(TimeSpan.FromMilliseconds(120000), retryDelay);
-            Assert.AreEqual(501, response.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromMilliseconds(120000)));
+                Assert.That(response.Status, Is.EqualTo(501));
+            });
         }
 
         [Theory]
@@ -355,8 +382,11 @@ namespace Azure.Core.Tests
 
             Response response = await task.TimeoutAfterDefault();
 
-            Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromMilliseconds(120000)).Within(TimeSpan.FromMilliseconds(0.2 * 120000)));
-            Assert.AreEqual(501, response.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(retryDelay, Is.EqualTo(TimeSpan.FromMilliseconds(120000)).Within(TimeSpan.FromMilliseconds(0.2 * 120000)));
+                Assert.That(response.Status, Is.EqualTo(501));
+            });
         }
 
         [Test]
@@ -399,16 +429,16 @@ namespace Azure.Core.Tests
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("host1", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("host1"));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("host2", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("host2"));
 
             await task;
         }
@@ -427,16 +457,16 @@ namespace Azure.Core.Tests
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await task;
         }
@@ -466,16 +496,16 @@ namespace Azure.Core.Tests
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("host1", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("host1"));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("host2", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("host2"));
 
             await task;
         }
@@ -503,16 +533,16 @@ namespace Azure.Core.Tests
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await task;
         }
@@ -531,17 +561,17 @@ namespace Azure.Core.Tests
             MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
             await gate.Cycle();
 
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await task;
         }
@@ -559,12 +589,12 @@ namespace Azure.Core.Tests
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("host1", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("host1"));
             await Task.Delay(TimeSpan.FromSeconds(5));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await task;
         }
@@ -582,18 +612,18 @@ namespace Azure.Core.Tests
             MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
             await gate.Cycle();
 
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.CycleWithException(new IOException());
-            Assert.AreEqual("host1", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("host1"));
             await Task.Delay(TimeSpan.FromSeconds(5));
             await gate.Cycle();
 
             request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
-            Assert.AreEqual("example.com", request.Uri.Host);
+            Assert.That(request.Uri.Host, Is.EqualTo("example.com"));
 
             await task;
         }
@@ -613,7 +643,7 @@ namespace Azure.Core.Tests
             // use a delay before asserting unlike in the other tests because this becomes too difficult to reason about otherwise
             // as we are simulating two threads
             await Task.Delay(TimeSpan.FromSeconds(1));
-            Assert.AreEqual("host1", request1.Uri.Host);
+            Assert.That(request1.Uri.Host, Is.EqualTo("host1"));
 
             (HttpPipelinePolicy policy2, AsyncGate<TimeSpan, object> gate2) = CreateRetryPolicy(maxRetries: 3);
             MockTransport mockTransport2 = CreateMockTransport();
@@ -624,12 +654,12 @@ namespace Azure.Core.Tests
             var request2 = await mockTransport2.RequestGate.CycleWithException(new IOException());
             await gate2.Cycle();
             await Task.Delay(TimeSpan.FromSeconds(1));
-            Assert.AreEqual("host2", request2.Uri.Host);
+            Assert.That(request2.Uri.Host, Is.EqualTo("host2"));
 
             request1 = await mockTransport1.RequestGate.CycleWithException(new IOException());
             await gate1.Cycle();
             await Task.Delay(TimeSpan.FromSeconds(1));
-            Assert.AreEqual("host2", request1.Uri.Host);
+            Assert.That(request1.Uri.Host, Is.EqualTo("host2"));
 
             await mockTransport1.RequestGate.Cycle(new MockResponse(200));
             await mockTransport2.RequestGate.Cycle(new MockResponse(200));
@@ -642,10 +672,13 @@ namespace Azure.Core.Tests
         {
             EventWrittenEventArgs e = listener.SingleEventById(10, args => args.GetProperty<int>("retryNumber") == retryNumber);
 
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("RequestRetrying", e.EventName);
-            Assert.AreEqual(request.ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.IsTrue(e.GetProperty<double>("seconds") > 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+                Assert.That(e.EventName, Is.EqualTo("RequestRetrying"));
+                Assert.That(e.GetProperty<string>("requestId"), Is.EqualTo(request.ClientRequestId));
+                Assert.That(e.GetProperty<double>("seconds"), Is.GreaterThan(0));
+            });
         }
 
         protected (HttpPipelinePolicy Policy, AsyncGate<TimeSpan, object> Gate) CreateRetryPolicy(int maxRetries = 3)

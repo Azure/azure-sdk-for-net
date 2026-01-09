@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricIPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpCommunityName, data);
             NetworkFabricIPCommunityResource createResult = lro.Value;
             NetworkFabricIPCommunityResource ipCommunity = Client.GetNetworkFabricIPCommunityResource(ipCommunityResourceId);
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpCommunityName);
+            Assert.That(TestEnvironment.IpCommunityName, Is.EqualTo(createResult.Data.Name));
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricIPCommunityResource getResult = await ipCommunity.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpCommunityName);
+            Assert.That(TestEnvironment.IpCommunityName, Is.EqualTo(getResult.Data.Name));
 
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
             var listByResourceGroup = new List<NetworkFabricIPCommunityResource>();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
             SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await ipCommunity.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

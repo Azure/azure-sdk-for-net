@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             string result = path.Bind(bindingData);
 
-            Assert.AreEqual("queue-name-with-parameter", result);
+            Assert.That(result, Is.EqualTo("queue-name-with-parameter"));
         }
 
         [Test]

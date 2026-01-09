@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // Exist
             var flag = await _dicomServiceCollection.ExistsAsync(dicomServiceName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getDicomService = await _dicomServiceCollection.GetAsync(dicomServiceName);
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _dicomServiceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateDicomService(list.FirstOrDefault().Data, dicomServiceName);
 
             // Delete
             await dicomService.DeleteAsync(WaitUntil.Completed);
             flag = await _dicomServiceCollection.ExistsAsync(dicomServiceName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [TestCase(null)]
@@ -70,15 +70,18 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await dicomService.AddTagAsync("addtagkey", "addtagvalue");
             dicomService = await _dicomServiceCollection.GetAsync(dicomServiceName);
-            Assert.AreEqual(1, dicomService.Data.Tags.Count);
+            Assert.That(dicomService.Data.Tags, Has.Count.EqualTo(1));
             KeyValuePair<string, string> tag = dicomService.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+                Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
+            });
 
             // RemoveTag
             await dicomService.RemoveTagAsync("addtagkey");
             dicomService = await _dicomServiceCollection.GetAsync(dicomServiceName);
-            Assert.AreEqual(0, dicomService.Data.Tags.Count);
+            Assert.That(dicomService.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private async Task<DicomServiceResource> CreateDicomService(string dicomServiceName)
@@ -90,11 +93,14 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateDicomService(DicomServiceData dicomService, string dicomServiceName)
         {
-            Assert.IsNotNull(dicomService);
-            Assert.AreEqual(dicomServiceName, dicomService.Id.Name);
-            Assert.AreEqual(DefaultLocation, dicomService.Location);
-            Assert.AreEqual("Succeeded", dicomService.ProvisioningState.ToString());
-            Assert.AreEqual("Microsoft.HealthcareApis/workspaces/dicomservices", dicomService.ResourceType.ToString());
+            Assert.That(dicomService, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dicomService.Id.Name, Is.EqualTo(dicomServiceName));
+                Assert.That(dicomService.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(dicomService.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+                Assert.That(dicomService.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/dicomservices"));
+            });
         }
     }
 }

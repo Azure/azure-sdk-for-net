@@ -50,10 +50,10 @@ namespace Azure.AI.Personalizer.Tests
             // Action
             PersonalizerRankResult response = await client.RankAsync(request);
             // Assert
-            Assert.AreEqual(actions.Count, response.Ranking.Count);
+            Assert.That(response.Ranking, Has.Count.EqualTo(actions.Count));
             for (int i = 0; i < response.Ranking.Count; i++)
             {
-                Assert.AreEqual(actions[i].Id, response.Ranking[i].Id);
+                Assert.That(response.Ranking[i].Id, Is.EqualTo(actions[i].Id));
             }
         }
 
@@ -81,12 +81,15 @@ namespace Azure.AI.Personalizer.Tests
             var request = new PersonalizerRankOptions(actions, contextFeatures, excludeActions, eventId);
             // Action
             PersonalizerRankResult response = await client.RankAsync(request);
-            // Assert
-            Assert.AreEqual(eventId, response.EventId);
-            Assert.AreEqual(actions.Count, response.Ranking.Count);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(response.EventId, Is.EqualTo(eventId));
+                Assert.That(response.Ranking, Has.Count.EqualTo(actions.Count));
+            });
             for (int i = 0; i < response.Ranking.Count; i++)
             {
-                Assert.AreEqual(actions[i].Id, response.Ranking[i].Id);
+                Assert.That(response.Ranking[i].Id, Is.EqualTo(actions[i].Id));
             }
         }
 
@@ -111,7 +114,7 @@ namespace Azure.AI.Personalizer.Tests
             ));
             // Action
             PersonalizerRankResult response = await client.RankAsync(actions, contextFeatures);
-            Assert.AreEqual(actions.Count, response.Ranking.Count);
+            Assert.That(response.Ranking, Has.Count.EqualTo(actions.Count));
         }
     }
 }

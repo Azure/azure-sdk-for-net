@@ -109,8 +109,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var keyValue = "ExpectedKeyValue";
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, keyValue, TimeSpan.FromSeconds(30));
 
-            Assert.That(signature.SharedAccessKeyName, Is.EqualTo(keyName), "The shared access key name should match.");
-            Assert.That(signature.SharedAccessKey, Is.EqualTo(keyValue), "The shared access key should match.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(signature.SharedAccessKeyName, Is.EqualTo(keyName), "The shared access key name should match.");
+                Assert.That(signature.SharedAccessKey, Is.EqualTo(keyValue), "The shared access key should match.");
+            });
         }
 
         /// <summary>
@@ -260,9 +263,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var parsedSignature = constructor(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
             Assert.That(parsedSignature, Is.Not.Null, "There should have been a result returned.");
-            Assert.That(parsedSignature.Resource, Is.EqualTo(resource), "The resource should match.");
-            Assert.That(parsedSignature.SharedAccessKeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
-            Assert.That(parsedSignature.SignatureExpiration, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsedSignature.Resource, Is.EqualTo(resource), "The resource should match.");
+                Assert.That(parsedSignature.SharedAccessKeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
+                Assert.That(parsedSignature.SignatureExpiration, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            });
         }
 
         /// <summary>
@@ -363,9 +369,12 @@ namespace Azure.Messaging.EventHubs.Tests
             (string KeyName, string Resource, DateTimeOffset ExpirationTime) parsed = ParseSignature(signature);
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
-            Assert.That(parsed.Resource, Is.Not.Null.Or.Empty, "The resource should have been parsed.");
-            Assert.That(parsed.KeyName, Is.Not.Null.Or.Empty, "The key should have been parsed.");
-            Assert.That(parsed.ExpirationTime, Is.Not.EqualTo(default(DateTimeOffset)), "The expiration should be parsed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Resource, Is.Not.Null.Or.Empty, "The resource should have been parsed.");
+                Assert.That(parsed.KeyName, Is.Not.Null.Or.Empty, "The key should have been parsed.");
+                Assert.That(parsed.ExpirationTime, Is.Not.EqualTo(default(DateTimeOffset)), "The expiration should be parsed.");
+            });
         }
 
         /// <summary>
@@ -447,10 +456,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(clone, Is.Not.Null, "There should have been a copy produced.");
             Assert.That(clone, Is.Not.SameAs(signature), "The clone should be a unique instance.");
-            Assert.That(clone.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
-            Assert.That(clone.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The key name should match.");
-            Assert.That(clone.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The key should match.");
-            Assert.That(clone.SignatureExpiration, Is.EqualTo(expectedCloneExpiration).Within(TimeSpan.FromSeconds(5)), "The expiration should have been extended.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
+                Assert.That(clone.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The key name should match.");
+                Assert.That(clone.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The key should match.");
+                Assert.That(clone.SignatureExpiration, Is.EqualTo(expectedCloneExpiration).Within(TimeSpan.FromSeconds(5)), "The expiration should have been extended.");
+            });
         }
 
         /// <summary>
@@ -470,9 +482,12 @@ namespace Azure.Messaging.EventHubs.Tests
             (string KeyName, string Resource, DateTimeOffset ExpirationTime) parsed = ParseSignature(signature.ToString());
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
-            Assert.That(parsed.Resource, Is.EqualTo("amqps://some.namespace.com/hubName"), "The resource should match.");
-            Assert.That(parsed.KeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
-            Assert.That(parsed.ExpirationTime, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(parsed.Resource, Is.EqualTo("amqps://some.namespace.com/hubName"), "The resource should match.");
+                Assert.That(parsed.KeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
+                Assert.That(parsed.ExpirationTime, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            });
         }
 
         /// <summary>

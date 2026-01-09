@@ -14,35 +14,35 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Scalar
         public Task Azure_Core_Scalar_AzureLocation_get() => Test(async (host) =>
         {
             var response = await new ScalarClient(host, null).GetAzureLocationScalarClient().GetAsync();
-            Assert.AreEqual(AzureLocation.EastUS, response.Value);
+            Assert.That(response.Value, Is.EqualTo(AzureLocation.EastUS));
         });
 
         [SpectorTest]
         public Task Azure_Core_Scalar_AzureLocation_put() => Test(async (host) =>
         {
             var response = await new ScalarClient(host, null).GetAzureLocationScalarClient().PutAsync(new AzureLocation("eastus"));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Azure_Core_Scalar_AzureLocation_post() => Test(async (host) =>
         {
             var response = await new ScalarClient(host, null).GetAzureLocationScalarClient().PostAsync(new AzureLocationModel(new AzureLocation("eastus")));
-            Assert.AreEqual(AzureLocation.EastUS, response.Value.Location);
+            Assert.That(response.Value.Location, Is.EqualTo(AzureLocation.EastUS));
         });
 
         [SpectorTest]
         public Task Azure_Core_Scalar_AzureLocation_header() => Test(async (host) =>
         {
             var response = await new ScalarClient(host, null).GetAzureLocationScalarClient().HeaderAsync(AzureLocation.EastUS);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task Azure_Core_Scalar_AzureLocation_query() => Test(async (host) =>
         {
             var response = await new ScalarClient(host, null).GetAzureLocationScalarClient().QueryAsync(AzureLocation.EastUS);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

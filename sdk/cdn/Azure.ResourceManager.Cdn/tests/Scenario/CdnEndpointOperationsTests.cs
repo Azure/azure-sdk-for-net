@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             await cdnEndpoint.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnEndpoint.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            Assert.AreEqual(cdnEndpoint.Data.ResourceState, EndpointResourceState.Running);
+            Assert.That(EndpointResourceState.Running, Is.EqualTo(cdnEndpoint.Data.ResourceState));
             var lro1 = await cdnEndpoint.StopAsync(WaitUntil.Completed);
-            Assert.AreEqual(lro1.Value.Data.ResourceState, EndpointResourceState.Stopped);
+            Assert.That(EndpointResourceState.Stopped, Is.EqualTo(lro1.Value.Data.ResourceState));
             var lro2 = await cdnEndpoint.StartAsync(WaitUntil.Completed);
-            Assert.AreEqual(lro2.Value.Data.ResourceState, EndpointResourceState.Running);
+            Assert.That(EndpointResourceState.Running, Is.EqualTo(lro2.Value.Data.ResourceState));
         }
 
         [TestCase]
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk1");
             ValidateCustomDomainContent validateCustomDomainContent1 = new ValidateCustomDomainContent("customdomainrecord.clitest.azfdtest.xyz");
             ValidateCustomDomainResult validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent1);
-            Assert.True(validateResult.IsCustomDomainValid);
+            Assert.That(validateResult.IsCustomDomainValid, Is.True);
             ValidateCustomDomainContent validateCustomDomainContent2 = new ValidateCustomDomainContent("customdomainvirtual.clitest.azfdtest.xyz");
             validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent2);
-            Assert.False(validateResult.IsCustomDomainValid);
+            Assert.That(validateResult.IsCustomDomainValid, Is.False);
         }
 
         [TestCase]
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 8);
+            Assert.That(count, Is.EqualTo(8));
         }
     }
 }

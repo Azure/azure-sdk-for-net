@@ -97,8 +97,11 @@ namespace Azure.Search.Documents.Tests
 
             SearchClient client = resources.GetQueryClient();
             Response<SearchDocument> response = await client.GetDocumentAsync<SearchDocument>("3");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("3", response.Value["hotelId"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value["hotelId"], Is.EqualTo("3"));
+            });
         }
 
 #if EXPERIMENTAL_DYNAMIC
@@ -111,7 +114,7 @@ namespace Azure.Search.Documents.Tests
             SearchClient client = resources.GetQueryClient();
             Response<SearchDocument> response = await client.GetDocumentAsync<SearchDocument>("3");
             dynamic hotel = response.Value;
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.AreEqual("3", hotel.hotelId);
         }
 
@@ -122,8 +125,11 @@ namespace Azure.Search.Documents.Tests
 
             SearchClient client = resources.GetQueryClient();
             Response<Hotel> response = await client.GetDocumentAsync<Hotel>("3");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("3", response.Value.HotelId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.HotelId, Is.EqualTo("3"));
+            });
         }
 
         [Test]
@@ -137,7 +143,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             Response<Hotel> response = await resources.GetQueryClient().GetDocumentAsync<Hotel>(document.HotelId);
-            Assert.AreEqual(document.HotelId, response.Value.HotelId);
+            Assert.That(response.Value.HotelId, Is.EqualTo(document.HotelId));
         }
 
         [Test]
@@ -151,7 +157,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             Response<Hotel> response = await resources.GetQueryClient().GetDocumentAsync<Hotel>(document.HotelId);
-            Assert.AreEqual(document.HotelId, response.Value.HotelId);
+            Assert.That(response.Value.HotelId, Is.EqualTo(document.HotelId));
         }
 
         [Test]
@@ -188,7 +194,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             Response<SearchDocument> response = await resources.GetQueryClient().GetDocumentAsync<SearchDocument>((string)document["hotelId"]);
-            Assert.AreEqual(document["hotelId"], response.Value["hotelId"]);
+            Assert.That(response.Value["hotelId"], Is.EqualTo(document["hotelId"]));
         }
 
         [Test]
@@ -369,7 +375,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchClient client = resources.GetQueryClient();
             Response<SimpleStructHotel> response = await client.GetDocumentAsync<SimpleStructHotel>(document.HotelId);
-            Assert.AreEqual(document, response.Value);
+            Assert.That(response.Value, Is.EqualTo(document));
         }
 
         [Test]
@@ -530,7 +536,7 @@ namespace Azure.Search.Documents.Tests
             SearchClient client = resources.GetQueryClient();
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await client.GetDocumentAsync<SearchDocument>("ThisDocumentDoesNotExist"));
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -542,8 +548,8 @@ namespace Azure.Search.Documents.Tests
                 async () => await client.GetDocumentAsync<SearchDocument>(
                     "3",
                     new GetDocumentOptions() { SelectedFields = new[] { "ThisFieldDoesNotExist" } }));
-            Assert.AreEqual(400, ex.Status);
-            StringAssert.StartsWith("Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'.", ex.Message);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.Message, Does.StartWith("Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'."));
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

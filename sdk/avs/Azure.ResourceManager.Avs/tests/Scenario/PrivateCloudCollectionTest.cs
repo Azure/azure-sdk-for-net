@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Avs.Tests
         {
             var collection = await GetPrivateCloudCollectionAsync();
             AvsPrivateCloudResource result = await collection.GetAsync(PRIVATE_CLOUD_NAME);
-            Assert.AreEqual(result.Data.Name, PRIVATE_CLOUD_NAME);
+            Assert.That(result.Data.Name, Is.EqualTo(PRIVATE_CLOUD_NAME));
         }
     }
 }

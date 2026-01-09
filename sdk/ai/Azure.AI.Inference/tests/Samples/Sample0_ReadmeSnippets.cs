@@ -155,7 +155,7 @@ namespace Azure.AI.Inference.Tests.Samples
             {
                 Console.WriteLine($"Exception status code: {e.Status}");
                 Console.WriteLine($"Exception message: {e.Message}");
-                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
+                Assert.That(e.Message, Does.Contain("Extra inputs are not permitted"));
             }
             #endregion
         }

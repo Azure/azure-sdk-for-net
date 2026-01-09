@@ -54,13 +54,19 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         {
             _ = _wpsClient.JoinGroupAttemptAsync("group");
             var msg = (JoinGroupMessage)await _tcs.VerifyCalledTimesAsync(1).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual(1u, msg.AckId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.Group, Is.EqualTo("group"));
+                Assert.That(msg.AckId, Is.EqualTo(1u));
+            });
 
             _ = _wpsClient.JoinGroupAttemptAsync("group", 214578694245);
             msg = (JoinGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual(214578694245u, msg.AckId.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.Group, Is.EqualTo("group"));
+                Assert.That(msg.AckId.Value, Is.EqualTo(214578694245u));
+            });
         }
 
         [Test]
@@ -68,13 +74,19 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         {
             _ = _wpsClient.LeaveGroupAttemptAsync("group");
             var msg = (LeaveGroupMessage)await _tcs.VerifyCalledTimesAsync(1).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual(1u, msg.AckId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.Group, Is.EqualTo("group"));
+                Assert.That(msg.AckId, Is.EqualTo(1u));
+            });
 
             _ = _wpsClient.LeaveGroupAttemptAsync("group", 214578694245);
             msg = (LeaveGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual(214578694245u, msg.AckId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.Group, Is.EqualTo("group"));
+                Assert.That(msg.AckId, Is.EqualTo(214578694245u));
+            });
         }
 
         [Test]
@@ -82,27 +94,36 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         {
             _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text);
             var msg = (SendToGroupMessage)await _tcs.VerifyCalledTimesAsync(1).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual("text", msg.Data.ToString());
-            Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.Group, Is.EqualTo("group"));
+                Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
+                Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
+            });
             Assert.AreEqual(1u, msg.AckId);
-            Assert.False(msg.NoEcho);
+            Assert.That(msg.NoEcho, Is.False);
 
             _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245);
             msg = (SendToGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual("text", msg.Data.ToString());
             Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
-            Assert.AreEqual(214578694245u, msg.AckId);
-            Assert.False(msg.NoEcho);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.AckId, Is.EqualTo(214578694245u));
+                Assert.That(msg.NoEcho, Is.False);
+            });
 
             _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245, true, true);
             msg = (SendToGroupMessage)await _tcs.VerifyCalledTimesAsync(3).OrTimeout();
-            Assert.AreEqual("group", msg.Group);
-            Assert.AreEqual("text", msg.Data.ToString());
-            Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
-            Assert.Null(msg.AckId);
-            Assert.True(msg.NoEcho);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.Group, Is.EqualTo("group"));
+                Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
+                Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
+                Assert.That(msg.AckId, Is.Null);
+                Assert.That(msg.NoEcho, Is.True);
+            });
         }
 
         [Test]
@@ -110,9 +131,12 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
         {
             _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text);
             var msg = (SendEventMessage)await _tcs.VerifyCalledTimesAsync(1).OrTimeout();
-            Assert.AreEqual("event", msg.EventName);
-            Assert.AreEqual("text", msg.Data.ToString());
-            Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.EventName, Is.EqualTo("event"));
+                Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
+                Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
+            });
             Assert.AreEqual(1u, msg.AckId);
 
             _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245);
@@ -120,14 +144,17 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual("event", msg.EventName);
             Assert.AreEqual("text", msg.Data.ToString());
             Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
-            Assert.AreEqual(214578694245u, msg.AckId);
+            Assert.That(msg.AckId, Is.EqualTo(214578694245u));
 
             _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245, true);
             msg = (SendEventMessage)await _tcs.VerifyCalledTimesAsync(3).OrTimeout();
-            Assert.AreEqual("event", msg.EventName);
-            Assert.AreEqual("text", msg.Data.ToString());
-            Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
-            Assert.Null(msg.AckId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(msg.EventName, Is.EqualTo("event"));
+                Assert.That(msg.Data.ToString(), Is.EqualTo("text"));
+                Assert.That(msg.DataType, Is.EqualTo(WebPubSubDataType.Text));
+                Assert.That(msg.AckId, Is.Null);
+            });
         }
 
         [Test]

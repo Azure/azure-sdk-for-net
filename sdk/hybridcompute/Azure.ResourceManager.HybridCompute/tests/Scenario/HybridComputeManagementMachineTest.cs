@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
             Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
             Debug.WriteLine($"Succeeded on name: {resourceData.Name}");
-            Assert.AreEqual(machineName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(machineName));
         }
 
         [TestCase]
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
             Debug.WriteLine($"Succeeded on id: {resourceCollection.Id}");
             string collectionId = "/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName;
-            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+            Assert.That(resourceCollection.Id.ToString(), Is.EqualTo(collectionId));
         }
 
         [TestCase]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanInstallPatch(){
             MachineInstallPatchesResult resourceData = await installPatch();
 
-            Assert.NotNull(resourceData.Status.ToString());
+            Assert.That(resourceData.Status.ToString(), Is.Not.Null);
         }
 
         [TestCase]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanAssessPatch(){
             MachineAssessPatchesResult resourceData = await assessPatch();
 
-            Assert.AreEqual("Succeeded", resourceData.Status.ToString());
+            Assert.That(resourceData.Status.ToString(), Is.EqualTo("Succeeded"));
         }
 
         // have to have a valid private link scope before running this function
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             HybridComputeMachineData resourceData = await updateMachine();
 
             Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
-            Assert.AreEqual(machineName, resourceData.Name.ToString());
+            Assert.That(resourceData.Name.ToString(), Is.EqualTo(machineName));
         }
 
         [TestCase]

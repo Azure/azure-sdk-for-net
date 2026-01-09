@@ -57,12 +57,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);
 
-            Assert.That(firstSegmentBeforeConversion, Is.EqualTo(firstSegment), "The first segment should match before conversion.");
-            Assert.That(secondSegmentBeforeConversion, Is.EqualTo(secondSegment), "The second segment should match before conversion.");
-            Assert.That(firstSegmentAfterConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match after conversion.");
-            Assert.That(secondSegmentAfterConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match after conversion.");
-            Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(allSegmentsArray), "The unified segments should match.");
-            Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSegmentBeforeConversion, Is.EqualTo(firstSegment), "The first segment should match before conversion.");
+                Assert.That(secondSegmentBeforeConversion, Is.EqualTo(secondSegment), "The second segment should match before conversion.");
+                Assert.That(firstSegmentAfterConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match after conversion.");
+                Assert.That(secondSegmentAfterConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match after conversion.");
+                Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(allSegmentsArray), "The unified segments should match.");
+                Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
+            });
         }
 
         /// <summary>
@@ -92,12 +95,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);
 
-            Assert.That(firstSegmentBeforeConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match before conversion.");
-            Assert.That(secondSegmentBeforeConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match before conversion.");
-            Assert.That(firstSegmentAfterConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match after conversion.");
-            Assert.That(secondSegmentAfterConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match after conversion.");
-            Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(allSegmentsArray), "The unified segments should match.");
-            Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstSegmentBeforeConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match before conversion.");
+                Assert.That(secondSegmentBeforeConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match before conversion.");
+                Assert.That(firstSegmentAfterConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match after conversion.");
+                Assert.That(secondSegmentAfterConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match after conversion.");
+                Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(allSegmentsArray), "The unified segments should match.");
+                Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
+            });
         }
     }
 }

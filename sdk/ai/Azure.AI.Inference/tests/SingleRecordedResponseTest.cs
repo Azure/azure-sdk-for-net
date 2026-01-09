@@ -57,42 +57,48 @@ namespace Azure.AI.Inference.Tests
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new RecordedResponse(completions, traceContent);
-            Assert.AreEqual("4567", response.Id);
-            CollectionAssert.AreEqual(
-                new[] {"content_filter", null, "stop"},
-                response.FinishReasons);
-            Assert.AreEqual("Phi2000", response.Model);
-            Assert.AreEqual(15, response.CompletionTokens);
-            Assert.AreEqual(10, response.PromptTokens);
+            Assert.That(response.Id, Is.EqualTo("4567"));
+            Assert.That(
+                response.FinishReasons,
+                Is.EqualTo(new[] { "content_filter", null, "stop" }).AsCollection);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Model, Is.EqualTo("Phi2000"));
+                Assert.That(response.CompletionTokens, Is.EqualTo(15));
+                Assert.That(response.PromptTokens, Is.EqualTo(10));
 
-            Assert.AreEqual(3, response.Choices.Length);
+                Assert.That(response.Choices.Length, Is.EqualTo(3));
+            });
             for (int i = 0; i < response.Choices.Length; i++)
             {
                 var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[i]);
                 var message = choiceEvent["message"];
-                Assert.NotNull(message);
+                Assert.That(message, Is.Not.Null);
                 if (traceContent)
                 {
-                    Assert.NotNull(message["content"]);
-                    Assert.AreEqual(messages[i], message["content"].GetValue<string>());
-                    Assert.Null(message["tool_calls"]);
+                    Assert.That(message["content"], Is.Not.Null);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(message["content"].GetValue<string>(), Is.EqualTo(messages[i]));
+                        Assert.That(message["tool_calls"], Is.Null);
+                    });
                 }
                 else
                 {
-                    Assert.Null(message["content"]);
+                    Assert.That(message["content"], Is.Null);
                 }
 
                 if (finishReasons[i].HasValue)
                 {
-                    Assert.AreEqual(finishReasons[i].ToString(), choiceEvent["finish_reason"].GetValue<string>());
+                    Assert.That(choiceEvent["finish_reason"].GetValue<string>(), Is.EqualTo(finishReasons[i].ToString()));
                 }
                 else
                 {
-                    Assert.IsNull(choiceEvent["finish_reason"]);
+                    Assert.That(choiceEvent["finish_reason"], Is.Null);
                 }
 
-                Assert.NotNull(choiceEvent["index"]);
-                Assert.AreEqual(i, choiceEvent["index"].GetValue<int>());
+                Assert.That(choiceEvent["index"], Is.Not.Null);
+                Assert.That(choiceEvent["index"].GetValue<int>(), Is.EqualTo(i));
             }
         }
 
@@ -160,82 +166,94 @@ namespace Azure.AI.Inference.Tests
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new RecordedResponse(completions, traceContent);
-            Assert.AreEqual("12", response.Id);
-            CollectionAssert.AreEqual(
-                new List<string>()
+            Assert.That(response.Id, Is.EqualTo("12"));
+            Assert.That(
+                response.FinishReasons,
+                Is.EqualTo(new List<string>()
                 {
                     CompletionsFinishReason.ToolCalls.ToString(),
                     CompletionsFinishReason.ToolCalls.ToString(),
                     CompletionsFinishReason.ContentFiltered.ToString()
-                },
-                response.FinishReasons);
+                }).AsCollection);
 
-            Assert.AreEqual("Phi2001", response.Model);
-            Assert.AreEqual(15, response.CompletionTokens);
-            Assert.AreEqual(10, response.PromptTokens);
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Model, Is.EqualTo("Phi2001"));
+                Assert.That(response.CompletionTokens, Is.EqualTo(15));
+                Assert.That(response.PromptTokens, Is.EqualTo(10));
+            });
 
             for (int i = 0; i < response.Choices.Length; i++)
             {
                 var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[i]);
                 var message = choiceEvent["message"];
-                Assert.NotNull(message);
+                Assert.That(message, Is.Not.Null);
                 if (traceContent || i == 2)
                 {
                     if (traceContent)
                     {
-                        Assert.AreEqual(messages[i], message["content"].GetValue<string>());
+                        Assert.That(message["content"].GetValue<string>(), Is.EqualTo(messages[i]));
                     }
                     else
                     {
-                        Assert.Null(message["content"]);
+                        Assert.That(message["content"], Is.Null);
                     }
                 }
                 else
                 {
-                    Assert.Null(message["content"]);
+                    Assert.That(message["content"], Is.Null);
                 }
 
                 if (i != 2)
                 {
-                    Assert.Null(message["tool_calls"]);
+                    Assert.That(message["tool_calls"], Is.Null);
                 }
                 else
                 {
-                    Assert.IsInstanceOf(typeof(JsonArray), message["tool_calls"]);
+                    Assert.That(message["tool_calls"], Is.InstanceOf(typeof(JsonArray)));
                     JsonArray toolCallsArray = message["tool_calls"].AsArray();
-                    Assert.AreEqual(2, toolCallsArray.Count);
+                    Assert.That(toolCallsArray, Has.Count.EqualTo(2));
 
-                    Assert.AreEqual("4", toolCallsArray[0]["id"].GetValue<string>());
-                    Assert.AreEqual("5", toolCallsArray[1]["id"].GetValue<string>());
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(toolCallsArray[0]["id"].GetValue<string>(), Is.EqualTo("4"));
+                        Assert.That(toolCallsArray[1]["id"].GetValue<string>(), Is.EqualTo("5"));
 
-                    Assert.AreEqual("func1", toolCallsArray[0]["function"]["name"].GetValue<string>());
-                    Assert.AreEqual("func1", toolCallsArray[1]["function"]["name"].GetValue<string>());
+                        Assert.That(toolCallsArray[0]["function"]["name"].GetValue<string>(), Is.EqualTo("func1"));
+                        Assert.That(toolCallsArray[1]["function"]["name"].GetValue<string>(), Is.EqualTo("func1"));
+                    });
 
                     if (traceContent)
                     {
-                        Assert.AreEqual("{\"arg1\": \"gg\"}", toolCallsArray[0]["function"]["arguments"].GetValue<string>());
-                        Assert.AreEqual("{\"arg1\": \"gg\",\"arg2\": 432}", toolCallsArray[1]["function"]["arguments"].GetValue<string>());
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(toolCallsArray[0]["function"]["arguments"].GetValue<string>(), Is.EqualTo("{\"arg1\": \"gg\"}"));
+                            Assert.That(toolCallsArray[1]["function"]["arguments"].GetValue<string>(), Is.EqualTo("{\"arg1\": \"gg\",\"arg2\": 432}"));
+                        });
                     }
                     else
                     {
-                        Assert.Null(toolCallsArray[0]["function"]["arguments"]);
-                        Assert.Null(toolCallsArray[1]["function"]["arguments"]);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(toolCallsArray[0]["function"]["arguments"], Is.Null);
+                            Assert.That(toolCallsArray[1]["function"]["arguments"], Is.Null);
+                        });
                     }
                 }
 
                 var finishReason = choiceEvent["finish_reason"];
-                Assert.NotNull(finishReason);
+                Assert.That(finishReason, Is.Not.Null);
                 if (i == 2)
                 {
-                    Assert.AreEqual("content_filter", finishReason.GetValue<string>());
+                    Assert.That(finishReason.GetValue<string>(), Is.EqualTo("content_filter"));
                 }
                 else
                 {
-                    Assert.AreEqual("tool_calls", finishReason.GetValue<string>());
+                    Assert.That(finishReason.GetValue<string>(), Is.EqualTo("tool_calls"));
                 }
 
-                Assert.NotNull(choiceEvent["index"]);
-                Assert.AreEqual(i, choiceEvent["index"].GetValue<int>());
+                Assert.That(choiceEvent["index"], Is.Not.Null);
+                Assert.That(choiceEvent["index"].GetValue<int>(), Is.EqualTo(i));
             }
         }
     }

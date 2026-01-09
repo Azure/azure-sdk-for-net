@@ -99,10 +99,13 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastJsonMessage(fake);
             Assert.That(last, Is.Not.Null, "Expected a response.create message.");
             var root = last!.RootElement;
-            Assert.That(root.TryGetProperty("type", out var typeProp), Is.True);
-            Assert.That(typeProp.GetString(), Is.EqualTo("response.create"));
-            // Ensure no additional_instructions property present
-            Assert.That(root.TryGetProperty("additional_instructions", out _), Is.False, "Did not expect additional_instructions for no-options overload.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("type", out var typeProp), Is.True);
+                Assert.That(typeProp.GetString(), Is.EqualTo("response.create"));
+                // Ensure no additional_instructions property present
+                Assert.That(root.TryGetProperty("additional_instructions", out _), Is.False, "Did not expect additional_instructions for no-options overload.");
+            });
         }
 
         [Test]
@@ -116,9 +119,12 @@ namespace Azure.AI.VoiceLive.Tests
             using var last = GetLastJsonMessage(fake);
             Assert.That(last, Is.Not.Null);
             var root = last!.RootElement;
-            Assert.That(root.GetProperty("type").GetString(), Is.EqualTo("response.create"));
-            Assert.That(root.TryGetProperty("additional_instructions", out var aiProp), Is.True, "Expected additional_instructions property.");
-            Assert.That(aiProp.GetString(), Is.EqualTo(instructions));
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.GetProperty("type").GetString(), Is.EqualTo("response.create"));
+                Assert.That(root.TryGetProperty("additional_instructions", out var aiProp), Is.True, "Expected additional_instructions property.");
+                Assert.That(aiProp.GetString(), Is.EqualTo(instructions));
+            });
         }
 
         [Test]

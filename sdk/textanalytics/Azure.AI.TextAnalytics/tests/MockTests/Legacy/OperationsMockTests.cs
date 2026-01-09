@@ -59,12 +59,18 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsNull(continuationToken.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
-            Assert.AreEqual(3, continuationToken.InputDocumentOrder.Count);
-            Assert.AreEqual(0, continuationToken.InputDocumentOrder["0"]);
-            Assert.AreEqual(1, continuationToken.InputDocumentOrder["1"]);
-            Assert.AreEqual(2, continuationToken.InputDocumentOrder["2"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.ShowStats, Is.Null);
+                Assert.That(continuationToken.JobId, Is.EqualTo("2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+                Assert.That(continuationToken.InputDocumentOrder, Has.Count.EqualTo(3));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.InputDocumentOrder["0"], Is.EqualTo(0));
+                Assert.That(continuationToken.InputDocumentOrder["1"], Is.EqualTo(1));
+                Assert.That(continuationToken.InputDocumentOrder["2"], Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -97,11 +103,17 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsNull(continuationToken.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
-            Assert.AreEqual(2, continuationToken.InputDocumentOrder.Count);
-            Assert.AreEqual(0, continuationToken.InputDocumentOrder["134234"]);
-            Assert.AreEqual(1, continuationToken.InputDocumentOrder["324232"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.ShowStats, Is.Null);
+                Assert.That(continuationToken.JobId, Is.EqualTo("2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+                Assert.That(continuationToken.InputDocumentOrder, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.InputDocumentOrder["134234"], Is.EqualTo(0));
+                Assert.That(continuationToken.InputDocumentOrder["324232"], Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -118,7 +130,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = OperationContinuationToken.Serialize(jobId, inputOrder, true);
 
             var operation = new AnalyzeActionsOperation(operationId, client);
-            Assert.AreEqual(operationId, operation.Id);
+            Assert.That(operation.Id, Is.EqualTo(operationId));
         }
 
         [Test]
@@ -127,7 +139,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             var client = CreateTestClient(new MockTransport());
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
-            Assert.IsInstanceOf<FormatException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<FormatException>());
         }
 
         [Test]
@@ -142,7 +154,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -154,7 +166,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = OperationContinuationToken.Serialize(null, order, null);
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -169,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeActionsOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -244,7 +256,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await operation.CancelAsync());
 
-            Assert.AreEqual("Cancellation is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Cancellation is not available in API version v3.1. Use service API version 2022-05-01 or newer."));
         }
 
         #endregion Analyze
@@ -269,11 +281,17 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsFalse(continuationToken.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
-            Assert.AreEqual(2, continuationToken.InputDocumentOrder.Count);
-            Assert.AreEqual(0, continuationToken.InputDocumentOrder["0"]);
-            Assert.AreEqual(1, continuationToken.InputDocumentOrder["1"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.ShowStats, Is.False);
+                Assert.That(continuationToken.JobId, Is.EqualTo("2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+                Assert.That(continuationToken.InputDocumentOrder, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.InputDocumentOrder["0"], Is.EqualTo(0));
+                Assert.That(continuationToken.InputDocumentOrder["1"], Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -301,11 +319,17 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             OperationContinuationToken continuationToken = OperationContinuationToken.Deserialize(operation.Id);
 
-            Assert.IsFalse(continuationToken.ShowStats);
-            Assert.AreEqual("2a96a91f-7edf-4931-a880-3fdee1d56f15", continuationToken.JobId);
-            Assert.AreEqual(2, continuationToken.InputDocumentOrder.Count);
-            Assert.AreEqual(0, continuationToken.InputDocumentOrder["134234"]);
-            Assert.AreEqual(1, continuationToken.InputDocumentOrder["324232"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.ShowStats, Is.False);
+                Assert.That(continuationToken.JobId, Is.EqualTo("2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+                Assert.That(continuationToken.InputDocumentOrder, Has.Count.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(continuationToken.InputDocumentOrder["134234"], Is.EqualTo(0));
+                Assert.That(continuationToken.InputDocumentOrder["324232"], Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -322,7 +346,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = OperationContinuationToken.Serialize(jobId, inputOrder, true);
 
             var operation = new AnalyzeHealthcareEntitiesOperation(operationId, client);
-            Assert.AreEqual(operationId, operation.Id);
+            Assert.That(operation.Id, Is.EqualTo(operationId));
         }
 
         [Test]
@@ -331,7 +355,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             var client = CreateTestClient(new MockTransport());
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client));
-            Assert.IsInstanceOf<FormatException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<FormatException>());
         }
 
         [Test]
@@ -346,7 +370,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -358,7 +382,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = OperationContinuationToken.Serialize(null, order, null);
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -373,7 +397,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string operationId = token.Serialize();
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
-            Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+            Assert.That(ex.InnerException, Is.InstanceOf<ArgumentNullException>());
         }
 
         [Test]

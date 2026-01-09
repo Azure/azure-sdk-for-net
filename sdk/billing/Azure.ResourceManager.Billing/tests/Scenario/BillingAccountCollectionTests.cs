@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Billing.Tests
             AsyncPageable<BillingAccountResource> response = Collection.GetAllAsync(options);
             List<BillingAccountResource> billingAccountResources = await response.ToEnumerableAsync();
 
-            Assert.IsNotNull(billingAccountResources);
+            Assert.That(billingAccountResources, Is.Not.Null);
         }
     }
 }

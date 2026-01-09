@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Tests
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
             var collection = managedInstance.GetRecoverableManagedDatabases();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
 
         [Test]
@@ -58,24 +58,27 @@ namespace Azure.ResourceManager.Sql.Tests
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
             var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(managedInstance.Data);
+            Assert.That(managedInstance.Data, Is.Not.Null);
 
             var collection = managedInstance.GetRecoverableManagedDatabases();
 
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             string recoverableManagedDatabaseName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(recoverableManagedDatabaseName));
+            Assert.That((bool)collection.Exists(recoverableManagedDatabaseName), Is.True);
 
             // 3.Get
             var getRecoverableManagedDatabase = await collection.GetAsync(recoverableManagedDatabaseName);
-            Assert.AreEqual(recoverableManagedDatabaseName.ToString(), getRecoverableManagedDatabase.Value.Data.Name);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(getRecoverableManagedDatabase.Value.Data.Name, Is.EqualTo(recoverableManagedDatabaseName.ToString()));
 
-            // 4.GetIfExist
-            Assert.IsTrue(await collection.ExistsAsync(recoverableManagedDatabaseName));
+                // 4.GetIfExist
+                Assert.That((bool)await collection.ExistsAsync(recoverableManagedDatabaseName), Is.True);
+            });
         }
     }
 }

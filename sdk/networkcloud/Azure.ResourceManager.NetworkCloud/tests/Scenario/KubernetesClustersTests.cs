@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
-            Assert.AreEqual(createResult.Value.Data.Name, kubernetesClusterName);
+            Assert.That(kubernetesClusterName, Is.EqualTo(createResult.Value.Data.Name));
 
             // Get KubernetesCluster
             NetworkCloudKubernetesClusterResource kubernetesCluster = Client.GetNetworkCloudKubernetesClusterResource(kubernetesClusterResourceId);
             NetworkCloudKubernetesClusterResource getResult = await kubernetesCluster.GetAsync();
-            Assert.AreEqual(createResult.Value.Data.Name, kubernetesClusterName);
+            Assert.That(kubernetesClusterName, Is.EqualTo(createResult.Value.Data.Name));
 
             // Update KubernetesCluster
             NetworkCloudKubernetesClusterPatch updateData = new NetworkCloudKubernetesClusterPatch()
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 Tags = { { "test", "patch" } },
             };
             ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
-            Assert.AreEqual(updateResult.Value.Data.Tags["test"], "patch");
+            Assert.That(updateResult.Value.Data.Tags["test"], Is.EqualTo("patch"));
 
             // Get KubernetesClusters by Resource Group
             var listByResourceGroupResult = new List<NetworkCloudKubernetesClusterResource>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroupResult.Add(kubernetesClusterResource);
             }
-            Assert.IsNotEmpty(listByResourceGroupResult);
+            Assert.That(listByResourceGroupResult, Is.Not.Empty);
 
             // Get KubernetesClusters by Subscription
             var listBySubscriptionResult = new List<NetworkCloudKubernetesClusterResource>();
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscriptionResult.Add(kubernetesClusterResource);
             }
-            Assert.IsNotEmpty(listBySubscriptionResult);
+            Assert.That(listBySubscriptionResult, Is.Not.Empty);
 
             // Delete KubernetesCluster
             var deleteResult = await kubernetesCluster.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

@@ -13,28 +13,28 @@ namespace TestProjects.Spector.Tests.Http._Type._Enum.Extensible
         public Task GetKnownValue() => Test(async (host) =>
         {
             var response = await new ExtensibleClient(host, null).GetStringClient().GetKnownValueAsync();
-            Assert.AreEqual(DaysOfWeekExtensibleEnum.Monday, (DaysOfWeekExtensibleEnum)response);
+            Assert.That((DaysOfWeekExtensibleEnum)response, Is.EqualTo(DaysOfWeekExtensibleEnum.Monday));
         });
 
         [SpectorTest]
         public Task GetUnknownValue() => Test(async (host) =>
         {
             var response = await new ExtensibleClient(host, null).GetStringClient().GetUnknownValueAsync();
-            Assert.AreEqual(new DaysOfWeekExtensibleEnum("Weekend"), (DaysOfWeekExtensibleEnum)response);
+            Assert.That((DaysOfWeekExtensibleEnum)response, Is.EqualTo(new DaysOfWeekExtensibleEnum("Weekend")));
         });
 
         [SpectorTest]
         public Task PutKnownValue() => Test(async (host) =>
         {
             var response = await new ExtensibleClient(host, null).GetStringClient().PutKnownValueAsync(DaysOfWeekExtensibleEnum.Monday);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task PutUnknownValue() => Test(async (host) =>
         {
             var response = await new ExtensibleClient(host, null).GetStringClient().PutUnknownValueAsync(new DaysOfWeekExtensibleEnum("Weekend"));
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

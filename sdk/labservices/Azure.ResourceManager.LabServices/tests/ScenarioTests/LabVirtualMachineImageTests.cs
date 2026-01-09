@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.LabServices.Tests
             // GetAll test
             var vmImageCollection = labPlan.GetLabVirtualMachineImages();
             var list = await vmImageCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.That(list.Count, Is.GreaterThanOrEqualTo(1));
 
             // Get test - 1
             var labImageName = list[0].Data.Name;
             var labImage = (await vmImageCollection.GetAsync(labImageName)).Value;
-            Assert.AreEqual(labImageName, labImage.Data.Name);
+            Assert.That(labImage.Data.Name, Is.EqualTo(labImageName));
 
             // Update with PUT test
             // No create available
@@ -49,25 +49,34 @@ namespace Azure.ResourceManager.LabServices.Tests
                 EnabledState = LabServicesEnableState.Disabled
             };
             labImage = (await vmImageCollection.CreateOrUpdateAsync(WaitUntil.Completed, labImageName, vmImageData)).Value;
-            Assert.AreEqual(labImageName, labImage.Data.Name);
-            Assert.AreEqual(vmImageData.EnabledState, labImage.Data.EnabledState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(labImage.Data.Name, Is.EqualTo(labImageName));
+                Assert.That(labImage.Data.EnabledState, Is.EqualTo(vmImageData.EnabledState));
+            });
 
             // Update with PATCH
             var patch = new LabVirtualMachineImagePatch() { EnabledState = LabServicesEnableState.Enabled };
             labImage = (await labImage.UpdateAsync(patch)).Value;
-            Assert.AreEqual(labImageName, labImage.Data.Name);
-            Assert.AreEqual(LabServicesEnableState.Enabled, labImage.Data.EnabledState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(labImage.Data.Name, Is.EqualTo(labImageName));
+                Assert.That(labImage.Data.EnabledState, Is.EqualTo(LabServicesEnableState.Enabled));
+            });
 
             // Get test - 2
             labImage = (await labImage.GetAsync()).Value;
-            Assert.AreEqual(labImageName, labImage.Data.Name);
-            Assert.AreEqual(LabServicesEnableState.Enabled, labImage.Data.EnabledState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(labImage.Data.Name, Is.EqualTo(labImageName));
+                Assert.That(labImage.Data.EnabledState, Is.EqualTo(LabServicesEnableState.Enabled));
+            });
 
             // Exists test
             bool boolResult = await vmImageCollection.ExistsAsync(labImageName);
-            Assert.IsTrue(boolResult);
+            Assert.That(boolResult, Is.True);
             boolResult = await vmImageCollection.ExistsAsync("foo");
-            Assert.IsFalse(boolResult);
+            Assert.That(boolResult, Is.False);
         }
 
         public LabPlanData GePlantData()

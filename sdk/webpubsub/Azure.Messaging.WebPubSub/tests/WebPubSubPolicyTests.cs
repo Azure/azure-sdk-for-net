@@ -30,10 +30,10 @@ namespace Azure.Messaging.WebPubSub.Tests
             var client = new WebPubSubServiceClient(new Uri(wpsEndpoint), "test_hub", credentail, options);
 
             var response = client.SendToAll("Hello World!");
-            Assert.AreEqual(202, response.Status);
+            Assert.That(response.Status, Is.EqualTo(202));
 
             var requestUri = transport.SingleRequest.Uri.ToUri();
-            Assert.AreEqual(new Uri(apimEndpoint).Host, requestUri.Host);
+            Assert.That(requestUri.Host, Is.EqualTo(new Uri(apimEndpoint).Host));
         }
     }
 }

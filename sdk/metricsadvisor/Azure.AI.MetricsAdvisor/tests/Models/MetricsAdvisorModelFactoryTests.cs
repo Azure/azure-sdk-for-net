@@ -30,10 +30,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var anomalyAlert = MetricsAdvisorModelFactory.AnomalyAlert(id, timestamp, createdOn, lastModified);
 
-            Assert.That(anomalyAlert.Id, Is.EqualTo(id));
-            Assert.That(anomalyAlert.Timestamp, Is.EqualTo(timestamp));
-            Assert.That(anomalyAlert.CreatedOn, Is.EqualTo(createdOn));
-            Assert.That(anomalyAlert.LastModified, Is.EqualTo(lastModified));
+            Assert.Multiple(() =>
+            {
+                Assert.That(anomalyAlert.Id, Is.EqualTo(id));
+                Assert.That(anomalyAlert.Timestamp, Is.EqualTo(timestamp));
+                Assert.That(anomalyAlert.CreatedOn, Is.EqualTo(createdOn));
+                Assert.That(anomalyAlert.LastModified, Is.EqualTo(lastModified));
+            });
         }
 
         [Test]
@@ -54,13 +57,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var anomalyAlertConfiguration = MetricsAdvisorModelFactory.AnomalyAlertConfiguration(id, name, description, crossMetricsOperator,
                 dimensionsToSplitAlert, idsOfHooksToAlert, metricAlertConfigurations);
 
-            Assert.That(anomalyAlertConfiguration.Id, Is.EqualTo(id));
-            Assert.That(anomalyAlertConfiguration.Name, Is.EqualTo(name));
-            Assert.That(anomalyAlertConfiguration.Description, Is.EqualTo(description));
-            Assert.That(anomalyAlertConfiguration.CrossMetricsOperator, Is.EqualTo(crossMetricsOperator));
-            Assert.That(anomalyAlertConfiguration.DimensionsToSplitAlert, Is.EqualTo(dimensionsToSplitAlert));
-            Assert.That(anomalyAlertConfiguration.IdsOfHooksToAlert, Is.EqualTo(idsOfHooksToAlert));
-            Assert.That(anomalyAlertConfiguration.MetricAlertConfigurations, Is.EqualTo(metricAlertConfigurations));
+            Assert.Multiple(() =>
+            {
+                Assert.That(anomalyAlertConfiguration.Id, Is.EqualTo(id));
+                Assert.That(anomalyAlertConfiguration.Name, Is.EqualTo(name));
+                Assert.That(anomalyAlertConfiguration.Description, Is.EqualTo(description));
+                Assert.That(anomalyAlertConfiguration.CrossMetricsOperator, Is.EqualTo(crossMetricsOperator));
+                Assert.That(anomalyAlertConfiguration.DimensionsToSplitAlert, Is.EqualTo(dimensionsToSplitAlert));
+                Assert.That(anomalyAlertConfiguration.IdsOfHooksToAlert, Is.EqualTo(idsOfHooksToAlert));
+                Assert.That(anomalyAlertConfiguration.MetricAlertConfigurations, Is.EqualTo(metricAlertConfigurations));
+            });
         }
 
         [Test]
@@ -85,13 +91,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var anomalyDetectionConfiguration = MetricsAdvisorModelFactory.AnomalyDetectionConfiguration(id, name, description, metricId,
                 wholeSeriesDetectionConditions, seriesGroupDetectionConditions, seriesDetectionConditions);
 
-            Assert.That(anomalyDetectionConfiguration.Id, Is.EqualTo(id));
-            Assert.That(anomalyDetectionConfiguration.Name, Is.EqualTo(name));
-            Assert.That(anomalyDetectionConfiguration.Description, Is.EqualTo(description));
-            Assert.That(anomalyDetectionConfiguration.MetricId, Is.EqualTo(metricId));
-            Assert.That(anomalyDetectionConfiguration.WholeSeriesDetectionConditions, Is.EqualTo(wholeSeriesDetectionConditions));
-            Assert.That(anomalyDetectionConfiguration.SeriesGroupDetectionConditions, Is.EqualTo(seriesGroupDetectionConditions));
-            Assert.That(anomalyDetectionConfiguration.SeriesDetectionConditions, Is.EqualTo(seriesDetectionConditions));
+            Assert.Multiple(() =>
+            {
+                Assert.That(anomalyDetectionConfiguration.Id, Is.EqualTo(id));
+                Assert.That(anomalyDetectionConfiguration.Name, Is.EqualTo(name));
+                Assert.That(anomalyDetectionConfiguration.Description, Is.EqualTo(description));
+                Assert.That(anomalyDetectionConfiguration.MetricId, Is.EqualTo(metricId));
+                Assert.That(anomalyDetectionConfiguration.WholeSeriesDetectionConditions, Is.EqualTo(wholeSeriesDetectionConditions));
+                Assert.That(anomalyDetectionConfiguration.SeriesGroupDetectionConditions, Is.EqualTo(seriesGroupDetectionConditions));
+                Assert.That(anomalyDetectionConfiguration.SeriesDetectionConditions, Is.EqualTo(seriesDetectionConditions));
+            });
         }
 
         [Test]
@@ -112,17 +121,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var anomalyIncident = MetricsAdvisorModelFactory.AnomalyIncident(dataFeedId, metricId, detectionConfigurationId,
                 id, startedOn, lastDetectedOn, rootSeriesKey, severity, status, valueOfRootNode, expectedValueOfRootNode);
 
-            Assert.That(anomalyIncident.DataFeedId, Is.EqualTo(dataFeedId));
-            Assert.That(anomalyIncident.MetricId, Is.EqualTo(metricId));
-            Assert.That(anomalyIncident.DetectionConfigurationId, Is.EqualTo(detectionConfigurationId));
-            Assert.That(anomalyIncident.Id, Is.EqualTo(id));
-            Assert.That(anomalyIncident.StartedOn, Is.EqualTo(startedOn));
-            Assert.That(anomalyIncident.LastDetectedOn, Is.EqualTo(lastDetectedOn));
-            Assert.That(anomalyIncident.RootSeriesKey, Is.EqualTo(rootSeriesKey));
-            Assert.That(anomalyIncident.Severity, Is.EqualTo(severity));
-            Assert.That(anomalyIncident.Status, Is.EqualTo(status));
-            Assert.That(anomalyIncident.ValueOfRootNode, Is.EqualTo(valueOfRootNode));
-            Assert.That(anomalyIncident.ExpectedValueOfRootNode, Is.EqualTo(expectedValueOfRootNode));
+            Assert.Multiple(() =>
+            {
+                Assert.That(anomalyIncident.DataFeedId, Is.EqualTo(dataFeedId));
+                Assert.That(anomalyIncident.MetricId, Is.EqualTo(metricId));
+                Assert.That(anomalyIncident.DetectionConfigurationId, Is.EqualTo(detectionConfigurationId));
+                Assert.That(anomalyIncident.Id, Is.EqualTo(id));
+                Assert.That(anomalyIncident.StartedOn, Is.EqualTo(startedOn));
+                Assert.That(anomalyIncident.LastDetectedOn, Is.EqualTo(lastDetectedOn));
+                Assert.That(anomalyIncident.RootSeriesKey, Is.EqualTo(rootSeriesKey));
+                Assert.That(anomalyIncident.Severity, Is.EqualTo(severity));
+                Assert.That(anomalyIncident.Status, Is.EqualTo(status));
+                Assert.That(anomalyIncident.ValueOfRootNode, Is.EqualTo(valueOfRootNode));
+                Assert.That(anomalyIncident.ExpectedValueOfRootNode, Is.EqualTo(expectedValueOfRootNode));
+            });
         }
 
         [Test]
@@ -155,24 +167,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 schema, granularity, ingestionSettings, description, actionLinkTemplate, accessMode, rollupSettings, missingDataPointFillSettings,
                 administrators, viewers);
 
-            Assert.That(dataFeed.Id, Is.EqualTo(id));
-            Assert.That(dataFeed.Status, Is.EqualTo(status));
-            Assert.That(dataFeed.CreatedOn, Is.EqualTo(createdOn));
-            Assert.That(dataFeed.Creator, Is.EqualTo(creator));
-            Assert.That(dataFeed.IsAdministrator, Is.EqualTo(isAdministrator));
-            Assert.That(dataFeed.MetricIds, Is.EqualTo(metricIds));
-            Assert.That(dataFeed.Name, Is.EqualTo(name));
-            Assert.That(dataFeed.DataSource, Is.EqualTo(dataSource));
-            Assert.That(dataFeed.Schema, Is.EqualTo(schema));
-            Assert.That(dataFeed.Granularity, Is.EqualTo(granularity));
-            Assert.That(dataFeed.IngestionSettings, Is.EqualTo(ingestionSettings));
-            Assert.That(dataFeed.Description, Is.EqualTo(description));
-            Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo(actionLinkTemplate));
-            Assert.That(dataFeed.AccessMode, Is.EqualTo(accessMode));
-            Assert.That(dataFeed.RollupSettings, Is.EqualTo(rollupSettings));
-            Assert.That(dataFeed.MissingDataPointFillSettings, Is.EqualTo(missingDataPointFillSettings));
-            Assert.That(dataFeed.Administrators, Is.EqualTo(administrators));
-            Assert.That(dataFeed.Viewers, Is.EqualTo(viewers));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dataFeed.Id, Is.EqualTo(id));
+                Assert.That(dataFeed.Status, Is.EqualTo(status));
+                Assert.That(dataFeed.CreatedOn, Is.EqualTo(createdOn));
+                Assert.That(dataFeed.Creator, Is.EqualTo(creator));
+                Assert.That(dataFeed.IsAdministrator, Is.EqualTo(isAdministrator));
+                Assert.That(dataFeed.MetricIds, Is.EqualTo(metricIds));
+                Assert.That(dataFeed.Name, Is.EqualTo(name));
+                Assert.That(dataFeed.DataSource, Is.EqualTo(dataSource));
+                Assert.That(dataFeed.Schema, Is.EqualTo(schema));
+                Assert.That(dataFeed.Granularity, Is.EqualTo(granularity));
+                Assert.That(dataFeed.IngestionSettings, Is.EqualTo(ingestionSettings));
+                Assert.That(dataFeed.Description, Is.EqualTo(description));
+                Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo(actionLinkTemplate));
+                Assert.That(dataFeed.AccessMode, Is.EqualTo(accessMode));
+                Assert.That(dataFeed.RollupSettings, Is.EqualTo(rollupSettings));
+                Assert.That(dataFeed.MissingDataPointFillSettings, Is.EqualTo(missingDataPointFillSettings));
+                Assert.That(dataFeed.Administrators, Is.EqualTo(administrators));
+                Assert.That(dataFeed.Viewers, Is.EqualTo(viewers));
+            });
         }
 
         [Test]

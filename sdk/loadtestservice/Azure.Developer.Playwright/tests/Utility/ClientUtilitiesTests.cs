@@ -58,8 +58,11 @@ namespace Azure.Developer.Playwright.Tests.Utility
         [Test]
         public void GetOSPlatform_WithNullOrEmpty_ReturnsNull()
         {
-            Assert.That(ClientUtilities.GetOSPlatform(null), Is.Null);
-            Assert.That(ClientUtilities.GetOSPlatform(""), Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ClientUtilities.GetOSPlatform(null), Is.Null);
+                Assert.That(ClientUtilities.GetOSPlatform(""), Is.Null);
+            });
         }
 
         [Test]

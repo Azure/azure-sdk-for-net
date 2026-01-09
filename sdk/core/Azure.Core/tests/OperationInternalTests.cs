@@ -27,8 +27,11 @@ namespace Azure.Core.Tests
         public void DefaultPropertyInitialization()
         {
             var operationInternal = new OperationInternal(TestOperation.Succeeded(), ClientDiagnostics, InitialResponse);
-            Assert.IsNotNull(operationInternal.RawResponse);
-            Assert.False(operationInternal.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationInternal.RawResponse, Is.Not.Null);
+                Assert.That(operationInternal.HasCompleted, Is.False);
+            });
         }
 
         [Test]
@@ -36,22 +39,25 @@ namespace Azure.Core.Tests
         {
             var operationInternal = new OperationInternal(TestOperation.Succeeded(), ClientDiagnostics, InitialResponse);
 
-            Assert.AreEqual(InitialResponse, operationInternal.RawResponse);
-            Assert.False(operationInternal.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationInternal.RawResponse, Is.EqualTo(InitialResponse));
+                Assert.That(operationInternal.HasCompleted, Is.False);
+            });
         }
 
         [Test]
         public void SetStateSucceeds()
         {
             var operationInternal = OperationInternal.Succeeded(InitialResponse);
-            Assert.IsTrue(operationInternal.HasCompleted);
+            Assert.That(operationInternal.HasCompleted, Is.True);
         }
 
         [Test]
         public void SetStateFails()
         {
             var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse));
-            Assert.IsTrue(operationInternal.HasCompleted);
+            Assert.That(operationInternal.HasCompleted, Is.True);
         }
 
         [Test]
@@ -63,8 +69,11 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
-            Assert.AreEqual(operationResponse, operationInternal.RawResponse);
-            Assert.False(operationInternal.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationInternal.RawResponse, Is.EqualTo(operationResponse));
+                Assert.That(operationInternal.HasCompleted, Is.False);
+            });
         }
 
         [Test]
@@ -76,8 +85,11 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
-            Assert.AreEqual(operationResponse, operationInternal.RawResponse);
-            Assert.True(operationInternal.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationInternal.RawResponse, Is.EqualTo(operationResponse));
+                Assert.That(operationInternal.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -93,11 +105,14 @@ namespace Azure.Core.Tests
 
             if (!useDefaultException)
             {
-                Assert.AreEqual(OriginalException, thrownException);
+                Assert.That(thrownException, Is.EqualTo(OriginalException));
             }
 
-            Assert.AreEqual(418, operationInternal.RawResponse.Status);
-            Assert.True(operationInternal.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationInternal.RawResponse.Status, Is.EqualTo(418));
+                Assert.That(operationInternal.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -109,9 +124,12 @@ namespace Azure.Core.Tests
                 ? Assert.ThrowsAsync<StackOverflowException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
                 : Assert.Throws<StackOverflowException>(() => operationInternal.UpdateStatus(CancellationToken.None));
 
-            Assert.AreEqual(CustomException, thrownException);
+            Assert.Multiple(() =>
+            {
+                Assert.That(thrownException, Is.EqualTo(CustomException));
 
-            Assert.IsNotNull(operationInternal.RawResponse);
+                Assert.That(operationInternal.RawResponse, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -140,7 +158,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]
@@ -158,7 +176,7 @@ namespace Azure.Core.Tests
             catch { }
 
             var expectedTypeName = nameof(TestOperation);
-            testListener.AssertScopeException($"{expectedTypeName}.UpdateStatus", scopeException => Assert.AreEqual(OriginalException, scopeException));
+            testListener.AssertScopeException($"{expectedTypeName}.UpdateStatus", scopeException => Assert.That(scopeException, Is.EqualTo(OriginalException)));
         }
 
         [Test]
@@ -176,7 +194,7 @@ namespace Azure.Core.Tests
             catch { }
 
             var expectedTypeName = nameof(TestOperation);
-            testListener.AssertScopeException($"{expectedTypeName}.UpdateStatus", scopeException => Assert.AreEqual(CustomException, scopeException));
+            testListener.AssertScopeException($"{expectedTypeName}.UpdateStatus", scopeException => Assert.That(scopeException, Is.EqualTo(CustomException)));
         }
 
         [Test]
@@ -197,7 +215,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.UpdateStatusAsync(originalToken)
                 : operationInternal.UpdateStatus(originalToken);
 
-            Assert.AreEqual(originalToken, passedToken);
+            Assert.That(passedToken, Is.EqualTo(originalToken));
         }
 
         [Test]
@@ -218,7 +236,7 @@ namespace Azure.Core.Tests
             if (suppressNestedClientActivities)
             {
                 testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
-                CollectionAssert.IsEmpty(testListener.Scopes);
+                Assert.That(testListener.Scopes, Is.Empty);
             }
 #endif
         }
@@ -233,7 +251,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            Assert.That(testListener.Scopes, Is.Empty);
         }
 
         [Test]
@@ -245,8 +263,11 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
                 : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, CancellationToken.None);
 
-            Assert.AreEqual(operationInternal.RawResponse, operationResponse);
-            Assert.True(operationInternal.HasCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationResponse, Is.EqualTo(operationInternal.RawResponse));
+                Assert.That(operationInternal.HasCompleted, Is.True);
+            });
         }
 
         [Test]
@@ -268,11 +289,11 @@ namespace Azure.Core.Tests
             // if there is a suggested time, it should be used instead of the zero polling interval
             if (hasSuggest)
             {
-                Assert.IsTrue(stopwatch.Elapsed > TimeSpan.FromSeconds(1));
+                Assert.That(stopwatch.Elapsed, Is.GreaterThan(TimeSpan.FromSeconds(1)));
             }
             else
             {
-                Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(1));
+                Assert.That(stopwatch.Elapsed < TimeSpan.FromSeconds(1), Is.True);
             }
         }
 
@@ -295,7 +316,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
                 : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, originalToken);
 
-            Assert.AreEqual(originalToken, passedToken);
+            Assert.That(passedToken, Is.EqualTo(originalToken));
         }
 
         [Test]
@@ -321,7 +342,7 @@ namespace Azure.Core.Tests
             var operationInternal = new OperationInternal(TestOperation.SucceededAfter(retries), ClientDiagnostics, InitialResponse, fallbackStrategy: fallbackStrategy);
             _ = await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
 
-            Assert.AreEqual(retries, fallbackStrategy.CallCount);
+            Assert.That(fallbackStrategy.CallCount, Is.EqualTo(retries));
         }
 
         [Test]
@@ -332,7 +353,7 @@ namespace Azure.Core.Tests
             var operationInternal = new OperationInternal(TestOperation.SucceededAfter(retries), ClientDiagnostics, InitialResponse, fallbackStrategy: fallbackStrategy);
             _ = operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
-            Assert.AreEqual(retries, fallbackStrategy.CallCount);
+            Assert.That(fallbackStrategy.CallCount, Is.EqualTo(retries));
         }
 
         [Test]
@@ -381,12 +402,15 @@ namespace Azure.Core.Tests
 
             await Task.WhenAll(tasks);
 
-            Assert.AreEqual(expectedDelayStrategyCalls + 1, callCount);
-            Assert.AreEqual(expectedDelayStrategyCalls, fallbackStrategy.CallCount);
+            Assert.Multiple(() =>
+            {
+                Assert.That(callCount, Is.EqualTo(expectedDelayStrategyCalls + 1));
+                Assert.That(fallbackStrategy.CallCount, Is.EqualTo(expectedDelayStrategyCalls));
+            });
 
             foreach (var task in tasks.Skip(1))
             {
-                Assert.AreEqual(task.Result, tasks[0].Result);
+                Assert.That(tasks[0].Result, Is.EqualTo(task.Result));
             }
         }
 

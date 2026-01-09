@@ -51,19 +51,25 @@ public partial class ChatTests
         var response = await client.CompleteChatAsync(messages, options);
         Assert.That(response, Is.Not.Null);
 
-        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.That(response.Value.CreatedAt, Is.GreaterThan(START_2024));
-        Assert.That(response.Value.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
-        Assert.That(response.Value.Role, Is.EqualTo(ChatMessageRole.Assistant));
-        Assert.That(response.Value.Usage, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.CreatedAt, Is.GreaterThan(START_2024));
+            Assert.That(response.Value.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
+            Assert.That(response.Value.Role, Is.EqualTo(ChatMessageRole.Assistant));
+            Assert.That(response.Value.Usage, Is.Not.Null);
+        });
         Assert.That(response.Value.Usage.InputTokenCount, Is.GreaterThan(10));
         Assert.That(response.Value.Usage.OutputTokenCount, Is.GreaterThan(10));
         Assert.That(response.Value.Usage.TotalTokenCount, Is.GreaterThan(20));
 
         Assert.That(response.Value.Content, Has.Count.EqualTo(1));
         ChatMessageContentPart choice = response.Value.Content[0];
-        Assert.That(choice.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
-        Assert.That(choice.Text, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(choice.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
+            Assert.That(choice.Text, Is.Not.Null.Or.Empty);
+        });
         Assert.That(choice.Text.ToLowerInvariant(), Does.Contain("dog").Or.Contain("cat"));
 
         // TODO FIXME: Some models (e.g. gpt-4o either randomly return prompt filters with some missing entries)
@@ -76,8 +82,11 @@ public partial class ChatTests
         var responseFilter = response.Value.GetResponseContentFilterResult();
         Assert.That(responseFilter, Is.Not.Null);
         Assert.That(responseFilter.Hate, Is.Not.Null);
-        Assert.That(responseFilter.Hate.Filtered, Is.False);
-        Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        Assert.Multiple(() =>
+        {
+            Assert.That(responseFilter.Hate.Filtered, Is.False);
+            Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+        });
     }
 
     [RecordedTest]
@@ -149,10 +158,13 @@ public partial class ChatTests
                         Path.Combine("Assets", "files_travis_favorite_food.pdf"))),
                 fileBytesMediaType: "application/pdf",
                 "test_travis_favorite_food.pdf");
-        Assert.That(binaryFileContentPart.FileBytes, Is.Not.Null);
-        Assert.That(binaryFileContentPart.FileBytesMediaType, Is.EqualTo("application/pdf"));
-        Assert.That(binaryFileContentPart.Filename, Is.EqualTo("test_travis_favorite_food.pdf"));
-        Assert.That(binaryFileContentPart.FileId, Is.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(binaryFileContentPart.FileBytes, Is.Not.Null);
+            Assert.That(binaryFileContentPart.FileBytesMediaType, Is.EqualTo("application/pdf"));
+            Assert.That(binaryFileContentPart.Filename, Is.EqualTo("test_travis_favorite_food.pdf"));
+            Assert.That(binaryFileContentPart.FileId, Is.Null);
+        });
 
         ChatClient client = GetTestClient();
 

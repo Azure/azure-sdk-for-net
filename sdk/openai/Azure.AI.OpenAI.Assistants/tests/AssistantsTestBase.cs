@@ -133,9 +133,12 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         Assert.That(rawResponse.Status, Is.EqualTo(200));
 
         string rawResponseContent = rawResponse.Content.ToString();
-        Assert.That(rawResponseContent, Is.Not.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(rawResponseContent, Is.Not.Null.Or.Empty);
 
-        Assert.That(response.Value, Is.InstanceOf<T>());
+            Assert.That(response.Value, Is.InstanceOf<T>());
+        });
 
         if (response is Response<bool> boolResponse)
         {

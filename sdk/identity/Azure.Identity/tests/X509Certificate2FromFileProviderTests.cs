@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests
 
             var cert = await certProvider.GetCertificateAsync(async, default);
 
-            Assert.NotNull(cert);
+            Assert.That(cert, Is.Not.Null);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await certProvider.GetCertificateAsync(async, default));
 
-            StringAssert.Contains("Password protection for PEM encoded certificates is not supported.", ex.Message);
+            Assert.That(ex.Message, Does.Contain("Password protection for PEM encoded certificates is not supported."));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
 
             var cert = await certProvider.GetCertificateAsync(async, default);
 
-            Assert.NotNull(cert);
+            Assert.That(cert, Is.Not.Null);
         }
     }
 }

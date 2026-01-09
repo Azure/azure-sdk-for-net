@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkDeviceInterfaceResource getResult = await networkInterface.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkInterfaceName);
+            Assert.That(TestEnvironment.NetworkInterfaceName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             UpdateAdministrativeStateContent cotnent = new UpdateAdministrativeStateContent()
             {

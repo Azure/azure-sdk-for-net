@@ -143,8 +143,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var readState = await ReadEventsAsync(receiver, new HashSet<string> { singleEvent.MessageId }, cancellationSource.Token);
 
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                        Assert.That(readState.Events, Has.Count.EqualTo(1), "A single event was sent.");
+                    });
                     Assert.That(readState.Events.Values.Single().IsEquivalentTo(singleEvent), "The single event did not match the corresponding read event.");
                 }
 
@@ -180,8 +183,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var readState = await ReadEventsAsync(receiver, new HashSet<string> { singleEvent.MessageId }, cancellationSource.Token);
 
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                        Assert.That(readState.Events, Has.Count.EqualTo(1), "A single event was sent.");
+                    });
                     Assert.That(readState.Events.Values.Single().IsEquivalentTo(singleEvent), "The single event did not match the corresponding read event.");
                 }
 
@@ -220,8 +226,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var readState = await ReadEventsAsync(receiver, new HashSet<string> { singleEvent.MessageId }, cancellationSource.Token);
 
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                        Assert.That(readState.Events, Has.Count.EqualTo(1), "A single event was sent.");
+                    });
                     Assert.That(readState.Events.Values.Single().IsEquivalentTo(singleEvent), "The single event did not match the corresponding read event.");
                 }
 
@@ -264,8 +273,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -305,8 +317,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -352,8 +367,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -401,8 +419,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -438,8 +459,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -474,8 +498,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -513,8 +540,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -554,8 +584,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -650,10 +683,13 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                     }
 
-                    // Await reading of the events and validate that we were able to read at least one event.
+                    Assert.Multiple(() =>
+                    {
+                        // Await reading of the events and validate that we were able to read at least one event.
 
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(eventsRead, Is.GreaterThanOrEqualTo(1), "At least one event should have been read.");
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                        Assert.That(eventsRead, Is.GreaterThanOrEqualTo(1), "At least one event should have been read.");
+                    });
 
                     cancellationSource.Cancel();
 
@@ -727,15 +763,21 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var readState = await ReadEventsAsync(receiver, expectedEvents, cancellationSource.Token);
 
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                        Assert.That(readState.Events, Has.Count.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
+                    });
                     Assert.That(readState.Events.Values.Any(readEvent => readEvent.OffsetString == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -807,15 +849,21 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var readState = await ReadEventsAsync(receiver, expectedEvents, cancellationSource.Token);
 
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                        Assert.That(readState.Events, Has.Count.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
+                    });
                     Assert.That(readState.Events.Values.Any(readEvent => readEvent.SequenceNumber == lastSequence), Is.EqualTo(isInclusive), $"The event with sequence number [{ lastSequence }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -875,18 +923,24 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubsTestEnvironment.Instance.Credential))
                 {
                     var readState = await ReadEventsAsync(receiver, sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-                    // The exact number of events returned by the service may vary due to clock skew and how reader is positioned; ensure that
-                    // at least the expected source events were read and ignore any additional events.
+                        // The exact number of events returned by the service may vary due to clock skew and how reader is positioned; ensure that
+                        // at least the expected source events were read and ignore any additional events.
 
-                    Assert.That(readState.Events.Count, Is.AtLeast(sourceEvents.Count), "The number of events received should match.");
+                        Assert.That(readState.Events, Has.Count.AtLeast(sourceEvents.Count), "The number of events received should match.");
+                    });
 
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
 
@@ -943,11 +997,14 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState[0].Events.TryGetValue(sourceId, out var customReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed for the custom receiver group.");
-                        Assert.That(sourceEvent.IsEquivalentTo(customReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the custom receiver group.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState[0].Events.TryGetValue(sourceId, out var customReadEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed for the custom receiver group.");
+                            Assert.That(sourceEvent.IsEquivalentTo(customReadEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event for the custom receiver group.");
 
-                        Assert.That(readState[1].Events.TryGetValue(sourceId, out var defaultReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed for the default receiver group.");
-                        Assert.That(sourceEvent.IsEquivalentTo(defaultReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the default receiver group.");
+                            Assert.That(readState[1].Events.TryGetValue(sourceId, out var defaultReadEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed for the default receiver group.");
+                            Assert.That(sourceEvent.IsEquivalentTo(defaultReadEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event for the default receiver group.");
+                        });
                     }
                 }
 
@@ -1029,10 +1086,13 @@ namespace Azure.Messaging.EventHubs.Tests
                     readCancellation.CancelAfter(TimeSpan.FromSeconds(15));
 
                     var readState = await ReadEventsAsync(receiver, sourceEvents.Select(evt => evt.MessageId), readCancellation.Token, waitTime: TimeSpan.FromMilliseconds(250));
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
 
-                    Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
-                    Assert.That(readState.EmptyCount, Is.GreaterThan(0), "At least one empty receive should have occurred.");
+                        Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
+                        Assert.That(readState.EmptyCount, Is.GreaterThan(0), "At least one empty receive should have occurred.");
+                    });
                 }
 
                 cancellationSource.Cancel();
@@ -1215,8 +1275,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the receiver.");
-                        Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the receiver.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed by the receiver.");
+                            Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event for the receiver.");
+                        });
                     }
                 }
             }
@@ -1279,11 +1342,14 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the first receiver.");
-                        Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the first receiver.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed by the first receiver.");
+                            Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event for the first receiver.");
 
-                        Assert.That(secondState.Events.TryGetValue(sourceId, out var secondReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the second receiver.");
-                        Assert.That(sourceEvent.IsEquivalentTo(secondReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the second receiver.");
+                            Assert.That(secondState.Events.TryGetValue(sourceId, out var secondReadEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed by the second receiver.");
+                            Assert.That(sourceEvent.IsEquivalentTo(secondReadEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event for the second receiver.");
+                        });
                     }
                 }
             }
@@ -1454,8 +1520,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     var lowerResult = await lowerMonitor.ReadTask;
                     var higherResult = await higherMonitor.ReadTask;
 
-                    Assert.That(higherResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The higher reader should have read all events.");
-                    Assert.That(lowerResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The lower reader should have read all events.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(higherResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The higher reader should have read all events.");
+                        Assert.That(lowerResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The lower reader should have read all events.");
+                    });
                 }
             }
         }
@@ -1516,8 +1585,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     var lowerResult = await lowerMonitor.ReadTask;
                     var higherResult = await higherMonitor.ReadTask;
 
-                    Assert.That(higherResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The higher reader should have read all events.");
-                    Assert.That(lowerResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The lower reader should have read all events.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(higherResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The higher reader should have read all events.");
+                        Assert.That(lowerResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The lower reader should have read all events.");
+                    });
                 }
             }
         }
@@ -1586,8 +1658,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
             }
@@ -1658,8 +1733,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     foreach (var sourceEvent in sourceEvents)
                     {
                         var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                            Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                        });
                     }
                 }
             }
@@ -1735,8 +1813,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     var nonExclusiveResult = await nonExclusiveMonitor.ReadTask;
                     var exclusiveResult = await exclusiveMonitor.ReadTask;
 
-                    Assert.That(nonExclusiveResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The non-exclusive reader should have read all events.");
-                    Assert.That(exclusiveResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The exclusive reader should have read all events.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(nonExclusiveResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The non-exclusive reader should have read all events.");
+                        Assert.That(exclusiveResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The exclusive reader should have read all events.");
+                    });
                 }
             }
         }
@@ -1807,8 +1888,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     var nonExclusiveResult = await nonExclusiveMonitor.ReadTask;
                     var exclusiveResult = await exclusiveMonitor.ReadTask;
 
-                    Assert.That(nonExclusiveResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The non-exclusive reader should have read all events.");
-                    Assert.That(exclusiveResult.Events.Count, Is.EqualTo(sourceEvents.Count), "The exclusive reader should have read all events.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(nonExclusiveResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The non-exclusive reader should have read all events.");
+                        Assert.That(exclusiveResult.Events, Has.Count.EqualTo(sourceEvents.Count), "The exclusive reader should have read all events.");
+                    });
                 }
             }
         }
@@ -1983,8 +2067,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Validate the captured exception; it should indicate that a partition was stolen.
 
                 Assert.That(capturedException, Is.Not.Null, "The contested read should have surfaced an exception.");
-                Assert.That(capturedException, Is.TypeOf<EventHubsException>(), "The exception should be of the correct type.");
-                Assert.That(((EventHubsException)capturedException).Reason, Is.EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The contested read should have failed due to a stolen partition.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(capturedException, Is.TypeOf<EventHubsException>(), "The exception should be of the correct type.");
+                    Assert.That(((EventHubsException)capturedException).Reason, Is.EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The contested read should have failed due to a stolen partition.");
+                });
 
                 // Cleanup the receive tasks.
 
@@ -2113,8 +2200,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                 }
 
-                Assert.That(secondReceiverStolen, Is.True, "The second receiver should have acknowledged the loss of ownership.");
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(secondReceiverStolen, Is.True, "The second receiver should have acknowledged the loss of ownership.");
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+                });
                 cancellationSource.Cancel();
 
                 // Cleanup the receive tasks.
@@ -2161,10 +2251,13 @@ namespace Azure.Messaging.EventHubs.Tests
                     readCancellation.CancelAfter(readTime);
 
                     var readState = await ReadEventsAsync(receiver, null, readCancellation.Token, waitTime: waitTime);
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
 
-                    Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
-                    Assert.That(readState.EmptyCount, Is.AtLeast(minimumEmptyBatches), "The number of empty events read should be consistent with the requested wait time.");
+                        Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
+                        Assert.That(readState.EmptyCount, Is.AtLeast(minimumEmptyBatches), "The number of empty events read should be consistent with the requested wait time.");
+                    });
                 }
 
                 cancellationSource.Cancel();
@@ -2252,8 +2345,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var readState = await ReadEventsAsync(receiver, new HashSet<string> { eventData.MessageId }, cancellationSource.Token);
 
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(readState.Events, Has.Count.EqualTo(1), "A single event was sent.");
+                });
                 cancellationSource.Cancel();
 
                 // Validate the extended event attributes. Note that the header and delivery annotations are per-hop
@@ -2262,32 +2358,38 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var readMessage = readState.Events.First().Value.GetRawAmqpMessage();
 
-                Assert.That(readMessage.GetEventBody().ToArray(), Is.EquivalentTo(message.GetEventBody().ToArray()), "The data body should match.");
-                Assert.That(readMessage.ApplicationProperties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
-                Assert.That(readMessage.Footer, Is.EquivalentTo(message.Footer), "The footer should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readMessage.GetEventBody().ToArray(), Is.EquivalentTo(message.GetEventBody().ToArray()), "The data body should match.");
+                    Assert.That(readMessage.ApplicationProperties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
+                    Assert.That(readMessage.Footer, Is.EquivalentTo(message.Footer), "The footer should match.");
 
-                // Properties
+                    // Properties
 
-                Assert.That(readMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(readMessage.Properties.CreationTime + message.Header.TimeToLive), "The expiry time should be equal to the computed creation time plus the time to live.");
-                Assert.That(readMessage.Properties.ContentEncoding, Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
-                Assert.That(readMessage.Properties.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
-                Assert.That(readMessage.Properties.CorrelationId, Is.EqualTo(message.Properties.CorrelationId), "The correlation identifier should match.");
-                Assert.That(readMessage.Properties.CreationTime, Is.EqualTo(readMessage.Properties.AbsoluteExpiryTime - message.Header.TimeToLive), "The creation time should be equal to the difference of the expiry time and time to live.");
-                Assert.That(readMessage.Properties.GroupId, Is.EqualTo(message.Properties.GroupId), "The group identifier should match.");
-                Assert.That(readMessage.Properties.GroupSequence, Is.EqualTo(message.Properties.GroupSequence), "The group sequence should match.");
-                Assert.That(readMessage.Properties.MessageId, Is.EqualTo(message.Properties.MessageId), "The message identifier should match.");
-                Assert.That(readMessage.Properties.ReplyTo, Is.EqualTo(message.Properties.ReplyTo), "The reply-to address should match.");
-                Assert.That(readMessage.Properties.ReplyToGroupId, Is.EqualTo(message.Properties.ReplyToGroupId), "The reply-to group identifier should match.");
-                Assert.That(readMessage.Properties.Subject, Is.EqualTo(message.Properties.Subject), "The subject should match.");
-                Assert.That(readMessage.Properties.To, Is.EqualTo(message.Properties.To), "The to address should match.");
-                Assert.That(readMessage.Properties.UserId.Value.ToArray(), Is.EquivalentTo(message.Properties.UserId.Value.ToArray()), "The user identifier should match.");
+                    Assert.That(readMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(readMessage.Properties.CreationTime + message.Header.TimeToLive), "The expiry time should be equal to the computed creation time plus the time to live.");
+                    Assert.That(readMessage.Properties.ContentEncoding, Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
+                    Assert.That(readMessage.Properties.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
+                    Assert.That(readMessage.Properties.CorrelationId, Is.EqualTo(message.Properties.CorrelationId), "The correlation identifier should match.");
+                    Assert.That(readMessage.Properties.CreationTime, Is.EqualTo(readMessage.Properties.AbsoluteExpiryTime - message.Header.TimeToLive), "The creation time should be equal to the difference of the expiry time and time to live.");
+                    Assert.That(readMessage.Properties.GroupId, Is.EqualTo(message.Properties.GroupId), "The group identifier should match.");
+                    Assert.That(readMessage.Properties.GroupSequence, Is.EqualTo(message.Properties.GroupSequence), "The group sequence should match.");
+                    Assert.That(readMessage.Properties.MessageId, Is.EqualTo(message.Properties.MessageId), "The message identifier should match.");
+                    Assert.That(readMessage.Properties.ReplyTo, Is.EqualTo(message.Properties.ReplyTo), "The reply-to address should match.");
+                    Assert.That(readMessage.Properties.ReplyToGroupId, Is.EqualTo(message.Properties.ReplyToGroupId), "The reply-to group identifier should match.");
+                    Assert.That(readMessage.Properties.Subject, Is.EqualTo(message.Properties.Subject), "The subject should match.");
+                    Assert.That(readMessage.Properties.To, Is.EqualTo(message.Properties.To), "The to address should match.");
+                    Assert.That(readMessage.Properties.UserId.Value.ToArray(), Is.EquivalentTo(message.Properties.UserId.Value.ToArray()), "The user identifier should match.");
+                });
 
                 // Message Annotations
 
                 foreach (var key in message.MessageAnnotations.Keys)
                 {
-                    Assert.That(readMessage.MessageAnnotations.ContainsKey(key), $"The message annotation key [{ key }] should be present.");
-                    Assert.That(readMessage.MessageAnnotations[key], Is.EqualTo(message.MessageAnnotations[key]), $"The message annotation [{ key }] should match the expected value.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(readMessage.MessageAnnotations.ContainsKey(key), $"The message annotation key [{key}] should be present.");
+                        Assert.That(readMessage.MessageAnnotations[key], Is.EqualTo(message.MessageAnnotations[key]), $"The message annotation [{key}] should match the expected value.");
+                    });
                 }
             }
         }
@@ -2331,8 +2433,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var readState = await ReadEventsAsync(receiver, new HashSet<string> { eventData.MessageId }, cancellationSource.Token);
 
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(readState.Events, Has.Count.EqualTo(1), "A single event was sent.");
+                });
                 cancellationSource.Cancel();
 
                 // Validate the extended event attributes. Note that the header and delivery annotations are per-hop
@@ -2341,8 +2446,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var readMessage = readState.Events.First().Value.GetRawAmqpMessage();
 
-                Assert.That(readMessage.Body.TryGetValue(out var readValue), Is.True, "The message should have a value body.");
-                Assert.That(readValue, Is.EquivalentTo(value), "The value body should match.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(readMessage.Body.TryGetValue(out var readValue), Is.True, "The message should have a value body.");
+                    Assert.That(readValue, Is.EquivalentTo(value), "The value body should match.");
+                });
             }
         }
 
@@ -2385,8 +2493,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var readState = await ReadEventsAsync(receiver, new HashSet<string> { eventData.MessageId }, cancellationSource.Token);
 
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(readState.Events, Has.Count.EqualTo(1), "A single event was sent.");
+                });
                 cancellationSource.Cancel();
 
                 // Validate the extended event attributes. Note that the header and delivery annotations are per-hop
@@ -2430,14 +2541,20 @@ namespace Azure.Messaging.EventHubs.Tests
                     receiverOptions))
                 {
                     var partitionProperties = await receiver.GetPartitionPropertiesAsync(cancellationSource.Token);
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-                    Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
-                    Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
-                    Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
-                    Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                        Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
+                    });
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
+                        Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
+                        Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
+                        Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
+                        Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    });
                 }
             }
         }

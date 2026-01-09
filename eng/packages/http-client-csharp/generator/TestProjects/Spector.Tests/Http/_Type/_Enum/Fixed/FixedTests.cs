@@ -16,22 +16,22 @@ namespace TestProjects.Spector.Tests.Http._Type._Enum.Fixed
         public Task GetKnownValue() => Test(async (host) =>
         {
             var response = await new FixedClient(host, null).GetStringClient().GetKnownValueAsync();
-            Assert.AreEqual(DaysOfWeekEnum.Monday, response.Value);
+            Assert.That(response.Value, Is.EqualTo(DaysOfWeekEnum.Monday));
         });
 
         [SpectorTest]
         public Task PutKnownValue() => Test(async (host) =>
         {
             var response = await new FixedClient(host, null).GetStringClient().PutKnownValueAsync(DaysOfWeekEnum.Monday);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task PutUnknownValue() => Test((host) =>
         {
             var exception = Assert.ThrowsAsync<RequestFailedException>(() => new FixedClient(host, null).GetStringClient().PutUnknownValueAsync(RequestContent.Create(BinaryData.FromObjectAsJson("Weekend")), null));
-            Assert.IsNotNull(exception?.GetRawResponse());
-            Assert.AreEqual(500, exception?.GetRawResponse()?.Status);
+            Assert.That(exception?.GetRawResponse(), Is.Not.Null);
+            Assert.That(exception?.GetRawResponse()?.Status, Is.EqualTo(500));
             return Task.CompletedTask;
         });
     }

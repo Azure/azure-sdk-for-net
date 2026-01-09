@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsForwardingRuleset = await _dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
 
             // ASSERT
-            Assert.AreEqual(dnsForwardingRuleset.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(dnsForwardingRuleset.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedDnsForwardingRuleset = await _dnsForwardingRulesetCollection.GetAsync(dnsForwardingRulesetName);
 
             // ASSERT
-            Assert.AreEqual(retrievedDnsForwardingRuleset.Value.Data.Name, dnsForwardingRulesetName);
+            Assert.That(dnsForwardingRulesetName, Is.EqualTo(retrievedDnsForwardingRuleset.Value.Data.Name));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var patchedDnsForwardingRuleset = await createdDnsForwardingRuleset.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedDnsForwardingRuleset.Value.Data.Tags);
+            Assert.That(patchedDnsForwardingRuleset.Value.Data.Tags, Is.EquivalentTo(new Dictionary<string, string> { { newTagKey, newTagValue } }));
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getDnsForwardingRulesetResult = await _dnsForwardingRulesetCollection.ExistsAsync(dnsForwardingRulesetName);
-            Assert.AreEqual(getDnsForwardingRulesetResult.Value, false);
+            Assert.That(getDnsForwardingRulesetResult.Value, Is.EqualTo(false));
         }
     }
 }

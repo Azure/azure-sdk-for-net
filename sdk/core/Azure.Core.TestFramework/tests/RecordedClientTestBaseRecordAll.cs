@@ -22,7 +22,7 @@ namespace Azure.Core.TestFramework.Tests
             bool isAsyncFileV4 = filename == "ValidateFilename[V4]Async.json";
             bool isSyncFileV0 = filename == "ValidateFilename[V0].json";
             bool isSyncFileV4 = filename == "ValidateFilename[V4].json";
-            Assert.IsTrue(isAsyncFileV4 || isAsyncFileV0 || isSyncFileV0 || isSyncFileV4);
+            Assert.That(isAsyncFileV4 || isAsyncFileV0 || isSyncFileV0 || isSyncFileV4, Is.True);
         }
     }
 }

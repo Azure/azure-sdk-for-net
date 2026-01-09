@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // Exist
             var flag = await _fhirDestinationCollection.ExistsAsync(fhirDestinationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getfhirDestination = await _fhirDestinationCollection.GetAsync(fhirDestinationName);
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // GetAll
             var list = await _fhirDestinationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateHealthcareApisIotFhirDestination(list.FirstOrDefault().Data, fhirDestinationName);
 
             // Delete
             await fhirDestination.DeleteAsync(WaitUntil.Completed);
             flag = await _fhirDestinationCollection.ExistsAsync(fhirDestinationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         private async Task<HealthcareApisIotFhirDestinationResource> CreateHealthcareApisIotFhirDestination(string fhirDestinationName)
@@ -78,13 +78,16 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
         private void ValidateHealthcareApisIotFhirDestination(HealthcareApisIotFhirDestinationData fhirDestination, string fhirDestinationName)
         {
-            Assert.IsNotNull(fhirDestination);
-            Assert.IsNotNull(fhirDestination.ETag);
-            Assert.IsNotNull(fhirDestination.FhirMappingContent);
-            Assert.AreEqual(fhirDestinationName, fhirDestination.Id.Name);
-            Assert.AreEqual(DefaultLocation, fhirDestination.Location);
-            Assert.AreEqual("Create", fhirDestination.ResourceIdentityResolutionType.ToString());
-            Assert.AreEqual("Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations", fhirDestination.ResourceType.ToString());
+            Assert.That(fhirDestination, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fhirDestination.ETag, Is.Not.Null);
+                Assert.That(fhirDestination.FhirMappingContent, Is.Not.Null);
+                Assert.That(fhirDestination.Id.Name, Is.EqualTo(fhirDestinationName));
+                Assert.That(fhirDestination.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(fhirDestination.ResourceIdentityResolutionType.ToString(), Is.EqualTo("Create"));
+                Assert.That(fhirDestination.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations"));
+            });
         }
     }
 }

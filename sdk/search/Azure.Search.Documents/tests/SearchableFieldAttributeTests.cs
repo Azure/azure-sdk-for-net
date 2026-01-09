@@ -61,19 +61,22 @@ namespace Azure.Search.Documents.Tests
             SearchField field = new SearchField("test", SearchFieldDataType.String);
             ((ISearchFieldAttribute)sut).SetField(field);
 
-            Assert.AreEqual("test", field.Name);
-            Assert.AreEqual(SearchFieldDataType.String, field.Type);
-            Assert.AreEqual(key, field.IsKey ?? false);
-            Assert.AreEqual(hidden, field.IsHidden ?? false);
-            Assert.AreEqual(filterable, field.IsFilterable ?? false);
-            Assert.AreEqual(facetable, field.IsFacetable ?? false);
-            Assert.IsTrue(field.IsSearchable);
-            Assert.AreEqual(sortable, field.IsSortable ?? false);
-            Assert.AreEqual(analyzerName, field.AnalyzerName?.ToString());
-            Assert.AreEqual(searchAnalyzerName, field.SearchAnalyzerName?.ToString());
-            Assert.AreEqual(indexAnalyzerName, field.IndexAnalyzerName?.ToString());
-            Assert.AreEqual(normalizerName, field.NormalizerName?.ToString());
-            Assert.AreEqual(synonymMapNames ?? Array.Empty<string>(), field.SynonymMapNames);
+            Assert.Multiple(() =>
+            {
+                Assert.That(field.Name, Is.EqualTo("test"));
+                Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.String));
+                Assert.That(field.IsKey ?? false, Is.EqualTo(key));
+                Assert.That(field.IsHidden ?? false, Is.EqualTo(hidden));
+                Assert.That(field.IsFilterable ?? false, Is.EqualTo(filterable));
+                Assert.That(field.IsFacetable ?? false, Is.EqualTo(facetable));
+                Assert.That(field.IsSearchable, Is.True);
+                Assert.That(field.IsSortable ?? false, Is.EqualTo(sortable));
+                Assert.That(field.AnalyzerName?.ToString(), Is.EqualTo(analyzerName));
+                Assert.That(field.SearchAnalyzerName?.ToString(), Is.EqualTo(searchAnalyzerName));
+                Assert.That(field.IndexAnalyzerName?.ToString(), Is.EqualTo(indexAnalyzerName));
+                Assert.That(field.NormalizerName?.ToString(), Is.EqualTo(normalizerName));
+                Assert.That(field.SynonymMapNames, Is.EqualTo(synonymMapNames ?? Array.Empty<string>()));
+            });
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
             var response = tenants.FirstOrDefault().GetTenantPolicy();
-            Assert.NotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
     }
 }

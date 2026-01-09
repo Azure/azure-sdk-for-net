@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
             ArmOperation<NetworkFabricInternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternalNetworkName, data);
             NetworkFabricInternalNetworkResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.InternalNetworkName);
+            Assert.That(TestEnvironment.InternalNetworkName, Is.EqualTo(createResult.Data.Name));
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricInternalNetworkResource getResult = await internalNetwork.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.InternalNetworkName);
+            Assert.That(TestEnvironment.InternalNetworkName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await internalNetwork.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

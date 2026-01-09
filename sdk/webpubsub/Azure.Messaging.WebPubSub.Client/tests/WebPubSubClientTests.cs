@@ -57,14 +57,14 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             client.WebSocketClientFactory = _factoryMoc.Object;
 
             await client.StartAsync().OrTimeout();
-            Assert.True(fetchTcs.Task.IsCompleted);
+            Assert.That(fetchTcs.Task.IsCompleted, Is.True);
 
             // Another start is not allowed
             Assert.ThrowsAsync<InvalidOperationException>(() => client.StartAsync());
 
             // Stop should work
             await client.StopAsync().OrTimeout();
-            Assert.True(socketStopTcs.VerifyCalledTimesAsync(1).IsCompleted);
+            Assert.That(socketStopTcs.VerifyCalledTimesAsync(1).IsCompleted, Is.True);
             TestUtils.AssertTimeout(socketStopTcs.VerifyCalledTimesAsync(2));
 
             // After stop we can have another start
@@ -139,13 +139,13 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             await connectedTcs.Task.OrTimeout();
 
             var uri1 = await connectUriTcs.VerifyCalledTimesAsync(1).OrTimeout();
-            Assert.AreEqual("wss://test.com/", uri1.AbsoluteUri);
+            Assert.That(uri1.AbsoluteUri, Is.EqualTo("wss://test.com/"));
 
             var uri2 = await connectUriTcs.VerifyCalledTimesAsync(2).OrTimeout();
-            Assert.AreEqual("wss://test.com/?awps_connection_id=connection&awps_reconnection_token=rec", uri2.AbsoluteUri);
+            Assert.That(uri2.AbsoluteUri, Is.EqualTo("wss://test.com/?awps_connection_id=connection&awps_reconnection_token=rec"));
 
             var uri3 = await connectUriTcs.VerifyCalledTimesAsync(3).OrTimeout();
-            Assert.AreEqual("wss://test.com/?awps_connection_id=connection&awps_reconnection_token=rec", uri3.AbsoluteUri);
+            Assert.That(uri3.AbsoluteUri, Is.EqualTo("wss://test.com/?awps_connection_id=connection&awps_reconnection_token=rec"));
 
             // After stop the recover or reconnect should stop
             await client.StopAsync();
@@ -212,15 +212,15 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             await connectedTcs.Task.OrTimeout();
 
             var uri1 = await connectUriTcs.VerifyCalledTimesAsync(1).OrTimeout();
-            Assert.AreEqual("wss://test.com/", uri1.AbsoluteUri);
+            Assert.That(uri1.AbsoluteUri, Is.EqualTo("wss://test.com/"));
             await disconnectedTcs.VerifyCalledTimesAsync(1).OrTimeout();
 
             var uri2 = await connectUriTcs.VerifyCalledTimesAsync(2).OrTimeout();
-            Assert.AreEqual("wss://test.com/", uri2.AbsoluteUri);
+            Assert.That(uri2.AbsoluteUri, Is.EqualTo("wss://test.com/"));
             await disconnectedTcs.VerifyCalledTimesAsync(2).OrTimeout();
 
             var uri3 = await connectUriTcs.VerifyCalledTimesAsync(3).OrTimeout();
-            Assert.AreEqual("wss://test.com/", uri3.AbsoluteUri);
+            Assert.That(uri3.AbsoluteUri, Is.EqualTo("wss://test.com/"));
             await disconnectedTcs.VerifyCalledTimesAsync(3).OrTimeout();
 
             // After stop the recover or reconnect should stop

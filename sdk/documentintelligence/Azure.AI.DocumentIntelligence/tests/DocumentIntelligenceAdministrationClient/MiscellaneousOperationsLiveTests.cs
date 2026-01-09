@@ -141,7 +141,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            Assert.That(idMapping.Count, Is.EqualTo(expectedIdMapping.Count));
+            Assert.That(idMapping, Has.Count.EqualTo(expectedIdMapping.Count));
 
             foreach (string id in expectedIdMapping.Keys)
             {
@@ -150,16 +150,19 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 DocumentIntelligenceOperationDetails expected = expectedIdMapping[id];
                 DocumentIntelligenceOperationDetails operation = idMapping[id];
 
-                Assert.That(operation.OperationId, Is.EqualTo(expected.OperationId));
-                Assert.That(operation.ApiVersion, Is.EqualTo(expected.ApiVersion));
-                Assert.That(operation.Status, Is.EqualTo(expected.Status));
-                Assert.That(operation.PercentCompleted, Is.EqualTo(expected.PercentCompleted));
-                Assert.That(operation.ResourceLocation.AbsoluteUri, Is.EqualTo(expected.ResourceLocation.AbsoluteUri));
-                Assert.That(operation.CreatedOn, Is.EqualTo(expected.CreatedOn));
-                Assert.That(operation.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
-                Assert.That(operation.Tags, Is.EquivalentTo(expected.Tags));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(operation.OperationId, Is.EqualTo(expected.OperationId));
+                    Assert.That(operation.ApiVersion, Is.EqualTo(expected.ApiVersion));
+                    Assert.That(operation.Status, Is.EqualTo(expected.Status));
+                    Assert.That(operation.PercentCompleted, Is.EqualTo(expected.PercentCompleted));
+                    Assert.That(operation.ResourceLocation.AbsoluteUri, Is.EqualTo(expected.ResourceLocation.AbsoluteUri));
+                    Assert.That(operation.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                    Assert.That(operation.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
+                    Assert.That(operation.Tags, Is.EquivalentTo(expected.Tags));
 
-                Assert.That(operation.Error, Is.Null);
+                    Assert.That(operation.Error, Is.Null);
+                });
             }
         }
 
@@ -167,18 +170,21 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         private void ValidateOperationDetails(DocumentIntelligenceOperationDetails operationDetails, string operationId, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
         {
-            Assert.That(operationDetails.OperationId, Is.EqualTo(operationId));
-            Assert.That(operationDetails.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(operationDetails.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
-            Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
-            Assert.That(operationDetails.ResourceLocation.AbsoluteUri, Is.EqualTo(resourceLocation));
+            Assert.Multiple(() =>
+            {
+                Assert.That(operationDetails.OperationId, Is.EqualTo(operationId));
+                Assert.That(operationDetails.ApiVersion, Is.EqualTo(ServiceVersionString));
+                Assert.That(operationDetails.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
+                Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
+                Assert.That(operationDetails.ResourceLocation.AbsoluteUri, Is.EqualTo(resourceLocation));
 
-            Assert.That(operationDetails.Error, Is.Null);
+                Assert.That(operationDetails.Error, Is.Null);
 
-            // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.CreatedOn));
-            Assert.That(operationDetails.Tags, Is.EquivalentTo(tags));
+                // Add a 4-hour tolerance because the model could have been cached before this test.
+                Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+                Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.CreatedOn));
+                Assert.That(operationDetails.Tags, Is.EquivalentTo(tags));
+            });
         }
     }
 }

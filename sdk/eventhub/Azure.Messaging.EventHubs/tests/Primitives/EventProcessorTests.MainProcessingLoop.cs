@@ -170,9 +170,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if querying partitions fails.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if querying partitions fails.");
+            });
 
             mockProcessor
                 .Protected()
@@ -242,9 +245,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(Task.WhenAll(logCompletionSource.Task, handlerCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+            });
 
             mockLogger
                 .Verify(log => log.EventProcessorLoadBalancingError(
@@ -335,9 +341,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(Task.WhenAll(loadBalanceCompletionSource.Task, errorHandlerCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+            });
 
             mockLogger
                 .Verify(log => log.EventProcessorClaimOwnershipError(
@@ -421,9 +430,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(Task.WhenAll(loadBalanceCompletionSource.Task, errorHandlerCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+            });
 
             mockLogger
                 .Verify(log => log.EventProcessorClaimOwnershipError(
@@ -529,9 +541,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(Task.WhenAll(logCompletionSource.Task, handlerCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+                Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+            });
 
             mockLogger
                 .Verify(log => log.EventProcessorClaimOwnershipError(
@@ -649,8 +664,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var activeProcessors = GetActivePartitionProcessors(mockProcessor.Object);
-            Assert.That(activeProcessors.ContainsKey(firstPartiton), Is.True, "The partition processing for the first partition should be active.");
-            Assert.That(activeProcessors.ContainsKey(secondPartition), Is.True, "The partition processing for the second partition should be active.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(activeProcessors.ContainsKey(firstPartiton), Is.True, "The partition processing for the first partition should be active.");
+                Assert.That(activeProcessors.ContainsKey(secondPartition), Is.True, "The partition processing for the second partition should be active.");
+            });
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
@@ -1044,8 +1062,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var activeProcessors = GetActivePartitionProcessors(mockProcessor.Object);
-            Assert.That(activeProcessors.ContainsKey(firstPartiton), Is.False, "The partition processing for the first partition should not be active.");
-            Assert.That(activeProcessors.ContainsKey(secondPartition), Is.True, "The partition processing for the second partition should be active.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(activeProcessors.ContainsKey(firstPartiton), Is.False, "The partition processing for the first partition should not be active.");
+                Assert.That(activeProcessors.ContainsKey(secondPartition), Is.True, "The partition processing for the second partition should be active.");
+            });
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
@@ -2345,9 +2366,9 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
             cancellationSource.Cancel();
 
-            Assert.That(ownedPartitions.Count, Is.EqualTo(2), "There should be two owned partitions.");
-            Assert.That(ownedPartitions.Contains(firstPartiton), Is.True, "The first partition should be owned.");
-            Assert.That(ownedPartitions.Contains(secondPartition), Is.True, "The second partition should be owned.");
+            Assert.That(ownedPartitions, Has.Count.EqualTo(2), "There should be two owned partitions.");
+            Assert.That(ownedPartitions, Does.Contain(firstPartiton), "The first partition should be owned.");
+            Assert.That(ownedPartitions, Does.Contain(secondPartition), "The second partition should be owned.");
 
             // Due to non-determinism, the exact number of cycle is not known.
 
@@ -2433,14 +2454,17 @@ namespace Azure.Messaging.EventHubs.Tests
             var delayTask = Task.Delay(TimeSpan.FromSeconds(1), cancellationSource.Token);
             var completedTask = await Task.WhenAny(completionSource.Task, delayTask);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(completedTask, Is.SameAs(delayTask), "The completion source should have timed out because the load balancing interval should not have passed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(completedTask, Is.SameAs(delayTask), "The completion source should have timed out because the load balancing interval should not have passed.");
+            });
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
             cancellationSource.Cancel();
 
-            Assert.That(ownedPartitions.Count, Is.EqualTo(1), "There should be a single owned partition.");
-            Assert.That(ownedPartitions.Contains(partitionIds[2]), Is.True, "The last partition should be owned.");
+            Assert.That(ownedPartitions, Has.Count.EqualTo(1), "There should be a single owned partition.");
+            Assert.That(ownedPartitions, Does.Contain(partitionIds[2]), "The last partition should be owned.");
 
             // Because the load balancer is signaling that it is in a balanced state after the first claim, there should be no
             // attempts to claim again within the time period allowed by the test.
@@ -2531,13 +2555,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var delayTask = Task.Delay(TimeSpan.FromSeconds(1), cancellationSource.Token);
             var completedTask = await Task.WhenAny(completionSource.Task, delayTask);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(completedTask, Is.SameAs(delayTask), "The completion source should have timed out because the load balancing interval should not have passed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(completedTask, Is.SameAs(delayTask), "The completion source should have timed out because the load balancing interval should not have passed.");
+            });
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
             cancellationSource.Cancel();
 
-            Assert.That(ownedPartitions.Count, Is.EqualTo(1), "There should be a single owned partition.");
+            Assert.That(ownedPartitions, Has.Count.EqualTo(1), "There should be a single owned partition.");
             Assert.That(ownedPartitions[0], Is.EqualTo(firstPartiton), "The first partition should be owned.");
 
             mockLoadBalancer
@@ -2662,9 +2689,12 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
 
             await Task.WhenAny(Task.WhenAll(stopCompletionSource.Task, processCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(loadBalancingCount, Is.GreaterThan(loadBalancingCountAtDelay), "The load balancing cycle should not have been held up by the partition stopping.");
+                Assert.That(loadBalancingCount, Is.GreaterThan(loadBalancingCountAtDelay), "The load balancing cycle should not have been held up by the partition stopping.");
+            });
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
@@ -2738,9 +2768,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have faulted during startup.");
+                Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have faulted during startup.");
+            });
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             mockEventSource

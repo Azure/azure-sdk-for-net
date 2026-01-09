@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void KeyReleasePolicyValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new KeyReleasePolicy(null));
-            Assert.AreEqual("encodedPolicy", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("encodedPolicy"));
         }
 
         [Test]
@@ -27,8 +27,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 policy.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual("application/json", policy.ContentType);
-            Assert.AreEqual("test", policy.EncodedPolicy.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.ContentType, Is.EqualTo("application/json"));
+                Assert.That(policy.EncodedPolicy.ToString(), Is.EqualTo("test"));
+            });
         }
 
         [Test]
@@ -42,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using JsonStream json = new();
             json.WriteObject(policy);
 
-            Assert.AreEqual(@"{""contentType"":""application/json"",""data"":""dGVzdA""}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo(@"{""contentType"":""application/json"",""data"":""dGVzdA""}"));
         }
 
         [Test]
@@ -54,9 +57,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 policy.Deserialize(json.AsStream());
             }
 
-            Assert.AreEqual("application/json", policy.ContentType);
-            Assert.AreEqual("test", policy.EncodedPolicy.ToString());
-            Assert.AreEqual(immutable, policy.Immutable);
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.ContentType, Is.EqualTo("application/json"));
+                Assert.That(policy.EncodedPolicy.ToString(), Is.EqualTo("test"));
+                Assert.That(policy.Immutable, Is.EqualTo(immutable));
+            });
         }
 
         [Test]
@@ -71,7 +77,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using JsonStream json = new();
             json.WriteObject(policy);
 
-            Assert.AreEqual(@$"{{""contentType"":""application/json"",""data"":""dGVzdA"",""immutable"":{(immutable ? "true" : "false")}}}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo(@$"{{""contentType"":""application/json"",""data"":""dGVzdA"",""immutable"":{(immutable ? "true" : "false")}}}"));
         }
 
         [Test]
@@ -98,9 +104,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
                 stream.CopyTo(file);
             }
-#endregion
+            #endregion
 
-            Assert.AreEqual("test", Encoding.UTF8.GetString(ms.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(ms.ToArray()), Is.EqualTo("test"));
         }
 
         [Test]
@@ -118,7 +124,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using JsonStream json = new();
             json.WriteObject(policy);
 
-            Assert.AreEqual(@"{""data"":""dGVzdA""}", json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo(@"{""data"":""dGVzdA""}"));
         }
     }
 }

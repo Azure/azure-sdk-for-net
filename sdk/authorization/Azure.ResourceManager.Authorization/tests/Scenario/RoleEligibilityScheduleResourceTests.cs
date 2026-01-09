@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var id = RoleEligibilityScheduleResource.CreateResourceIdentifier("/providers/Microsoft.Management/managementGroups/CnAIOrchestrationServicePublicCorpprod", "0ec10fdb-ef51-481d-bbf0-fd87c484cb3c");
             var resource = Client.GetRoleEligibilityScheduleResource(id);
             resource = await resource.GetAsync();
-            Assert.NotNull(resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.Not.Null);
         }
     }
 }

@@ -21,9 +21,12 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var policy = new MockServiceBusRetryPolicy();
 
-            Assert.That(policy.IsServerBusy, Is.False);
-            Assert.That(policy.ServerBusyBaseSleepTime, Is.GreaterThan(TimeSpan.FromSeconds(0)));
-            Assert.That(policy.ServerBusyExceptionMessage, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(policy.IsServerBusy, Is.False);
+                Assert.That(policy.ServerBusyBaseSleepTime, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+                Assert.That(policy.ServerBusyExceptionMessage, Is.Null);
+            });
         }
 
         [Test]
@@ -128,8 +131,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await policy.RunOperation(operation, null, null, CancellationToken.None);
             });
 
-            Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.ServiceBusy));
-            Assert.That(policy.CalculateRetryDelayCallCount, Is.EqualTo(CustomServerBusyMockRetryPolicy.MaxRetries + 1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.Reason, Is.EqualTo(ServiceBusFailureReason.ServiceBusy));
+                Assert.That(policy.CalculateRetryDelayCallCount, Is.EqualTo(CustomServerBusyMockRetryPolicy.MaxRetries + 1));
+            });
         }
 
         [Test]
@@ -156,10 +162,13 @@ namespace Azure.Messaging.ServiceBus.Tests
             // Should eventually invoke the operation and return true
             var result = await policy.RunOperation(operation, null, null, CancellationToken.None);
 
-            Assert.That(result, Is.True);
-            Assert.That(operationInvoked, Is.True);
-            Assert.That(operationCallCount, Is.EqualTo(1));
-            Assert.That(policy.CalculateRetryDelayCallCount, Is.EqualTo(ServerBusyResolvesMockRetryPolicy.BusyResolveAfterRetries + 1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(operationInvoked, Is.True);
+                Assert.That(operationCallCount, Is.EqualTo(1));
+                Assert.That(policy.CalculateRetryDelayCallCount, Is.EqualTo(ServerBusyResolvesMockRetryPolicy.BusyResolveAfterRetries + 1));
+            });
         }
 
         // Private test helper classes as nested types

@@ -54,8 +54,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(options, default);
 
             Assert.That(batch, Is.Not.Null, "The created batch should be populated.");
-            Assert.That(batch, Is.InstanceOf<AmqpMessageBatch>(), $"The created batch should be an {nameof(AmqpMessageBatch)}.");
-            Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch), Is.SameAs(options), "The provided options should have been used.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch, Is.InstanceOf<AmqpMessageBatch>(), $"The created batch should be an {nameof(AmqpMessageBatch)}.");
+                Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch), Is.SameAs(options), "The provided options should have been used.");
+            });
         }
 
         /// <summary>

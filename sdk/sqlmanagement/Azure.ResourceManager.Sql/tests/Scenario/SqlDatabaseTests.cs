@@ -65,31 +65,34 @@ namespace Azure.ResourceManager.Sql.Tests
             // 1.CreateOrUpdate
             SqlDatabaseData data = new SqlDatabaseData(Location) { };
             var database = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
-            Assert.IsNotNull(database.Value.Data);
-            Assert.AreEqual(databaseName, database.Value.Data.Name);
+            Assert.That(database.Value.Data, Is.Not.Null);
+            Assert.Multiple(async () =>
+            {
+                Assert.That(database.Value.Data.Name, Is.EqualTo(databaseName));
 
-            // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(databaseName));
-            Assert.IsFalse(await collection.ExistsAsync(databaseName + "0"));
+                // 2.CheckIfExist
+                Assert.That((bool)await collection.ExistsAsync(databaseName), Is.True);
+                Assert.That((bool)await collection.ExistsAsync(databaseName + "0"), Is.False);
+            });
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseName);
-            Assert.IsNotNull(getDatabase.Value.Data);
-            Assert.AreEqual(databaseName, getDatabase.Value.Data.Name);
+            Assert.That(getDatabase.Value.Data, Is.Not.Null);
+            Assert.That(getDatabase.Value.Data.Name, Is.EqualTo(databaseName));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list, Has.Count.EqualTo(2));
             string[] databaseNamesList = { list.First().Data.Name, list.Last().Data.Name };
-            Assert.Contains(databaseName, databaseNamesList);
+            Assert.That(databaseNamesList, Does.Contain(databaseName));
 
             // 5.Delete
             var deleteDatabase = await collection.GetAsync(databaseName);
             await deleteDatabase.Value.DeleteAsync(WaitUntil.Completed);
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
-            Assert.AreNotEqual(databaseName, list.First().Data.Name);
+            Assert.That(list, Has.Count.EqualTo(1));
+            Assert.That(list.First().Data.Name, Is.Not.EqualTo(databaseName));
         }
 
         [Test]
@@ -114,33 +117,39 @@ namespace Azure.ResourceManager.Sql.Tests
                 };
 
                 var database = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
-                Assert.IsNotNull(database.Value.Data);
-                Assert.AreEqual(databaseName, database.Value.Data.Name);
-                Assert.AreEqual(enclaveType, database.Value.Data.PreferredEnclaveType);
+                Assert.That(database.Value.Data, Is.Not.Null);
+                Assert.Multiple(async () =>
+                {
+                    Assert.That(database.Value.Data.Name, Is.EqualTo(databaseName));
+                    Assert.That(database.Value.Data.PreferredEnclaveType, Is.EqualTo(enclaveType));
 
-                // 2.CheckIfExist
-                Assert.IsTrue(await collection.ExistsAsync(databaseName));
-                Assert.IsFalse(await collection.ExistsAsync(databaseName + "0"));
+                    // 2.CheckIfExist
+                    Assert.That((bool)await collection.ExistsAsync(databaseName), Is.True);
+                    Assert.That((bool)await collection.ExistsAsync(databaseName + "0"), Is.False);
+                });
 
                 // 3.Get
                 var getDatabase = await collection.GetAsync(databaseName);
-                Assert.IsNotNull(getDatabase.Value.Data);
-                Assert.AreEqual(databaseName, getDatabase.Value.Data.Name);
-                Assert.AreEqual(enclaveType, database.Value.Data.PreferredEnclaveType);
+                Assert.That(getDatabase.Value.Data, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(getDatabase.Value.Data.Name, Is.EqualTo(databaseName));
+                    Assert.That(database.Value.Data.PreferredEnclaveType, Is.EqualTo(enclaveType));
+                });
 
                 // 4.GetAll
                 var list = await collection.GetAllAsync().ToEnumerableAsync();
-                Assert.IsNotEmpty(list);
-                Assert.AreEqual(2, list.Count);
+                Assert.That(list, Is.Not.Empty);
+                Assert.That(list, Has.Count.EqualTo(2));
                 string[] databaseNamesList = { list.First().Data.Name, list.Last().Data.Name };
-                Assert.Contains(databaseName, databaseNamesList);
+                Assert.That(databaseNamesList, Does.Contain(databaseName));
 
                 // 5.Delete
                 var deleteDatabase = await collection.GetAsync(databaseName);
                 await deleteDatabase.Value.DeleteAsync(WaitUntil.Completed);
                 list = await collection.GetAllAsync().ToEnumerableAsync();
-                Assert.AreEqual(1, list.Count);
-                Assert.AreNotEqual(databaseName, list.First().Data.Name);
+                Assert.That(list, Has.Count.EqualTo(1));
+                Assert.That(list.First().Data.Name, Is.Not.EqualTo(databaseName));
             }
         }
     }

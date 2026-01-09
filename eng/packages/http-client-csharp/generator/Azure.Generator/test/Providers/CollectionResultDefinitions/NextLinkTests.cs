@@ -21,11 +21,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -35,11 +35,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -49,11 +49,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -63,11 +63,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -77,11 +77,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -91,11 +91,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResultOfT");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -105,11 +105,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -119,11 +119,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResultOfT");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -147,11 +147,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var catClientCollectionResult = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(catClientCollectionResult);
+            Assert.That(catClientCollectionResult, Is.Not.Null);
 
             var felineClientCollectionResult = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "FelineClientGetCatsCollectionResult");
-            Assert.IsNotNull(felineClientCollectionResult);
+            Assert.That(felineClientCollectionResult, Is.Not.Null);
         }
 
         [Test]
@@ -161,11 +161,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -175,11 +175,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -219,7 +219,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                 new AzureCollectionResultDefinition(clientProvider!, inputServiceMethod, modelType!.Type, false);
             var fields = collectionResultDefinition.Fields;
 
-            Assert.IsTrue(fields.Any(f => f.Name == "_foo"));
+            Assert.That(fields.Any(f => f.Name == "_foo"), Is.True);
         }
 
         private static void CreatePagingOperation(InputResponseLocation responseLocation, bool useStringProperty = false, bool includeMaxPageSize = false, bool maxPageSizeRequired = false)
@@ -260,11 +260,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -274,11 +274,11 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
-            Assert.IsNotNull(collectionResultDefinition);
+            Assert.That(collectionResultDefinition, Is.Not.Null);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
             var file = writer.Write();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.That(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync(), Is.Null);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
                 await receiver.AbandonMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNotNull(CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.That(CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync(), Is.Not.Null);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // received message
                 ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessageAsync(receivedMessage.SequenceNumber);
                 #endregion
-                Assert.IsNotNull(deferredMessage);
+                Assert.That(deferredMessage, Is.Not.Null);
             }
         }
 
@@ -158,11 +158,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
                 string reason = dlqMessage.DeadLetterReason;
                 string description = dlqMessage.DeadLetterErrorDescription;
-                #endregion
+                Assert.Multiple(() =>
+                {
+                    #endregion
 
-                Assert.IsNotNull(dlqMessage);
-                Assert.AreEqual("sample reason", reason);
-                Assert.AreEqual("sample description", description);
+                    Assert.That(dlqMessage, Is.Not.Null);
+                    Assert.That(reason, Is.EqualTo("sample reason"));
+                    Assert.That(description, Is.EqualTo("sample description"));
+                });
             }
         }
 
@@ -201,7 +204,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.That(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync(), Is.Null);
             }
         }
     }

@@ -67,14 +67,20 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             StandbyContainerGroupPoolRuntimeViewResource standbyContainerGroupPool_RUNTIMEVIEW =
                 await Client.GetStandbyContainerGroupPoolRuntimeViewResource(standbyContainerGroupPoolTestProperties.StandbyContainerGroupPoolRuntimeViewResourceId).GetAsync();
 
-            Assert.AreEqual(runtimeViewName, standbyContainerGroupPool_RUNTIMEVIEW.Data.Name);
-            Assert.IsTrue(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0);
-            Assert.IsTrue(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyContainerGroupInstanceCountsByState.Count > 0);
-            Assert.IsNotNull(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.Status);
+            Assert.Multiple(() =>
+            {
+                Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Name, Is.EqualTo(runtimeViewName));
+                Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary, Is.Not.Empty);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyContainerGroupInstanceCountsByState, Is.Not.Empty);
+                Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.Status, Is.Not.Null);
 
-            // Prediction is not available in the response. This field is only populated for StandbyPools that record scale out activity over a period of time.
-            // However, this assertion verifies that the prediction field is available in the response for the StandbyContainerGroupPoolRuntimeViewResource.
-            Assert.IsNull(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.Prediction);
+                // Prediction is not available in the response. This field is only populated for StandbyPools that record scale out activity over a period of time.
+                // However, this assertion verifies that the prediction field is available in the response for the StandbyContainerGroupPoolRuntimeViewResource.
+                Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.Prediction, Is.Null);
+            });
         }
 
         private async Task UpdateStandbyContainerGroupPoolResourceAndVerify(StandbyContainerGroupPoolResource standbyContainerGroupPoolResource, long maxReadyCapacity, StandbyContainerGroupPoolTestProperties standbyContainerGroupPoolTestProperties)
@@ -99,12 +105,15 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         private void VerifyStandbyContainerGroupPool(StandbyContainerGroupPoolTestProperties expected, StandbyContainerGroupPoolResource actual)
         {
-            Assert.AreEqual(expected.StandbyPoolName, actual.Data.Name);
-            Assert.AreEqual(expected.MaxReadyCapacity, actual.Data.Properties.ElasticityProfile.MaxReadyCapacity);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.Data.Name, Is.EqualTo(expected.StandbyPoolName));
+                Assert.That(actual.Data.Properties.ElasticityProfile.MaxReadyCapacity, Is.EqualTo(expected.MaxReadyCapacity));
+            });
 
             if (expected.Id != null)
             {
-                Assert.AreEqual(expected.Id, actual.Data.Id);
+                Assert.That(actual.Data.Id, Is.EqualTo(expected.Id));
             }
         }
 

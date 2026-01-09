@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var gatewaName = Recording.GenerateAssetName("gateway-");
             var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewaName, data)).Value;
-            Assert.AreEqual(apiManagementService.Data.Name, gatewaName);
+            Assert.That(gatewaName, Is.EqualTo(apiManagementService.Data.Name));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 collection = resourceGroup.Value.GetApiGateways();
             }
             var gatewayResource = (await collection.GetAsync(apiName)).Value;
-            Assert.NotNull(gatewayResource.Data.Name);
+            Assert.That(gatewayResource.Data.Name, Is.Not.Null);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 collection = resourceGroup.Value.GetApiGateways();
             }
             var apiManagementServices = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(apiManagementServices.Count, 1);
+            Assert.That(apiManagementServices.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Test]
@@ -102,8 +102,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             }
             var apiManagementServiceTrue = await collection.ExistsAsync(apiName);
             var apiManagementServiceFalse = await collection.ExistsAsync("foo");
-            Assert.IsTrue(apiManagementServiceTrue);
-            Assert.IsFalse(apiManagementServiceFalse);
+            Assert.Multiple(() =>
+            {
+                Assert.That((bool)apiManagementServiceTrue, Is.True);
+                Assert.That((bool)apiManagementServiceFalse, Is.False);
+            });
         }
     }
 }

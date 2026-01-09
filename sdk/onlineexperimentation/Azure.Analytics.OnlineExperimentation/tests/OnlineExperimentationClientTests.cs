@@ -49,9 +49,12 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
-            Assert.That(response.Value.Id, Is.EqualTo(metricId));
-            Assert.That(response.Value.DisplayName, Is.EqualTo(metricDefinition.DisplayName));
-            Assert.That(response.Value.Description, Is.EqualTo(metricDefinition.Description));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.EqualTo(metricId));
+                Assert.That(response.Value.DisplayName, Is.EqualTo(metricDefinition.DisplayName));
+                Assert.That(response.Value.Description, Is.EqualTo(metricDefinition.Description));
+            });
         }
 
         [RecordedTest]
@@ -80,8 +83,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
-            Assert.That(response.Value.Id, Is.EqualTo(metricId));
-            Assert.That(response.Value.DisplayName, Is.EqualTo(metricDefinition.DisplayName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Value.Id, Is.EqualTo(metricId));
+                Assert.That(response.Value.DisplayName, Is.EqualTo(metricDefinition.DisplayName));
+            });
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -108,10 +114,13 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetric updatedMetric = response.Value;
 
             Assert.That(updatedMetric, Is.Not.Null);
-            Assert.That(updatedMetric.Id, Is.EqualTo(metricId));
-            Assert.That(updatedMetric.DisplayName, Is.EqualTo(updatedDefinition.DisplayName));
-            Assert.That(updatedMetric.Description, Is.EqualTo(updatedDefinition.Description));
-            Assert.That(updatedMetric.ETag, Is.Not.EqualTo(originalMetric.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetric.Id, Is.EqualTo(metricId));
+                Assert.That(updatedMetric.DisplayName, Is.EqualTo(updatedDefinition.DisplayName));
+                Assert.That(updatedMetric.Description, Is.EqualTo(updatedDefinition.Description));
+                Assert.That(updatedMetric.ETag, Is.Not.EqualTo(originalMetric.ETag));
+            });
         }
 
         [RecordedTest]
@@ -132,8 +141,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
                 await _client.CreateOrUpdateMetricAsync(metricId, invalidDefinition);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(StatusCodes.Status400BadRequest));
-            Assert.That(exception.ErrorCode, Is.EqualTo("InvalidOrUnsupportedError"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.Status, Is.EqualTo(StatusCodes.Status400BadRequest));
+                Assert.That(exception.ErrorCode, Is.EqualTo("InvalidOrUnsupportedError"));
+            });
         }
 
         [RecordedTest]
@@ -157,9 +169,12 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetric updatedMetric = response.Value;
 
             Assert.That(updatedMetric, Is.Not.Null);
-            Assert.That(updatedMetric.Id, Is.EqualTo(metricId));
-            Assert.That(updatedMetric.DisplayName, Is.EqualTo(updatedDefinition.DisplayName));
-            Assert.That(updatedMetric.ETag, Is.Not.EqualTo(originalMetric.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedMetric.Id, Is.EqualTo(metricId));
+                Assert.That(updatedMetric.DisplayName, Is.EqualTo(updatedDefinition.DisplayName));
+                Assert.That(updatedMetric.ETag, Is.Not.EqualTo(originalMetric.ETag));
+            });
         }
 
         [RecordedTest]
@@ -199,7 +214,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
                 metrics.Add(metric);
             }
 
-            Assert.That(metrics.Count, Is.GreaterThanOrEqualTo(numMetrics));
+            Assert.That(metrics, Has.Count.GreaterThanOrEqualTo(numMetrics));
         }
 
         [RecordedTest]
@@ -215,7 +230,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             List<ExperimentMetric> metrics = await _client.GetMetricsAsync(top: topCount).ToEnumerableAsync();
 
-            Assert.That(metrics.Count, Is.GreaterThanOrEqualTo(numMetrics));
+            Assert.That(metrics, Has.Count.GreaterThanOrEqualTo(numMetrics));
         }
 
         [RecordedTest]
@@ -229,10 +244,13 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetric retrievedMetric = response.Value;
 
             Assert.That(retrievedMetric, Is.Not.Null);
-            Assert.That(retrievedMetric.Id, Is.EqualTo(metricId));
-            Assert.That(retrievedMetric.DisplayName, Is.EqualTo(createdMetric.DisplayName));
-            Assert.That(retrievedMetric.Description, Is.EqualTo(createdMetric.Description));
-            Assert.That(retrievedMetric.ETag, Is.EqualTo(createdMetric.ETag));
+            Assert.Multiple(() =>
+            {
+                Assert.That(retrievedMetric.Id, Is.EqualTo(metricId));
+                Assert.That(retrievedMetric.DisplayName, Is.EqualTo(createdMetric.DisplayName));
+                Assert.That(retrievedMetric.Description, Is.EqualTo(createdMetric.Description));
+                Assert.That(retrievedMetric.ETag, Is.EqualTo(createdMetric.ETag));
+            });
         }
 
         [RecordedTest]
@@ -271,8 +289,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             }
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.IsValid, Is.True);
-            Assert.That(result.Diagnostics, Is.Null.Or.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.IsValid, Is.True);
+                Assert.That(result.Diagnostics, Is.Null.Or.Empty);
+            });
         }
 
         [RecordedTest]
@@ -293,8 +314,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetricValidationResult result = response.Value;
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.IsValid, Is.False);
-            Assert.That(result.Diagnostics, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.IsValid, Is.False);
+                Assert.That(result.Diagnostics, Is.Not.Null);
+            });
             Assert.That(result.Diagnostics, Is.Not.Empty);
         }
 
@@ -379,8 +403,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetric activatedMetric = response.Value;
 
             Assert.That(activatedMetric, Is.Not.Null);
-            Assert.That(activatedMetric.Id, Is.EqualTo(metricId));
-            Assert.That(activatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Active));
+            Assert.Multiple(() =>
+            {
+                Assert.That(activatedMetric.Id, Is.EqualTo(metricId));
+                Assert.That(activatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Active));
+            });
         }
 
         [RecordedTest]
@@ -398,8 +425,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetric deactivatedMetric = response.Value;
 
             Assert.That(deactivatedMetric, Is.Not.Null);
-            Assert.That(deactivatedMetric.Id, Is.EqualTo(metricId));
-            Assert.That(deactivatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Inactive));
+            Assert.Multiple(() =>
+            {
+                Assert.That(deactivatedMetric.Id, Is.EqualTo(metricId));
+                Assert.That(deactivatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Inactive));
+            });
         }
 
         [RecordedTest]
@@ -416,8 +446,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             // Verify the metric was activated
             ExperimentMetric deactivatedMetric = response.Value;
 
-            Assert.That(deactivatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Inactive));
-            Assert.That(deactivatedMetric.ETag.ToString(), Is.Not.EqualTo(activeMetric.ETag), "ETag should change when metric is modified");
+            Assert.Multiple(() =>
+            {
+                Assert.That(deactivatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Inactive));
+                Assert.That(deactivatedMetric.ETag.ToString(), Is.Not.EqualTo(activeMetric.ETag), "ETag should change when metric is modified");
+            });
         }
 
         [RecordedTest]
@@ -449,8 +482,11 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             // Verify the metric was activated
             ExperimentMetric activatedMetric = response.Value;
 
-            Assert.That(activatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Active));
-            Assert.That(activatedMetric.ETag.ToString(), Is.Not.EqualTo(inactiveMetric.ETag), "ETag should change when metric is modified");
+            Assert.Multiple(() =>
+            {
+                Assert.That(activatedMetric.Lifecycle, Is.EqualTo(LifecycleStage.Active));
+                Assert.That(activatedMetric.ETag.ToString(), Is.Not.EqualTo(inactiveMetric.ETag), "ETag should change when metric is modified");
+            });
         }
 
         [RecordedTest]

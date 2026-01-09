@@ -13,21 +13,21 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Empty
         public Task PutEmpty() => Test(async (host) =>
         {
             var response = await new EmptyClient(host, null).PutEmptyAsync(new EmptyInput());
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
         public Task GetEmpty() => Test(async (host) =>
         {
             var response = await new EmptyClient(host, null).GetEmptyAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         });
 
         [SpectorTest]
         public Task PostRoundTripEmpty() => Test(async (host) =>
         {
             var response = await new EmptyClient(host, null).PostRoundTripEmptyAsync(new EmptyInputOutput());
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         });
     }
 }

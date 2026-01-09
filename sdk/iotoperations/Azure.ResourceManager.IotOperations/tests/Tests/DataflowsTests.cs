@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 );
             IotOperationsDataflowResource createdDataflow = resp.Value;
 
-            Assert.IsNotNull(createdDataflow);
-            Assert.IsNotNull(createdDataflow.Data);
-            Assert.IsNotNull(createdDataflow.Data.Properties);
+            Assert.That(createdDataflow, Is.Not.Null);
+            Assert.That(createdDataflow.Data, Is.Not.Null);
+            Assert.That(createdDataflow.Data.Properties, Is.Not.Null);
 
             // Delete Dataflow
             await createdDataflow.DeleteAsync(WaitUntil.Completed);

@@ -37,9 +37,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialToCreate);
             DataSourceCredentialEntity createdCredential = disposableCredential.Credential;
 
-            Assert.That(createdCredential.Id, Is.Not.Empty.And.Not.Null);
-            Assert.That(createdCredential.Name, Is.EqualTo(credentialName));
-            Assert.That(createdCredential.Description, Is.Empty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(createdCredential.Id, Is.Not.Empty.And.Not.Null);
+                Assert.That(createdCredential.Name, Is.EqualTo(credentialName));
+                Assert.That(createdCredential.Description, Is.Empty);
+            });
 
             ValidateTestCaseDataSourceCredentialEntity(createdCredential);
         }
@@ -90,9 +93,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             DataSourceCredentialEntity updatedCredential = await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate);
 
-            Assert.That(updatedCredential.Id, Is.EqualTo(credentialToUpdate.Id));
-            Assert.That(updatedCredential.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedCredential.Description, Is.EqualTo(expectedDescription));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedCredential.Id, Is.EqualTo(credentialToUpdate.Id));
+                Assert.That(updatedCredential.Name, Is.EqualTo(expectedName));
+                Assert.That(updatedCredential.Description, Is.EqualTo(expectedDescription));
+            });
         }
 
         [RecordedTest]
@@ -112,8 +118,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedCredential = (await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate)).Value as ServicePrincipalCredentialEntity;
 
-            Assert.That(updatedCredential.ClientId, Is.EqualTo(ClientId));
-            Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedCredential.ClientId, Is.EqualTo(ClientId));
+                Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
+            });
         }
 
         [RecordedTest]
@@ -136,11 +145,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedCredential = (await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate)).Value as ServicePrincipalInKeyVaultCredentialEntity;
 
-            Assert.That(updatedCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
-            Assert.That(updatedCredential.KeyVaultClientId, Is.EqualTo(ClientId));
-            Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
-            Assert.That(updatedCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
-            Assert.That(updatedCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
+                Assert.That(updatedCredential.KeyVaultClientId, Is.EqualTo(ClientId));
+                Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
+                Assert.That(updatedCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
+                Assert.That(updatedCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
+            });
         }
 
         [RecordedTest]
@@ -175,9 +187,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (DataSourceCredentialEntity credential in adminClient.GetDataSourceCredentialsAsync())
             {
-                Assert.That(credential.Id, Is.Not.Null.And.Not.Empty);
-                Assert.That(credential.Name, Is.Not.Null.And.Not.Empty);
-                Assert.That(credential.Description, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(credential.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(credential.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(credential.Description, Is.Not.Null);
+                });
 
                 ValidateGenericDataSourceCredentialEntity(credential);
 
@@ -223,18 +238,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             if (credential is ServicePrincipalCredentialEntity spCredential)
             {
-                Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
-                Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
-                Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
+                    Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
+                });
             }
             else if (credential is ServicePrincipalInKeyVaultCredentialEntity kvCredential)
             {
-                Assert.That(kvCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipalInKeyVault));
-                Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.Not.Null.And.Not.Empty);
-                Assert.That(kvCredential.KeyVaultClientId, Is.Not.Null.And.Not.Empty);
-                Assert.That(kvCredential.TenantId, Is.Not.Null.And.Not.Empty);
-                Assert.That(kvCredential.SecretNameForClientId, Is.Not.Null.And.Not.Empty);
-                Assert.That(kvCredential.SecretNameForClientSecret, Is.Not.Null.And.Not.Empty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(kvCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipalInKeyVault));
+                    Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.Not.Null.And.Not.Empty);
+                    Assert.That(kvCredential.KeyVaultClientId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(kvCredential.TenantId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(kvCredential.SecretNameForClientId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(kvCredential.SecretNameForClientSecret, Is.Not.Null.And.Not.Empty);
+                });
             }
             else if (credential is DataLakeSharedKeyCredentialEntity skCredential)
             {
@@ -254,18 +275,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             if (credential is ServicePrincipalCredentialEntity spCredential)
             {
-                Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
-                Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
-                Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
+                    Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
+                    Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
+                });
             }
             else if (credential is ServicePrincipalInKeyVaultCredentialEntity kvCredential)
             {
-                Assert.That(kvCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipalInKeyVault));
-                Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
-                Assert.That(kvCredential.KeyVaultClientId, Is.EqualTo(ClientId));
-                Assert.That(kvCredential.TenantId, Is.EqualTo(TenantId));
-                Assert.That(kvCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
-                Assert.That(kvCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(kvCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipalInKeyVault));
+                    Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
+                    Assert.That(kvCredential.KeyVaultClientId, Is.EqualTo(ClientId));
+                    Assert.That(kvCredential.TenantId, Is.EqualTo(TenantId));
+                    Assert.That(kvCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
+                    Assert.That(kvCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
+                });
             }
             else if (credential is DataLakeSharedKeyCredentialEntity skCredential)
             {

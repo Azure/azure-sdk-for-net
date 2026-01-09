@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             CosmosDBForPostgreSqlCoordinatorConfigurationCollection configurationCollection = _cluster.GetCosmosDBForPostgreSqlCoordinatorConfigurations();
             var lro = await configurationCollection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
             CosmosDBForPostgreSqlCoordinatorConfigurationResource configuration = lro.Value;
-            Assert.AreEqual(data.Value, configuration.Data.Value);
+            Assert.That(configuration.Data.Value, Is.EqualTo(data.Value));
 
             // Get
             CosmosDBForPostgreSqlCoordinatorConfigurationResource configurationFromGet = await _cluster.GetCosmosDBForPostgreSqlCoordinatorConfigurationAsync(configurationName);
-            Assert.AreEqual(data.Value, configurationFromGet.Data.Value);
+            Assert.That(configurationFromGet.Data.Value, Is.EqualTo(data.Value));
         }
 
         [TestCase]
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             CosmosDBForPostgreSqlNodeConfigurationCollection configurationCollection = _cluster.GetCosmosDBForPostgreSqlNodeConfigurations();
             var lro = await configurationCollection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
             CosmosDBForPostgreSqlNodeConfigurationResource configuration = lro.Value;
-            Assert.AreEqual(data.Value, configuration.Data.Value);
+            Assert.That(configuration.Data.Value, Is.EqualTo(data.Value));
 
             // Get
             CosmosDBForPostgreSqlNodeConfigurationResource configurationFromGet = await _cluster.GetCosmosDBForPostgreSqlNodeConfigurationAsync(configurationName);
-            Assert.AreEqual(data.Value, configurationFromGet.Data.Value);
+            Assert.That(configurationFromGet.Data.Value, Is.EqualTo(data.Value));
         }
     }
 }

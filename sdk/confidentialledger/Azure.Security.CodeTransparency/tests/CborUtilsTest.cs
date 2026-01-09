@@ -31,7 +31,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, "key1");
 
             // Assert
-            Assert.AreEqual("value1", result);
+            Assert.That(result, Is.EqualTo("value1"));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, "nonexistent");
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey((byte[])null, "key");
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(Array.Empty<byte>(), "key");
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, null);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, string.Empty);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, "key1");
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, "key2");
 
             // Assert
-            Assert.AreEqual("value2", result);
+            Assert.That(result, Is.EqualTo("value2"));
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, 1);
 
             // Assert
-            Assert.AreEqual("value1", result);
+            Assert.That(result, Is.EqualTo("value1"));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, -5);
 
             // Assert
-            Assert.AreEqual("negative_value", result);
+            Assert.That(result, Is.EqualTo("negative_value"));
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, 99);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -209,7 +209,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey((byte[])null, 1);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -219,7 +219,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(Array.Empty<byte>(), 1);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -237,7 +237,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, 1);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -259,7 +259,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, 10);
 
             // Assert
-            Assert.AreEqual("intValue", result);
+            Assert.That(result, Is.EqualTo("intValue"));
         }
 
         [Test]
@@ -279,7 +279,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, 5);
 
             // Assert
-            Assert.AreEqual("intKeyValue", result);
+            Assert.That(result, Is.EqualTo("intKeyValue"));
         }
 
         [Test]
@@ -295,7 +295,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, "key");
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -311,7 +311,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string result = CborUtils.GetStringValueFromCborMapByKey(cborBytes, 1);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
     }
 }

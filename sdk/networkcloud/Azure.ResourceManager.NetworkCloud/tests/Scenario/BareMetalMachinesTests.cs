@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             // List by Subscription
             var listBySubscription = new List<NetworkCloudBareMetalMachineResource>();
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.That(listBySubscription, Is.Not.Empty);
 
             // Get
             var firstBMM = listByResourceGroup[0].Data;
             var bareMetalMachineName = firstBMM.Name;
             var getResult = await collection.GetAsync(bareMetalMachineName);
-            Assert.AreEqual(bareMetalMachineName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(bareMetalMachineName));
 
             // Update
             NetworkCloudBareMetalMachineResource bareMetalMachine = Client.GetNetworkCloudBareMetalMachineResource(new ResourceIdentifier(firstBMM.Id));
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 patch.Tags.Add(key, firstBMM.Tags[key]);
             }
             ArmOperation<NetworkCloudBareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             patch.Tags.Remove(testKey);
             updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags), "tag reversion failed");
         }
     }
 }

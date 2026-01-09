@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 count++;
             }
 
-            Assert.Greater(count, 0);
+            Assert.That(count, Is.GreaterThan(0));
         }
     }
 }

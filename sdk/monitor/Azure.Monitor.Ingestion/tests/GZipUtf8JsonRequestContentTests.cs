@@ -24,10 +24,10 @@ namespace Azure.Core.Tests
             gzContent.JsonWriter.WriteEndObject();
 
             string deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
 
             deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
         }
 
         [Test]
@@ -38,10 +38,10 @@ namespace Azure.Core.Tests
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent(rc);
 
             string deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
 
             deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
         }
 
         [Test]
@@ -52,13 +52,13 @@ namespace Azure.Core.Tests
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent(rc);
             long length = 0;
             gzContent.TryComputeLength(out length);
-            Assert.Greater(length, 10);
+            Assert.That(length, Is.GreaterThan(10));
 
             string deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
 
             deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
             long length = 0;
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent();
             gzContent.TryComputeLength(out length);
-            Assert.AreEqual(0, length);
+            Assert.That(length, Is.EqualTo(0));
             gzContent.JsonWriter.WriteStartObject();
             Enumerable.Range(1, 100).ToList().ForEach(i =>
             {
@@ -76,14 +76,14 @@ namespace Azure.Core.Tests
             });
             gzContent.JsonWriter.WriteEndObject();
             gzContent.TryComputeLength(out length);
-            Assert.Greater(length, 1000);
+            Assert.That(length, Is.GreaterThan(1000));
             string deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
 
             gzContent.TryComputeLength(out length);
-            Assert.Greater(length, 1000);
+            Assert.That(length, Is.GreaterThan(1000));
             deserialized = UncompressAndDeserialize(gzContent);
-            Assert.IsNotEmpty(deserialized);
+            Assert.That(deserialized, Is.Not.Empty);
         }
 
         private static string UncompressAndDeserialize(RequestContent gzContent)

@@ -15,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.CollectionFormat
         {
             List<string> colors = ["blue", "red", "green"];
             var response = await new CollectionFormatClient(host, null).GetQueryClient().MultiAsync(colors);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -23,7 +23,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.CollectionFormat
         {
             string[] colors = ["blue", "red", "green"];
             var response = await new CollectionFormatClient(host, null).GetQueryClient().MultiAsync(colors);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -31,7 +31,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.CollectionFormat
         {
             List<string> colors = ["blue", "red", "green"];
             var response = await new CollectionFormatClient(host, null).GetQueryClient().CsvAsync(colors);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -39,7 +39,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.CollectionFormat
         {
             List<string> colors = ["blue", "red", "green"];
             var response = await new CollectionFormatClient(host, null).GetQueryClient().SsvAsync(colors);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -47,7 +47,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.CollectionFormat
         {
             List<string> colors = ["blue", "red", "green"];
             var response = await new CollectionFormatClient(host, null).GetQueryClient().PipesAsync(colors);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
 
         [SpectorTest]
@@ -55,7 +55,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.CollectionFormat
         {
             List<string> colors = ["blue", "red", "green"];
             var response = await new CollectionFormatClient(host, null).GetHeaderClient().CsvAsync(colors);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         });
     }
 }

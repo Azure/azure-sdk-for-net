@@ -72,7 +72,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             {
                 await downloadInfo.Content.CopyToAsync(file);
                 var fileInfo = new FileInfo(localFileDownloadPath);
-                Assert.Greater(fileInfo.Length, 0);
+                Assert.That(fileInfo.Length, Is.GreaterThan(0));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             {
                 await downloadInfo.Content.CopyToAsync(file);
                 var fileInfo = new FileInfo(localFileDownloadPath);
-                Assert.Greater(fileInfo.Length, 0);
+                Assert.That(fileInfo.Length, Is.GreaterThan(0));
             }
         }
 

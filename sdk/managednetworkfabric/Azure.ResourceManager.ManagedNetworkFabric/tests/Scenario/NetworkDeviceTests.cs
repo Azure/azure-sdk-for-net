@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkDeviceResource getResult = await device.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkDeviceNameUnderDeprovisionedNF);
+            Assert.That(TestEnvironment.NetworkDeviceNameUnderDeprovisionedNF, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.That(listByResourceGroup, Is.Not.Empty);
 
             //List by subscription
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
             ArmOperation<NetworkDeviceResource> lro = await device.UpdateAsync(WaitUntil.Completed, patch);
             NetworkDeviceResource result = lro.Value;
-            Assert.AreEqual(result.Data.SerialNumber, patch.SerialNumber);
+            Assert.That(patch.SerialNumber, Is.EqualTo(result.Data.SerialNumber));
         }
     }
 }

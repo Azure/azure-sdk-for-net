@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         {
             var listDisocverySolutionsData = DefaultTenantResource.DiscoverSolutionsAsync("ProblemClassificationId eq 'a93e16a3-9f43-a003-6ac0-e5f6caa90cb9'");
             var response = await listDisocverySolutionsData.ToEnumerableAsync();
-            Assert.NotNull(response.First());
+            Assert.That(response.First(), Is.Not.Null);
         }
     }
 }

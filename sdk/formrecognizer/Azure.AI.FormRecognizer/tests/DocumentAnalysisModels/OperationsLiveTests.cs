@@ -39,8 +39,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(100, operation.PercentCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasValue, Is.True);
+                Assert.That(operation.PercentCompleted, Is.EqualTo(100));
+            });
         }
 
         [RecordedTest]
@@ -58,8 +61,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(100, operation.PercentCompleted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(operation.HasValue, Is.True);
+                Assert.That(operation.PercentCompleted, Is.EqualTo(100));
+            });
         }
 
         [RecordedTest]
@@ -97,7 +103,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
             }
 
-            Assert.AreEqual(100, operation.PercentCompleted);
+            Assert.That(operation.PercentCompleted, Is.EqualTo(100));
         }
     }
 }

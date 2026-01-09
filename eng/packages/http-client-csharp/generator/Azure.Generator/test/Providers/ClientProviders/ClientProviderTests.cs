@@ -60,7 +60,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var client = InputFactory.Client(TestClientName, parameters: [.. inputParameters]);
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             if (_hasKeyAuth)
             {
@@ -88,7 +88,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var client = InputFactory.Client(TestClientName, parameters: [.. inputParameters]);
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // fields here should not have anything related with auth
             bool authFieldFound = false;
@@ -100,7 +100,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
                 }
             }
 
-            Assert.IsFalse(authFieldFound);
+            Assert.That(authFieldFound, Is.False);
         }
 
         // validates the credential fields are built correctly when a client has sub-clients
@@ -109,7 +109,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         {
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             // fields here should not have anything related with auth
             bool authFieldFound = false;
@@ -121,7 +121,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
                 }
             }
 
-            Assert.IsFalse(authFieldFound);
+            Assert.That(authFieldFound, Is.False);
         }
 
         [TestCaseSource(nameof(BuildConstructorsTestCases))]
@@ -133,7 +133,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var client = InputFactory.Client(TestClientName, parameters: [.. inputParameters]);
             var clientProvider = new ClientProvider(client);
 
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
 
             var constructors = clientProvider.Constructors;
 
@@ -157,8 +157,8 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var caseName = TestContext.CurrentContext.Test.Properties.Get("caseName");
             var expected = Helpers.GetExpectedFromFile($"{caseName},{_hasKeyAuth},{_hasOAuth2},{ctorIndex}", method, filePath);
             var primaryCtorBody = primaryPublicConstructor?.BodyStatements;
-            Assert.IsNotNull(primaryCtorBody);
-            Assert.AreEqual(expected, primaryCtorBody?.ToDisplayString());
+            Assert.That(primaryCtorBody, Is.Not.Null);
+            Assert.That(primaryCtorBody?.ToDisplayString(), Is.EqualTo(expected));
         }
 
         public static IEnumerable<TestCaseData> BuildConstructorsTestCases
@@ -304,23 +304,29 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         {
             if (expected.IsFrameworkType)
             {
-                Assert.IsTrue(type.IsFrameworkType);
-                Assert.AreEqual(expected.FrameworkType, type.FrameworkType);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(type.IsFrameworkType, Is.True);
+                    Assert.That(type.FrameworkType, Is.EqualTo(expected.FrameworkType));
+                });
             }
             else
             {
-                Assert.IsFalse(type.IsFrameworkType);
-                Assert.AreEqual(expected.Name, type.Name);
-                Assert.AreEqual(expected.Namespace, type.Namespace);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(type.IsFrameworkType, Is.False);
+                    Assert.That(type.Name, Is.EqualTo(expected.Name));
+                    Assert.That(type.Namespace, Is.EqualTo(expected.Namespace));
+                });
             }
-            Assert.AreEqual(expected.IsNullable, type.IsNullable);
+            Assert.That(type.IsNullable, Is.EqualTo(expected.IsNullable));
         }
 
         private static void AssertFieldAreEqual(ExpectedFieldProvider expected, FieldProvider field)
         {
-            Assert.AreEqual(expected.Name, field.Name);
+            Assert.That(field.Name, Is.EqualTo(expected.Name));
             AssertCSharpTypeAreEqual(expected.Type, field.Type);
-            Assert.AreEqual(expected.Modifiers, field.Modifiers);
+            Assert.That(field.Modifiers, Is.EqualTo(expected.Modifiers));
         }
 
         private static void AssertHasFields(TypeProvider provider, IReadOnlyList<ExpectedFieldProvider> expectedFields)
@@ -328,7 +334,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             var fields = provider.Fields;
 
             // validate the length of the result
-            Assert.GreaterOrEqual(fields.Count, expectedFields.Count);
+            Assert.That(fields, Has.Count.GreaterThanOrEqualTo(expectedFields.Count));
 
             // validate each of them
             var fieldDict = fields.ToDictionary(f => f.Name);
@@ -336,7 +342,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             {
                 var expected = expectedFields[i];
 
-                Assert.IsTrue(fieldDict.TryGetValue(expected.Name, out var actual), $"Field {expected.Name} not present");
+                Assert.That(fieldDict.TryGetValue(expected.Name, out var actual), Is.True, $"Field {expected.Name} not present");
                 AssertFieldAreEqual(expected, actual!);
             }
         }

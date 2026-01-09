@@ -176,8 +176,11 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await foreach (var receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
                 {
-                    Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
-                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{ receivedEvent.Data.EventBody }] was not read from the correct partition.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
+                        Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{receivedEvent.Data.EventBody}] was not read from the correct partition.");
+                    });
 
                     ++readEvents;
 
@@ -191,8 +194,11 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            });
         }
 
         /// <summary>
@@ -245,8 +251,11 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await foreach (var receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
                 {
-                    Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
-                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{ receivedEvent.Data.EventBody }] was not read from the correct partition.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
+                        Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{receivedEvent.Data.EventBody}] was not read from the correct partition.");
+                    });
 
                     ++readEvents;
 
@@ -260,8 +269,11 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            });
         }
 
         /// <summary>
@@ -358,8 +370,11 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            });
         }
 
         /// <summary>
@@ -432,8 +447,11 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
-            Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+                Assert.That(readEvents, Is.EqualTo(expectedEvents), "The expected number of events should have been read.");
+            });
         }
 
         /// <summary>
@@ -860,16 +878,19 @@ namespace Azure.Messaging.EventHubs.Tests
                         PartitionProperties newPartitionProperties = await producer.GetPartitionPropertiesAsync(partition);
                         Assert.That(newPartitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
 
-                        // The following properties should not have been altered.
+                        Assert.Multiple(() =>
+                        {
+                            // The following properties should not have been altered.
 
-                        Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
-                        Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
-                        Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
+                            Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
+                            Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
+                            Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
 
-                        // The following properties should have been updated.
+                            // The following properties should have been updated.
 
-                        Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.GreaterThan(oldPartitionProperties.LastEnqueuedOffsetString));
+                            Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
+                            Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.GreaterThan(oldPartitionProperties.LastEnqueuedOffsetString));
+                        });
                     }
                 }
             }
@@ -911,16 +932,19 @@ namespace Azure.Messaging.EventHubs.Tests
                         PartitionProperties newPartitionProperties = await producer.GetPartitionPropertiesAsync(partition);
                         Assert.That(newPartitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
 
-                        // The following properties should not have been altered.
+                        Assert.Multiple(() =>
+                        {
+                            // The following properties should not have been altered.
 
-                        Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
-                        Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
-                        Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
+                            Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
+                            Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
+                            Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
 
-                        // The following properties should have been updated.
+                            // The following properties should have been updated.
 
-                        Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(oldPartitionProperties.LastEnqueuedOffsetString));
+                            Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
+                            Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(oldPartitionProperties.LastEnqueuedOffsetString));
+                        });
                         Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.Not.Null.And.Not.Empty);
                     }
                 }
@@ -959,13 +983,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         Assert.That(newPartitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
 
-                        // All properties should remain the same.
+                        Assert.Multiple(() =>
+                        {
+                            // All properties should remain the same.
 
-                        Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
-                        Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
-                        Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.EqualTo(oldPartitionProperties.LastEnqueuedSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.EqualTo(oldPartitionProperties.LastEnqueuedOffsetString));
+                            Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
+                            Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
+                            Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
+                            Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.EqualTo(oldPartitionProperties.LastEnqueuedSequenceNumber));
+                            Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.EqualTo(oldPartitionProperties.LastEnqueuedOffsetString));
+                        });
                     }
                 }
             }
@@ -1106,8 +1133,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                     }
 
-                    Assert.That(partitionsCount, Is.EqualTo(1));
-                    Assert.That(receivedEventsCount, Is.EqualTo(eventBatch.Count));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(partitionsCount, Is.EqualTo(1));
+                        Assert.That(receivedEventsCount, Is.EqualTo(eventBatch.Count));
+                    });
                 }
             }
         }
@@ -1174,8 +1204,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                     }
 
-                    Assert.That(partitionsCount, Is.EqualTo(1));
-                    Assert.That(receivedEventsCount, Is.EqualTo(batches));
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(partitionsCount, Is.EqualTo(1));
+                        Assert.That(receivedEventsCount, Is.EqualTo(batches));
+                    });
                 }
             }
         }
@@ -1308,9 +1341,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-                    Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
-                    Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
+                        Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
+                        Assert.That(properties.CreatedOn, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(60)), "The Event Hub should have been created just about now.");
+                    });
                 }
             }
         }
@@ -1340,11 +1376,14 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitionProperties = await producer.GetPartitionPropertiesAsync(partition, cancellation.Token);
 
                     Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
-                    Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
-                    Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
-                    Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.Null.And.Not.Empty, "The last offset should have been populated.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
+                        Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
+                        Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
+                        Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
+                        Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.Null.And.Not.Empty, "The last offset should have been populated.");
+                    });
                 }
             }
         }
@@ -1365,8 +1404,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitions = await producer.GetPartitionIdsAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-                    Assert.That(properties.PartitionIds, Is.Not.Null, "A set of partition identifiers for the properties should have been returned.");
-                    Assert.That(partitions, Is.Not.Null, "A set of partition identifiers should have been returned.");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(properties.PartitionIds, Is.Not.Null, "A set of partition identifiers for the properties should have been returned.");
+                        Assert.That(partitions, Is.Not.Null, "A set of partition identifiers should have been returned.");
+                    });
                     Assert.That(partitions, Is.EquivalentTo(properties.PartitionIds), "The partition identifiers returned directly should match those returned with properties.");
                 }
             }

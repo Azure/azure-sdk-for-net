@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetNsp()
         {
             NetworkSecurityPerimeterConfigurationData resourceData = await getNsp();
-            Assert.AreEqual(perimeterName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(perimeterName));
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetNspCollection()
         {
             NetworkSecurityPerimeterConfigurationCollection resourceCollection = await getNspCollection();
-            Assert.IsNotNull(resourceCollection);
+            Assert.That(resourceCollection, Is.Not.Null);
         }
 
         [TestCase]

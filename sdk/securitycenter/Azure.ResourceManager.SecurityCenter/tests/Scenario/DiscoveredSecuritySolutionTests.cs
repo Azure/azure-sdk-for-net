@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string ascLocation = "";
             string discoveredSecuritySolutionName = "";
             var discoveredSecuritySolution = await _resourceGroup.GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName);
-            Assert.IsNotNull(discoveredSecuritySolution);
+            Assert.That(discoveredSecuritySolution, Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task List()
         {
             var list = await DefaultSubscription.GetDiscoveredSecuritySolutionsAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
 
         [RecordedTest]
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");
             var list = await ascLocation.Value.GetDiscoveredSecuritySolutionsByHomeRegionAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.That(list, Is.Empty);
         }
     }
 }

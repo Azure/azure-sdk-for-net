@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Console.WriteLine($"Project created with status: {response.Status}");
 
-            Assert.AreEqual(201, response.Status, "Expected the status to indicate project creation success.");
+            Assert.That(response.Status, Is.EqualTo(201), "Expected the status to indicate project creation success.");
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion
 
-            Assert.AreEqual(201, response.Status, "Expected the status to indicate project creation success.");
+            Assert.That(response.Status, Is.EqualTo(201), "Expected the status to indicate project creation success.");
         }
     }
 }

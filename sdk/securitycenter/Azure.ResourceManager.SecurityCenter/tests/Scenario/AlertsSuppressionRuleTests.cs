@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
             await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
             await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
+            Assert.That(list, Is.Not.Empty);
             ValidateAlertsSuppressionRule(list.First(item => item.Data.Name == alertsSuppressionRuleName), alertsSuppressionRuleName);
         }
 
@@ -98,18 +98,21 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
             var alertSuppressionRule = await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await alertSuppressionRule.DeleteAsync(WaitUntil.Completed);
             flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateAlertsSuppressionRule(SecurityAlertsSuppressionRuleResource alertSuppressionRule, string alertsSuppressionRuleName)
         {
-            Assert.IsNotNull(alertSuppressionRule);
-            Assert.IsNotNull(alertSuppressionRule.Data.Id);
-            Assert.AreEqual(alertsSuppressionRuleName, alertSuppressionRule.Data.Name);
+            Assert.That(alertSuppressionRule, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(alertSuppressionRule.Data.Id, Is.Not.Null);
+                Assert.That(alertSuppressionRule.Data.Name, Is.EqualTo(alertsSuppressionRuleName));
+            });
         }
     }
 }

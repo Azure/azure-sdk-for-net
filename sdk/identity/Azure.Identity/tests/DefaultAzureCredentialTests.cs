@@ -31,16 +31,19 @@ namespace Azure.Identity.Tests
 
             TokenCredential[] sources = cred._sources();
 
-            Assert.NotNull(sources);
-            Assert.AreEqual(9, sources.Length);
-            Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
-            Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[7]);
+            Assert.That(sources, Is.Not.Null);
+            Assert.That(sources, Has.Length.EqualTo(9));
+            Assert.Multiple(() =>
+            {
+                Assert.That(sources[0], Is.InstanceOf(typeof(EnvironmentCredential)));
+                Assert.That(sources[1], Is.InstanceOf(typeof(WorkloadIdentityCredential)));
+                Assert.That(sources[2], Is.InstanceOf(typeof(ManagedIdentityCredential)));
+                Assert.That(sources[3], Is.InstanceOf(typeof(VisualStudioCredential)));
+                Assert.That(sources[4], Is.InstanceOf(typeof(VisualStudioCodeCredential)));
+                Assert.That(sources[5], Is.InstanceOf(typeof(AzureCliCredential)));
+                Assert.That(sources[6], Is.InstanceOf(typeof(AzurePowerShellCredential)));
+                Assert.That(sources[7], Is.InstanceOf(typeof(AzureDeveloperCliCredential)));
+            });
         }
 
         [Test]
@@ -50,21 +53,24 @@ namespace Azure.Identity.Tests
 
             TokenCredential[] sources = cred._sources();
 
-            Assert.NotNull(sources);
-            Assert.AreEqual(includeInteractive ? 10 : 9, sources.Length);
+            Assert.That(sources, Is.Not.Null);
+            Assert.That(sources, Has.Length.EqualTo(includeInteractive ? 10 : 9));
 
-            Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
-            Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[7]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sources[0], Is.InstanceOf(typeof(EnvironmentCredential)));
+                Assert.That(sources[1], Is.InstanceOf(typeof(WorkloadIdentityCredential)));
+                Assert.That(sources[2], Is.InstanceOf(typeof(ManagedIdentityCredential)));
+                Assert.That(sources[3], Is.InstanceOf(typeof(VisualStudioCredential)));
+                Assert.That(sources[4], Is.InstanceOf(typeof(VisualStudioCodeCredential)));
+                Assert.That(sources[5], Is.InstanceOf(typeof(AzureCliCredential)));
+                Assert.That(sources[6], Is.InstanceOf(typeof(AzurePowerShellCredential)));
+                Assert.That(sources[7], Is.InstanceOf(typeof(AzureDeveloperCliCredential)));
+            });
 
             if (includeInteractive)
             {
-                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[8]);
+                Assert.That(sources[8], Is.InstanceOf(typeof(InteractiveBrowserCredential)));
             }
         }
 
@@ -147,43 +153,43 @@ namespace Azure.Identity.Tests
 
             if (!excludeEnvironmentCredential)
             {
-                Assert.True(ex.Message.Contains("EnvironmentCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("EnvironmentCredential Unavailable"));
             }
             if (!excludeWorkloadIdentityCredential)
             {
-                Assert.True(ex.Message.Contains("WorkloadIdentityCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("WorkloadIdentityCredential Unavailable"));
             }
             if (!excludeManagedIdentityCredential)
             {
-                Assert.True(ex.Message.Contains("ManagedIdentityCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("ManagedIdentityCredential Unavailable"));
             }
             if (!excludeDeveloperCliCredential)
             {
-                Assert.True(ex.Message.Contains("DeveloperCliCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("DeveloperCliCredential Unavailable"));
             }
             if (!excludeSharedTokenCacheCredential)
             {
-                Assert.True(ex.Message.Contains("SharedTokenCacheCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("SharedTokenCacheCredential Unavailable"));
             }
             if (!excludeCliCredential)
             {
-                Assert.True(ex.Message.Contains("CliCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("CliCredential Unavailable"));
             }
             if (!excludePowerShellCredential)
             {
-                Assert.True(ex.Message.Contains("PowerShellCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("PowerShellCredential Unavailable"));
             }
             if (!excludeInteractiveBrowserCredential)
             {
-                Assert.True(ex.Message.Contains("InteractiveBrowserCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("InteractiveBrowserCredential Unavailable"));
             }
             if (!excludeVisualStudioCredential)
             {
-                Assert.True(ex.Message.Contains("VisualStudioCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("VisualStudioCredential Unavailable"));
             }
             if (!excludeVisualStudioCodeCredential)
             {
-                Assert.True(ex.Message.Contains("VisualStudioCodeCredential Unavailable"));
+                Assert.That(ex.Message, Does.Contain("VisualStudioCodeCredential Unavailable"));
             }
         }
 
@@ -252,7 +258,7 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             var unhandledException = ex.InnerException is AggregateException ae ? ae.InnerExceptions.Last() : ex.InnerException;
 
-            Assert.AreEqual($"{credentialType.Name} unhandled exception", unhandledException.Message);
+            Assert.That(unhandledException.Message, Is.EqualTo($"{credentialType.Name} unhandled exception"));
         }
 
         public static IEnumerable<object[]> AllCredentialTypes()
@@ -295,21 +301,27 @@ namespace Azure.Identity.Tests
 
             AccessToken actToken = await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken.Token, actToken.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actToken.Token, Is.EqualTo(expToken.Token));
 
-            // assert that the available credential was the last credential called
-            Assert.AreEqual(calledCredentials[calledCredentials.Count - 1], availableCredential);
+                // assert that the available credential was the last credential called
+                Assert.That(availableCredential, Is.EqualTo(calledCredentials[calledCredentials.Count - 1]));
+            });
 
             calledCredentials.Clear();
 
             actToken = await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expToken.Token, actToken.Token);
+            Assert.Multiple(() =>
+            {
+                Assert.That(actToken.Token, Is.EqualTo(expToken.Token));
 
-            // assert that the available credential was the only credential called
-            Assert.AreEqual(calledCredentials.Count, 1);
+                // assert that the available credential was the only credential called
+                Assert.That(calledCredentials.Count, Is.EqualTo(1));
 
-            Assert.AreEqual(calledCredentials[0], availableCredential);
+                Assert.That(availableCredential, Is.EqualTo(calledCredentials[0]));
+            });
         }
 
         [Test]
@@ -370,11 +382,11 @@ namespace Azure.Identity.Tests
                 DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, true);
 
                 var credential = new DefaultAzureCredential(options);
-                Assert.AreEqual(1, credential._sources.Length);
+                Assert.That(credential._sources, Has.Length.EqualTo(1));
                 var targetCred = credential._sources[0];
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(targetCred);
 
-                Assert.IsTrue(DisableInstanceDiscovery);
+                Assert.That(DisableInstanceDiscovery, Is.True);
             }
         }
 
@@ -400,11 +412,11 @@ namespace Azure.Identity.Tests
             {
                 DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, false);
                 var credential = new DefaultAzureCredential(options);
-                Assert.AreEqual(1, credential._sources.Length);
+                Assert.That(credential._sources, Has.Length.EqualTo(1));
                 var targetCred = credential._sources[0];
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(targetCred);
 
-                Assert.IsFalse(DisableInstanceDiscovery);
+                Assert.That(DisableInstanceDiscovery, Is.False);
             }
         }
 
@@ -427,7 +439,7 @@ namespace Azure.Identity.Tests
                 options.AdditionallyAllowedTenants.Add(additionalTenant);
 
                 var credential = new DefaultAzureCredential(options);
-                Assert.AreEqual(1, credential._sources.Length);
+                Assert.That(credential._sources, Has.Length.EqualTo(1));
                 var targetCred = credential._sources[0];
                 if (targetCred is SharedTokenCacheCredential || targetCred is ManagedIdentityCredential)
                 {
@@ -435,7 +447,7 @@ namespace Azure.Identity.Tests
                 }
                 string[] additionallyAllowedTenantIds = CredentialTestHelpers.ExtractAdditionalTenantProperty(targetCred);
 
-                CollectionAssert.Contains(additionallyAllowedTenantIds, additionalTenant);
+                Assert.That(additionallyAllowedTenantIds, Has.Member(additionalTenant));
             }
         }
 
@@ -458,7 +470,7 @@ namespace Azure.Identity.Tests
                 options.AdditionallyAllowedTenants.Add(additionalTenant);
 
                 var credential = new DefaultAzureCredential(options);
-                Assert.AreEqual(1, credential._sources.Length);
+                Assert.That(credential._sources, Has.Length.EqualTo(1));
                 var targetCred = credential._sources[0];
                 if (CredentialTestHelpers.TryGetConfiguredTenantIdForMsalCredential(targetCred, out string tenantId))
                 {
@@ -468,7 +480,7 @@ namespace Azure.Identity.Tests
                     }
                     else
                     {
-                        Assert.AreEqual("overridetenantid", tenantId);
+                        Assert.That(tenantId, Is.EqualTo("overridetenantid"));
                     }
                 }
             }
@@ -491,13 +503,13 @@ namespace Azure.Identity.Tests
                 options.ExcludeWorkloadIdentityCredential = true;
 
                 var credential = new DefaultAzureCredential(options);
-                Assert.AreEqual(1, credential._sources.Length);
+                Assert.That(credential._sources, Has.Length.EqualTo(1));
                 var targetCred = credential._sources[0];
 
-                Assert.IsInstanceOf<ManagedIdentityCredential>(targetCred);
+                Assert.That(targetCred, Is.InstanceOf<ManagedIdentityCredential>());
                 ManagedIdentityCredential miCred = targetCred as ManagedIdentityCredential;
                 var source = miCred.Client._identitySource.Value;
-                Assert.IsNotInstanceOf<TokenExchangeManagedIdentitySource>(source);
+                Assert.That(source, Is.Not.InstanceOf<TokenExchangeManagedIdentitySource>());
             }
         }
 
@@ -592,7 +604,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ValidateDefaultEnvironmentVariableName()
         {
-            Assert.AreEqual("AZURE_TOKEN_CREDENTIALS", DefaultAzureCredential.DefaultEnvironmentVariableName);
+            Assert.That(DefaultAzureCredential.DefaultEnvironmentVariableName, Is.EqualTo("AZURE_TOKEN_CREDENTIALS"));
         }
 
         [Test]
@@ -612,7 +624,7 @@ namespace Azure.Identity.Tests
         public void ValidateCustomEnvironmentVariableConstructorWithInvalidVariableName()
         {
             var ex = Assert.Throws<ArgumentException>(() => new DefaultAzureCredential("INVALID-VAR-NAME"));
-            Assert.True(ex.Message.Contains("Invalid environment variable name: 'INVALID-VAR-NAME'. Only letters, digits, and underscores are allowed."));
+            Assert.That(ex.Message, Does.Contain("Invalid environment variable name: 'INVALID-VAR-NAME'. Only letters, digits, and underscores are allowed."));
         }
 
         [Test]
@@ -622,7 +634,7 @@ namespace Azure.Identity.Tests
             {
                 // This should not throw and create a valid credential
                 var cred = new DefaultAzureCredential("VALID_VAR_NAME_123");
-                Assert.IsNotNull(cred);
+                Assert.That(cred, Is.Not.Null);
             }
         }
 
@@ -632,7 +644,7 @@ namespace Azure.Identity.Tests
             using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", null))
             {
                 var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS"));
-                Assert.True(ex.Message.Contains("Environment variable 'CUSTOM_TOKEN_CREDENTIALS' is not set or is empty"));
+                Assert.That(ex.Message, Does.Contain("Environment variable 'CUSTOM_TOKEN_CREDENTIALS' is not set or is empty"));
             }
         }
 
@@ -642,7 +654,7 @@ namespace Azure.Identity.Tests
             using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", ""))
             {
                 var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS"));
-                Assert.True(ex.Message.Contains("Environment variable 'CUSTOM_TOKEN_CREDENTIALS' is not set or is empty"));
+                Assert.That(ex.Message, Does.Contain("Environment variable 'CUSTOM_TOKEN_CREDENTIALS' is not set or is empty"));
             }
         }
 
@@ -652,7 +664,7 @@ namespace Azure.Identity.Tests
             using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", "invalid_credential_type"))
             {
                 var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS"));
-                Assert.True(ex.Message.Contains("Invalid value for environment variable CUSTOM_TOKEN_CREDENTIALS: invalid_credential_type"));
+                Assert.That(ex.Message, Does.Contain("Invalid value for environment variable CUSTOM_TOKEN_CREDENTIALS: invalid_credential_type"));
             }
         }
 
@@ -664,14 +676,17 @@ namespace Azure.Identity.Tests
                 var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS");
                 TokenCredential[] sources = cred._sources();
 
-                Assert.NotNull(sources);
-                Assert.AreEqual(6, sources.Length);
-                Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[0]);
-                Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[1]);
-                Assert.IsInstanceOf(typeof(AzureCliCredential), sources[2]);
-                Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[3]);
-                Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[4]);
-                Assert.IsInstanceOf(typeof(BrokerCredential), sources[5]);
+                Assert.That(sources, Is.Not.Null);
+                Assert.That(sources, Has.Length.EqualTo(6));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sources[0], Is.InstanceOf(typeof(VisualStudioCredential)));
+                    Assert.That(sources[1], Is.InstanceOf(typeof(VisualStudioCodeCredential)));
+                    Assert.That(sources[2], Is.InstanceOf(typeof(AzureCliCredential)));
+                    Assert.That(sources[3], Is.InstanceOf(typeof(AzurePowerShellCredential)));
+                    Assert.That(sources[4], Is.InstanceOf(typeof(AzureDeveloperCliCredential)));
+                    Assert.That(sources[5], Is.InstanceOf(typeof(BrokerCredential)));
+                });
             }
         }
 
@@ -683,11 +698,14 @@ namespace Azure.Identity.Tests
                 var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS");
                 TokenCredential[] sources = cred._sources();
 
-                Assert.NotNull(sources);
-                Assert.AreEqual(3, sources.Length);
-                Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
-                Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
-                Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
+                Assert.That(sources, Is.Not.Null);
+                Assert.That(sources, Has.Length.EqualTo(3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sources[0], Is.InstanceOf(typeof(EnvironmentCredential)));
+                    Assert.That(sources[1], Is.InstanceOf(typeof(WorkloadIdentityCredential)));
+                    Assert.That(sources[2], Is.InstanceOf(typeof(ManagedIdentityCredential)));
+                });
             }
         }
 
@@ -699,9 +717,9 @@ namespace Azure.Identity.Tests
                 var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS");
                 TokenCredential[] sources = cred._sources();
 
-                Assert.NotNull(sources);
-                Assert.AreEqual(1, sources.Length);
-                Assert.IsInstanceOf(typeof(AzureCliCredential), sources[0]);
+                Assert.That(sources, Is.Not.Null);
+                Assert.That(sources, Has.Length.EqualTo(1));
+                Assert.That(sources[0], Is.InstanceOf(typeof(AzureCliCredential)));
             }
         }
 
@@ -718,9 +736,9 @@ namespace Azure.Identity.Tests
                 var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS", options);
                 TokenCredential[] sources = cred._sources();
 
-                Assert.NotNull(sources);
-                Assert.AreEqual(1, sources.Length);
-                Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
+                Assert.That(sources, Is.Not.Null);
+                Assert.That(sources, Has.Length.EqualTo(1));
+                Assert.That(sources[0], Is.InstanceOf(typeof(EnvironmentCredential)));
             }
         }
 
@@ -732,9 +750,9 @@ namespace Azure.Identity.Tests
                 var cred = new DefaultAzureCredential(DefaultAzureCredential.DefaultEnvironmentVariableName);
                 TokenCredential[] sources = cred._sources();
 
-                Assert.NotNull(sources);
-                Assert.AreEqual(1, sources.Length);
-                Assert.IsInstanceOf(typeof(AzureCliCredential), sources[0]);
+                Assert.That(sources, Is.Not.Null);
+                Assert.That(sources, Has.Length.EqualTo(1));
+                Assert.That(sources[0], Is.InstanceOf(typeof(AzureCliCredential)));
             }
         }
     }

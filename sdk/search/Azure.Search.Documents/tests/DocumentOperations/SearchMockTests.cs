@@ -80,27 +80,27 @@ namespace Azure.Search.Documents.Tests
 
         private void AssertFacetsEqual(ICollection<FacetResult> actualFacets, params FacetResult[] expectedFacets)
         {
-            Assert.AreEqual(actualFacets.Count, expectedFacets.Length);
+            Assert.That(expectedFacets, Has.Length.EqualTo(actualFacets.Count));
             int i = 0;
             foreach (FacetResult actualFacet in actualFacets)
             {
                 FacetResult expectedFacet = expectedFacets[i++];
-                Assert.AreEqual(expectedFacet.Count, actualFacet.Count);
-                CollectionAssert.IsSubsetOf(actualFacet.Keys, expectedFacet.Keys);
+                Assert.That(actualFacet.Count, Is.EqualTo(expectedFacet.Count));
+                Assert.That(actualFacet.Keys, Is.SubsetOf(expectedFacet.Keys));
                 foreach (string key in expectedFacet.Keys)
                 {
-                    Assert.AreEqual(
-                        expectedFacet[key],
-                        actualFacet.TryGetValue(key, out object value) ? value : null);
+                    Assert.That(
+                        actualFacet.TryGetValue(key, out object value) ? value : null,
+                        Is.EqualTo(expectedFacet[key]));
                 }
             }
         }
 
         private ICollection<FacetResult> GetFacetsForField(IDictionary<string, IList<FacetResult>> facets, string expectedField, int expectedCount)
         {
-            Assert.True(facets.ContainsKey(expectedField), $"Expecting facets to contain {expectedField}");
+            Assert.That(facets.ContainsKey(expectedField), Is.True, $"Expecting facets to contain {expectedField}");
             ICollection<FacetResult> fieldFacets = facets[expectedField];
-            Assert.AreEqual(expectedCount, fieldFacets.Count);
+            Assert.That(fieldFacets.Count, Is.EqualTo(expectedCount));
             return fieldFacets;
         }
     }

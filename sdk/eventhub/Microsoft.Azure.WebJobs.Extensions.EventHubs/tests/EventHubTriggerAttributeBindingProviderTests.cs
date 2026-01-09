@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.UnitTests
             TriggerBindingProviderContext context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
 
             ITriggerBinding binding = await _provider.TryCreateAsync(context);
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
 
             var listener = await binding.CreateListenerAsync(new ListenerFactoryContext(new FunctionDescriptor(),
                 new Mock<ITriggeredFunctionExecutor>().Object, CancellationToken.None));
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.UnitTests
                 .GetValue(listener);
             var batchCount = (int) typeof(EventProcessor<EventProcessorHostPartition>).GetProperty("EventBatchMaximumCount", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processorHost);
-            Assert.AreEqual(expectedBatchCount, batchCount);
+            Assert.That(batchCount, Is.EqualTo(expectedBatchCount));
         }
 
         internal static void SingleDispatch(

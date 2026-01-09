@@ -188,9 +188,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var filter = AmqpFilter.CreateConsumerFilter(expression);
 
             Assert.That(filter, Is.Not.Null, "The filter should have been created");
-            Assert.That(filter.DescriptorName, Is.EqualTo((AmqpSymbol)AmqpFilter.ConsumerFilterName), "The filter name should have been populated");
-            Assert.That(filter.DescriptorCode, Is.EqualTo(AmqpFilter.ConsumerFilterCode), "The filter code should have been populated");
-            Assert.That(filter.Value, Is.EqualTo(expression), "The filter expression should have been used as the body of the filter");
+            Assert.Multiple(() =>
+            {
+                Assert.That(filter.DescriptorName, Is.EqualTo((AmqpSymbol)AmqpFilter.ConsumerFilterName), "The filter name should have been populated");
+                Assert.That(filter.DescriptorCode, Is.EqualTo(AmqpFilter.ConsumerFilterCode), "The filter code should have been populated");
+                Assert.That(filter.Value, Is.EqualTo(expression), "The filter expression should have been used as the body of the filter");
+            });
         }
     }
 }

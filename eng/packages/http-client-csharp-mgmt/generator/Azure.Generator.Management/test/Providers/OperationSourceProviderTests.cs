@@ -23,17 +23,23 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.None));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.Name, "ResponseTypeResource");
+            Assert.Multiple(() =>
+            {
+                Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.None));
+                Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)), Is.True);
+                Assert.That(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)), Is.True);
+                Assert.That(signature.ReturnType?.Name, Is.EqualTo("ResponseTypeResource"));
+            });
 
             // verify the method body
             var bodyStatements = validateIdMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         [TestCase]
@@ -43,24 +49,30 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Async));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(ValueTask<>));
+            Assert.Multiple(() =>
+            {
+                Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Async));
+                Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)), Is.True);
+                Assert.That(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)), Is.True);
+                Assert.That(typeof(ValueTask<>), Is.EqualTo(signature.ReturnType?.FrameworkType));
+            });
 
             // verify the method body
             var bodyStatements = validateIdMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(exptected));
         }
 
         private static MethodProvider GetOperationSourceProviderMethodByName(string methodName)
         {
             OperationSourceProvider resourceProvider = GetOperationSourceProvider();
             var method = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == methodName);
-            Assert.NotNull(method);
+            Assert.That(method, Is.Not.Null);
             return method!;
         }
 
@@ -131,9 +143,9 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
-            Assert.NotNull(outputLibrary);
+            Assert.That(outputLibrary, Is.Not.Null);
             var operationSourceProvider = outputLibrary!.OperationSourceDict.Values.FirstOrDefault();
-            Assert.NotNull(operationSourceProvider);
+            Assert.That(operationSourceProvider, Is.Not.Null);
             return operationSourceProvider!;
         }
 

@@ -59,15 +59,21 @@ namespace OpenAI.TestFramework.Tests
             using ProxyService proxy = await CreateProxyServiceAsync();
 
             Assert.That(proxy.HttpEndpoint, Is.Not.Null);
-            Assert.That(proxy.HttpEndpoint.Port, Is.GreaterThan(0).And.LessThanOrEqualTo(ushort.MaxValue));
-            Assert.That(proxy.HttpsEndpoint, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(proxy.HttpEndpoint.Port, Is.GreaterThan(0).And.LessThanOrEqualTo(ushort.MaxValue));
+                Assert.That(proxy.HttpsEndpoint, Is.Not.Null);
+            });
             Assert.That(proxy.HttpsEndpoint.Port, Is.GreaterThan(0).And.LessThanOrEqualTo(ushort.MaxValue));
 
             ProxyClientResult<string> available = await proxy.Client.ListAvailableAsync(Token);
             Assert.That(available, Is.Not.Null);
             Assert.That(available.GetRawResponse(), Is.Not.Null);
-            Assert.That(available.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(available.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(available.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(available.Value, Is.Not.Null);
+            });
             Assert.That(available.Value, Does.Contain("BodilessMatcher"));
         }
 
@@ -108,8 +114,11 @@ namespace OpenAI.TestFramework.Tests
             ProxyClientResult<IReadOnlyList<string>> result = await proxy.Client.AddSanitizersAsync(sanitizers, token: Token);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.GetRawResponse(), Is.Not.Null);
-            Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(result.Value, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(result.Value, Is.Not.Null);
+            });
             Assert.That(result.Value, Has.Count.EqualTo(sanitizers.Count));
         }
 
@@ -290,13 +299,19 @@ namespace OpenAI.TestFramework.Tests
 
                 ClientResult<string?> get = await client.GetAsync(id2, token);
                 Assert.That(add, Is.Not.Null);
-                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
-                Assert.That(get.Value, Is.EqualTo(value2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+                    Assert.That(get.Value, Is.EqualTo(value2));
+                });
 
                 get = await client.GetAsync(id3, token);
                 Assert.That(add, Is.Not.Null);
-                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
-                Assert.That(get.Value, Is.EqualTo(value3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+                    Assert.That(get.Value, Is.EqualTo(value3));
+                });
 
                 ClientResult<bool> remove = await client.RemoveAsync(id3, token);
                 Assert.That(remove.Value, Is.True);
@@ -306,8 +321,11 @@ namespace OpenAI.TestFramework.Tests
 
                 get = await client.GetAsync(id3, token);
                 Assert.That(get, Is.Not.Null);
-                Assert.That(get.GetRawResponse().Status, Is.EqualTo(404));
-                Assert.That(get.Value, Is.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(get.GetRawResponse().Status, Is.EqualTo(404));
+                    Assert.That(get.Value, Is.Null);
+                });
             }
         }
 

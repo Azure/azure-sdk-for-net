@@ -159,8 +159,11 @@ namespace Azure.AI.Inference.Tests.Utilities
                 return;
             }
             List<Dictionary<string, object>> lstActual = m_measurementTags[metricsName];
-            Assert.AreEqual(lstExpected.Count, lstActual.Count);
-            Assert.AreEqual(lstExpected.Count, m_measurements[metricsName].Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lstActual, Has.Count.EqualTo(lstExpected.Count));
+                Assert.That(m_measurements[metricsName], Has.Count.EqualTo(lstExpected.Count));
+            });
             for (int i = 0; i < lstExpected.Count; i++)
             {
                 AssertDictEqual(lstExpected[i], lstActual[i]);
@@ -168,11 +171,11 @@ namespace Azure.AI.Inference.Tests.Utilities
                 {
                     if (measurement is double d)
                     {
-                        Assert.Greater(d, 0);
+                        Assert.That(d, Is.GreaterThan(0));
                     }
                     else
                     {
-                        Assert.Greater((long)measurement, 0);
+                        Assert.That((long)measurement, Is.GreaterThan(0));
                     }
                 }
             }
@@ -185,18 +188,24 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <param name="expected">The expected values.</param>
         private static void AssertDictEqual(Dictionary<string, object> expected, Dictionary<string, object> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual, Has.Count.EqualTo(expected.Count));
             foreach (KeyValuePair<string, object> kv in expected)
             {
-                Assert.That(actual.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, actual[kv.Key]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actual.ContainsKey(kv.Key));
+                    Assert.That(actual[kv.Key], Is.EqualTo(kv.Value));
+                });
             }
         }
 
         public void ValidateMetricsAreOff()
         {
-            Assert.That(m_measurements.IsEmpty);
-            Assert.That(m_measurementTags.IsEmpty);
+            Assert.Multiple(() =>
+            {
+                Assert.That(m_measurements.IsEmpty);
+                Assert.That(m_measurementTags.IsEmpty);
+            });
         }
     }
 }

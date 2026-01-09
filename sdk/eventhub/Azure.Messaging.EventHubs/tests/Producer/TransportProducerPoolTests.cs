@@ -45,10 +45,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             GetExpirationCallBack(transportProducerPool).Invoke(null);
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "PerformExpiration should remove an expired producer from the pool.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "PerformExpiration should close an expired producer.");
-            Assert.That(startingPool.TryGetValue("1", out _), Is.True, "PerformExpiration should not remove valid producers.");
-            Assert.That(startingPool.TryGetValue("2", out _), Is.True, "PerformExpiration should not remove valid producers.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(startingPool.TryGetValue("0", out _), Is.False, "PerformExpiration should remove an expired producer from the pool.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "PerformExpiration should close an expired producer.");
+                Assert.That(startingPool.TryGetValue("1", out _), Is.True, "PerformExpiration should not remove valid producers.");
+                Assert.That(startingPool.TryGetValue("2", out _), Is.True, "PerformExpiration should not remove valid producers.");
+            });
         }
 
         /// <summary>
@@ -76,23 +79,29 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var transportProducerPool = new TransportProducerPool(producerFactory, pool: startingPool, eventHubProducer: transportProducer);
 
-            // Validate the initial state.
+            Assert.Multiple(() =>
+            {
+                // Validate the initial state.
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
-            Assert.That(wasFactoryCalled, Is.False, "No producer should not have been created.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+                Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+                Assert.That(wasFactoryCalled, Is.False, "No producer should not have been created.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+            });
 
             // Expire the producer and validate the removal state.
 
             await transportProducerPool.ExpirePooledProducerAsync("0");
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
-            Assert.That(wasFactoryCalled, Is.False, "The requested partition should not have been created.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
+                Assert.That(wasFactoryCalled, Is.False, "The requested partition should not have been created.");
 
-            // Request the producer again and validate a new producer is created.
+                // Request the producer again and validate a new producer is created.
 
-            Assert.That(transportProducerPool.GetPooledProducer("0"), Is.Not.Null, "The requested partition should be available.");
+                Assert.That(transportProducerPool.GetPooledProducer("0"), Is.Not.Null, "The requested partition should be available.");
+            });
             Assert.That(wasFactoryCalled, Is.True, "A new producer for the requested partition should have been created.");
         }
 
@@ -114,10 +123,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var transportProducerPool = new TransportProducerPool(partition => transportProducer, pool: startingPool, eventHubProducer: transportProducer);
 
-            // Validate the initial state.
+            Assert.Multiple(() =>
+            {
+                // Validate the initial state.
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+                Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+            });
 
             // Request the producer and hold the reference to ensure that it is flagged as being in use.
 
@@ -127,8 +139,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await transportProducerPool.ExpirePooledProducerAsync("0", forceClose: false);
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+            });
         }
 
         /// <summary>
@@ -149,10 +164,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var transportProducerPool = new TransportProducerPool(partition => transportProducer, pool: startingPool, eventHubProducer: transportProducer);
 
-            // Validate the initial state.
+            Assert.Multiple(() =>
+            {
+                // Validate the initial state.
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+                Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+            });
 
             // Request the producer and hold the reference to ensure that it is flagged as being in use.
 
@@ -162,8 +180,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await transportProducerPool.ExpirePooledProducerAsync("0", forceClose: true);
 
-            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
-            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+                Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
+            });
         }
 
         /// <summary>
@@ -243,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (pooledProducer)
             {
-                Assert.That(poolItem.ActiveInstances.Count, Is.EqualTo(1), "The usage of a transport producer should be tracked.");
+                Assert.That(poolItem.ActiveInstances, Has.Count.EqualTo(1), "The usage of a transport producer should be tracked.");
             }
 
             Assert.That(poolItem.ActiveInstances.Count, Is.EqualTo(0), "After usage an active instance should be removed from the pool.");

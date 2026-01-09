@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var scope = DefaultSubscription.Id;
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             Assert.ThrowsAsync<RequestFailedException>(() => denyAssignmentCollection.GetAsync(randomGuid));
-            Assert.IsFalse(await denyAssignmentCollection.ExistsAsync(randomGuid));
+            Assert.That((bool)await denyAssignmentCollection.ExistsAsync(randomGuid), Is.False);
         }
 
         [RecordedTest]
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var scope = DefaultSubscription.Id;
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             var denyAssignments = await denyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(denyAssignments);
+            Assert.That(denyAssignments, Is.Empty);
         }
 
         [RecordedTest]
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var scope = new ResourceIdentifier($"{subscriptionId}/resourceGroups/resourceGroupTestName1");
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             var denyAssignments = await denyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(denyAssignments);
+            Assert.That(denyAssignments, Is.Empty);
         }
 
         [RecordedTest]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var scope = new ResourceIdentifier($"{subscriptionId}/resourceGroups/discoverProtectableItemTest/providers/Microsoft.RecoveryServices/vaults/recoveryVault");
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             var denyAssignments = await denyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(denyAssignments);
+            Assert.That(denyAssignments, Is.Empty);
         }
     }
 }

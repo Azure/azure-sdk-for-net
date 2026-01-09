@@ -52,29 +52,38 @@ namespace Azure.AI.Inference.Tests.Utilities
             var expectedEvent = JsonSerializer.SerializeToNode(expected);
             var actualEvent = JsonNode.Parse(actual);
 
-            Assert.AreEqual(expectedEvent["index"].GetValue<int>(), actualEvent["index"].GetValue<int>());
-            Assert.AreEqual(expectedEvent["finish_reason"]?.GetValue<string>(), actualEvent["finish_reason"]?.GetValue<string>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualEvent["index"].GetValue<int>(), Is.EqualTo(expectedEvent["index"].GetValue<int>()));
+                Assert.That(actualEvent["finish_reason"]?.GetValue<string>(), Is.EqualTo(expectedEvent["finish_reason"]?.GetValue<string>()));
+            });
 
             JsonNode expectedMessage = expectedEvent["message"];
             JsonNode actualMessage = actualEvent["message"];
-            Assert.AreEqual(expectedMessage["content"]?.GetValue<string>(), actualMessage["content"]?.GetValue<string>());
+            Assert.That(actualMessage["content"]?.GetValue<string>(), Is.EqualTo(expectedMessage["content"]?.GetValue<string>()));
 
             if (expectedMessage["tool_calls"] != null)
             {
                 JsonArray expectedTools = expectedMessage["tool_calls"].AsArray();
                 JsonArray actualTools = actualMessage["tool_calls"].AsArray();
 
-                Assert.AreEqual(expectedTools.Count, actualTools.Count);
+                Assert.That(actualTools, Has.Count.EqualTo(expectedTools.Count));
                 for (int i = 0; i < expectedTools.Count; i++)
                 {
-                    Assert.AreEqual(expectedTools[i]["id"].GetValue<string>(), actualTools[i]["id"].GetValue<string>());
-                    Assert.AreEqual(expectedTools[i]["type"].GetValue<string>(), actualTools[i]["type"].GetValue<string>());
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(actualTools[i]["id"].GetValue<string>(), Is.EqualTo(expectedTools[i]["id"].GetValue<string>()));
+                        Assert.That(actualTools[i]["type"].GetValue<string>(), Is.EqualTo(expectedTools[i]["type"].GetValue<string>()));
+                    });
 
                     JsonNode expectedFunction = expectedTools[i]["function"];
                     JsonNode actualFunction = actualTools[i]["function"];
 
-                    Assert.AreEqual(expectedFunction["name"].GetValue<string>(), actualFunction["name"].GetValue<string>());
-                    Assert.AreEqual(expectedFunction["arguments"]?.GetValue<string>(), actualFunction["arguments"]?.GetValue<string>());
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(actualFunction["name"].GetValue<string>(), Is.EqualTo(expectedFunction["name"].GetValue<string>()));
+                        Assert.That(actualFunction["arguments"]?.GetValue<string>(), Is.EqualTo(expectedFunction["arguments"]?.GetValue<string>()));
+                    });
                 }
             }
         }

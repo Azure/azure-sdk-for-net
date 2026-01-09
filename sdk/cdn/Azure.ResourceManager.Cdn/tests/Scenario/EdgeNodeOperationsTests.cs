@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 {
                     count++;
                 }
-                Assert.AreEqual(count, 3);
+                Assert.That(count, Is.EqualTo(3));
             }
         }
     }

@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var sameOperation = InstrumentOperation(new AnalyzeActionsOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(sameOperation.HasValue);
+            Assert.That(sameOperation.HasValue, Is.True);
         }
 
         [RecordedTest]
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var sameOperation = InstrumentOperation(new AnalyzeActionsOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(sameOperation.HasValue);
+            Assert.That(sameOperation.HasValue, Is.True);
         }
 
         #endregion Analyze
@@ -99,7 +99,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var sameOperation = InstrumentOperation(new AnalyzeHealthcareEntitiesOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(sameOperation.HasValue);
+            Assert.That(sameOperation.HasValue, Is.True);
         }
 
         [RecordedTest]
@@ -118,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var sameOperation = InstrumentOperation(new AnalyzeHealthcareEntitiesOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
-            Assert.IsTrue(sameOperation.HasValue);
+            Assert.That(sameOperation.HasValue, Is.True);
         }
 
         #endregion Healthcare

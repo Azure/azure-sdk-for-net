@@ -73,13 +73,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableLinkedService service = await DisposableLinkedService.Create (client, this.Recording);
 
             IList<LinkedServiceResource> services = await client.GetLinkedServicesByWorkspaceAsync().ToListAsync();
-            Assert.GreaterOrEqual(services.Count, 1);
+            Assert.That(services, Is.Not.Empty);
 
             foreach (var expectedLinkedService in services)
             {
                 LinkedServiceResource actualLinkedService = await client.GetLinkedServiceAsync(expectedLinkedService.Name);
-                Assert.AreEqual(expectedLinkedService.Name, actualLinkedService.Name);
-                Assert.AreEqual(expectedLinkedService.Id, actualLinkedService.Id);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actualLinkedService.Name, Is.EqualTo(expectedLinkedService.Name));
+                    Assert.That(actualLinkedService.Id, Is.EqualTo(expectedLinkedService.Id));
+                });
             }
         }
 
@@ -107,7 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             LinkedServiceResource service = await client.GetLinkedServiceAsync (newLinkedServiceName);
-            Assert.AreEqual (newLinkedServiceName, service.Name);
+            Assert.That(service.Name, Is.EqualTo(newLinkedServiceName));
 
             LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (newLinkedServiceName);
             await operation.WaitForCompletionResponseAsync();

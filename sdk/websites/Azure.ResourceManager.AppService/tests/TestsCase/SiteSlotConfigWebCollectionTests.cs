@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var Input = ResourceDataHelper.GetBasicSiteConfigResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Input);
             WebSiteSlotConfigResource siteSlotConfigWeb = lro.Value;
-            Assert.AreEqual(name, siteSlotConfigWeb.Data.Name);
+            Assert.That(siteSlotConfigWeb.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]

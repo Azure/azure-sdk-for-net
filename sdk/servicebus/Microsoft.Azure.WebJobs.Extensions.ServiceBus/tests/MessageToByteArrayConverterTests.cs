@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             byte[] result = await converter.ConvertAsync(message, CancellationToken.None);
             string decoded = Encoding.UTF8.GetString(result);
-            Assert.AreEqual(TestString, decoded);
+            Assert.That(decoded, Is.EqualTo(TestString));
         }
     }
 }

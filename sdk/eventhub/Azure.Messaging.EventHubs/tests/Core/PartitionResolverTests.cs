@@ -140,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{ partition }] should have had assignments.");
+                Assert.That(assignmentHash, Does.Contain(partition), $"Partition: [{partition}] should have had assignments.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{ partition }] should have had assignments.");
+                Assert.That(assignmentHash, Does.Contain(partition), $"Partition: [{partition}] should have had assignments.");
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(assignmentHash.Contains(partition), Is.True, $"Partition: [{ partition }] should have had assignments.");
+                Assert.That(assignmentHash, Does.Contain(partition), $"Partition: [{partition}] should have had assignments.");
             }
         }
 
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.Token.ThrowIfCancellationRequested();
             }
 
-            Assert.That(assignedHash.Count, Is.GreaterThanOrEqualTo(requiredAssignments), "Partition keys should have had some level of distribution among partitions.");
+            Assert.That(assignedHash, Has.Count.GreaterThanOrEqualTo(requiredAssignments), "Partition keys should have had some level of distribution among partitions.");
         }
 
         /// <summary>

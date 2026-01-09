@@ -239,8 +239,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
             var connection = new ReadableTransportOptionsMock(fakeConnection);
 
-            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
-            Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+                Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
+            });
         }
 
         /// <summary>
@@ -255,8 +258,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName";
             var connection = new ReadableTransportOptionsMock(fakeConnection);
 
-            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
-            Assert.That(connection.UseTls.Value, Is.True, "The options should use TLS for communcating with the service.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+                Assert.That(connection.UseTls.Value, Is.True, "The options should use TLS for communcating with the service.");
+            });
         }
 
         /// <summary>
@@ -408,8 +414,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             var uri = new Uri(resource, UriKind.Absolute);
 
-            Assert.That(uri.AbsolutePath.StartsWith("/"), Is.True, "The resource path have been normalized to begin with a trailing slash.");
-            Assert.That(uri.AbsolutePath.EndsWith("/"), Is.False, "The resource path have been normalized to not end with a trailing slash.");
+            Assert.That(uri.AbsolutePath, Does.StartWith("/"), "The resource path have been normalized to begin with a trailing slash.");
+            Assert.That(uri.AbsolutePath, Does.Not.EndWith("/"), "The resource path have been normalized to not end with a trailing slash.");
         }
 
         /// <summary>
@@ -429,8 +435,11 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             var uri = new Uri(resource, UriKind.Absolute);
 
-            Assert.That(uri.Host, Is.EqualTo(fullyQualifiedNamespace), "The resource should match the host.");
-            Assert.That(uri.AbsolutePath, Is.EqualTo(expectedPath), "The resource path should match the Event Hub path.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(uri.Host, Is.EqualTo(fullyQualifiedNamespace), "The resource should match the host.");
+                Assert.That(uri.AbsolutePath, Is.EqualTo(expectedPath), "The resource path should match the Event Hub path.");
+            });
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void KeyVaultCertificateIdentifierNullThrows()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new KeyVaultCertificateIdentifier(null));
-            Assert.AreEqual("id", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("id"));
         }
 
         [TestCaseSource(nameof(Data))]
@@ -23,10 +23,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 KeyVaultCertificateIdentifier identifier = new KeyVaultCertificateIdentifier(id);
 
-                Assert.AreEqual(id, identifier.SourceId);
-                Assert.AreEqual(vaultUri, identifier.VaultUri);
-                Assert.AreEqual(name, identifier.Name);
-                Assert.AreEqual(version, identifier.Version);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(identifier.SourceId, Is.EqualTo(id));
+                    Assert.That(identifier.VaultUri, Is.EqualTo(vaultUri));
+                    Assert.That(identifier.Name, Is.EqualTo(name));
+                    Assert.That(identifier.Version, Is.EqualTo(version));
+                });
 
                 return true;
             }
@@ -42,7 +45,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificateIdentifier a = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version"));
             KeyVaultCertificateIdentifier b = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version"));
 
-            Assert.AreEqual(a, b);
+            Assert.That(b, Is.EqualTo(a));
         }
 
         [Test]
@@ -51,7 +54,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificateIdentifier a = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version?api-version=7.0"));
             KeyVaultCertificateIdentifier b = new KeyVaultCertificateIdentifier(new Uri("https://test.vault.azure.net/deletedcertificates/test-name/test-version?api-version=7.1"));
 
-            Assert.AreNotEqual(a, b);
+            Assert.That(b, Is.Not.EqualTo(a));
         }
 
         [Test]
@@ -60,13 +63,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Uri uri = new Uri("https://test.vault.azure.net/keys/test-name/test-version");
             KeyVaultCertificateIdentifier keyId = new KeyVaultCertificateIdentifier(uri);
 
-            Assert.AreEqual(uri.GetHashCode(), keyId.GetHashCode());
+            Assert.That(keyId.GetHashCode(), Is.EqualTo(uri.GetHashCode()));
         }
 
         [Test]
         public void TryCreateFromNull()
         {
-            Assert.IsFalse(KeyVaultCertificateIdentifier.TryCreate(null, out KeyVaultCertificateIdentifier identifier));
+            Assert.That(KeyVaultCertificateIdentifier.TryCreate(null, out KeyVaultCertificateIdentifier identifier), Is.False);
             Assert.That(() => default(KeyVaultCertificateIdentifier).Equals(identifier));
         }
 
@@ -77,10 +80,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             if (result)
             {
-                Assert.AreEqual(id, identifier.SourceId);
-                Assert.AreEqual(vaultUri, identifier.VaultUri);
-                Assert.AreEqual(name, identifier.Name);
-                Assert.AreEqual(version, identifier.Version);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(identifier.SourceId, Is.EqualTo(id));
+                    Assert.That(identifier.VaultUri, Is.EqualTo(vaultUri));
+                    Assert.That(identifier.Name, Is.EqualTo(name));
+                    Assert.That(identifier.Version, Is.EqualTo(version));
+                });
             }
 
             return result;

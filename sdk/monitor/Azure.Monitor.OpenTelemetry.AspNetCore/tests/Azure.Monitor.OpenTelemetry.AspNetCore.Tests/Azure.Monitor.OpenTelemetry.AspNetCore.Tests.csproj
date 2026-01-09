@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
     <NoWarn>SA1636</NoWarn>
   </PropertyGroup>
 

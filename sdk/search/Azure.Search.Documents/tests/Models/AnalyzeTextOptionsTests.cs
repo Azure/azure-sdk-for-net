@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void RequiresText()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => new AnalyzeTextOptions(null, LexicalTokenizerName.Whitespace));
-            Assert.AreEqual("text", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("text"));
         }
     }
 }

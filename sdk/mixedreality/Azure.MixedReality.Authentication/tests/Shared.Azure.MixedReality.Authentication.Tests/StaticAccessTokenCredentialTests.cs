@@ -25,8 +25,11 @@ namespace Azure.MixedReality.Authentication.Tests
         {
             StaticAccessTokenCredential credential = new StaticAccessTokenCredential(s_fakeAccessToken);
             AccessToken token = credential.GetToken(default, default);
-            Assert.AreEqual(ExpectedTestToken, token.Token);
-            Assert.AreEqual(DateTimeOffset.MaxValue, token.ExpiresOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(ExpectedTestToken));
+                Assert.That(token.ExpiresOn, Is.EqualTo(DateTimeOffset.MaxValue));
+            });
         }
 
         [Test]
@@ -34,8 +37,11 @@ namespace Azure.MixedReality.Authentication.Tests
         {
             StaticAccessTokenCredential credential = new StaticAccessTokenCredential(s_fakeAccessToken);
             AccessToken token = await credential.GetTokenAsync(default, default);
-            Assert.AreEqual(ExpectedTestToken, token.Token);
-            Assert.AreEqual(DateTimeOffset.MaxValue, token.ExpiresOn);
+            Assert.Multiple(() =>
+            {
+                Assert.That(token.Token, Is.EqualTo(ExpectedTestToken));
+                Assert.That(token.ExpiresOn, Is.EqualTo(DateTimeOffset.MaxValue));
+            });
         }
     }
 }

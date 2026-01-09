@@ -17,24 +17,24 @@ namespace TestProjects.Spector.Tests.Http.Payload.ContentNegotiation
         public Task SameBody() => Test(async (host) =>
         {
             var response1 = await new ContentNegotiationClient(host, null).GetSameBodyClient().GetAvatarAsPngAsync();
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
-            CollectionAssert.AreEqual(File.ReadAllBytes(_samplePngPath), response1.Value.ToArray());
+            Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response1.Value.ToArray(), Is.EqualTo(File.ReadAllBytes(_samplePngPath)).AsCollection);
 
             var response2 = await new ContentNegotiationClient(host, null).GetSameBodyClient().GetAvatarAsJpegAsync();
-            Assert.AreEqual(200, response2.GetRawResponse().Status);
-            CollectionAssert.AreEqual(File.ReadAllBytes(_sampleJpgPath), response2.Value.ToArray());
+            Assert.That(response2.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response2.Value.ToArray(), Is.EqualTo(File.ReadAllBytes(_sampleJpgPath)).AsCollection);
         });
 
         [SpectorTest]
         public Task DifferentBody() => Test(async (host) =>
         {
             var response1 = await new ContentNegotiationClient(host, null).GetDifferentBodyClient().GetAvatarAsPngAsync();
-            Assert.AreEqual(200, response1.GetRawResponse().Status);
-            CollectionAssert.AreEqual(File.ReadAllBytes(_samplePngPath), response1.Value.ToArray());
+            Assert.That(response1.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response1.Value.ToArray(), Is.EqualTo(File.ReadAllBytes(_samplePngPath)).AsCollection);
 
             var response2 = await new ContentNegotiationClient(host, null).GetDifferentBodyClient().GetAvatarAsJsonAsync();
-            Assert.AreEqual(200, response2.GetRawResponse().Status);
-            CollectionAssert.AreEqual(File.ReadAllBytes(_samplePngPath), response2.Value.Content.ToArray());
+            Assert.That(response2.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response2.Value.Content.ToArray(), Is.EqualTo(File.ReadAllBytes(_samplePngPath)).AsCollection);
         });
     }
 }

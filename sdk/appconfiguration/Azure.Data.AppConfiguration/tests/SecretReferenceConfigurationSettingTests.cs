@@ -25,9 +25,12 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var reference = new SecretReferenceConfigurationSetting("key", new Uri("http://example.com/secret"));
 
-            Assert.AreEqual("application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8", reference.ContentType);
-            Assert.AreEqual("key" , reference.Key);
-            Assert.AreEqual("http://example.com/secret", reference.SecretId.AbsoluteUri);
+            Assert.Multiple(() =>
+            {
+                Assert.That(reference.ContentType, Is.EqualTo("application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8"));
+                Assert.That(reference.Key, Is.EqualTo("key"));
+                Assert.That(reference.SecretId.AbsoluteUri, Is.EqualTo("http://example.com/secret"));
+            });
         }
 
         [TestCase("INVALID")]
@@ -44,13 +47,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 using var expected = JsonDocument.Parse(value ?? "");
                 using var actual = JsonDocument.Parse(secretSetting.Value);
 
-                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+                Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
             }
             catch (JsonException)
             {
                 // For the cases that are not legal JSON, this exception will occur
                 // and we just want to make sure that the string value is set correctly.
-                Assert.AreEqual(value, secretSetting.Value);
+                Assert.That(secretSetting.Value, Is.EqualTo(value));
             }
         }
 
@@ -63,7 +66,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));        }
+            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);        }
 
         [Test]
         public void NewFeatureReferenceSerialized()
@@ -73,7 +76,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
         }
 
         [Test]
@@ -85,7 +88,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
         }
 
         [Test]
@@ -98,7 +101,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
         }
 
         [Test]
@@ -111,7 +114,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse("{\"uri\":\"http://example.org/\"}");
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
         }
 
         [Test]
@@ -127,7 +130,7 @@ namespace Azure.Data.AppConfiguration.Tests
             for (var index = 0; index < 3; ++index)
             {
                 using var actual = JsonDocument.Parse(secretSetting.Value);
-                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+                Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
             }
         }
 
@@ -148,7 +151,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(expectedJson);
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
         }
     }
 }

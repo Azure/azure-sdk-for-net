@@ -13,7 +13,7 @@ namespace TestProjects.Spector.Tests.Http.Server.Path.Single
         public Task MyOp() => Test(async (host) =>
         {
             var result = await new SingleClient(host, null).MyOpAsync();
-            Assert.AreEqual(200, result.Status);
+            Assert.That(result.Status, Is.EqualTo(200));
         });
     }
 }

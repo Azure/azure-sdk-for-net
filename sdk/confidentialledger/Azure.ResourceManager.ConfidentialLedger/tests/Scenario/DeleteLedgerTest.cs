@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             }
             catch (Exception exception)
             {
-                Assert.True(exception.Message.Contains("ResourceNotFound"));
+                Assert.That(exception.Message, Does.Contain("ResourceNotFound"));
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             int responseStatus = (await armOperation.WaitForCompletionResponseAsync()).Status;
 
             //https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md
-            Assert.AreEqual(StatusCodes.Status204NoContent, responseStatus);
+            Assert.That(responseStatus, Is.EqualTo(StatusCodes.Status204NoContent));
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetTest()
         {
             var getDeletedConfigurationStore = await deletedConfigurationStore.GetAsync();
-            Assert.AreEqual(getDeletedConfigurationStore.Value.Data.Name, configurationStoreName);
+            Assert.That(configurationStoreName, Is.EqualTo(getDeletedConfigurationStore.Value.Data.Name));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             _ = await deletedConfigurationStore.PurgeDeletedAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deletedConfigurationStore.GetAsync());
-            Assert.AreEqual(ex.Status, 404);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
     }
 }

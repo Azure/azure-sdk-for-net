@@ -13,7 +13,7 @@ namespace TestProjects.Spector.Tests.Http.Server.Endpoint.NotDefined
         public Task Valid() => Test(async (host) =>
         {
             var response = await new NotDefinedClient(host, null).ValidAsync();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         });
     }
 }

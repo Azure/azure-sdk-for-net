@@ -29,10 +29,13 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var audioData = CallAutomationModelFactory.AudioData(data, timestamp, participantId, silent);
 
-            Assert.AreEqual(data, Convert.ToBase64String(audioData.Data.ToArray()));
-            Assert.AreEqual(timestamp, audioData.Timestamp.DateTime);
-            Assert.AreEqual(participantId, audioData.Participant.RawId);
-            Assert.AreEqual(silent, audioData.IsSilent);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Convert.ToBase64String(audioData.Data.ToArray()), Is.EqualTo(data));
+                Assert.That(audioData.Timestamp.DateTime, Is.EqualTo(timestamp));
+                Assert.That(audioData.Participant.RawId, Is.EqualTo(participantId));
+                Assert.That(audioData.IsSilent, Is.EqualTo(silent));
+            });
         }
 
         [Test]
@@ -46,10 +49,13 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var audioMetadata = CallAutomationModelFactory.AudioMetadata(mediaSubscriptionId, encoding, sampleRate, channels, length);
 
-            Assert.AreEqual(mediaSubscriptionId, audioMetadata.MediaSubscriptionId);
-            Assert.AreEqual(encoding, audioMetadata.Encoding);
-            Assert.AreEqual(sampleRate, audioMetadata.SampleRate);
-            Assert.AreEqual(AudioChannel.Mono, audioMetadata.Channels);
+            Assert.Multiple(() =>
+            {
+                Assert.That(audioMetadata.MediaSubscriptionId, Is.EqualTo(mediaSubscriptionId));
+                Assert.That(audioMetadata.Encoding, Is.EqualTo(encoding));
+                Assert.That(audioMetadata.SampleRate, Is.EqualTo(sampleRate));
+                Assert.That(audioMetadata.Channels, Is.EqualTo(AudioChannel.Mono));
+            });
         }
 
         [Test]
@@ -66,15 +72,18 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format, confidence, offset, duration, words, participantRawID, resultState);
 
-            Assert.AreEqual(text, transcriptionData.Text);
-            Assert.AreEqual(format, transcriptionData.Format);
-            Assert.AreEqual(confidence, transcriptionData.Confidence);
-            Assert.AreEqual(TimeSpan.FromTicks(offset), transcriptionData.Offset);
-            Assert.AreEqual(TimeSpan.FromTicks(duration), transcriptionData.Duration);
-            Assert.AreEqual(CommunicationIdentifier.FromRawId(participantRawID), transcriptionData.Participant);
-            Assert.AreEqual(resultState, transcriptionData.ResultState);
-            Assert.IsNotNull(transcriptionData.Words);
-            Assert.AreEqual(1, transcriptionData.Words.Count());
+            Assert.Multiple(() =>
+            {
+                Assert.That(transcriptionData.Text, Is.EqualTo(text));
+                Assert.That(transcriptionData.Format, Is.EqualTo(format));
+                Assert.That(transcriptionData.Confidence, Is.EqualTo(confidence));
+                Assert.That(transcriptionData.Offset, Is.EqualTo(TimeSpan.FromTicks(offset)));
+                Assert.That(transcriptionData.Duration, Is.EqualTo(TimeSpan.FromTicks(duration)));
+                Assert.That(transcriptionData.Participant, Is.EqualTo(CommunicationIdentifier.FromRawId(participantRawID)));
+                Assert.That(transcriptionData.ResultState, Is.EqualTo(resultState));
+                Assert.That(transcriptionData.Words, Is.Not.Null);
+            });
+            Assert.That(transcriptionData.Words.Count(), Is.EqualTo(1));
         }
 
         [Test]
@@ -86,9 +95,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var wordData = CallAutomationModelFactory.WordData(text, offset, duration);
 
-            Assert.AreEqual(text, wordData.Text);
-            Assert.AreEqual(TimeSpan.FromTicks(offset), wordData.Offset);
-            Assert.AreEqual(TimeSpan.FromTicks(duration), wordData.Duration);
+            Assert.Multiple(() =>
+            {
+                Assert.That(wordData.Text, Is.EqualTo(text));
+                Assert.That(wordData.Offset, Is.EqualTo(TimeSpan.FromTicks(offset)));
+                Assert.That(wordData.Duration, Is.EqualTo(TimeSpan.FromTicks(duration)));
+            });
         }
 
         [Test]
@@ -98,7 +110,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var outStreamingData = CallAutomationModelFactory.OutStreamingData(kind);
 
-            Assert.AreEqual(kind, outStreamingData.Kind);
+            Assert.That(outStreamingData.Kind, Is.EqualTo(kind));
         }
 
         [Test]
@@ -110,9 +122,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var result = CallAutomationModelFactory.AddParticipantsResult(participant, operationContext, invitationId);
 
-            Assert.AreEqual(participant, result.Participant);
-            Assert.AreEqual(operationContext, result.OperationContext);
-            Assert.AreEqual(invitationId, result.InvitationId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Participant, Is.EqualTo(participant));
+                Assert.That(result.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(result.InvitationId, Is.EqualTo(invitationId));
+            });
         }
 
         [Test]
@@ -125,8 +140,11 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var result = CallAutomationModelFactory.AnswerCallResult(callConnection, callConnectionProperties);
 
-            Assert.AreEqual(callConnection, result.CallConnection);
-            Assert.AreEqual(callConnectionProperties, result.CallConnectionProperties);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.CallConnection, Is.EqualTo(callConnection));
+                Assert.That(result.CallConnectionProperties, Is.EqualTo(callConnectionProperties));
+            });
         }
 
         [Test]
@@ -146,16 +164,22 @@ namespace Azure.Communication.CallAutomation.Tests.Models
                 callConnectionId, serverCallId, targets, callConnectionState, callbackUri,
                 sourceIdentity, sourceCallerIdNumber, sourceDisplayName, answeredBy);
 
-            Assert.AreEqual(callConnectionId, properties.CallConnectionId);
-            Assert.AreEqual(serverCallId, properties.ServerCallId);
-            Assert.AreNotSame(targets, properties.Targets);
-            Assert.AreEqual(targets, properties.Targets);
-            Assert.AreEqual(callConnectionState, properties.CallConnectionState);
-            Assert.AreEqual(callbackUri, properties.CallbackUri);
-            Assert.AreEqual(sourceIdentity, properties.Source);
-            Assert.AreEqual(sourceCallerIdNumber, properties.SourceCallerIdNumber);
-            Assert.AreEqual(sourceDisplayName, properties.SourceDisplayName);
-            Assert.AreEqual(answeredBy, properties.AnsweredBy);
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(properties.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(properties.Targets, Is.Not.SameAs(targets));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Targets, Is.EqualTo(targets));
+                Assert.That(properties.CallConnectionState, Is.EqualTo(callConnectionState));
+                Assert.That(properties.CallbackUri, Is.EqualTo(callbackUri));
+                Assert.That(properties.Source, Is.EqualTo(sourceIdentity));
+                Assert.That(properties.SourceCallerIdNumber, Is.EqualTo(sourceCallerIdNumber));
+                Assert.That(properties.SourceDisplayName, Is.EqualTo(sourceDisplayName));
+                Assert.That(properties.AnsweredBy, Is.EqualTo(answeredBy));
+            });
         }
 
         [Test]
@@ -167,9 +191,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var participant = CallAutomationModelFactory.CallParticipant(identifier, isMuted, isOnHold);
 
-            Assert.AreEqual(identifier, participant.Identifier);
-            Assert.AreEqual(isMuted, participant.IsMuted);
-            Assert.AreEqual(isOnHold, participant.IsOnHold);
+            Assert.Multiple(() =>
+            {
+                Assert.That(participant.Identifier, Is.EqualTo(identifier));
+                Assert.That(participant.IsMuted, Is.EqualTo(isMuted));
+                Assert.That(participant.IsOnHold, Is.EqualTo(isOnHold));
+            });
         }
 
         [Test]
@@ -182,8 +209,11 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var result = CallAutomationModelFactory.CreateCallResult(callConnection, callConnectionProperties);
 
-            Assert.AreEqual(callConnection, result.CallConnection);
-            Assert.AreEqual(callConnectionProperties, result.CallConnectionProperties);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.CallConnection, Is.EqualTo(callConnection));
+                Assert.That(result.CallConnectionProperties, Is.EqualTo(callConnectionProperties));
+            });
         }
 
         [Test]
@@ -193,7 +223,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var result = CallAutomationModelFactory.RemoveParticipantResult(operationContext);
 
-            Assert.AreEqual(operationContext, result.OperationContext);
+            Assert.That(result.OperationContext, Is.EqualTo(operationContext));
         }
 
         [Test]
@@ -204,8 +234,11 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var result = CallAutomationModelFactory.CancelAddParticipantResult(invitationId, operationContext);
 
-            Assert.AreEqual(invitationId, result.InvitationId);
-            Assert.AreEqual(operationContext, result.OperationContext);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.InvitationId, Is.EqualTo(invitationId));
+                Assert.That(result.OperationContext, Is.EqualTo(operationContext));
+            });
         }
 
         [Test]
@@ -221,12 +254,15 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.AddParticipantFailed(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation, participant);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(participant, eventResult.Participant);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.Participant, Is.EqualTo(participant));
+            });
         }
 
         [Test]
@@ -242,12 +278,15 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.AddParticipantSucceeded(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation, participant);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(participant, eventResult.Participant);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.Participant, Is.EqualTo(participant));
+            });
         }
 
         [Test]
@@ -266,13 +305,16 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.ParticipantsUpdated(
                 callConnectionId, serverCallId, correlationId, participants, sequenceNumber, resultInformation);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(sequenceNumber, eventResult.SequenceNumber);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.IsNotNull(eventResult.Participants);
-            Assert.AreEqual(1, eventResult.Participants.Count());
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.SequenceNumber, Is.EqualTo(sequenceNumber));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.Participants, Is.Not.Null);
+            });
+            Assert.That(eventResult.Participants.Count(), Is.EqualTo(1));
         }
 
         [Test]
@@ -288,12 +330,15 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.RecognizeCompleted(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(recognitionType, eventResult.RecognitionType);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.RecognitionType, Is.EqualTo(recognitionType));
+            });
         }
 
         [Test]
@@ -310,13 +355,16 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.CallTransferAccepted(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transferee, transferTarget);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(transferee, eventResult.Transferee);
-            Assert.AreEqual(transferTarget, eventResult.TransferTarget);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.Transferee, Is.EqualTo(transferee));
+                Assert.That(eventResult.TransferTarget, Is.EqualTo(transferTarget));
+            });
         }
 
         [Test]
@@ -331,11 +379,14 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.CallConnected(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+            });
         }
 
         [Test]
@@ -350,11 +401,14 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.CallDisconnected(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+            });
         }
 
         [Test]
@@ -369,11 +423,14 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.PlayCompleted(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+            });
         }
 
         [Test]
@@ -389,12 +446,15 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.PlayFailed(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(failedPlaySourceIndex, eventResult.FailedPlaySourceIndex);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.FailedPlaySourceIndex, Is.EqualTo(failedPlaySourceIndex));
+            });
         }
 
         [Test]
@@ -411,13 +471,16 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(
                 sequenceId, tone, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
 
-            Assert.AreEqual(sequenceId, eventResult.SequenceId);
-            Assert.AreEqual(tone, eventResult.Tone);
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.SequenceId, Is.EqualTo(sequenceId));
+                Assert.That(eventResult.Tone, Is.EqualTo(tone));
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+            });
         }
 
         [Test]
@@ -435,14 +498,17 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.RecordingStateChanged(
                 callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime, recordingKind, resultInformation);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(recordingId, eventResult.RecordingId);
-            Assert.AreEqual(state, eventResult.State);
-            Assert.AreEqual(startDateTime, eventResult.StartDateTime);
-            Assert.AreEqual(recordingKind, eventResult.RecordingKind);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.RecordingId, Is.EqualTo(recordingId));
+                Assert.That(eventResult.State, Is.EqualTo(state));
+                Assert.That(eventResult.StartDateTime, Is.EqualTo(startDateTime));
+                Assert.That(eventResult.RecordingKind, Is.EqualTo(recordingKind));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+            });
         }
 
         [Test]
@@ -454,9 +520,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
 
             var result = CallAutomationModelFactory.RecordingStateResult(recordingId, recordingState, recordingKind);
 
-            Assert.AreEqual(recordingId, result.RecordingId);
-            Assert.AreEqual(recordingState, result.RecordingState);
-            Assert.AreEqual(recordingKind, result.RecordingKind);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.RecordingId, Is.EqualTo(recordingId));
+                Assert.That(result.RecordingState, Is.EqualTo(recordingState));
+                Assert.That(result.RecordingKind, Is.EqualTo(recordingKind));
+            });
         }
 
         [Test]
@@ -471,11 +540,14 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.SendDtmfTonesCompleted(
                 callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+            });
         }
 
         [Test]
@@ -490,11 +562,14 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var eventResult = CallAutomationModelFactory.CreateCallFailed(
                 callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
 
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(operationContext, eventResult.OperationContext);
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
+                Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
+                Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+                Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
+                Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+            });
         }
 
         [Test]
@@ -504,8 +579,8 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var properties = CallAutomationModelFactory.CallConnectionProperties(
                 targets: null);
 
-            Assert.IsNotNull(properties.Targets);
-            Assert.AreEqual(0, properties.Targets.Count);
+            Assert.That(properties.Targets, Is.Not.Null);
+            Assert.That(properties.Targets.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -514,9 +589,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             // Test that default parameter values work correctly
             var participant = CallAutomationModelFactory.CallParticipant();
 
-            Assert.IsNull(participant.Identifier);
-            Assert.IsFalse(participant.IsMuted);
-            Assert.IsFalse(participant.IsOnHold);
+            Assert.Multiple(() =>
+            {
+                Assert.That(participant.Identifier, Is.Null);
+                Assert.That(participant.IsMuted, Is.False);
+                Assert.That(participant.IsOnHold, Is.False);
+            });
         }
 
         [Test]
@@ -526,12 +604,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var originalTargets = new List<CommunicationIdentifier> { _testUser };
             var properties = CallAutomationModelFactory.CallConnectionProperties(targets: originalTargets);
 
-            Assert.AreNotSame(originalTargets, properties.Targets);
-            Assert.AreEqual(originalTargets, properties.Targets);
+            Assert.That(properties.Targets, Is.Not.SameAs(originalTargets));
+            Assert.That(properties.Targets, Is.EqualTo(originalTargets));
 
             // Modifying original should not affect the created instance
             originalTargets.Add(_testPhoneNumber);
-            Assert.AreEqual(1, properties.Targets.Count);
+            Assert.That(properties.Targets.Count, Is.EqualTo(1));
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")

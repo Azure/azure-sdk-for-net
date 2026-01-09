@@ -34,9 +34,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = EventHubsModelFactory.EventHubProperties(name, createdOn, partitions);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
-            Assert.That(properties.Name, Is.EqualTo(name), "The name should have been set.");
-            Assert.That(properties.CreatedOn, Is.EqualTo(createdOn), "The creation date/time should have been set.");
-            Assert.That(properties.PartitionIds, Is.EquivalentTo(partitions), "The partition identifiers should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Name, Is.EqualTo(name), "The name should have been set.");
+                Assert.That(properties.CreatedOn, Is.EqualTo(createdOn), "The creation date/time should have been set.");
+                Assert.That(properties.PartitionIds, Is.EquivalentTo(partitions), "The partition identifiers should have been set.");
+            });
         }
 
         /// <summary>
@@ -57,13 +60,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
-            Assert.That(properties.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
-            Assert.That(properties.Id, Is.EqualTo(partitionId), "The partition identifier should have been set.");
-            Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The `is empty` flag should have been set.");
-            Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginningSequenceNumber), "The beginning sequence number should have been set.");
-            Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should have been set.");
-            Assert.That(properties.LastEnqueuedOffsetString, Is.EqualTo(lastOffset), "The last offset should have been set.");
-            Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueue date/time should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
+                Assert.That(properties.Id, Is.EqualTo(partitionId), "The partition identifier should have been set.");
+                Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The `is empty` flag should have been set.");
+                Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginningSequenceNumber), "The beginning sequence number should have been set.");
+                Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should have been set.");
+                Assert.That(properties.LastEnqueuedOffsetString, Is.EqualTo(lastOffset), "The last offset should have been set.");
+                Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueue date/time should have been set.");
+            });
         }
 
         /// <summary>
@@ -81,10 +87,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = EventHubsModelFactory.PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
-            Assert.That(properties.IsIdempotentPublishingEnabled, Is.EqualTo(isIdempotentPublishingEnabled), "The idempotent publishing flag should have been set.");
-            Assert.That(properties.ProducerGroupId, Is.EqualTo(producerGroupId), "The producer group should have been set.");
-            Assert.That(properties.OwnerLevel, Is.EqualTo(ownerLevel), "The owner level should have been set.");
-            Assert.That(properties.LastPublishedSequenceNumber, Is.EqualTo(lastPublishedSequenceNumber), "The last sequence number should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.IsIdempotentPublishingEnabled, Is.EqualTo(isIdempotentPublishingEnabled), "The idempotent publishing flag should have been set.");
+                Assert.That(properties.ProducerGroupId, Is.EqualTo(producerGroupId), "The producer group should have been set.");
+                Assert.That(properties.OwnerLevel, Is.EqualTo(ownerLevel), "The owner level should have been set.");
+                Assert.That(properties.LastPublishedSequenceNumber, Is.EqualTo(lastPublishedSequenceNumber), "The last sequence number should have been set.");
+            });
         }
 
         /// <summary>
@@ -102,10 +111,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, lastEnqueued, lastReceived);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
-            Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
-            Assert.That(properties.OffsetString, Is.EqualTo(lastOffset), "The offset should have been set.");
-            Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
-            Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
+                Assert.That(properties.OffsetString, Is.EqualTo(lastOffset), "The offset should have been set.");
+                Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
+                Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
+            });
         }
 
         /// <summary>
@@ -125,11 +137,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var context = EventHubsModelFactory.PartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partition, properties);
 
             Assert.That(context, Is.Not.Null, "The context should have been created.");
-            Assert.That(context.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace), "The namespace should have been set.");
-            Assert.That(context.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
-            Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
-            Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
-            Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(properties), "The last enqueued event properties should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(context.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace), "The namespace should have been set.");
+                Assert.That(context.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
+                Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
+                Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
+                Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(properties), "The last enqueued event properties should have been set.");
+            });
         }
 
         /// <summary>
@@ -147,11 +162,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var context = EventHubsModelFactory.PartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partition);
 
             Assert.That(context, Is.Not.Null, "The context should have been created.");
-            Assert.That(context.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace), "The namespace should have been set.");
-            Assert.That(context.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
-            Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
-            Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
-            Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(new LastEnqueuedEventProperties()), "Reading last enqueued event properties should return a default instance.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(context.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace), "The namespace should have been set.");
+                Assert.That(context.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
+                Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
+                Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
+                Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(new LastEnqueuedEventProperties()), "Reading last enqueued event properties should return a default instance.");
+            });
         }
 
         /// <summary>
@@ -172,13 +190,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = EventHubsModelFactory.EventData(body, properties, systemProperties, partitionKey, sequenceNumber, offset, enqueueTime);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.EventBody.ToString(), Is.EqualTo(body.ToString()), "The event body should have been set.");
-            Assert.That(eventData.Properties, Is.EquivalentTo(properties), "The properties should have been set.");
-            Assert.That(eventData.SystemProperties, Is.EquivalentTo(systemProperties), "The system properties should have been set.");
-            Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should have been set.");
-            Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should have been set.");
-            Assert.That(eventData.OffsetString, Is.EqualTo(offset), "The offset should have been set.");
-            Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The sequence number should have been set.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(eventData.EventBody.ToString(), Is.EqualTo(body.ToString()), "The event body should have been set.");
+                Assert.That(eventData.Properties, Is.EquivalentTo(properties), "The properties should have been set.");
+                Assert.That(eventData.SystemProperties, Is.EquivalentTo(systemProperties), "The system properties should have been set.");
+                Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should have been set.");
+                Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should have been set.");
+                Assert.That(eventData.OffsetString, Is.EqualTo(offset), "The offset should have been set.");
+                Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The sequence number should have been set.");
+            });
         }
 
         /// <summary>
@@ -195,10 +216,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var batch = EventHubsModelFactory.EventDataBatch(size, store, options);
 
             Assert.That(batch, Is.Not.Null, "The batch should have been created.");
-            Assert.That(batch.SizeInBytes, Is.EqualTo(size), "The batch size should have been set.");
-            Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(options.MaximumSizeInBytes), "The maximum batch size should have been set.");
-            Assert.That(batch.Count, Is.EqualTo(store.Count), "The batch count should reflect the count of the backing store.");
-            Assert.That(batch.AsReadOnlyCollection<AmqpMessage>().Count, Is.EqualTo(store.Count), "The batch enumerable should be populated with the same number of messages as the event store.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(batch.SizeInBytes, Is.EqualTo(size), "The batch size should have been set.");
+                Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(options.MaximumSizeInBytes), "The maximum batch size should have been set.");
+                Assert.That(batch.Count, Is.EqualTo(store.Count), "The batch count should reflect the count of the backing store.");
+            });
+            Assert.That(batch.AsReadOnlyCollection<AmqpMessage>(), Has.Count.EqualTo(store.Count), "The batch enumerable should be populated with the same number of messages as the event store.");
         }
 
         /// <summary>
@@ -223,12 +247,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 messages.Add(converter.CreateMessageFromEvent(eventData));
             }
 
-            Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit.");
+            Assert.That(store, Has.Count.EqualTo(eventLimit), "The batch should be at its limit.");
             Assert.That(() => batch.TryAdd(new EventData(new BinaryData("Too many"))), Is.False, "The batch is full; it should not be possible to add a new event.");
             Assert.That(() => batch.TryAdd(new EventData(new BinaryData("Too many"))), Is.False, "The batch is full; a second attempt to add a new event should not succeed.");
 
-            Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
-            Assert.That(batch.AsReadOnlyCollection<AmqpMessage>().Count, Is.EqualTo(eventLimit), "The messages produced by the batch should match the limit.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(store, Has.Count.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
+                Assert.That(batch.AsReadOnlyCollection<AmqpMessage>(), Has.Count.EqualTo(eventLimit), "The messages produced by the batch should match the limit.");
+            });
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.DoesNotThrow(() =>
             {
                 var funcCredential = new FunctionRouterRuleCredential("functionKey");
-                Assert.AreEqual("functionKey", funcCredential.FunctionKey);
+                Assert.That(funcCredential.FunctionKey, Is.EqualTo("functionKey"));
             });
         }
 

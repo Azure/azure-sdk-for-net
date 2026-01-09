@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var discoveryNlpReqObject = GetDiscoveryNlpContent();
             await foreach (SolutionNlpMetadata item in DefaultSubscription.DiscoverSolutionsNlpAsync(discoveryNlpReqObject))
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 break;
             }
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var discoveryNlpReqObject = GetDiscoveryNlpContent();
             await foreach (SolutionNlpMetadata item in DefaultTenantResource.DiscoverSolutionsNlpAsync(discoveryNlpReqObject))
             {
-                Assert.IsNotNull(item);
+                Assert.That(item, Is.Not.Null);
                 break;
             }
         }

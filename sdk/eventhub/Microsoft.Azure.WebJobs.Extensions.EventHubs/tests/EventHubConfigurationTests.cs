@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public void ConfigureOptions_CheckpointingEnabledByDefault()
         {
             EventHubOptions options = CreateOptionsFromConfigWithoutCheckpointEnabled();
-            Assert.True(options.EnableCheckpointing);
+            Assert.That(options.EnableCheckpointing, Is.True);
         }
 
         [Test]
@@ -55,25 +55,28 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfig();
 
-            Assert.AreEqual(123, options.MaxEventBatchSize);
-            Assert.AreEqual(100, options.MinEventBatchSize);
-            Assert.AreEqual(TimeSpan.FromSeconds(60), options.MaxWaitTime);
-            Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
-            Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
-            Assert.AreEqual(5, options.BatchCheckpointFrequency);
-            Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
-            Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
-            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type.ToString());
-            Assert.AreEqual("2020-09-13 12:00:00Z", options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
-            Assert.AreEqual(5, options.ClientRetryOptions.MaximumRetries);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), options.ClientRetryOptions.Delay);
-            Assert.AreEqual(TimeSpan.FromMinutes(1), options.ClientRetryOptions.MaximumDelay);
-            Assert.AreEqual(TimeSpan.FromSeconds(90), options.ClientRetryOptions.TryTimeout);
-            Assert.AreEqual(EventHubsRetryMode.Fixed, options.ClientRetryOptions.Mode);
-            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.TransportType);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) options.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual("http://www.customendpoint.com/", options.CustomEndpointAddress.ToString());
-            Assert.False(options.EnableCheckpointing);
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.MaxEventBatchSize, Is.EqualTo(123));
+                Assert.That(options.MinEventBatchSize, Is.EqualTo(100));
+                Assert.That(options.MaxWaitTime, Is.EqualTo(TimeSpan.FromSeconds(60)));
+                Assert.That(options.EventProcessorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(true));
+                Assert.That(options.EventProcessorOptions.PrefetchCount, Is.EqualTo(123));
+                Assert.That(options.BatchCheckpointFrequency, Is.EqualTo(5));
+                Assert.That(options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds, Is.EqualTo(31));
+                Assert.That(options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds, Is.EqualTo(21));
+                Assert.That(options.InitialOffsetOptions.Type.ToString(), Is.EqualTo("FromEnqueuedTime"));
+                Assert.That(options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"), Is.EqualTo("2020-09-13 12:00:00Z"));
+                Assert.That(options.ClientRetryOptions.MaximumRetries, Is.EqualTo(5));
+                Assert.That(options.ClientRetryOptions.Delay, Is.EqualTo(TimeSpan.FromSeconds(1)));
+                Assert.That(options.ClientRetryOptions.MaximumDelay, Is.EqualTo(TimeSpan.FromMinutes(1)));
+                Assert.That(options.ClientRetryOptions.TryTimeout, Is.EqualTo(TimeSpan.FromSeconds(90)));
+                Assert.That(options.ClientRetryOptions.Mode, Is.EqualTo(EventHubsRetryMode.Fixed));
+                Assert.That(options.TransportType, Is.EqualTo(EventHubsTransportType.AmqpWebSockets));
+                Assert.That(((WebProxy)options.WebProxy).Address.AbsoluteUri, Is.EqualTo("http://proxyserver:8080/"));
+                Assert.That(options.CustomEndpointAddress.ToString(), Is.EqualTo("http://www.customendpoint.com/"));
+                Assert.That(options.EnableCheckpointing, Is.False);
+            });
         }
 
         [Test]
@@ -89,25 +92,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 b => { b.AddEventHubs(); },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(123, result.MaxEventBatchSize);
-            Assert.AreEqual(100, options.MinEventBatchSize);
-            Assert.AreEqual(TimeSpan.FromSeconds(60), options.MaxWaitTime);
-            Assert.AreEqual(5, result.BatchCheckpointFrequency);
-            Assert.True(result.TrackLastEnqueuedEventProperties);
-            Assert.AreEqual(123, result.PrefetchCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
-            Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
-            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type.ToString());
-            Assert.AreEqual("2020-09-13 12:00:00Z", result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
-            Assert.AreEqual(5, result.ClientRetryOptions.MaximumRetries);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), result.ClientRetryOptions.Delay);
-            Assert.AreEqual(TimeSpan.FromMinutes(1), result.ClientRetryOptions.MaximumDelay);
-            Assert.AreEqual(TimeSpan.FromSeconds(90), result.ClientRetryOptions.TryTimeout);
-            Assert.AreEqual(EventHubsRetryMode.Fixed, result.ClientRetryOptions.Mode);
-            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.TransportType);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) result.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual("http://www.customendpoint.com/", result.CustomEndpointAddress.AbsoluteUri);
-            Assert.False(result.EnableCheckpointing);
+            Assert.That(result.MaxEventBatchSize, Is.EqualTo(123));
+            Assert.That(options.MinEventBatchSize, Is.EqualTo(100));
+            Assert.That(options.MaxWaitTime, Is.EqualTo(TimeSpan.FromSeconds(60)));
+            Assert.That(result.BatchCheckpointFrequency, Is.EqualTo(5));
+            Assert.That(result.TrackLastEnqueuedEventProperties, Is.True);
+            Assert.That(result.PrefetchCount, Is.EqualTo(123));
+            Assert.That(result.PartitionOwnershipExpirationInterval, Is.EqualTo(TimeSpan.FromSeconds(31)));
+            Assert.That(result.LoadBalancingUpdateInterval, Is.EqualTo(TimeSpan.FromSeconds(21)));
+            Assert.That(result.InitialOffsetOptions.Type.ToString(), Is.EqualTo("FromEnqueuedTime"));
+            Assert.That(result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"), Is.EqualTo("2020-09-13 12:00:00Z"));
+            Assert.That(result.ClientRetryOptions.MaximumRetries, Is.EqualTo(5));
+            Assert.That(result.ClientRetryOptions.Delay, Is.EqualTo(TimeSpan.FromSeconds(1)));
+            Assert.That(result.ClientRetryOptions.MaximumDelay, Is.EqualTo(TimeSpan.FromMinutes(1)));
+            Assert.That(result.ClientRetryOptions.TryTimeout, Is.EqualTo(TimeSpan.FromSeconds(90)));
+            Assert.That(result.ClientRetryOptions.Mode, Is.EqualTo(EventHubsRetryMode.Fixed));
+            Assert.That(result.TransportType, Is.EqualTo(EventHubsTransportType.AmqpWebSockets));
+            Assert.That(((WebProxy)result.WebProxy).Address.AbsoluteUri, Is.EqualTo("http://proxyserver:8080/"));
+            Assert.That(result.CustomEndpointAddress.AbsoluteUri, Is.EqualTo("http://www.customendpoint.com/"));
+            Assert.That(result.EnableCheckpointing, Is.False);
         }
 
         [Test]
@@ -115,16 +118,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
-            Assert.AreEqual(300, options.TargetUnprocessedEventThreshold);
-            Assert.AreEqual(123, options.MaxEventBatchSize);
-            Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
-            Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
-            Assert.AreEqual(5, options.BatchCheckpointFrequency);
-            Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
-            Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
-            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type.ToString());
-            Assert.AreEqual("2020-09-13 12:00:00Z", options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
-            Assert.IsTrue(options.EnableCheckpointing);
+            Assert.That(options.TargetUnprocessedEventThreshold, Is.EqualTo(300));
+            Assert.That(options.MaxEventBatchSize, Is.EqualTo(123));
+            Assert.That(options.EventProcessorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(true));
+            Assert.That(options.EventProcessorOptions.PrefetchCount, Is.EqualTo(123));
+            Assert.That(options.BatchCheckpointFrequency, Is.EqualTo(5));
+            Assert.That(options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds, Is.EqualTo(31));
+            Assert.That(options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds, Is.EqualTo(21));
+            Assert.That(options.InitialOffsetOptions.Type.ToString(), Is.EqualTo("FromEnqueuedTime"));
+            Assert.That(options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"), Is.EqualTo("2020-09-13 12:00:00Z"));
+            Assert.That(options.EnableCheckpointing, Is.True);
         }
 
         [Test]
@@ -141,16 +144,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 b => { b.AddEventHubs(); },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(300, result.TargetUnprocessedEventThreshold);
-            Assert.AreEqual(123, result.MaxEventBatchSize);
-            Assert.AreEqual(5, result.BatchCheckpointFrequency);
-            Assert.True(result.TrackLastEnqueuedEventProperties);
-            Assert.AreEqual(123, result.PrefetchCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
-            Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
-            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type.ToString());
-            Assert.AreEqual("2020-09-13 12:00:00Z", result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
-            Assert.IsTrue(options.EnableCheckpointing);
+            Assert.That(result.TargetUnprocessedEventThreshold, Is.EqualTo(300));
+            Assert.That(result.MaxEventBatchSize, Is.EqualTo(123));
+            Assert.That(result.BatchCheckpointFrequency, Is.EqualTo(5));
+            Assert.That(result.TrackLastEnqueuedEventProperties, Is.True);
+            Assert.That(result.PrefetchCount, Is.EqualTo(123));
+            Assert.That(result.PartitionOwnershipExpirationInterval, Is.EqualTo(TimeSpan.FromSeconds(31)));
+            Assert.That(result.LoadBalancingUpdateInterval, Is.EqualTo(TimeSpan.FromSeconds(21)));
+            Assert.That(result.InitialOffsetOptions.Type.ToString(), Is.EqualTo("FromEnqueuedTime"));
+            Assert.That(result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"), Is.EqualTo("2020-09-13 12:00:00Z"));
+            Assert.That(options.EnableCheckpointing, Is.True);
         }
 
         [Test]
@@ -167,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     b.AddEventHubs();
                 },
                 new Dictionary<string, string> { { $"{extensionPath}:InitialOffsetOptions:Type", offsetType } });
-            Assert.AreEqual(typeEnum, options.InitialOffsetOptions.Type);
+            Assert.That(options.InitialOffsetOptions.Type, Is.EqualTo(typeEnum));
         }
 
         [Test]
@@ -186,8 +189,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     { $"{extensionPath}:InitialOffsetOptions:Type", offsetType },
                     { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", enqueuedTime },
                 });
-            Assert.AreEqual(OffsetType.FromEnqueuedTime, options.InitialOffsetOptions.Type);
-            Assert.AreEqual(DateTimeOffset.Parse(enqueuedTime), options.InitialOffsetOptions.EnqueuedTimeUtc);
+            Assert.That(options.InitialOffsetOptions.Type, Is.EqualTo(OffsetType.FromEnqueuedTime));
+            Assert.That(options.InitialOffsetOptions.EnqueuedTimeUtc, Is.EqualTo(DateTimeOffset.Parse(enqueuedTime)));
         }
 
         [Test]
@@ -358,10 +361,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string expectedMessage = "EventProcessorHost error (Action='TestAction', HostName='TestHostName', PartitionId='TestPartitionId').";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
 
-            Assert.False(ex.IsTransient);
-            Assert.AreEqual(LogLevel.Error, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.IsTransient, Is.False);
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Error));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage));
+            });
         }
 
         [Test]
@@ -374,10 +380,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string expectedMessage = "EventProcessorHost error (Action='TestAction', HostName='TestHostName', PartitionId='TestPartitionId').";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
 
-            Assert.True(ex.IsTransient);
-            Assert.AreEqual(LogLevel.Information, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage + string.Format(_template, typeof(EventHubsException).Name), logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(ex.IsTransient, Is.True);
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage + string.Format(_template, typeof(EventHubsException).Name)));
+            });
         }
 
         [Test]
@@ -389,9 +398,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             string expectedMessage = "EventProcessorHost error (Action='TestAction', HostName='TestHostName', PartitionId='TestPartitionId').";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Information, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage + string.Format(_template, typeof(OperationCanceledException).Name), logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage + string.Format(_template, typeof(OperationCanceledException).Name)));
+            });
         }
 
         [Test]
@@ -403,9 +415,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             string expectedMessage = "EventProcessorHost error (Action='TestAction', HostName='TestHostName', PartitionId='TestPartitionId').";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Error, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Error));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage));
+            });
         }
 
         [Test]
@@ -417,9 +432,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             string expectedMessage = "EventProcessorHost error (Action='TestAction', HostName='TestHostName', PartitionId='TestPartitionId').";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Information, logMessage.Level);
-            Assert.AreSame(ex, logMessage.Exception);
-            Assert.AreEqual(expectedMessage + string.Format(_template, typeof(EventHubsException).Name), logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(logMessage.Exception, Is.SameAs(ex));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage + string.Format(_template, typeof(EventHubsException).Name)));
+            });
         }
 
         [Test]
@@ -433,9 +451,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             string expectedMessage = "EventProcessorHost error (Action='TestAction', HostName='TestHostName', PartitionId='TestPartitionId').";
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual(LogLevel.Information, logMessage.Level);
-            Assert.AreSame(oce, logMessage.Exception);
-            Assert.AreEqual(expectedMessage + string.Format(_template, typeof(OperationCanceledException).Name), logMessage.FormattedMessage);
+            Assert.Multiple(() =>
+            {
+                Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Information));
+                Assert.That(logMessage.Exception, Is.SameAs(oce));
+                Assert.That(logMessage.FormattedMessage, Is.EqualTo(expectedMessage + string.Format(_template, typeof(OperationCanceledException).Name)));
+            });
         }
     }
 }
