@@ -1,0 +1,245 @@
+# Multi-Service SDK Generation Design
+
+## Table of Contents
+
+1. [Motivation](#motivation)
+2. [Design Overview](#design-overview)
+3. [Sample TypeSpec](#sample-typespec)
+4. [Generated API Surface](#generated-api-surface)
+5. [Usage Examples](#usage-examples)
+6. [Notes](#notes)
+
+## Motivation
+
+This design provides the ability for Azure data plane SDKs to interact with multiple services through a single client library. It enables generating a unified client that aggregates multiple independently-versioned services, sharing common infrastructure (HTTP pipeline, authentication, diagnostics).
+
+## Design Overview
+
+### Approach
+
+The multi-service SDK generation follows these principles:
+
+1. **Combined Client**: A root client that aggregates multiple services and provides factory methods for sub-clients
+2. **Independent Versioning**: Each service maintains its own API version enum, configurable via client options
+3. **Shared Infrastructure**: HTTP pipeline, diagnostics, and endpoint are shared across all sub-clients
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      CombinedClient                         │
+│  - Shared HttpPipeline                                      │
+│  - Shared ClientDiagnostics                                 │
+│  - Per-service API version strings                          │
+├─────────────────────────────────────────────────────────────┤
+│  GetFooClient()              │  GetBarClient()              │
+│  └─► Foo (sub-client)        │  └─► Bar (sub-client)        │
+│       Namespace: ServiceA    │       Namespace: ServiceB    │
+│       Models: FooModel       │       Models: BarModel       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Sample TypeSpec
+
+The following TypeSpec defines a multi-service package with two versioned services:
+
+### main.tsp
+
+```tsp
+import "@typespec/versioning";
+import "@typespec/http";
+
+using Versioning;
+using Http;
+using Spector;
+
+namespace Service.MultiService;
+
+/*
+ * First service definition in a multi-service package with versioning
+ */
+@versioned(VersionsA)
+namespace ServiceA {
+  enum VersionsA {
+    av1,
+    av2,
+  }
+
+  model FooModel {
+    fooProp: string;
+  }
+
+  @route("foo")
+  interface Foo {
+    @scenario
+    @route("/test")
+    test(@query("api-version") apiVersion: VersionsA): FooModel;
+  }
+}
+
+/**
+ * Second service definition in a multi-service package with versioning
+ */
+@versioned(VersionsB)
+namespace ServiceB {
+  enum VersionsB {
+    bv1,
+    bv2,
+  }
+
+  model BarModel {
+    barProp: string;
+  }
+
+  @route("bar")
+  interface Bar {
+    @route("/test")
+    test(@query("api-version") apiVersion: VersionsB): BarModel;
+  }
+}
+```
+
+### client.tsp
+
+```tsp
+import "./main.tsp";
+import "@azure-tools/typespec-client-generator-core";
+import "@typespec/spector";
+import "@typespec/http";
+import "@typespec/versioning";
+
+using Azure.ClientGenerator.Core;
+using Spector;
+using Versioning;
+
+@client({
+  service: [Service.MultiService.ServiceA, Service.MultiService.ServiceB],
+})
+namespace Service.MultiService.Combined;
+```
+
+**Key Points:**
+- The `@client` decorator with `service: [...]` array declares a multi-service client
+- Each service maintains its own versioning enum (`VersionsA`, `VersionsB`)
+
+## Generated API Surface
+
+This section shows the public API shape for the multi-service library.
+
+```csharp
+namespace Service.MultiService.Combined {
+    public class CombinedClient {
+        protected CombinedClient();
+        public CombinedClient(Uri endpoint);
+        public CombinedClient(Uri endpoint, CombinedClientOptions options);
+        public virtual HttpPipeline Pipeline { get; }
+        public virtual Bar GetBarClient();
+        public virtual Foo GetFooClient();
+    }
+    public class CombinedClientOptions : ClientOptions {
+        public CombinedClientOptions(ServiceAVersion serviceAVersion = ServiceAVersion.Av2, ServiceBVersion serviceBVersion = ServiceBVersion.Bv2);
+        public enum ServiceAVersion {
+            Av1 = 1,
+            Av2 = 2,
+        }
+        public enum ServiceBVersion {
+            Bv1 = 1,
+            Bv2 = 2,
+        }
+    }
+}
+namespace Service.MultiService.ServiceA {
+    public class Foo {
+        protected Foo();
+        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response Test(RequestContext context);
+        public virtual Response<FooModel> Test(CancellationToken cancellationToken = default);
+        public virtual Task<Response> TestAsync(RequestContext context);
+        public virtual Task<Response<FooModel>> TestAsync(CancellationToken cancellationToken = default);
+    }
+    public class FooModel : IJsonModel<FooModel>, IPersistableModel<FooModel> {
+        public FooModel(string fooProp);
+        public string FooProp { get; }
+        public static explicit operator FooModel(Response response);
+        public static implicit operator RequestContent(FooModel fooModel);
+    }
+}
+namespace Service.MultiService.ServiceB {
+    public class Bar {
+        protected Bar();
+        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response Test(RequestContext context);
+        public virtual Response<BarModel> Test(CancellationToken cancellationToken = default);
+        public virtual Task<Response> TestAsync(RequestContext context);
+        public virtual Task<Response<BarModel>> TestAsync(CancellationToken cancellationToken = default);
+    }
+    public class BarModel : IJsonModel<BarModel>, IPersistableModel<BarModel> {
+        public BarModel(string barProp);
+        public string BarProp { get; }
+        public static explicit operator BarModel(Response response);
+        public static implicit operator RequestContent(BarModel barModel);
+    }
+}
+```
+
+**Key API Patterns:**
+- `CombinedClient` is the entry point with factory methods (`GetFooClient()`, `GetBarClient()`)
+- `CombinedClientOptions` exposes per-service version enums
+- Sub-clients (`Foo`, `Bar`) have the operations.
+
+## Usage Examples
+
+### Basic Usage with Default API Versions
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using Azure;
+using Service.MultiService.Combined;
+using Service.MultiService.ServiceA;
+using Service.MultiService.ServiceB;
+
+// Create the combined client with default options (latest versions)
+var client = new CombinedClient(new Uri("https://example.azure.com"));
+
+// Get sub-clients for each service
+Foo fooClient = client.GetFooClient();
+Bar barClient = client.GetBarClient();
+
+// Call operations
+Response<FooModel> fooResponse = await fooClient.TestAsync();
+Console.WriteLine($"ServiceA FooProp: {fooResponse.Value.FooProp}");
+
+Response<BarModel> barResponse = await barClient.TestAsync();
+Console.WriteLine($"ServiceB BarProp: {barResponse.Value.BarProp}");
+```
+
+### Configuring Specific API Versions
+
+```csharp
+using System;
+using Azure;
+using Service.MultiService.Combined;
+using Service.MultiService.ServiceA;
+using Service.MultiService.ServiceB;
+using static Service.MultiService.Combined.CombinedClientOptions;
+
+// Configure specific versions for each service
+var options = new CombinedClientOptions(
+    serviceAVersion: ServiceAVersion.Av1,  // Specific version for ServiceA
+    serviceBVersion: ServiceBVersion.Bv2   // Specific version for ServiceB
+);
+
+var client = new CombinedClient(new Uri("https://example.azure.com"), options);
+
+// Operations will use the configured versions
+Foo fooClient = client.GetFooClient();
+Bar barClient = client.GetBarClient();
+
+Response<FooModel> fooResponse = await fooClient.TestAsync();
+Response<BarModel> barResponse = await barClient.TestAsync();
+```
+
+## Notes
+
+- The high level design applies to both Azure-branded and unbranded clients.

@@ -14,14 +14,14 @@ namespace TestProjects.Spector.Tests.Http.Service.MultiService
         public Task ServiceAOperation() => Test(async (host) =>
         {
             var response = await new CombinedClient(host).GetFooClient().TestAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.AreEqual(204, response.GetRawResponse().Status);
         });
 
         [SpectorTest]
         public Task ServiceBOperation() => Test(async (host) =>
         {
             var response = await new CombinedClient(host).GetBarClient().TestAsync();
-            Assert.AreEqual(204, response.Status);
+            Assert.AreEqual(204, response.GetRawResponse().Status);
         });
 
         [Test]
