@@ -287,11 +287,11 @@ namespace Azure.Generator.Management.Visitors
                         {
                             var (propertyNameMap, _) = result;
                             // Try to match the constructor parameter name with an internal property name
-                            if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list))
+                            if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list) && list.Count > 0)
                             {
                                 // Found the internal property by name, now collect all nested flattened properties
                                 // that correspond to this internal property from the current flattened properties list
-                                var internalProperty = list.First().InternalProperty;
+                                var internalProperty = list[0].InternalProperty;
                                 var innerFlattenedProperties = CollectNestedFlattenedProperties(internalProperty, flattenedProperties);
 
                                 if (innerFlattenedProperties.Count > 0)
@@ -299,6 +299,10 @@ namespace Azure.Generator.Management.Visitors
                                     var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                                     parameters.Add(New.Instance(constructorParameterType, innerParameters));
                                 }
+                                // Note: If innerFlattenedProperties is empty, we skip adding this parameter.
+                                // This can happen when the nested model has no required properties, and all
+                                // flattened properties are optional. In such cases, the model factory will
+                                // not include this nested object in the constructor call.
                             }
                         }
                     }
