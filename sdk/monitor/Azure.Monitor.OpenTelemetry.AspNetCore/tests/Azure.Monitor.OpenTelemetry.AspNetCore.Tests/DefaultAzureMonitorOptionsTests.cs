@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             Assert.Null(azureMonitorOptions.ConnectionString);
             Assert.False(azureMonitorOptions.DisableOfflineStorage);
-            Assert.Equal(1.0F, azureMonitorOptions.SamplingRatio);
+            Assert.Null(azureMonitorOptions.SamplingRatio);
             Assert.Null(azureMonitorOptions.StorageDirectory);
             Assert.True(azureMonitorOptions.EnableTraceBasedLogsSampler);
         }
