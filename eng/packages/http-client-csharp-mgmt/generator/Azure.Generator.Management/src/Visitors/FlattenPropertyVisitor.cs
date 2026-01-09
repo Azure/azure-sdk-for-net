@@ -772,28 +772,5 @@ namespace Azure.Generator.Management.Visitors
             // This handles the case where we're at the last level of flattening
             return flattenedProvider.FlattenedProperty == targetInternalProperty;
         }
-
-        /// <summary>
-        /// Determines if a flattened property is a descendant of the specified internal property.
-        /// </summary>
-        /// <param name="flattenedProperty">The flattened property to check</param>
-        /// <param name="internalProperty">The internal property to check against</param>
-        /// <returns>True if the flattened property is a descendant of the internal property</returns>
-        private bool IsDescendantOf(PropertyProvider flattenedProperty, PropertyProvider internalProperty)
-        {
-            if (flattenedProperty is not FlattenedPropertyProvider flattenedProvider)
-            {
-                return false;
-            }
-
-            // Check if the direct parent matches
-            if (flattenedProvider.FlattenedProperty == internalProperty)
-            {
-                return true;
-            }
-
-            // Recursively check if any ancestor matches
-            return IsDescendantOf(flattenedProvider.FlattenedProperty, internalProperty);
-        }
     }
 }
