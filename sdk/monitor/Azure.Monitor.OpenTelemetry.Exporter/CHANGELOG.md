@@ -8,6 +8,11 @@
 
 ### Bugs Fixed
 
+* Fixed performance counter metrics not using configured resource attributes
+  (cloud_RoleName and cloud_RoleInstance), which previously showed
+  "unknown_service:somevalue" instead of the configured values.
+  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+
 ### Other Changes
 
 ## 1.6.0-beta.1 (2025-12-03)
