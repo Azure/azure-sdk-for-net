@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     internal partial class UnknownAzureArcKubernetesNetworkFunctionApplication : AzureArcKubernetesNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureArcKubernetesNetworkFunctionApplication"/>. </summary>
-        /// <param name="name"> The name of the network function application. </param>
-        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="name">
+        /// The name of the network function application.
+        /// Serialized Name: NetworkFunctionApplication.name
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// Depends on profile definition.
+        /// Serialized Name: NetworkFunctionApplication.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="artifactType"> The artifact type. </param>
+        /// <param name="artifactType">
+        /// The artifact type.
+        /// Serialized Name: AzureArcKubernetesNetworkFunctionApplication.artifactType
+        /// </param>
         internal UnknownAzureArcKubernetesNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureArcKubernetesArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
         {
             ArtifactType = artifactType;

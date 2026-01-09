@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the ArtifactStore data model.
     /// Artifact store properties.
+    /// Serialized Name: ArtifactStore
     /// </summary>
     public partial class ArtifactStoreData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> ArtifactStores properties. </param>
+        /// <param name="properties">
+        /// ArtifactStores properties.
+        /// Serialized Name: ArtifactStore.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArtifactStorePropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> ArtifactStores properties. </summary>
+        /// <summary>
+        /// ArtifactStores properties.
+        /// Serialized Name: ArtifactStore.properties
+        /// </summary>
         public ArtifactStorePropertiesFormat Properties { get; set; }
     }
 }

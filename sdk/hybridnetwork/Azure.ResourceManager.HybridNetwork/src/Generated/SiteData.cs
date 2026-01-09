@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the Site data model.
     /// Site resource.
+    /// Serialized Name: Site
     /// </summary>
     public partial class SiteData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Site properties. </param>
+        /// <param name="properties">
+        /// Site properties.
+        /// Serialized Name: Site.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SitePropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Site properties. </summary>
+        /// <summary>
+        /// Site properties.
+        /// Serialized Name: Site.properties
+        /// </summary>
         public SitePropertiesFormat Properties { get; set; }
     }
 }

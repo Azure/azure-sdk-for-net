@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Template mapping rule profile. </summary>
+    /// <summary>
+    /// Template mapping rule profile
+    /// Serialized Name: ArmTemplateMappingRuleProfile
+    /// </summary>
     internal partial class ArmTemplateMappingRuleProfile
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmTemplateMappingRuleProfile"/>. </summary>
-        /// <param name="templateParameters"> List of template parameters. </param>
+        /// <param name="templateParameters">
+        /// List of template parameters.
+        /// Serialized Name: ArmTemplateMappingRuleProfile.templateParameters
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArmTemplateMappingRuleProfile(string templateParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of template parameters. </summary>
+        /// <summary>
+        /// List of template parameters.
+        /// Serialized Name: ArmTemplateMappingRuleProfile.templateParameters
+        /// </summary>
         public string TemplateParameters { get; set; }
     }
 }

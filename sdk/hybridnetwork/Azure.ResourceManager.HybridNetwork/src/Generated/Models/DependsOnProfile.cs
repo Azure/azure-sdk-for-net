@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Depends on profile definition. </summary>
+    /// <summary>
+    /// Depends on profile definition.
+    /// Serialized Name: DependsOnProfile
+    /// </summary>
     public partial class DependsOnProfile
     {
         /// <summary>
@@ -54,9 +57,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DependsOnProfile"/>. </summary>
-        /// <param name="installDependsOn"> Application installation operation dependency. </param>
-        /// <param name="uninstallDependsOn"> Application deletion operation dependency. </param>
-        /// <param name="updateDependsOn"> Application update operation dependency. </param>
+        /// <param name="installDependsOn">
+        /// Application installation operation dependency.
+        /// Serialized Name: DependsOnProfile.installDependsOn
+        /// </param>
+        /// <param name="uninstallDependsOn">
+        /// Application deletion operation dependency.
+        /// Serialized Name: DependsOnProfile.uninstallDependsOn
+        /// </param>
+        /// <param name="updateDependsOn">
+        /// Application update operation dependency.
+        /// Serialized Name: DependsOnProfile.updateDependsOn
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DependsOnProfile(IList<string> installDependsOn, IList<string> uninstallDependsOn, IList<string> updateDependsOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,11 +78,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Application installation operation dependency. </summary>
+        /// <summary>
+        /// Application installation operation dependency.
+        /// Serialized Name: DependsOnProfile.installDependsOn
+        /// </summary>
         public IList<string> InstallDependsOn { get; }
-        /// <summary> Application deletion operation dependency. </summary>
+        /// <summary>
+        /// Application deletion operation dependency.
+        /// Serialized Name: DependsOnProfile.uninstallDependsOn
+        /// </summary>
         public IList<string> UninstallDependsOn { get; }
-        /// <summary> Application update operation dependency. </summary>
+        /// <summary>
+        /// Application update operation dependency.
+        /// Serialized Name: DependsOnProfile.updateDependsOn
+        /// </summary>
         public IList<string> UpdateDependsOn { get; }
     }
 }

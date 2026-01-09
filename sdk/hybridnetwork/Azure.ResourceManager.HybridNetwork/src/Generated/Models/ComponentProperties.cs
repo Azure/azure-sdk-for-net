@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The component properties of the network function. </summary>
+    /// <summary>
+    /// The component properties of the network function.
+    /// Serialized Name: ComponentProperties
+    /// </summary>
     public partial class ComponentProperties
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the component resource. </param>
-        /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
-        /// <param name="deploymentStatus"> The deployment status of the component resource. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the component resource.
+        /// Serialized Name: ComponentProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentProfile">
+        /// The JSON-serialized deployment profile of the component resource.
+        /// Serialized Name: ComponentProperties.deploymentProfile
+        /// </param>
+        /// <param name="deploymentStatus">
+        /// The deployment status of the component resource.
+        /// Serialized Name: ComponentProperties.deploymentStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComponentProperties(ProvisioningState? provisioningState, string deploymentProfile, DeploymentStatusProperties deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the component resource. </summary>
+        /// <summary>
+        /// The provisioning state of the component resource.
+        /// Serialized Name: ComponentProperties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The JSON-serialized deployment profile of the component resource. </summary>
+        /// <summary>
+        /// The JSON-serialized deployment profile of the component resource.
+        /// Serialized Name: ComponentProperties.deploymentProfile
+        /// </summary>
         public string DeploymentProfile { get; }
-        /// <summary> The deployment status of the component resource. </summary>
+        /// <summary>
+        /// The deployment status of the component resource.
+        /// Serialized Name: ComponentProperties.deploymentStatus
+        /// </summary>
         public DeploymentStatusProperties DeploymentStatus { get; }
     }
 }

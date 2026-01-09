@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The NFVI type. </summary>
+    /// <summary>
+    /// The NFVI type.
+    /// Serialized Name: NfviType
+    /// </summary>
     public readonly partial struct NfviType : IEquatable<NfviType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string AzureCoreValue = "AzureCore";
         private const string AzureOperatorNexusValue = "AzureOperatorNexus";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: NfviType.Unknown
+        /// </summary>
         public static NfviType Unknown { get; } = new NfviType(UnknownValue);
-        /// <summary> AzureArcKubernetes. </summary>
+        /// <summary>
+        /// AzureArcKubernetes
+        /// Serialized Name: NfviType.AzureArcKubernetes
+        /// </summary>
         public static NfviType AzureArcKubernetes { get; } = new NfviType(AzureArcKubernetesValue);
-        /// <summary> AzureCore. </summary>
+        /// <summary>
+        /// AzureCore
+        /// Serialized Name: NfviType.AzureCore
+        /// </summary>
         public static NfviType AzureCore { get; } = new NfviType(AzureCoreValue);
-        /// <summary> AzureOperatorNexus. </summary>
+        /// <summary>
+        /// AzureOperatorNexus
+        /// Serialized Name: NfviType.AzureOperatorNexus
+        /// </summary>
         public static NfviType AzureOperatorNexus { get; } = new NfviType(AzureOperatorNexusValue);
         /// <summary> Determines if two <see cref="NfviType"/> values are the same. </summary>
         public static bool operator ==(NfviType left, NfviType right) => left.Equals(right);

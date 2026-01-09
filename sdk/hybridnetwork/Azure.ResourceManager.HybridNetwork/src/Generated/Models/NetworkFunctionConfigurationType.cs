@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The secret type which indicates if secret or not. </summary>
+    /// <summary>
+    /// The secret type which indicates if secret or not.
+    /// Serialized Name: NetworkFunctionConfigurationType
+    /// </summary>
     internal readonly partial struct NetworkFunctionConfigurationType : IEquatable<NetworkFunctionConfigurationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string SecretValue = "Secret";
         private const string OpenValue = "Open";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: NetworkFunctionConfigurationType.Unknown
+        /// </summary>
         public static NetworkFunctionConfigurationType Unknown { get; } = new NetworkFunctionConfigurationType(UnknownValue);
-        /// <summary> Secret. </summary>
+        /// <summary>
+        /// Secret
+        /// Serialized Name: NetworkFunctionConfigurationType.Secret
+        /// </summary>
         public static NetworkFunctionConfigurationType Secret { get; } = new NetworkFunctionConfigurationType(SecretValue);
-        /// <summary> Open. </summary>
+        /// <summary>
+        /// Open
+        /// Serialized Name: NetworkFunctionConfigurationType.Open
+        /// </summary>
         public static NetworkFunctionConfigurationType Open { get; } = new NetworkFunctionConfigurationType(OpenValue);
         /// <summary> Determines if two <see cref="NetworkFunctionConfigurationType"/> values are the same. </summary>
         public static bool operator ==(NetworkFunctionConfigurationType left, NetworkFunctionConfigurationType right) => left.Equals(right);

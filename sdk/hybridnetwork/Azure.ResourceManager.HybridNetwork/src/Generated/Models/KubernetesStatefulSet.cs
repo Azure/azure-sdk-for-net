@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm StatefulSet status properties. </summary>
+    /// <summary>
+    /// Helm StatefulSet status properties.
+    /// Serialized Name: StatefulSet
+    /// </summary>
     public partial class KubernetesStatefulSet
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesStatefulSet"/>. </summary>
-        /// <param name="name"> The name of the statefulset. </param>
-        /// <param name="namespace"> The namespace of the statefulset. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="createdOn"> Creation Time of statefulset. </param>
+        /// <param name="name">
+        /// The name of the statefulset.
+        /// Serialized Name: StatefulSet.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the statefulset.
+        /// Serialized Name: StatefulSet.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: StatefulSet.desired
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of ready pods.
+        /// Serialized Name: StatefulSet.ready
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of statefulset.
+        /// Serialized Name: StatefulSet.creationTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesStatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the statefulset. </summary>
+        /// <summary>
+        /// The name of the statefulset.
+        /// Serialized Name: StatefulSet.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The namespace of the statefulset. </summary>
+        /// <summary>
+        /// The namespace of the statefulset.
+        /// Serialized Name: StatefulSet.namespace
+        /// </summary>
         public string Namespace { get; }
-        /// <summary> Desired number of pods. </summary>
+        /// <summary>
+        /// Desired number of pods
+        /// Serialized Name: StatefulSet.desired
+        /// </summary>
         public int? DesiredNumberOfPods { get; }
-        /// <summary> Number of ready pods. </summary>
+        /// <summary>
+        /// Number of ready pods.
+        /// Serialized Name: StatefulSet.ready
+        /// </summary>
         public int? ReadyNumberOfPods { get; }
-        /// <summary> Creation Time of statefulset. </summary>
+        /// <summary>
+        /// Creation Time of statefulset.
+        /// Serialized Name: StatefulSet.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

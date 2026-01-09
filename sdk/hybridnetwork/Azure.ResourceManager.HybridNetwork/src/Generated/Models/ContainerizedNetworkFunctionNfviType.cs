@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The network function type. </summary>
+    /// <summary>
+    /// The network function type.
+    /// Serialized Name: ContainerizedNetworkFunctionNfviType
+    /// </summary>
     internal readonly partial struct ContainerizedNetworkFunctionNfviType : IEquatable<ContainerizedNetworkFunctionNfviType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string UnknownValue = "Unknown";
         private const string AzureArcKubernetesValue = "AzureArcKubernetes";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ContainerizedNetworkFunctionNfviType.Unknown
+        /// </summary>
         public static ContainerizedNetworkFunctionNfviType Unknown { get; } = new ContainerizedNetworkFunctionNfviType(UnknownValue);
-        /// <summary> AzureArcKubernetes. </summary>
+        /// <summary>
+        /// AzureArcKubernetes
+        /// Serialized Name: ContainerizedNetworkFunctionNfviType.AzureArcKubernetes
+        /// </summary>
         public static ContainerizedNetworkFunctionNfviType AzureArcKubernetes { get; } = new ContainerizedNetworkFunctionNfviType(AzureArcKubernetesValue);
         /// <summary> Determines if two <see cref="ContainerizedNetworkFunctionNfviType"/> values are the same. </summary>
         public static bool operator ==(ContainerizedNetworkFunctionNfviType left, ContainerizedNetworkFunctionNfviType right) => left.Equals(right);

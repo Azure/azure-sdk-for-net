@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm ReplicaSet status properties. </summary>
+    /// <summary>
+    /// Helm ReplicaSet status properties.
+    /// Serialized Name: ReplicaSet
+    /// </summary>
     public partial class KubernetesReplicaSet
     {
         /// <summary>
@@ -51,12 +54,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesReplicaSet"/>. </summary>
-        /// <param name="name"> The name of the replicaSet. </param>
-        /// <param name="namespace"> The namespace of the replicaSet. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="currentNumberOfPods"> Number of current pods. </param>
-        /// <param name="createdOn"> Creation Time of replicaSet. </param>
+        /// <param name="name">
+        /// The name of the replicaSet.
+        /// Serialized Name: ReplicaSet.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the replicaSet.
+        /// Serialized Name: ReplicaSet.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: ReplicaSet.desired
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of ready pods.
+        /// Serialized Name: ReplicaSet.ready
+        /// </param>
+        /// <param name="currentNumberOfPods">
+        /// Number of current pods.
+        /// Serialized Name: ReplicaSet.current
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of replicaSet.
+        /// Serialized Name: ReplicaSet.creationTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesReplicaSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? currentNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,17 +90,35 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the replicaSet. </summary>
+        /// <summary>
+        /// The name of the replicaSet.
+        /// Serialized Name: ReplicaSet.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The namespace of the replicaSet. </summary>
+        /// <summary>
+        /// The namespace of the replicaSet.
+        /// Serialized Name: ReplicaSet.namespace
+        /// </summary>
         public string Namespace { get; }
-        /// <summary> Desired number of pods. </summary>
+        /// <summary>
+        /// Desired number of pods
+        /// Serialized Name: ReplicaSet.desired
+        /// </summary>
         public int? DesiredNumberOfPods { get; }
-        /// <summary> Number of ready pods. </summary>
+        /// <summary>
+        /// Number of ready pods.
+        /// Serialized Name: ReplicaSet.ready
+        /// </summary>
         public int? ReadyNumberOfPods { get; }
-        /// <summary> Number of current pods. </summary>
+        /// <summary>
+        /// Number of current pods.
+        /// Serialized Name: ReplicaSet.current
+        /// </summary>
         public int? CurrentNumberOfPods { get; }
-        /// <summary> Creation Time of replicaSet. </summary>
+        /// <summary>
+        /// Creation Time of replicaSet.
+        /// Serialized Name: ReplicaSet.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

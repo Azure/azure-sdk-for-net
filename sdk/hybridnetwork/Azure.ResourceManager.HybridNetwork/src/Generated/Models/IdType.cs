@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The resource reference arm id type. </summary>
+    /// <summary>
+    /// The resource reference arm id type.
+    /// Serialized Name: IdType
+    /// </summary>
     internal readonly partial struct IdType : IEquatable<IdType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string OpenValue = "Open";
         private const string SecretValue = "Secret";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: IdType.Unknown
+        /// </summary>
         public static IdType Unknown { get; } = new IdType(UnknownValue);
-        /// <summary> Open. </summary>
+        /// <summary>
+        /// Open
+        /// Serialized Name: IdType.Open
+        /// </summary>
         public static IdType Open { get; } = new IdType(OpenValue);
-        /// <summary> Secret. </summary>
+        /// <summary>
+        /// Secret
+        /// Serialized Name: IdType.Secret
+        /// </summary>
         public static IdType Secret { get; } = new IdType(SecretValue);
         /// <summary> Determines if two <see cref="IdType"/> values are the same. </summary>
         public static bool operator ==(IdType left, IdType right) => left.Equals(right);

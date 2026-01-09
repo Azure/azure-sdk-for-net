@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the ArtifactManifest data model.
     /// Artifact manifest properties.
+    /// Serialized Name: ArtifactManifest
     /// </summary>
     public partial class ArtifactManifestData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Artifact manifest properties. </param>
+        /// <param name="properties">
+        /// Artifact manifest properties.
+        /// Serialized Name: ArtifactManifest.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArtifactManifestPropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Artifact manifest properties. </summary>
+        /// <summary>
+        /// Artifact manifest properties.
+        /// Serialized Name: ArtifactManifest.properties
+        /// </summary>
         public ArtifactManifestPropertiesFormat Properties { get; set; }
     }
 }

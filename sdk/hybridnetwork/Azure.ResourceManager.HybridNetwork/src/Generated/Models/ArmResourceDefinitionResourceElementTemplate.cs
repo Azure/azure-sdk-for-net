@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The arm template RE. </summary>
+    /// <summary>
+    /// The arm template RE.
+    /// Serialized Name: ArmResourceDefinitionResourceElementTemplate
+    /// </summary>
     public partial class ArmResourceDefinitionResourceElementTemplate
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplate"/>. </summary>
-        /// <param name="templateType"> The template type. </param>
-        /// <param name="parameterValues"> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </param>
-        /// <param name="artifactProfile"> Artifact profile properties. </param>
+        /// <param name="templateType">
+        /// The template type.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplate.templateType
+        /// </param>
+        /// <param name="parameterValues">
+        /// Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplate.parameterValues
+        /// </param>
+        /// <param name="artifactProfile">
+        /// Artifact profile properties.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplate.artifactProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NSDArtifactProfile artifactProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The template type. </summary>
+        /// <summary>
+        /// The template type.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplate.templateType
+        /// </summary>
         public TemplateType? TemplateType { get; set; }
-        /// <summary> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </summary>
+        /// <summary>
+        /// Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplate.parameterValues
+        /// </summary>
         public string ParameterValues { get; set; }
-        /// <summary> Artifact profile properties. </summary>
+        /// <summary>
+        /// Artifact profile properties.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplate.artifactProfile
+        /// </summary>
         public NSDArtifactProfile ArtifactProfile { get; set; }
     }
 }

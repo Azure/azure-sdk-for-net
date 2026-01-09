@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Sku, to be associated with a SiteNetworkService. </summary>
+    /// <summary>
+    /// Sku, to be associated with a SiteNetworkService.
+    /// Serialized Name: Sku
+    /// </summary>
     public partial class HybridNetworkSku
     {
         /// <summary>
@@ -46,15 +49,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/>. </summary>
-        /// <param name="name"> Name of this Sku. </param>
+        /// <param name="name">
+        /// Name of this Sku
+        /// Serialized Name: Sku.name
+        /// </param>
         public HybridNetworkSku(HybridNetworkSkuName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/>. </summary>
-        /// <param name="name"> Name of this Sku. </param>
-        /// <param name="tier"> The SKU tier based on the SKU name. </param>
+        /// <param name="name">
+        /// Name of this Sku
+        /// Serialized Name: Sku.name
+        /// </param>
+        /// <param name="tier">
+        /// The SKU tier based on the SKU name.
+        /// Serialized Name: Sku.tier
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HybridNetworkSku(HybridNetworkSkuName name, HybridNetworkSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,9 +80,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> Name of this Sku. </summary>
+        /// <summary>
+        /// Name of this Sku
+        /// Serialized Name: Sku.name
+        /// </summary>
         public HybridNetworkSkuName Name { get; set; }
-        /// <summary> The SKU tier based on the SKU name. </summary>
+        /// <summary>
+        /// The SKU tier based on the SKU name.
+        /// Serialized Name: Sku.tier
+        /// </summary>
         public HybridNetworkSkuTier? Tier { get; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Artifact profile properties. </summary>
+    /// <summary>
+    /// Artifact profile properties.
+    /// Serialized Name: ArtifactProfile
+    /// </summary>
     public partial class ArtifactProfile
     {
         /// <summary>
@@ -53,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
-        /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="artifactStore">
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The reference to artifact store. </summary>
+        /// <summary>
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </summary>
         internal WritableSubResource ArtifactStore { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier ArtifactStoreId

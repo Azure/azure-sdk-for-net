@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The resource element template type. </summary>
+    /// <summary>
+    /// The resource element template type.
+    /// Serialized Name: Type
+    /// </summary>
     internal readonly partial struct Type : IEquatable<Type>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ArmResourceDefinitionValue = "ArmResourceDefinition";
         private const string NetworkFunctionDefinitionValue = "NetworkFunctionDefinition";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: Type.Unknown
+        /// </summary>
         public static Type Unknown { get; } = new Type(UnknownValue);
-        /// <summary> ArmResourceDefinition. </summary>
+        /// <summary>
+        /// ArmResourceDefinition
+        /// Serialized Name: Type.ArmResourceDefinition
+        /// </summary>
         public static Type ArmResourceDefinition { get; } = new Type(ArmResourceDefinitionValue);
-        /// <summary> NetworkFunctionDefinition. </summary>
+        /// <summary>
+        /// NetworkFunctionDefinition
+        /// Serialized Name: Type.NetworkFunctionDefinition
+        /// </summary>
         public static Type NetworkFunctionDefinition { get; } = new Type(NetworkFunctionDefinitionValue);
         /// <summary> Determines if two <see cref="Type"/> values are the same. </summary>
         public static bool operator ==(Type left, Type right) => left.Equals(right);

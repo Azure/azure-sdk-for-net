@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> publisher properties. </summary>
+    /// <summary>
+    /// publisher properties.
+    /// Serialized Name: PublisherPropertiesFormat
+    /// </summary>
     public partial class PublisherPropertiesFormat
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublisherPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
-        /// <param name="scope"> The publisher scope. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the publisher resource.
+        /// Serialized Name: PublisherPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="scope">
+        /// The publisher scope.
+        /// Serialized Name: PublisherPropertiesFormat.scope
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublisherPropertiesFormat(ProvisioningState? provisioningState, PublisherScope? scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the publisher resource. </summary>
+        /// <summary>
+        /// The provisioning state of the publisher resource.
+        /// Serialized Name: PublisherPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The publisher scope. </summary>
+        /// <summary>
+        /// The publisher scope.
+        /// Serialized Name: PublisherPropertiesFormat.scope
+        /// </summary>
         public PublisherScope? Scope { get; set; }
     }
 }

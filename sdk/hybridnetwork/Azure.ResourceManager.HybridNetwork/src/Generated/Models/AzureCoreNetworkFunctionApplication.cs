@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure virtual network function application definition.
+    /// Serialized Name: AzureCoreNetworkFunctionApplication
     /// Please note <see cref="AzureCoreNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
     /// </summary>
@@ -23,16 +24,28 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionApplication"/>. </summary>
-        /// <param name="name"> The name of the network function application. </param>
-        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="name">
+        /// The name of the network function application.
+        /// Serialized Name: NetworkFunctionApplication.name
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// Depends on profile definition.
+        /// Serialized Name: NetworkFunctionApplication.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="artifactType"> The artifact type. </param>
+        /// <param name="artifactType">
+        /// The artifact type.
+        /// Serialized Name: AzureCoreNetworkFunctionApplication.artifactType
+        /// </param>
         internal AzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData)
         {
             ArtifactType = artifactType;
         }
 
-        /// <summary> The artifact type. </summary>
+        /// <summary>
+        /// The artifact type.
+        /// Serialized Name: AzureCoreNetworkFunctionApplication.artifactType
+        /// </summary>
         internal AzureCoreArtifactType ArtifactType { get; set; }
     }
 }

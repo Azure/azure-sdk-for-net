@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The http method of the request. </summary>
+    /// <summary>
+    /// The http method of the request.
+    /// Serialized Name: HttpMethod
+    /// </summary>
     public readonly partial struct HttpMethod : IEquatable<HttpMethod>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string PatchValue = "Patch";
         private const string DeleteValue = "Delete";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: HttpMethod.Unknown
+        /// </summary>
         public static HttpMethod Unknown { get; } = new HttpMethod(UnknownValue);
-        /// <summary> Post. </summary>
+        /// <summary>
+        /// Post
+        /// Serialized Name: HttpMethod.Post
+        /// </summary>
         public static HttpMethod Post { get; } = new HttpMethod(PostValue);
-        /// <summary> Put. </summary>
+        /// <summary>
+        /// Put
+        /// Serialized Name: HttpMethod.Put
+        /// </summary>
         public static HttpMethod Put { get; } = new HttpMethod(PutValue);
-        /// <summary> Get. </summary>
+        /// <summary>
+        /// Get
+        /// Serialized Name: HttpMethod.Get
+        /// </summary>
         public static HttpMethod Get { get; } = new HttpMethod(GetValue);
-        /// <summary> Patch. </summary>
+        /// <summary>
+        /// Patch
+        /// Serialized Name: HttpMethod.Patch
+        /// </summary>
         public static HttpMethod Patch { get; } = new HttpMethod(PatchValue);
-        /// <summary> Delete. </summary>
+        /// <summary>
+        /// Delete
+        /// Serialized Name: HttpMethod.Delete
+        /// </summary>
         public static HttpMethod Delete { get; } = new HttpMethod(DeleteValue);
         /// <summary> Determines if two <see cref="HttpMethod"/> values are the same. </summary>
         public static bool operator ==(HttpMethod left, HttpMethod right) => left.Equals(right);

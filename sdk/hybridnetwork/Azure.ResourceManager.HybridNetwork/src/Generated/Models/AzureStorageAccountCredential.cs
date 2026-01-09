@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The azure storage account credential definition. </summary>
+    /// <summary>
+    /// The azure storage account credential definition.
+    /// Serialized Name: AzureStorageAccountCredential
+    /// </summary>
     public partial class AzureStorageAccountCredential : ArtifactAccessCredential
     {
         /// <summary> Initializes a new instance of <see cref="AzureStorageAccountCredential"/>. </summary>
@@ -22,11 +25,23 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageAccountCredential"/>. </summary>
-        /// <param name="credentialType"> The credential type. </param>
+        /// <param name="credentialType">
+        /// The credential type.
+        /// Serialized Name: ArtifactAccessCredential.credentialType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="storageAccountId"> The storage account Id. </param>
-        /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <param name="storageAccountId">
+        /// The storage account Id
+        /// Serialized Name: AzureStorageAccountCredential.storageAccountId
+        /// </param>
+        /// <param name="containerCredentials">
+        /// The containers that could be accessed using the current credential.
+        /// Serialized Name: AzureStorageAccountCredential.containerCredentials
+        /// </param>
+        /// <param name="expiry">
+        /// The UTC time when credential will expire.
+        /// Serialized Name: AzureStorageAccountCredential.expiry
+        /// </param>
         internal AzureStorageAccountCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountId, IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiry) : base(credentialType, serializedAdditionalRawData)
         {
             StorageAccountId = storageAccountId;
@@ -35,11 +50,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             CredentialType = credentialType;
         }
 
-        /// <summary> The storage account Id. </summary>
+        /// <summary>
+        /// The storage account Id
+        /// Serialized Name: AzureStorageAccountCredential.storageAccountId
+        /// </summary>
         public ResourceIdentifier StorageAccountId { get; }
-        /// <summary> The containers that could be accessed using the current credential. </summary>
+        /// <summary>
+        /// The containers that could be accessed using the current credential.
+        /// Serialized Name: AzureStorageAccountCredential.containerCredentials
+        /// </summary>
         public IReadOnlyList<AzureStorageAccountContainerCredential> ContainerCredentials { get; }
-        /// <summary> The UTC time when credential will expire. </summary>
+        /// <summary>
+        /// The UTC time when credential will expire.
+        /// Serialized Name: AzureStorageAccountCredential.expiry
+        /// </summary>
         public DateTimeOffset? Expiry { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact type. </summary>
+    /// <summary>
+    /// The artifact type.
+    /// Serialized Name: AzureCoreArtifactType
+    /// </summary>
     internal readonly partial struct AzureCoreArtifactType : IEquatable<AzureCoreArtifactType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string VhdImageFileValue = "VhdImageFile";
         private const string ArmTemplateValue = "ArmTemplate";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: AzureCoreArtifactType.Unknown
+        /// </summary>
         public static AzureCoreArtifactType Unknown { get; } = new AzureCoreArtifactType(UnknownValue);
-        /// <summary> VhdImageFile. </summary>
+        /// <summary>
+        /// VhdImageFile
+        /// Serialized Name: AzureCoreArtifactType.VhdImageFile
+        /// </summary>
         public static AzureCoreArtifactType VhdImageFile { get; } = new AzureCoreArtifactType(VhdImageFileValue);
-        /// <summary> ArmTemplate. </summary>
+        /// <summary>
+        /// ArmTemplate
+        /// Serialized Name: AzureCoreArtifactType.ArmTemplate
+        /// </summary>
         public static AzureCoreArtifactType ArmTemplate { get; } = new AzureCoreArtifactType(ArmTemplateValue);
         /// <summary> Determines if two <see cref="AzureCoreArtifactType"/> values are the same. </summary>
         public static bool operator ==(AzureCoreArtifactType left, AzureCoreArtifactType right) => left.Equals(right);

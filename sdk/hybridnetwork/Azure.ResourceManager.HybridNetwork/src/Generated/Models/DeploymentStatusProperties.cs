@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The deployment status properties of the network function component. </summary>
+    /// <summary>
+    /// The deployment status properties of the network function component.
+    /// Serialized Name: DeploymentStatusProperties
+    /// </summary>
     public partial class DeploymentStatusProperties
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStatusProperties"/>. </summary>
-        /// <param name="status"> The status of the component resource. </param>
-        /// <param name="resources"> The resource related to the component resource. </param>
-        /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
+        /// <param name="status">
+        /// The status of the component resource.
+        /// Serialized Name: DeploymentStatusProperties.status
+        /// </param>
+        /// <param name="resources">
+        /// The resource related to the component resource.
+        /// Serialized Name: DeploymentStatusProperties.resources
+        /// </param>
+        /// <param name="nextExpectedUpdateOn">
+        /// The next expected update of deployment status.
+        /// Serialized Name: DeploymentStatusProperties.nextExpectedUpdateAt
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentStatusProperties(ComponentStatus? status, ComponentKubernetesResources resources, DateTimeOffset? nextExpectedUpdateOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the component resource. </summary>
+        /// <summary>
+        /// The status of the component resource.
+        /// Serialized Name: DeploymentStatusProperties.status
+        /// </summary>
         public ComponentStatus? Status { get; }
-        /// <summary> The resource related to the component resource. </summary>
+        /// <summary>
+        /// The resource related to the component resource.
+        /// Serialized Name: DeploymentStatusProperties.resources
+        /// </summary>
         public ComponentKubernetesResources Resources { get; }
-        /// <summary> The next expected update of deployment status. </summary>
+        /// <summary>
+        /// The next expected update of deployment status.
+        /// Serialized Name: DeploymentStatusProperties.nextExpectedUpdateAt
+        /// </summary>
         public DateTimeOffset? NextExpectedUpdateOn { get; }
     }
 }

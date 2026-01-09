@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The helm deployment options. </summary>
+    /// <summary>
+    /// The helm deployment options
+    /// Serialized Name: HelmMappingRuleProfileOptions
+    /// </summary>
     public partial class HelmMappingRuleProfileConfig
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfileConfig"/>. </summary>
-        /// <param name="installOptions"> The helm deployment install options. </param>
-        /// <param name="upgradeOptions"> The helm deployment upgrade options. </param>
+        /// <param name="installOptions">
+        /// The helm deployment install options
+        /// Serialized Name: HelmMappingRuleProfileOptions.installOptions
+        /// </param>
+        /// <param name="upgradeOptions">
+        /// The helm deployment upgrade options
+        /// Serialized Name: HelmMappingRuleProfileOptions.upgradeOptions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HelmMappingRuleProfileConfig(HelmInstallConfig installOptions, HelmUpgradeConfig upgradeOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The helm deployment install options. </summary>
+        /// <summary>
+        /// The helm deployment install options
+        /// Serialized Name: HelmMappingRuleProfileOptions.installOptions
+        /// </summary>
         public HelmInstallConfig InstallOptions { get; set; }
-        /// <summary> The helm deployment upgrade options. </summary>
+        /// <summary>
+        /// The helm deployment upgrade options
+        /// Serialized Name: HelmMappingRuleProfileOptions.upgradeOptions
+        /// </summary>
         public HelmUpgradeConfig UpgradeOptions { get; set; }
     }
 }

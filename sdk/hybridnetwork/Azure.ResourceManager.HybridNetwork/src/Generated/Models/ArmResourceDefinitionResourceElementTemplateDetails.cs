@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The arm resource definition resource element template details. </summary>
+    /// <summary>
+    /// The arm resource definition resource element template details.
+    /// Serialized Name: ArmResourceDefinitionResourceElementTemplateDetails
+    /// </summary>
     public partial class ArmResourceDefinitionResourceElementTemplateDetails : ResourceElementTemplate
     {
         /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/>. </summary>
@@ -20,18 +23,33 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/>. </summary>
-        /// <param name="name"> Name of the resource element template. </param>
-        /// <param name="resourceElementType"> The resource element template type. </param>
-        /// <param name="dependsOnProfile"> The depends on profile. </param>
+        /// <param name="name">
+        /// Name of the resource element template.
+        /// Serialized Name: ResourceElementTemplate.name
+        /// </param>
+        /// <param name="resourceElementType">
+        /// The resource element template type.
+        /// Serialized Name: ResourceElementTemplate.type
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// The depends on profile.
+        /// Serialized Name: ResourceElementTemplate.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="configuration"> The resource element template type. </param>
+        /// <param name="configuration">
+        /// The resource element template type.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplateDetails.configuration
+        /// </param>
         internal ArmResourceDefinitionResourceElementTemplateDetails(string name, Type resourceElementType, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmResourceDefinitionResourceElementTemplate configuration) : base(name, resourceElementType, dependsOnProfile, serializedAdditionalRawData)
         {
             Configuration = configuration;
             ResourceElementType = resourceElementType;
         }
 
-        /// <summary> The resource element template type. </summary>
+        /// <summary>
+        /// The resource element template type.
+        /// Serialized Name: ArmResourceDefinitionResourceElementTemplateDetails.configuration
+        /// </summary>
         public ArmResourceDefinitionResourceElementTemplate Configuration { get; set; }
     }
 }

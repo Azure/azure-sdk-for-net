@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
             }
+            if (Optional.IsDefined(BackingResourcePublicNetworkAccess))
+            {
+                writer.WritePropertyName("backingResourcePublicNetworkAccess"u8);
+                writer.WriteStringValue(BackingResourcePublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(ReplicationStrategy))
             {
                 writer.WritePropertyName("replicationStrategy"u8);
@@ -98,6 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             ProvisioningState? provisioningState = default;
             ArtifactStoreType? storeType = default;
+            BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default;
             ArtifactReplicationStrategy? replicationStrategy = default;
             ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             ResourceIdentifier storageResourceId = default;
@@ -121,6 +127,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         continue;
                     }
                     storeType = new ArtifactStoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("backingResourcePublicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backingResourcePublicNetworkAccess = new BackingResourcePublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationStrategy"u8))
@@ -159,6 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStorePropertiesFormat(
                 provisioningState,
                 storeType,
+                backingResourcePublicNetworkAccess,
                 replicationStrategy,
                 managedResourceGroupConfiguration,
                 storageResourceId,

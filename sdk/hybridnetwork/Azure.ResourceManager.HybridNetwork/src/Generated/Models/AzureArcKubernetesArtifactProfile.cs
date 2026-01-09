@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure arc kubernetes artifact profile properties. </summary>
+    /// <summary>
+    /// Azure arc kubernetes artifact profile properties.
+    /// Serialized Name: AzureArcKubernetesArtifactProfile
+    /// </summary>
     public partial class AzureArcKubernetesArtifactProfile : ArtifactProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesArtifactProfile"/>. </summary>
@@ -20,15 +23,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesArtifactProfile"/>. </summary>
-        /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="artifactStore">
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="helmArtifactProfile"> Helm artifact profile. </param>
+        /// <param name="helmArtifactProfile">
+        /// Helm artifact profile.
+        /// Serialized Name: AzureArcKubernetesArtifactProfile.helmArtifactProfile
+        /// </param>
         internal AzureArcKubernetesArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, HelmArtifactProfile helmArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             HelmArtifactProfile = helmArtifactProfile;
         }
 
-        /// <summary> Helm artifact profile. </summary>
+        /// <summary>
+        /// Helm artifact profile.
+        /// Serialized Name: AzureArcKubernetesArtifactProfile.helmArtifactProfile
+        /// </summary>
         public HelmArtifactProfile HelmArtifactProfile { get; set; }
     }
 }

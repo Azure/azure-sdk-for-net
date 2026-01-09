@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The azure storage account container credential definition. </summary>
+    /// <summary>
+    /// The azure storage account container credential definition.
+    /// Serialized Name: AzureStorageAccountContainerCredential
+    /// </summary>
     public partial class AzureStorageAccountContainerCredential
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageAccountContainerCredential"/>. </summary>
-        /// <param name="containerName"> The storage account container name. </param>
-        /// <param name="containerSasUri"> The storage account container sas uri. </param>
+        /// <param name="containerName">
+        /// The storage account container name
+        /// Serialized Name: AzureStorageAccountContainerCredential.containerName
+        /// </param>
+        /// <param name="containerSasUri">
+        /// The storage account container sas uri
+        /// Serialized Name: AzureStorageAccountContainerCredential.containerSasUri
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AzureStorageAccountContainerCredential(string containerName, Uri containerSasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The storage account container name. </summary>
+        /// <summary>
+        /// The storage account container name
+        /// Serialized Name: AzureStorageAccountContainerCredential.containerName
+        /// </summary>
         public string ContainerName { get; }
-        /// <summary> The storage account container sas uri. </summary>
+        /// <summary>
+        /// The storage account container sas uri
+        /// Serialized Name: AzureStorageAccountContainerCredential.containerSasUri
+        /// </summary>
         public Uri ContainerSasUri { get; }
     }
 }

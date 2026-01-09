@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
+    /// <summary>
+    /// The ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.
+    /// Serialized Name: ArtifactStorePropertiesFormatManagedResourceGroupConfiguration
+    /// </summary>
     public partial class ArtifactStorePropertiesFormatManagedResourceGroupConfiguration
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/>. </summary>
-        /// <param name="name"> The managed resource group name. </param>
-        /// <param name="location"> The managed resource group location. </param>
+        /// <param name="name">
+        /// The managed resource group name.
+        /// Serialized Name: ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.name
+        /// </param>
+        /// <param name="location">
+        /// The managed resource group location.
+        /// Serialized Name: ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.location
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The managed resource group name. </summary>
+        /// <summary>
+        /// The managed resource group name.
+        /// Serialized Name: ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The managed resource group location. </summary>
+        /// <summary>
+        /// The managed resource group location.
+        /// Serialized Name: ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure Operator Distributed Services network function template. </summary>
+    /// <summary>
+    /// Azure Operator Distributed Services network function template.
+    /// Serialized Name: AzureOperatorNexusNetworkFunctionTemplate
+    /// </summary>
     public partial class AzureOperatorNexusNetworkFunctionTemplate : VirtualNetworkFunctionTemplate
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>. </summary>
@@ -21,10 +24,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>. </summary>
-        /// <param name="nfviType"> The network function type. </param>
+        /// <param name="nfviType">
+        /// The network function type.
+        /// Serialized Name: VirtualNetworkFunctionTemplate.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkFunctionApplications">
         /// Network function applications.
+        /// Serialized Name: AzureOperatorNexusNetworkFunctionTemplate.networkFunctionApplications
         /// Please note <see cref="AzureOperatorNexusNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
         /// </param>
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary>
         /// Network function applications.
+        /// Serialized Name: AzureOperatorNexusNetworkFunctionTemplate.networkFunctionApplications
         /// Please note <see cref="AzureOperatorNexusNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
         /// </summary>

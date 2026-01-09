@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The network function type. </summary>
+    /// <summary>
+    /// The network function type.
+    /// Serialized Name: VirtualNetworkFunctionNfviType
+    /// </summary>
     internal readonly partial struct VirtualNetworkFunctionNfviType : IEquatable<VirtualNetworkFunctionNfviType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string AzureCoreValue = "AzureCore";
         private const string AzureOperatorNexusValue = "AzureOperatorNexus";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: VirtualNetworkFunctionNfviType.Unknown
+        /// </summary>
         public static VirtualNetworkFunctionNfviType Unknown { get; } = new VirtualNetworkFunctionNfviType(UnknownValue);
-        /// <summary> AzureCore. </summary>
+        /// <summary>
+        /// AzureCore
+        /// Serialized Name: VirtualNetworkFunctionNfviType.AzureCore
+        /// </summary>
         public static VirtualNetworkFunctionNfviType AzureCore { get; } = new VirtualNetworkFunctionNfviType(AzureCoreValue);
-        /// <summary> AzureOperatorNexus. </summary>
+        /// <summary>
+        /// AzureOperatorNexus
+        /// Serialized Name: VirtualNetworkFunctionNfviType.AzureOperatorNexus
+        /// </summary>
         public static VirtualNetworkFunctionNfviType AzureOperatorNexus { get; } = new VirtualNetworkFunctionNfviType(AzureOperatorNexusValue);
         /// <summary> Determines if two <see cref="VirtualNetworkFunctionNfviType"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkFunctionNfviType left, VirtualNetworkFunctionNfviType right) => left.Equals(right);

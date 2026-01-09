@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact state. </summary>
+    /// <summary>
+    /// The artifact state.
+    /// Serialized Name: ArtifactState
+    /// </summary>
     public readonly partial struct ArtifactState : IEquatable<ArtifactState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ActiveValue = "Active";
         private const string DeprecatedValue = "Deprecated";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ArtifactState.Unknown
+        /// </summary>
         public static ArtifactState Unknown { get; } = new ArtifactState(UnknownValue);
-        /// <summary> Preview. </summary>
+        /// <summary>
+        /// Preview
+        /// Serialized Name: ArtifactState.Preview
+        /// </summary>
         public static ArtifactState Preview { get; } = new ArtifactState(PreviewValue);
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: ArtifactState.Active
+        /// </summary>
         public static ArtifactState Active { get; } = new ArtifactState(ActiveValue);
-        /// <summary> Deprecated. </summary>
+        /// <summary>
+        /// Deprecated
+        /// Serialized Name: ArtifactState.Deprecated
+        /// </summary>
         public static ArtifactState Deprecated { get; } = new ArtifactState(DeprecatedValue);
         /// <summary> Determines if two <see cref="ArtifactState"/> values are the same. </summary>
         public static bool operator ==(ArtifactState left, ArtifactState right) => left.Equals(right);

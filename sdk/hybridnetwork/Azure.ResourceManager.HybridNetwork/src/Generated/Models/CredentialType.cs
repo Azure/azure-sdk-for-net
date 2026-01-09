@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The credential type. </summary>
+    /// <summary>
+    /// The credential type.
+    /// Serialized Name: CredentialType
+    /// </summary>
     internal readonly partial struct CredentialType : IEquatable<CredentialType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string AzureContainerRegistryScopedTokenValue = "AzureContainerRegistryScopedToken";
         private const string AzureStorageAccountTokenValue = "AzureStorageAccountToken";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: CredentialType.Unknown
+        /// </summary>
         public static CredentialType Unknown { get; } = new CredentialType(UnknownValue);
-        /// <summary> AzureContainerRegistryScopedToken. </summary>
+        /// <summary>
+        /// AzureContainerRegistryScopedToken
+        /// Serialized Name: CredentialType.AzureContainerRegistryScopedToken
+        /// </summary>
         public static CredentialType AzureContainerRegistryScopedToken { get; } = new CredentialType(AzureContainerRegistryScopedTokenValue);
-        /// <summary> AzureStorageAccountToken. </summary>
+        /// <summary>
+        /// AzureStorageAccountToken
+        /// Serialized Name: CredentialType.AzureStorageAccountToken
+        /// </summary>
         public static CredentialType AzureStorageAccountToken { get; } = new CredentialType(AzureStorageAccountTokenValue);
         /// <summary> Determines if two <see cref="CredentialType"/> values are the same. </summary>
         public static bool operator ==(CredentialType left, CredentialType right) => left.Equals(right);

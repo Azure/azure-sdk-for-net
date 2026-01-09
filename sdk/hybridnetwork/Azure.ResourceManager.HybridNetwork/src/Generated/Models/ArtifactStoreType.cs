@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact store type. </summary>
+    /// <summary>
+    /// The artifact store type.
+    /// Serialized Name: ArtifactStoreType
+    /// </summary>
     public readonly partial struct ArtifactStoreType : IEquatable<ArtifactStoreType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string AzureContainerRegistryValue = "AzureContainerRegistry";
         private const string AzureStorageAccountValue = "AzureStorageAccount";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ArtifactStoreType.Unknown
+        /// </summary>
         public static ArtifactStoreType Unknown { get; } = new ArtifactStoreType(UnknownValue);
-        /// <summary> AzureContainerRegistry. </summary>
+        /// <summary>
+        /// AzureContainerRegistry
+        /// Serialized Name: ArtifactStoreType.AzureContainerRegistry
+        /// </summary>
         public static ArtifactStoreType AzureContainerRegistry { get; } = new ArtifactStoreType(AzureContainerRegistryValue);
-        /// <summary> AzureStorageAccount. </summary>
+        /// <summary>
+        /// AzureStorageAccount
+        /// Serialized Name: ArtifactStoreType.AzureStorageAccount
+        /// </summary>
         public static ArtifactStoreType AzureStorageAccount { get; } = new ArtifactStoreType(AzureStorageAccountValue);
         /// <summary> Determines if two <see cref="ArtifactStoreType"/> values are the same. </summary>
         public static bool operator ==(ArtifactStoreType left, ArtifactStoreType right) => left.Equals(right);

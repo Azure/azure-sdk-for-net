@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Name of this Sku. </summary>
+    /// <summary>
+    /// Name of this Sku
+    /// Serialized Name: SkuName
+    /// </summary>
     public readonly partial struct HybridNetworkSkuName : IEquatable<HybridNetworkSkuName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: SkuName.Basic
+        /// </summary>
         public static HybridNetworkSkuName Basic { get; } = new HybridNetworkSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: SkuName.Standard
+        /// </summary>
         public static HybridNetworkSkuName Standard { get; } = new HybridNetworkSkuName(StandardValue);
         /// <summary> Determines if two <see cref="HybridNetworkSkuName"/> values are the same. </summary>
         public static bool operator ==(HybridNetworkSkuName left, HybridNetworkSkuName right) => left.Equals(right);

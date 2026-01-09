@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The proxy artifact overview. </summary>
+    /// <summary>
+    /// The proxy artifact overview.
+    /// Serialized Name: ProxyArtifactListOverview
+    /// </summary>
     public partial class ProxyArtifactListOverview : ResourceData
     {
         /// <summary>

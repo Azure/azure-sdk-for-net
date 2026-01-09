@@ -34,17 +34,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 throw new FormatException($"The model {nameof(ProxyArtifactVersionsOverviewListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,10 +91,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ProxyArtifactVersionsListOverview> array = new List<ProxyArtifactVersionsListOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -117,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProxyArtifactVersionsOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactVersionsListOverview>(), nextLink, serializedAdditionalRawData);
+            return new ProxyArtifactVersionsOverviewListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactVersionsOverviewListResult>.Write(ModelReaderWriterOptions options)

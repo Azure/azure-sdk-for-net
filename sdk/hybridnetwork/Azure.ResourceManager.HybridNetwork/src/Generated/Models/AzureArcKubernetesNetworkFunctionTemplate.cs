@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure Arc kubernetes network function template. </summary>
+    /// <summary>
+    /// Azure Arc kubernetes network function template.
+    /// Serialized Name: AzureArcKubernetesNetworkFunctionTemplate
+    /// </summary>
     public partial class AzureArcKubernetesNetworkFunctionTemplate : ContainerizedNetworkFunctionTemplate
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>. </summary>
@@ -21,10 +24,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>. </summary>
-        /// <param name="nfviType"> The network function type. </param>
+        /// <param name="nfviType">
+        /// The network function type.
+        /// Serialized Name: ContainerizedNetworkFunctionTemplate.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkFunctionApplications">
         /// Network function applications.
+        /// Serialized Name: AzureArcKubernetesNetworkFunctionTemplate.networkFunctionApplications
         /// Please note <see cref="AzureArcKubernetesNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcKubernetesHelmApplication"/>.
         /// </param>
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary>
         /// Network function applications.
+        /// Serialized Name: AzureArcKubernetesNetworkFunctionTemplate.networkFunctionApplications
         /// Please note <see cref="AzureArcKubernetesNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcKubernetesHelmApplication"/>.
         /// </summary>

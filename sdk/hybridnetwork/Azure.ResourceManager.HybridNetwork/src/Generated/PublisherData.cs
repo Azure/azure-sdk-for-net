@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the Publisher data model.
     /// publisher resource.
+    /// Serialized Name: Publisher
     /// </summary>
     public partial class PublisherData : TrackedResourceData
     {
@@ -64,8 +65,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Publisher properties. </param>
-        /// <param name="identity"> The managed identity of the publisher, if configured. </param>
+        /// <param name="properties">
+        /// Publisher properties.
+        /// Serialized Name: Publisher.properties
+        /// </param>
+        /// <param name="identity">
+        /// The managed identity of the publisher, if configured.
+        /// Serialized Name: Publisher.identity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublisherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublisherPropertiesFormat properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -79,9 +86,15 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Publisher properties. </summary>
+        /// <summary>
+        /// Publisher properties.
+        /// Serialized Name: Publisher.properties
+        /// </summary>
         public PublisherPropertiesFormat Properties { get; set; }
-        /// <summary> The managed identity of the publisher, if configured. </summary>
+        /// <summary>
+        /// The managed identity of the publisher, if configured.
+        /// Serialized Name: Publisher.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

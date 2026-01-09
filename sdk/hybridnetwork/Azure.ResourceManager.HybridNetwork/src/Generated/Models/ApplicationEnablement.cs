@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The application enablement. </summary>
+    /// <summary>
+    /// The application enablement.
+    /// Serialized Name: ApplicationEnablement
+    /// </summary>
     public readonly partial struct ApplicationEnablement : IEquatable<ApplicationEnablement>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ApplicationEnablement.Unknown
+        /// </summary>
         public static ApplicationEnablement Unknown { get; } = new ApplicationEnablement(UnknownValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ApplicationEnablement.Enabled
+        /// </summary>
         public static ApplicationEnablement Enabled { get; } = new ApplicationEnablement(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ApplicationEnablement.Disabled
+        /// </summary>
         public static ApplicationEnablement Disabled { get; } = new ApplicationEnablement(DisabledValue);
         /// <summary> Determines if two <see cref="ApplicationEnablement"/> values are the same. </summary>
         public static bool operator ==(ApplicationEnablement left, ApplicationEnablement right) => left.Equals(right);

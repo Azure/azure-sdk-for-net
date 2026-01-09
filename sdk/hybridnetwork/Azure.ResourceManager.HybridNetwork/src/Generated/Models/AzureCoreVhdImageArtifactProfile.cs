@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure vhd artifact profile properties. </summary>
+    /// <summary>
+    /// Azure vhd artifact profile properties.
+    /// Serialized Name: AzureCoreVhdImageArtifactProfile
+    /// </summary>
     public partial class AzureCoreVhdImageArtifactProfile : ArtifactProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageArtifactProfile"/>. </summary>
@@ -20,15 +23,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageArtifactProfile"/>. </summary>
-        /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="artifactStore">
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vhdArtifactProfile"> Vhd artifact profile. </param>
+        /// <param name="vhdArtifactProfile">
+        /// Vhd artifact profile.
+        /// Serialized Name: AzureCoreVhdImageArtifactProfile.vhdArtifactProfile
+        /// </param>
         internal AzureCoreVhdImageArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, VhdImageArtifactProfile vhdArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             VhdArtifactProfile = vhdArtifactProfile;
         }
 
-        /// <summary> Vhd artifact profile. </summary>
+        /// <summary>
+        /// Vhd artifact profile.
+        /// Serialized Name: AzureCoreVhdImageArtifactProfile.vhdArtifactProfile
+        /// </summary>
         public VhdImageArtifactProfile VhdArtifactProfile { get; set; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The proxy artifact overview. </summary>
+    /// <summary>
+    /// The proxy artifact overview.
+    /// Serialized Name: ProxyArtifactVersionsListOverview
+    /// </summary>
     public partial class ProxyArtifactVersionsListOverview : ResourceData
     {
         /// <summary>
@@ -57,7 +60,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Proxy Artifact overview properties. </param>
+        /// <param name="properties">
+        /// Proxy Artifact overview properties.
+        /// Serialized Name: ProxyArtifactVersionsListOverview.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProxyArtifactVersionsListOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProxyArtifactOverviewPropertiesValue properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +71,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Proxy Artifact overview properties. </summary>
+        /// <summary>
+        /// Proxy Artifact overview properties.
+        /// Serialized Name: ProxyArtifactVersionsListOverview.properties
+        /// </summary>
         public ProxyArtifactOverviewPropertiesValue Properties { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Payload for execute request post call. </summary>
+    /// <summary>
+    /// Payload for execute request post call.
+    /// Serialized Name: ExecuteRequestParameters
+    /// </summary>
     public partial class ExecuteRequestContent
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExecuteRequestContent"/>. </summary>
-        /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
-        /// <param name="requestMetadata"> The request metadata. </param>
+        /// <param name="serviceEndpoint">
+        /// The endpoint of service to call.
+        /// Serialized Name: ExecuteRequestParameters.serviceEndpoint
+        /// </param>
+        /// <param name="requestMetadata">
+        /// The request metadata.
+        /// Serialized Name: ExecuteRequestParameters.requestMetadata
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="requestMetadata"/> is null. </exception>
         public ExecuteRequestContent(string serviceEndpoint, RequestMetadata requestMetadata)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteRequestContent"/>. </summary>
-        /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
-        /// <param name="requestMetadata"> The request metadata. </param>
+        /// <param name="serviceEndpoint">
+        /// The endpoint of service to call.
+        /// Serialized Name: ExecuteRequestParameters.serviceEndpoint
+        /// </param>
+        /// <param name="requestMetadata">
+        /// The request metadata.
+        /// Serialized Name: ExecuteRequestParameters.requestMetadata
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExecuteRequestContent(string serviceEndpoint, RequestMetadata requestMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +89,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The endpoint of service to call. </summary>
+        /// <summary>
+        /// The endpoint of service to call.
+        /// Serialized Name: ExecuteRequestParameters.serviceEndpoint
+        /// </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> The request metadata. </summary>
+        /// <summary>
+        /// The request metadata.
+        /// Serialized Name: ExecuteRequestParameters.requestMetadata
+        /// </summary>
         public RequestMetadata RequestMetadata { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Pod Event  properties. </summary>
+    /// <summary>
+    /// Pod Event  properties.
+    /// Serialized Name: PodEvent
+    /// </summary>
     public partial class PodEvent
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PodEvent"/>. </summary>
-        /// <param name="eventType"> The type of pod event. </param>
-        /// <param name="reason"> Event reason. </param>
-        /// <param name="message"> Event message. </param>
-        /// <param name="lastSeenOn"> Event Last seen. </param>
+        /// <param name="eventType">
+        /// The type of pod event.
+        /// Serialized Name: PodEvent.type
+        /// </param>
+        /// <param name="reason">
+        /// Event reason.
+        /// Serialized Name: PodEvent.reason
+        /// </param>
+        /// <param name="message">
+        /// Event message.
+        /// Serialized Name: PodEvent.message
+        /// </param>
+        /// <param name="lastSeenOn">
+        /// Event Last seen.
+        /// Serialized Name: PodEvent.lastSeenTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PodEvent(PodEventType? eventType, string reason, string message, DateTimeOffset? lastSeenOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of pod event. </summary>
+        /// <summary>
+        /// The type of pod event.
+        /// Serialized Name: PodEvent.type
+        /// </summary>
         public PodEventType? EventType { get; }
-        /// <summary> Event reason. </summary>
+        /// <summary>
+        /// Event reason.
+        /// Serialized Name: PodEvent.reason
+        /// </summary>
         public string Reason { get; }
-        /// <summary> Event message. </summary>
+        /// <summary>
+        /// Event message.
+        /// Serialized Name: PodEvent.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Event Last seen. </summary>
+        /// <summary>
+        /// Event Last seen.
+        /// Serialized Name: PodEvent.lastSeenTime
+        /// </summary>
         public DateTimeOffset? LastSeenOn { get; }
     }
 }

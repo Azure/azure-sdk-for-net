@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure Operator Distributed Services image artifact profile properties. </summary>
+    /// <summary>
+    /// Azure Operator Distributed Services image artifact profile properties.
+    /// Serialized Name: AzureOperatorNexusImageArtifactProfile
+    /// </summary>
     public partial class AzureOperatorNexusImageArtifactProfile : ArtifactProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageArtifactProfile"/>. </summary>
@@ -20,15 +23,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageArtifactProfile"/>. </summary>
-        /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="artifactStore">
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="imageArtifactProfile"> Image artifact profile. </param>
+        /// <param name="imageArtifactProfile">
+        /// Image artifact profile.
+        /// Serialized Name: AzureOperatorNexusImageArtifactProfile.imageArtifactProfile
+        /// </param>
         internal AzureOperatorNexusImageArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, ImageArtifactProfile imageArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             ImageArtifactProfile = imageArtifactProfile;
         }
 
-        /// <summary> Image artifact profile. </summary>
+        /// <summary>
+        /// Image artifact profile.
+        /// Serialized Name: AzureOperatorNexusImageArtifactProfile.imageArtifactProfile
+        /// </summary>
         public ImageArtifactProfile ImageArtifactProfile { get; set; }
     }
 }

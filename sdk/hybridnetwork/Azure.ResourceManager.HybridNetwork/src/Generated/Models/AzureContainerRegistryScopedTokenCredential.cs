@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The azure container registry scoped token credential definition. </summary>
+    /// <summary>
+    /// The azure container registry scoped token credential definition.
+    /// Serialized Name: AzureContainerRegistryScopedTokenCredential
+    /// </summary>
     public partial class AzureContainerRegistryScopedTokenCredential : ArtifactAccessCredential
     {
         /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
@@ -21,13 +24,31 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
-        /// <param name="credentialType"> The credential type. </param>
+        /// <param name="credentialType">
+        /// The credential type.
+        /// Serialized Name: ArtifactAccessCredential.credentialType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="username"> The username of the credential. </param>
-        /// <param name="acrToken"> The credential value. </param>
-        /// <param name="acrServerUri"> The Acr server url. </param>
-        /// <param name="repositories"> The repositories that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <param name="username">
+        /// The username of the credential.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.username
+        /// </param>
+        /// <param name="acrToken">
+        /// The credential value.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.acrToken
+        /// </param>
+        /// <param name="acrServerUri">
+        /// The Acr server url
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.acrServerUrl
+        /// </param>
+        /// <param name="repositories">
+        /// The repositories that could be accessed using the current credential.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.repositories
+        /// </param>
+        /// <param name="expiry">
+        /// The UTC time when credential will expire.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.expiry
+        /// </param>
         internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string acrToken, Uri acrServerUri, IReadOnlyList<string> repositories, DateTimeOffset? expiry) : base(credentialType, serializedAdditionalRawData)
         {
             Username = username;
@@ -38,15 +59,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             CredentialType = credentialType;
         }
 
-        /// <summary> The username of the credential. </summary>
+        /// <summary>
+        /// The username of the credential.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.username
+        /// </summary>
         public string Username { get; }
-        /// <summary> The credential value. </summary>
+        /// <summary>
+        /// The credential value.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.acrToken
+        /// </summary>
         public string AcrToken { get; }
-        /// <summary> The Acr server url. </summary>
+        /// <summary>
+        /// The Acr server url
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.acrServerUrl
+        /// </summary>
         public Uri AcrServerUri { get; }
-        /// <summary> The repositories that could be accessed using the current credential. </summary>
+        /// <summary>
+        /// The repositories that could be accessed using the current credential.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.repositories
+        /// </summary>
         public IReadOnlyList<string> Repositories { get; }
-        /// <summary> The UTC time when credential will expire. </summary>
+        /// <summary>
+        /// The UTC time when credential will expire.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.expiry
+        /// </summary>
         public DateTimeOffset? Expiry { get; }
     }
 }

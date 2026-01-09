@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Network function definition group properties. </summary>
+    /// <summary>
+    /// Network function definition group properties.
+    /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat
+    /// </summary>
     public partial class NetworkFunctionDefinitionGroupPropertiesFormat
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
-        /// <param name="description"> The network function definition group description. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition groups resource.
+        /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition group description.
+        /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the network function definition groups resource. </summary>
+        /// <summary>
+        /// The provisioning state of the network function definition groups resource.
+        /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The network function definition group description. </summary>
+        /// <summary>
+        /// The network function definition group description.
+        /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

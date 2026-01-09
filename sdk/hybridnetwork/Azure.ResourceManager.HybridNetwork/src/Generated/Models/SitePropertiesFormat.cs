@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Site properties. </summary>
+    /// <summary>
+    /// Site properties.
+    /// Serialized Name: SitePropertiesFormat
+    /// </summary>
     public partial class SitePropertiesFormat
     {
         /// <summary>
@@ -54,13 +57,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SitePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site resource. **TODO**: Confirm if this is needed.
+        /// Serialized Name: SitePropertiesFormat.provisioningState
+        /// </param>
         /// <param name="nfvis">
         /// List of NFVIs
+        /// Serialized Name: SitePropertiesFormat.nfvis
         /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
         /// </param>
-        /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
+        /// <param name="siteNetworkServiceReferences">
+        /// The list of site network services on the site.
+        /// Serialized Name: SitePropertiesFormat.siteNetworkServiceReferences
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SitePropertiesFormat(ProvisioningState? provisioningState, IList<NFVIs> nfvis, IReadOnlyList<WritableSubResource> siteNetworkServiceReferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +80,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </summary>
+        /// <summary>
+        /// The provisioning state of the site resource. **TODO**: Confirm if this is needed.
+        /// Serialized Name: SitePropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// List of NFVIs
+        /// Serialized Name: SitePropertiesFormat.nfvis
         /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
         /// </summary>
         public IList<NFVIs> Nfvis { get; }
-        /// <summary> The list of site network services on the site. </summary>
+        /// <summary>
+        /// The list of site network services on the site.
+        /// Serialized Name: SitePropertiesFormat.siteNetworkServiceReferences
+        /// </summary>
         public IReadOnlyList<WritableSubResource> SiteNetworkServiceReferences { get; }
     }
 }

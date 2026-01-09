@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Publisher configuration group schema update request definition. </summary>
+    /// <summary>
+    /// Publisher configuration group schema update request definition.
+    /// Serialized Name: ConfigurationGroupSchemaVersionUpdateState
+    /// </summary>
     public partial class ConfigurationGroupSchemaVersionUpdateState
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaVersionUpdateState"/>. </summary>
-        /// <param name="versionState"> The configuration group schema state. </param>
+        /// <param name="versionState">
+        /// The configuration group schema state.
+        /// Serialized Name: ConfigurationGroupSchemaVersionUpdateState.versionState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The configuration group schema state. </summary>
+        /// <summary>
+        /// The configuration group schema state.
+        /// Serialized Name: ConfigurationGroupSchemaVersionUpdateState.versionState
+        /// </summary>
         public VersionState? VersionState { get; set; }
     }
 }

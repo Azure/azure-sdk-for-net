@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the NetworkServiceDesignVersion data model.
     /// network service design version.
+    /// Serialized Name: NetworkServiceDesignVersion
     /// </summary>
     public partial class NetworkServiceDesignVersionData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> network service design version properties. </param>
+        /// <param name="properties">
+        /// network service design version properties.
+        /// Serialized Name: NetworkServiceDesignVersion.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkServiceDesignVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkServiceDesignVersionPropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> network service design version properties. </summary>
+        /// <summary>
+        /// network service design version properties.
+        /// Serialized Name: NetworkServiceDesignVersion.properties
+        /// </summary>
         public NetworkServiceDesignVersionPropertiesFormat Properties { get; set; }
     }
 }

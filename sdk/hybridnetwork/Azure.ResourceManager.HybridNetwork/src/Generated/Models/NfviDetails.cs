@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The nfvi details. </summary>
+    /// <summary>
+    /// The nfvi details.
+    /// Serialized Name: NfviDetails
+    /// </summary>
     public partial class NfviDetails
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
-        /// <param name="name"> The nfvi name. </param>
-        /// <param name="nfviDetailsType"> The nfvi type. </param>
+        /// <param name="name">
+        /// The nfvi name.
+        /// Serialized Name: NfviDetails.name
+        /// </param>
+        /// <param name="nfviDetailsType">
+        /// The nfvi type.
+        /// Serialized Name: NfviDetails.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NfviDetails(string name, string nfviDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The nfvi name. </summary>
+        /// <summary>
+        /// The nfvi name.
+        /// Serialized Name: NfviDetails.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The nfvi type. </summary>
+        /// <summary>
+        /// The nfvi type.
+        /// Serialized Name: NfviDetails.type
+        /// </summary>
         public string NfviDetailsType { get; set; }
     }
 }

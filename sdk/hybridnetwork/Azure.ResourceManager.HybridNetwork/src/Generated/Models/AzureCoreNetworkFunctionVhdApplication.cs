@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure core network function vhd application definition. </summary>
+    /// <summary>
+    /// Azure core network function vhd application definition.
+    /// Serialized Name: AzureCoreNetworkFunctionVhdApplication
+    /// </summary>
     public partial class AzureCoreNetworkFunctionVhdApplication : AzureCoreNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionVhdApplication"/>. </summary>
@@ -20,12 +23,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionVhdApplication"/>. </summary>
-        /// <param name="name"> The name of the network function application. </param>
-        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="name">
+        /// The name of the network function application.
+        /// Serialized Name: NetworkFunctionApplication.name
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// Depends on profile definition.
+        /// Serialized Name: NetworkFunctionApplication.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="artifactType"> The artifact type. </param>
-        /// <param name="artifactProfile"> Azure vhd image artifact profile. </param>
-        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <param name="artifactType">
+        /// The artifact type.
+        /// Serialized Name: AzureCoreNetworkFunctionApplication.artifactType
+        /// </param>
+        /// <param name="artifactProfile">
+        /// Azure vhd image artifact profile.
+        /// Serialized Name: AzureCoreNetworkFunctionVhdApplication.artifactProfile
+        /// </param>
+        /// <param name="deployParametersMappingRuleProfile">
+        /// Deploy mapping rule profile.
+        /// Serialized Name: AzureCoreNetworkFunctionVhdApplication.deployParametersMappingRuleProfile
+        /// </param>
         internal AzureCoreNetworkFunctionVhdApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureCoreArtifactType artifactType, AzureCoreVhdImageArtifactProfile artifactProfile, AzureCoreVhdImageDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
         {
             ArtifactProfile = artifactProfile;
@@ -33,9 +51,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ArtifactType = artifactType;
         }
 
-        /// <summary> Azure vhd image artifact profile. </summary>
+        /// <summary>
+        /// Azure vhd image artifact profile.
+        /// Serialized Name: AzureCoreNetworkFunctionVhdApplication.artifactProfile
+        /// </summary>
         public AzureCoreVhdImageArtifactProfile ArtifactProfile { get; set; }
-        /// <summary> Deploy mapping rule profile. </summary>
+        /// <summary>
+        /// Deploy mapping rule profile.
+        /// Serialized Name: AzureCoreNetworkFunctionVhdApplication.deployParametersMappingRuleProfile
+        /// </summary>
         public AzureCoreVhdImageDeployMappingRuleProfile DeployParametersMappingRuleProfile { get; set; }
     }
 }

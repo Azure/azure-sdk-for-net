@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The component resource deployment status. </summary>
+    /// <summary>
+    /// The component resource deployment status.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct ComponentStatus : IEquatable<ComponentStatus>
     {
         private readonly string _value;
@@ -37,33 +40,75 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string RollingbackValue = "Rollingback";
         private const string UpgradingValue = "Upgrading";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: Status.Unknown
+        /// </summary>
         public static ComponentStatus Unknown { get; } = new ComponentStatus(UnknownValue);
-        /// <summary> Deployed. </summary>
+        /// <summary>
+        /// Deployed
+        /// Serialized Name: Status.Deployed
+        /// </summary>
         public static ComponentStatus Deployed { get; } = new ComponentStatus(DeployedValue);
-        /// <summary> Uninstalled. </summary>
+        /// <summary>
+        /// Uninstalled
+        /// Serialized Name: Status.Uninstalled
+        /// </summary>
         public static ComponentStatus Uninstalled { get; } = new ComponentStatus(UninstalledValue);
-        /// <summary> Superseded. </summary>
+        /// <summary>
+        /// Superseded
+        /// Serialized Name: Status.Superseded
+        /// </summary>
         public static ComponentStatus Superseded { get; } = new ComponentStatus(SupersededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: Status.Failed
+        /// </summary>
         public static ComponentStatus Failed { get; } = new ComponentStatus(FailedValue);
-        /// <summary> Uninstalling. </summary>
+        /// <summary>
+        /// Uninstalling
+        /// Serialized Name: Status.Uninstalling
+        /// </summary>
         public static ComponentStatus Uninstalling { get; } = new ComponentStatus(UninstallingValue);
-        /// <summary> Pending-Install. </summary>
+        /// <summary>
+        /// Pending-Install
+        /// Serialized Name: Status.Pending-Install
+        /// </summary>
         public static ComponentStatus PendingInstall { get; } = new ComponentStatus(PendingInstallValue);
-        /// <summary> Pending-Upgrade. </summary>
+        /// <summary>
+        /// Pending-Upgrade
+        /// Serialized Name: Status.Pending-Upgrade
+        /// </summary>
         public static ComponentStatus PendingUpgrade { get; } = new ComponentStatus(PendingUpgradeValue);
-        /// <summary> Pending-Rollback. </summary>
+        /// <summary>
+        /// Pending-Rollback
+        /// Serialized Name: Status.Pending-Rollback
+        /// </summary>
         public static ComponentStatus PendingRollback { get; } = new ComponentStatus(PendingRollbackValue);
-        /// <summary> Downloading. </summary>
+        /// <summary>
+        /// Downloading
+        /// Serialized Name: Status.Downloading
+        /// </summary>
         public static ComponentStatus Downloading { get; } = new ComponentStatus(DownloadingValue);
-        /// <summary> Installing. </summary>
+        /// <summary>
+        /// Installing
+        /// Serialized Name: Status.Installing
+        /// </summary>
         public static ComponentStatus Installing { get; } = new ComponentStatus(InstallingValue);
-        /// <summary> Reinstalling. </summary>
+        /// <summary>
+        /// Reinstalling
+        /// Serialized Name: Status.Reinstalling
+        /// </summary>
         public static ComponentStatus Reinstalling { get; } = new ComponentStatus(ReinstallingValue);
-        /// <summary> Rollingback. </summary>
+        /// <summary>
+        /// Rollingback
+        /// Serialized Name: Status.Rollingback
+        /// </summary>
         public static ComponentStatus Rollingback { get; } = new ComponentStatus(RollingbackValue);
-        /// <summary> Upgrading. </summary>
+        /// <summary>
+        /// Upgrading
+        /// Serialized Name: Status.Upgrading
+        /// </summary>
         public static ComponentStatus Upgrading { get; } = new ComponentStatus(UpgradingValue);
         /// <summary> Determines if two <see cref="ComponentStatus"/> values are the same. </summary>
         public static bool operator ==(ComponentStatus left, ComponentStatus right) => left.Equals(right);

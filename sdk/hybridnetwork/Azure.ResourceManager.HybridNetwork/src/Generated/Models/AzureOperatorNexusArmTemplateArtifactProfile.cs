@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure Operator Distributed Services vhd artifact profile properties. </summary>
+    /// <summary>
+    /// Azure Operator Distributed Services vhd artifact profile properties.
+    /// Serialized Name: AzureOperatorNexusArmTemplateArtifactProfile
+    /// </summary>
     public partial class AzureOperatorNexusArmTemplateArtifactProfile : ArtifactProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateArtifactProfile"/>. </summary>
@@ -20,15 +23,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateArtifactProfile"/>. </summary>
-        /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="artifactStore">
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="templateArtifactProfile"> Template artifact profile. </param>
+        /// <param name="templateArtifactProfile">
+        /// Template artifact profile.
+        /// Serialized Name: AzureOperatorNexusArmTemplateArtifactProfile.templateArtifactProfile
+        /// </param>
         internal AzureOperatorNexusArmTemplateArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             TemplateArtifactProfile = templateArtifactProfile;
         }
 
-        /// <summary> Template artifact profile. </summary>
+        /// <summary>
+        /// Template artifact profile.
+        /// Serialized Name: AzureOperatorNexusArmTemplateArtifactProfile.templateArtifactProfile
+        /// </summary>
         public ArmTemplateArtifactProfile TemplateArtifactProfile { get; set; }
     }
 }

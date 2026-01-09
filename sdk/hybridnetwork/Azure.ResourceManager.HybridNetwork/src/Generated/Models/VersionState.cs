@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The configuration group schema state. </summary>
+    /// <summary>
+    /// The configuration group schema state.
+    /// Serialized Name: VersionState
+    /// </summary>
     public readonly partial struct VersionState : IEquatable<VersionState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ValidatingValue = "Validating";
         private const string ValidationFailedValue = "ValidationFailed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: VersionState.Unknown
+        /// </summary>
         public static VersionState Unknown { get; } = new VersionState(UnknownValue);
-        /// <summary> Preview. </summary>
+        /// <summary>
+        /// Preview
+        /// Serialized Name: VersionState.Preview
+        /// </summary>
         public static VersionState Preview { get; } = new VersionState(PreviewValue);
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: VersionState.Active
+        /// </summary>
         public static VersionState Active { get; } = new VersionState(ActiveValue);
-        /// <summary> Deprecated. </summary>
+        /// <summary>
+        /// Deprecated
+        /// Serialized Name: VersionState.Deprecated
+        /// </summary>
         public static VersionState Deprecated { get; } = new VersionState(DeprecatedValue);
-        /// <summary> Validating. </summary>
+        /// <summary>
+        /// Validating
+        /// Serialized Name: VersionState.Validating
+        /// </summary>
         public static VersionState Validating { get; } = new VersionState(ValidatingValue);
-        /// <summary> ValidationFailed. </summary>
+        /// <summary>
+        /// ValidationFailed
+        /// Serialized Name: VersionState.ValidationFailed
+        /// </summary>
         public static VersionState ValidationFailed { get; } = new VersionState(ValidationFailedValue);
         /// <summary> Determines if two <see cref="VersionState"/> values are the same. </summary>
         public static bool operator ==(VersionState left, VersionState right) => left.Equals(right);

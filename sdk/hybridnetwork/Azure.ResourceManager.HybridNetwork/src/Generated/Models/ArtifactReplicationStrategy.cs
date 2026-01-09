@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The replication strategy. </summary>
+    /// <summary>
+    /// The replication strategy.
+    /// Serialized Name: ArtifactReplicationStrategy
+    /// </summary>
     public readonly partial struct ArtifactReplicationStrategy : IEquatable<ArtifactReplicationStrategy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string UnknownValue = "Unknown";
         private const string SingleReplicationValue = "SingleReplication";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ArtifactReplicationStrategy.Unknown
+        /// </summary>
         public static ArtifactReplicationStrategy Unknown { get; } = new ArtifactReplicationStrategy(UnknownValue);
-        /// <summary> SingleReplication. </summary>
+        /// <summary>
+        /// SingleReplication
+        /// Serialized Name: ArtifactReplicationStrategy.SingleReplication
+        /// </summary>
         public static ArtifactReplicationStrategy SingleReplication { get; } = new ArtifactReplicationStrategy(SingleReplicationValue);
         /// <summary> Determines if two <see cref="ArtifactReplicationStrategy"/> values are the same. </summary>
         public static bool operator ==(ArtifactReplicationStrategy left, ArtifactReplicationStrategy right) => left.Equals(right);

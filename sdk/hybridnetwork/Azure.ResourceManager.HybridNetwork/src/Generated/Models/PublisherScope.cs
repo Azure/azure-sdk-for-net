@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Publisher Scope. </summary>
+    /// <summary>
+    /// Publisher Scope.
+    /// Serialized Name: PublisherScope
+    /// </summary>
     public readonly partial struct PublisherScope : IEquatable<PublisherScope>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string UnknownValue = "Unknown";
         private const string PrivateValue = "Private";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: PublisherScope.Unknown
+        /// </summary>
         public static PublisherScope Unknown { get; } = new PublisherScope(UnknownValue);
-        /// <summary> Private. </summary>
+        /// <summary>
+        /// Private
+        /// Serialized Name: PublisherScope.Private
+        /// </summary>
         public static PublisherScope Private { get; } = new PublisherScope(PrivateValue);
         /// <summary> Determines if two <see cref="PublisherScope"/> values are the same. </summary>
         public static bool operator ==(PublisherScope left, PublisherScope right) => left.Equals(right);
