@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: Azure.ResourceManager.ManagedNetworkFabric
 namespace: Azure.ResourceManager.ManagedNetworkFabric
-require: https://github.com/Azure/azure-rest-api-specs/blob/0baf811c3c76c87b3c127d098519bd97141222dd/specification/managednetworkfabric/resource-manager/readme.md
-#tag: package-2023-06-15
+require: https://github.com/Azure/azure-rest-api-specs/blob/5476ceee2ed3364cdedec8e0d002d2e45389a8f0/specification/managednetworkfabric/resource-manager/readme.md
+tag: package-2024-06-15-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -62,18 +62,18 @@ acronym-mapping:
 
 rename-mapping:
   AccessControlList: NetworkFabricAccessControlList
-  AccessControlListsListResult: AccessControlListsResult
   ExternalNetwork: NetworkFabricExternalNetwork
   ExternalNetwork.properties.networkToNetworkInterconnectId: -|arm-id
   InternalNetwork: NetworkFabricInternalNetwork
   InternetGateway: NetworkFabricInternetGateway
   InternetGateway.properties.ipv4Address: IpV4Address
   InternetGatewayRule: NetworkFabricInternetGatewayRule
-  InternetGatewayRule.properties.internetGatewayIds: -|arm-id
   IpCommunity: NetworkFabricIpCommunity
   IpExtendedCommunity: NetworkFabricIpExtendedCommunity
   IpPrefix: NetworkFabricIpPrefix
   L2IsolationDomain: NetworkFabricL2IsolationDomain
+  ConnectedSubnetRoutePolicy.exportRoutePolicy: connectedExportRoutePolicy
+  ConnectedSubnetRoutePolicyPatch.exportRoutePolicy: connectedExportRoutePolicy
   L3IsolationDomain: NetworkFabricL3IsolationDomain
   NeighborGroup: NetworkFabricNeighborGroup
   NetworkDevice.properties.managementIpv4Address: -|ip-address
@@ -81,9 +81,7 @@ rename-mapping:
   RoutePolicy: NetworkFabricRoutePolicy
   NetworkInterface: NetworkDeviceInterface
   Action: InternetGatewayRuleAction
-  AddressFamilyTypeL: NetworkFabricAddressFamilyType
   AdministrativeState: NetworkFabricAdministrativeState
-  AnnotationResource: AnnotationResourceProperties
   BooleanEnumProperty: NetworkFabricBooleanValue
   CommonPostActionResponseForDeviceUpdate: DeviceUpdateCommonPostActionResult
   CommonPostActionResponseForStateUpdate: StateUpdateCommonPostActionResult
@@ -95,8 +93,6 @@ rename-mapping:
   DestinationType: NetworkTapDestinationType
   DeviceAdministrativeState: NetworkDeviceAdministrativeState
   DeviceInterfaceProperties: NetworkDeviceInterfaceProperties
-  EnableDisableOnResources: UpdateAdministrativeStateOnResources
-  EnableDisableOnResources.resourceIds: -|arm-id
   EnableDisableState: AdministrativeEnableState
   Encapsulation: IsolationDomainEncapsulationType
   EncapsulationType: NetworkTapEncapsulationType
@@ -104,8 +100,6 @@ rename-mapping:
   Extension: StaticRouteConfigurationExtension
   ExternalNetworkPatchPropertiesOptionAProperties: ExternalNetworkPatchOptionAProperties
   ExternalNetworkPropertiesOptionAProperties: ExternalNetworkOptionAProperties
-  InternalNetworkPropertiesBgpConfiguration: InternalNetworkBgpConfiguration
-  InternalNetworkPropertiesStaticRouteConfiguration: InternalNetworkStaticRouteConfiguration
   IpCommunityIdList.ipCommunityIds: -|arm-id
   IpExtendedCommunityIdList.ipExtendedCommunityIds: -|arm-id
   GatewayType: InternetGatewayType
@@ -115,11 +109,7 @@ rename-mapping:
   IPAddressType: NetworkFabricIPAddressType
   NeighborGroupDestination.ipv4Addresses: -|ip-address
   NetworkDevice.properties.networkRackId: -|arm-id
-  NetworkFabricController.properties.workloadManagementNetwork: IsWorkloadManagementNetwork
   NetworkInterfacePatch: NetworkDeviceInterfacePatch
-  NetworkInterfacesList: NetworkDeviceInterfacesList
-  NetworkTapRule.properties.networkTapId: -|arm-id
-  NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration: NetworkToNetworkInterconnectOptionBLayer3Configuration
   NfcSku: NetworkFabricControllerSKU
   PollingType: NetworkTapPollingType
   PortCondition: NetworkFabricPortCondition
@@ -137,14 +127,37 @@ rename-mapping:
   ValidateAction: NetworkFabricValidateAction
   ValidateConfigurationProperties: ValidateConfigurationContent
   ValidateConfigurationResponse: ValidateConfigurationResult
-  VpnConfigurationPatchablePropertiesOptionAProperties: VpnConfigurationPatchableOptionAProperties
-  VpnConfigurationPropertiesOptionAProperties: VpnConfigurationOptionAProperties
+  CommitBatchStatusResponse: CommitBatchStatusResult
+  InternalNetworkBfdAdministrativeStateResponse: InternalNetworkBfdAdministrativeStateResult
+  InternalNetworkBgpAdministrativeStateResponse: InternalNetworkBgpAdministrativeStateResult
+  DiscardCommitBatchResponse: DiscardCommitBatchResult
+  ArmConfigurationDiffResponse: ArmConfigurationDiffResult
+  ExternalNetworkBfdAdministrativeStateResponse: ExternalNetworkBfdAdministrativeStateResult
+  NniBfdAdministrativeStateResponse: NniBfdAdministrativeStateResult
+  ViewDeviceConfigurationResponse: ViewDeviceConfigurationResult
 
 directive:
-  - from: NetworkFabricControllers.json
+  - from: managednetworkfabric.json
     where: $.definitions
-    transform:
+    transform: >
+      $.NetworkDevice.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkInterface.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkDeviceSku.properties.properties["x-ms-client-flatten"] = true;
+      $.AccessControlList.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkFabricController.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkFabric.properties.properties["x-ms-client-flatten"] = true;
+      $.ExternalNetwork.properties.properties["x-ms-client-flatten"] = true;
+      $.InternalNetwork.properties.properties["x-ms-client-flatten"] = true;
+      $.InternetGateway.properties.properties["x-ms-client-flatten"] = true;
+  # change some properties back to optional to overcome some breaking changes
+  - from: managednetworkfabric.json
+    where: $.definitions
+    transform: >
       $.ExpressRouteConnectionInformation.required =  [ 'expressRouteCircuitId' ];
+      $.BgpConfiguration.required = undefined;
+      $.ExternalNetworkPropertiesOptionAProperties.required = undefined;
+      $.OptionBLayer3Configuration.required = undefined;
+      $.AccessControlListProperties.required = undefined;
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete
   - remove-operation: InternetGateways_Create
