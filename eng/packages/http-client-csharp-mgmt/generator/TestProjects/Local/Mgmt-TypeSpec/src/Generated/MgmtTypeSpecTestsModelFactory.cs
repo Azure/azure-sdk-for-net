@@ -130,17 +130,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
-        /// <param name="vmProfile"> Test ApplicationProfile flattening scenario. </param>
         /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
+        /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
+        /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, VmProfile vmProfile = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -152,7 +153,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && vmProfile is null && etag is null && writableSubResourceProp is null && nestedPropertyProperties is null && flattenedProperty is null ? default : new FooProperties(
+                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && etag is null && writableSubResourceProp is null && nestedPropertyProperties is null && flattenedProperty is null && vmGalleryApplications is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
@@ -162,9 +163,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, null),
                     new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
-                    vmProfile,
+                    new VmProfile(new ApplicationProfile((prop1 ?? new ChangeTrackingList<string>()).ToList(), null), null),
                     etag,
                     writableSubResourceProp,
+                    new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
                     null),
                 extendedLocation,
                 identity,
@@ -180,12 +182,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop2"></param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
-        /// <param name="vmProfile"> Test ApplicationProfile flattening scenario. </param>
+        /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
         /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
+        /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, VmProfile vmProfile = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -200,9 +203,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop2.ToList(),
                 nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, null),
                 flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
-                vmProfile,
+                vmGalleryApplications is null ? default : new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), null), null),
                 etag,
                 writableSubResourceProp,
+                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -796,20 +800,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 properties);
         }
 
-        /// <summary> The JooProperties. </summary>
         /// <param name="name"></param>
-        /// <param name="prediction"></param>
-        /// <returns> A new <see cref="Models.JooProperties"/> instance for mocking. </returns>
-        public static JooProperties JooProperties(string name = default, Prediction prediction = default)
-        {
-            return new JooProperties(name, prediction, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="predictionInputHistoricalData"> Gets the HistoricalData. </param>
-        /// <returns> A new <see cref="Models.Prediction"/> instance for mocking. </returns>
-        public static Prediction Prediction(IEnumerable<long> predictionInputHistoricalData = default)
+        /// <returns> A new <see cref="Models.JooProperties"/> instance for mocking. </returns>
+        public static JooProperties JooProperties(string name = default, IEnumerable<long> predictionInputHistoricalData = default)
         {
-            return new Prediction(predictionInputHistoricalData is null ? default : new PredictionInput((predictionInputHistoricalData ?? new ChangeTrackingList<long>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new JooProperties(name, predictionInputHistoricalData is null ? default : new Prediction(new PredictionInput((predictionInputHistoricalData ?? new ChangeTrackingList<long>()).ToList(), null), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

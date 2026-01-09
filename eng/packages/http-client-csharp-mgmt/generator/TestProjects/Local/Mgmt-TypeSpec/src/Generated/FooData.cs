@@ -191,24 +191,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Test ApplicationProfile flattening scenario. </summary>
-        [WirePath("properties.vmProfile")]
-        public VmProfile VmProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VmProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FooProperties();
-                }
-                Properties.VmProfile = value;
-            }
-        }
-
         /// <summary> ETag property for testing etag parameter name generation. </summary>
         [WirePath("properties.etag")]
         public ETag? ETag
@@ -274,6 +256,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new FooProperties();
                 }
                 return Properties.FlattenedProperty;
+            }
+        }
+
+        /// <summary> Specifies the gallery applications that should be made available. </summary>
+        [WirePath("properties.vmProfile.applicationProfile.galleryApplications")]
+        public IList<string> VmGalleryApplications
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.VmGalleryApplications;
             }
         }
 
