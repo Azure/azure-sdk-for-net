@@ -6,49 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A Class representing a SphereDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereDeviceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSphereDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereDeviceGroupResource"/> using the GetSphereDevice method.
+    /// A class representing a SphereDevice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereDeviceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereDeviceGroupResource"/> using the GetSphereDevices method.
     /// </summary>
     public partial class SphereDeviceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SphereDeviceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="catalogName"> The catalogName. </param>
-        /// <param name="productName"> The productName. </param>
-        /// <param name="deviceGroupName"> The deviceGroupName. </param>
-        /// <param name="deviceName"> The deviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sphereDeviceDevicesClientDiagnostics;
-        private readonly DevicesRestOperations _sphereDeviceDevicesRestClient;
+        private readonly ClientDiagnostics _devicesClientDiagnostics;
+        private readonly Devices _devicesRestClient;
         private readonly SphereDeviceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products/deviceGroups/devices";
 
-        /// <summary> Initializes a new instance of the <see cref="SphereDeviceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SphereDeviceResource for mocking. </summary>
         protected SphereDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SphereDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereDeviceResource(ArmClient client, SphereDeviceData data) : this(client, data.Id)
@@ -57,71 +44,95 @@ namespace Azure.ResourceManager.Sphere
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SphereDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SphereDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sphereDeviceDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sphereDeviceDevicesApiVersion);
-            _sphereDeviceDevicesRestClient = new DevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeviceDevicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string sphereDeviceApiVersion);
+            _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SphereDeviceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="productName"> The productName. </param>
+        /// <param name="deviceGroupName"> The deviceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Device. Use '.unassigned' or '.default' for the device group and product names when a device does not belong to a device group and product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SphereDeviceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Get");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SphereDeviceData> response = Response.FromValue(SphereDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,118 +146,42 @@ namespace Azure.ResourceManager.Sphere
         /// Get a Device. Use '.unassigned' or '.default' for the device group and product names when a device does not belong to a device group and product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SphereDeviceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Get");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = _sphereDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SphereDeviceData> response = Response.FromValue(SphereDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SphereDeviceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Device
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _sphereDeviceDevicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation(_sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Device
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _sphereDeviceDevicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SphereArmOperation(_sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -259,20 +194,20 @@ namespace Azure.ResourceManager.Sphere
         /// Update a Device. Use '.unassigned' or '.default' for the device group and product names to move a device to the catalog level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,14 +219,27 @@ namespace Azure.ResourceManager.Sphere
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Update");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceDevicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SphereDeviceResource>(new SphereDeviceOperationSource(Client), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SphereDevicePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SphereArmOperation<SphereDeviceResource> operation = new SphereArmOperation<SphereDeviceResource>(
+                    new SphereDeviceOperationSource(Client),
+                    _devicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,20 +253,20 @@ namespace Azure.ResourceManager.Sphere
         /// Update a Device. Use '.unassigned' or '.default' for the device group and product names to move a device to the catalog level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,14 +278,125 @@ namespace Azure.ResourceManager.Sphere
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Update");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = _sphereDeviceDevicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new SphereArmOperation<SphereDeviceResource>(new SphereDeviceOperationSource(Client), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SphereDevicePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SphereArmOperation<SphereDeviceResource> operation = new SphereArmOperation<SphereDeviceResource>(
+                    new SphereDeviceOperationSource(Client),
+                    _devicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Device
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SphereArmOperation operation = new SphereArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Device
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SphereArmOperation operation = new SphereArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -351,20 +410,20 @@ namespace Azure.ResourceManager.Sphere
         /// Generates the capability image for the device. Use '.unassigned' or '.default' for the device group and product names to generate the image for a device that does not belong to a specific device group and product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}/generateCapabilityImage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}/generateCapabilityImage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GenerateCapabilityImage</description>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_GenerateCapabilityImage. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,14 +435,27 @@ namespace Azure.ResourceManager.Sphere
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.GenerateCapabilityImage");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.GenerateCapabilityImage");
             scope.Start();
             try
             {
-                var response = await _sphereDeviceDevicesRestClient.GenerateCapabilityImageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SignedCapabilityImageResponse>(new SignedCapabilityImageResponseOperationSource(), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateGenerateCapabilityImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGenerateCapabilityImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GenerateCapabilityImageContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SphereArmOperation<SignedCapabilityImageResponse> operation = new SphereArmOperation<SignedCapabilityImageResponse>(
+                    new SignedCapabilityImageResponseOperationSource(),
+                    _devicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -397,20 +469,20 @@ namespace Azure.ResourceManager.Sphere
         /// Generates the capability image for the device. Use '.unassigned' or '.default' for the device group and product names to generate the image for a device that does not belong to a specific device group and product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}/generateCapabilityImage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}/generateCapabilityImage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GenerateCapabilityImage</description>
+        /// <term> Operation Id. </term>
+        /// <description> Devices_GenerateCapabilityImage. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SphereDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SphereDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,14 +494,27 @@ namespace Azure.ResourceManager.Sphere
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.GenerateCapabilityImage");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("SphereDeviceResource.GenerateCapabilityImage");
             scope.Start();
             try
             {
-                var response = _sphereDeviceDevicesRestClient.GenerateCapabilityImage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new SphereArmOperation<SignedCapabilityImageResponse>(new SignedCapabilityImageResponseOperationSource(), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateGenerateCapabilityImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGenerateCapabilityImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GenerateCapabilityImageContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SphereArmOperation<SignedCapabilityImageResponse> operation = new SphereArmOperation<SignedCapabilityImageResponse>(
+                    new SignedCapabilityImageResponseOperationSource(),
+                    _devicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
