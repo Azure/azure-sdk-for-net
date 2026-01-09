@@ -1,6 +1,6 @@
 directory: specification/vmware/resource-manager/Microsoft.AVS/AVS
-commit: 3fde27c10f35fdb038ae45126a23d27d8653ba77
-repo: Azure/azure-rest-api-specs
+commit: 62bb5b8208660723d0701c4e4e420abdc08e6519
+repo: cataggar/azure-rest-api-specs
 additionalDirectories: 
 
 emitterPackageJsonPath: eng/legacy-emitter-package.json
