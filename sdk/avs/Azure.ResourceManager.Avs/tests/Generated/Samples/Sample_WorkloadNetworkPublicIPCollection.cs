@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreatePublicIP()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_CreatePublicIP.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_CreatePublicIP.json
             // this example is just showing the usage of "WorkloadNetworkPublicIP_CreatePublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPublicIP.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetPublicIP.json
             // this example is just showing the usage of "WorkloadNetworkPublicIP_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListPublicIPs()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_ListPublicIPs.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_ListPublicIPs.json
             // this example is just showing the usage of "WorkloadNetworkPublicIP_ListPublicIPs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPublicIP.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetPublicIP.json
             // this example is just showing the usage of "WorkloadNetworkPublicIP_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPublicIP.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetPublicIP.json
             // this example is just showing the usage of "WorkloadNetworkPublicIP_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
