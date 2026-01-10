@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             // Find the specific Request Duration metric among possibly many perf counter metrics.
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
             Assert.NotNull(metricTelemetry);
@@ -148,7 +148,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
             Assert.NotNull(metricTelemetry);
@@ -204,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.DependencyDurationMetricIdValue);
             Assert.NotNull(metricTelemetry);
@@ -272,7 +272,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.DependencyDurationMetricIdValue);
             Assert.NotNull(metricTelemetry);
@@ -339,7 +339,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.DependencyDurationMetricIdValue);
             Assert.NotNull(metricTelemetry);
@@ -398,7 +398,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricIdToFind = kind == ActivityKind.Client ? StandardMetricConstants.DependencyDurationMetricIdValue : StandardMetricConstants.RequestDurationMetricIdValue;
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, metricIdToFind);
@@ -446,7 +446,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             var metricIdToFind = kind == ActivityKind.Client ? StandardMetricConstants.DependencyDurationMetricIdValue : StandardMetricConstants.RequestDurationMetricIdValue;
             var metricTelemetry = GetMetricTelemetry(metricTelemetryItems, metricIdToFind);
@@ -512,7 +512,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var perfCountersCollected = SpinWait.SpinUntil(
                 condition: () =>
                 {
-                    standardMetricCustomProcessor._meterProvider?.ForceFlush();
+                    standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
                     Thread.Sleep(100);
                     var requestRate = metricTelemetryItems
                         .Select(ti => (MetricsData)ti.Data.BaseData)
@@ -615,7 +615,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             tracerProvider?.ForceFlush();
             WaitForActivityExport(traceTelemetryItems);
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             // Standard metrics should not be present
             var requestMetric = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
@@ -654,7 +654,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Wait briefly for any potential perf counter collection
             Thread.Sleep(1000);
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             // Performance counter metrics should not be present
             MetricsData? FindMetric(string expectedName) => metricTelemetryItems
@@ -713,7 +713,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             WaitForActivityExport(traceTelemetryItems);
 
             Thread.Sleep(1000);
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             // No metrics should be present at all
             Assert.Empty(metricTelemetryItems);
@@ -760,7 +760,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             WaitForActivityExport(traceTelemetryItems);
 
             Thread.Sleep(1000);
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
 
             // Verify standard metrics
             var requestMetric = GetMetricTelemetry(metricTelemetryItems, StandardMetricConstants.RequestDurationMetricIdValue);
@@ -794,6 +794,103 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 Assert.Null(requestRate);
                 Assert.Null(privateBytes);
+            }
+        }
+
+        [Fact]
+        public void ValidatePerfCountersUseConfiguredResourceAttributes()
+        {
+            // This test verifies the fix for the bug where performance counters were not using
+            // the configured cloud_RoleName and cloud_RoleInstance from the TracerProvider resource.
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidatePerfCountersUseConfiguredResourceAttributes));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var options = new AzureMonitorExporterOptions();
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
+
+            // Configure custom resource attributes
+            var customRoleName = new KeyValuePair<string, object>("service.name", "MyCustomService");
+            var customRoleInstance = new KeyValuePair<string, object>("service.instance.id", "MyCustomInstance123");
+            var resourceAttributes = new KeyValuePair<string, object>[] { customRoleName, customRoleInstance };
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
+                .AddSource(nameof(StandardMetricTests.ValidatePerfCountersUseConfiguredResourceAttributes))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            // Generate some activities to trigger perf counter collection
+            for (int i = 0; i < 5; i++)
+            {
+                using var a = activitySource.StartActivity("Req", ActivityKind.Server);
+                a?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            WaitForActivityExport(traceTelemetryItems);
+
+            // Wait for performance counter collection
+            var perfCountersCollected = SpinWait.SpinUntil(
+                condition: () =>
+                {
+                    standardMetricCustomProcessor._meterProvider?.Value?.ForceFlush();
+                    Thread.Sleep(100);
+                    return metricTelemetryItems.Any(ti =>
+                    {
+                        var data = (MetricsData)ti.Data.BaseData;
+                        return data.Metrics.Count > 0 &&
+                               (data.Metrics[0].Name == PerfCounterConstants.RequestRateMetricIdValue ||
+                                data.Metrics[0].Name == PerfCounterConstants.ProcessPrivateBytesMetricIdValue);
+                    });
+                },
+                timeout: TimeSpan.FromSeconds(5));
+
+            Assert.True(perfCountersCollected, "Performance counter metrics were not collected within the timeout period.");
+
+            // Verify that perf counter telemetry items have the configured resource attributes in Tags
+            var perfCounterTelemetryItems = metricTelemetryItems
+                .Where(ti => ti.Data.BaseType == "MetricData")
+                .Where(ti =>
+                {
+                    var data = (MetricsData)ti.Data.BaseData;
+                    return data.Metrics.Count > 0 &&
+                           (data.Metrics[0].Name == PerfCounterConstants.RequestRateMetricIdValue ||
+                            data.Metrics[0].Name == PerfCounterConstants.ProcessPrivateBytesMetricIdValue ||
+                            data.Metrics[0].Name == PerfCounterConstants.ProcessCpuMetricIdValue ||
+                            data.Metrics[0].Name == PerfCounterConstants.ProcessCpuNormalizedMetricIdValue);
+                })
+                .ToList();
+
+            Assert.NotEmpty(perfCounterTelemetryItems);
+
+            // Verify each perf counter telemetry item has the correct cloud role tags
+            foreach (var telemetryItem in perfCounterTelemetryItems)
+            {
+                Assert.True(telemetryItem.Tags.TryGetValue(ContextTagKeys.AiCloudRole.ToString(), out var cloudRole),
+                    "Performance counter should have cloud role tag");
+                Assert.Equal("MyCustomService", cloudRole);
+
+                Assert.True(telemetryItem.Tags.TryGetValue(ContextTagKeys.AiCloudRoleInstance.ToString(), out var cloudRoleInstance),
+                    "Performance counter should have cloud role instance tag");
+                Assert.Equal("MyCustomInstance123", cloudRoleInstance);
+            }
+
+            // Additionally verify standard metrics also have cloud role attributes as properties
+            var standardMetrics = metricTelemetryItems
+                .Where(ti => ti.Data.BaseType == "MetricData")
+                .Select(ti => (MetricsData)ti.Data.BaseData)
+                .Where(md => md.Metrics.Count > 0 && md.Metrics[0].Name == StandardMetricConstants.RequestDurationMetricIdValue)
+                .FirstOrDefault();
+
+            if (standardMetrics != null)
+            {
+                Assert.True(standardMetrics.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out var roleName));
+                Assert.Equal("MyCustomService", roleName);
+                Assert.True(standardMetrics.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out var roleInstance));
+                Assert.Equal("MyCustomInstance123", roleInstance);
             }
         }
     }
