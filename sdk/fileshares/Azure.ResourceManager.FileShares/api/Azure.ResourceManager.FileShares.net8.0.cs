@@ -184,8 +184,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileShareProvisioningRecommendationResult FileShareProvisioningRecommendationResult(Azure.ResourceManager.FileShares.Models.FileShareProvisioningRecommendationOutputProperties properties = null) { throw null; }
         public static Azure.ResourceManager.FileShares.FileShareSnapshotData FileShareSnapshotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.FileShares.Models.FileShareSnapshotProperties properties = null) { throw null; }
         public static Azure.ResourceManager.FileShares.Models.FileShareSnapshotProperties FileShareSnapshotProperties(string snapshotTime = null, string initiatorId = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
-        public static Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties FileShareUsageDataProperties(int? liveSharesFileShareCount = default(int?)) { throw null; }
-        public static Azure.ResourceManager.FileShares.Models.FileShareUsageDataResult FileShareUsageDataResult(Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.FileShares.Models.FileShareUsageDataResult FileShareUsageDataResult(int? liveSharesFileShareCount = default(int?)) { throw null; }
     }
     public partial class FileShareLimits : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FileShares.Models.FileShareLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FileShares.Models.FileShareLimits>
     {
@@ -636,24 +635,10 @@ namespace Azure.ResourceManager.FileShares.Models
         public static bool operator !=(Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FileShareUsageDataProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>
-    {
-        internal FileShareUsageDataProperties() { }
-        public int? LiveSharesFileShareCount { get { throw null; } }
-        protected virtual Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class FileShareUsageDataResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FileShares.Models.FileShareUsageDataResult>
     {
         internal FileShareUsageDataResult() { }
-        public Azure.ResourceManager.FileShares.Models.FileShareUsageDataProperties Properties { get { throw null; } }
+        public int? LiveSharesFileShareCount { get { throw null; } }
         protected virtual Azure.ResourceManager.FileShares.Models.FileShareUsageDataResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.FileShares.Models.FileShareUsageDataResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `BicepMetadata` class that provides a clean, type-safe way to set Bicep metadata on resources:
+    - Description - Adds `@description('...')` decorator
+    - BatchSize - Adds `@batchSize(n)` decorator for loop deployments
+    - OnlyIfNotExists - Adds `@onlyIfNotExists()` decorator
+- Added `BicepMetadata` property on `ProvisionableResource`
 
 ## 1.4.0 (2025-12-10)
 
