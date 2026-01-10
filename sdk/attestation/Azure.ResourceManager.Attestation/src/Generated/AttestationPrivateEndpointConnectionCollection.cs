@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +269,8 @@ namespace Azure.ResourceManager.Attestation
         public virtual AsyncPageable<AttestationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,7 +299,8 @@ namespace Azure.ResourceManager.Attestation
         public virtual Pageable<AttestationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _attestationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AttestationPrivateEndpointConnectionResource(Client, AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(e)), _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AttestationPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +316,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +359,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,7 +402,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +447,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

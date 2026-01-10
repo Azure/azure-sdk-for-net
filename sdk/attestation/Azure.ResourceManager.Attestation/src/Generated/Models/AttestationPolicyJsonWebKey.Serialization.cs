@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class JsonWebKey : IUtf8JsonSerializable, IJsonModel<JsonWebKey>
+    public partial class AttestationPolicyJsonWebKey : IUtf8JsonSerializable, IJsonModel<AttestationPolicyJsonWebKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationPolicyJsonWebKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AttestationPolicyJsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationPolicyJsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationPolicyJsonWebKey)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Alg))
@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.Attestation.Models
             }
         }
 
-        JsonWebKey IJsonModel<JsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AttestationPolicyJsonWebKey IJsonModel<AttestationPolicyJsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationPolicyJsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationPolicyJsonWebKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJsonWebKey(document.RootElement, options);
+            return DeserializeAttestationPolicyJsonWebKey(document.RootElement, options);
         }
 
-        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AttestationPolicyJsonWebKey DeserializeAttestationPolicyJsonWebKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JsonWebKey(
+            return new AttestationPolicyJsonWebKey(
                 alg,
                 crv,
                 d,
@@ -300,35 +300,35 @@ namespace Azure.ResourceManager.Attestation.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AttestationPolicyJsonWebKey>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationPolicyJsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationPolicyJsonWebKey)} does not support writing '{options.Format}' format.");
             }
         }
 
-        JsonWebKey IPersistableModel<JsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AttestationPolicyJsonWebKey IPersistableModel<AttestationPolicyJsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationPolicyJsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeJsonWebKey(document.RootElement, options);
+                        return DeserializeAttestationPolicyJsonWebKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationPolicyJsonWebKey)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<JsonWebKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AttestationPolicyJsonWebKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

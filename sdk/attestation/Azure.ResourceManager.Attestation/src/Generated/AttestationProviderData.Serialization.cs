@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.Attestation
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TpmAttestationAuthentication))
+            {
+                writer.WritePropertyName("tpmAttestationAuthentication"u8);
+                writer.WriteStringValue(TpmAttestationAuthentication.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -102,8 +107,9 @@ namespace Azure.ResourceManager.Attestation
             string trustModel = default;
             AttestationServiceStatus? status = default;
             Uri attestUri = default;
-            PublicNetworkAccessType? publicNetworkAccess = default;
+            AttestationProviderPublicNetworkAccessType? publicNetworkAccess = default;
             IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default;
+            TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccessType(property0.Value.GetString());
+                            publicNetworkAccess = new AttestationProviderPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -204,6 +210,15 @@ namespace Azure.ResourceManager.Attestation
                                 array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("tpmAttestationAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tpmAttestationAuthentication = new TpmAttestationAuthenticationType(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -227,6 +242,7 @@ namespace Azure.ResourceManager.Attestation
                 attestUri,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(),
+                tpmAttestationAuthentication,
                 serializedAdditionalRawData);
         }
 

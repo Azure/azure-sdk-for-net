@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AttestationProviderResource> GetDefaultAttestationProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersByDefaultProviderAsync(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,18 +293,18 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<AttestationProviderResource> GetDefaultAttestationProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersByDefaultProvider(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviders(cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,18 +329,18 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocationAttestationProviderAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderByLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,18 +365,18 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AttestationProviderResource> GetDefaultByLocationAttestationProvider(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<AttestationProviderResource> GetDefaultAttestationProviderByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocationAttestationProvider(location, cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultAttestationProviderByLocation(location, cancellationToken);
         }
     }
 }

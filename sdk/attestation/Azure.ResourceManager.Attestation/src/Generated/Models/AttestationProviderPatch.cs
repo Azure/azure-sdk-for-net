@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProviderPatch(IDictionary<string, string> tags, AttestationServicePatchSpecificParams properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AttestationProviderPatch(IDictionary<string, string> tags, AttestationServicePatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -65,17 +65,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> The tags that will be assigned to the attestation provider. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the attestation provider. </summary>
-        internal AttestationServicePatchSpecificParams Properties { get; set; }
-        /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? AttestationServicePatchSpecificParamsPublicNetworkAccess
-        {
-            get => Properties is null ? default : Properties.PublicNetworkAccess;
-            set
-            {
-                if (Properties is null)
-                    Properties = new AttestationServicePatchSpecificParams();
-                Properties.PublicNetworkAccess = value;
-            }
-        }
+        public AttestationServicePatchProperties Properties { get; set; }
     }
 }

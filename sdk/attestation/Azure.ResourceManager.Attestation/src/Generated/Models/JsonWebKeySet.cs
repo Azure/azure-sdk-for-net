@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
         public JsonWebKeySet()
         {
-            Keys = new ChangeTrackingList<JsonWebKey>();
+            Keys = new ChangeTrackingList<AttestationPolicyJsonWebKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// desired.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JsonWebKeySet(IList<JsonWebKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JsonWebKeySet(IList<AttestationPolicyJsonWebKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keys = keys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<JsonWebKey> Keys { get; }
+        public IList<AttestationPolicyJsonWebKey> Keys { get; }
     }
 }

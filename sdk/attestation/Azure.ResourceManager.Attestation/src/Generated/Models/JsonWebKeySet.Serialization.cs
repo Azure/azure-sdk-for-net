@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            IList<JsonWebKey> keys = default;
+            IList<AttestationPolicyJsonWebKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    List<JsonWebKey> array = new List<JsonWebKey>();
+                    List<AttestationPolicyJsonWebKey> array = new List<AttestationPolicyJsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
+                        array.Add(AttestationPolicyJsonWebKey.DeserializeAttestationPolicyJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JsonWebKeySet(keys ?? new ChangeTrackingList<JsonWebKey>(), serializedAdditionalRawData);
+            return new JsonWebKeySet(keys ?? new ChangeTrackingList<AttestationPolicyJsonWebKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonWebKeySet>.Write(ModelReaderWriterOptions options)
