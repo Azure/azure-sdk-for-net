@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Unknown version of ManagedServicePlacementPolicy. </summary>
     internal partial class UnknownServicePlacementPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicy"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownServicePlacementPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicy"/> for deserialization. </summary>
-        internal UnknownServicePlacementPolicy()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownServicePlacementPolicy(ServicePlacementPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

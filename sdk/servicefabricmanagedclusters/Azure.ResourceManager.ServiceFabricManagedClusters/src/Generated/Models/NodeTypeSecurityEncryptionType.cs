@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct NodeTypeSecurityEncryptionType : IEquatable<NodeTypeSecurityEncryptionType>
     {
         private readonly string _value;
+        /// <summary> For encryption of the managed disk along with VMGuestState blob. </summary>
+        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
+        /// <summary> For encryption of just the VMGuestState blob. </summary>
+        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NodeTypeSecurityEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
-        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
+            _value = value;
+        }
 
         /// <summary> For encryption of the managed disk along with VMGuestState blob. </summary>
         public static NodeTypeSecurityEncryptionType DiskWithVmGuestState { get; } = new NodeTypeSecurityEncryptionType(DiskWithVmGuestStateValue);
+
         /// <summary> For encryption of just the VMGuestState blob. </summary>
         public static NodeTypeSecurityEncryptionType VmGuestStateOnly { get; } = new NodeTypeSecurityEncryptionType(VmGuestStateOnlyValue);
+
         /// <summary> Determines if two <see cref="NodeTypeSecurityEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NodeTypeSecurityEncryptionType left, NodeTypeSecurityEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NodeTypeSecurityEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NodeTypeSecurityEncryptionType left, NodeTypeSecurityEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeTypeSecurityEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NodeTypeSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NodeTypeSecurityEncryptionType(string value) => new NodeTypeSecurityEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NodeTypeSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NodeTypeSecurityEncryptionType?(string value) => value == null ? null : new NodeTypeSecurityEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NodeTypeSecurityEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NodeTypeSecurityEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

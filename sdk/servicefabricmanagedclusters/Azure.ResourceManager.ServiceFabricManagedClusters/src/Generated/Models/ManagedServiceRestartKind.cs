@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedServiceRestartKind : IEquatable<ManagedServiceRestartKind>
     {
         private readonly string _value;
+        /// <summary> Restart all listed replicas at the same time. </summary>
+        private const string SimultaneousValue = "Simultaneous";
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceRestartKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedServiceRestartKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SimultaneousValue = "Simultaneous";
+            _value = value;
+        }
 
         /// <summary> Restart all listed replicas at the same time. </summary>
         public static ManagedServiceRestartKind Simultaneous { get; } = new ManagedServiceRestartKind(SimultaneousValue);
+
         /// <summary> Determines if two <see cref="ManagedServiceRestartKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedServiceRestartKind left, ManagedServiceRestartKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedServiceRestartKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedServiceRestartKind left, ManagedServiceRestartKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedServiceRestartKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedServiceRestartKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedServiceRestartKind(string value) => new ManagedServiceRestartKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedServiceRestartKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedServiceRestartKind?(string value) => value == null ? null : new ManagedServiceRestartKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedServiceRestartKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedServiceRestartKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

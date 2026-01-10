@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct SpotNodeVmEvictionPolicyType : IEquatable<SpotNodeVmEvictionPolicyType>
     {
         private readonly string _value;
+        /// <summary> Eviction policy will be Delete for SPOT vms. </summary>
+        private const string DeleteValue = "Delete";
+        /// <summary> Eviction policy will be Deallocate for SPOT vms. </summary>
+        private const string DeallocateValue = "Deallocate";
 
         /// <summary> Initializes a new instance of <see cref="SpotNodeVmEvictionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SpotNodeVmEvictionPolicyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeleteValue = "Delete";
-        private const string DeallocateValue = "Deallocate";
+            _value = value;
+        }
 
         /// <summary> Eviction policy will be Delete for SPOT vms. </summary>
         public static SpotNodeVmEvictionPolicyType Delete { get; } = new SpotNodeVmEvictionPolicyType(DeleteValue);
+
         /// <summary> Eviction policy will be Deallocate for SPOT vms. </summary>
         public static SpotNodeVmEvictionPolicyType Deallocate { get; } = new SpotNodeVmEvictionPolicyType(DeallocateValue);
+
         /// <summary> Determines if two <see cref="SpotNodeVmEvictionPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SpotNodeVmEvictionPolicyType left, SpotNodeVmEvictionPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SpotNodeVmEvictionPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SpotNodeVmEvictionPolicyType left, SpotNodeVmEvictionPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SpotNodeVmEvictionPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SpotNodeVmEvictionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SpotNodeVmEvictionPolicyType(string value) => new SpotNodeVmEvictionPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SpotNodeVmEvictionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SpotNodeVmEvictionPolicyType?(string value) => value == null ? null : new SpotNodeVmEvictionPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SpotNodeVmEvictionPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SpotNodeVmEvictionPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

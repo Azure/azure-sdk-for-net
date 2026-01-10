@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Request to restart a replica. </summary>
     public partial class ManagedServiceRestartReplicaContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceRestartReplicaContent"/>. </summary>
         /// <param name="partitionId"> The ID of the partition. </param>
@@ -67,30 +39,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="restartKind"> The kind of restart to perform. </param>
         /// <param name="forceRestart"> If true, the restart operation will be forced. Use this option with care, as it may cause data loss. </param>
         /// <param name="timeoutInSeconds"> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceRestartReplicaContent(string partitionId, IList<long> replicaIds, ManagedServiceRestartKind restartKind, bool? forceRestart, long? timeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceRestartReplicaContent(string partitionId, IList<long> replicaIds, ManagedServiceRestartKind restartKind, bool? forceRestart, long? timeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartitionId = partitionId;
             ReplicaIds = replicaIds;
             RestartKind = restartKind;
             ForceRestart = forceRestart;
             TimeoutInSeconds = timeoutInSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceRestartReplicaContent"/> for deserialization. </summary>
-        internal ManagedServiceRestartReplicaContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the partition. </summary>
         public string PartitionId { get; }
+
         /// <summary> The IDs of the replicas to be restarted. </summary>
         public IList<long> ReplicaIds { get; }
+
         /// <summary> The kind of restart to perform. </summary>
         public ManagedServiceRestartKind RestartKind { get; }
+
         /// <summary> If true, the restart operation will be forced. Use this option with care, as it may cause data loss. </summary>
         public bool? ForceRestart { get; set; }
+
         /// <summary> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </summary>
         public long? TimeoutInSeconds { get; set; }
     }

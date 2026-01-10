@@ -1,0 +1,2 @@
+# This fix is required because ManagedServiceProperties is in fact an abstract class
+CannotMakeTypeAbstract : Type 'Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties' is abstract in the implementation but is not abstract in the contract.
