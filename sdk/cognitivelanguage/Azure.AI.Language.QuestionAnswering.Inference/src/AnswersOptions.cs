@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
@@ -16,7 +17,9 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <exception cref="ArgumentNullException"><paramref name="question"/> is null.</exception>
         internal AnswersOptions WithQuestion(string question)
         {
-            Question = Argument.CheckNotNullOrEmpty(question, nameof(question));
+            Argument.AssertNotNullOrEmpty(question, nameof(question));
+
+            Question = question;
             return this;
         }
 

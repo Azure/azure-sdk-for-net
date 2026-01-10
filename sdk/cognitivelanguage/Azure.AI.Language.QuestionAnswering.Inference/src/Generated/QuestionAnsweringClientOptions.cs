@@ -10,23 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
-    /// <summary> Client options for QuestionAnsweringClient. </summary>
+    /// <summary> Client options for <see cref="QuestionAnsweringClient"/>. </summary>
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-04-01". </summary>
-            V2023_04_01 = 1,
-            /// <summary> Service version "2025-05-15-preview". </summary>
-            V2025_05_15_Preview = 2,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of QuestionAnsweringClientOptions. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public QuestionAnsweringClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -35,6 +25,18 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2023-04-01 API version. </summary>
+            V2023_04_01 = 1,
+            /// <summary> Version 2025-05-15-preview. </summary>
+            V2025_05_15_Preview = 2
         }
     }
 }
