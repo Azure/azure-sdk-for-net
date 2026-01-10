@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.ResourceManager
 {
@@ -19,6 +19,11 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
+        /// </summary>
+        public ArmClientOptions() { }
+
         internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
@@ -75,6 +80,18 @@ namespace Azure.ResourceManager
                         }
                     }
                 }
+            }
+        }
+
+        internal ArmClientOptions(IConfigurationSection section)
+            : base(section)
+        {
+            if (section is null)
+                return; // default options
+
+            if (section.GetSection("Environment").Exists())
+            {
+                Environment = new ArmEnvironment(new Uri(section["Environment:Endpoint"]), section["Environment:Audience"]);
             }
         }
     }
