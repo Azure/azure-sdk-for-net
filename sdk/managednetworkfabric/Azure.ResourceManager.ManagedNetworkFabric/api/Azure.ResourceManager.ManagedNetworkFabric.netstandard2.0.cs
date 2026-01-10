@@ -631,7 +631,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public NetworkFabricInternetGatewayData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType typePropertiesType, Azure.Core.ResourceIdentifier networkFabricControllerId) { }
         public string Annotation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InternetGatewayRuleId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("IPv4Address is deprecated, use IPV4Address instead")]
         public System.Net.IPAddress IPv4Address { get { throw null; } }
         public string IPV4Address { get { throw null; } }
@@ -1756,9 +1755,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType Drop { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType Log { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType (string value) { throw null; }
@@ -1798,9 +1795,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType IPv4 { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType left, Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType (string value) { throw null; }
@@ -1816,9 +1811,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState Disable { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState left, Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState (string value) { throw null; }
@@ -1857,9 +1850,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride Disable { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride left, Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride (string value) { throw null; }
@@ -1889,7 +1880,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData NetworkDeviceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, string hostName = null, string serialNumber = null, string version = null, string networkDeviceSku = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole? networkDeviceRole = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole?), Azure.Core.ResourceIdentifier networkRackId = null, System.Net.IPAddress managementIPv4Address = null, string managementIPv6Address = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData NetworkDeviceInterfaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string annotation = null, string physicalIdentifier = null, string connectedTo = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType? interfaceType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType?), System.Net.IPAddress ipv4Address = null, string ipv6Address = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData NetworkDeviceSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string model = null, string manufacturer = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties> supportedVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName> supportedRoleTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties> interfaces = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData NetworkFabricAccessControlListData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string annotation, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType? configurationType, System.Uri aclsUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration> matchConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration> dynamicMatchConfigurations, System.DateTimeOffset? lastSyncedOn, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData NetworkFabricAccessControlListData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType? configurationType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType?), System.Uri aclsUri = null, Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType? defaultAction = default(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration> matchConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, System.DateTimeOffset? lastSyncedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData NetworkFabricControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> workloadExpressRouteConnections = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices infrastructureServices = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices workloadServices = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkFabricIds = null, bool? isWorkloadManagementNetwork = default(bool?), Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default(Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> tenantInternetGatewayIds = null, string ipv4AddressSpace = null, string ipv6AddressSpace = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU? nfcSku = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?)) { throw null; }
@@ -1907,7 +1897,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, Azure.Core.ResourceIdentifier networkFabricId = null, int vlanId = 0, int? mtu = default(int?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet? redistributeConnectedSubnets = default(Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet?), Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute? redistributeStaticRoutes = default(Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute?), Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration aggregateRouteConfiguration = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = null, Azure.Core.ResourceIdentifier networkFabricId = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination destination = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkTapIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkTapRuleIds = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string annotation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties> statements, Azure.Core.ResourceIdentifier networkFabricId, Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType? addressFamilyType, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType? defaultAction = default(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties> statements = null, Azure.Core.ResourceIdentifier networkFabricId = null, Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType? addressFamilyType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData NetworkFabricSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType? typePropertiesType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType?), int? maxComputeRacks = default(int?), int? maximumServerCount = default(int?), System.Collections.Generic.IEnumerable<string> supportedVersions = null, string details = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?)) { throw null; }
@@ -1935,9 +1924,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState Mat { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState Rma { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState left, Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState (string value) { throw null; }
@@ -2012,9 +1999,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType Deny { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType Permit { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType (string value) { throw null; }
@@ -2181,9 +2166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction Allow { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction left, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction (string value) { throw null; }
@@ -2211,9 +2194,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType Infrastructure { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType Workload { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType left, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType (string value) { throw null; }
@@ -2303,9 +2284,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType LongestPrefix { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType Prefix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType left, Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType (string value) { throw null; }
@@ -2338,9 +2317,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition LesserThanOrEqualTo { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition Range { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition left, Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition (string value) { throw null; }
@@ -2356,9 +2333,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsManagementType False { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsManagementType True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.IsManagementType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.IsManagementType left, Azure.ResourceManager.ManagedNetworkFabric.Models.IsManagementType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.IsManagementType (string value) { throw null; }
@@ -2374,9 +2349,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled False { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled left, Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled (string value) { throw null; }
@@ -2392,9 +2365,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType Gre { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType (string value) { throw null; }
@@ -2422,9 +2393,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled False { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled left, Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled (string value) { throw null; }
@@ -2491,9 +2460,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol left, Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol (string value) { throw null; }
@@ -2584,9 +2551,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState Resync { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState Rma { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState (string value) { throw null; }
@@ -2626,9 +2591,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType Data { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType Management { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType (string value) { throw null; }
@@ -2670,9 +2633,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType UngracefulRebootWithoutZtp { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType UngracefulRebootWithZtp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType (string value) { throw null; }
@@ -2691,9 +2652,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole ToR { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole TS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRole (string value) { throw null; }
@@ -2712,9 +2671,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName ToR { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName TS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName (string value) { throw null; }
@@ -2748,9 +2705,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState Mat { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState Rma { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState (string value) { throw null; }
@@ -2766,9 +2721,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue False { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue (string value) { throw null; }
@@ -2792,9 +2745,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState Rejected { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState (string value) { throw null; }
@@ -2810,9 +2761,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType File { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType Inline { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType (string value) { throw null; }
@@ -2853,9 +2802,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU HighPerformance { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU (string value) { throw null; }
@@ -2944,9 +2891,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType IPv4 { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType (string value) { throw null; }
@@ -3082,9 +3027,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType DestinationPort { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType SourcePort { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType (string value) { throw null; }
@@ -3104,9 +3047,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState (string value) { throw null; }
@@ -3134,9 +3075,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType MultiRack { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType SingleRack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType (string value) { throw null; }
@@ -3164,9 +3103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction Configuration { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction Connectivity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction (string value) { throw null; }
@@ -3204,9 +3141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType Combined { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType Compute { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType (string value) { throw null; }
@@ -3237,9 +3172,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType Direct { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType IsolationDomain { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType (string value) { throw null; }
@@ -3255,9 +3188,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType GTPv1 { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType (string value) { throw null; }
@@ -3296,9 +3227,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType Pull { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType Push { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType (string value) { throw null; }
@@ -3408,9 +3337,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NniType CE { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.NniType Npb { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NniType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NniType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NniType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NniType (string value) { throw null; }
@@ -3479,9 +3406,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption OptionA { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption OptionB { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption left, Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption (string value) { throw null; }
@@ -3498,9 +3423,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond Sixty { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond Thirty { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond left, Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond (int value) { throw null; }
@@ -3528,9 +3451,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet False { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet left, Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet (string value) { throw null; }
@@ -3546,9 +3467,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute False { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute left, Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute (string value) { throw null; }
@@ -3565,9 +3484,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType Deny { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType Permit { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType (string value) { throw null; }
@@ -3583,9 +3500,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType And { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType Or { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType (string value) { throw null; }
@@ -3628,9 +3543,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType DestinationIP { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType SourceIP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType (string value) { throw null; }
@@ -3697,9 +3610,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension NoExtension { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension Npb { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension left, Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension (string value) { throw null; }
@@ -3758,9 +3669,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType Redirect { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType Replicate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType (string value) { throw null; }
@@ -3945,9 +3854,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity NoAdvertise { get { throw null; } }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity NoExport { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity left, Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity right) { throw null; }
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity (string value) { throw null; }

@@ -258,9 +258,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.ColorMapNames Ylorrd { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.ColorMapNames YlorrdR { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.ColorMapNames other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.ColorMapNames left, Azure.Analytics.PlanetaryComputer.ColorMapNames right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.ColorMapNames (string value) { throw null; }
@@ -434,9 +432,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public FeatureType(string value) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.FeatureType Feature { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.FeatureType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.FeatureType left, Azure.Analytics.PlanetaryComputer.FeatureType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.FeatureType (string value) { throw null; }
@@ -454,9 +450,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.FilterLanguage Cql2Text { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.FilterLanguage CqlJson { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.FilterLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.FilterLanguage left, Azure.Analytics.PlanetaryComputer.FilterLanguage right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.FilterLanguage (string value) { throw null; }
@@ -716,9 +710,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.IngestionSourceType BlobManagedIdentity { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.IngestionSourceType SharedAccessSignatureToken { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.IngestionSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.IngestionSourceType left, Azure.Analytics.PlanetaryComputer.IngestionSourceType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.IngestionSourceType (string value) { throw null; }
@@ -735,9 +727,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.IngestionStatus Deleting { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.IngestionStatus Ready { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.IngestionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.IngestionStatus left, Azure.Analytics.PlanetaryComputer.IngestionStatus right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.IngestionStatus (string value) { throw null; }
@@ -753,9 +743,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IngestionType(string value) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.IngestionType StaticCatalog { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.IngestionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.IngestionType left, Azure.Analytics.PlanetaryComputer.IngestionType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.IngestionType (string value) { throw null; }
@@ -774,9 +762,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.LegendConfigType Interval { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.LegendConfigType None { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.LegendConfigType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.LegendConfigType left, Azure.Analytics.PlanetaryComputer.LegendConfigType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.LegendConfigType (string value) { throw null; }
@@ -912,9 +898,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.MosaicMetadataType Mosaic { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.MosaicMetadataType Search { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.MosaicMetadataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.MosaicMetadataType left, Azure.Analytics.PlanetaryComputer.MosaicMetadataType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.MosaicMetadataType (string value) { throw null; }
@@ -976,9 +960,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.NoDataType Nodata { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.NoDataType None { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.NoDataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.NoDataType left, Azure.Analytics.PlanetaryComputer.NoDataType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.NoDataType (string value) { throw null; }
@@ -999,9 +981,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.OperationStatus Running { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.OperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.OperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.OperationStatus left, Azure.Analytics.PlanetaryComputer.OperationStatus right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.OperationStatus (string value) { throw null; }
@@ -1052,9 +1032,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.PartitionTypeScheme None { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.PartitionTypeScheme Year { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.PartitionTypeScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.PartitionTypeScheme left, Azure.Analytics.PlanetaryComputer.PartitionTypeScheme right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.PartitionTypeScheme (string value) { throw null; }
@@ -1077,9 +1055,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.PixelSelection Median { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.PixelSelection StandardDeviation { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.PixelSelection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.PixelSelection left, Azure.Analytics.PlanetaryComputer.PixelSelection right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.PixelSelection (string value) { throw null; }
@@ -1277,9 +1253,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.RenderOptionType VtLine { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.RenderOptionType VtPolygon { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.RenderOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.RenderOptionType left, Azure.Analytics.PlanetaryComputer.RenderOptionType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.RenderOptionType (string value) { throw null; }
@@ -1322,9 +1296,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.ResamplingMethod Nearest { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.ResamplingMethod Rms { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.ResamplingMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.ResamplingMethod left, Azure.Analytics.PlanetaryComputer.ResamplingMethod right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.ResamplingMethod (string value) { throw null; }
@@ -1445,9 +1417,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode False { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode True { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode left, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode (string value) { throw null; }
@@ -1964,9 +1934,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.StacLinkMethod GET { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.StacLinkMethod POST { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.StacLinkMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.StacLinkMethod left, Azure.Analytics.PlanetaryComputer.StacLinkMethod right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.StacLinkMethod (string value) { throw null; }
@@ -1994,9 +1962,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.StacLinkType TextHtml { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.StacLinkType TextPlain { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.StacLinkType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.StacLinkType left, Azure.Analytics.PlanetaryComputer.StacLinkType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.StacLinkType (string value) { throw null; }
@@ -2088,9 +2054,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType String { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType Timestamp { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType left, Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.StacQueryableDefinitionDataType (string value) { throw null; }
@@ -2135,9 +2099,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.StacSearchSortingDirection Asc { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.StacSearchSortingDirection Desc { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.StacSearchSortingDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.StacSearchSortingDirection left, Azure.Analytics.PlanetaryComputer.StacSearchSortingDirection right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.StacSearchSortingDirection (string value) { throw null; }
@@ -2172,9 +2134,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Terrainrgb { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Terrarium { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.TerrainAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.TerrainAlgorithm left, Azure.Analytics.PlanetaryComputer.TerrainAlgorithm right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.TerrainAlgorithm (string value) { throw null; }
@@ -2191,9 +2151,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.TileAddressingScheme Tms { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TileAddressingScheme Xyz { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.TileAddressingScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.TileAddressingScheme left, Azure.Analytics.PlanetaryComputer.TileAddressingScheme right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.TileAddressingScheme (string value) { throw null; }
@@ -2265,9 +2223,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.TileMatrixCornerOfOrigin BottomLeft { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TileMatrixCornerOfOrigin TopLeft { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.TileMatrixCornerOfOrigin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.TileMatrixCornerOfOrigin left, Azure.Analytics.PlanetaryComputer.TileMatrixCornerOfOrigin right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.TileMatrixCornerOfOrigin (string value) { throw null; }
@@ -2348,9 +2304,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.TilerImageFormat Tif { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TilerImageFormat Webp { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.TilerImageFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.PlanetaryComputer.TilerImageFormat left, Azure.Analytics.PlanetaryComputer.TilerImageFormat right) { throw null; }
         public static implicit operator Azure.Analytics.PlanetaryComputer.TilerImageFormat (string value) { throw null; }

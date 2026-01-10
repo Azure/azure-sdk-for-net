@@ -31,16 +31,12 @@ namespace Azure.Storage.Queues
         public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.QueueSasBuilder builder) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.QueueSasBuilder builder, out string stringToSign) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn, out string stringToSign) { throw null; }
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasBuilder builder, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasBuilder builder, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>> GetAccessPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>>> GetAccessPolicyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -149,10 +145,8 @@ namespace Azure.Storage.Queues
         public virtual Azure.Response DeleteQueue(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteQueueAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasBuilder builder) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasBuilder builder, out string stringToSign) { throw null; }
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes, out string stringToSign) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -192,7 +186,6 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? InsertedOn { get { throw null; } }
         public string MessageId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
     }
     public partial class QueueAccessPolicy
@@ -220,9 +213,7 @@ namespace Azure.Storage.Queues.Models
         public static Azure.Storage.Queues.Models.QueueAudience PublicAudience { get { throw null; } }
         public static Azure.Storage.Queues.Models.QueueAudience CreateQueueServiceAccountAudience(string storageAccountName) { throw null; }
         public bool Equals(Azure.Storage.Queues.Models.QueueAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Queues.Models.QueueAudience left, Azure.Storage.Queues.Models.QueueAudience right) { throw null; }
         public static implicit operator Azure.Storage.Queues.Models.QueueAudience (string value) { throw null; }
@@ -302,10 +293,8 @@ namespace Azure.Storage.Queues.Models
         public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter { get { throw null; } }
         public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode { get { throw null; } }
         public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public bool Equals(string value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) { throw null; }
         public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode code, string value) { throw null; }
@@ -342,7 +331,6 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? InsertedOn { get { throw null; } }
         public string MessageId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
         public System.DateTimeOffset? NextVisibleOn { get { throw null; } }
         public string PopReceipt { get { throw null; } }
@@ -359,7 +347,6 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueProperties
     {
         public QueueProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int ApproximateMessagesCount { get { throw null; } }
         public long ApproximateMessagesCountLong { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
@@ -392,14 +379,11 @@ namespace Azure.Storage.Queues.Models
     public static partial class QueuesModelFactory
     {
         public static Azure.Storage.Queues.Models.PeekedMessage PeekedMessage(string messageId, System.BinaryData message, long dequeueCount, System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.PeekedMessage PeekedMessage(string messageId, string messageText, long dequeueCount, System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueGeoReplication QueueGeoReplication(Azure.Storage.Queues.Models.QueueGeoReplicationStatus status, System.DateTimeOffset? lastSyncedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueItem QueueItem(string name, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, System.BinaryData body, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, string messageText, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, int approximateMessagesCount) { throw null; }
         public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, long approximateMessagesCount) { throw null; }
         public static Azure.Storage.Queues.Models.QueueServiceStatistics QueueServiceStatistics(Azure.Storage.Queues.Models.QueueGeoReplication geoReplication = null) { throw null; }
@@ -479,7 +463,6 @@ namespace Azure.Storage.Sas
     }
     public partial class QueueSasBuilder
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public QueueSasBuilder() { }
         public QueueSasBuilder(Azure.Storage.Sas.QueueAccountSasPermissions permissions, System.DateTimeOffset expiresOn) { }
         public QueueSasBuilder(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn) { }
@@ -491,11 +474,8 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
         public string QueueName { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Version { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public void SetPermissions(Azure.Storage.Sas.QueueAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.QueueSasPermissions permissions) { }
@@ -505,7 +485,6 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.QueueSasQueryParameters ToSasQueryParameters(Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, string accountName, out string stringToSign) { throw null; }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential, out string stringToSign) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.FlagsAttribute]
@@ -537,7 +516,6 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

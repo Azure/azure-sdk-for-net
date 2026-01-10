@@ -24,9 +24,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AnimationOutputType Blendshapes { get { throw null; } }
         public static Azure.AI.VoiceLive.AnimationOutputType VisemeId { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.AnimationOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.AnimationOutputType left, Azure.AI.VoiceLive.AnimationOutputType right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.AnimationOutputType (string value) { throw null; }
@@ -91,9 +89,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel Gpt4oTranscribe { get { throw null; } }
         public static Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel Whisper1 { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel left, Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel (string value) { throw null; }
@@ -125,9 +121,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AudioNoiseReductionType FarField { get { throw null; } }
         public static Azure.AI.VoiceLive.AudioNoiseReductionType NearField { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.AudioNoiseReductionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.AudioNoiseReductionType left, Azure.AI.VoiceLive.AudioNoiseReductionType right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.AudioNoiseReductionType (string value) { throw null; }
@@ -143,9 +137,7 @@ namespace Azure.AI.VoiceLive
         public AudioTimestampType(string value) { throw null; }
         public static Azure.AI.VoiceLive.AudioTimestampType Word { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.AudioTimestampType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.AudioTimestampType left, Azure.AI.VoiceLive.AudioTimestampType right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.AudioTimestampType (string value) { throw null; }
@@ -417,9 +409,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.EouThresholdLevel Low { get { throw null; } }
         public static Azure.AI.VoiceLive.EouThresholdLevel Medium { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.EouThresholdLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.EouThresholdLevel left, Azure.AI.VoiceLive.EouThresholdLevel right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.EouThresholdLevel (string value) { throw null; }
@@ -501,9 +491,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.InputAudioFormat G711Ulaw { get { throw null; } }
         public static Azure.AI.VoiceLive.InputAudioFormat Pcm16 { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.InputAudioFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.InputAudioFormat left, Azure.AI.VoiceLive.InputAudioFormat right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.InputAudioFormat (string value) { throw null; }
@@ -553,9 +541,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.InteractionModality Avatar { get { throw null; } }
         public static Azure.AI.VoiceLive.InteractionModality Text { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.InteractionModality other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.InteractionModality left, Azure.AI.VoiceLive.InteractionModality right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.InteractionModality (string value) { throw null; }
@@ -572,9 +558,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ItemParamStatus Completed { get { throw null; } }
         public static Azure.AI.VoiceLive.ItemParamStatus Incomplete { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.ItemParamStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.ItemParamStatus left, Azure.AI.VoiceLive.ItemParamStatus right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.ItemParamStatus (string value) { throw null; }
@@ -670,9 +654,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.OAIVoice Shimmer { get { throw null; } }
         public static Azure.AI.VoiceLive.OAIVoice Verse { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.OAIVoice other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.OAIVoice left, Azure.AI.VoiceLive.OAIVoice right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.OAIVoice (string value) { throw null; }
@@ -707,9 +689,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.OutputAudioFormat Pcm1616000hz { get { throw null; } }
         public static Azure.AI.VoiceLive.OutputAudioFormat Pcm168000hz { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.OutputAudioFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.OutputAudioFormat left, Azure.AI.VoiceLive.OutputAudioFormat right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.OutputAudioFormat (string value) { throw null; }
@@ -756,9 +736,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.PersonalVoiceModels PhoenixLatestNeural { get { throw null; } }
         public static Azure.AI.VoiceLive.PersonalVoiceModels PhoenixV2Neural { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.PersonalVoiceModels other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.PersonalVoiceModels left, Azure.AI.VoiceLive.PersonalVoiceModels right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels (string value) { throw null; }
@@ -831,9 +809,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ResponseCancelledDetailsReason ClientCancelled { get { throw null; } }
         public static Azure.AI.VoiceLive.ResponseCancelledDetailsReason TurnDetected { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.ResponseCancelledDetailsReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.ResponseCancelledDetailsReason left, Azure.AI.VoiceLive.ResponseCancelledDetailsReason right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.ResponseCancelledDetailsReason (string value) { throw null; }
@@ -910,9 +886,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ResponseIncompleteDetailsReason ContentFilter { get { throw null; } }
         public static Azure.AI.VoiceLive.ResponseIncompleteDetailsReason MaxOutputTokens { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.ResponseIncompleteDetailsReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.ResponseIncompleteDetailsReason left, Azure.AI.VoiceLive.ResponseIncompleteDetailsReason right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.ResponseIncompleteDetailsReason (string value) { throw null; }
@@ -930,9 +904,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ResponseMessageRole System { get { throw null; } }
         public static Azure.AI.VoiceLive.ResponseMessageRole User { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.ResponseMessageRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.ResponseMessageRole left, Azure.AI.VoiceLive.ResponseMessageRole right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.ResponseMessageRole (string value) { throw null; }
@@ -1053,9 +1025,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.SessionResponseItemStatus Incomplete { get { throw null; } }
         public static Azure.AI.VoiceLive.SessionResponseItemStatus InProgress { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.SessionResponseItemStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.SessionResponseItemStatus left, Azure.AI.VoiceLive.SessionResponseItemStatus right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.SessionResponseItemStatus (string value) { throw null; }
@@ -1091,9 +1061,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.SessionResponseStatus Incomplete { get { throw null; } }
         public static Azure.AI.VoiceLive.SessionResponseStatus InProgress { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.SessionResponseStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.SessionResponseStatus left, Azure.AI.VoiceLive.SessionResponseStatus right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.SessionResponseStatus (string value) { throw null; }
@@ -1738,9 +1706,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ToolChoiceLiteral None { get { throw null; } }
         public static Azure.AI.VoiceLive.ToolChoiceLiteral Required { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.ToolChoiceLiteral other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.ToolChoiceLiteral left, Azure.AI.VoiceLive.ToolChoiceLiteral right) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.ToolChoiceLiteral (string value) { throw null; }
@@ -1927,7 +1893,6 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AnimationOptions AnimationOptions(string modelName = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AnimationOutputType> outputs = null) { throw null; }
         public static Azure.AI.VoiceLive.AssistantMessageItem AssistantMessageItem(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.MessageContentPart> content = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
         public static Azure.AI.VoiceLive.AudioEchoCancellation AudioEchoCancellation() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.VoiceLive.AudioEchoCancellation AudioEchoCancellation(string type) { throw null; }
         public static Azure.AI.VoiceLive.AudioInputTranscriptionOptions AudioInputTranscriptionOptions(Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel model = default(Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel), string language = null, System.Collections.Generic.IDictionary<string, string> customSpeech = null, System.Collections.Generic.IEnumerable<string> phraseList = null) { throw null; }
         public static Azure.AI.VoiceLive.AudioNoiseReduction AudioNoiseReduction(Azure.AI.VoiceLive.AudioNoiseReductionType type = default(Azure.AI.VoiceLive.AudioNoiseReductionType)) { throw null; }
@@ -1955,7 +1920,6 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.MessageContentPart MessageContentPart(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.MessageItem MessageItem(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.MessageContentPart> content = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
         public static Azure.AI.VoiceLive.OpenAIVoice OpenAIVoice(Azure.AI.VoiceLive.OAIVoice name = default(Azure.AI.VoiceLive.OAIVoice)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.VoiceLive.OpenAIVoice OpenAIVoice(string type, Azure.AI.VoiceLive.OAIVoice name) { throw null; }
         public static Azure.AI.VoiceLive.OutputTextContentPart OutputTextContentPart(string text = null) { throw null; }
         public static Azure.AI.VoiceLive.OutputTokenDetails OutputTokenDetails(int textTokens = 0, int audioTokens = 0) { throw null; }
@@ -1996,7 +1960,6 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.SessionUpdateResponseAudioDelta SessionUpdateResponseAudioDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0, System.BinaryData delta = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseAudioDone SessionUpdateResponseAudioDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0, int audioOffsetMs = 0, int audioDurationMs = 0, string text = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseAudioTimestampDone SessionUpdateResponseAudioTimestampDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseAudioTranscriptDelta SessionUpdateResponseAudioTranscriptDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0, string delta = null) { throw null; }

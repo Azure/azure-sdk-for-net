@@ -514,11 +514,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource> ScheduleRun(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Response<ContainerRegistryRunResource> ScheduleRun(ContainerRegistryRunContent content, CancellationToken cancellationToken = default)` instead")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource> ScheduleRun(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource>> ScheduleRunAsync(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(ContainerRegistryRunContent content, CancellationToken cancellationToken = default)` instead")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource>> ScheduleRunAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -584,11 +582,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         protected ContainerRegistryRunResource() { }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Response Cancel(CancellationToken cancellationToken = default)` instead")]
         public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Task<Response> CancelAsync(CancellationToken cancellationToken = default)` instead")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -603,11 +599,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource> Update(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)` instead")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource>> UpdateAsync(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)` instead")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -676,11 +670,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource> Update(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Response<ContainerRegistryTaskResource> Update(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default)` instead")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource>> UpdateAsync(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated, use `Task<Response<ContainerRegistryTaskResource>> UpdateAsync(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default)` instead")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -950,9 +942,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.AadAuthenticationAsArmPolicyStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.AadAuthenticationAsArmPolicyStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.AadAuthenticationAsArmPolicyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.AadAuthenticationAsArmPolicyStatus left, Azure.ResourceManager.ContainerRegistry.Models.AadAuthenticationAsArmPolicyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.AadAuthenticationAsArmPolicyStatus (string value) { throw null; }
@@ -968,9 +958,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer None { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer Recreate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer left, Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer (string value) { throw null; }
@@ -991,9 +979,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier credentialSetResourceId = null, string sourceRepository = null, string targetRepository = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealth ContainerRegistryCredentialHealth(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus?), string errorCode = null, string errorMessage = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryCredentialSetData ContainerRegistryCredentialSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string loginServer = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential> authCredentials = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryData ContainerRegistryData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string loginServer, System.DateTimeOffset? createdOn, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet networkRuleSet, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies policies, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, System.Collections.Generic.IEnumerable<string> dataEndpointHostNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryData ContainerRegistryData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string loginServer, System.DateTimeOffset? createdOn, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet networkRuleSet, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies policies, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, System.Collections.Generic.IEnumerable<string> dataEndpointHostNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy, bool? isAnonymousPullEnabled) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryData ContainerRegistryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string loginServer = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet networkRuleSet = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies policies = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> dataEndpointHostNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption?), bool? isNetworkRuleBypassAllowedForTasks = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy?), bool? isAnonymousPullEnabled = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildStep ContainerRegistryDockerBuildStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunArgument> arguments = null) { throw null; }
@@ -1005,10 +991,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportSourceCredentials ContainerRegistryImportSourceCredentials(string username = null, string password = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryKeyVaultProperties ContainerRegistryKeyVaultProperties(string keyIdentifier = null, string versionedKeyIdentifier = null, string identity = null, bool? isKeyRotationEnabled = default(bool?), System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryListCredentialsResult ContainerRegistryListCredentialsResult(string username = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword> passwords = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType resourceType) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType resourceType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType), string resourceGroupName = null, Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(bool? isNameAvailable, string reason, string message) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(string availableLoginServerName = null, bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword ContainerRegistryPassword(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPasswordName? name = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPasswordName?), string value = null) { throw null; }
@@ -1056,9 +1040,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope Unsecure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
@@ -1074,9 +1056,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus Active { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus (string value) { throw null; }
@@ -1092,9 +1072,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus (string value) { throw null; }
@@ -1112,9 +1090,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState Syncing { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState Unhealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState (string value) { throw null; }
@@ -1157,9 +1133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel None { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel (string value) { throw null; }
@@ -1177,9 +1151,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode ReadWrite { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode Registry { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode (string value) { throw null; }
@@ -1318,9 +1290,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType BuildTime { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType RunTime { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType (string value) { throw null; }
@@ -1351,9 +1321,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType All { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType Runtime { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType (string value) { throw null; }
@@ -1394,9 +1362,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryCertificateType(string value) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType LocalDirectory { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType (string value) { throw null; }
@@ -1413,9 +1379,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant V7 { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant V8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant (string value) { throw null; }
@@ -1444,9 +1408,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus Healthy { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus Unhealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealthStatus (string value) { throw null; }
@@ -1461,9 +1423,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryCredentialName(string value) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialName Credential1 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialName left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialName (string value) { throw null; }
@@ -1486,7 +1446,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryCredentials() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials> CustomRegistries { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryCredentials SourceRegistry { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode? SourceRegistryLoginMode { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1625,9 +1584,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryptionStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryptionStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryptionStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryptionStatus (string value) { throw null; }
@@ -1643,9 +1600,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus (string value) { throw null; }
@@ -1771,9 +1726,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportMode Force { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportMode NoForce { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportMode left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportMode (string value) { throw null; }
@@ -1785,7 +1738,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryImportSource(string sourceImage) { }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportSourceCredentials Credentials { get { throw null; } set { } }
         public string RegistryAddress { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("RegistryUri is deprecated, use RegistryAddress instead")]
         public System.Uri RegistryUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
@@ -1829,9 +1781,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryIPRuleAction(string value) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryIPRuleAction Allow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryIPRuleAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryIPRuleAction left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryIPRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryIPRuleAction (string value) { throw null; }
@@ -1902,9 +1852,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption AzureServices { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption (string value) { throw null; }
@@ -1920,9 +1868,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleDefaultAction Allow { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleDefaultAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleDefaultAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleDefaultAction left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleDefaultAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleDefaultAction (string value) { throw null; }
@@ -1950,9 +1896,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS Linux { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS (string value) { throw null; }
@@ -1971,9 +1915,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture ThreeHundredEightySix { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture X86 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture (string value) { throw null; }
@@ -2086,9 +2028,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus (string value) { throw null; }
@@ -2119,9 +2059,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionStatus (string value) { throw null; }
@@ -2141,9 +2079,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState (string value) { throw null; }
@@ -2159,9 +2095,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess (string value) { throw null; }
@@ -2201,9 +2135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryResourceType(string value) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType MicrosoftContainerRegistryRegistries { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType (string value) { throw null; }
@@ -2232,9 +2164,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode AbacRepositoryPermissions { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode LegacyRegistryPermissions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode (string value) { throw null; }
@@ -2305,9 +2235,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus Timeout { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus (string value) { throw null; }
@@ -2325,9 +2253,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType QuickBuild { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType QuickRun { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType (string value) { throw null; }
@@ -2355,9 +2281,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType Opaque { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType VaultSecret { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType (string value) { throw null; }
@@ -2387,9 +2311,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName Premium { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName (string value) { throw null; }
@@ -2407,9 +2329,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier (string value) { throw null; }
@@ -2456,9 +2376,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent Commit { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent PullRequest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent (string value) { throw null; }
@@ -2549,9 +2467,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus (string value) { throw null; }
@@ -2654,9 +2570,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsStatus (string value) { throw null; }
@@ -2686,9 +2600,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName Certificate1 { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName Certificate2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName (string value) { throw null; }
@@ -2730,9 +2642,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName Password1 { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName Password2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName (string value) { throw null; }
@@ -2761,9 +2671,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus (string value) { throw null; }
@@ -2792,9 +2700,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus (string value) { throw null; }
@@ -2834,9 +2740,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryTrustPolicyType(string value) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType Notary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType (string value) { throw null; }
@@ -2852,9 +2756,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType Default { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType Token { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType (string value) { throw null; }
@@ -2884,9 +2786,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsageUnit Bytes { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsageUnit Count { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsageUnit left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsageUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsageUnit (string value) { throw null; }
@@ -2905,9 +2805,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction Push { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction Quarantine { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction (string value) { throw null; }
@@ -3084,9 +2982,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookStatus (string value) { throw null; }
@@ -3102,9 +2998,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy Disabled { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy (string value) { throw null; }
@@ -3187,9 +3081,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType OAuth { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType Pat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType left, Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType (string value) { throw null; }
@@ -3233,9 +3125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceControlType Github { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceControlType VisualStudioTeamService { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.SourceControlType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.SourceControlType left, Azure.ResourceManager.ContainerRegistry.Models.SourceControlType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.SourceControlType (string value) { throw null; }
@@ -3263,9 +3153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode Default { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode (string value) { throw null; }

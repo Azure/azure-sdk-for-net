@@ -89,7 +89,6 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.OperationalInsights.OperationalInsightsCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -551,7 +550,6 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSharedKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

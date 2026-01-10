@@ -32,7 +32,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> ThumbprintString { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.AppCertificate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -204,11 +203,8 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.AppServiceBuiltInRole WebPlanContributor { get { throw null; } }
         public static Azure.Provisioning.AppService.AppServiceBuiltInRole WebsiteContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.AppService.AppServiceBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.AppService.AppServiceBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.AppService.AppServiceBuiltInRole left, Azure.Provisioning.AppService.AppServiceBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.AppService.AppServiceBuiltInRole (string value) { throw null; }
@@ -425,7 +421,6 @@ namespace Azure.Provisioning.AppService
         public AppServiceEnvironment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceNameValuePair> ClusterSettings { get { throw null; } set { } }
         public Azure.Provisioning.AppService.CustomDnsSuffixConfiguration CustomDnsSuffixConfig { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.AppService.CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> DedicatedHostCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DnsSuffix { get { throw null; } set { } }
@@ -443,7 +438,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> MultiSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppService.AseV3NetworkingConfiguration NetworkingConfig { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.AppService.AseV3NetworkingConfigurationData NetworkingConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.ProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.HostingEnvironmentStatus> Status { get { throw null; } }
@@ -666,7 +660,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> WorkerTierName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.AppServicePlan FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -1016,7 +1009,6 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AseV3NetworkingConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AseV3NetworkingConfigurationData() { }
@@ -1248,7 +1240,6 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class CustomDnsSuffixConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CustomDnsSuffixConfigurationData() { }
@@ -1377,7 +1368,6 @@ namespace Azure.Provisioning.AppService
     {
         public FunctionAppAlwaysReadyConfig() { }
         public Azure.Provisioning.BicepValue<int> AlwaysReadyInstanceCount { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> InstanceCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1426,11 +1416,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<int> ConcurrentHttpPerInstanceConcurrency { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FunctionAppInstanceMemoryMB { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FunctionAppMaximumInstanceCount { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> HttpPerInstanceConcurrency { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> InstanceMemoryMB { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> MaximumInstanceCount { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2860,7 +2847,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SitePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -3760,7 +3746,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.AppService.StaticSiteTemplate TemplateProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionApp> UserFunctionApps { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.StaticSite FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -4137,7 +4122,6 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class StaticSiteUserProvidedFunctionAppData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StaticSiteUserProvidedFunctionAppData() { }
@@ -4319,7 +4303,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.WebSite FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -4820,7 +4803,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.WebSiteSlot FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

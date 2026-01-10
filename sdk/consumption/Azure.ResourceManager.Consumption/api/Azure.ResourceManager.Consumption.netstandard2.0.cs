@@ -245,14 +245,12 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo ConsumptionMeterDetailsInfo(string meterName = null, string meterCategory = null, string meterSubCategory = null, string unitOfMeasure = null, string serviceFamily = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary ConsumptionModernChargeSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string billingPeriodId = null, string usageStart = null, string usageEnd = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount azureCharges = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount chargesBilledSeparately = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount marketplaceCharges = null, string billingAccountId = null, string billingProfileId = null, string invoiceSectionId = null, string customerId = null, bool? isInvoiced = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string locationPropertiesLocation = null, int? lookBackPeriod = default(int?), float? instanceFlexibilityRatio = default(float?), string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = default(float?), System.Guid? meterId = default(System.Guid?), string term = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = default(decimal?), Azure.ResourceManager.Consumption.Models.ConsumptionAmount totalCostWithReservedInstances = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount netSavings = null, System.DateTimeOffset? firstUsageOn = default(System.DateTimeOffset?), string scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> skuProperties = null, string skuName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, string locationPropertiesLocation = null, int? lookBackPeriod = default(int?), float? instanceFlexibilityRatio = default(float?), string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = default(float?), System.Guid? meterId = default(System.Guid?), string term = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = default(decimal?), Azure.ResourceManager.Consumption.Models.ConsumptionAmount totalCostWithReservedInstances = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount netSavings = null, System.DateTimeOffset? firstUsageOn = default(System.DateTimeOffset?), string scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> skuProperties = null, string skuName = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction ConsumptionModernReservationTransaction(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, decimal? amount = default(decimal?), string armSkuName = null, string billingFrequency = null, Azure.Core.ResourceIdentifier billingProfileId = null, string billingProfileName = null, string currency = null, string description = null, System.DateTimeOffset? transactOn = default(System.DateTimeOffset?), string eventType = null, string invoice = null, Azure.Core.ResourceIdentifier invoiceId = null, Azure.Core.ResourceIdentifier invoiceSectionId = null, string invoiceSectionName = null, System.Guid? purchasingSubscriptionGuid = default(System.Guid?), string purchasingSubscriptionName = null, decimal? quantity = default(decimal?), string region = null, string reservationOrderId = null, string reservationOrderName = null, string term = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail ConsumptionModernUsageDetail(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string billingAccountId = null, decimal? effectivePrice = default(decimal?), Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType? pricingModel = default(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType?), string billingAccountName = null, System.DateTimeOffset? billingPeriodStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingPeriodEndOn = default(System.DateTimeOffset?), string billingProfileId = null, string billingProfileName = null, string subscriptionGuid = null, string subscriptionName = null, System.DateTimeOffset? on = default(System.DateTimeOffset?), string product = null, System.Guid? meterId = default(System.Guid?), string meterName = null, string meterRegion = null, string meterCategory = null, string meterSubCategory = null, string serviceFamily = null, decimal? quantity = default(decimal?), string unitOfMeasure = null, string instanceName = null, decimal? costInUSD = default(decimal?), decimal? unitPrice = default(decimal?), string billingCurrencyCode = null, string resourceLocation = null, string consumedService = null, string serviceInfo1 = null, string serviceInfo2 = null, string additionalInfo = null, string invoiceSectionId = null, string invoiceSectionName = null, string costCenter = null, string resourceGroup = null, string reservationId = null, string reservationName = null, string productOrderId = null, string productOrderName = null, bool? isAzureCreditEligible = default(bool?), string term = null, string publisherName = null, string publisherType = null, string chargeType = null, string frequency = null, decimal? costInBillingCurrency = default(decimal?), decimal? costInPricingCurrency = default(decimal?), string exchangeRate = null, System.DateTimeOffset? exchangeRateOn = default(System.DateTimeOffset?), string invoiceId = null, string previousInvoiceId = null, string pricingCurrencyCode = null, string productIdentifier = null, string resourceLocationNormalized = null, System.DateTimeOffset? servicePeriodStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? servicePeriodEndOn = default(System.DateTimeOffset?), string customerTenantId = null, string customerName = null, string partnerTenantId = null, string partnerName = null, string resellerMpnId = null, string resellerName = null, string publisherId = null, decimal? marketPrice = default(decimal?), decimal? exchangeRatePricingToBilling = default(decimal?), decimal? paygCostInBillingCurrency = default(decimal?), decimal? paygCostInUSD = default(decimal?), decimal? partnerEarnedCreditRate = default(decimal?), string partnerEarnedCreditApplied = null, decimal? payGPrice = default(decimal?), string benefitId = null, string benefitName = null, string provider = null, string costAllocationRuleName = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReseller ConsumptionReseller(Azure.Core.ResourceIdentifier resellerId = null, string resellerDescription = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail ConsumptionReservationDetail(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string reservationOrderId = null, string instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string reservationId = null, string skuName = null, decimal? reservedHours = default(decimal?), System.DateTimeOffset? consumptionOccurredOn = default(System.DateTimeOffset?), decimal? usedHours = default(decimal?), Azure.Core.ResourceIdentifier instanceId = null, decimal? totalReservedQuantity = default(decimal?), string kind = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation ConsumptionReservationRecommendation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation ConsumptionReservationRecommendation(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string kind, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails ConsumptionReservationRecommendationDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, string currency = null, Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties properties = null, string resourceGroup = null, Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties savings = null, string scope = null, Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties usage = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary ConsumptionReservationSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string reservationOrderId = null, string reservationId = null, string skuName = null, decimal? reservedHours = default(decimal?), System.DateTimeOffset? useOn = default(System.DateTimeOffset?), decimal? usedHours = default(decimal?), decimal? minUtilizationPercentage = default(decimal?), decimal? avgUtilizationPercentage = default(decimal?), decimal? maxUtilizationPercentage = default(decimal?), string kind = null, decimal? purchasedQuantity = default(decimal?), decimal? remainingQuantity = default(decimal?), decimal? totalReservedQuantity = default(decimal?), decimal? usedQuantity = default(decimal?), decimal? utilizedPercentage = default(decimal?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
@@ -303,9 +301,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public BudgetCategory(string value) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.BudgetCategory Cost { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.BudgetCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.BudgetCategory left, Azure.ResourceManager.Consumption.Models.BudgetCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.BudgetCategory (string value) { throw null; }
@@ -369,9 +365,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public BudgetOperatorType(string value) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.BudgetOperatorType In { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.BudgetOperatorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.BudgetOperatorType left, Azure.ResourceManager.Consumption.Models.BudgetOperatorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.BudgetOperatorType (string value) { throw null; }
@@ -391,9 +385,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType Monthly { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType Quarterly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType left, Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType (string value) { throw null; }
@@ -519,9 +511,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency Quarter { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency Year { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency left, Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency (string value) { throw null; }
@@ -635,9 +625,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionEventType SettledCharges { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionEventType UnKnown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionEventType left, Azure.ResourceManager.Consumption.Models.ConsumptionEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionEventType (string value) { throw null; }
@@ -750,9 +738,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionLotSource PromotionalCredit { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionLotSource PurchasedCredit { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionLotSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionLotSource left, Azure.ResourceManager.Consumption.Models.ConsumptionLotSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionLotSource (string value) { throw null; }
@@ -772,9 +758,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus Inactive { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus left, Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus (string value) { throw null; }
@@ -887,9 +871,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionMetricType AmortizedCostMetricType { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionMetricType UsageMetricType { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType left, Azure.ResourceManager.Consumption.Models.ConsumptionMetricType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionMetricType (string value) { throw null; }
@@ -1066,9 +1048,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType Reservation { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType Spot { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType left, Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType (string value) { throw null; }
@@ -1154,9 +1134,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod Last30Days { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod Last60Days { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod (string value) { throw null; }
@@ -1172,9 +1150,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope Shared { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope (string value) { throw null; }
@@ -1190,9 +1166,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm P1Y { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm P3Y { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm (string value) { throw null; }
@@ -1380,9 +1354,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType GreaterThan { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType GreaterThanOrEqualTo { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType left, Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType (string value) { throw null; }
@@ -1398,9 +1370,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.NotificationThresholdType Actual { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.NotificationThresholdType Forecasted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.NotificationThresholdType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.NotificationThresholdType left, Azure.ResourceManager.Consumption.Models.NotificationThresholdType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.NotificationThresholdType (string value) { throw null; }
@@ -1469,9 +1439,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode SwedishSweden { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode TurkishTurkey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode left, Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode (string value) { throw null; }
@@ -1487,9 +1455,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain DailyGrain { get { throw null; } }
         public static Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain MonthlyGrain { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain left, Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain right) { throw null; }
         public static implicit operator Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain (string value) { throw null; }

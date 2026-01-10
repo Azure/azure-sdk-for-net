@@ -27,9 +27,7 @@ namespace Azure.AI.Projects
         public virtual Azure.AI.Projects.AIProjectIndexesOperations Indexes { get { throw null; } }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectTelemetry Telemetry { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
     }
     public partial class AIProjectClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
@@ -134,28 +132,22 @@ namespace Azure.AI.Projects
     {
         protected AIProjectConnectionsOperations() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnection(string connectionName, bool includeCredentials, CancellationToken cancellationToken) instead.")]
         public Azure.AI.Projects.AIProjectConnection GetConnection(string connectionName, bool includeCredentials, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public Azure.AI.Projects.AIProjectConnection GetConnection(string connectionName, bool includeCredentials = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnectionAsync(string connectionName, bool includeCredentials, CancellationToken cancellationToken) instead.")]
         public System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AIProjectConnection>> GetConnectionAsync(string connectionName, bool includeCredentials, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AIProjectConnection>> GetConnectionAsync(string connectionName, bool includeCredentials = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnections(ConnectionType? connectionType, bool? defaultConnection, CancellationToken cancellationToken) instead.")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AIProjectConnection> GetConnections(Azure.AI.Projects.ConnectionType? connectionType, bool? defaultConnection, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AIProjectConnection> GetConnections(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool? defaultConnection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetConnections(string connectionType, bool? defaultConnection, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnections(string connectionType, bool? defaultConnection, RequestOptions options) instead.")]
         public virtual System.ClientModel.Primitives.CollectionResult GetConnections(string connectionType, bool? defaultConnection, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnectionsAsync(ConnectionType? connectionType, bool? defaultConnection, CancellationToken cancellationToken) instead.")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AIProjectConnection> GetConnectionsAsync(Azure.AI.Projects.ConnectionType? connectionType, bool? defaultConnection, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AIProjectConnection> GetConnectionsAsync(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool? defaultConnection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnectionsAsync(string connectionType, bool? defaultConnection, RequestOptions options) instead.")]
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public Azure.AI.Projects.AIProjectConnection GetDefaultConnection(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
@@ -256,35 +248,27 @@ namespace Azure.AI.Projects
         protected AIProjectDeploymentsOperations() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult GetDeployment(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeployment(string name, RequestOptions options) instead.")]
         public virtual System.ClientModel.ClientResult GetDeployment(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeploymentAsync(string name, CancellationToken cancellationToken) instead.")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AIProjectDeployment> GetDeployment(string name, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AIProjectDeployment> GetDeployment(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetDeploymentAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeploymentAsync(string name, RequestOptions options) instead.")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetDeploymentAsync(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeploymentAsync(string name, CancellationToken cancellationToken) instead.")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AIProjectDeployment>> GetDeploymentAsync(string name, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AIProjectDeployment>> GetDeploymentAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeploymentsAsync(string modelPublisher, string modelName, AIProjectDeploymentType? deploymentType, CancellationToken cancellationToken) instead.")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AIProjectDeployment> GetDeployments(string modelPublisher, string modelName, Azure.AI.Projects.AIProjectDeploymentType? deploymentType, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AIProjectDeployment> GetDeployments(string modelPublisher = null, string modelName = null, Azure.AI.Projects.AIProjectDeploymentType? deploymentType = default(Azure.AI.Projects.AIProjectDeploymentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeployments(string modelPublisher, string modelName, string deploymentType, RequestOptions options) instead.")]
         public virtual System.ClientModel.Primitives.CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeploymentsAsync(string modelPublisher, string modelName, AIProjectDeploymentType? deploymentType, CancellationToken cancellationToken) instead.")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AIProjectDeployment> GetDeploymentsAsync(string modelPublisher, string modelName, Azure.AI.Projects.AIProjectDeploymentType? deploymentType, string clientRequestId, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AIProjectDeployment> GetDeploymentsAsync(string modelPublisher = null, string modelName = null, Azure.AI.Projects.AIProjectDeploymentType? deploymentType = default(Azure.AI.Projects.AIProjectDeploymentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the clientRequestId parameter is not used. Please use GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, RequestOptions options) instead.")]
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
@@ -296,9 +280,7 @@ namespace Azure.AI.Projects
         public AIProjectDeploymentType(string value) { throw null; }
         public static Azure.AI.Projects.AIProjectDeploymentType ModelDeployment { get { throw null; } }
         public bool Equals(Azure.AI.Projects.AIProjectDeploymentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.AIProjectDeploymentType left, Azure.AI.Projects.AIProjectDeploymentType right) { throw null; }
         public static implicit operator Azure.AI.Projects.AIProjectDeploymentType (string value) { throw null; }
@@ -397,7 +379,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AIProjectIndexFieldMapping AIProjectIndexFieldMapping(System.Collections.Generic.IEnumerable<string> contentFields = null, string filepathField = null, string titleField = null, string urlField = null, System.Collections.Generic.IEnumerable<string> vectorFields = null, System.Collections.Generic.IEnumerable<string> metadataFields = null) { throw null; }
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.AIProjectIndexFieldMapping fieldMapping = null) { throw null; }
         public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(System.Uri sasUri = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(System.Uri sasUri, string type) { throw null; }
         public static Azure.AI.Projects.DatasetCredential DatasetCredential(Azure.AI.Projects.AIProjectBlobReference blobReference = null) { throw null; }
         public static Azure.AI.Projects.EmbeddingConfiguration EmbeddingConfiguration(string modelDeploymentName = null, string embeddingField = null) { throw null; }
@@ -408,10 +389,8 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ModelDeploymentSku ModelDeploymentSku(long capacity = (long)0, string family = null, string name = null, string size = null, string tier = null) { throw null; }
         public static Azure.AI.Projects.NoAuthenticationCredentials NoAuthenticationCredentials() { throw null; }
         public static Azure.AI.Projects.PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = null, string connectionName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.Projects.PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId, string connectionName, Azure.AI.Projects.PendingUploadType pendingUploadType) { throw null; }
         public static Azure.AI.Projects.PendingUploadResult PendingUploadResult(Azure.AI.Projects.AIProjectBlobReference blobReference = null, string pendingUploadId = null, string version = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.Projects.PendingUploadResult PendingUploadResult(Azure.AI.Projects.AIProjectBlobReference blobReference, string pendingUploadId, string version, Azure.AI.Projects.PendingUploadType pendingUploadType) { throw null; }
     }
     public partial class AzureAISearchIndex : Azure.AI.Projects.AIProjectIndex, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>
@@ -461,9 +440,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ConnectionType CosmosDB { get { throw null; } }
         public static Azure.AI.Projects.ConnectionType Custom { get { throw null; } }
         public bool Equals(Azure.AI.Projects.ConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
         public static implicit operator Azure.AI.Projects.ConnectionType (string value) { throw null; }
@@ -635,9 +612,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.PendingUploadType BlobReference { get { throw null; } }
         public static Azure.AI.Projects.PendingUploadType None { get { throw null; } }
         public bool Equals(Azure.AI.Projects.PendingUploadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.PendingUploadType left, Azure.AI.Projects.PendingUploadType right) { throw null; }
         public static implicit operator Azure.AI.Projects.PendingUploadType (string value) { throw null; }

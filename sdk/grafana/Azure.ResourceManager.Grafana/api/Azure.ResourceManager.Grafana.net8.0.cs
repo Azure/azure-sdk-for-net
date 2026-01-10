@@ -217,13 +217,10 @@ namespace Azure.ResourceManager.Grafana
     }
     public partial class GrafanaPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.GrafanaPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.GrafanaPrivateLinkResourceData>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public GrafanaPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState? ProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -317,7 +314,6 @@ namespace Azure.ResourceManager.Grafana
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.ManagedGrafanaProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.ManagedGrafanaSku Sku { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SkuName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -369,10 +365,8 @@ namespace Azure.ResourceManager.Grafana
         Azure.ResourceManager.Grafana.ManagedGrafanaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.ManagedGrafanaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.ManagedGrafanaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.ManagedGrafanaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Grafana.ManagedGrafanaResource> Update(Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Grafana.ManagedGrafanaResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Grafana.ManagedGrafanaResource>> UpdateAsync(Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Grafana.ManagedGrafanaResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -494,7 +488,6 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.ManagedGrafanaData ManagedGrafanaData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string skuName = null, Azure.ResourceManager.Grafana.Models.ManagedGrafanaProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch ManagedGrafanaPatch(Azure.ResourceManager.Grafana.Models.ManagedGrafanaSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatchProperties ManagedGrafanaPatchProperties(Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy? zoneRedundancy = default(Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy?), Azure.ResourceManager.Grafana.Models.GrafanaApiKey? apiKey = default(Azure.ResourceManager.Grafana.Models.GrafanaApiKey?), Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin? creatorCanAdmin = default(Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin?), Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP? deterministicOutboundIP = default(Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP?), Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Grafana.Models.MonitorWorkspaceIntegration> monitorWorkspaceIntegrations = null, Azure.ResourceManager.Grafana.Models.EnterpriseConfigurations enterpriseConfigurations = null, Azure.ResourceManager.Grafana.Models.GrafanaConfigurations grafanaConfigurations = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Grafana.Models.GrafanaPlugin> grafanaPlugins = null, string grafanaMajorVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.Grafana.Models.ManagedGrafanaProperties ManagedGrafanaProperties(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState? provisioningState, string grafanaVersion, string endpoint, Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy? zoneRedundancy, Azure.ResourceManager.Grafana.Models.GrafanaApiKey? apiKey, Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP? deterministicOutboundIP, System.Collections.Generic.IEnumerable<string> outboundIPs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Grafana.GrafanaPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Grafana.Models.MonitorWorkspaceIntegration> monitorWorkspaceIntegrations, Azure.ResourceManager.Grafana.Models.EnterpriseConfigurations enterpriseConfigurations, Azure.ResourceManager.Grafana.Models.Smtp grafanaConfigurationsSmtp, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Grafana.Models.GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion) { throw null; }
         public static Azure.ResourceManager.Grafana.Models.ManagedGrafanaProperties ManagedGrafanaProperties(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState? provisioningState = default(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState?), string grafanaVersion = null, string endpoint = null, Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess?), Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy? zoneRedundancy = default(Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy?), Azure.ResourceManager.Grafana.Models.GrafanaApiKey? apiKey = default(Azure.ResourceManager.Grafana.Models.GrafanaApiKey?), Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin? creatorCanAdmin = default(Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin?), Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP? deterministicOutboundIP = default(Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP?), System.Collections.Generic.IEnumerable<string> outboundIPs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Grafana.GrafanaPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Grafana.Models.MonitorWorkspaceIntegration> monitorWorkspaceIntegrations = null, Azure.ResourceManager.Grafana.Models.EnterpriseConfigurations enterpriseConfigurations = null, Azure.ResourceManager.Grafana.Models.GrafanaConfigurations grafanaConfigurations = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Grafana.Models.GrafanaPlugin> grafanaPlugins = null, string grafanaMajorVersion = null) { throw null; }
@@ -513,9 +506,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public AutoGeneratedDomainNameLabelScope(string value) { throw null; }
         public static Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
@@ -532,9 +523,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.AvailablePromotion FreeTrial { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.AvailablePromotion None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.AvailablePromotion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.AvailablePromotion left, Azure.ResourceManager.Grafana.Models.AvailablePromotion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.AvailablePromotion (string value) { throw null; }
@@ -566,9 +555,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP Disabled { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP left, Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP (string value) { throw null; }
@@ -615,9 +602,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaApiKey Disabled { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaApiKey Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaApiKey other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaApiKey left, Azure.ResourceManager.Grafana.Models.GrafanaApiKey right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaApiKey (string value) { throw null; }
@@ -669,9 +654,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin Disabled { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin left, Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaCreatorCanAdmin (string value) { throw null; }
@@ -736,9 +719,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -756,9 +737,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -798,9 +777,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState left, Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState (string value) { throw null; }
@@ -817,9 +794,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess left, Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess (string value) { throw null; }
@@ -836,9 +811,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaSize X1 { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaSize X2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaSize left, Azure.ResourceManager.Grafana.Models.GrafanaSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaSize (string value) { throw null; }
@@ -877,9 +850,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy NoStartTls { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy OpportunisticStartTls { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy left, Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy (string value) { throw null; }
@@ -911,9 +882,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy Disabled { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy left, Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy (string value) { throw null; }
@@ -941,7 +910,6 @@ namespace Azure.ResourceManager.Grafana.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatchProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.ManagedGrafanaSku Sku { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -962,7 +930,6 @@ namespace Azure.ResourceManager.Grafana.Models
         public Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP? DeterministicOutboundIP { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.EnterpriseConfigurations EnterpriseConfigurations { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.GrafanaConfigurations GrafanaConfigurations { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release.", false)]
         public Azure.ResourceManager.Grafana.Models.Smtp GrafanaConfigurationsSmtp { get { throw null; } set { } }
         public string GrafanaMajorVersion { get { throw null; } set { } }
@@ -990,7 +957,6 @@ namespace Azure.ResourceManager.Grafana.Models
         public string Endpoint { get { throw null; } }
         public Azure.ResourceManager.Grafana.Models.EnterpriseConfigurations EnterpriseConfigurations { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.GrafanaConfigurations GrafanaConfigurations { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release.", false)]
         public Azure.ResourceManager.Grafana.Models.Smtp GrafanaConfigurationsSmtp { get { throw null; } set { } }
         public string GrafanaMajorVersion { get { throw null; } set { } }
@@ -1053,9 +1019,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.ManagedPrivateEndpointConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.ManagedPrivateEndpointConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.ManagedPrivateEndpointConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.ManagedPrivateEndpointConnectionStatus left, Azure.ResourceManager.Grafana.Models.ManagedPrivateEndpointConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.ManagedPrivateEndpointConnectionStatus (string value) { throw null; }
@@ -1086,9 +1050,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.MarketplaceAutoRenew Disabled { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.MarketplaceAutoRenew Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.MarketplaceAutoRenew other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.MarketplaceAutoRenew left, Azure.ResourceManager.Grafana.Models.MarketplaceAutoRenew right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.MarketplaceAutoRenew (string value) { throw null; }
@@ -1144,7 +1106,6 @@ namespace Azure.ResourceManager.Grafana.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.SaasSubscriptionDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.SaasSubscriptionDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class Smtp : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.Models.Smtp>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>
     {
@@ -1164,7 +1125,6 @@ namespace Azure.ResourceManager.Grafana.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StartTLSPolicy : System.IEquatable<Azure.ResourceManager.Grafana.Models.StartTLSPolicy>
@@ -1176,9 +1136,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy NoStartTLS { get { throw null; } }
         public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy OpportunisticStartTLS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Grafana.Models.StartTLSPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Grafana.Models.StartTLSPolicy left, Azure.ResourceManager.Grafana.Models.StartTLSPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Grafana.Models.StartTLSPolicy (string value) { throw null; }

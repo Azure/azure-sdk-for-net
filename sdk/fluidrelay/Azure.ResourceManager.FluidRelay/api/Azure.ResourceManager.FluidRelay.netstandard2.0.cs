@@ -217,9 +217,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public static Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState left, Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState (string value) { throw null; }
@@ -261,9 +259,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public static Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku Basic { get { throw null; } }
         public static Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku left, Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku (string value) { throw null; }

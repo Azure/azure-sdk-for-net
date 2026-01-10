@@ -298,9 +298,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel Low { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel left, Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel (string value) { throw null; }
@@ -366,9 +364,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactConnectorType(string value) { throw null; }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType AzureMonitor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType left, Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType (string value) { throw null; }
@@ -435,9 +431,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource Other { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource ServiceNow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource left, Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource (string value) { throw null; }
@@ -517,9 +511,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit Percent { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit Seconds { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit left, Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit (string value) { throw null; }
@@ -560,9 +552,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol left, Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol (string value) { throw null; }
@@ -580,9 +570,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState left, Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState (string value) { throw null; }
@@ -606,9 +594,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactToolset Shell { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactToolset Terraform { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactToolset other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactToolset left, Azure.ResourceManager.ImpactReporting.Models.ImpactToolset right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactToolset (string value) { throw null; }

@@ -247,9 +247,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot ContinueConfiguration { get { throw null; } }
         public static Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot StopConfiguration { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot left, Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot (string value) { throw null; }
@@ -268,7 +266,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo GuestConfigurationAssignmentReportInfo(Azure.Core.ResourceIdentifier id = null, System.Guid? reportId = default(System.Guid?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo assignment = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo vm = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? operationType = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> resources = null) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties GuestConfigurationAssignmentReportProperties(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus?), System.Guid? reportId = default(System.Guid?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo assignment = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo vm = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails details = null, string vmssResourceId = null) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo GuestConfigurationInfo(string name = null, string version = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation GuestConfigurationNavigation(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind? kind, string name, string version, System.Uri contentUri, string contentHash, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> configurationParameters, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> configurationProtectedParameters, Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting configurationSetting) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation GuestConfigurationNavigation(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind? kind = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind?), string name = null, string version = null, System.Uri contentUri = null, string contentHash = null, string contentManagedIdentity = null, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType? assignmentType = default(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType?), string assignmentSource = null, string contentType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> configurationParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> configurationProtectedParameters = null, Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting configurationSetting = null) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData GuestConfigurationResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
@@ -286,9 +283,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus NonCompliant { get { throw null; } }
         public static Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus left, Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus (string value) { throw null; }
@@ -430,9 +425,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType Consistency { get { throw null; } }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType (string value) { throw null; }
@@ -450,9 +443,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType Audit { get { throw null; } }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType DeployAndAutoCorrect { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType (string value) { throw null; }
@@ -479,9 +470,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public GuestConfigurationKind(string value) { throw null; }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind Dsc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind (string value) { throw null; }
@@ -533,9 +522,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState (string value) { throw null; }
@@ -594,9 +581,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode ApplyAndMonitor { get { throw null; } }
         public static Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode ApplyOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode left, Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode (string value) { throw null; }

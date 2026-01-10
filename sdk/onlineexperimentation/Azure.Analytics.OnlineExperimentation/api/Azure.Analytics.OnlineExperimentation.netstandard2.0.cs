@@ -47,9 +47,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.DesiredDirection Increase { get { throw null; } }
         public static Azure.Analytics.OnlineExperimentation.DesiredDirection Neutral { get { throw null; } }
         public bool Equals(Azure.Analytics.OnlineExperimentation.DesiredDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.OnlineExperimentation.DesiredDirection left, Azure.Analytics.OnlineExperimentation.DesiredDirection right) { throw null; }
         public static implicit operator Azure.Analytics.OnlineExperimentation.DesiredDirection (string value) { throw null; }
@@ -68,9 +66,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.DiagnosticCode InvalidExperimentMetricDefinition { get { throw null; } }
         public static Azure.Analytics.OnlineExperimentation.DiagnosticCode UnsupportedEventCondition { get { throw null; } }
         public bool Equals(Azure.Analytics.OnlineExperimentation.DiagnosticCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.OnlineExperimentation.DiagnosticCode left, Azure.Analytics.OnlineExperimentation.DiagnosticCode right) { throw null; }
         public static implicit operator Azure.Analytics.OnlineExperimentation.DiagnosticCode (string value) { throw null; }
@@ -191,9 +187,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.LifecycleStage Active { get { throw null; } }
         public static Azure.Analytics.OnlineExperimentation.LifecycleStage Inactive { get { throw null; } }
         public bool Equals(Azure.Analytics.OnlineExperimentation.LifecycleStage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.OnlineExperimentation.LifecycleStage left, Azure.Analytics.OnlineExperimentation.LifecycleStage right) { throw null; }
         public static implicit operator Azure.Analytics.OnlineExperimentation.LifecycleStage (string value) { throw null; }
