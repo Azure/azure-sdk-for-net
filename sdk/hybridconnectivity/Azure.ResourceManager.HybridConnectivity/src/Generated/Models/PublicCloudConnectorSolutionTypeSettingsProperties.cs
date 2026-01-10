@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> Represent Solution settings properties description array. </summary>
     public partial class PublicCloudConnectorSolutionTypeSettingsProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionTypeSettingsProperties"/>. </summary>
         /// <param name="name"> The name of the solution setting property. </param>
@@ -53,19 +24,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="description"> Description of solution setting property. </param>
         /// <param name="allowedValues"> Array of allowed values for this solution settings property. </param>
         /// <param name="defaultValue"> Default value for this solution settings property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="displayName"/>, <paramref name="type"/>, <paramref name="description"/>, <paramref name="allowedValues"/> or <paramref name="defaultValue"/> is null. </exception>
-        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string type, string description, IEnumerable<string> allowedValues, string defaultValue)
+        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IEnumerable<string> allowedValues, string defaultValue)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(allowedValues, nameof(allowedValues));
-            Argument.AssertNotNull(defaultValue, nameof(defaultValue));
-
             Name = name;
             DisplayName = displayName;
-            Type = type;
+            Type = @type;
             Description = description;
             AllowedValues = allowedValues.ToList();
             DefaultValue = defaultValue;
@@ -78,33 +41,33 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="description"> Description of solution setting property. </param>
         /// <param name="allowedValues"> Array of allowed values for this solution settings property. </param>
         /// <param name="defaultValue"> Default value for this solution settings property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string type, string description, IReadOnlyList<string> allowedValues, string defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IReadOnlyList<string> allowedValues, string defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
-            Type = type;
+            Type = @type;
             Description = description;
             AllowedValues = allowedValues;
             DefaultValue = defaultValue;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionTypeSettingsProperties"/> for deserialization. </summary>
-        internal PublicCloudConnectorSolutionTypeSettingsProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the solution setting property. </summary>
         public string Name { get; }
+
         /// <summary> The UI friendly name of the solution setting property. </summary>
         public string DisplayName { get; }
+
         /// <summary> Type of the solution setting property, represented as a string. </summary>
         public string Type { get; }
+
         /// <summary> Description of solution setting property. </summary>
         public string Description { get; }
+
         /// <summary> Array of allowed values for this solution settings property. </summary>
         public IReadOnlyList<string> AllowedValues { get; }
+
         /// <summary> Default value for this solution settings property. </summary>
         public string DefaultValue { get; }
     }
