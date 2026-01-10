@@ -1,14 +1,11 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.14.0 (2026-01-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added new resource type `GalleryScript`.
+- Added `StorageAccountStrategy` property to `GalleryArtifactPublishingProfileBase` class.
 
 ## 1.13.0 (2025-11-14)
 
