@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> Description of the response of the verification code. </summary>
-    public partial class CertificateVerificationCodeResult : ResourceData
+    public partial class CertificateVerificationCodeResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeResult"/>. </summary>
         internal CertificateVerificationCodeResult()
@@ -53,23 +23,35 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Request etag. </param>
+        /// <param name="name"> Name of certificate. </param>
+        /// <param name="eTag"> Request etag. </param>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="properties"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateVerificationCodeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CertificateVerificationCodeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateVerificationCodeResult(string name, ETag? eTag, string id, string @type, CertificateVerificationCodeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ETag = etag;
+            Name = name;
+            ETag = eTag;
+            Id = id;
+            Type = @type;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Name of certificate. </summary>
+        public string Name { get; }
 
         /// <summary> Request etag. </summary>
         public ETag? ETag { get; }
-        /// <summary> Gets the properties. </summary>
+
+        /// <summary> The resource identifier. </summary>
+        public string Id { get; }
+
+        /// <summary> The resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> Gets the Properties. </summary>
         public CertificateVerificationCodeProperties Properties { get; }
     }
 }

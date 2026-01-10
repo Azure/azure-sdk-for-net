@@ -6,35 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceProvisioningServices;
+using Azure.ResourceManager.DeviceProvisioningServices.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDeviceProvisioningServicesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _groupIdInformationsClientDiagnostics;
+        private GroupIdInformations _groupIdInformationsRestClient;
+        private ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private PrivateEndpointConnections _privateEndpointConnectionsRestClient;
+
+        /// <summary> Initializes a new instance of MockableDeviceProvisioningServicesResourceGroupResource for mocking. </summary>
         protected MockableDeviceProvisioningServicesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDeviceProvisioningServicesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDeviceProvisioningServicesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics GroupIdInformationsClientDiagnostics => _groupIdInformationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
+        private GroupIdInformations GroupIdInformationsRestClient => _groupIdInformationsRestClient ??= new GroupIdInformations(GroupIdInformationsClientDiagnostics, Pipeline, Endpoint, "2025-02-01-preview");
+
+        private ClientDiagnostics PrivateEndpointConnectionsClientDiagnostics => _privateEndpointConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateEndpointConnections PrivateEndpointConnectionsRestClient => _privateEndpointConnectionsRestClient ??= new PrivateEndpointConnections(PrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, "2025-02-01-preview");
+
+        /// <summary> Gets a collection of DeviceProvisioningServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeviceProvisioningServices and their operations over a DeviceProvisioningServiceResource. </returns>
         public virtual DeviceProvisioningServiceCollection GetDeviceProvisioningServices()
         {
             return GetCachedClient(client => new DeviceProvisioningServiceCollection(client, Id));
@@ -44,20 +58,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// Get the metadata of the provisioning service without SAS keys.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisioningServiceDescription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +78,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
             return await GetDeviceProvisioningServices().GetAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +87,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// Get the metadata of the provisioning service without SAS keys.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisioningServiceDescription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +107,205 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
             return GetDeviceProvisioningServices().Get(provisioningServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List private link resources for the given provisioning service
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_ListPrivateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PrivateLinkResources>> GetDeviceProvisioningServicesPrivateLinkResourcesAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = GroupIdInformationsClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningServicesPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GroupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PrivateLinkResources> response = Response.FromValue(PrivateLinkResources.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List private link resources for the given provisioning service
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_ListPrivateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PrivateLinkResources> GetDeviceProvisioningServicesPrivateLinkResources(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = GroupIdInformationsClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningServicesPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GroupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PrivateLinkResources> response = Response.FromValue(PrivateLinkResources.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List private endpoint connection properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>>> GetPrivateEndpointConnectionsAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = PrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetPrivateEndpointConnections");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateEndpointConnectionsRestClient.CreateGetPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> response = Response.FromValue(IList<DeviceProvisioningServicesPrivateEndpointConnectionData>.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List private endpoint connection properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> GetPrivateEndpointConnections(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using DiagnosticScope scope = PrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableDeviceProvisioningServicesResourceGroupResource.GetPrivateEndpointConnections");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateEndpointConnectionsRestClient.CreateGetPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> response = Response.FromValue(IList<DeviceProvisioningServicesPrivateEndpointConnectionData>.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
