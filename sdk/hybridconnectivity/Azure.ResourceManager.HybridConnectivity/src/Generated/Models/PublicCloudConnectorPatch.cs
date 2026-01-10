@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PublicCloudConnectorPropertiesUpdate Properties { get; set; }
+        internal PublicCloudConnectorPropertiesUpdate Properties { get; set; }
     }
 }

@@ -53,13 +53,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess> GetCredentials(Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent content = null, long? expiresin = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>> GetCredentialsAsync(Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent content = null, long? expiresin = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess> GetCredentials(Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent content = null, long? expiresin = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess> GetCredentials(long? expiresin = default(long?), Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>> GetCredentialsAsync(Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent content = null, long? expiresin = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>> GetCredentialsAsync(long? expiresin = default(long?), Azure.ResourceManager.HybridConnectivity.Models.ListCredentialsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
 >>>>>>> 5f38db42ef0 (MPG migration - hybridconnectivity)
@@ -73,7 +75,6 @@ namespace Azure.ResourceManager.HybridConnectivity
 =======
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin = default(long?), Azure.ResourceManager.HybridConnectivity.Models.ListIngressGatewayCredentialsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(Azure.ResourceManager.HybridConnectivity.Models.ListIngressGatewayCredentialsContent content = null, long? expiresin = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.Models.IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin = default(long?), Azure.ResourceManager.HybridConnectivity.Models.ListIngressGatewayCredentialsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
 >>>>>>> 5f38db42ef0 (MPG migration - hybridconnectivity)
@@ -478,8 +479,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.ManagedProxyAsset ManagedProxyAsset(string proxy = null, long expiresOn = (long)0) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.ManagedProxyContent ManagedProxyContent(string service = null, string hostname = null, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName? serviceName = default(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName?)) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorData PublicCloudConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties properties = null) { throw null; }
+<<<<<<< HEAD
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPatch PublicCloudConnectorPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPropertiesUpdate properties = null) { throw null; }
 >>>>>>> 5f38db42ef0 (MPG migration - hybridconnectivity)
+=======
+        public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPatch PublicCloudConnectorPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> awsCloudExcludedAccounts = null) { throw null; }
+>>>>>>> 934510e749a (rebase and regfen)
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPatch PublicCloudConnectorPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> awsCloudExcludedAccounts = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties PublicCloudConnectorProperties(Azure.ResourceManager.HybridConnectivity.Models.AwsCloudProfile awsCloudProfile = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType hostType = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType), Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState?), string connectorPrimaryIdentifier = null) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionConfigurationData PublicCloudConnectorSolutionConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationProperties properties = null) { throw null; }
@@ -530,14 +535,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType Ec2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType left, Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType left, Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType (string value) { throw null; }
@@ -612,14 +619,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType (string value) { throw null; }
@@ -660,14 +669,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState (string value) { throw null; }
@@ -704,14 +715,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName WAC { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName (string value) { throw null; }
@@ -833,7 +846,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     {
         public PublicCloudConnectorPatch() { }
         public System.Collections.Generic.IList<string> AwsCloudExcludedAccounts { get { throw null; } }
-        public Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPropertiesUpdate Properties { get { throw null; } set { } }
         protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -867,6 +879,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     public partial class PublicCloudConnectorPropertiesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPropertiesUpdate>
     {
@@ -883,6 +896,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorPropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 >>>>>>> 5f38db42ef0 (MPG migration - hybridconnectivity)
+=======
+>>>>>>> 934510e749a (rebase and regfen)
     public partial class PublicCloudConnectorSolutionConfigurationPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationPatch>
     {
         public PublicCloudConnectorSolutionConfigurationPatch() { }
@@ -940,14 +955,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus (string value) { throw null; }
@@ -1049,14 +1066,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType Aws { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType (string value) { throw null; }
@@ -1099,14 +1118,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState other) { throw null; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState (string value) { throw null; }
 =======
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+=======
+>>>>>>> 934510e749a (rebase and regfen)
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState (string value) { throw null; }

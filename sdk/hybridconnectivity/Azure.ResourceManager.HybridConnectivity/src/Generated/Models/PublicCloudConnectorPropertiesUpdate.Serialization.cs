@@ -14,7 +14,7 @@ using Azure.ResourceManager.HybridConnectivity;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Properties of public cloud connectors. </summary>
-    public partial class PublicCloudConnectorPropertiesUpdate : IJsonModel<PublicCloudConnectorPropertiesUpdate>
+    internal partial class PublicCloudConnectorPropertiesUpdate : IJsonModel<PublicCloudConnectorPropertiesUpdate>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
