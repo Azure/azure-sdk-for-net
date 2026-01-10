@@ -17,90 +17,258 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAvsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.AddonHcxProperties"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="offer"> The offer type. </param>
+        /// <returns> A new <see cref="Models.AddonHcxProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState = null, string offer = null)
         {
             return AddonHcxProperties(provisioningState, offer, managementNetwork: null, uplinkNetwork: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsCloudLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> Cloud link status. </param>
+        /// <param name="linkedCloud"> The linked cloud id. </param>
+        /// <returns> A new <see cref="AvsCloudLinkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsCloudLinkData AvsCloudLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsCloudLinkStatus? status = null, ResourceIdentifier linkedCloud = null)
         {
             return AvsCloudLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null, status: status, linkedCloud: linkedCloud);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AvsManagementCluster"/>. </summary>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
+        /// <param name="clusterId"> The identity. </param>
+        /// <param name="hosts"> The hosts. </param>
+        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsManagementCluster AvsManagementCluster(int? clusterSize = null, AvsPrivateCloudClusterProvisioningState? provisioningState = null, int? clusterId = null, IEnumerable<string> hosts = null)
         {
             return AvsManagementCluster(clusterSize: clusterSize, provisioningState: provisioningState, clusterId: clusterId, hosts: hosts, vsanDatastoreName: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the virtual machine. </param>
+        /// <param name="moRefId"> The vCenter MoRef ID. </param>
+        /// <param name="folderPath"> The folder path. </param>
+        /// <param name="restrictMovement"> Restrict movement state. </param>
+        /// <returns> A new <see cref="AvsPrivateCloudClusterVirtualMachineData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string moRefId = null, string folderPath = null, VirtualMachineRestrictMovementState? restrictMovement = null)
         {
             return AvsPrivateCloudClusterVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null, displayName: displayName, moRefId: moRefId, folderPath: folderPath, restrictMovement: restrictMovement);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudDatastoreData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="netAppVolumeId"> The netApp volume id. </param>
+        /// <param name="diskPoolVolume"> The disk pool volume. </param>
+        /// <param name="elasticSanVolumeTargetId"> The elastic san volume target id. </param>
+        /// <param name="status"> The datastore status. </param>
+        /// <returns> A new <see cref="AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, ResourceIdentifier elasticSanVolumeTargetId = null, DatastoreStatus? status = null)
         {
             return AvsPrivateCloudDatastoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, netAppVolumeId: netAppVolumeId, diskPoolVolume: diskPoolVolume, elasticSanVolumeTargetId: elasticSanVolumeTargetId, pureStorageVolume: null, status: status);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudDatastoreData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="netAppVolumeId"> The netApp volume id. </param>
+        /// <param name="diskPoolVolume"> The disk pool volume. </param>
+        /// <param name="status"> The datastore status. </param>
+        /// <returns> A new <see cref="AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, DatastoreStatus? status = null)
         {
             return AvsPrivateCloudDatastoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, netAppVolumeId: netAppVolumeId, diskPoolVolume: diskPoolVolume, elasticSanVolumeTargetId: null, pureStorageVolume: null, status: status);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudEndpoints"/>. </summary>
+        /// <param name="nsxtManager"> The NSX-T manager endpoint. </param>
+        /// <param name="vcsa"> The vCenter endpoint. </param>
+        /// <param name="hcxCloudManager"> The HCX cloud manager endpoint. </param>
+        /// <returns> A new <see cref="Models.AvsPrivateCloudEndpoints"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager = null, string vcsa = null, string hcxCloudManager = null)
         {
             return AvsPrivateCloudEndpoints(nsxtManager: nsxtManager, vcsa: vcsa, hcxCloudManager: hcxCloudManager, nsxtManagerIP: null, vcenterIP: null, hcxCloudManagerIP: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="managementCluster"> The default cluster used for management. </param>
+        /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
+        /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
+        /// <param name="availability"> Availability properties. </param>
+        /// <param name="encryption"> Customer managed encryption. </param>
+        /// <param name="extendedNetworkBlocks"> Additional networks noncontiguous with networkBlock. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="circuit"> An ExpressRoute Circuit. </param>
+        /// <param name="endpoints"> The endpoints. </param>
+        /// <param name="networkBlock"> The network block. </param>
+        /// <param name="managementNetwork"> The management network. </param>
+        /// <param name="provisioningNetwork"> The provisioning network. </param>
+        /// <param name="vMotionNetwork"> The vMotion network. </param>
+        /// <param name="vCenterPassword"> The vCenter admin password. </param>
+        /// <param name="nsxtPassword"> The NSX-T manager password. </param>
+        /// <param name="vCenterCertificateThumbprint"> The vCenter certificate thumbprint. </param>
+        /// <param name="nsxtCertificateThumbprint"> The NSX-T manager certificate thumbprint. </param>
+        /// <param name="externalCloudLinks"> External cloud link ids. </param>
+        /// <param name="secondaryCircuit"> A secondary expressRoute circuit. </param>
+        /// <param name="nsxPublicIPQuotaRaised"> NSX public IP quota raised flag. </param>
+        /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
+        /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
+        /// <param name="sku"> The SKU assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="AvsPrivateCloudData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AvsManagementCluster managementCluster = null, InternetConnectivityState? internet = null, IEnumerable<SingleSignOnIdentitySource> identitySources = null, PrivateCloudAvailabilityProperties availability = null, CustomerManagedEncryption encryption = null, IEnumerable<string> extendedNetworkBlocks = null, AvsPrivateCloudProvisioningState? provisioningState = null, ExpressRouteCircuit circuit = null, AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, IEnumerable<ResourceIdentifier> externalCloudLinks = null, ExpressRouteCircuit secondaryCircuit = null, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = null, ResourceIdentifier virtualNetworkId = null, AvsDnsZoneType? dnsZoneType = null, AvsSku sku = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
         {
             return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, vcfLicense: null, sku: sku, identity: identity, zones: zones);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="managementCluster"> The default cluster used for management. </param>
+        /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
+        /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
+        /// <param name="availability"> Availability properties. </param>
+        /// <param name="encryption"> Customer managed encryption. </param>
+        /// <param name="extendedNetworkBlocks"> Additional networks noncontiguous with networkBlock. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="circuit"> An ExpressRoute Circuit. </param>
+        /// <param name="endpoints"> The endpoints. </param>
+        /// <param name="networkBlock"> The network block. </param>
+        /// <param name="managementNetwork"> The management network. </param>
+        /// <param name="provisioningNetwork"> The provisioning network. </param>
+        /// <param name="vMotionNetwork"> The vMotion network. </param>
+        /// <param name="vCenterPassword"> The vCenter admin password. </param>
+        /// <param name="nsxtPassword"> The NSX-T manager password. </param>
+        /// <param name="vCenterCertificateThumbprint"> The vCenter certificate thumbprint. </param>
+        /// <param name="nsxtCertificateThumbprint"> The NSX-T manager certificate thumbprint. </param>
+        /// <param name="externalCloudLinks"> External cloud link ids. </param>
+        /// <param name="secondaryCircuit"> A secondary expressRoute circuit. </param>
+        /// <param name="nsxPublicIPQuotaRaised"> NSX public IP quota raised flag. </param>
+        /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
+        /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
+        /// <returns> A new <see cref="AvsPrivateCloudData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AvsSku sku = null, ManagedServiceIdentity identity = null, AvsManagementCluster managementCluster = null, InternetConnectivityState? internet = null, IEnumerable<SingleSignOnIdentitySource> identitySources = null, PrivateCloudAvailabilityProperties availability = null, CustomerManagedEncryption encryption = null, IEnumerable<string> extendedNetworkBlocks = null, AvsPrivateCloudProvisioningState? provisioningState = null, ExpressRouteCircuit circuit = null, AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, IEnumerable<ResourceIdentifier> externalCloudLinks = null, ExpressRouteCircuit secondaryCircuit = null, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = null, ResourceIdentifier virtualNetworkId = null, AvsDnsZoneType? dnsZoneType = null)
         {
             return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, vcfLicense: null, sku: sku, identity: identity, zones: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="activationKey"> The activation key. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="HcxEnterpriseSiteData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string activationKey = null, HcxEnterpriseSiteStatus? status = null)
         {
             return HcxEnterpriseSiteData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null, activationKey: activationKey, status: status);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the script cmdlet. </param>
+        /// <param name="timeout"> Script timeout. </param>
+        /// <param name="parameters"> Script parameters. </param>
+        /// <returns> A new <see cref="ScriptCmdletData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, TimeSpan? timeout = null, IEnumerable<ScriptParameter> parameters = null)
         {
             return ScriptCmdletData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null, description: description, timeout: timeout, audience: null, parameters: parameters);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the script package. </param>
+        /// <param name="version"> Version of the script package. </param>
+        /// <param name="company"> Company of the script package. </param>
+        /// <param name="uri"> The URI. </param>
+        /// <returns> A new <see cref="ScriptPackageData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string version = null, string company = null, Uri uri = null)
         {
             return ScriptPackageData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null, description: description, version: version, company: company, uri: uri);
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <returns> A new <see cref="WorkloadNetworkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
             return WorkloadNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the gateway. </param>
+        /// <param name="path"> NSX gateway path. </param>
+        /// <returns> A new <see cref="WorkloadNetworkGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string path = null)
         {
             return WorkloadNetworkGatewayData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: null, displayName: displayName, path: path);
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the virtual machine. </param>
+        /// <param name="vmType"> The virtual machine type. </param>
+        /// <returns> A new <see cref="WorkloadNetworkVirtualMachineData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, WorkloadNetworkVmType? vmType = null)
         {
