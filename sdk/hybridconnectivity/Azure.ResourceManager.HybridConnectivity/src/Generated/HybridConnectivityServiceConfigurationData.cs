@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary>
-    /// A class representing the HybridConnectivityServiceConfiguration data model.
-    /// The service configuration details associated with the target resource.
-    /// </summary>
+    /// <summary> The service configuration details associated with the target resource. </summary>
     public partial class HybridConnectivityServiceConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectivityServiceConfigurationData"/>. </summary>
         public HybridConnectivityServiceConfigurationData()
@@ -57,31 +25,62 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectivityServiceConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
-        /// <param name="port"> The port on which service is enabled. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectivityServiceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridConnectivityServiceName? serviceName, ResourceIdentifier resourceId, long? port, HybridConnectivityProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The service configuration properties. </param>
+        internal HybridConnectivityServiceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            ServiceName = serviceName;
-            ResourceId = resourceId;
-            Port = port;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Name of the service. </summary>
-        public HybridConnectivityServiceName? ServiceName { get; set; }
+        /// <summary> The service configuration properties. </summary>
+        internal ServiceConfigurationProperties Properties { get; set; }
+
         /// <summary> The resource Id of the connectivity endpoint (optional). </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceConfigurationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
         /// <summary> The port on which service is enabled. </summary>
-        public long? Port { get; set; }
+        public long? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceConfigurationProperties();
+                }
+                Properties.Port = value.Value;
+            }
+        }
+
         /// <summary> The resource provisioning state. </summary>
-        public HybridConnectivityProvisioningState? ProvisioningState { get; }
+        public HybridConnectivityProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
