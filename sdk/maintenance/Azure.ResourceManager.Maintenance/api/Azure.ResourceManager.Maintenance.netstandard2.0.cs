@@ -277,9 +277,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility Custom { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility Public { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility left, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility (string value) { throw null; }
@@ -297,9 +295,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType Redeploy { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType Restart { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType left, Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType (string value) { throw null; }
@@ -319,9 +315,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope SqlDB { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope SqlManagedInstance { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maintenance.Models.MaintenanceScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maintenance.Models.MaintenanceScope left, Azure.ResourceManager.Maintenance.Models.MaintenanceScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maintenance.Models.MaintenanceScope (string value) { throw null; }
@@ -356,9 +350,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus RetryLater { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus RetryNow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus left, Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus (string value) { throw null; }

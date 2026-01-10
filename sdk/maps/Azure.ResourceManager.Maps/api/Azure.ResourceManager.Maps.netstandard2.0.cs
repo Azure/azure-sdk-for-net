@@ -220,9 +220,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static Azure.ResourceManager.Maps.Models.MapsAccountKind Gen1 { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsAccountKind Gen2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsAccountKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsAccountKind left, Azure.ResourceManager.Maps.Models.MapsAccountKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsAccountKind (string value) { throw null; }
@@ -350,9 +348,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static Azure.ResourceManager.Maps.Models.MapsIdentityType SystemAssignedIdentity { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsIdentityType UserAssignedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsIdentityType left, Azure.ResourceManager.Maps.Models.MapsIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsIdentityType (string value) { throw null; }
@@ -368,9 +364,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption Disabled { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption left, Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption (string value) { throw null; }
@@ -397,9 +391,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static Azure.ResourceManager.Maps.Models.MapsKeyType Primary { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsKeyType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsKeyType left, Azure.ResourceManager.Maps.Models.MapsKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsKeyType (string value) { throw null; }
@@ -428,9 +420,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static Azure.ResourceManager.Maps.Models.MapsSigningKey PrimaryKey { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsSigningKey SecondaryKey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsSigningKey other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsSigningKey left, Azure.ResourceManager.Maps.Models.MapsSigningKey right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsSigningKey (string value) { throw null; }
@@ -459,9 +449,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static Azure.ResourceManager.Maps.Models.MapsSkuName S0 { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsSkuName S1 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsSkuName left, Azure.ResourceManager.Maps.Models.MapsSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsSkuName (string value) { throw null; }
