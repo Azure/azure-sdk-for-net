@@ -10,13 +10,29 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class PreflightCheckContent : IUtf8JsonSerializable, IJsonModel<PreflightCheckContent>
+    /// <summary>
+    /// Preflight check parameters for branch and child resources.
+    /// 
+    /// IMPORTANT: Only one of the property types (branchProperties, roleProperties, databaseProperties,
+    /// or endpointProperties) should be provided at a time, based on the entityType value:
+    /// - When entityType is "branch", provide only branchProperties
+    /// - When entityType is "role", provide only roleProperties
+    /// - When entityType is "database", provide only databaseProperties
+    /// - When entityType is "endpoint", provide only endpointProperties
+    /// </summary>
+    public partial class PreflightCheckContent : IJsonModel<PreflightCheckContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreflightCheckContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckContent"/> for deserialization. </summary>
+        internal PreflightCheckContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PreflightCheckContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +44,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PreflightCheckContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("projectId"u8);
             writer.WriteStringValue(ProjectId);
             writer.WritePropertyName("branchId"u8);
@@ -60,15 +75,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("endpointProperties"u8);
                 writer.WriteObjectValue(EndpointProperties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,22 +92,27 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        PreflightCheckContent IJsonModel<PreflightCheckContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PreflightCheckContent IJsonModel<PreflightCheckContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PreflightCheckContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PreflightCheckContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePreflightCheckContent(document.RootElement, options);
         }
 
-        internal static PreflightCheckContent DeserializePreflightCheckContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PreflightCheckContent DeserializePreflightCheckContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,67 +124,65 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             NeonRoleProperties roleProperties = default;
             NeonDatabaseProperties databaseProperties = default;
             NeonEndpointProperties endpointProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("projectId"u8))
+                if (prop.NameEquals("projectId"u8))
                 {
-                    projectId = property.Value.GetString();
+                    projectId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("branchId"u8))
+                if (prop.NameEquals("branchId"u8))
                 {
-                    branchId = property.Value.GetString();
+                    branchId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityType"u8))
+                if (prop.NameEquals("entityType"u8))
                 {
-                    entityType = new PreflightCheckEntityType(property.Value.GetString());
+                    entityType = new PreflightCheckEntityType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("branchProperties"u8))
+                if (prop.NameEquals("branchProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    branchProperties = NeonBranchProperties.DeserializeNeonBranchProperties(property.Value, options);
+                    branchProperties = NeonBranchProperties.DeserializeNeonBranchProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("roleProperties"u8))
+                if (prop.NameEquals("roleProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    roleProperties = NeonRoleProperties.DeserializeNeonRoleProperties(property.Value, options);
+                    roleProperties = NeonRoleProperties.DeserializeNeonRoleProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("databaseProperties"u8))
+                if (prop.NameEquals("databaseProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseProperties = NeonDatabaseProperties.DeserializeNeonDatabaseProperties(property.Value, options);
+                    databaseProperties = NeonDatabaseProperties.DeserializeNeonDatabaseProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("endpointProperties"u8))
+                if (prop.NameEquals("endpointProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointProperties = NeonEndpointProperties.DeserializeNeonEndpointProperties(property.Value, options);
+                    endpointProperties = NeonEndpointProperties.DeserializeNeonEndpointProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PreflightCheckContent(
                 projectId,
                 branchId,
@@ -173,13 +191,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 roleProperties,
                 databaseProperties,
                 endpointProperties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PreflightCheckContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PreflightCheckContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -189,15 +210,20 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        PreflightCheckContent IPersistableModel<PreflightCheckContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PreflightCheckContent IPersistableModel<PreflightCheckContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PreflightCheckContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PreflightCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePreflightCheckContent(document.RootElement, options);
                     }
                 default:
@@ -205,6 +231,19 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PreflightCheckContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="preflightCheckContent"> The <see cref="PreflightCheckContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PreflightCheckContent preflightCheckContent)
+        {
+            if (preflightCheckContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(preflightCheckContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

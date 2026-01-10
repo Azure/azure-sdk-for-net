@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NeonPostgres.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(Attributes))]
     [ModelReaderWriterBuildable(typeof(BranchListResult))]
@@ -28,27 +29,30 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(NeonCompute))]
     [ModelReaderWriterBuildable(typeof(NeonComputeAutoscalingSize))]
     [ModelReaderWriterBuildable(typeof(NeonComputeProperties))]
-    [ModelReaderWriterBuildable(typeof(NeonDatabase))]
+    [ModelReaderWriterBuildable(typeof(NeonDatabaseData))]
     [ModelReaderWriterBuildable(typeof(NeonDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(NeonDatabaseProperties))]
-    [ModelReaderWriterBuildable(typeof(NeonEndpoint))]
+    [ModelReaderWriterBuildable(typeof(NeonDatabaseResource))]
+    [ModelReaderWriterBuildable(typeof(NeonEndpointData))]
     [ModelReaderWriterBuildable(typeof(NeonEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonEndpointResource))]
     [ModelReaderWriterBuildable(typeof(NeonMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(NeonOfferDetails))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationData))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationPatch))]
-    [ModelReaderWriterBuildable(typeof(NeonOrganizationPatchProperties))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(NeonProjectData))]
     [ModelReaderWriterBuildable(typeof(NeonProjectProperties))]
     [ModelReaderWriterBuildable(typeof(NeonProjectResource))]
-    [ModelReaderWriterBuildable(typeof(NeonRole))]
+    [ModelReaderWriterBuildable(typeof(NeonRoleData))]
     [ModelReaderWriterBuildable(typeof(NeonRoleListResult))]
     [ModelReaderWriterBuildable(typeof(NeonRoleProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonRoleResource))]
     [ModelReaderWriterBuildable(typeof(NeonSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(NeonUserDetails))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(PartnerOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(PgVersion))]
     [ModelReaderWriterBuildable(typeof(PgVersionsResult))]
