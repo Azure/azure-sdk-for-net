@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Properties of public cloud connectors. </summary>
-    public partial class PublicCloudConnectorPropertiesUpdate
+    internal partial class PublicCloudConnectorPropertiesUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

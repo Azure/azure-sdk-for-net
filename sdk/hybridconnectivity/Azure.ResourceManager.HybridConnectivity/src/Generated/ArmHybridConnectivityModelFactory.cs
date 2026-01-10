@@ -195,15 +195,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new AwsCloudProfile(accountId, excludedAccounts.ToList(), isOrganizationalAccount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Public Cloud Connector. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="awsCloudExcludedAccounts"> List of AWS accounts which need to be excluded. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorPatch"/> instance for mocking. </returns>
-        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, PublicCloudConnectorPropertiesUpdate properties = default)
+        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, IEnumerable<string> awsCloudExcludedAccounts = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
-                properties);
+                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), null), null));
         }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
