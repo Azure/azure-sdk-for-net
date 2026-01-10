@@ -6,19 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.EdgeZones;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeZones.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmEdgeZonesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeZones.ExtendedZoneData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+
+        /// <summary> Resource that represents an Azure Extended Zone available to a subscription for registering and unregistering. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="EdgeZones.ExtendedZoneData"/> instance for mocking. </returns>
+        public static ExtendedZoneData ExtendedZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtendedZoneProperties properties = default)
+        {
+            return new ExtendedZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The properties of an Extended Zone resource. </summary>
         /// <param name="provisioningState"> Status of the last operation performed by the subscription on the Edge Zone resource. </param>
         /// <param name="registrationState"> Indicates the Azure Extended Zone registration’s approval status. </param>
         /// <param name="displayName"> Display name of the Azure Extended Zone. </param>
@@ -30,14 +49,10 @@ namespace Azure.ResourceManager.EdgeZones.Models
         /// <param name="longitude"> The Longitude of the Azure Extended Zone. </param>
         /// <param name="latitude"> The Latitude of the Azure Extended Zone. </param>
         /// <param name="homeLocation"> The Home Location of the Azure Extended Zone. </param>
-        /// <returns> A new <see cref="EdgeZones.ExtendedZoneData"/> instance for mocking. </returns>
-        public static ExtendedZoneData ExtendedZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeZonesProvisioningState? provisioningState = null, EdgeZonesRegistrationState? registrationState = null, string displayName = null, string regionalDisplayName = null, string regionType = null, string regionCategory = null, string geography = null, string geographyGroup = null, string longitude = null, string latitude = null, string homeLocation = null)
+        /// <returns> A new <see cref="Models.ExtendedZoneProperties"/> instance for mocking. </returns>
+        public static ExtendedZoneProperties ExtendedZoneProperties(EdgeZonesProvisioningState? provisioningState = default, EdgeZonesRegistrationState? registrationState = default, string displayName = default, string regionalDisplayName = default, string regionType = default, string regionCategory = default, string geography = default, string geographyGroup = default, string longitude = default, string latitude = default, string homeLocation = default)
         {
-            return new ExtendedZoneData(
-                id,
-                name,
-                resourceType,
-                systemData,
+            return new ExtendedZoneProperties(
                 provisioningState,
                 registrationState,
                 displayName,
@@ -49,7 +64,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
                 longitude,
                 latitude,
                 homeLocation,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }
