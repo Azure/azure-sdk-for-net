@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    discoveryEndpointUri = new Uri(prop.Value.GetString());
+                    discoveryEndpointUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceLocation"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    managementEndpointUri = new Uri(prop.Value.GetString());
+                    managementEndpointUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("monitoringEndpointUri"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    monitoringEndpointUri = new Uri(prop.Value.GetString());
+                    monitoringEndpointUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("monitoringConfiguration"u8))

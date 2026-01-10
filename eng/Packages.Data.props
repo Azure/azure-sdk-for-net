@@ -57,7 +57,6 @@
     <MicrosoftExtensionsConfigurationVersion>10.0.1</MicrosoftExtensionsConfigurationVersion>
     <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.1</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
     <MicrosoftExtensionsHostingVersion>10.0.1</MicrosoftExtensionsHostingVersion>
-    <MicrosoftExtensionsLoggingAbstractionsVersion>10.0.1</MicrosoftExtensionsLoggingAbstractionsVersion>
     <MicrosoftExtensionsLoggingVersion>10.0.1</MicrosoftExtensionsLoggingVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
@@ -109,7 +108,7 @@
     <!-- BCL packages -->
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.1" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="$(MicrosoftExtensionsLoggingAbstractionsVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
     <PackageReference Update="System.Buffers" Version="4.5.1" />
     <PackageReference Update="System.ClientModel" Version="1.8.1" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.1" />
@@ -313,7 +312,6 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="$(MicrosoftExtensionsLoggingAbstractionsVersion)" />
   </ItemGroup>
 
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
@@ -514,7 +512,7 @@
   <!-- Versions for internal tooling mapped to the dev feed -->
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20251209.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251219.1</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20251215.3</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251223.1</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20251223.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

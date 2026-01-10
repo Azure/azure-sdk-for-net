@@ -34,8 +34,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private static string? s_operatingSystem;
 
-        private string? _language;
-
         private readonly string? _customer_Ikey;
 
         private readonly IPlatform _platform;
@@ -114,21 +112,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     SetResourceProviderDetails(_platform);
                 }
 
-                // Lazy initialize language based on VersionType which gets set when customer's Resource is processed.
-                if (_language == null)
-                {
-                    _language = SdkVersionUtils.VersionType switch
-                    {
-                        SdkVersionType.Distro => "dotnet-distro",
-                        SdkVersionType.ShimBase => "dotnet-shim",
-                        SdkVersionType.ShimAspNetCore => "dotnet-core",
-                        SdkVersionType.ShimWorkerService => "dotnet-worker",
-                        SdkVersionType.ShimWeb => "dotnet-web",
-                        SdkVersionType.ShimNLog => "dotnet-nlog",
-                        _ => "dotnet-exp"
-                    };
-                }
-
                 return
                     new Measurement<int>(1,
                         new("rp", _resourceProvider),
@@ -136,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         new("attach", s_hasSdkPrefix ? "IntegratedAuto" : "Manual"),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
-                        new("language", _language),
+                        new("language", "dotnet"),
                         new("version", s_sdkVersion),
                         new("os", s_operatingSystem));
             }

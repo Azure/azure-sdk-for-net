@@ -24,18 +24,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
         /// <param name="something"> something. </param>
         /// <param name="prop1"></param>
-        /// <param name="nestedProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedProperty"/> is null. </exception>
-        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, NestedFooModel nestedProperty)
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
-            Argument.AssertNotNull(nestedProperty, nameof(nestedProperty));
+            Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
             Something = something;
             Prop1 = prop1.ToList();
             Prop2 = new ChangeTrackingList<int>();
-            NestedProperty = nestedProperty;
+            NestedProperty = new NestedFooModel(nestedPropertyProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
@@ -125,17 +125,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
         }
 
-        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        /// <summary> Gets the FlattenedProperty. </summary>
         [WirePath("optionalProperty.flattenedProperty")]
-        public string FlattenedProperty
+        public IList<string> FlattenedProperty
         {
             get
             {
-                return OptionalProperty is null ? default : OptionalProperty.FlattenedProperty;
-            }
-            set
-            {
-                OptionalProperty = new SafeFlattenModel(value);
+                if (OptionalProperty is null)
+                {
+                    OptionalProperty = new SafeFlattenModel();
+                }
+                return OptionalProperty.FlattenedProperty;
             }
         }
     }

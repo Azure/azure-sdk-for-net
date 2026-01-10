@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -34,6 +35,9 @@ namespace Azure.Generator.Management
 
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
+        private CSharpType? _modelReaderWriterContextType;
+        internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
@@ -318,6 +322,9 @@ namespace Azure.Generator.Management
             }
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
+            // Extract array response collection results from all methods
+            var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
+
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 WirePathAttributeDefinition,
@@ -331,7 +338,45 @@ namespace Azure.Generator.Management
                 ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
+                .. arrayResponseCollectionResults,
                 .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+        }
+
+        private List<ArrayResponseCollectionResultDefinition> ExtractArrayResponseCollectionResults()
+        {
+            var collectionResults = new List<ArrayResponseCollectionResultDefinition>();
+
+            // Check all resource providers
+            foreach (var resource in ResourceProviders)
+            {
+                ExtractCollectionResultsFromMethods(resource.Methods, collectionResults);
+            }
+
+            // Check all resource collection providers
+            foreach (var collection in ResourceCollectionProviders)
+            {
+                ExtractCollectionResultsFromMethods(collection.Methods, collectionResults);
+            }
+
+            // Check all mockable resource providers
+            foreach (var mockableResource in MockableResourceProviders)
+            {
+                ExtractCollectionResultsFromMethods(mockableResource.Methods, collectionResults);
+            }
+
+            return collectionResults;
+        }
+
+        private void ExtractCollectionResultsFromMethods(IReadOnlyList<MethodProvider> methods, List<ArrayResponseCollectionResultDefinition> collectionResults)
+        {
+            foreach (var method in methods)
+            {
+                // Check if this is an ScmMethodProvider with an ArrayResponseCollectionResultDefinition
+                if (method is ScmMethodProvider { CollectionDefinition: ArrayResponseCollectionResultDefinition arrayCollectionResult })
+                {
+                    collectionResults.Add(arrayCollectionResult);
+                }
+            }
         }
 
         private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()

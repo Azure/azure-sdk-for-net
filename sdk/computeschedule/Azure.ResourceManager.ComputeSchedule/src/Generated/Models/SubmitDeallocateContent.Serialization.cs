@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class SubmitDeallocateContent : IUtf8JsonSerializable, IJsonModel<SubmitDeallocateContent>
+    /// <summary> The deallocate request for resources. </summary>
+    public partial class SubmitDeallocateContent : IJsonModel<SubmitDeallocateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubmitDeallocateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SubmitDeallocateContent"/> for deserialization. </summary>
+        internal SubmitDeallocateContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubmitDeallocateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubmitDeallocateContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("executionParameters"u8);
@@ -42,15 +48,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteObjectValue(Resources, options);
             writer.WritePropertyName("correlationid"u8);
             writer.WriteStringValue(CorrelationId);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -59,22 +65,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        SubmitDeallocateContent IJsonModel<SubmitDeallocateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubmitDeallocateContent IJsonModel<SubmitDeallocateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SubmitDeallocateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubmitDeallocateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSubmitDeallocateContent(document.RootElement, options);
         }
 
-        internal static SubmitDeallocateContent DeserializeSubmitDeallocateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SubmitDeallocateContent DeserializeSubmitDeallocateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,44 +93,45 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             UserRequestSchedule schedule = default;
             ScheduledActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
-            string correlationid = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string correlationId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("schedule"u8))
+                if (prop.NameEquals("schedule"u8))
                 {
-                    schedule = UserRequestSchedule.DeserializeUserRequestSchedule(property.Value, options);
+                    schedule = UserRequestSchedule.DeserializeUserRequestSchedule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("executionParameters"u8))
+                if (prop.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(property.Value, options);
+                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resources"u8))
+                if (prop.NameEquals("resources"u8))
                 {
-                    resources = UserRequestResources.DeserializeUserRequestResources(property.Value, options);
+                    resources = UserRequestResources.DeserializeUserRequestResources(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("correlationid"u8))
+                if (prop.NameEquals("correlationid"u8))
                 {
-                    correlationid = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SubmitDeallocateContent(schedule, executionParameters, resources, correlationid, serializedAdditionalRawData);
+            return new SubmitDeallocateContent(schedule, executionParameters, resources, correlationId, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SubmitDeallocateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SubmitDeallocateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -129,15 +141,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        SubmitDeallocateContent IPersistableModel<SubmitDeallocateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubmitDeallocateContent IPersistableModel<SubmitDeallocateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SubmitDeallocateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSubmitDeallocateContent(document.RootElement, options);
                     }
                 default:
@@ -145,6 +162,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SubmitDeallocateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="submitDeallocateContent"> The <see cref="SubmitDeallocateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SubmitDeallocateContent submitDeallocateContent)
+        {
+            if (submitDeallocateContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(submitDeallocateContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

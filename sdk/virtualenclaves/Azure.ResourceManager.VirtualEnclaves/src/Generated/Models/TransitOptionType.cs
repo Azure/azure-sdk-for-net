@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct TransitOptionType : IEquatable<TransitOptionType>
     {
         private readonly string _value;
+        /// <summary> TransitOptionType ExpressRoute. </summary>
+        private const string ExpressRouteValue = "ExpressRoute";
+        /// <summary> TransitOptionType Gateway. </summary>
+        private const string GatewayValue = "Gateway";
+        /// <summary> TransitOptionType Peering. </summary>
+        private const string PeeringValue = "Peering";
 
         /// <summary> Initializes a new instance of <see cref="TransitOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransitOptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExpressRouteValue = "ExpressRoute";
-        private const string GatewayValue = "Gateway";
-        private const string PeeringValue = "Peering";
+            _value = value;
+        }
 
         /// <summary> TransitOptionType ExpressRoute. </summary>
         public static TransitOptionType ExpressRoute { get; } = new TransitOptionType(ExpressRouteValue);
+
         /// <summary> TransitOptionType Gateway. </summary>
         public static TransitOptionType Gateway { get; } = new TransitOptionType(GatewayValue);
+
         /// <summary> TransitOptionType Peering. </summary>
         public static TransitOptionType Peering { get; } = new TransitOptionType(PeeringValue);
+
         /// <summary> Determines if two <see cref="TransitOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransitOptionType left, TransitOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransitOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransitOptionType left, TransitOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransitOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransitOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransitOptionType(string value) => new TransitOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransitOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransitOptionType?(string value) => value == null ? null : new TransitOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransitOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransitOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

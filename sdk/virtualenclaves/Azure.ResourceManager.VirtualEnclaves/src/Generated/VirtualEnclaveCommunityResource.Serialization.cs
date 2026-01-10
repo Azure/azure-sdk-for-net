@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
+    /// <summary></summary>
     public partial class VirtualEnclaveCommunityResource : IJsonModel<VirtualEnclaveCommunityData>
     {
-        private static VirtualEnclaveCommunityData s_dataDeserializationInstance;
-        private static VirtualEnclaveCommunityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualEnclaveCommunityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualEnclaveCommunityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualEnclaveCommunityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveCommunityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEnclaveCommunityData>)Data).Write(writer, options);
 
-        VirtualEnclaveCommunityData IJsonModel<VirtualEnclaveCommunityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEnclaveCommunityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualEnclaveCommunityData IJsonModel<VirtualEnclaveCommunityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualEnclaveCommunityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualEnclaveCommunityData>(Data, options, AzureResourceManagerVirtualEnclavesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualEnclaveCommunityData IPersistableModel<VirtualEnclaveCommunityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEnclaveCommunityData>(data, options, AzureResourceManagerVirtualEnclavesContext.Default);
 
-        string IPersistableModel<VirtualEnclaveCommunityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualEnclaveCommunityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualEnclaveCommunityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

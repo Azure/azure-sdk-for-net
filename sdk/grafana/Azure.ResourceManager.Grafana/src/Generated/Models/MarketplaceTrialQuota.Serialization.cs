@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class MarketplaceTrialQuota : IUtf8JsonSerializable, IJsonModel<MarketplaceTrialQuota>
+    /// <summary> The allocation details of the per subscription free trial slot of the subscription. </summary>
+    public partial class MarketplaceTrialQuota : IJsonModel<MarketplaceTrialQuota>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceTrialQuota>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MarketplaceTrialQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AvailablePromotion))
             {
                 writer.WritePropertyName("availablePromotion"u8);
@@ -54,15 +55,15 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("trialEndAt"u8);
                 writer.WriteStringValue(TrialEndOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,83 +72,89 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        MarketplaceTrialQuota IJsonModel<MarketplaceTrialQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MarketplaceTrialQuota IJsonModel<MarketplaceTrialQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceTrialQuota JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMarketplaceTrialQuota(document.RootElement, options);
         }
 
-        internal static MarketplaceTrialQuota DeserializeMarketplaceTrialQuota(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MarketplaceTrialQuota DeserializeMarketplaceTrialQuota(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AvailablePromotion? availablePromotion = default;
             ResourceIdentifier grafanaResourceId = default;
-            DateTimeOffset? trialStartAt = default;
-            DateTimeOffset? trialEndAt = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? trialStartOn = default;
+            DateTimeOffset? trialEndOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("availablePromotion"u8))
+                if (prop.NameEquals("availablePromotion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availablePromotion = new AvailablePromotion(property.Value.GetString());
+                    availablePromotion = new AvailablePromotion(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grafanaResourceId"u8))
+                if (prop.NameEquals("grafanaResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    grafanaResourceId = new ResourceIdentifier(property.Value.GetString());
+                    grafanaResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trialStartAt"u8))
+                if (prop.NameEquals("trialStartAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trialStartAt = property.Value.GetDateTimeOffset("O");
+                    trialStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("trialEndAt"u8))
+                if (prop.NameEquals("trialEndAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trialEndAt = property.Value.GetDateTimeOffset("O");
+                    trialEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartAt, trialEndAt, serializedAdditionalRawData);
+            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartOn, trialEndOn, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MarketplaceTrialQuota>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MarketplaceTrialQuota>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -157,15 +164,20 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        MarketplaceTrialQuota IPersistableModel<MarketplaceTrialQuota>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MarketplaceTrialQuota IPersistableModel<MarketplaceTrialQuota>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceTrialQuota PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMarketplaceTrialQuota(document.RootElement, options);
                     }
                 default:
@@ -173,6 +185,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MarketplaceTrialQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

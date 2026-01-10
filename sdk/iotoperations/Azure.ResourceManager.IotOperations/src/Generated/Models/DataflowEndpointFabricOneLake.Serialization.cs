@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class DataflowEndpointFabricOneLake : IUtf8JsonSerializable, IJsonModel<DataflowEndpointFabricOneLake>
+    /// <summary> Microsoft Fabric endpoint properties. </summary>
+    public partial class DataflowEndpointFabricOneLake : IJsonModel<DataflowEndpointFabricOneLake>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowEndpointFabricOneLake>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataflowEndpointFabricOneLake"/> for deserialization. </summary>
+        internal DataflowEndpointFabricOneLake()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowEndpointFabricOneLake>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointFabricOneLake)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("authentication"u8);
             writer.WriteObjectValue(Authentication, options);
             writer.WritePropertyName("names"u8);
@@ -47,15 +52,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("batching"u8);
                 writer.WriteObjectValue(Batching, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,22 +69,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointFabricOneLake IJsonModel<DataflowEndpointFabricOneLake>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointFabricOneLake IJsonModel<DataflowEndpointFabricOneLake>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointFabricOneLake JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointFabricOneLake)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowEndpointFabricOneLake(document.RootElement, options);
         }
 
-        internal static DataflowEndpointFabricOneLake DeserializeDataflowEndpointFabricOneLake(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataflowEndpointFabricOneLake DeserializeDataflowEndpointFabricOneLake(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,58 +99,59 @@ namespace Azure.ResourceManager.IotOperations.Models
             DataflowEndpointFabricPathType oneLakePathType = default;
             string host = default;
             IotOperationsBatchingConfig batching = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    authentication = DataflowEndpointFabricOneLakeAuthentication.DeserializeDataflowEndpointFabricOneLakeAuthentication(property.Value, options);
+                    authentication = DataflowEndpointFabricOneLakeAuthentication.DeserializeDataflowEndpointFabricOneLakeAuthentication(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("names"u8))
+                if (prop.NameEquals("names"u8))
                 {
-                    names = DataflowEndpointFabricOneLakeNames.DeserializeDataflowEndpointFabricOneLakeNames(property.Value, options);
+                    names = DataflowEndpointFabricOneLakeNames.DeserializeDataflowEndpointFabricOneLakeNames(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("oneLakePathType"u8))
+                if (prop.NameEquals("oneLakePathType"u8))
                 {
-                    oneLakePathType = new DataflowEndpointFabricPathType(property.Value.GetString());
+                    oneLakePathType = new DataflowEndpointFabricPathType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("host"u8))
+                if (prop.NameEquals("host"u8))
                 {
-                    host = property.Value.GetString();
+                    host = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("batching"u8))
+                if (prop.NameEquals("batching"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    batching = IotOperationsBatchingConfig.DeserializeIotOperationsBatchingConfig(property.Value, options);
+                    batching = IotOperationsBatchingConfig.DeserializeIotOperationsBatchingConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataflowEndpointFabricOneLake(
                 authentication,
                 names,
                 oneLakePathType,
                 host,
                 batching,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataflowEndpointFabricOneLake>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowEndpointFabricOneLake>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -150,15 +161,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointFabricOneLake IPersistableModel<DataflowEndpointFabricOneLake>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointFabricOneLake IPersistableModel<DataflowEndpointFabricOneLake>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointFabricOneLake PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointFabricOneLake>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataflowEndpointFabricOneLake(document.RootElement, options);
                     }
                 default:
@@ -166,6 +182,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowEndpointFabricOneLake>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
