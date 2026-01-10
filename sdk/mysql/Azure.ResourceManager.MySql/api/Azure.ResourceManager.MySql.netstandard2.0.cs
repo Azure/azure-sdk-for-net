@@ -885,10 +885,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource>> GetMySqlFlexibleServersCapabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string capabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource GetMySqlFlexibleServersCapabilityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersPrivateEndpointConnectionResource GetMySqlFlexibleServersPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated.")]
         public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult> GetOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>> GetOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1067,10 +1065,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> Get(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> GetAll(string tags = null, string keyword = null, int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> GetAllAsync(string tags = null, string keyword = null, int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource>> GetAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> GetIfExists(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1135,12 +1131,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy? MaintenancePatchStrategy { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork Network { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public int? ReplicaCapacity { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole? ReplicationRole { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInOn { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersPrivateEndpointConnectionData> ServerPrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku Sku { get { throw null; } set { } }
@@ -1515,10 +1509,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityCollection GetMySqlFlexibleServersCapabilities(Azure.Core.AzureLocation locationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource> GetMySqlFlexibleServersCapability(Azure.Core.AzureLocation locationName, string capabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource>> GetMySqlFlexibleServersCapabilityAsync(Azure.Core.AzureLocation locationName, string capabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated.")]
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult> GetOperationResult(Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is deprecated.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>> GetOperationResultAsync(Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1539,9 +1531,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public AdvancedThreatProtectionName(string value) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName (string value) { throw null; }
@@ -1570,9 +1560,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState (string value) { throw null; }
@@ -1588,9 +1576,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState (string value) { throw null; }
@@ -1612,7 +1598,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData MySqlFlexibleServerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string currentValue = null, string description = null, string documentationLink = null, string defaultValue = null, string dataType = null, string allowedValues = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource? source = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState? isReadOnly = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState? isDynamicConfig = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData> values) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData> values = null, System.Uri nextLink = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData MySqlFlexibleServerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion? version, string availabilityZone, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode? createMode, Azure.Core.ResourceIdentifier sourceServerResourceId, System.DateTimeOffset? restorePointInTime, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption dataEncryption, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState? state, string fullyQualifiedDomainName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage storage, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties backup, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability highAvailability, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork network, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow maintenanceWindow, Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties importSourceProperties) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData MySqlFlexibleServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string administratorLogin = null, string administratorLoginPassword = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion? version = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion?), string fullVersion = null, string availabilityZone = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode? createMode = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode?), Azure.Core.ResourceIdentifier sourceServerResourceId = null, System.DateTimeOffset? restorePointInOn = default(System.DateTimeOffset?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole? replicationRole = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole?), int? replicaCapacity = default(int?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption dataEncryption = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState? state = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState?), string fullyQualifiedDomainName = null, int? databasePort = default(int?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage storage = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties backup = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability highAvailability = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork network = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy? maintenancePatchStrategy = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow maintenanceWindow = null, Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties importSourceProperties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku sku = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData MySqlFlexibleServerDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string charset = null, string collation = null) { throw null; }
@@ -1630,7 +1615,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> supportedGeoBackupRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2> supportedServerVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFeatureProperty> supportedFeatures = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability MySqlFlexibleServerServerVersionCapability(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability> supportedSkus = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability MySqlFlexibleServerSkuCapability(string name = null, long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVCoreInMB = default(long?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection MySqlFlexibleServersPrivateEndpointConnection(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IEnumerable<string> groupIds, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersPrivateEndpointConnectionData MySqlFlexibleServersPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? autoGrow, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? logOnDisk, string storageSku, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? autoIoScaling) { throw null; }
@@ -1638,9 +1622,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability MySqlFlexibleServerStorageEditionCapability(string name = null, long? minStorageSize = default(long?), long? maxStorageSize = default(long?), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?), long? minBackupIntervalHours = default(long?), long? maxBackupIntervalHours = default(long?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult MySqlFlexibleServerValidateBackupResult(int? numberOfContainers = default(int?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string subscriptionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult OperationStatusExtendedResult(Azure.Core.ResourceIdentifier id, Azure.Core.ResourceIdentifier resourceId, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult> operations, Azure.ResponseError error, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult OperationStatusResult(Azure.Core.ResourceIdentifier id, Azure.Core.ResourceIdentifier resourceId, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult> operations, Azure.ResponseError error) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2 ServerEditionCapabilityV2(string name = null, string defaultSku = null, int? defaultStorageSize = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2> supportedSkus = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2 ServerVersionCapabilityV2(string name = null) { throw null; }
@@ -1681,9 +1663,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public ImportSourceStorageType(string value) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType AzureBlob { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType left, Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType (string value) { throw null; }
@@ -1698,9 +1678,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerAdministratorName(string value) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorName ActiveDirectory { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorName left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorName right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorName (string value) { throw null; }
@@ -1715,9 +1693,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerAdministratorType(string value) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType ActiveDirectory { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType (string value) { throw null; }
@@ -1782,9 +1758,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat CollatedFormat { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat Raw { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat (string value) { throw null; }
@@ -1817,9 +1791,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState (string value) { throw null; }
@@ -1856,9 +1828,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerBackupType(string value) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType Full { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType (string value) { throw null; }
@@ -1875,9 +1845,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBatchOfMaintenance Batch2 { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBatchOfMaintenance Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBatchOfMaintenance other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBatchOfMaintenance left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBatchOfMaintenance right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBatchOfMaintenance (string value) { throw null; }
@@ -1907,9 +1875,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState False { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState (string value) { throw null; }
@@ -1925,9 +1891,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState False { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState (string value) { throw null; }
@@ -1943,9 +1907,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState False { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState (string value) { throw null; }
@@ -1986,9 +1948,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault False { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault (string value) { throw null; }
@@ -2016,9 +1976,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource SystemDefault { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource UserOverride { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource (string value) { throw null; }
@@ -2036,9 +1994,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode PointInTimeRestore { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode Replica { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode (string value) { throw null; }
@@ -2110,9 +2066,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum Disabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum (string value) { throw null; }
@@ -2176,9 +2130,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode SameZone { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode ZoneRedundant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode (string value) { throw null; }
@@ -2197,9 +2149,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState NotEnabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState RemovingStandby { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState (string value) { throw null; }
@@ -2243,9 +2193,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState (string value) { throw null; }
@@ -2265,9 +2213,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState ReScheduled { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState Scheduled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState (string value) { throw null; }
@@ -2285,9 +2231,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType RoutineMaintenance { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType SecurityPatches { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType (string value) { throw null; }
@@ -2379,9 +2323,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy Regular { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy VirtualCanary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatchStrategy (string value) { throw null; }
@@ -2409,9 +2351,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole Replica { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole Source { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole (string value) { throw null; }
@@ -2478,9 +2418,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier GeneralPurpose { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier MemoryOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier (string value) { throw null; }
@@ -2512,9 +2450,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -2531,9 +2467,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -2567,9 +2501,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState Stopping { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState (string value) { throw null; }
@@ -2619,9 +2551,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageRedundancyType LocalRedundancy { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageRedundancyType ZoneRedundancy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageRedundancyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageRedundancyType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageRedundancyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageRedundancyType (string value) { throw null; }
@@ -2648,9 +2578,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Ver5_7 { get { throw null; } }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Ver8_0_21 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion (string value) { throw null; }
@@ -2681,7 +2609,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class OperationStatusExtendedResult : Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>
     {
         internal OperationStatusExtendedResult() { }
@@ -2693,7 +2620,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class OperationStatusResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>
     {
         internal OperationStatusResult() { }
@@ -2840,9 +2766,7 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlAdministratorType(string value) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlAdministratorType ActiveDirectory { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlAdministratorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlAdministratorType left, Azure.ResourceManager.MySql.Models.MySqlAdministratorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlAdministratorType (string value) { throw null; }
@@ -2869,9 +2793,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup Disabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup left, Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup (string value) { throw null; }
@@ -2887,9 +2809,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption Disabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption left, Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption (string value) { throw null; }
@@ -2922,9 +2842,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_2 { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLSEnforcementDisabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum left, Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum (string value) { throw null; }
@@ -3015,9 +2933,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState Ready { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState Rejecting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState left, Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState (string value) { throw null; }
@@ -3057,9 +2973,7 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlPrivateLinkServiceConnectionStateRequiredAction(string value) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction left, Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction (string value) { throw null; }
@@ -3077,9 +2991,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus left, Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus (string value) { throw null; }
@@ -3095,9 +3007,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum Disabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum left, Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum (string value) { throw null; }
@@ -3125,9 +3035,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState Failed { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState left, Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState (string value) { throw null; }
@@ -3158,9 +3066,7 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlSecurityAlertPolicyName(string value) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName left, Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName (string value) { throw null; }
@@ -3190,9 +3096,7 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlServerKeyType(string value) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlServerKeyType AzureKeyVault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlServerKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlServerKeyType left, Azure.ResourceManager.MySql.Models.MySqlServerKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlServerKeyType (string value) { throw null; }
@@ -3335,9 +3239,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlServerState Inaccessible { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlServerState Ready { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlServerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlServerState left, Azure.ResourceManager.MySql.Models.MySqlServerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlServerState (string value) { throw null; }
@@ -3365,9 +3267,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver5_7 { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver8_0 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlServerVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlServerVersion left, Azure.ResourceManager.MySql.Models.MySqlServerVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlServerVersion (string value) { throw null; }
@@ -3399,9 +3299,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlSkuTier GeneralPurpose { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlSkuTier MemoryOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlSkuTier left, Azure.ResourceManager.MySql.Models.MySqlSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlSkuTier (string value) { throw null; }
@@ -3422,9 +3320,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow Disabled { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow left, Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow (string value) { throw null; }
@@ -3473,9 +3369,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState Ready { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState left, Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState (string value) { throw null; }

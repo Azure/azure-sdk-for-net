@@ -1000,9 +1000,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus NotRegistered { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus Registered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus (string value) { throw null; }
@@ -1049,9 +1047,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType Feeds { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType UrlCustom { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType (string value) { throw null; }
@@ -1068,9 +1064,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType Disabled { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType (string value) { throw null; }
@@ -1087,9 +1081,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType Disabled { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType (string value) { throw null; }
@@ -1150,22 +1142,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter FirewallRuleResetConter(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo FirewallSupportInfo(string productSku = null, string productSerial = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? accountRegistered = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), string accountId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? userDomainSupported = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? userRegistered = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? freeTrial = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), int? freeTrialDaysLeft = default(int?), int? freeTrialCreditLeft = default(int?), string helpURL = null, string supportURL = null, string registerURL = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties FirewallUpdateProperties(Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isStrataCloudManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, string cloudManagerName = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string certificateSignerResourceId, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string certificateSignerResourceId, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? certificateSelfSigned = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData GlobalRulestackData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData GlobalRulestackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData GlobalRulestackFqdnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> fqdnList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo GlobalRulestackInfo(string azureId = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData GlobalRulestackPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> prefixList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties GlobalRulestackUpdateProperties(Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string certificateSignerResourceId, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string certificateSignerResourceId, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? certificateSelfSigned = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData LocalRulestackData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData LocalRulestackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData LocalRulestackFqdnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> fqdnList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
@@ -1175,11 +1161,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties LocalRulestackUpdateProperties(Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData MetricsObjectFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string applicationInsightsResourceId = null, string applicationInsightsConnectionString = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject NameDescriptionObject(string name = null, string description = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isStrataCloudManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null, string cloudManagerName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch PaloAltoNetworksFirewallPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? healthStatus, string healthReason, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus panoramaStatus, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? provisioningState) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? healthStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus?), string healthReason = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus panoramaStatus = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isStrataCloudManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo strataCloudManagerInfo = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails PanFirewallMarketplaceDetails(string marketplaceSubscriptionId = null, string offerId = null, string publisherId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus?)) { throw null; }
@@ -1220,9 +1204,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType SslInboundInspection { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType SslOutboundInspection { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType (string value) { throw null; }
@@ -1272,9 +1254,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType Azure { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType Custom { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType (string value) { throw null; }
@@ -1324,9 +1304,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle Monthly { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle Weekly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle (string value) { throw null; }
@@ -1360,9 +1338,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType Committed { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType Payg { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType (string value) { throw null; }
@@ -1379,9 +1355,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType False { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType (string value) { throw null; }
@@ -1448,9 +1422,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus Red { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus Yellow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus (string value) { throw null; }
@@ -1483,9 +1455,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption IndividualDestination { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption SameDestination { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption (string value) { throw null; }
@@ -1526,9 +1496,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType Traffic { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType Wildfire { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType (string value) { throw null; }
@@ -1566,9 +1534,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType Vnet { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType Vwan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType (string value) { throw null; }
@@ -1606,9 +1572,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus Down { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus Up { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus (string value) { throw null; }
@@ -1640,9 +1604,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType Tcp { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType (string value) { throw null; }
@@ -1666,9 +1628,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState (string value) { throw null; }
@@ -1686,9 +1646,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType Failed { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType (string value) { throw null; }
@@ -1830,9 +1788,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus (string value) { throw null; }
@@ -1971,9 +1927,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
@@ -2106,9 +2060,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode IPS { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode (string value) { throw null; }
@@ -2127,9 +2079,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType DenyResetServer { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType DenySilent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType (string value) { throw null; }
@@ -2193,9 +2143,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType Global { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType Local { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType (string value) { throw null; }
@@ -2252,9 +2200,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType IPsVulnerability { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType UrlFiltering { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType (string value) { throw null; }
@@ -2286,9 +2232,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType Disabled { get { throw null; } }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType (string value) { throw null; }

@@ -247,9 +247,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.Models.Category Performance { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.Category Security { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.Category other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.Category left, Azure.ResourceManager.Advisor.Models.Category right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.Category (string value) { throw null; }
@@ -277,9 +275,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public ConfigurationName(string value) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.ConfigurationName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.ConfigurationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.ConfigurationName left, Azure.ResourceManager.Advisor.Models.ConfigurationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.ConfigurationName (string value) { throw null; }
@@ -297,9 +293,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.Models.CpuThreshold Ten { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.CpuThreshold Twenty { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.CpuThreshold other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.CpuThreshold left, Azure.ResourceManager.Advisor.Models.CpuThreshold right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.CpuThreshold (string value) { throw null; }
@@ -331,9 +325,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.Models.DigestConfigState Active { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.DigestConfigState Disabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.DigestConfigState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.DigestConfigState left, Azure.ResourceManager.Advisor.Models.DigestConfigState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.DigestConfigState (string value) { throw null; }
@@ -350,9 +342,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.Models.Impact Low { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.Impact Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.Impact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.Impact left, Azure.ResourceManager.Advisor.Models.Impact right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.Impact (string value) { throw null; }
@@ -396,9 +386,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.Models.Risk None { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.Risk Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.Risk other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.Risk left, Azure.ResourceManager.Advisor.Models.Risk right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.Risk (string value) { throw null; }
@@ -413,9 +401,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public Scenario(string value) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.Scenario Alerts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.Scenario other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Advisor.Models.Scenario left, Azure.ResourceManager.Advisor.Models.Scenario right) { throw null; }
         public static implicit operator Azure.ResourceManager.Advisor.Models.Scenario (string value) { throw null; }

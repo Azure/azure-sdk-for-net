@@ -602,9 +602,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType Transit { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType Voice { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.DirectPeeringType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.DirectPeeringType left, Azure.ResourceManager.Peering.Models.DirectPeeringType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.DirectPeeringType (string value) { throw null; }
@@ -650,9 +648,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.LegacyPeeringsKind Direct { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.LegacyPeeringsKind Exchange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.LegacyPeeringsKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.LegacyPeeringsKind left, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.LegacyPeeringsKind (string value) { throw null; }
@@ -669,9 +665,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.LookingGlassCommand Ping { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.LookingGlassCommand Traceroute { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.LookingGlassCommand other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.LookingGlassCommand left, Azure.ResourceManager.Peering.Models.LookingGlassCommand right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.LookingGlassCommand (string value) { throw null; }
@@ -699,9 +693,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.LookingGlassSourceType AzureRegion { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.LookingGlassSourceType EdgeSite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.LookingGlassSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.LookingGlassSourceType left, Azure.ResourceManager.Peering.Models.LookingGlassSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.LookingGlassSourceType (string value) { throw null; }
@@ -732,9 +724,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeerAsnValidationState None { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeerAsnValidationState Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeerAsnValidationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeerAsnValidationState left, Azure.ResourceManager.Peering.Models.PeerAsnValidationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeerAsnValidationState (string value) { throw null; }
@@ -791,9 +781,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState TypeChangeRequested { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState Validating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringConnectionState left, Azure.ResourceManager.Peering.Models.PeeringConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringConnectionState (string value) { throw null; }
@@ -844,9 +832,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringFamily Direct { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringFamily Exchange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringFamily left, Azure.ResourceManager.Peering.Models.PeeringFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringFamily (string value) { throw null; }
@@ -862,9 +848,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringKind Direct { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringKind Exchange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringKind left, Azure.ResourceManager.Peering.Models.PeeringKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringKind (string value) { throw null; }
@@ -881,9 +865,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringLearnedType ViaServiceProvider { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLearnedType ViaSession { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringLearnedType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringLearnedType left, Azure.ResourceManager.Peering.Models.PeeringLearnedType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLearnedType (string value) { throw null; }
@@ -921,9 +903,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType Transit { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType Voice { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType left, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType (string value) { throw null; }
@@ -939,9 +919,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsKind Direct { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsKind Exchange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringLocationsKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringLocationsKind left, Azure.ResourceManager.Peering.Models.PeeringLocationsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLocationsKind (string value) { throw null; }
@@ -985,9 +963,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState Verified { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState left, Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState (string value) { throw null; }
@@ -1005,9 +981,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringProvisioningState left, Azure.ResourceManager.Peering.Models.PeeringProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringProvisioningState (string value) { throw null; }
@@ -1055,9 +1029,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringRole Service { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringRole Technical { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringRole left, Azure.ResourceManager.Peering.Models.PeeringRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringRole (string value) { throw null; }
@@ -1133,9 +1105,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability Available { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability left, Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability (string value) { throw null; }
@@ -1151,9 +1121,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider Microsoft { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider Peer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider left, Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider (string value) { throw null; }
@@ -1178,9 +1146,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 PendingRemove { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 PendingUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 left, Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 (string value) { throw null; }
@@ -1205,9 +1171,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 PendingRemove { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 PendingUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 left, Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 (string value) { throw null; }
@@ -1224,9 +1188,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringSize Metered { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringSize Unlimited { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSize left, Azure.ResourceManager.Peering.Models.PeeringSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSize (string value) { throw null; }
@@ -1256,9 +1218,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringTier Basic { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringTier Premium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringTier left, Azure.ResourceManager.Peering.Models.PeeringTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringTier (string value) { throw null; }

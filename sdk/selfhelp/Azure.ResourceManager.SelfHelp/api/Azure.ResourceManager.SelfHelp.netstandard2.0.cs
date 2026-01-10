@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.SelfHelp
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> GetSelfHelpSimplifiedSolution(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetSelfHelpSimplifiedSolutionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -238,9 +236,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(Azure.Core.ResourceIdentifier scope) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> GetSelfHelpSimplifiedSolution(Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetSelfHelpSimplifiedSolutionAsync(Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -296,7 +292,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData SelfHelpSimplifiedSolutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, System.Collections.Generic.IDictionary<string, string> parameters = null, string title = null, System.Collections.Generic.IReadOnlyDictionary<string, string> appendix = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpSolutionData SelfHelpSolutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion> triggerCriteria = null, System.Collections.Generic.IDictionary<string, string> parameters = null, string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState?), string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps replacementMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> sections = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> solutions = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredParameterSets) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch SelfHelpSolutionPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion> triggerCriteria = null, System.Collections.Generic.IDictionary<string, string> parameters = null, string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState?), string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps replacementMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> sections = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult SelfHelpSolutionResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult replacementMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionSection> sections = null) { throw null; }
@@ -338,9 +333,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType Success { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType left, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType (string value) { throw null; }
@@ -359,9 +352,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Min { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Sum { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType left, Azure.ResourceManager.SelfHelp.Models.ChartAggregationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.ChartAggregationType (string value) { throw null; }
@@ -422,9 +413,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.KBSearchResultType Community { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.KBSearchResultType Documentation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType left, Azure.ResourceManager.SelfHelp.Models.KBSearchResultType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.KBSearchResultType (string value) { throw null; }
@@ -520,9 +509,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence Low { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence left, Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence (string value) { throw null; }
@@ -581,9 +568,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus Timeout { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus left, Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus (string value) { throw null; }
@@ -627,9 +612,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel Information { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel left, Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel (string value) { throw null; }
@@ -646,9 +629,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpName ReplacementKey { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpName SolutionId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpName left, Azure.ResourceManager.SelfHelp.Models.SelfHelpName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpName (string value) { throw null; }
@@ -692,9 +673,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState left, Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState (string value) { throw null; }
@@ -717,14 +696,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class SelfHelpSolutionMetadata : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>
     {
         public SelfHelpSolutionMetadata() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Description { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> RequiredParameterSets { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SolutionId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> Solutions { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SolutionType { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -777,9 +752,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType Solutions { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType Troubleshooters { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType left, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType (string value) { throw null; }
@@ -820,9 +793,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Insight { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Solution { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpType left, Azure.ResourceManager.SelfHelp.Models.SelfHelpType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpType (string value) { throw null; }
@@ -882,9 +853,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState left, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState (string value) { throw null; }
@@ -996,9 +965,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus Success { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus (string value) { throw null; }
@@ -1017,9 +984,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState (string value) { throw null; }
@@ -1036,9 +1001,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType Markdown { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType Text { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType (string value) { throw null; }
@@ -1058,9 +1021,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType RadioButton { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType TextInput { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType (string value) { throw null; }
@@ -1112,9 +1073,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope NumberOnlyFormat { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope UrlFormat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope (string value) { throw null; }

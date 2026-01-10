@@ -272,7 +272,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     }
     public static partial class ArmNewRelicObservabilityModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NewRelicObservability.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceSubscriptionName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceSubscriptionName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, string publisherId = null, string offerId = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData NewRelicAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?)) { throw null; }
@@ -286,9 +285,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.NewRelicMonitoredSubscriptionData NewRelicMonitoredSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoredSubscriptionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoredSubscriptionProperties NewRelicMonitoredSubscriptionProperties(Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation? patchOperation = default(Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringTagRules NewRelicMonitoringTagRules(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules logRules = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules metricRules = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData NewRelicMonitorResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus? monitoringStatus, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties newRelicAccountProperties, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo userInfo, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData NewRelicMonitorResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus? monitoringStatus, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties newRelicAccountProperties, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo userInfo, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource, string subscriptionState, string saaSAzureSubscriptionStatus) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData NewRelicMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus?), string marketplaceSubscriptionId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties newRelicAccountProperties = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo userInfo = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, string saaSResourceId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory?), int? liftrResourcePreference = default(int?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource?), string subscriptionState = null, string saaSAzureSubscriptionStatus = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(Azure.Core.ResourceIdentifier azureResourceId = null, string agentVersion = null, string agentStatus = null) { throw null; }
@@ -328,9 +325,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public MonitoredSubscriptionConfigurationName(string value) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionConfigurationName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionConfigurationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionConfigurationName left, Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionConfigurationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionConfigurationName (string value) { throw null; }
@@ -349,9 +344,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation DeleteBegin { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation DeleteComplete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation left, Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.MonitoredSubscriptionPatchOperation (string value) { throw null; }
@@ -456,9 +449,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory MonitorLogs { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory (string value) { throw null; }
@@ -537,9 +528,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus (string value) { throw null; }
@@ -586,9 +575,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource Liftr { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource Newrelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource (string value) { throw null; }
@@ -631,9 +618,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle Weekly { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle Yearly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle (string value) { throw null; }
@@ -649,9 +634,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource Azure { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource Newrelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource (string value) { throw null; }
@@ -706,9 +689,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus Active { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -737,9 +718,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus (string value) { throw null; }
@@ -755,9 +734,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource Liftr { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource Newrelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource (string value) { throw null; }
@@ -795,9 +772,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus (string value) { throw null; }
@@ -813,9 +788,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus (string value) { throw null; }
@@ -831,9 +804,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus (string value) { throw null; }
@@ -849,9 +820,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus (string value) { throw null; }
@@ -867,9 +836,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus (string value) { throw null; }
@@ -885,9 +852,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus IsDisabled { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus IsEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus (string value) { throw null; }
@@ -903,9 +868,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction Exclude { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction Include { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction (string value) { throw null; }
@@ -933,9 +896,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType Committed { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType Payg { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType (string value) { throw null; }
@@ -1038,9 +999,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState (string value) { throw null; }
@@ -1087,9 +1046,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState Existing { get { throw null; } }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState (string value) { throw null; }

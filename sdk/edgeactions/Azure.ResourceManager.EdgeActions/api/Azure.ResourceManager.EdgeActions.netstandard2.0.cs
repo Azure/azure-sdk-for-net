@@ -295,9 +295,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion False { get { throw null; } }
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion left, Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeActions.Models.EdgeActionIsDefaultVersion (string value) { throw null; }
@@ -332,9 +330,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState left, Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeActions.Models.EdgeActionProvisioningState (string value) { throw null; }
@@ -382,9 +378,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType Others { get { throw null; } }
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType Zip { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType left, Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionDeploymentType (string value) { throw null; }
@@ -419,9 +413,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus left, Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeActions.Models.EdgeActionVersionValidationStatus (string value) { throw null; }

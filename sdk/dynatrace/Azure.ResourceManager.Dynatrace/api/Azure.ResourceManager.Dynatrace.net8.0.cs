@@ -107,10 +107,8 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo> GetAccountCredentials(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo> GetAppServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -130,10 +128,8 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceMetricsStatusResult> GetMetricStatus(Azure.ResourceManager.Dynatrace.Models.DynatraceMetricStatusContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceMetricsStatusResult>> GetMetricStatusAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceMetricStatusContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails> GetMonitoredResources(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails> GetMonitoredResources(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult> GetSsoDetails(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>> GetSsoDetailsAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -229,7 +225,6 @@ namespace Azure.ResourceManager.Dynatrace
         public DynatraceTagRuleData() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules LogRules { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceMetricRules MetricRules { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -258,10 +253,8 @@ namespace Azure.ResourceManager.Dynatrace
         Azure.ResourceManager.Dynatrace.DynatraceTagRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Update(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Dynatrace.DynatraceTagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Dynatrace.DynatraceTagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -303,9 +296,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus (string value) { throw null; }
@@ -322,9 +313,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus (string value) { throw null; }
@@ -351,7 +340,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties DynatraceSingleSignOnProperties(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState? singleSignOnState = default(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState?), System.Guid? enterpriseAppId = default(System.Guid?), System.Uri singleSignOnUri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? provisioningState = default(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult DynatraceSsoDetailsResult(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus? isSsoEnabled = default(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus?), System.Uri metadataUri = null, System.Uri singleSignOnUri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null, System.Collections.Generic.IEnumerable<string> adminUsers = null) { throw null; }
         public static Azure.ResourceManager.Dynatrace.DynatraceTagRuleData DynatraceTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules logRules = null, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceMetricRules metricRules = null, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? provisioningState = default(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Dynatrace.DynatraceTagRuleData DynatraceTagRuleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules logRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? provisioningState = default(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceTagRuleProperties DynatraceTagRuleProperties(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules logRules = null, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceMetricRules metricRules = null, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? provisioningState = default(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload DynatraceVmExtensionPayload(string ingestionKey = null, string environmentId = null) { throw null; }
@@ -360,7 +348,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.MarketplaceSaaSResourceDetailsContent MarketplaceSaaSResourceDetailsContent(System.Guid tenantId = default(System.Guid)) { throw null; }
         public static Azure.ResourceManager.Dynatrace.Models.MarketplaceSaaSResourceDetailsResult MarketplaceSaaSResourceDetailsResult(Azure.Core.ResourceIdentifier marketplaceSaaSResourceId = null, string planId = null, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus?), string marketplaceSaaSResourceName = null) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DynatraceAccountCredentialsInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>
     {
         internal DynatraceAccountCredentialsInfo() { }
@@ -399,9 +386,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceAgentAction Install { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceAgentAction Uninstall { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceAgentAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceAgentAction left, Azure.ResourceManager.Dynatrace.Models.DynatraceAgentAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceAgentAction (string value) { throw null; }
@@ -469,9 +454,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState left, Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState (string value) { throw null; }
@@ -565,9 +548,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredSubscriptionOperation DeleteBegin { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredSubscriptionOperation DeleteComplete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredSubscriptionOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredSubscriptionOperation left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredSubscriptionOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredSubscriptionOperation (string value) { throw null; }
@@ -619,9 +600,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringState Failed { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringState InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringState left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringState (string value) { throw null; }
@@ -638,9 +617,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus (string value) { throw null; }
@@ -658,9 +635,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -671,18 +646,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public partial class DynatraceMonitorPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>
     {
         public DynatraceMonitorPatch() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus? MonitoringStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo MonitorUpdatePlanData { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -751,9 +721,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction Exclude { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction Include { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction (string value) { throw null; }
@@ -810,9 +778,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting (string value) { throw null; }
@@ -835,9 +801,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState Unmonitored { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState (string value) { throw null; }
@@ -877,9 +841,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType Discovery { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType FullStack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType (string value) { throw null; }
@@ -903,9 +865,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus UpdateProblem { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus UpToDate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus (string value) { throw null; }
@@ -929,9 +889,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState left, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState (string value) { throw null; }
@@ -968,9 +926,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState Existing { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState (string value) { throw null; }
@@ -1020,9 +976,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus (string value) { throw null; }
@@ -1030,7 +984,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DynatraceTagRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>
     {
         public DynatraceTagRulePatch() { }
@@ -1097,9 +1050,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory MonitorLogs { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory left, Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory (string value) { throw null; }
@@ -1149,9 +1100,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus (string value) { throw null; }
@@ -1183,9 +1132,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.MarketplaceSaasAutoRenew Off { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.MarketplaceSaasAutoRenew On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.MarketplaceSaasAutoRenew other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MarketplaceSaasAutoRenew left, Azure.ResourceManager.Dynatrace.Models.MarketplaceSaasAutoRenew right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.MarketplaceSaasAutoRenew (string value) { throw null; }
@@ -1233,9 +1180,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus (string value) { throw null; }
@@ -1252,9 +1197,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus left, Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus (string value) { throw null; }

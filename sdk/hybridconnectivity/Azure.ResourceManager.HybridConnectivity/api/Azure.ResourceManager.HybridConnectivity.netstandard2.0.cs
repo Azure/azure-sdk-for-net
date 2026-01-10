@@ -417,9 +417,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public CloudNativeType(string value) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType Ec2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType left, Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.CloudNativeType (string value) { throw null; }
@@ -470,9 +468,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType Custom { get { throw null; } }
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityEndpointType (string value) { throw null; }
@@ -510,9 +506,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityProvisioningState (string value) { throw null; }
@@ -539,9 +533,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName SSH { get { throw null; } }
         public static Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName WAC { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName left, Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.HybridConnectivityServiceName (string value) { throw null; }
@@ -678,9 +670,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudConnectorSolutionConfigurationStatus (string value) { throw null; }
@@ -748,9 +738,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public PublicCloudHostType(string value) { throw null; }
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType Aws { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudHostType (string value) { throw null; }
@@ -783,9 +771,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState left, Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.PublicCloudResourceProvisioningState (string value) { throw null; }

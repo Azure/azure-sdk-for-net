@@ -37,9 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.AssetKind Qnas { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.AssetKind Synonyms { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind left, Azure.AI.Language.QuestionAnswering.Authoring.AssetKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.AssetKind (string value) { throw null; }
@@ -75,9 +73,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.FileFormat Json { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.FileFormat Tsv { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.FileFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.FileFormat left, Azure.AI.Language.QuestionAnswering.Authoring.FileFormat right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.FileFormat (string value) { throw null; }
@@ -149,9 +145,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseSourceKind File { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseSourceKind Url { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseSourceKind left, Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseSourceKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.KnowledgeBaseSourceKind (string value) { throw null; }
@@ -219,9 +213,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience AzureGovernment { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience left, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience (string value) { throw null; }
@@ -379,9 +371,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringErrorCode Unauthorized { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringErrorCode Warning { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringErrorCode left, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringErrorCode right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringErrorCode (string value) { throw null; }
@@ -442,9 +432,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringInnerErrorCode ModelVersionIncorrect { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringInnerErrorCode UnsupportedLanguageCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringInnerErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringInnerErrorCode left, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringInnerErrorCode right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringInnerErrorCode (string value) { throw null; }
@@ -480,9 +468,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringJobStatus Running { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringJobStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringJobStatus left, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringJobStatus right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringJobStatus (string value) { throw null; }
@@ -629,9 +615,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public SourceContentStructureKind(string value) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind Unstructured { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind left, Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind (string value) { throw null; }
