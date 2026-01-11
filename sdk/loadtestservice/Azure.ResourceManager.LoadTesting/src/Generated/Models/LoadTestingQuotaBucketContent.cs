@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Request object of new quota for a quota bucket. </summary>
-    public partial class LoadTestingQuotaBucketContent : ResourceData
+    public partial class LoadTestingQuotaBucketContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
         public LoadTestingQuotaBucketContent()
@@ -53,31 +22,83 @@ namespace Azure.ResourceManager.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="currentUsage"> Current quota usage of the quota bucket. </param>
-        /// <param name="currentQuota"> Current quota limit of the quota bucket. </param>
-        /// <param name="newQuota"> New quota limit of the quota bucket. </param>
-        /// <param name="dimensions"> Dimensions for new quota request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaBucketContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? currentUsage, int? currentQuota, int? newQuota, LoadTestingQuotaBucketDimensions dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Request object of new quota for a quota bucket. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaBucketContent(QuotaBucketRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CurrentUsage = currentUsage;
-            CurrentQuota = currentQuota;
-            NewQuota = newQuota;
-            Dimensions = dimensions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Request object of new quota for a quota bucket. </summary>
+        internal QuotaBucketRequestProperties Properties { get; set; }
+
         /// <summary> Current quota usage of the quota bucket. </summary>
-        public int? CurrentUsage { get; set; }
+        public int? CurrentUsage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentUsage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaBucketRequestProperties();
+                }
+                Properties.CurrentUsage = value.Value;
+            }
+        }
+
         /// <summary> Current quota limit of the quota bucket. </summary>
-        public int? CurrentQuota { get; set; }
+        public int? CurrentQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentQuota;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaBucketRequestProperties();
+                }
+                Properties.CurrentQuota = value.Value;
+            }
+        }
+
         /// <summary> New quota limit of the quota bucket. </summary>
-        public int? NewQuota { get; set; }
+        public int? NewQuota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NewQuota;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaBucketRequestProperties();
+                }
+                Properties.NewQuota = value.Value;
+            }
+        }
+
         /// <summary> Dimensions for new quota request. </summary>
-        public LoadTestingQuotaBucketDimensions Dimensions { get; set; }
+        public LoadTestingQuotaBucketDimensions Dimensions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Dimensions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaBucketRequestProperties();
+                }
+                Properties.Dimensions = value;
+            }
+        }
     }
 }

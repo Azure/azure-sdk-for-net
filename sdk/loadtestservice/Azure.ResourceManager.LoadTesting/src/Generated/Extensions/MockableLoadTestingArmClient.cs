@@ -6,56 +6,42 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableLoadTestingArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableLoadTestingArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableLoadTestingArmClient for mocking. </summary>
         protected MockableLoadTestingArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLoadTestingArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableLoadTestingArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableLoadTestingArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableLoadTestingArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LoadTestingQuotaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LoadTestingQuotaResource"/> object. </returns>
-        public virtual LoadTestingQuotaResource GetLoadTestingQuotaResource(ResourceIdentifier id)
-        {
-            LoadTestingQuotaResource.ValidateResourceId(id);
-            return new LoadTestingQuotaResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LoadTestingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadTestingResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="LoadTestingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadTestingResource"/> object. </returns>
         public virtual LoadTestingResource GetLoadTestingResource(ResourceIdentifier id)
         {
             LoadTestingResource.ValidateResourceId(id);
             return new LoadTestingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LoadTestingQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LoadTestingQuotaResource"/> object. </returns>
+        public virtual LoadTestingQuotaResource GetLoadTestingQuotaResource(ResourceIdentifier id)
+        {
+            LoadTestingQuotaResource.ValidateResourceId(id);
+            return new LoadTestingQuotaResource(Client, id);
         }
     }
 }
