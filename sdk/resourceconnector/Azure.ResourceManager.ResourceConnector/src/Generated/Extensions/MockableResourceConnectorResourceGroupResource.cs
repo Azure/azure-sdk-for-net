@@ -8,56 +8,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceConnector;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceConnector.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableResourceConnectorResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceConnectorResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableResourceConnectorResourceGroupResource for mocking. </summary>
         protected MockableResourceConnectorResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceConnectorResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourceConnectorResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceConnectorResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of Appliances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Appliances and their operations over a ApplianceResource. </returns>
+        public virtual ApplianceCollection GetAppliances()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ResourceConnectorApplianceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourceConnectorApplianceResources and their operations over a ResourceConnectorApplianceResource. </returns>
-        public virtual ResourceConnectorApplianceCollection GetResourceConnectorAppliances()
-        {
-            return GetCachedClient(client => new ResourceConnectorApplianceCollection(client, Id));
+            return GetCachedClient(client => new ApplianceCollection(client, Id));
         }
 
         /// <summary>
         /// Gets the details of an Appliance with a specified resource group and name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +60,27 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplianceResource>> GetApplianceAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetResourceConnectorAppliances().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetAppliances().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the details of an Appliance with a specified resource group and name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +89,11 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplianceResource> GetAppliance(string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetResourceConnectorAppliances().Get(resourceName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetAppliances().Get(resourceName, cancellationToken);
         }
     }
 }
