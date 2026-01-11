@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Mocking;
+using Azure.ResourceManager.Hci.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,22 +130,41 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArcSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciEdgeDeviceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetArcSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciEdgeDeviceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
-        public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciEdgeDeviceResource"/> object. </returns>
+        public static HciEdgeDeviceResource GetHciEdgeDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciArmClient(client).GetArcSettingResource(id);
+            return GetMockableHciArmClient(client).GetHciEdgeDeviceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HciEdgeDeviceJobKindResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciEdgeDeviceJobKindResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceJobKindResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciEdgeDeviceJobKindResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciEdgeDeviceJobKindResource"/> object. </returns>
+        public static HciEdgeDeviceJobKindResource GetHciEdgeDeviceJobKindResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetHciEdgeDeviceJobKindResource(id);
         }
 
         /// <summary>
@@ -167,41 +187,98 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterDeploymentSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterDeploymentSettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterDeploymentSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciOSImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciOSImageResource.CreateResourceIdentifier" /> to create a <see cref="HciOSImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterDeploymentSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciOSImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HciClusterDeploymentSettingResource"/> object. </returns>
-        public static HciClusterDeploymentSettingResource GetHciClusterDeploymentSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciOSImageResource"/> object. </returns>
+        public static HciOSImageResource GetHciOSImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciArmClient(client).GetHciClusterDeploymentSettingResource(id);
+            return GetMockableHciArmClient(client).GetHciOSImageResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciEdgeDeviceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciPlatformUpdateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciPlatformUpdateResource.CreateResourceIdentifier" /> to create a <see cref="HciPlatformUpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciEdgeDeviceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciPlatformUpdateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HciEdgeDeviceResource"/> object. </returns>
-        public static HciEdgeDeviceResource GetHciEdgeDeviceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciPlatformUpdateResource"/> object. </returns>
+        public static HciPlatformUpdateResource GetHciPlatformUpdateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciArmClient(client).GetHciEdgeDeviceResource(id);
+            return GetMockableHciArmClient(client).GetHciPlatformUpdateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HciUpdateContentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciUpdateContentResource.CreateResourceIdentifier" /> to create a <see cref="HciUpdateContentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciUpdateContentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciUpdateContentResource"/> object. </returns>
+        public static HciUpdateContentResource GetHciUpdateContentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetHciUpdateContentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HciValidatedSolutionRecipeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciValidatedSolutionRecipeResource.CreateResourceIdentifier" /> to create a <see cref="HciValidatedSolutionRecipeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciValidatedSolutionRecipeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciValidatedSolutionRecipeResource"/> object. </returns>
+        public static HciValidatedSolutionRecipeResource GetHciValidatedSolutionRecipeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetHciValidatedSolutionRecipeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArcSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetArcSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
+        public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetArcSettingResource(id);
         }
 
         /// <summary>
@@ -221,6 +298,25 @@ namespace Azure.ResourceManager.Hci
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetArcExtensionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HciClusterDeploymentSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterDeploymentSettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterDeploymentSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterDeploymentSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciClusterDeploymentSettingResource"/> object. </returns>
+        public static HciClusterDeploymentSettingResource GetHciClusterDeploymentSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetHciClusterDeploymentSettingResource(id);
         }
 
         /// <summary>
@@ -262,25 +358,6 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterSecuritySettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterSecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterSecuritySettingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterSecuritySettingResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
-        public static HciClusterSecuritySettingResource GetHciClusterSecuritySettingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHciArmClient(client).GetHciClusterSecuritySettingResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="HciSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -300,22 +377,22 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterUpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HciClusterSecuritySettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterSecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterSecuritySettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterUpdateRunResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterSecuritySettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HciClusterUpdateRunResource"/> object. </returns>
-        public static HciClusterUpdateRunResource GetHciClusterUpdateRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
+        public static HciClusterSecuritySettingResource GetHciClusterSecuritySettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHciArmClient(client).GetHciClusterUpdateRunResource(id);
+            return GetMockableHciArmClient(client).GetHciClusterSecuritySettingResource(id);
         }
 
         /// <summary>
@@ -357,6 +434,25 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="HciClusterUpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterUpdateRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciClusterUpdateRunResource"/> object. </returns>
+        public static HciClusterUpdateRunResource GetHciClusterUpdateRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetHciClusterUpdateRunResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of HciClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -386,7 +482,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,7 +520,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -450,6 +546,390 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// Gets a collection of HciOSImageResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciOSImages(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of HciOSImageResources and their operations over a HciOSImageResource. </returns>
+        public static HciOSImageCollection GetHciOSImages(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciOSImages(location);
+        }
+
+        /// <summary>
+        /// Get a os image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/osImages/{osImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OsImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciOSImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciOSImageAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="osImageName"> The name of the OsImage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="osImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciOSImageResource>> GetHciOSImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableHciSubscriptionResource(subscriptionResource).GetHciOSImageAsync(location, osImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a os image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/osImages/{osImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OsImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciOSImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciOSImage(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="osImageName"> The name of the OsImage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="osImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciOSImageResource> GetHciOSImage(this SubscriptionResource subscriptionResource, AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciOSImage(location, osImageName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of HciPlatformUpdateResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciPlatformUpdates(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of HciPlatformUpdateResources and their operations over a HciPlatformUpdateResource. </returns>
+        public static HciPlatformUpdateCollection GetHciPlatformUpdates(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciPlatformUpdates(location);
+        }
+
+        /// <summary>
+        /// Get a platform update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/platformUpdates/{platformUpdateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PlatformUpdates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciPlatformUpdateResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciPlatformUpdateAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="platformUpdateName"> The name of the PlatformUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="platformUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="platformUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciPlatformUpdateResource>> GetHciPlatformUpdateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string platformUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableHciSubscriptionResource(subscriptionResource).GetHciPlatformUpdateAsync(location, platformUpdateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a platform update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/platformUpdates/{platformUpdateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PlatformUpdates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciPlatformUpdateResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciPlatformUpdate(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="platformUpdateName"> The name of the PlatformUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="platformUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="platformUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciPlatformUpdateResource> GetHciPlatformUpdate(this SubscriptionResource subscriptionResource, AzureLocation location, string platformUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciPlatformUpdate(location, platformUpdateName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of HciUpdateContentResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciUpdateContents(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of HciUpdateContentResources and their operations over a HciUpdateContentResource. </returns>
+        public static HciUpdateContentCollection GetHciUpdateContents(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciUpdateContents(location);
+        }
+
+        /// <summary>
+        /// Gets content for an update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/updateContents/{updateContentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateContents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciUpdateContentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciUpdateContentAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="updateContentName"> The name of the UpdateContent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="updateContentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateContentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciUpdateContentResource>> GetHciUpdateContentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableHciSubscriptionResource(subscriptionResource).GetHciUpdateContentAsync(location, updateContentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets content for an update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/updateContents/{updateContentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateContents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciUpdateContentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciUpdateContent(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="updateContentName"> The name of the UpdateContent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="updateContentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateContentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciUpdateContentResource> GetHciUpdateContent(this SubscriptionResource subscriptionResource, AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciUpdateContent(location, updateContentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of HciValidatedSolutionRecipeResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciValidatedSolutionRecipes(AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of HciValidatedSolutionRecipeResources and their operations over a HciValidatedSolutionRecipeResource. </returns>
+        public static HciValidatedSolutionRecipeCollection GetHciValidatedSolutionRecipes(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciValidatedSolutionRecipes(location);
+        }
+
+        /// <summary>
+        /// Get a validated solution recipe.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/validatedSolutionRecipes/{validatedSolutionRecipeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidatedSolutionRecipes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciValidatedSolutionRecipeResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciValidatedSolutionRecipeAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="validatedSolutionRecipeName"> The name of the ValidatedSolutionRecipe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="validatedSolutionRecipeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="validatedSolutionRecipeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciValidatedSolutionRecipeResource>> GetHciValidatedSolutionRecipeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableHciSubscriptionResource(subscriptionResource).GetHciValidatedSolutionRecipeAsync(location, validatedSolutionRecipeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a validated solution recipe.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/validatedSolutionRecipes/{validatedSolutionRecipeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidatedSolutionRecipes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciValidatedSolutionRecipeResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciValidatedSolutionRecipe(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="validatedSolutionRecipeName"> The name of the ValidatedSolutionRecipe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="validatedSolutionRecipeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="validatedSolutionRecipeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciValidatedSolutionRecipeResource> GetHciValidatedSolutionRecipe(this SubscriptionResource subscriptionResource, AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciValidatedSolutionRecipe(location, validatedSolutionRecipeName, cancellationToken);
+        }
+
+        /// <summary>
         /// List all HCI clusters in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -462,7 +942,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +978,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -519,6 +999,72 @@ namespace Azure.ResourceManager.Hci
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetHciClusters(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all kubernetes versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/kubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesVersions_ListBySubscriptionLocationResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciKubernetesVersionsByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="HciLocationKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciLocationKubernetesVersion> GetHciKubernetesVersionsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciKubernetesVersionsByLocationAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all kubernetes versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/kubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesVersions_ListBySubscriptionLocationResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciKubernetesVersionsByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="HciLocationKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciLocationKubernetesVersion> GetHciKubernetesVersionsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciKubernetesVersionsByLocation(location, cancellationToken);
         }
     }
 }

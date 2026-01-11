@@ -116,6 +116,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("nicStatus"u8);
                 writer.WriteStringValue(NicStatus);
             }
+            if (options.Format != "W" && Optional.IsDefined(RdmaCapability))
+            {
+                writer.WritePropertyName("rdmaCapability"u8);
+                writer.WriteStringValue(RdmaCapability.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -168,6 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
             string nicType = default;
             string vlanId = default;
             string nicStatus = default;
+            HciNicRdmaCapability? rdmaCapability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,6 +262,15 @@ namespace Azure.ResourceManager.Hci.Models
                     nicStatus = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("rdmaCapability"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdmaCapability = new HciNicRdmaCapability(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -278,6 +293,7 @@ namespace Azure.ResourceManager.Hci.Models
                 nicType,
                 vlanId,
                 nicStatus,
+                rdmaCapability,
                 serializedAdditionalRawData);
         }
 
@@ -647,6 +663,21 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         builder.AppendLine($"'{NicStatus}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdmaCapability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdmaCapability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdmaCapability))
+                {
+                    builder.Append("  rdmaCapability: ");
+                    builder.AppendLine($"'{RdmaCapability.Value.ToString()}'");
                 }
             }
 

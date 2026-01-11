@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Hci.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> None. </summary>
+        /// <summary> No log collection has been initiated. </summary>
         public static LogCollectionStatus None { get; } = new LogCollectionStatus(NoneValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> Log collection is currently in progress. </summary>
         public static LogCollectionStatus InProgress { get; } = new LogCollectionStatus(InProgressValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Log collection has failed. </summary>
         public static LogCollectionStatus Failed { get; } = new LogCollectionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Log collection completed successfully. </summary>
         public static LogCollectionStatus Succeeded { get; } = new LogCollectionStatus(SucceededValue);
         /// <summary> Determines if two <see cref="LogCollectionStatus"/> values are the same. </summary>
         public static bool operator ==(LogCollectionStatus left, LogCollectionStatus right) => left.Equals(right);

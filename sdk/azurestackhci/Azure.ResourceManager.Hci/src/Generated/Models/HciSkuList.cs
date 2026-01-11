@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciSkuList"/>. </summary>
-        internal HciSkuList()
+        /// <param name="value"> The Sku items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal HciSkuList(IEnumerable<HciSkuData> value)
         {
-            Value = new ChangeTrackingList<HciSkuData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciSkuList"/>. </summary>
-        /// <param name="value"> List of SKU proxy resources. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value"> The Sku items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciSkuList(IReadOnlyList<HciSkuData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciSkuList(IReadOnlyList<HciSkuData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of SKU proxy resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuList"/> for deserialization. </summary>
+        internal HciSkuList()
+        {
+        }
+
+        /// <summary> The Sku items on this page. </summary>
         public IReadOnlyList<HciSkuData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

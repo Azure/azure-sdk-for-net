@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
-#tag: package-2024-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/afb290a389f8ee1d3a7612e703f31817d6c8ff15/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
+#tag: package-preview-2025-11-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -27,6 +27,7 @@ enable-bicep-serialization: true
 
 override-operation-name:
   Offers_ListByCluster: GetHciClusterOffers
+  KubernetesVersions_ListBySubscriptionLocationResource: GetHciKubernetesVersionsByLocation
 
 format-by-name-rules:
   '*TenantId': 'uuid'
@@ -193,33 +194,74 @@ rename-mapping:
   DeviceKind: HciEdgeDeviceKind
   ExtensionProfile: HciEdgeDeviceExtensionProfile
   PerNodeExtensionState.instanceView: ExtensionInstanceView
+  KubernetesVersion: HciLocationKubernetesVersion
+  SupportStatus: HciClusterSupportStatus
+  SecretsType: HciSecretsLocationType
+  RdmaCapability: HciNicRdmaCapability
+  PlatformPayload: HciPlatformPayload
+  OsImage: HciOSImage
+  OsImageProperties: HciOSImageProperties
+  JobStatus: HciEdgeDeviceJobStatus
+  IdentityProvider: HciDeploymentIdentityProvider
+  HardwareClass: HciClusterHardwareClass
+  DnsZones: HciNetworkDnsZones
+  DnsServerConfig: HciNetworkDnsServerConfig
+  ContentPayload: HciUpdateContentPayload
+  ClusterPattern: HciClusterPattern
+  AssemblyInfo: HciDeploymentAssemblyInfo
+  AssemblyInfoPayload: HciDeploymentAssemblyInfoPayload
+  EdgeDeviceJob: HciEdgeDeviceJobKind
+  PlatformUpdate: HciPlatformUpdate
+  UpdateContent: HciUpdateContent
+  ValidatedSolutionRecipe: HciValidatedSolutionRecipe
+  ChangeRingRequestProperties: HciChangeRingContentProperties
+  DeviceLogCollectionStatus: HciDeviceLogCollectionJobStatus
+  LocalAvailabilityZones: HciClusterLocalAvailabilityZones
+  LogCollectionJobSession: HciLogCollectionJobSessionDetails
+  LogCollectionReportedProperties: HciLogCollectionReportedProperties
+  PlatformUpdateDetails: HciPlatformUpdateDetails
+  RemoteSupportAccessLevel: HciRemoteSupportAccessLevel
+  RemoteSupportJobNodeSettings: HciRemoteSupportJobNodeSettings
+  RemoteSupportJobReportedProperties: HciRemoteSupportJobReportedProperties
+  RemoteSupportSession: HciRemoteSupportSession
+  SecretsLocationDetails: HciSecretsLocationDetails
+  SecretsLocationsChangeRequest: HciSecretsLocationsChangeContent
+  ArcConnectivityProperties: HciArcConnectivityProperties
+  ArcSetting.properties.connectivityProperties: ConnectivityConfigurations
+  ArcSettingsPatch.properties.connectivityProperties: ConnectivityConfigurations
+  ServiceConfiguration: HciServiceConfiguration
+  ServiceName: HciServiceConfigurationName
 
 directive:
-  - from: swagger-document
-    where: $.definitions..systemData
-    transform: $["x-ms-client-flatten"] = false
-  - from: updateRuns.json
+  - from: hci.json
     where: $.definitions.UpdateRunProperties.properties
     transform: >
       $.duration['x-ms-format'] = 'string';
-  - from: edgeDevices.json
-    where: $.definitions
+  - from: hci.json
+    where: $.definitions.UpdateRunPropertiesState
     transform: >
-      $.ErrorDetail['x-ms-client-name'] = 'HciValidationFailureDetail';
-      $.Extension['x-ms-client-name'] = 'HciEdgeDeviceArcExtension';
-      $.Intents['x-ms-client-name'] = 'HciEdgeDeviceIntents';
-      $.HostNetwork['x-ms-client-name'] = 'HciEdgeDeviceHostNetwork';
-      $.StorageNetworks['x-ms-client-name'] = 'HciEdgeDeviceStorageNetworks';
-      $.StorageAdapterIPInfo['x-ms-client-name'] = 'HciEdgeDeviceStorageAdapterIPInfo';
-      $.AdapterPropertyOverrides['x-ms-client-name'] = 'HciEdgeDeviceAdapterPropertyOverrides';
-      $.VirtualSwitchConfigurationOverrides['x-ms-client-name'] = 'HciEdgeDeviceVirtualSwitchConfigurationOverrides';
-  - from: deploymentSettings.json
-    where: $.definitions
+      delete $.readOnly;
+  # Add missing value to Status enum
+  - from: hci.json
+    where: $.definitions.Status
     transform: >
-      $.Intents['x-ms-client-name'] = 'DeploymentSettingIntents';
-      $.HostNetwork['x-ms-client-name'] = 'DeploymentSettingHostNetwork';
-      $.StorageNetworks['x-ms-client-name'] = 'DeploymentSettingStorageNetworks';
-      $.StorageAdapterIPInfo['x-ms-client-name'] = 'DeploymentSettingStorageAdapterIPInfo';
-      $.AdapterPropertyOverrides['x-ms-client-name'] = 'DeploymentSettingAdapterPropertyOverrides';
-      $.VirtualSwitchConfigurationOverrides['x-ms-client-name'] = 'DeploymentSettingVirtualSwitchConfigurationOverrides';
-```
+      $.enum.push("Succeeded", "Failed", "InProgress");
+      $['x-ms-enum'].values.push(
+        {
+          "name": "Succeeded",
+          "value": "Succeeded", 
+          "description": "The operation completed successfully."
+        },
+        {
+          "name": "Failed",
+          "value": "Failed",
+          "description": "The operation failed."
+        },
+        {
+          "name": "InProgress", 
+          "value": "InProgress",
+          "description": "The operation is currently in progress."
+        }
+      );
+
+```  

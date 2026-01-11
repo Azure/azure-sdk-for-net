@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(MsiExpirationTimeStamp))
+            {
+                writer.WritePropertyName("msiExpirationTimeStamp"u8);
+                writer.WriteStringValue(MsiExpirationTimeStamp.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(ImdsAttestation))
             {
                 writer.WritePropertyName("imdsAttestation"u8);
@@ -100,6 +105,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("oemActivation"u8);
                 writer.WriteStringValue(OemActivation.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HardwareClass))
+            {
+                writer.WritePropertyName("hardwareClass"u8);
+                writer.WriteStringValue(HardwareClass.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -143,12 +153,14 @@ namespace Azure.ResourceManager.Hci.Models
             string clusterVersion = default;
             IReadOnlyList<HciClusterNode> nodes = default;
             DateTimeOffset? lastUpdated = default;
+            DateTimeOffset? msiExpirationTimeStamp = default;
             ImdsAttestationState? imdsAttestation = default;
             HciClusterDiagnosticLevel? diagnosticLevel = default;
             IReadOnlyList<string> supportedCapabilities = default;
             ClusterNodeType? clusterType = default;
             string manufacturer = default;
             OemActivation? oemActivation = default;
+            HciClusterHardwareClass? hardwareClass = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,6 +205,15 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     lastUpdated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("msiExpirationTimeStamp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    msiExpirationTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("imdsAttestation"u8))
@@ -250,6 +271,15 @@ namespace Azure.ResourceManager.Hci.Models
                     oemActivation = new OemActivation(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("hardwareClass"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareClass = new HciClusterHardwareClass(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -262,12 +292,14 @@ namespace Azure.ResourceManager.Hci.Models
                 clusterVersion,
                 nodes ?? new ChangeTrackingList<HciClusterNode>(),
                 lastUpdated,
+                msiExpirationTimeStamp,
                 imdsAttestation,
                 diagnosticLevel,
                 supportedCapabilities ?? new ChangeTrackingList<string>(),
                 clusterType,
                 manufacturer,
                 oemActivation,
+                hardwareClass,
                 serializedAdditionalRawData);
         }
 
@@ -378,6 +410,22 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     builder.Append("  lastUpdated: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MsiExpirationTimeStamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  msiExpirationTimeStamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MsiExpirationTimeStamp))
+                {
+                    builder.Append("  msiExpirationTimeStamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(MsiExpirationTimeStamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
@@ -498,6 +546,21 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     builder.Append("  oemActivation: ");
                     builder.AppendLine($"'{OemActivation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HardwareClass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hardwareClass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HardwareClass))
+                {
+                    builder.Append("  hardwareClass: ");
+                    builder.AppendLine($"'{HardwareClass.Value.ToString()}'");
                 }
             }
 

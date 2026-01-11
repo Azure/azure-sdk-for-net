@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateHCIEdgeDevice()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/CreateHciEdgeDevice.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/CreateHciEdgeDevice.json
             // this example is just showing the usage of "EdgeDevices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +70,7 @@ DefaultIsolationId = "0",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEdgeDevice()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/GetEdgeDevices.json
             // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ DefaultIsolationId = "0",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEdgeDevices()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListEdgeDevices.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/ListEdgeDevices.json
             // this example is just showing the usage of "EdgeDevices_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ DefaultIsolationId = "0",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetEdgeDevice()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/GetEdgeDevices.json
             // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ DefaultIsolationId = "0",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetEdgeDevice()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/GetEdgeDevices.json
             // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

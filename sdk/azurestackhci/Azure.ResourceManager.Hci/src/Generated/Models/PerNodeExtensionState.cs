@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> Name of the node in HCI Cluster. </param>
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="state"> State of Arc Extension in this node. </param>
+        /// <param name="state"> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </param>
         /// <param name="extensionInstanceView"> The extension instance view. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView extensionInstanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Specifies the version of the script handler. </summary>
         [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
-        /// <summary> State of Arc Extension in this node. </summary>
+        /// <summary> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
         [WirePath("state")]
         public NodeExtensionState? State { get; }
         /// <summary> The extension instance view. </summary>

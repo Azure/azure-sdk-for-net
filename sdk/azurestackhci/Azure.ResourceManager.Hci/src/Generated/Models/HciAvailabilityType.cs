@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Indicates the way the update content can be downloaded. </summary>
+    /// <summary> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </summary>
     public readonly partial struct HciAvailabilityType : IEquatable<HciAvailabilityType>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Hci.Models
         private const string OnlineValue = "Online";
         private const string NotifyValue = "Notify";
 
-        /// <summary> Local. </summary>
+        /// <summary> The update content is available locally within the environment. </summary>
         public static HciAvailabilityType Local { get; } = new HciAvailabilityType(LocalValue);
-        /// <summary> Online. </summary>
+        /// <summary> The update content is available from an online source. </summary>
         public static HciAvailabilityType Online { get; } = new HciAvailabilityType(OnlineValue);
-        /// <summary> Notify. </summary>
+        /// <summary> The system will notify the user when update content becomes available. </summary>
         public static HciAvailabilityType Notify { get; } = new HciAvailabilityType(NotifyValue);
         /// <summary> Determines if two <see cref="HciAvailabilityType"/> values are the same. </summary>
         public static bool operator ==(HciAvailabilityType left, HciAvailabilityType right) => left.Equals(right);

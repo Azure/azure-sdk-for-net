@@ -56,20 +56,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="timeCollected"> Duration of logs collected. </param>
         /// <param name="logSize"> Size of the logs collected. </param>
         /// <param name="logCollectionStatus"> LogCollection status. </param>
-        /// <param name="logCollectionJobType"> LogCollection job type. </param>
         /// <param name="correlationId"> CorrelationId of the log collection. </param>
+        /// <param name="logCollectionJobType"> Specifies the type of log collection job. Determines whether the logs are collected immediately on demand or as part of a scheduled operation. </param>
         /// <param name="endTimeCollected"> End Time of the logs when it was collected. </param>
         /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, LogCollectionJobType? logCollectionJobType, string correlationId, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, string correlationId, LogCollectionJobType? logCollectionJobType, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogStartOn = logStartOn;
             LogEndOn = logEndOn;
             TimeCollected = timeCollected;
             LogSize = logSize;
             LogCollectionStatus = logCollectionStatus;
-            LogCollectionJobType = logCollectionJobType;
             CorrelationId = correlationId;
+            LogCollectionJobType = logCollectionJobType;
             EndTimeCollected = endTimeCollected;
             LogCollectionError = logCollectionError;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> LogCollection status. </summary>
         [WirePath("logCollectionStatus")]
         public LogCollectionStatus? LogCollectionStatus { get; }
-        /// <summary> LogCollection job type. </summary>
-        [WirePath("logCollectionJobType")]
-        public LogCollectionJobType? LogCollectionJobType { get; }
         /// <summary> CorrelationId of the log collection. </summary>
         [WirePath("correlationId")]
         public string CorrelationId { get; }
+        /// <summary> Specifies the type of log collection job. Determines whether the logs are collected immediately on demand or as part of a scheduled operation. </summary>
+        [WirePath("logCollectionJobType")]
+        public LogCollectionJobType? LogCollectionJobType { get; }
         /// <summary> End Time of the logs when it was collected. </summary>
         [WirePath("endTimeCollected")]
         public DateTimeOffset? EndTimeCollected { get; }

@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </param>
         /// <param name="timeStarted"> Timestamp of the update run was started. </param>
         /// <param name="lastUpdatedOn"> Timestamp of the most recently completed step in the update run. </param>
         /// <param name="duration"> Duration of the update run. </param>
-        /// <param name="state"> State of the update run. </param>
+        /// <param name="state"> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </param>
         /// <param name="namePropertiesProgressName"> Name of the step. </param>
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the UpdateRuns proxy resource. </summary>
+        /// <summary> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
         /// <summary> Timestamp of the update run was started. </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Duration of the update run. </summary>
         [WirePath("properties.duration")]
         public string Duration { get; set; }
-        /// <summary> State of the update run. </summary>
+        /// <summary> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </summary>
         [WirePath("properties.state")]
         public UpdateRunPropertiesState? State { get; set; }
         /// <summary> Name of the step. </summary>

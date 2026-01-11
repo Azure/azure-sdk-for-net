@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The deployment mode of EnterpriseCloudEngine(ECE) action for a cluster. </summary>
+    /// <summary> Deployment mode to trigger job. </summary>
     public readonly partial struct EceDeploymentMode : IEquatable<EceDeploymentMode>
     {
         private readonly string _value;

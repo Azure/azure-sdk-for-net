@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Hci.Models
         private const string BasicValue = "Basic";
         private const string EnhancedValue = "Enhanced";
 
-        /// <summary> Off. </summary>
+        /// <summary> No diagnostic data will be emitted. </summary>
         public static HciClusterDiagnosticLevel Off { get; } = new HciClusterDiagnosticLevel(OffValue);
-        /// <summary> Basic. </summary>
+        /// <summary> Basic diagnostic data will be emitted, including essential health metrics. </summary>
         public static HciClusterDiagnosticLevel Basic { get; } = new HciClusterDiagnosticLevel(BasicValue);
-        /// <summary> Enhanced. </summary>
+        /// <summary> Enhanced diagnostic data will be emitted, including detailed performance and usage metrics. </summary>
         public static HciClusterDiagnosticLevel Enhanced { get; } = new HciClusterDiagnosticLevel(EnhancedValue);
         /// <summary> Determines if two <see cref="HciClusterDiagnosticLevel"/> values are the same. </summary>
         public static bool operator ==(HciClusterDiagnosticLevel left, HciClusterDiagnosticLevel right) => left.Equals(right);

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
 
-        /// <summary> Enable. </summary>
+        /// <summary> Customer intends to enable the Software Assurance benefit. </summary>
         public static SoftwareAssuranceIntent Enable { get; } = new SoftwareAssuranceIntent(EnableValue);
-        /// <summary> Disable. </summary>
+        /// <summary> Customer intends to disable the Software Assurance benefit. </summary>
         public static SoftwareAssuranceIntent Disable { get; } = new SoftwareAssuranceIntent(DisableValue);
         /// <summary> Determines if two <see cref="SoftwareAssuranceIntent"/> values are the same. </summary>
         public static bool operator ==(SoftwareAssuranceIntent left, SoftwareAssuranceIntent right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of the update run. </summary>
+    /// <summary> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </summary>
     public readonly partial struct UpdateRunPropertiesState : IEquatable<UpdateRunPropertiesState>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Hci.Models
         private const string InProgressValue = "InProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> The state of the update run is not known. </summary>
         public static UpdateRunPropertiesState Unknown { get; } = new UpdateRunPropertiesState(UnknownValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The update run completed successfully. </summary>
         public static UpdateRunPropertiesState Succeeded { get; } = new UpdateRunPropertiesState(SucceededValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> The update run is currently in progress. </summary>
         public static UpdateRunPropertiesState InProgress { get; } = new UpdateRunPropertiesState(InProgressValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The update run failed to complete successfully. </summary>
         public static UpdateRunPropertiesState Failed { get; } = new UpdateRunPropertiesState(FailedValue);
         /// <summary> Determines if two <see cref="UpdateRunPropertiesState"/> values are the same. </summary>
         public static bool operator ==(UpdateRunPropertiesState left, UpdateRunPropertiesState right) => left.Equals(right);

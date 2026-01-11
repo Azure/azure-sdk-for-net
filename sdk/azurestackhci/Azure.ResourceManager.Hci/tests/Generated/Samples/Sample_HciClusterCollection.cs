@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/CreateCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/CreateCluster.json
             // this example is just showing the usage of "Clusters_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Hci.Samples
             string clusterName = "myCluster";
             HciClusterData data = new HciClusterData(new AzureLocation("East US"))
             {
+                TypeIdentityType = HciManagedServiceIdentityType.SystemAssigned,
                 CloudManagementEndpoint = "https://98294836-31be-4668-aeae-698667faf99b.waconazure.com",
                 AadClientId = Guid.Parse("24a6e53d-04e5-44d2-b7cc-1b732a847dfc"),
                 AadTenantId = Guid.Parse("7e589cc1-a8b6-4dff-91bd-5ec0fa18db94"),
-                TypeIdentityType = HciManagedServiceIdentityType.SystemAssigned,
             };
             ArmOperation<HciClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             HciClusterResource result = lro.Value;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListClustersInAGivenResourceGroup()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListClustersByResourceGroup.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/ListClustersByResourceGroup.json
             // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

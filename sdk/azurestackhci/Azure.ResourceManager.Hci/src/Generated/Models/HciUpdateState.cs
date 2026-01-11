@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of the update as it relates to this stamp. </summary>
+    /// <summary> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </summary>
     public readonly partial struct HciUpdateState : IEquatable<HciUpdateState>
     {
         private readonly string _value;
@@ -42,43 +42,43 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ScanFailedValue = "ScanFailed";
         private const string AdditionalContentRequiredValue = "AdditionalContentRequired";
 
-        /// <summary> HasPrerequisite. </summary>
+        /// <summary> The update has prerequisites that must be fulfilled before it can proceed. </summary>
         public static HciUpdateState HasPrerequisite { get; } = new HciUpdateState(HasPrerequisiteValue);
-        /// <summary> Obsolete. </summary>
+        /// <summary> The update is obsolete and no longer applicable. </summary>
         public static HciUpdateState Obsolete { get; } = new HciUpdateState(ObsoleteValue);
-        /// <summary> Ready. </summary>
+        /// <summary> The update is ready to be installed. </summary>
         public static HciUpdateState Ready { get; } = new HciUpdateState(ReadyValue);
-        /// <summary> NotApplicableBecauseAnotherUpdateIsInProgress. </summary>
+        /// <summary> The update cannot be applied because another update is currently in progress. </summary>
         public static HciUpdateState NotApplicableBecauseAnotherUpdateIsInProgress { get; } = new HciUpdateState(NotApplicableBecauseAnotherUpdateIsInProgressValue);
-        /// <summary> Preparing. </summary>
+        /// <summary> The update is currently in the preparation phase. </summary>
         public static HciUpdateState Preparing { get; } = new HciUpdateState(PreparingValue);
-        /// <summary> Installing. </summary>
+        /// <summary> The update is currently being installed. </summary>
         public static HciUpdateState Installing { get; } = new HciUpdateState(InstallingValue);
-        /// <summary> Installed. </summary>
+        /// <summary> The update has been successfully installed. </summary>
         public static HciUpdateState Installed { get; } = new HciUpdateState(InstalledValue);
-        /// <summary> PreparationFailed. </summary>
+        /// <summary> The update preparation phase failed. </summary>
         public static HciUpdateState PreparationFailed { get; } = new HciUpdateState(PreparationFailedValue);
-        /// <summary> InstallationFailed. </summary>
+        /// <summary> The update installation failed. </summary>
         public static HciUpdateState InstallationFailed { get; } = new HciUpdateState(InstallationFailedValue);
-        /// <summary> Invalid. </summary>
+        /// <summary> The update is invalid and cannot be applied. </summary>
         public static HciUpdateState Invalid { get; } = new HciUpdateState(InvalidValue);
-        /// <summary> Recalled. </summary>
+        /// <summary> The update has been recalled and should not be applied. </summary>
         public static HciUpdateState Recalled { get; } = new HciUpdateState(RecalledValue);
-        /// <summary> Downloading. </summary>
+        /// <summary> The update is currently being downloaded. </summary>
         public static HciUpdateState Downloading { get; } = new HciUpdateState(DownloadingValue);
-        /// <summary> DownloadFailed. </summary>
+        /// <summary> The update download failed. </summary>
         public static HciUpdateState DownloadFailed { get; } = new HciUpdateState(DownloadFailedValue);
-        /// <summary> HealthChecking. </summary>
+        /// <summary> A health check is being performed before applying the update. </summary>
         public static HciUpdateState HealthChecking { get; } = new HciUpdateState(HealthCheckingValue);
-        /// <summary> HealthCheckFailed. </summary>
+        /// <summary> The health check failed, preventing the update from proceeding. </summary>
         public static HciUpdateState HealthCheckFailed { get; } = new HciUpdateState(HealthCheckFailedValue);
-        /// <summary> ReadyToInstall. </summary>
+        /// <summary> The update is ready to be installed after successful preparation and checks. </summary>
         public static HciUpdateState ReadyToInstall { get; } = new HciUpdateState(ReadyToInstallValue);
-        /// <summary> ScanInProgress. </summary>
+        /// <summary> The system is scanning for updates. </summary>
         public static HciUpdateState ScanInProgress { get; } = new HciUpdateState(ScanInProgressValue);
-        /// <summary> ScanFailed. </summary>
+        /// <summary> The scan for updates failed. </summary>
         public static HciUpdateState ScanFailed { get; } = new HciUpdateState(ScanFailedValue);
-        /// <summary> AdditionalContentRequired. </summary>
+        /// <summary> Additional content is required to proceed with the update. </summary>
         public static HciUpdateState AdditionalContentRequired { get; } = new HciUpdateState(AdditionalContentRequiredValue);
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
         public static bool operator ==(HciUpdateState left, HciUpdateState right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Extension managed by user or Azure. </summary>
+    /// <summary> Indicates whether the extension is managed by the user or by Azure. </summary>
     public readonly partial struct ArcExtensionManagedBy : IEquatable<ArcExtensionManagedBy>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string UserValue = "User";
         private const string AzureValue = "Azure";
 
-        /// <summary> User. </summary>
+        /// <summary> The extension is managed by the user. </summary>
         public static ArcExtensionManagedBy User { get; } = new ArcExtensionManagedBy(UserValue);
-        /// <summary> Azure. </summary>
+        /// <summary> The extension is managed by Azure. </summary>
         public static ArcExtensionManagedBy Azure { get; } = new ArcExtensionManagedBy(AzureValue);
         /// <summary> Determines if two <see cref="ArcExtensionManagedBy"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionManagedBy left, ArcExtensionManagedBy right) => left.Equals(right);

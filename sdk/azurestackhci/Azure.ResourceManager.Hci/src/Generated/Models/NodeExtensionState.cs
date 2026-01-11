@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of Arc Extension in this node. </summary>
+    /// <summary> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
     public readonly partial struct NodeExtensionState : IEquatable<NodeExtensionState>
     {
         private readonly string _value;
@@ -40,39 +40,39 @@ namespace Azure.ResourceManager.Hci.Models
         private const string AcceptedValue = "Accepted";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> The state is not specified. </summary>
         public static NodeExtensionState NotSpecified { get; } = new NodeExtensionState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+        /// <summary> An error occurred during the extension lifecycle. </summary>
         public static NodeExtensionState Error { get; } = new NodeExtensionState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The extension operation completed successfully. </summary>
         public static NodeExtensionState Succeeded { get; } = new NodeExtensionState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The extension operation was canceled. </summary>
         public static NodeExtensionState Canceled { get; } = new NodeExtensionState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The extension operation failed. </summary>
         public static NodeExtensionState Failed { get; } = new NodeExtensionState(FailedValue);
-        /// <summary> Connected. </summary>
+        /// <summary> The extension is connected on the node. </summary>
         public static NodeExtensionState Connected { get; } = new NodeExtensionState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary> The extension is disconnected on the node. </summary>
         public static NodeExtensionState Disconnected { get; } = new NodeExtensionState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> The extension has been deleted from the node. </summary>
         public static NodeExtensionState Deleted { get; } = new NodeExtensionState(DeletedValue);
-        /// <summary> Creating. </summary>
+        /// <summary> The extension is being created on the node. </summary>
         public static NodeExtensionState Creating { get; } = new NodeExtensionState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary> The extension is being updated on the node. </summary>
         public static NodeExtensionState Updating { get; } = new NodeExtensionState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> The extension is being deleted from the node. </summary>
         public static NodeExtensionState Deleting { get; } = new NodeExtensionState(DeletingValue);
-        /// <summary> Moving. </summary>
+        /// <summary> The extension is being moved on the node. </summary>
         public static NodeExtensionState Moving { get; } = new NodeExtensionState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+        /// <summary> The extension operation partially succeeded. </summary>
         public static NodeExtensionState PartiallySucceeded { get; } = new NodeExtensionState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+        /// <summary> The extension is partially connected on the node. </summary>
         public static NodeExtensionState PartiallyConnected { get; } = new NodeExtensionState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> The extension operation is currently in progress. </summary>
         public static NodeExtensionState InProgress { get; } = new NodeExtensionState(InProgressValue);
-        /// <summary> Accepted. </summary>
+        /// <summary> The extension operation has been accepted and is pending execution. </summary>
         public static NodeExtensionState Accepted { get; } = new NodeExtensionState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary> The extension is currently being provisioned on the node. </summary>
         public static NodeExtensionState Provisioning { get; } = new NodeExtensionState(ProvisioningValue);
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are the same. </summary>
         public static bool operator ==(NodeExtensionState left, NodeExtensionState right) => left.Equals(right);

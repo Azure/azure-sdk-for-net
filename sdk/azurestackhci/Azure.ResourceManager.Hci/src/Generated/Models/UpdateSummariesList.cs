@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/>. </summary>
-        internal UpdateSummariesList()
+        /// <param name="value"> The UpdateSummaries items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal UpdateSummariesList(IEnumerable<HciClusterUpdateSummaryData> value)
         {
-            Value = new ChangeTrackingList<HciClusterUpdateSummaryData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/>. </summary>
-        /// <param name="value"> List of Update Summaries. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value"> The UpdateSummaries items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSummariesList(IReadOnlyList<HciClusterUpdateSummaryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateSummariesList(IReadOnlyList<HciClusterUpdateSummaryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Update Summaries. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/> for deserialization. </summary>
+        internal UpdateSummariesList()
+        {
+        }
+
+        /// <summary> The UpdateSummaries items on this page. </summary>
         public IReadOnlyList<HciClusterUpdateSummaryData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

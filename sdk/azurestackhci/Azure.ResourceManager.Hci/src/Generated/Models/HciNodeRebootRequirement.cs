@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The HciNodeRebootRequirement. </summary>
+    /// <summary> Indicates whether a reboot is required after the update or operation. Helps determine if a system restart is necessary to complete the process. </summary>
     public readonly partial struct HciNodeRebootRequirement : IEquatable<HciNodeRebootRequirement>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Hci.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> It is not known whether a reboot is required. </summary>
         public static HciNodeRebootRequirement Unknown { get; } = new HciNodeRebootRequirement(UnknownValue);
-        /// <summary> True. </summary>
+        /// <summary> A reboot is required to complete the operation. </summary>
         public static HciNodeRebootRequirement True { get; } = new HciNodeRebootRequirement(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary> No reboot is required after the operation. </summary>
         public static HciNodeRebootRequirement False { get; } = new HciNodeRebootRequirement(FalseValue);
         /// <summary> Determines if two <see cref="HciNodeRebootRequirement"/> values are the same. </summary>
         public static bool operator ==(HciNodeRebootRequirement left, HciNodeRebootRequirement right) => left.Equals(right);

@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("azureServiceEndpoint"u8);
                 writer.WriteStringValue(AzureServiceEndpoint);
             }
+            if (options.Format != "W" && Optional.IsDefined(HardwareClass))
+            {
+                writer.WritePropertyName("hardwareClass"u8);
+                writer.WriteStringValue(HardwareClass.Value.ToString());
+            }
+            if (Optional.IsDefined(ClusterPattern))
+            {
+                writer.WritePropertyName("clusterPattern"u8);
+                writer.WriteStringValue(ClusterPattern.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,6 +112,8 @@ namespace Azure.ResourceManager.Hci.Models
             string witnessPath = default;
             string cloudAccountName = default;
             string azureServiceEndpoint = default;
+            HciClusterHardwareClass? hardwareClass = default;
+            HciClusterPattern? clusterPattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,6 +143,24 @@ namespace Azure.ResourceManager.Hci.Models
                     azureServiceEndpoint = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("hardwareClass"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareClass = new HciClusterHardwareClass(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clusterPattern"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterPattern = new HciClusterPattern(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -143,6 +173,8 @@ namespace Azure.ResourceManager.Hci.Models
                 witnessPath,
                 cloudAccountName,
                 azureServiceEndpoint,
+                hardwareClass,
+                clusterPattern,
                 serializedAdditionalRawData);
         }
 
@@ -269,6 +301,36 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         builder.AppendLine($"'{AzureServiceEndpoint}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HardwareClass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hardwareClass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HardwareClass))
+                {
+                    builder.Append("  hardwareClass: ");
+                    builder.AppendLine($"'{HardwareClass.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterPattern), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterPattern: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterPattern))
+                {
+                    builder.Append("  clusterPattern: ");
+                    builder.AppendLine($"'{ClusterPattern.Value.ToString()}'");
                 }
             }
 

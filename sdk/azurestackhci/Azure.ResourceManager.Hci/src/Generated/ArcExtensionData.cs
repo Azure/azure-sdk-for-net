@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
+        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. Indicates the current lifecycle status of the resource, such as whether it's being created, updated, deleted, or has encountered an error. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. This reflects the overall status of the extension deployment and operation across all nodes. </param>
         /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
-        /// <param name="managedBy"> Indicates if the extension is managed by azure or the user. </param>
+        /// <param name="managedBy"> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning state of the Extension proxy resource. </summary>
+        /// <summary> Provisioning state of the Extension proxy resource. Indicates the current lifecycle status of the resource, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
         [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </summary>
+        /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. This reflects the overall status of the extension deployment and operation across all nodes. </summary>
         [WirePath("properties.aggregateState")]
         public ArcExtensionAggregateState? AggregateState { get; }
         /// <summary> State of Arc Extension in each of the nodes. </summary>
         [WirePath("properties.perNodeExtensionDetails")]
         public IReadOnlyList<PerNodeExtensionState> PerNodeExtensionDetails { get; }
-        /// <summary> Indicates if the extension is managed by azure or the user. </summary>
+        /// <summary> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </summary>
         [WirePath("properties.managedBy")]
         public ArcExtensionManagedBy? ManagedBy { get; }
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

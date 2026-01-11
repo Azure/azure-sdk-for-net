@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> LogCollection job type. </summary>
+    /// <summary> Specifies the type of log collection job. Determines whether the logs are collected immediately on demand or as part of a scheduled operation. </summary>
     public readonly partial struct LogCollectionJobType : IEquatable<LogCollectionJobType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string OnDemandValue = "OnDemand";
         private const string ScheduledValue = "Scheduled";
 
-        /// <summary> OnDemand. </summary>
+        /// <summary> Log collection is triggered manually and executed immediately. </summary>
         public static LogCollectionJobType OnDemand { get; } = new LogCollectionJobType(OnDemandValue);
-        /// <summary> Scheduled. </summary>
+        /// <summary> Log collection is scheduled to run at a predefined time or interval. </summary>
         public static LogCollectionJobType Scheduled { get; } = new LogCollectionJobType(ScheduledValue);
         /// <summary> Determines if two <see cref="LogCollectionJobType"/> values are the same. </summary>
         public static bool operator ==(LogCollectionJobType left, LogCollectionJobType right) => left.Equals(right);

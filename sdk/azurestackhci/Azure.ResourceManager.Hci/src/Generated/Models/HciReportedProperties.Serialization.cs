@@ -51,6 +51,16 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sbeDeploymentPackageInfo"u8);
                 writer.WriteObjectValue(SbeDeploymentPackageInfo, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(StorageProfile))
+            {
+                writer.WritePropertyName("storageProfile"u8);
+                writer.WriteObjectValue(StorageProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile"u8);
+                writer.WriteObjectValue(HardwareProfile, options);
+            }
         }
 
         HciReportedProperties IJsonModel<HciReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,6 +86,8 @@ namespace Azure.ResourceManager.Hci.Models
             HciNetworkProfile networkProfile = default;
             HciOSProfile osProfile = default;
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
+            HciStorageProfile storageProfile = default;
+            HciHardwareProfile hardwareProfile = default;
             HciEdgeDeviceState? deviceState = default;
             HciEdgeDeviceExtensionProfile extensionProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,6 +121,24 @@ namespace Azure.ResourceManager.Hci.Models
                     sbeDeploymentPackageInfo = SbeDeploymentPackageInfo.DeserializeSbeDeploymentPackageInfo(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = HciStorageProfile.DeserializeHciStorageProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("hardwareProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareProfile = HciHardwareProfile.DeserializeHciHardwareProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("deviceState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,7 +169,9 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData,
                 networkProfile,
                 osProfile,
-                sbeDeploymentPackageInfo);
+                sbeDeploymentPackageInfo,
+                storageProfile,
+                hardwareProfile);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -195,6 +227,42 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     builder.Append("  sbeDeploymentPackageInfo: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SbeDeploymentPackageInfo, options, 2, false, "  sbeDeploymentPackageInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StoragePoolableDisksCount", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageProfile: ");
+                builder.AppendLine("{");
+                builder.Append("    poolableDisksCount: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageProfile))
+                {
+                    builder.Append("  storageProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StorageProfile, options, 2, false, "  storageProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HardwareProcessorType", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hardwareProfile: ");
+                builder.AppendLine("{");
+                builder.Append("    processorType: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(HardwareProfile))
+                {
+                    builder.Append("  hardwareProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HardwareProfile, options, 2, false, "  hardwareProfile: ");
                 }
             }
 

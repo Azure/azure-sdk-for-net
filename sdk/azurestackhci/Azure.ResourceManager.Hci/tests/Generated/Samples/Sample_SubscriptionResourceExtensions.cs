@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Hci.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHciClusters_ListClustersInAGivenSubscription()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListClustersBySubscription.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/ListClustersBySubscription.json
             // this example is just showing the usage of "Clusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,6 +43,34 @@ namespace Azure.ResourceManager.Hci.Samples
                 HciClusterData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetHciKubernetesVersionsByLocation_KubernetesVersionsListBySubscriptionLocationResourceMaximumSet()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/KubernetesVersions_ListBySubscriptionLocationResource_MaximumSet_Gen.json
+            // this example is just showing the usage of "KubernetesVersions_ListBySubscriptionLocationResource" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ABB13722-6A68-4BFC-AE89-57B2EE91EA11";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("westus2");
+            await foreach (HciLocationKubernetesVersion item in subscriptionResource.GetHciKubernetesVersionsByLocationAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");

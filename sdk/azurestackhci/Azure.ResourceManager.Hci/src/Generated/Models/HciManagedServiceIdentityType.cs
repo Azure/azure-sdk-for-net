@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Hci.Models
         private const string NoneValue = "None";
         private const string SystemAssignedValue = "SystemAssigned";
         private const string UserAssignedValue = "UserAssigned";
-        private const string SystemAssignedUserAssignedValue = "SystemAssigned, UserAssigned";
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
         /// <summary> None. </summary>
         public static HciManagedServiceIdentityType None { get; } = new HciManagedServiceIdentityType(NoneValue);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciManagedServiceIdentityType SystemAssigned { get; } = new HciManagedServiceIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static HciManagedServiceIdentityType UserAssigned { get; } = new HciManagedServiceIdentityType(UserAssignedValue);
-        /// <summary> SystemAssigned, UserAssigned. </summary>
+        /// <summary> SystemAssigned,UserAssigned. </summary>
         public static HciManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new HciManagedServiceIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="HciManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(HciManagedServiceIdentityType left, HciManagedServiceIdentityType right) => left.Equals(right);

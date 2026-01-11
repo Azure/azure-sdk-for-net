@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="errorDetails"> Error details while installing Arc extension. </param>
         /// <param name="extensionResourceId"> Arc Extension Azure resource id. </param>
         /// <param name="typeHandlerVersion"> Extension version installed. </param>
-        /// <param name="managedBy"> Extension managed by user or Azure. </param>
+        /// <param name="managedBy"> Indicates whether the extension is managed by the user or by Azure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciEdgeDeviceArcExtension(string extensionName, ArcExtensionState? state, IReadOnlyList<HciValidationFailureDetail> errorDetails, ResourceIdentifier extensionResourceId, string typeHandlerVersion, ArcExtensionManagedBy? managedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Extension version installed. </summary>
         [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
-        /// <summary> Extension managed by user or Azure. </summary>
+        /// <summary> Indicates whether the extension is managed by the user or by Azure. </summary>
         [WirePath("managedBy")]
         public ArcExtensionManagedBy? ManagedBy { get; }
     }

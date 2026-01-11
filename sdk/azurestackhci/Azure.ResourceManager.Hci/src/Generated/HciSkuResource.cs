@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

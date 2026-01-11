@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DiagnosticsValue = "Diagnostics";
         private const string DiagnosticsAndRepairValue = "DiagnosticsAndRepair";
 
-        /// <summary> Diagnostics. </summary>
+        /// <summary> Allows remote diagnostics operations only. </summary>
         public static HciClusterAccessLevel Diagnostics { get; } = new HciClusterAccessLevel(DiagnosticsValue);
-        /// <summary> DiagnosticsAndRepair. </summary>
+        /// <summary> Allows both remote diagnostics and repair operations. </summary>
         public static HciClusterAccessLevel DiagnosticsAndRepair { get; } = new HciClusterAccessLevel(DiagnosticsAndRepairValue);
         /// <summary> Determines if two <see cref="HciClusterAccessLevel"/> values are the same. </summary>
         public static bool operator ==(HciClusterAccessLevel left, HciClusterAccessLevel right) => left.Equals(right);

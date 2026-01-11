@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Windows Server Subscription is disabled. </summary>
         public static WindowsServerSubscription Disabled { get; } = new WindowsServerSubscription(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary> Windows Server Subscription is enabled. </summary>
         public static WindowsServerSubscription Enabled { get; } = new WindowsServerSubscription(EnabledValue);
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are the same. </summary>
         public static bool operator ==(WindowsServerSubscription left, WindowsServerSubscription right) => left.Equals(right);
