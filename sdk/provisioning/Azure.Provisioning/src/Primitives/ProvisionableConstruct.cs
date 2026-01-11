@@ -41,7 +41,13 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         if (ProvisionableProperties.TryGetValue(property.Self!.PropertyName!, out IBicepValue? existing) &&
             existing != property)
         {
-            throw new ArgumentException($"Property {property.Self!.PropertyName} is not defined on construct {GetType().Name}.", nameof(property));
+            // Allow setting properties on dictionary and list items, which have the same PropertyName
+            // as their parent collection but are represented by specialized reference types
+            bool isCollectionItem = property.Self is BicepDictionaryValueReference or BicepListValueReference;
+            if (!isCollectionItem)
+            {
+                throw new ArgumentException($"Property {property.Self!.PropertyName} is not defined on construct {GetType().Name}.", nameof(property));
+            }
         }
         property.Assign(value);
     }
