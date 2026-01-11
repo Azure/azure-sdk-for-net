@@ -1994,6 +1994,42 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task CanAddAndGetMinimalFeatureFlag()
+        {
+            ConfigurationClient service = GetClient();
+            string featureId = GenerateKeyId("minimal-feature");
+            string key = FeatureFlagConfigurationSetting.KeyPrefix + featureId;
+
+            var minimalFeatureFlagSetting = new ConfigurationSetting(key, "{\"id\":\"" + featureId + "\"}")
+            {
+                ContentType = FeatureFlagConfigurationSetting.FeatureFlagContentType
+            };
+
+            try
+            {
+                var addResponse = await service.AddConfigurationSettingAsync(minimalFeatureFlagSetting);
+                Assert.AreEqual(key, addResponse.Value.Key);
+                Assert.AreEqual(FeatureFlagConfigurationSetting.FeatureFlagContentType, addResponse.Value.ContentType);
+
+                var getResponse = await service.GetConfigurationSettingAsync(key);
+                var retrievedSetting = getResponse.Value;
+
+                Assert.IsInstanceOf<FeatureFlagConfigurationSetting>(retrievedSetting);
+                Assert.AreEqual(key, retrievedSetting.Key);
+                Assert.AreEqual(FeatureFlagConfigurationSetting.FeatureFlagContentType, retrievedSetting.ContentType);
+
+                var featureFlag = (FeatureFlagConfigurationSetting)retrievedSetting;
+                Assert.AreEqual(featureId, featureFlag.FeatureId);
+                Assert.AreEqual(false, featureFlag.IsEnabled);
+                Assert.AreEqual(0, featureFlag.ClientFilters.Count);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(key));
+            }
+        }
+
+        [RecordedTest]
         public async Task CanAddAndUpdateFeatureFlag()
         {
             ConfigurationClient service = GetClient();

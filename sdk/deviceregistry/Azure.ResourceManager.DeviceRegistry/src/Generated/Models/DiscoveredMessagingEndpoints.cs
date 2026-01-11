@@ -47,10 +47,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return Outbound is null ? default : Outbound.Assigned;
             }
-            set
-            {
-                Outbound = new DiscoveredOutboundEndpoints(value);
-            }
         }
     }
 }

@@ -118,7 +118,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         public System.Collections.Generic.IList<Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> Values { get { throw null; } }
         protected virtual Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult (Azure.Response response) { throw null; }
         protected virtual Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

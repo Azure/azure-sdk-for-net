@@ -29,7 +29,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -58,7 +61,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public CloudHsmClusterPrivateEndpointConnectionData() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -145,12 +151,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     }
     public partial class DedicatedHsmData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>
     {
-        public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku sku) { }
+        public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties) { }
         public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku sku, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties) { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -239,6 +248,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult CloudHsmClusterBackupResult(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties CloudHsmClusterBackupResultProperties(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus? status = default(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus?), string statusDetails = null, Azure.ResponseError error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string jobId = null, System.Uri azureStorageBlobContainerUri = null, string backupId = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData CloudHsmClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku sku = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch CloudHsmClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData CloudHsmClusterPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties CloudHsmClusterPrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData CloudHsmClusterPrivateLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties properties = null) { throw null; }
@@ -254,6 +264,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency DedicatedHsmEndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail DedicatedHsmEndpointDetail(string ipAddress = null, int? port = default(int?), string protocol = null, string description = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface DedicatedHsmNetworkInterface(Azure.Core.ResourceIdentifier resourceId = null, string privateIPAddress = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile DedicatedHsmNetworkProfile(Azure.Core.ResourceIdentifier subnetResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface> networkInterfaces = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch DedicatedHsmPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties DedicatedHsmProperties(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile networkProfile = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile managementNetworkProfile = null, string stampId = null, string statusMessage = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -273,6 +285,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -285,7 +298,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -309,6 +325,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus left, Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus left, Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -317,7 +334,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public BackupRestoreRequestBaseProperties(System.Uri azureStorageBlobContainerUri) { }
         public System.Uri AzureStorageBlobContainerUri { get { throw null; } }
         public string Token { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -327,7 +347,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public partial class CloudHsmClusterBackupContent : Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent>
     {
         public CloudHsmClusterBackupContent(System.Uri azureStorageBlobContainerUri) : base (default(System.Uri)) { }
+        protected override Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -338,7 +361,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         internal CloudHsmClusterBackupResult() { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -350,7 +376,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         internal CloudHsmClusterBackupResultProperties() { }
         public System.Uri AzureStorageBlobContainerUri { get { throw null; } }
         public string BackupId { get { throw null; } }
+        protected override Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -362,7 +391,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public CloudHsmClusterPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -376,7 +408,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -403,6 +438,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -422,6 +458,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -429,7 +466,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         public CloudHsmClusterPrivateLinkData() { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -442,7 +482,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -455,7 +498,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -472,7 +518,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -498,6 +547,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -515,6 +565,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -522,7 +573,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         public CloudHsmClusterRestoreContent(System.Uri azureStorageBlobContainerUri, string backupId) : base (default(System.Uri)) { }
         public string BackupId { get { throw null; } }
+        protected override Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -533,7 +587,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         internal CloudHsmClusterRestoreResult() { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -546,7 +603,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily Family { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuName Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -567,6 +627,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily left, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -581,7 +642,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public string Fqdn { get { throw null; } }
         public string State { get { throw null; } }
         public string StateMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -593,7 +657,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         internal DedicatedHsmEgressEndpoint() { }
         public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency> Endpoints { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -605,7 +672,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         internal DedicatedHsmEndpointDependency() { }
         public string DomainName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail> EndpointDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -619,7 +689,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public string IPAddress { get { throw null; } }
         public int? Port { get { throw null; } }
         public string Protocol { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -646,6 +719,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType left, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType left, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -654,7 +728,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public DedicatedHsmNetworkInterface() { }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -666,7 +743,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public DedicatedHsmNetworkProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface> NetworkInterfaces { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -677,7 +757,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         public DedicatedHsmPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -692,7 +775,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType? ProvisioningState { get { throw null; } }
         public string StampId { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -703,7 +789,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         public DedicatedHsmSku() { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -730,6 +819,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName left, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName left, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -751,6 +841,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState left, Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState left, Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState right) { throw null; }
         public override string ToString() { throw null; }
     }

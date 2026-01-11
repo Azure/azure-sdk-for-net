@@ -377,6 +377,7 @@
           "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.BodyOptionality",
       "apiVersions": [],
@@ -643,9 +644,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
+              "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit",
           "apiVersions": [],

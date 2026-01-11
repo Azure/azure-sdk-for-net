@@ -1343,6 +1343,7 @@
           "crossLanguageDefinitionId": "Type.Model.Visibility.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Visibility",
       "apiVersions": []

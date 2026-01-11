@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     public readonly partial struct DisconnectedOperationsReleaseType : IEquatable<DisconnectedOperationsReleaseType>
     {
         private readonly string _value;
+        /// <summary> Release is a new install. </summary>
+        private const string InstallValue = "Install";
+        /// <summary> Release is update. </summary>
+        private const string UpdateValue = "Update";
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsReleaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisconnectedOperationsReleaseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InstallValue = "Install";
-        private const string UpdateValue = "Update";
+            _value = value;
+        }
 
         /// <summary> Release is a new install. </summary>
         public static DisconnectedOperationsReleaseType Install { get; } = new DisconnectedOperationsReleaseType(InstallValue);
+
         /// <summary> Release is update. </summary>
         public static DisconnectedOperationsReleaseType Update { get; } = new DisconnectedOperationsReleaseType(UpdateValue);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsReleaseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisconnectedOperationsReleaseType left, DisconnectedOperationsReleaseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsReleaseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisconnectedOperationsReleaseType left, DisconnectedOperationsReleaseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DisconnectedOperationsReleaseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsReleaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DisconnectedOperationsReleaseType(string value) => new DisconnectedOperationsReleaseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsReleaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DisconnectedOperationsReleaseType?(string value) => value == null ? null : new DisconnectedOperationsReleaseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisconnectedOperationsReleaseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DisconnectedOperationsReleaseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

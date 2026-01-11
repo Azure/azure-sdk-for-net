@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabase()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/DatabaseGet.json
-            // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/DatabaseGet.json
+            // this example is just showing the usage of "Database_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteADatabase()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/DatabaseDelete.json
-            // this example is just showing the usage of "Databases_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/DatabaseDelete.json
+            // this example is just showing the usage of "Database_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateADatabase()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/DatabaseCreate.json
-            // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/DatabaseCreate.json
+            // this example is just showing the usage of "Database_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,11 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerDatabaseResource mySqlFlexibleServerDatabase = client.GetMySqlFlexibleServerDatabaseResource(mySqlFlexibleServerDatabaseResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerDatabaseData data = new MySqlFlexibleServerDatabaseData
-            {
-                Charset = "utf8",
-                Collation = "utf8_general_ci",
-            };
+            MySqlFlexibleServerDatabaseData data = new MySqlFlexibleServerDatabaseData();
             ArmOperation<MySqlFlexibleServerDatabaseResource> lro = await mySqlFlexibleServerDatabase.UpdateAsync(WaitUntil.Completed, data);
             MySqlFlexibleServerDatabaseResource result = lro.Value;
 

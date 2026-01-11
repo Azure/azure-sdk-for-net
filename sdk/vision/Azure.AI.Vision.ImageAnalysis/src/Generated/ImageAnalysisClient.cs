@@ -238,7 +238,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromImageData(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = AnalyzeFromImageData(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -276,7 +276,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromImageDataAsync(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await AnalyzeFromImageDataAsync(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -426,7 +426,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -464,7 +464,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
     }

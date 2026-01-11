@@ -135,7 +135,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         protected virtual Azure.Data.AppConfiguration.ConfigurationSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSetting (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSetting (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Data.AppConfiguration.ConfigurationSetting configurationSetting) { throw null; }
         protected virtual Azure.Data.AppConfiguration.ConfigurationSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -179,7 +179,7 @@ namespace Azure.Data.AppConfiguration
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.Data.AppConfiguration.ConfigurationSnapshot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSnapshot (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSnapshot (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Data.AppConfiguration.ConfigurationSnapshot configurationSnapshot) { throw null; }
         protected virtual Azure.Data.AppConfiguration.ConfigurationSnapshot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

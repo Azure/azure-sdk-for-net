@@ -312,6 +312,7 @@
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.ContentNegotiation",
       "apiVersions": [],
@@ -540,9 +541,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody",
           "apiVersions": [],
@@ -770,9 +772,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody",
           "apiVersions": [],

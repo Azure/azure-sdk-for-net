@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OnlineExperimentation
 {
+    /// <summary></summary>
     public partial class OnlineExperimentationWorkspaceResource : IJsonModel<OnlineExperimentationWorkspaceData>
     {
-        private static OnlineExperimentationWorkspaceData s_dataDeserializationInstance;
-        private static OnlineExperimentationWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OnlineExperimentationWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OnlineExperimentationWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OnlineExperimentationWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OnlineExperimentationWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OnlineExperimentationWorkspaceData>)Data).Write(writer, options);
 
-        OnlineExperimentationWorkspaceData IJsonModel<OnlineExperimentationWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OnlineExperimentationWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OnlineExperimentationWorkspaceData IJsonModel<OnlineExperimentationWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OnlineExperimentationWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OnlineExperimentationWorkspaceData>(Data, options, AzureResourceManagerOnlineExperimentationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OnlineExperimentationWorkspaceData IPersistableModel<OnlineExperimentationWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OnlineExperimentationWorkspaceData>(data, options, AzureResourceManagerOnlineExperimentationContext.Default);
 
-        string IPersistableModel<OnlineExperimentationWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OnlineExperimentationWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OnlineExperimentationWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

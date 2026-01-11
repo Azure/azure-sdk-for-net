@@ -152,7 +152,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePendingUploadResult(document.RootElement, options);
                     }
@@ -167,8 +167,8 @@ namespace Azure.AI.Projects
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PendingUploadResult"/> from. </param>
         public static explicit operator PendingUploadResult(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePendingUploadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

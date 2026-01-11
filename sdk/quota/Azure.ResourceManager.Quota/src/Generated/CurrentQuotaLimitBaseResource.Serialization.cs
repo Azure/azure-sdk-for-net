@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Quota
 {
+    /// <summary></summary>
     public partial class CurrentQuotaLimitBaseResource : IJsonModel<CurrentQuotaLimitBaseData>
     {
-        private static CurrentQuotaLimitBaseData s_dataDeserializationInstance;
-        private static CurrentQuotaLimitBaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CurrentQuotaLimitBaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CurrentQuotaLimitBaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CurrentQuotaLimitBaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CurrentQuotaLimitBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CurrentQuotaLimitBaseData>)Data).Write(writer, options);
 
-        CurrentQuotaLimitBaseData IJsonModel<CurrentQuotaLimitBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CurrentQuotaLimitBaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CurrentQuotaLimitBaseData IJsonModel<CurrentQuotaLimitBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CurrentQuotaLimitBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CurrentQuotaLimitBaseData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CurrentQuotaLimitBaseData IPersistableModel<CurrentQuotaLimitBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CurrentQuotaLimitBaseData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<CurrentQuotaLimitBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CurrentQuotaLimitBaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CurrentQuotaLimitBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

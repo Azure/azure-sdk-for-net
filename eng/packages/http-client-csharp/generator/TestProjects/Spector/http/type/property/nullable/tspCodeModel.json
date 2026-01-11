@@ -1274,6 +1274,7 @@
           "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Property.Nullable",
       "apiVersions": [],
@@ -1712,9 +1713,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.String",
           "apiVersions": [],
@@ -2156,9 +2158,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes",
           "apiVersions": [],
@@ -2600,9 +2603,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime",
           "apiVersions": [],
@@ -3044,9 +3048,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Duration",
           "apiVersions": [],
@@ -3488,9 +3493,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte",
           "apiVersions": [],
@@ -3932,9 +3938,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel",
           "apiVersions": [],
@@ -4376,9 +4383,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString",
           "apiVersions": [],

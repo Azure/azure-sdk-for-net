@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
+    /// <summary></summary>
     public partial class DisconnectedOperationResource : IJsonModel<DisconnectedOperationData>
     {
-        private static DisconnectedOperationData s_dataDeserializationInstance;
-        private static DisconnectedOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DisconnectedOperationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DisconnectedOperationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DisconnectedOperationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisconnectedOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DisconnectedOperationData>)Data).Write(writer, options);
 
-        DisconnectedOperationData IJsonModel<DisconnectedOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DisconnectedOperationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationData IJsonModel<DisconnectedOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DisconnectedOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DisconnectedOperationData>(Data, options, AzureResourceManagerDisconnectedOperationsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DisconnectedOperationData IPersistableModel<DisconnectedOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DisconnectedOperationData>(data, options, AzureResourceManagerDisconnectedOperationsContext.Default);
 
-        string IPersistableModel<DisconnectedOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DisconnectedOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DisconnectedOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

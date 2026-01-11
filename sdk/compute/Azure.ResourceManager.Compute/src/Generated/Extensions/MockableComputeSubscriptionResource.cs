@@ -60,6 +60,18 @@ namespace Azure.ResourceManager.Compute.Mocking
         private ResourceSkusRestOperations _resourceSkusRestClient;
         private ClientDiagnostics _galleryClientDiagnostics;
         private GalleriesRestOperations _galleryRestClient;
+        private ClientDiagnostics _communityGalleriesClientDiagnostics;
+        private CommunityGalleriesRestOperations _communityGalleriesRestClient;
+        private ClientDiagnostics _communityGalleryImagesClientDiagnostics;
+        private CommunityGalleryImagesRestOperations _communityGalleryImagesRestClient;
+        private ClientDiagnostics _communityGalleryImageVersionsClientDiagnostics;
+        private CommunityGalleryImageVersionsRestOperations _communityGalleryImageVersionsRestClient;
+        private ClientDiagnostics _sharedGalleriesClientDiagnostics;
+        private SharedGalleriesRestOperations _sharedGalleriesRestClient;
+        private ClientDiagnostics _sharedGalleryImagesClientDiagnostics;
+        private SharedGalleryImagesRestOperations _sharedGalleryImagesRestClient;
+        private ClientDiagnostics _sharedGalleryImageVersionsClientDiagnostics;
+        private SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionsRestClient;
         private ClientDiagnostics _cloudServiceClientDiagnostics;
         private CloudServicesRestOperations _cloudServiceRestClient;
 
@@ -117,6 +129,18 @@ namespace Azure.ResourceManager.Compute.Mocking
         private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics GalleryClientDiagnostics => _galleryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryResource.ResourceType.Namespace, Diagnostics);
         private GalleriesRestOperations GalleryRestClient => _galleryRestClient ??= new GalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GalleryResource.ResourceType));
+        private ClientDiagnostics CommunityGalleriesClientDiagnostics => _communityGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CommunityGalleriesRestOperations CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CommunityGalleryImagesClientDiagnostics => _communityGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CommunityGalleryImagesRestOperations CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CommunityGalleryImageVersionsClientDiagnostics => _communityGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CommunityGalleryImageVersionsRestOperations CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SharedGalleriesClientDiagnostics => _sharedGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SharedGalleriesRestOperations SharedGalleriesRestClient => _sharedGalleriesRestClient ??= new SharedGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SharedGalleryImagesClientDiagnostics => _sharedGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SharedGalleryImagesRestOperations SharedGalleryImagesRestClient => _sharedGalleryImagesRestClient ??= new SharedGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SharedGalleryImageVersionsClientDiagnostics => _sharedGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SharedGalleryImageVersionsRestOperations SharedGalleryImageVersionsRestClient => _sharedGalleryImageVersionsRestClient ??= new SharedGalleryImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CloudServiceClientDiagnostics => _cloudServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceResource.ResourceType.Namespace, Diagnostics);
         private CloudServicesRestOperations CloudServiceRestClient => _cloudServiceRestClient ??= new CloudServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudServiceResource.ResourceType));
 
@@ -203,149 +227,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Response<VirtualMachineExtensionImageResource> GetVirtualMachineExtensionImage(AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             return GetVirtualMachineExtensionImages(location, publisherName).Get(type, version, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CommunityGalleryResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
-        public virtual CommunityGalleryCollection GetCommunityGalleries()
-        {
-            return GetCachedClient(client => new CommunityGalleryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunityGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            return await GetCommunityGalleries().GetAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunityGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CommunityGalleryResource> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            return GetCommunityGalleries().Get(location, publicGalleryName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
-        public virtual SharedGalleryCollection GetSharedGalleries(AzureLocation location)
-        {
-            return new SharedGalleryCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Get a shared gallery by subscription id or tenant id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            return await GetSharedGalleries(location).GetAsync(galleryUniqueName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a shared gallery by subscription id or tenant id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SharedGalleryResource> GetSharedGallery(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            return GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
@@ -2732,6 +2613,674 @@ namespace Azure.ResourceManager.Compute.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetGalleries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery images inside a gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunityGalleryImageData> GetCommunityGalleryImagesAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityGalleryImagesRestClient.CreateListRequest(Id.SubscriptionId, location, publicGalleryName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityGalleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, publicGalleryName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CommunityGalleryImageData.DeserializeCommunityGalleryImageData(e), CommunityGalleryImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCommunityGalleryImages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery images inside a gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        /// <returns> A collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunityGalleryImageData> GetCommunityGalleryImages(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityGalleryImagesRestClient.CreateListRequest(Id.SubscriptionId, location, publicGalleryName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityGalleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, publicGalleryName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CommunityGalleryImageData.DeserializeCommunityGalleryImageData(e), CommunityGalleryImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCommunityGalleryImages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a community gallery image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public virtual async Task<Response<CommunityGalleryImageData>> GetCommunityGalleryImageAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            using var scope = CommunityGalleryImagesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGalleryImage");
+            scope.Start();
+            try
+            {
+                var response = await CommunityGalleryImagesRestClient.GetAsync(Id.SubscriptionId, location, publicGalleryName, galleryImageName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a community gallery image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public virtual Response<CommunityGalleryImageData> GetCommunityGalleryImage(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            using var scope = CommunityGalleryImagesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGalleryImage");
+            scope.Start();
+            try
+            {
+                var response = CommunityGalleryImagesRestClient.Get(Id.SubscriptionId, location, publicGalleryName, galleryImageName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List community gallery image versions inside an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersionsAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityGalleryImageVersionsRestClient.CreateListRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityGalleryImageVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, publicGalleryName, galleryImageName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(e), CommunityGalleryImageVersionsClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCommunityGalleryImageVersions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery image versions inside an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersions(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunityGalleryImageVersionsRestClient.CreateListRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunityGalleryImageVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, publicGalleryName, galleryImageName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(e), CommunityGalleryImageVersionsClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCommunityGalleryImageVersions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a community gallery image version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual async Task<Response<CommunityGalleryImageVersionData>> GetCommunityGalleryImageVersionAsync(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+
+            using var scope = CommunityGalleryImageVersionsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGalleryImageVersion");
+            scope.Start();
+            try
+            {
+                var response = await CommunityGalleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a community gallery image version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual Response<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersion(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+
+            using var scope = CommunityGalleryImageVersionsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetCommunityGalleryImageVersion");
+            scope.Start();
+            try
+            {
+                var response = CommunityGalleryImageVersionsRestClient.Get(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List shared galleries by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedGalleryData> GetSharedGalleriesAsync(AzureLocation location, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SharedGalleriesRestClient.CreateListRequest(Id.SubscriptionId, location, sharedTo);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SharedGalleriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, sharedTo);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SharedGalleryData.DeserializeSharedGalleryData(e), SharedGalleriesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSharedGalleries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared galleries by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedGalleryData> GetSharedGalleries(AzureLocation location, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SharedGalleriesRestClient.CreateListRequest(Id.SubscriptionId, location, sharedTo);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SharedGalleriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, sharedTo);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SharedGalleryData.DeserializeSharedGalleryData(e), SharedGalleriesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSharedGalleries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery images by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedGalleryImageData> GetSharedGalleryImagesAsync(AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SharedGalleryImagesRestClient.CreateListRequest(Id.SubscriptionId, location, galleryUniqueName, sharedTo);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SharedGalleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, galleryUniqueName, sharedTo);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SharedGalleryImageData.DeserializeSharedGalleryImageData(e), SharedGalleryImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSharedGalleryImages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery images by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <returns> A collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedGalleryImageData> GetSharedGalleryImages(AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SharedGalleryImagesRestClient.CreateListRequest(Id.SubscriptionId, location, galleryUniqueName, sharedTo);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SharedGalleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, galleryUniqueName, sharedTo);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SharedGalleryImageData.DeserializeSharedGalleryImageData(e), SharedGalleryImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSharedGalleryImages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public virtual async Task<Response<SharedGalleryImageData>> GetSharedGalleryImageAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            using var scope = SharedGalleryImagesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGalleryImage");
+            scope.Start();
+            try
+            {
+                var response = await SharedGalleryImagesRestClient.GetAsync(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a shared gallery image by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public virtual Response<SharedGalleryImageData> GetSharedGalleryImage(AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            using var scope = SharedGalleryImagesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGalleryImage");
+            scope.Start();
+            try
+            {
+                var response = SharedGalleryImagesRestClient.Get(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List shared gallery image versions by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersionsAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SharedGalleryImageVersionsRestClient.CreateListRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, sharedTo);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SharedGalleryImageVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, galleryUniqueName, galleryImageName, sharedTo);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SharedGalleryImageVersionData.DeserializeSharedGalleryImageVersionData(e), SharedGalleryImageVersionsClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSharedGalleryImageVersions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery image versions by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersions(AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SharedGalleryImageVersionsRestClient.CreateListRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, sharedTo);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SharedGalleryImageVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, galleryUniqueName, galleryImageName, sharedTo);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SharedGalleryImageVersionData.DeserializeSharedGalleryImageVersionData(e), SharedGalleryImageVersionsClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSharedGalleryImageVersions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image version by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual async Task<Response<SharedGalleryImageVersionData>> GetSharedGalleryImageVersionAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+
+            using var scope = SharedGalleryImageVersionsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGalleryImageVersion");
+            scope.Start();
+            try
+            {
+                var response = await SharedGalleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a shared gallery image version by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual Response<SharedGalleryImageVersionData> GetSharedGalleryImageVersion(AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+
+            using var scope = SharedGalleryImageVersionsClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetSharedGalleryImageVersion");
+            scope.Start();
+            try
+            {
+                var response = SharedGalleryImageVersionsRestClient.Get(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -82,6 +82,7 @@
           "crossLanguageDefinitionId": "Routes.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Routes",
       "apiVersions": [],
@@ -371,9 +372,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.PathParameters",
           "apiVersions": [],
@@ -583,9 +585,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion",
               "apiVersions": [],
@@ -628,9 +631,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion",
               "apiVersions": [],
@@ -934,9 +938,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard",
                   "apiVersions": [],
@@ -1213,9 +1218,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode",
                   "apiVersions": [],
@@ -1260,9 +1266,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion",
               "apiVersions": [],
@@ -1539,9 +1546,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard",
                   "apiVersions": [],
@@ -1818,9 +1826,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode",
                   "apiVersions": [],
@@ -1865,9 +1874,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion",
               "apiVersions": [],
@@ -2144,9 +2154,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard",
                   "apiVersions": [],
@@ -2423,9 +2434,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode",
                   "apiVersions": [],
@@ -2470,9 +2482,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion",
               "apiVersions": [],
@@ -2749,9 +2762,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard",
                   "apiVersions": [],
@@ -3028,9 +3042,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode",
                   "apiVersions": [],
@@ -3318,9 +3333,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.QueryParameters",
           "apiVersions": [],
@@ -3363,9 +3379,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion",
               "apiVersions": [],
@@ -3633,9 +3650,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard",
                   "apiVersions": [],
@@ -3903,9 +3921,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode",
                   "apiVersions": [],
@@ -3950,9 +3969,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation",
               "apiVersions": [],
@@ -4220,9 +4240,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard",
                   "apiVersions": [],
@@ -4490,9 +4511,10 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode",
                   "apiVersions": [],
@@ -4577,9 +4599,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.endpoint"
+              "crossLanguageDefinitionId": "Routes.InInterface.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.InInterface",
           "apiVersions": [],

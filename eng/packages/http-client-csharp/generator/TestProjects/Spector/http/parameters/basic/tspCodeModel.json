@@ -151,6 +151,7 @@
           "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Basic",
       "apiVersions": [],
@@ -304,9 +305,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody",
           "apiVersions": [],
@@ -467,9 +469,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody",
           "apiVersions": [],

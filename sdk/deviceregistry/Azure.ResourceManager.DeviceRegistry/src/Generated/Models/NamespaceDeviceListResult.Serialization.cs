@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeNamespaceDeviceListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NamespaceDeviceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="NamespaceDeviceListResult"/> from. </param>
-        internal static NamespaceDeviceListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NamespaceDeviceListResult"/> from. </param>
+        internal static NamespaceDeviceListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeNamespaceDeviceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

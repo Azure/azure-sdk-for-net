@@ -10,16 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class StorageMoverAgentData : IUtf8JsonSerializable, IJsonModel<StorageMoverAgentData>
+    /// <summary> The Agent resource. </summary>
+    public partial class StorageMoverAgentData : ResourceData, IJsonModel<StorageMoverAgentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentData"/> for deserialization. </summary>
+        internal StorageMoverAgentData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageMoverAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,294 +38,107 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
-            {
-                writer.WritePropertyName("agentVersion"u8);
-                writer.WriteStringValue(AgentVersion);
-            }
-            writer.WritePropertyName("arcResourceId"u8);
-            writer.WriteStringValue(ArcResourceId);
-            writer.WritePropertyName("arcVmUuid"u8);
-            writer.WriteStringValue(ArcVmUuid);
-            if (options.Format != "W" && Optional.IsDefined(AgentStatus))
-            {
-                writer.WritePropertyName("agentStatus"u8);
-                writer.WriteStringValue(AgentStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
-            {
-                writer.WritePropertyName("lastStatusUpdate"u8);
-                writer.WriteStringValue(LastStatusUpdate.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LocalIPAddress))
-            {
-                writer.WritePropertyName("localIPAddress"u8);
-                writer.WriteStringValue(LocalIPAddress);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MemoryInMB))
-            {
-                writer.WritePropertyName("memoryInMB"u8);
-                writer.WriteNumberValue(MemoryInMB.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfCores))
-            {
-                writer.WritePropertyName("numberOfCores"u8);
-                writer.WriteNumberValue(NumberOfCores.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(UptimeInSeconds))
-            {
-                writer.WritePropertyName("uptimeInSeconds"u8);
-                writer.WriteNumberValue(UptimeInSeconds.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeZone))
-            {
-                writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(TimeZone);
-            }
-            if (Optional.IsDefined(UploadLimitSchedule))
-            {
-                writer.WritePropertyName("uploadLimitSchedule"u8);
-                writer.WriteObjectValue(UploadLimitSchedule, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
-            {
-                writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
-        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageMoverAgentData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageMoverAgentData(document.RootElement, options);
         }
 
-        internal static StorageMoverAgentData DeserializeStorageMoverAgentData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageMoverAgentData DeserializeStorageMoverAgentData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string description = default;
-            string agentVersion = default;
-            string arcResourceId = default;
-            string arcVmUuid = default;
-            StorageMoverAgentStatus? agentStatus = default;
-            DateTimeOffset? lastStatusUpdate = default;
-            string localIPAddress = default;
-            long? memoryInMB = default;
-            long? numberOfCores = default;
-            long? uptimeInSeconds = default;
-            string timeZone = default;
-            UploadLimitSchedule uploadLimitSchedule = default;
-            StorageMoverAgentPropertiesErrorDetails errorDetails = default;
-            StorageMoverProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AgentProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("agentVersion"u8))
-                        {
-                            agentVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("arcResourceId"u8))
-                        {
-                            arcResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("arcVmUuid"u8))
-                        {
-                            arcVmUuid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("agentStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            agentStatus = new StorageMoverAgentStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lastStatusUpdate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastStatusUpdate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("localIPAddress"u8))
-                        {
-                            localIPAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("memoryInMB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            memoryInMB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfCores"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfCores = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("uptimeInSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            uptimeInSeconds = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeZone"u8))
-                        {
-                            timeZone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("uploadLimitSchedule"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            uploadLimitSchedule = UploadLimitSchedule.DeserializeUploadLimitSchedule(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("errorDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = AgentProperties.DeserializeAgentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageMoverAgentData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                description,
-                agentVersion,
-                arcResourceId,
-                arcVmUuid,
-                agentStatus,
-                lastStatusUpdate,
-                localIPAddress,
-                memoryInMB,
-                numberOfCores,
-                uptimeInSeconds,
-                timeZone,
-                uploadLimitSchedule,
-                errorDetails,
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -328,15 +148,20 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
-        StorageMoverAgentData IPersistableModel<StorageMoverAgentData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageMoverAgentData IPersistableModel<StorageMoverAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageMoverAgentData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageMoverAgentData(document.RootElement, options);
                     }
                 default:
@@ -344,6 +169,26 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageMoverAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="storageMoverAgentData"> The <see cref="StorageMoverAgentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageMoverAgentData storageMoverAgentData)
+        {
+            if (storageMoverAgentData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(storageMoverAgentData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageMoverAgentData"/> from. </param>
+        internal static StorageMoverAgentData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStorageMoverAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {

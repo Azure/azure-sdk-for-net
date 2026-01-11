@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentApiKeyCreateOrUpdateContent. </summary>
-    public partial class NginxDeploymentApiKeyCreateOrUpdateContent : ResourceData
+    /// <summary> Nginx Deployment Api Key Request. </summary>
+    public partial class NginxDeploymentApiKeyCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyCreateOrUpdateContent"/>. </summary>
         public NginxDeploymentApiKeyCreateOrUpdateContent()
@@ -53,19 +23,35 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentApiKeyCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxDeploymentApiKeyRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="properties"> Nginx Deployment Api Key Request Properties. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentApiKeyCreateOrUpdateContent(string id, string name, string resourceType, NginxDeploymentApiKeyRequestProperties properties, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
+            Name = name;
+            ResourceType = resourceType;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SystemData = systemData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
+
+        /// <summary> Gets the ResourceType. </summary>
+        public string ResourceType { get; }
+
+        /// <summary> Nginx Deployment Api Key Request Properties. </summary>
         public NginxDeploymentApiKeyRequestProperties Properties { get; set; }
+
+        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        public SystemData SystemData { get; }
     }
 }

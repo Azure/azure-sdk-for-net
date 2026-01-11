@@ -8,97 +8,105 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.OracleDatabase;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableOracleDatabaseSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _cloudExadataInfrastructureClientDiagnostics;
-        private CloudExadataInfrastructuresRestOperations _cloudExadataInfrastructureRestClient;
-        private ClientDiagnostics _cloudVmClusterClientDiagnostics;
-        private CloudVmClustersRestOperations _cloudVmClusterRestClient;
-        private ClientDiagnostics _autonomousDatabaseClientDiagnostics;
-        private AutonomousDatabasesRestOperations _autonomousDatabaseRestClient;
-        private ClientDiagnostics _exadbVmClusterClientDiagnostics;
-        private ExadbVmClustersRestOperations _exadbVmClusterRestClient;
-        private ClientDiagnostics _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics;
-        private ExascaleDbStorageVaultsRestOperations _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient;
-        private ClientDiagnostics _oracleNetworkAnchorNetworkAnchorsClientDiagnostics;
-        private NetworkAnchorsRestOperations _oracleNetworkAnchorNetworkAnchorsRestClient;
-        private ClientDiagnostics _oracleResourceAnchorResourceAnchorsClientDiagnostics;
-        private ResourceAnchorsRestOperations _oracleResourceAnchorResourceAnchorsRestClient;
-        private ClientDiagnostics _oracleDBSystemDbSystemsClientDiagnostics;
-        private DbSystemsRestOperations _oracleDBSystemDbSystemsRestClient;
+        private ClientDiagnostics _cloudExadataInfrastructuresClientDiagnostics;
+        private CloudExadataInfrastructures _cloudExadataInfrastructuresRestClient;
+        private ClientDiagnostics _cloudVmClustersClientDiagnostics;
+        private CloudVmClusters _cloudVmClustersRestClient;
+        private ClientDiagnostics _autonomousDatabasesClientDiagnostics;
+        private AutonomousDatabases _autonomousDatabasesRestClient;
+        private ClientDiagnostics _exadbVmClustersClientDiagnostics;
+        private ExadbVmClusters _exadbVmClustersRestClient;
+        private ClientDiagnostics _exascaleDbStorageVaultsClientDiagnostics;
+        private ExascaleDbStorageVaults _exascaleDbStorageVaultsRestClient;
+        private ClientDiagnostics _networkAnchorsClientDiagnostics;
+        private NetworkAnchors _networkAnchorsRestClient;
+        private ClientDiagnostics _resourceAnchorsClientDiagnostics;
+        private ResourceAnchors _resourceAnchorsRestClient;
+        private ClientDiagnostics _dbSystemsClientDiagnostics;
+        private DbSystems _dbSystemsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOracleDatabaseSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableOracleDatabaseSubscriptionResource for mocking. </summary>
         protected MockableOracleDatabaseSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOracleDatabaseSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableOracleDatabaseSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableOracleDatabaseSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics CloudExadataInfrastructureClientDiagnostics => _cloudExadataInfrastructureClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudExadataInfrastructureResource.ResourceType.Namespace, Diagnostics);
-        private CloudExadataInfrastructuresRestOperations CloudExadataInfrastructureRestClient => _cloudExadataInfrastructureRestClient ??= new CloudExadataInfrastructuresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudExadataInfrastructureResource.ResourceType));
-        private ClientDiagnostics CloudVmClusterClientDiagnostics => _cloudVmClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterResource.ResourceType.Namespace, Diagnostics);
-        private CloudVmClustersRestOperations CloudVmClusterRestClient => _cloudVmClusterRestClient ??= new CloudVmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudVmClusterResource.ResourceType));
-        private ClientDiagnostics AutonomousDatabaseClientDiagnostics => _autonomousDatabaseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseResource.ResourceType.Namespace, Diagnostics);
-        private AutonomousDatabasesRestOperations AutonomousDatabaseRestClient => _autonomousDatabaseRestClient ??= new AutonomousDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutonomousDatabaseResource.ResourceType));
-        private ClientDiagnostics ExadbVmClusterClientDiagnostics => _exadbVmClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
-        private ExadbVmClustersRestOperations ExadbVmClusterRestClient => _exadbVmClusterRestClient ??= new ExadbVmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExadbVmClusterResource.ResourceType));
-        private ClientDiagnostics ExascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics => _exascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
-        private ExascaleDbStorageVaultsRestOperations ExascaleDBStorageVaultExascaleDbStorageVaultsRestClient => _exascaleDBStorageVaultExascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExascaleDBStorageVaultResource.ResourceType));
-        private ClientDiagnostics OracleNetworkAnchorNetworkAnchorsClientDiagnostics => _oracleNetworkAnchorNetworkAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleNetworkAnchorResource.ResourceType.Namespace, Diagnostics);
-        private NetworkAnchorsRestOperations OracleNetworkAnchorNetworkAnchorsRestClient => _oracleNetworkAnchorNetworkAnchorsRestClient ??= new NetworkAnchorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OracleNetworkAnchorResource.ResourceType));
-        private ClientDiagnostics OracleResourceAnchorResourceAnchorsClientDiagnostics => _oracleResourceAnchorResourceAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleResourceAnchorResource.ResourceType.Namespace, Diagnostics);
-        private ResourceAnchorsRestOperations OracleResourceAnchorResourceAnchorsRestClient => _oracleResourceAnchorResourceAnchorsRestClient ??= new ResourceAnchorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OracleResourceAnchorResource.ResourceType));
-        private ClientDiagnostics OracleDBSystemDbSystemsClientDiagnostics => _oracleDBSystemDbSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemResource.ResourceType.Namespace, Diagnostics);
-        private DbSystemsRestOperations OracleDBSystemDbSystemsRestClient => _oracleDBSystemDbSystemsRestClient ??= new DbSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OracleDBSystemResource.ResourceType));
+        private ClientDiagnostics CloudExadataInfrastructuresClientDiagnostics => _cloudExadataInfrastructuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private CloudExadataInfrastructures CloudExadataInfrastructuresRestClient => _cloudExadataInfrastructuresRestClient ??= new CloudExadataInfrastructures(CloudExadataInfrastructuresClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Gets a collection of OracleSystemVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleSystemVersionResources and their operations over a OracleSystemVersionResource. </returns>
+        private ClientDiagnostics CloudVmClustersClientDiagnostics => _cloudVmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CloudVmClusters CloudVmClustersRestClient => _cloudVmClustersRestClient ??= new CloudVmClusters(CloudVmClustersClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics AutonomousDatabasesClientDiagnostics => _autonomousDatabasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AutonomousDatabases AutonomousDatabasesRestClient => _autonomousDatabasesRestClient ??= new AutonomousDatabases(AutonomousDatabasesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics ExadbVmClustersClientDiagnostics => _exadbVmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExadbVmClusters ExadbVmClustersRestClient => _exadbVmClustersRestClient ??= new ExadbVmClusters(ExadbVmClustersClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics ExascaleDbStorageVaultsClientDiagnostics => _exascaleDbStorageVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExascaleDbStorageVaults ExascaleDbStorageVaultsRestClient => _exascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaults(ExascaleDbStorageVaultsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics NetworkAnchorsClientDiagnostics => _networkAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkAnchors NetworkAnchorsRestClient => _networkAnchorsRestClient ??= new NetworkAnchors(NetworkAnchorsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics ResourceAnchorsClientDiagnostics => _resourceAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ResourceAnchors ResourceAnchorsRestClient => _resourceAnchorsRestClient ??= new ResourceAnchors(ResourceAnchorsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics DbSystemsClientDiagnostics => _dbSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DbSystems DbSystemsRestClient => _dbSystemsRestClient ??= new DbSystems(DbSystemsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        /// <summary> Gets a collection of OracleSystemVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleSystemVersions and their operations over a OracleSystemVersionResource. </returns>
         public virtual OracleSystemVersionCollection GetOracleSystemVersions(AzureLocation location)
         {
-            return new OracleSystemVersionCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleSystemVersionCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a SystemVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
@@ -106,6 +114,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleSystemVersionResource>> GetOracleSystemVersionAsync(AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
+
             return await GetOracleSystemVersions(location).GetAsync(systemversionname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -113,24 +123,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a SystemVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/systemVersions/{systemversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleSystemVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="systemversionname"> SystemVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="systemversionname"/> is null. </exception>
@@ -138,46 +144,64 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleSystemVersionResource> GetOracleSystemVersion(AzureLocation location, string systemversionname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(systemversionname, nameof(systemversionname));
+
             return GetOracleSystemVersions(location).Get(systemversionname, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a OracleSubscriptionResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Get a OracleSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/oracleSubscriptions/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OracleSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OracleSubscriptionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <returns> Returns a <see cref="OracleSubscriptionResource"/> object. </returns>
         public virtual OracleSubscriptionResource GetOracleSubscription()
         {
             return new OracleSubscriptionResource(Client, Id.AppendProviderResource("Oracle.Database", "oracleSubscriptions", "default"));
         }
 
-        /// <summary> Gets a collection of OracleGIVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleGIVersionResources and their operations over a OracleGIVersionResource. </returns>
+        /// <summary> Gets a collection of OracleGIVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleGIVersions and their operations over a OracleGIVersionResource. </returns>
         public virtual OracleGIVersionCollection GetOracleGIVersions(AzureLocation location)
         {
-            return new OracleGIVersionCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleGIVersionCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a GiVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
@@ -185,6 +209,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleGIVersionResource>> GetOracleGIVersionAsync(AzureLocation location, string giversionname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
+
             return await GetOracleGIVersions(location).GetAsync(giversionname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -192,24 +218,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a GiVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
@@ -217,39 +239,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleGIVersionResource> GetOracleGIVersion(AzureLocation location, string giversionname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
+
             return GetOracleGIVersions(location).Get(giversionname, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleDBSystemShapeResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleDBSystemShapeResources and their operations over a OracleDBSystemShapeResource. </returns>
+        /// <summary> Gets a collection of OracleDBSystemShapes in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleDBSystemShapes and their operations over a OracleDBSystemShapeResource. </returns>
         public virtual OracleDBSystemShapeCollection GetOracleDBSystemShapes(AzureLocation location)
         {
-            return new OracleDBSystemShapeCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleDBSystemShapeCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a DbSystemShape
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes/{dbsystemshapename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes/{dbsystemshapename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbSystemShapes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBSystemShapeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dbsystemshapename"> DbSystemShape name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbsystemshapename"/> is null. </exception>
@@ -257,6 +277,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleDBSystemShapeResource>> GetOracleDBSystemShapeAsync(AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
+
             return await GetOracleDBSystemShapes(location).GetAsync(dbsystemshapename, cancellationToken).ConfigureAwait(false);
         }
 
@@ -264,24 +286,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a DbSystemShape
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes/{dbsystemshapename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes/{dbsystemshapename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbSystemShapes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBSystemShapeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dbsystemshapename"> DbSystemShape name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbsystemshapename"/> is null. </exception>
@@ -289,39 +307,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleDBSystemShapeResource> GetOracleDBSystemShape(AzureLocation location, string dbsystemshapename, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
+
             return GetOracleDBSystemShapes(location).Get(dbsystemshapename, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleDnsPrivateViewResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleDnsPrivateViewResources and their operations over a OracleDnsPrivateViewResource. </returns>
+        /// <summary> Gets a collection of OracleDnsPrivateViews in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleDnsPrivateViews and their operations over a OracleDnsPrivateViewResource. </returns>
         public virtual OracleDnsPrivateViewCollection GetOracleDnsPrivateViews(AzureLocation location)
         {
-            return new OracleDnsPrivateViewCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleDnsPrivateViewCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a DnsPrivateView
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateViews/{dnsprivateviewocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateViews/{dnsprivateviewocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateView_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsPrivateViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dnsprivateviewocid"> DnsPrivateView OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivateviewocid"/> is null. </exception>
@@ -329,6 +345,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleDnsPrivateViewResource>> GetOracleDnsPrivateViewAsync(AzureLocation location, string dnsprivateviewocid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dnsprivateviewocid, nameof(dnsprivateviewocid));
+
             return await GetOracleDnsPrivateViews(location).GetAsync(dnsprivateviewocid, cancellationToken).ConfigureAwait(false);
         }
 
@@ -336,24 +354,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a DnsPrivateView
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateViews/{dnsprivateviewocid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateViews/{dnsprivateviewocid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateView_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsPrivateViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dnsprivateviewocid"> DnsPrivateView OCID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivateviewocid"/> is null. </exception>
@@ -361,39 +375,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleDnsPrivateViewResource> GetOracleDnsPrivateView(AzureLocation location, string dnsprivateviewocid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dnsprivateviewocid, nameof(dnsprivateviewocid));
+
             return GetOracleDnsPrivateViews(location).Get(dnsprivateviewocid, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleDnsPrivateZoneResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleDnsPrivateZoneResources and their operations over a OracleDnsPrivateZoneResource. </returns>
+        /// <summary> Gets a collection of OracleDnsPrivateZones in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleDnsPrivateZones and their operations over a OracleDnsPrivateZoneResource. </returns>
         public virtual OracleDnsPrivateZoneCollection GetOracleDnsPrivateZones(AzureLocation location)
         {
-            return new OracleDnsPrivateZoneCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleDnsPrivateZoneCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a DnsPrivateZone
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsPrivateZones_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
@@ -401,6 +413,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleDnsPrivateZoneResource>> GetOracleDnsPrivateZoneAsync(AzureLocation location, string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
+
             return await GetOracleDnsPrivateZones(location).GetAsync(dnsprivatezonename, cancellationToken).ConfigureAwait(false);
         }
 
@@ -408,24 +422,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a DnsPrivateZone
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dnsPrivateZones/{dnsprivatezonename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsPrivateZone_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsPrivateZones_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDnsPrivateZoneResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dnsprivatezonename"> DnsPrivateZone name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsprivatezonename"/> is null. </exception>
@@ -433,39 +443,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleDnsPrivateZoneResource> GetOracleDnsPrivateZone(AzureLocation location, string dnsprivatezonename, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dnsprivatezonename, nameof(dnsprivatezonename));
+
             return GetOracleDnsPrivateZones(location).Get(dnsprivatezonename, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleFlexComponentResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleFlexComponentResources and their operations over a OracleFlexComponentResource. </returns>
+        /// <summary> Gets a collection of OracleFlexComponents in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleFlexComponents and their operations over a OracleFlexComponentResource. </returns>
         public virtual OracleFlexComponentCollection GetOracleFlexComponents(AzureLocation location)
         {
-            return new OracleFlexComponentCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleFlexComponentCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a FlexComponent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FlexComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
@@ -473,6 +481,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleFlexComponentResource>> GetOracleFlexComponentAsync(AzureLocation location, string flexComponentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
+
             return await GetOracleFlexComponents(location).GetAsync(flexComponentName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -480,24 +490,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a FlexComponent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/flexComponents/{flexComponentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FlexComponent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FlexComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleFlexComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="flexComponentName"> The name of the FlexComponent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flexComponentName"/> is null. </exception>
@@ -505,39 +511,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleFlexComponentResource> GetOracleFlexComponent(AzureLocation location, string flexComponentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(flexComponentName, nameof(flexComponentName));
+
             return GetOracleFlexComponents(location).Get(flexComponentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AutonomousDatabaseCharacterSetResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of AutonomousDatabaseCharacterSetResources and their operations over a AutonomousDatabaseCharacterSetResource. </returns>
+        /// <summary> Gets a collection of AutonomousDatabaseCharacterSets in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of AutonomousDatabaseCharacterSets and their operations over a AutonomousDatabaseCharacterSetResource. </returns>
         public virtual AutonomousDatabaseCharacterSetCollection GetAutonomousDatabaseCharacterSets(AzureLocation location)
         {
-            return new AutonomousDatabaseCharacterSetCollection(Client, Id, location);
+            return GetCachedClient(client => new AutonomousDatabaseCharacterSetCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a AutonomousDatabaseCharacterSet
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseCharacterSets/{adbscharsetname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseCharacterSets/{adbscharsetname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseCharacterSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabaseCharacterSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseCharacterSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="adbscharsetname"> AutonomousDatabaseCharacterSet name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adbscharsetname"/> is null. </exception>
@@ -545,6 +549,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AutonomousDatabaseCharacterSetResource>> GetAutonomousDatabaseCharacterSetAsync(AzureLocation location, string adbscharsetname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(adbscharsetname, nameof(adbscharsetname));
+
             return await GetAutonomousDatabaseCharacterSets(location).GetAsync(adbscharsetname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -552,24 +558,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a AutonomousDatabaseCharacterSet
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseCharacterSets/{adbscharsetname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseCharacterSets/{adbscharsetname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseCharacterSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabaseCharacterSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseCharacterSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="adbscharsetname"> AutonomousDatabaseCharacterSet name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adbscharsetname"/> is null. </exception>
@@ -577,39 +579,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<AutonomousDatabaseCharacterSetResource> GetAutonomousDatabaseCharacterSet(AzureLocation location, string adbscharsetname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(adbscharsetname, nameof(adbscharsetname));
+
             return GetAutonomousDatabaseCharacterSets(location).Get(adbscharsetname, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AutonomousDatabaseNationalCharacterSetResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of AutonomousDatabaseNationalCharacterSetResources and their operations over a AutonomousDatabaseNationalCharacterSetResource. </returns>
+        /// <summary> Gets a collection of AutonomousDatabaseNationalCharacterSets in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of AutonomousDatabaseNationalCharacterSets and their operations over a AutonomousDatabaseNationalCharacterSetResource. </returns>
         public virtual AutonomousDatabaseNationalCharacterSetCollection GetAutonomousDatabaseNationalCharacterSets(AzureLocation location)
         {
-            return new AutonomousDatabaseNationalCharacterSetCollection(Client, Id, location);
+            return GetCachedClient(client => new AutonomousDatabaseNationalCharacterSetCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a AutonomousDatabaseNationalCharacterSet
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseNationalCharacterSets/{adbsncharsetname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseNationalCharacterSets/{adbsncharsetname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabaseNationalCharacterSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseNationalCharacterSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="adbsncharsetname"> AutonomousDatabaseNationalCharacterSets name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adbsncharsetname"/> is null. </exception>
@@ -617,6 +617,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AutonomousDatabaseNationalCharacterSetResource>> GetAutonomousDatabaseNationalCharacterSetAsync(AzureLocation location, string adbsncharsetname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(adbsncharsetname, nameof(adbsncharsetname));
+
             return await GetAutonomousDatabaseNationalCharacterSets(location).GetAsync(adbsncharsetname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -624,24 +626,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a AutonomousDatabaseNationalCharacterSet
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseNationalCharacterSets/{adbsncharsetname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDatabaseNationalCharacterSets/{adbsncharsetname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseNationalCharacterSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabaseNationalCharacterSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseNationalCharacterSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="adbsncharsetname"> AutonomousDatabaseNationalCharacterSets name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adbsncharsetname"/> is null. </exception>
@@ -649,39 +647,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<AutonomousDatabaseNationalCharacterSetResource> GetAutonomousDatabaseNationalCharacterSet(AzureLocation location, string adbsncharsetname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(adbsncharsetname, nameof(adbsncharsetname));
+
             return GetAutonomousDatabaseNationalCharacterSets(location).Get(adbsncharsetname, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AutonomousDBVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of AutonomousDBVersionResources and their operations over a AutonomousDBVersionResource. </returns>
+        /// <summary> Gets a collection of AutonomousDBVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of AutonomousDBVersions and their operations over a AutonomousDBVersionResource. </returns>
         public virtual AutonomousDBVersionCollection GetAutonomousDBVersions(AzureLocation location)
         {
-            return new AutonomousDBVersionCollection(Client, Id, location);
+            return GetCachedClient(client => new AutonomousDBVersionCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a AutonomousDbVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabaseVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
@@ -689,6 +685,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AutonomousDBVersionResource>> GetAutonomousDBVersionAsync(AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
+
             return await GetAutonomousDBVersions(location).GetAsync(autonomousdbversionsname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -696,24 +694,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a AutonomousDbVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/autonomousDbVersions/{autonomousdbversionsname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDbVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabaseVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDBVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="autonomousdbversionsname"> AutonomousDbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autonomousdbversionsname"/> is null. </exception>
@@ -721,39 +715,37 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<AutonomousDBVersionResource> GetAutonomousDBVersion(AzureLocation location, string autonomousdbversionsname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(autonomousdbversionsname, nameof(autonomousdbversionsname));
+
             return GetAutonomousDBVersions(location).Get(autonomousdbversionsname, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleDBVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of OracleDBVersionResources and their operations over a OracleDBVersionResource. </returns>
+        /// <summary> Gets a collection of OracleDBVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OracleDBVersions and their operations over a OracleDBVersionResource. </returns>
         public virtual OracleDBVersionCollection GetOracleDBVersions(AzureLocation location)
         {
-            return new OracleDBVersionCollection(Client, Id, location);
+            return GetCachedClient(client => new OracleDBVersionCollection(client, Id, location));
         }
 
         /// <summary>
         /// Get a DbVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemDbVersions/{dbversionsname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemDbVersions/{dbversionsname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dbversionsname"> DbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbversionsname"/> is null. </exception>
@@ -761,6 +753,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleDBVersionResource>> GetOracleDBVersionAsync(AzureLocation location, string dbversionsname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dbversionsname, nameof(dbversionsname));
+
             return await GetOracleDBVersions(location).GetAsync(dbversionsname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -768,24 +762,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a DbVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemDbVersions/{dbversionsname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemDbVersions/{dbversionsname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="dbversionsname"> DbVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbversionsname"/> is null. </exception>
@@ -793,6 +783,8 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleDBVersionResource> GetOracleDBVersion(AzureLocation location, string dbversionsname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dbversionsname, nameof(dbversionsname));
+
             return GetOracleDBVersions(location).Get(dbversionsname, cancellationToken);
         }
 
@@ -800,50 +792,44 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// List CloudExadataInfrastructure resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/cloudExadataInfrastructures</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/cloudExadataInfrastructures. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudExadataInfrastructure_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudExadataInfrastructures_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudExadataInfrastructureResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudExadataInfrastructureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudExadataInfrastructureResource> GetCloudExadataInfrastructuresAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudExadataInfrastructureRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudExadataInfrastructureRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudExadataInfrastructureResource(Client, CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(e)), CloudExadataInfrastructureClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetCloudExadataInfrastructures", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetBySubscriptionAsyncCollectionResultOfT(CloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CloudExadataInfrastructureResource(Client, data));
         }
 
         /// <summary>
         /// List CloudExadataInfrastructure resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/cloudExadataInfrastructures</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/cloudExadataInfrastructures. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudExadataInfrastructure_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudExadataInfrastructures_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -851,59 +837,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="CloudExadataInfrastructureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudExadataInfrastructureResource> GetCloudExadataInfrastructures(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudExadataInfrastructureRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudExadataInfrastructureRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudExadataInfrastructureResource(Client, CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(e)), CloudExadataInfrastructureClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetCloudExadataInfrastructures", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetBySubscriptionCollectionResultOfT(CloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CloudExadataInfrastructureResource(Client, data));
         }
 
         /// <summary>
         /// List CloudVmCluster resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/cloudVmClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/cloudVmClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudVmCluster_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudVmClusters_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudVmClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudVmClusterResource> GetCloudVmClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudVmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudVmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterResource(Client, CloudVmClusterData.DeserializeCloudVmClusterData(e)), CloudVmClusterClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetCloudVmClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CloudVmClusterResource(Client, data));
         }
 
         /// <summary>
         /// List CloudVmCluster resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/cloudVmClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/cloudVmClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudVmCluster_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudVmClusters_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudVmClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -911,59 +893,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="CloudVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudVmClusterResource> GetCloudVmClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudVmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudVmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterResource(Client, CloudVmClusterData.DeserializeCloudVmClusterData(e)), CloudVmClusterClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetCloudVmClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetBySubscriptionCollectionResultOfT(CloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CloudVmClusterResource(Client, data));
         }
 
         /// <summary>
         /// List AutonomousDatabase resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/autonomousDatabases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/autonomousDatabases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabase_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabases_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutonomousDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutonomousDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutonomousDatabaseResource> GetAutonomousDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutonomousDatabaseRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutonomousDatabaseRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutonomousDatabaseResource(Client, AutonomousDatabaseData.DeserializeAutonomousDatabaseData(e)), AutonomousDatabaseClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetAutonomousDatabases", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetBySubscriptionAsyncCollectionResultOfT(AutonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>
         /// List AutonomousDatabase resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/autonomousDatabases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/autonomousDatabases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutonomousDatabase_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabases_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutonomousDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -971,59 +949,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="AutonomousDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutonomousDatabaseResource> GetAutonomousDatabases(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutonomousDatabaseRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutonomousDatabaseRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutonomousDatabaseResource(Client, AutonomousDatabaseData.DeserializeAutonomousDatabaseData(e)), AutonomousDatabaseClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetAutonomousDatabases", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetBySubscriptionCollectionResultOfT(AutonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>
         /// List ExadbVmCluster resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/exadbVmClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/exadbVmClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExadbVmClusters_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExadbVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExadbVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExadbVmClusterResource> GetExadbVmClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExadbVmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExadbVmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExadbVmClusterResource(Client, ExadbVmClusterData.DeserializeExadbVmClusterData(e)), ExadbVmClusterClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetExadbVmClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetBySubscriptionAsyncCollectionResultOfT(ExadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
         /// List ExadbVmCluster resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/exadbVmClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/exadbVmClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExadbVmCluster_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExadbVmClusters_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExadbVmClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1031,59 +1005,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="ExadbVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExadbVmClusterResource> GetExadbVmClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExadbVmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExadbVmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExadbVmClusterResource(Client, ExadbVmClusterData.DeserializeExadbVmClusterData(e)), ExadbVmClusterClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetExadbVmClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetBySubscriptionCollectionResultOfT(ExadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
         /// List ExascaleDbStorageVault resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/exascaleDbStorageVaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/exascaleDbStorageVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExascaleDBStorageVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExascaleDBStorageVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExascaleDBStorageVaultResource> GetExascaleDBStorageVaultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExascaleDBStorageVaultResource(Client, ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(e)), ExascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetExascaleDBStorageVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetBySubscriptionAsyncCollectionResultOfT(ExascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
         /// List ExascaleDbStorageVault resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/exascaleDbStorageVaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/exascaleDbStorageVaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExascaleDbStorageVault_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExascaleDbStorageVaults_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1091,59 +1061,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="ExascaleDBStorageVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExascaleDBStorageVaultResource> GetExascaleDBStorageVaults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExascaleDBStorageVaultExascaleDbStorageVaultsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExascaleDBStorageVaultResource(Client, ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(e)), ExascaleDBStorageVaultExascaleDbStorageVaultsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetExascaleDBStorageVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetBySubscriptionCollectionResultOfT(ExascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
         /// List NetworkAnchor resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/networkAnchors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/networkAnchors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleNetworkAnchorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleNetworkAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleNetworkAnchorResource> GetOracleNetworkAnchorsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OracleNetworkAnchorNetworkAnchorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OracleNetworkAnchorNetworkAnchorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleNetworkAnchorResource(Client, OracleNetworkAnchorData.DeserializeOracleNetworkAnchorData(e)), OracleNetworkAnchorNetworkAnchorsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetOracleNetworkAnchors", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetBySubscriptionAsyncCollectionResultOfT(NetworkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
         /// List NetworkAnchor resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/networkAnchors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/networkAnchors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkAnchor_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkAnchors_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1151,59 +1117,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="OracleNetworkAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleNetworkAnchorResource> GetOracleNetworkAnchors(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OracleNetworkAnchorNetworkAnchorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OracleNetworkAnchorNetworkAnchorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleNetworkAnchorResource(Client, OracleNetworkAnchorData.DeserializeOracleNetworkAnchorData(e)), OracleNetworkAnchorNetworkAnchorsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetOracleNetworkAnchors", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetBySubscriptionCollectionResultOfT(NetworkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
         /// List ResourceAnchor resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/resourceAnchors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/resourceAnchors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceAnchor_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceAnchors_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleResourceAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleResourceAnchorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleResourceAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleResourceAnchorResource> GetOracleResourceAnchorsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OracleResourceAnchorResourceAnchorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OracleResourceAnchorResourceAnchorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleResourceAnchorResource(Client, OracleResourceAnchorData.DeserializeOracleResourceAnchorData(e)), OracleResourceAnchorResourceAnchorsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetOracleResourceAnchors", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetBySubscriptionAsyncCollectionResultOfT(ResourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OracleResourceAnchorResource(Client, data));
         }
 
         /// <summary>
         /// List ResourceAnchor resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/resourceAnchors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/resourceAnchors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceAnchor_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceAnchors_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleResourceAnchorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1211,59 +1173,55 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="OracleResourceAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleResourceAnchorResource> GetOracleResourceAnchors(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OracleResourceAnchorResourceAnchorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OracleResourceAnchorResourceAnchorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleResourceAnchorResource(Client, OracleResourceAnchorData.DeserializeOracleResourceAnchorData(e)), OracleResourceAnchorResourceAnchorsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetOracleResourceAnchors", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetBySubscriptionCollectionResultOfT(ResourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OracleResourceAnchorResource(Client, data));
         }
 
         /// <summary>
         /// List DbSystem resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/dbSystems</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/dbSystems. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbSystem_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbSystems_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBSystemResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleDBSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OracleDBSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleDBSystemResource> GetOracleDBSystemsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OracleDBSystemDbSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OracleDBSystemDbSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemResource(Client, OracleDBSystemData.DeserializeOracleDBSystemData(e)), OracleDBSystemDbSystemsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetBySubscriptionAsyncCollectionResultOfT(DbSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OracleDBSystemResource(Client, data));
         }
 
         /// <summary>
         /// List DbSystem resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/dbSystems</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/dbSystems. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbSystem_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DbSystems_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleDBSystemResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1271,9 +1229,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> A collection of <see cref="OracleDBSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleDBSystemResource> GetOracleDBSystems(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OracleDBSystemDbSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OracleDBSystemDbSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemResource(Client, OracleDBSystemData.DeserializeOracleDBSystemData(e)), OracleDBSystemDbSystemsClientDiagnostics, Pipeline, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetBySubscriptionCollectionResultOfT(DbSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OracleDBSystemResource(Client, data));
         }
     }
 }

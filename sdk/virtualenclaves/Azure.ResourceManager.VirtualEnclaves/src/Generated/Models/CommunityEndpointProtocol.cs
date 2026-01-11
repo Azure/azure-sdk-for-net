@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct CommunityEndpointProtocol : IEquatable<CommunityEndpointProtocol>
     {
         private readonly string _value;
+        /// <summary> CommunityEndpointProtocol Type ANY. </summary>
+        private const string AnyValue = "ANY";
+        /// <summary> CommunityEndpointProtocol Type TCP. </summary>
+        private const string TcpValue = "TCP";
+        /// <summary> CommunityEndpointProtocol Type UDP. </summary>
+        private const string UdpValue = "UDP";
+        /// <summary> CommunityEndpointProtocol Type ICMP. </summary>
+        private const string IcmpValue = "ICMP";
+        /// <summary> CommunityEndpointProtocol Type ESP. </summary>
+        private const string EspValue = "ESP";
+        /// <summary> CommunityEndpointProtocol Type AH. </summary>
+        private const string AHValue = "AH";
+        /// <summary> CommunityEndpointProtocol Type HTTPS. </summary>
+        private const string HttpsValue = "HTTPS";
+        /// <summary> CommunityEndpointProtocol Type HTTP. </summary>
+        private const string HttpValue = "HTTP";
 
         /// <summary> Initializes a new instance of <see cref="CommunityEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunityEndpointProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnyValue = "ANY";
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string IcmpValue = "ICMP";
-        private const string EspValue = "ESP";
-        private const string AHValue = "AH";
-        private const string HttpsValue = "HTTPS";
-        private const string HttpValue = "HTTP";
+            _value = value;
+        }
 
         /// <summary> CommunityEndpointProtocol Type ANY. </summary>
         public static CommunityEndpointProtocol Any { get; } = new CommunityEndpointProtocol(AnyValue);
+
         /// <summary> CommunityEndpointProtocol Type TCP. </summary>
         public static CommunityEndpointProtocol Tcp { get; } = new CommunityEndpointProtocol(TcpValue);
+
         /// <summary> CommunityEndpointProtocol Type UDP. </summary>
         public static CommunityEndpointProtocol Udp { get; } = new CommunityEndpointProtocol(UdpValue);
+
         /// <summary> CommunityEndpointProtocol Type ICMP. </summary>
         public static CommunityEndpointProtocol Icmp { get; } = new CommunityEndpointProtocol(IcmpValue);
+
         /// <summary> CommunityEndpointProtocol Type ESP. </summary>
         public static CommunityEndpointProtocol Esp { get; } = new CommunityEndpointProtocol(EspValue);
+
         /// <summary> CommunityEndpointProtocol Type AH. </summary>
         public static CommunityEndpointProtocol AH { get; } = new CommunityEndpointProtocol(AHValue);
+
         /// <summary> CommunityEndpointProtocol Type HTTPS. </summary>
         public static CommunityEndpointProtocol Https { get; } = new CommunityEndpointProtocol(HttpsValue);
+
         /// <summary> CommunityEndpointProtocol Type HTTP. </summary>
         public static CommunityEndpointProtocol Http { get; } = new CommunityEndpointProtocol(HttpValue);
+
         /// <summary> Determines if two <see cref="CommunityEndpointProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunityEndpointProtocol left, CommunityEndpointProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommunityEndpointProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunityEndpointProtocol left, CommunityEndpointProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunityEndpointProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommunityEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommunityEndpointProtocol(string value) => new CommunityEndpointProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommunityEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommunityEndpointProtocol?(string value) => value == null ? null : new CommunityEndpointProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommunityEndpointProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommunityEndpointProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

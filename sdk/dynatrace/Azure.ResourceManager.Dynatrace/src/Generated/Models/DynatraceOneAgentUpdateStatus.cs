@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceOneAgentUpdateStatus : IEquatable<DynatraceOneAgentUpdateStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DynatraceOneAgentUpdateStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncompatibleValue = "INCOMPATIBLE";
         private const string OutdatedValue = "OUTDATED";
         private const string ScheduledValue = "SCHEDULED";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.Dynatrace.Models
         private const string UpdatePendingValue = "UPDATE_PENDING";
         private const string UpdateProblemValue = "UPDATE_PROBLEM";
 
-        /// <summary> INCOMPATIBLE. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DynatraceOneAgentUpdateStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Incompatible. </summary>
         public static DynatraceOneAgentUpdateStatus Incompatible { get; } = new DynatraceOneAgentUpdateStatus(IncompatibleValue);
-        /// <summary> OUTDATED. </summary>
+
+        /// <summary> Gets the Outdated. </summary>
         public static DynatraceOneAgentUpdateStatus Outdated { get; } = new DynatraceOneAgentUpdateStatus(OutdatedValue);
-        /// <summary> SCHEDULED. </summary>
+
+        /// <summary> Gets the Scheduled. </summary>
         public static DynatraceOneAgentUpdateStatus Scheduled { get; } = new DynatraceOneAgentUpdateStatus(ScheduledValue);
-        /// <summary> SUPPRESSED. </summary>
+
+        /// <summary> Gets the Suppressed. </summary>
         public static DynatraceOneAgentUpdateStatus Suppressed { get; } = new DynatraceOneAgentUpdateStatus(SuppressedValue);
-        /// <summary> UNKNOWN. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static DynatraceOneAgentUpdateStatus Unknown { get; } = new DynatraceOneAgentUpdateStatus(UnknownValue);
-        /// <summary> UP2DATE. </summary>
+
+        /// <summary> Gets the UpToDate. </summary>
         public static DynatraceOneAgentUpdateStatus UpToDate { get; } = new DynatraceOneAgentUpdateStatus(UpToDateValue);
-        /// <summary> UPDATE_IN_PROGRESS. </summary>
+
+        /// <summary> Gets the UpdateInProgress. </summary>
         public static DynatraceOneAgentUpdateStatus UpdateInProgress { get; } = new DynatraceOneAgentUpdateStatus(UpdateInProgressValue);
-        /// <summary> UPDATE_PENDING. </summary>
+
+        /// <summary> Gets the UpdatePending. </summary>
         public static DynatraceOneAgentUpdateStatus UpdatePending { get; } = new DynatraceOneAgentUpdateStatus(UpdatePendingValue);
-        /// <summary> UPDATE_PROBLEM. </summary>
+
+        /// <summary> Gets the UpdateProblem. </summary>
         public static DynatraceOneAgentUpdateStatus UpdateProblem { get; } = new DynatraceOneAgentUpdateStatus(UpdateProblemValue);
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentUpdateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceOneAgentUpdateStatus left, DynatraceOneAgentUpdateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentUpdateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceOneAgentUpdateStatus left, DynatraceOneAgentUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynatraceOneAgentUpdateStatus(string value) => new DynatraceOneAgentUpdateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynatraceOneAgentUpdateStatus?(string value) => value == null ? null : new DynatraceOneAgentUpdateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceOneAgentUpdateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynatraceOneAgentUpdateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

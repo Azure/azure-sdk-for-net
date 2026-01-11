@@ -26,7 +26,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     codeModel: CodeModel,
     sdkContext: CSharpEmitterContext
   ): CodeModel {
-    updateClients(codeModel, sdkContext);
+    updateClients(codeModel, sdkContext, context.options);
     setFlattenProperty(codeModel, sdkContext);
     return codeModel;
   }

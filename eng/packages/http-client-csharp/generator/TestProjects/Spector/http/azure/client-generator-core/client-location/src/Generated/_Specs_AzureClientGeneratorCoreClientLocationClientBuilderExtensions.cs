@@ -8,12 +8,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation;
+using Specs.Azure.ClientGenerator.Core.ClientLocation;
 
 namespace Microsoft.Extensions.Azure
 {
     public static partial class _Specs_AzureClientGeneratorCoreClientLocationClientBuilderExtensions
     {
+        public static IAzureClientBuilder<ClientLocationClient, ClientLocationClientOptions> AddClientLocationClient<TBuilder>(this TBuilder builder, string storageAccount)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<ClientLocationClient, ClientLocationClientOptions> AddClientLocationClient<TBuilder>(this TBuilder builder, Uri endpoint, string storageAccount)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Collection of different TLS types, NOTE- Enum at a time only one of them needs to be supported. </summary>
     public partial class ListenerPortTlsCertMethod
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ListenerPortTlsCertMethod"/>. </summary>
         /// <param name="mode"> Mode of TLS server certificate management. </param>
@@ -56,31 +27,35 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="mode"> Mode of TLS server certificate management. </param>
         /// <param name="certManagerCertificateSpec"> Option 1 - Automatic TLS server certificate management with cert-manager. </param>
         /// <param name="manual"> Option 2 - Manual TLS server certificate management through a defined secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListenerPortTlsCertMethod(TlsCertMethodMode mode, CertManagerCertificateSpec certManagerCertificateSpec, X509ManualCertificate manual, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListenerPortTlsCertMethod(TlsCertMethodMode mode, CertManagerCertificateSpec certManagerCertificateSpec, BrokerX509ManualCertificate manual, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             CertManagerCertificateSpec = certManagerCertificateSpec;
             Manual = manual;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ListenerPortTlsCertMethod"/> for deserialization. </summary>
-        internal ListenerPortTlsCertMethod()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mode of TLS server certificate management. </summary>
         public TlsCertMethodMode Mode { get; set; }
+
         /// <summary> Option 1 - Automatic TLS server certificate management with cert-manager. </summary>
         public CertManagerCertificateSpec CertManagerCertificateSpec { get; set; }
+
         /// <summary> Option 2 - Manual TLS server certificate management through a defined secret. </summary>
-        internal X509ManualCertificate Manual { get; set; }
+        internal BrokerX509ManualCertificate Manual { get; set; }
+
         /// <summary> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </summary>
         public string ManualSecretRef
         {
-            get => Manual is null ? default : Manual.SecretRef;
-            set => Manual = new X509ManualCertificate(value);
+            get
+            {
+                return Manual is null ? default : Manual.SecretRef;
+            }
+            set
+            {
+                Manual = new BrokerX509ManualCertificate(value);
+            }
         }
     }
 }

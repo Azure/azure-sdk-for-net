@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
         /// <param name="relationshipStatus"> The status of the Volume Replication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, ExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, NetAppRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, ExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, VolumeReplicationRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -97,6 +97,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
         public NetAppMirrorState? MirrorState { get; }
         /// <summary> The status of the Volume Replication. </summary>
-        public NetAppRelationshipStatus? RelationshipStatus { get; }
+        public VolumeReplicationRelationshipStatus? RelationshipStatus { get; }
     }
 }

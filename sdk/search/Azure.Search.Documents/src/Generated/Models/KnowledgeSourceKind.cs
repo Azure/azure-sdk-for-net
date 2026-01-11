@@ -24,11 +24,23 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string SearchIndexValue = "searchIndex";
         private const string AzureBlobValue = "azureBlob";
+        private const string WebValue = "web";
+        private const string RemoteSharePointValue = "remoteSharePoint";
+        private const string IndexedSharePointValue = "indexedSharePoint";
+        private const string IndexedOneLakeValue = "indexedOneLake";
 
-        /// <summary> A knowledge source that reads data from a Search Index. </summary>
+        /// <summary> A knowledge source that retrieves data from a Search Index. </summary>
         public static KnowledgeSourceKind SearchIndex { get; } = new KnowledgeSourceKind(SearchIndexValue);
-        /// <summary> A knowledge source that read and ingest data from Azure Blob Storage to a Search Index. </summary>
+        /// <summary> A knowledge source that retrieves and ingests data from Azure Blob Storage to a Search Index. </summary>
         public static KnowledgeSourceKind AzureBlob { get; } = new KnowledgeSourceKind(AzureBlobValue);
+        /// <summary> A knowledge source that retrieves data from the web. </summary>
+        public static KnowledgeSourceKind Web { get; } = new KnowledgeSourceKind(WebValue);
+        /// <summary> A knowledge source that retrieves data from a remote SharePoint endpoint. </summary>
+        public static KnowledgeSourceKind RemoteSharePoint { get; } = new KnowledgeSourceKind(RemoteSharePointValue);
+        /// <summary> A knowledge source that retrieves and ingests data from SharePoint to a Search Index. </summary>
+        public static KnowledgeSourceKind IndexedSharePoint { get; } = new KnowledgeSourceKind(IndexedSharePointValue);
+        /// <summary> A knowledge source that retrieves and ingests data from OneLake to a Search Index. </summary>
+        public static KnowledgeSourceKind IndexedOneLake { get; } = new KnowledgeSourceKind(IndexedOneLakeValue);
         /// <summary> Determines if two <see cref="KnowledgeSourceKind"/> values are the same. </summary>
         public static bool operator ==(KnowledgeSourceKind left, KnowledgeSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KnowledgeSourceKind"/> values are not the same. </summary>

@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    manufacturerUri = new Uri(prop.Value.GetString());
+                    manufacturerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    documentationUri = new Uri(prop.Value.GetString());
+                    documentationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serialNumber"u8))
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAssetProperties(document.RootElement, options);
                     }

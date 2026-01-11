@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.Query.Logs.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Monitor.Query.Logs
 {

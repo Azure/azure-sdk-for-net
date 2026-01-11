@@ -1973,6 +1973,7 @@
           "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Property.Optional",
       "apiVersions": [],
@@ -2411,9 +2412,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.String",
           "apiVersions": [],
@@ -2855,9 +2857,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.Bytes",
           "apiVersions": [],
@@ -3299,9 +3302,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.Datetime",
           "apiVersions": [],
@@ -3743,9 +3747,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.Duration",
           "apiVersions": [],
@@ -4187,9 +4192,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate",
           "apiVersions": [],
@@ -4631,9 +4637,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime",
           "apiVersions": [],
@@ -5075,9 +5082,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte",
           "apiVersions": [],
@@ -5519,9 +5527,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel",
           "apiVersions": [],
@@ -5963,9 +5972,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral",
           "apiVersions": [],
@@ -6407,9 +6417,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral",
           "apiVersions": [],
@@ -6851,9 +6862,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral",
           "apiVersions": [],
@@ -7295,9 +7307,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral",
           "apiVersions": [],
@@ -7739,9 +7752,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral",
           "apiVersions": [],
@@ -8183,9 +8197,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral",
           "apiVersions": [],
@@ -8627,9 +8642,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral",
           "apiVersions": [],
@@ -9072,9 +9088,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional",
           "apiVersions": [],

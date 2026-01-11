@@ -400,5 +400,91 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
+
+        [Test]
+        public void FeatureFlagWithoutConditionsIsValid()
+        {
+            var featureFlagValue = "{\"id\":\"my feature\",\"enabled\":true}";
+            var featureFlag = new FeatureFlagConfigurationSetting();
+            featureFlag.Value = featureFlagValue;
+
+            Assert.AreEqual("my feature", featureFlag.FeatureId);
+            Assert.AreEqual(true, featureFlag.IsEnabled);
+            Assert.AreEqual(0, featureFlag.ClientFilters.Count);
+        }
+
+        [Test]
+        public void FeatureFlagWithoutConditionsCanBeModified()
+        {
+            var featureFlagValue = "{\"id\":\"my feature\",\"enabled\":false}";
+            var featureFlag = new FeatureFlagConfigurationSetting();
+            featureFlag.Value = featureFlagValue;
+
+            featureFlag.IsEnabled = true;
+            featureFlag.Description = "New description";
+            featureFlag.DisplayName = "New display name";
+
+            Assert.AreEqual("my feature", featureFlag.FeatureId);
+            Assert.AreEqual(true, featureFlag.IsEnabled);
+            Assert.AreEqual("New description", featureFlag.Description);
+            Assert.AreEqual("New display name", featureFlag.DisplayName);
+            Assert.AreEqual(0, featureFlag.ClientFilters.Count);
+
+            using var actual = JsonDocument.Parse(featureFlag.Value);
+            Assert.IsTrue(actual.RootElement.TryGetProperty("id", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("enabled", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("description", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("display_name", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("conditions", out _));
+        }
+
+        [Test]
+        public void FeatureFlagWithOnlyIdIsValid()
+        {
+            var featureFlagValue = "{\"id\":\"my feature\"}";
+            var featureFlag = new FeatureFlagConfigurationSetting();
+            featureFlag.Value = featureFlagValue;
+
+            Assert.AreEqual("my feature", featureFlag.FeatureId);
+            Assert.AreEqual(false, featureFlag.IsEnabled);
+            Assert.AreEqual(0, featureFlag.ClientFilters.Count);
+        }
+
+        [Test]
+        public void FeatureFlagWithoutEnabledIsValid()
+        {
+            var featureFlagValue = "{\"id\":\"my feature\",\"conditions\":{}}";
+            var featureFlag = new FeatureFlagConfigurationSetting();
+            featureFlag.Value = featureFlagValue;
+
+            Assert.AreEqual("my feature", featureFlag.FeatureId);
+            Assert.AreEqual(false, featureFlag.IsEnabled);
+            Assert.AreEqual(0, featureFlag.ClientFilters.Count);
+        }
+
+        [Test]
+        public void FeatureFlagWithoutEnabledCanBeModified()
+        {
+            var featureFlagValue = "{\"id\":\"my feature\",\"conditions\":{}}";
+            var featureFlag = new FeatureFlagConfigurationSetting();
+            featureFlag.Value = featureFlagValue;
+
+            featureFlag.IsEnabled = true;
+            featureFlag.Description = "New description";
+            featureFlag.DisplayName = "New display name";
+
+            Assert.AreEqual("my feature", featureFlag.FeatureId);
+            Assert.AreEqual(true, featureFlag.IsEnabled);
+            Assert.AreEqual("New description", featureFlag.Description);
+            Assert.AreEqual("New display name", featureFlag.DisplayName);
+            Assert.AreEqual(0, featureFlag.ClientFilters.Count);
+
+            using var actual = JsonDocument.Parse(featureFlag.Value);
+            Assert.IsTrue(actual.RootElement.TryGetProperty("id", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("enabled", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("description", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("display_name", out _));
+            Assert.IsTrue(actual.RootElement.TryGetProperty("conditions", out _));
+        }
     }
 }

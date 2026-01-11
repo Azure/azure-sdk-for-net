@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The current provisioning state of trusted access role binding. </summary>
+    /// <summary>
+    /// The current provisioning state of trusted access role binding.
+    /// Serialized Name: TrustedAccessRoleBindingProvisioningState
+    /// </summary>
     public readonly partial struct ContainerServiceTrustedAccessRoleBindingProvisioningState : IEquatable<ContainerServiceTrustedAccessRoleBindingProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Canceled
+        /// </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Canceled { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Deleting
+        /// </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Deleting { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Failed
+        /// </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Failed { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Succeeded
+        /// </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Succeeded { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(SucceededValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: TrustedAccessRoleBindingProvisioningState.Updating
+        /// </summary>
         public static ContainerServiceTrustedAccessRoleBindingProvisioningState Updating { get; } = new ContainerServiceTrustedAccessRoleBindingProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="ContainerServiceTrustedAccessRoleBindingProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceTrustedAccessRoleBindingProvisioningState left, ContainerServiceTrustedAccessRoleBindingProvisioningState right) => left.Equals(right);

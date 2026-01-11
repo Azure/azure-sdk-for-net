@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Result for migrate operation.
-    /// Serialized Name: MigrateResult
-    /// </summary>
+    /// <summary> Result for migrate operation. </summary>
     public partial class MigrateResult
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateResult"/>. </summary>
-        /// <param name="resourceId">
-        /// Resource ID.
-        /// Serialized Name: MigrateResult.id
-        /// </param>
-        /// <param name="migrateResultType">
-        /// Resource type.
-        /// Serialized Name: MigrateResult.type
-        /// </param>
-        /// <param name="migratedProfileResourceId">
-        /// Arm resource id of the migrated profile
-        /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
-        /// </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="migrateResultType"> Resource type. </param>
+        /// <param name="migratedProfileResourceId"> Arm resource id of the migrated profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrateResult(ResourceIdentifier resourceId, string migrateResultType, WritableSubResource migratedProfileResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,22 +65,16 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource ID.
-        /// Serialized Name: MigrateResult.id
-        /// </summary>
+        /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier ResourceId { get; }
-        /// <summary>
-        /// Resource type.
-        /// Serialized Name: MigrateResult.type
-        /// </summary>
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public string MigrateResultType { get; }
-        /// <summary>
-        /// Arm resource id of the migrated profile
-        /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
-        /// </summary>
+        /// <summary> Arm resource id of the migrated profile. </summary>
         internal WritableSubResource MigratedProfileResourceId { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.migratedProfileResourceId.id")]
         public ResourceIdentifier MigratedProfileResourceIdId
         {
             get => MigratedProfileResourceId?.Id;

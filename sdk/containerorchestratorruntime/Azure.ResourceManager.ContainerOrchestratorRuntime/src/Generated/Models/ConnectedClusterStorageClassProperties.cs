@@ -7,50 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
     /// <summary> Details of the StorageClass StorageClass. </summary>
     public partial class ConnectedClusterStorageClassProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassProperties"/>. </summary>
-        /// <param name="typeProperties">
-        /// Properties of the StorageClass
-        /// Please note <see cref="StorageClassTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
-        /// </param>
+        /// <param name="typeProperties"> Properties of the StorageClass. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public ConnectedClusterStorageClassProperties(StorageClassTypeProperties typeProperties)
         {
@@ -73,14 +41,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="limitations"> Limitations of the storage class. </param>
         /// <param name="performance"> Performance tier. </param>
         /// <param name="priority"> Selection priority when multiple storage classes meet the criteria. 0: Highest, -1: Never use. </param>
-        /// <param name="typeProperties">
-        /// Properties of the StorageClass
-        /// Please note <see cref="StorageClassTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
-        /// </param>
+        /// <param name="typeProperties"> Properties of the StorageClass. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterStorageClassProperties(VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedClusterStorageClassProperties(VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowVolumeExpansion = allowVolumeExpansion;
             MountOptions = mountOptions;
@@ -94,40 +58,42 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             Priority = priority;
             TypeProperties = typeProperties;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassProperties"/> for deserialization. </summary>
-        internal ConnectedClusterStorageClassProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Volume can be expanded or not. </summary>
         public VolumeExpansion? AllowVolumeExpansion { get; set; }
+
         /// <summary> Additional mount options. </summary>
         public IList<string> MountOptions { get; }
+
         /// <summary> Provisioner name. </summary>
         public string Provisioner { get; set; }
+
         /// <summary> Binding mode of volumes: Immediate, WaitForFirstConsumer. </summary>
         public VolumeBindingMode? VolumeBindingMode { get; set; }
+
         /// <summary> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </summary>
         public IList<StorageClassAccessMode> AccessModes { get; }
+
         /// <summary> Allow single data node failure. </summary>
         public DataResilienceTier? DataResilience { get; set; }
+
         /// <summary> Failover speed: NA, Slow, Fast. </summary>
         public FailoverTier? FailoverSpeed { get; set; }
+
         /// <summary> Limitations of the storage class. </summary>
         public IList<string> Limitations { get; }
+
         /// <summary> Performance tier. </summary>
         public PerformanceTier? Performance { get; set; }
+
         /// <summary> Selection priority when multiple storage classes meet the criteria. 0: Highest, -1: Never use. </summary>
         public long? Priority { get; set; }
-        /// <summary>
-        /// Properties of the StorageClass
-        /// Please note <see cref="StorageClassTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
-        /// </summary>
+
+        /// <summary> Properties of the StorageClass. </summary>
         public StorageClassTypeProperties TypeProperties { get; set; }
+
         /// <summary> Resource provision state. </summary>
         public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }

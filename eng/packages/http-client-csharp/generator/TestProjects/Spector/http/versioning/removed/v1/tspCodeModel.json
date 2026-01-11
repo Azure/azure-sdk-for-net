@@ -1167,6 +1167,7 @@
           "crossLanguageDefinitionId": "Versioning.Removed.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Removed",
       "apiVersions": [
@@ -1359,7 +1360,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint"
             },
             {
               "$id": "99",
@@ -1386,9 +1387,10 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.version"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1",
           "apiVersions": [

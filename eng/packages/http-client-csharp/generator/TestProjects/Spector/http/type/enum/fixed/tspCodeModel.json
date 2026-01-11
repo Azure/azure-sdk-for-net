@@ -260,6 +260,7 @@
           "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Enum.Fixed",
       "apiVersions": [],
@@ -622,9 +623,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Fixed.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Enum.Fixed.String",
           "apiVersions": [],

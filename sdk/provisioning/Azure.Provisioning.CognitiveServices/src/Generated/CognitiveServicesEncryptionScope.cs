@@ -98,7 +98,7 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesEncryptionScope.</param>
     public CognitiveServicesEncryptionScope(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/encryptionScopes", resourceVersion ?? "2024-10-01")
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/encryptionScopes", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -108,6 +108,7 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _properties = DefineModelProperty<CognitiveServicesEncryptionScopeProperties>("Properties", ["properties"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -122,6 +123,16 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-10-01.
         /// </summary>

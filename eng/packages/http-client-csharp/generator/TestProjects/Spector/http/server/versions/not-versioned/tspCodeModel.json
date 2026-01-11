@@ -236,6 +236,7 @@
           "crossLanguageDefinitionId": "Server.Versions.NotVersioned.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Versions.NotVersioned",
       "apiVersions": []

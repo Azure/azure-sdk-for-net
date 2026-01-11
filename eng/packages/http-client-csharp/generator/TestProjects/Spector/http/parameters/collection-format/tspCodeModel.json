@@ -44,6 +44,7 @@
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.CollectionFormat",
       "apiVersions": [],
@@ -394,9 +395,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query",
           "apiVersions": [],
@@ -516,9 +518,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header",
           "apiVersions": [],

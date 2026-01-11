@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class SapSizingRecommendationContent : IUtf8JsonSerializable, IJsonModel<SapSizingRecommendationContent>
+    /// <summary> The SAP Sizing Recommendation request. </summary>
+    public partial class SapSizingRecommendationContent : IJsonModel<SapSizingRecommendationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSizingRecommendationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/> for deserialization. </summary>
+        internal SapSizingRecommendationContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapSizingRecommendationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
             writer.WritePropertyName("environment"u8);
@@ -58,15 +64,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -75,22 +81,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        SapSizingRecommendationContent IJsonModel<SapSizingRecommendationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapSizingRecommendationContent IJsonModel<SapSizingRecommendationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapSizingRecommendationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapSizingRecommendationContent(document.RootElement, options);
         }
 
-        internal static SapSizingRecommendationContent DeserializeSapSizingRecommendationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapSizingRecommendationContent DeserializeSapSizingRecommendationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,69 +115,67 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             SapDatabaseType databaseType = default;
             SapDatabaseScaleMethod? dbScaleMethod = default;
             SapHighAvailabilityType? highAvailabilityType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("appLocation"u8))
+                if (prop.NameEquals("appLocation"u8))
                 {
-                    appLocation = new AzureLocation(property.Value.GetString());
+                    appLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("environment"u8))
+                if (prop.NameEquals("environment"u8))
                 {
-                    environment = new SapEnvironmentType(property.Value.GetString());
+                    environment = new SapEnvironmentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sapProduct"u8))
+                if (prop.NameEquals("sapProduct"u8))
                 {
-                    sapProduct = new SapProductType(property.Value.GetString());
+                    sapProduct = new SapProductType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deploymentType"u8))
+                if (prop.NameEquals("deploymentType"u8))
                 {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
+                    deploymentType = new SapDeploymentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("saps"u8))
+                if (prop.NameEquals("saps"u8))
                 {
-                    saps = property.Value.GetInt64();
+                    saps = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dbMemory"u8))
+                if (prop.NameEquals("dbMemory"u8))
                 {
-                    dbMemory = property.Value.GetInt64();
+                    dbMemory = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("databaseType"u8))
+                if (prop.NameEquals("databaseType"u8))
                 {
-                    databaseType = new SapDatabaseType(property.Value.GetString());
+                    databaseType = new SapDatabaseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dbScaleMethod"u8))
+                if (prop.NameEquals("dbScaleMethod"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dbScaleMethod = new SapDatabaseScaleMethod(property.Value.GetString());
+                    dbScaleMethod = new SapDatabaseScaleMethod(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("highAvailabilityType"u8))
+                if (prop.NameEquals("highAvailabilityType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highAvailabilityType = new SapHighAvailabilityType(property.Value.GetString());
+                    highAvailabilityType = new SapHighAvailabilityType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SapSizingRecommendationContent(
                 appLocation,
                 environment,
@@ -177,13 +186,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 databaseType,
                 dbScaleMethod,
                 highAvailabilityType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SapSizingRecommendationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapSizingRecommendationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -193,15 +205,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        SapSizingRecommendationContent IPersistableModel<SapSizingRecommendationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapSizingRecommendationContent IPersistableModel<SapSizingRecommendationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapSizingRecommendationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapSizingRecommendationContent(document.RootElement, options);
                     }
                 default:
@@ -209,6 +226,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapSizingRecommendationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sapSizingRecommendationContent"> The <see cref="SapSizingRecommendationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SapSizingRecommendationContent sapSizingRecommendationContent)
+        {
+            if (sapSizingRecommendationContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sapSizingRecommendationContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

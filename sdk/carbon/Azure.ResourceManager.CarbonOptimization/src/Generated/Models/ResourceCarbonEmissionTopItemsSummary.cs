@@ -22,20 +22,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="resourceId"> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="resourceId"/> is null. </exception>
-        internal ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(latestMonthEmissions, previousMonthEmissions)
+        internal ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(CarbonEmissionDataType.ResourceTopItemsSummaryData, latestMonthEmissions, previousMonthEmissions)
         {
-            Argument.AssertNotNull(itemName, nameof(itemName));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
             ItemName = itemName;
             CategoryType = categoryType;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             ResourceId = resourceId;
-            DataType = CarbonEmissionDataType.ResourceTopItemsSummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceCarbonEmissionTopItemsSummary"/>. </summary>
@@ -44,35 +37,33 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemName"> The resource name of the resource for the Resource Category. </param>
         /// <param name="categoryType"> The category type of the item. This defines which dimension the emissions are aggregated by, and the supported values are defined in CategoryTypeEnum (e.g., Subscription, ResourceGroup, Resource, etc.). </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="resourceId"> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </param>
-        internal ResourceCarbonEmissionTopItemsSummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal ResourceCarbonEmissionTopItemsSummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, additionalBinaryDataProperties)
         {
             ItemName = itemName;
             CategoryType = categoryType;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             ResourceId = resourceId;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceCarbonEmissionTopItemsSummary"/> for deserialization. </summary>
-        internal ResourceCarbonEmissionTopItemsSummary()
-        {
         }
 
         /// <summary> The resource name of the resource for the Resource Category. </summary>
         public string ItemName { get; }
+
         /// <summary> The category type of the item. This defines which dimension the emissions are aggregated by, and the supported values are defined in CategoryTypeEnum (e.g., Subscription, ResourceGroup, Resource, etc.). </summary>
         public CarbonEmissionCategoryType CategoryType { get; }
+
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }
+
         /// <summary> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </summary>
         public ResourceIdentifier ResourceId { get; }
     }

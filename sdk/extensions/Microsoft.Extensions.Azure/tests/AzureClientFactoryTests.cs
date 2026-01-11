@@ -238,7 +238,7 @@ namespace Azure.Core.Extensions.Tests
         public void UsesProvidedCredentialIfOverGlobal()
         {
             var serviceCollection = new ServiceCollection();
-            var defaultAzureCredential = new ManagedIdentityCredential();
+            var defaultAzureCredential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             serviceCollection.AddAzureClients(builder => builder.AddTestClientWithCredentials(new Uri("http://localhost")).WithCredential(defaultAzureCredential));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
@@ -251,7 +251,7 @@ namespace Azure.Core.Extensions.Tests
         public void UsesGlobalCredential()
         {
             var serviceCollection = new ServiceCollection();
-            var defaultAzureCredential = new ManagedIdentityCredential();
+            var defaultAzureCredential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             serviceCollection.AddAzureClients(builder => {
                 builder.AddTestClientWithCredentials(new Uri("http://localhost"));
                 builder.UseCredential(defaultAzureCredential);

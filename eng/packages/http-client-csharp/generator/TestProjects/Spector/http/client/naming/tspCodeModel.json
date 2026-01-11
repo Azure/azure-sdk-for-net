@@ -1041,6 +1041,7 @@
           "crossLanguageDefinitionId": "Client.Naming.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Naming",
       "apiVersions": [],
@@ -1307,9 +1308,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.Model.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.Model",
           "apiVersions": [],
@@ -1575,9 +1577,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.UnionEnum.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.UnionEnum",
           "apiVersions": [],

@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAConfiguration()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ConfigurationGet.json
-            // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ConfigurationGet.json
+            // this example is just showing the usage of "Configuration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +50,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAUserConfiguration()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ConfigurationUpdate.json
-            // this example is just showing the usage of "Configurations_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ConfigurationUpdate.json
+            // this example is just showing the usage of "Configuration_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,11 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerConfigurationResource mySqlFlexibleServerConfiguration = client.GetMySqlFlexibleServerConfigurationResource(mySqlFlexibleServerConfigurationResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerConfigurationData data = new MySqlFlexibleServerConfigurationData
-            {
-                Value = "on",
-                Source = MySqlFlexibleServerConfigurationSource.UserOverride,
-            };
+            MySqlFlexibleServerConfigurationData data = new MySqlFlexibleServerConfigurationData();
             ArmOperation<MySqlFlexibleServerConfigurationResource> lro = await mySqlFlexibleServerConfiguration.UpdateAsync(WaitUntil.Completed, data);
             MySqlFlexibleServerConfigurationResource result = lro.Value;
 

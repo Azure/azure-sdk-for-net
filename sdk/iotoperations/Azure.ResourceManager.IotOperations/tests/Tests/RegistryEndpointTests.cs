@@ -60,15 +60,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
         {
             return new IotOperationsRegistryEndpointData
             {
-                Properties = new IotOperationsRegistryEndpointProperties
-                {
-                    Host = "contoso.azurecr.io",
-                    Authentication = new RegistryEndpointAnonymousAuthentication(new RegistryEndpointAnonymousSettings())
-                },
-                ExtendedLocation = new IotOperationsExtendedLocation(
-                    ExtendedLocation,
-                    IotOperationsExtendedLocationType.CustomLocation
-                ),
+                Properties = new IotOperationsRegistryEndpointProperties("contoso.azurecr.io", new RegistryEndpointAnonymousAuthentication(new RegistryEndpointAnonymousSettings())),
+                ExtendedLocation = new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation)
             };
         }
     }

@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PureStorageBlock.Models;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
     /// <summary>
-    /// A Class representing a PureStorageAvsVmVolume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PureStorageAvsVmVolumeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPureStorageAvsVmVolumeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PureStorageAvsVmResource"/> using the GetPureStorageAvsVmVolume method.
+    /// A class representing a PureStorageAvsVmVolume along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PureStorageAvsVmVolumeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PureStorageAvsVmResource"/> using the GetPureStorageAvsVmVolumes method.
     /// </summary>
     public partial class PureStorageAvsVmVolumeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PureStorageAvsVmVolumeResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="storagePoolName"> The storagePoolName. </param>
-        /// <param name="avsVmId"> The avsVmId. </param>
-        /// <param name="volumeId"> The volumeId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics;
-        private readonly AvsVmVolumesRestOperations _pureStorageAvsVmVolumeAvsVmVolumesRestClient;
+        private readonly ClientDiagnostics _avsVmVolumesClientDiagnostics;
+        private readonly AvsVmVolumes _avsVmVolumesRestClient;
         private readonly PureStorageAvsVmVolumeData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PureStorage.Block/storagePools/avsVms/avsVmVolumes";
 
-        /// <summary> Initializes a new instance of the <see cref="PureStorageAvsVmVolumeResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PureStorageAvsVmVolumeResource for mocking. </summary>
         protected PureStorageAvsVmVolumeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PureStorageAvsVmVolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PureStorageAvsVmVolumeResource(ArmClient client, PureStorageAvsVmVolumeData data) : this(client, data.Id)
@@ -56,71 +44,94 @@ namespace Azure.ResourceManager.PureStorageBlock
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PureStorageAvsVmVolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PureStorageAvsVmVolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string pureStorageAvsVmVolumeAvsVmVolumesApiVersion);
-            _pureStorageAvsVmVolumeAvsVmVolumesRestClient = new AvsVmVolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsVmVolumeAvsVmVolumesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string pureStorageAvsVmVolumeApiVersion);
+            _avsVmVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
+            _avsVmVolumesRestClient = new AvsVmVolumes(_avsVmVolumesClientDiagnostics, Pipeline, Endpoint, pureStorageAvsVmVolumeApiVersion ?? "2024-11-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PureStorageAvsVmVolumeData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storagePoolName"> The storagePoolName. </param>
+        /// <param name="avsVmId"> The avsVmId. </param>
+        /// <param name="volumeId"> The volumeId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a volume in an AVS VM
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsVmVolume_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsVmVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsVmVolumeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStorageAvsVmVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PureStorageAvsVmVolumeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Get");
+            using DiagnosticScope scope = _avsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Get");
             scope.Start();
             try
             {
-                var response = await _pureStorageAvsVmVolumeAvsVmVolumesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsVmVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PureStorageAvsVmVolumeData> response = Response.FromValue(PureStorageAvsVmVolumeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PureStorageAvsVmVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,118 +145,42 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Get a volume in an AVS VM
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsVmVolume_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsVmVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsVmVolumeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStorageAvsVmVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PureStorageAvsVmVolumeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Get");
+            using DiagnosticScope scope = _avsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Get");
             scope.Start();
             try
             {
-                var response = _pureStorageAvsVmVolumeAvsVmVolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsVmVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PureStorageAvsVmVolumeData> response = Response.FromValue(PureStorageAvsVmVolumeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PureStorageAvsVmVolumeResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a volume in an AVS VM
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsVmVolume_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsVmVolumeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _pureStorageAvsVmVolumeAvsVmVolumesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PureStorageBlockArmOperation(_pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics, Pipeline, _pureStorageAvsVmVolumeAvsVmVolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a volume in an AVS VM
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsVmVolume_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsVmVolumeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _pureStorageAvsVmVolumeAvsVmVolumesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PureStorageBlockArmOperation(_pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics, Pipeline, _pureStorageAvsVmVolumeAvsVmVolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -258,20 +193,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Update a volume in an AVS VM
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsVmVolume_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsVmVolumes_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsVmVolumeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStorageAvsVmVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,14 +218,27 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Update");
+            using DiagnosticScope scope = _avsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Update");
             scope.Start();
             try
             {
-                var response = await _pureStorageAvsVmVolumeAvsVmVolumesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource>(new PureStorageAvsVmVolumeOperationSource(Client), _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics, Pipeline, _pureStorageAvsVmVolumeAvsVmVolumesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsVmVolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageAvsVmVolumePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource>(
+                    new PureStorageAvsVmVolumeOperationSource(Client),
+                    _avsVmVolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -304,20 +252,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Update a volume in an AVS VM
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsVmVolume_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvsVmVolumes_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStorageAvsVmVolumeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStorageAvsVmVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +277,125 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Update");
+            using DiagnosticScope scope = _avsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Update");
             scope.Start();
             try
             {
-                var response = _pureStorageAvsVmVolumeAvsVmVolumesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource>(new PureStorageAvsVmVolumeOperationSource(Client), _pureStorageAvsVmVolumeAvsVmVolumesClientDiagnostics, Pipeline, _pureStorageAvsVmVolumeAvsVmVolumesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsVmVolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageAvsVmVolumePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource>(
+                    new PureStorageAvsVmVolumeOperationSource(Client),
+                    _avsVmVolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a volume in an AVS VM
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvsVmVolumes_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStorageAvsVmVolumeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _avsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsVmVolumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_avsVmVolumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a volume in an AVS VM
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}/avsVmVolumes/{volumeId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvsVmVolumes_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStorageAvsVmVolumeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _avsVmVolumesClientDiagnostics.CreateScope("PureStorageAvsVmVolumeResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _avsVmVolumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_avsVmVolumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

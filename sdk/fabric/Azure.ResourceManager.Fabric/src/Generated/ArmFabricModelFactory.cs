@@ -8,81 +8,122 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Fabric;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFabricModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Fabric.FabricCapacityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Fabric Capacity resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
-        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FabricCapacityProperties properties = null, FabricSku sku = null)
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FabricCapacityProperties properties = default, FabricSku sku = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FabricCapacityData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                sku,
-                serializedAdditionalRawData: null);
+                sku);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FabricCapacityProperties"/>. </summary>
         /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
-        /// <param name="administrationMembers"> The capacity administration. </param>
+        /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
-        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = null, FabricResourceState? state = null, IEnumerable<string> administrationMembers = null)
+        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, IEnumerable<string> administrationMembers = default)
         {
-            administrationMembers ??= new List<string>();
-
-            return new FabricCapacityProperties(provisioningState, state, administrationMembers != null ? new FabricCapacityAdministration(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new FabricCapacityProperties(provisioningState, state, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FabricNameAvailabilityResult"/>. </summary>
+        /// <summary> The administration properties of the Fabric capacity resource. </summary>
+        /// <param name="members"> An array of administrator user identities. </param>
+        /// <returns> A new <see cref="Models.FabricCapacityAdministration"/> instance for mocking. </returns>
+        public static FabricCapacityAdministration FabricCapacityAdministration(IEnumerable<string> members = default)
+        {
+            members ??= new ChangeTrackingList<string>();
+
+            return new FabricCapacityAdministration(members.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the FabricCapacity. </summary>
+        /// <param name="sku"> The SKU details. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
+        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, FabricCapacityUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FabricCapacityPatch(sku, tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.FabricNameAvailabilityResult"/> instance for mocking. </returns>
-        public static FabricNameAvailabilityResult FabricNameAvailabilityResult(bool? isNameAvailable = null, FabricNameUnavailableReason? reason = null, string message = null)
+        public static FabricNameAvailabilityResult FabricNameAvailabilityResult(bool? isNameAvailable = default, FabricNameUnavailableReason? reason = default, string message = default)
         {
-            return new FabricNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new FabricNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForExistingCapacity"/>. </summary>
+        /// <summary> An object that represents SKU details for existing resources. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <returns> A new <see cref="Models.FabricSkuDetailsForExistingCapacity"/> instance for mocking. </returns>
-        public static FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = null, FabricSku sku = null)
+        public static FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = default, FabricSku sku = default)
         {
-            return new FabricSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData: null);
+            return new FabricSkuDetailsForExistingCapacity(resourceType, sku, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForNewCapacity"/>. </summary>
+        /// <summary> The SKU details. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The SKU's name. </param>
         /// <param name="locations"> The list of available locations for the SKU. </param>
         /// <returns> A new <see cref="Models.FabricSkuDetailsForNewCapacity"/> instance for mocking. </returns>
-        public static FabricSkuDetailsForNewCapacity FabricSkuDetailsForNewCapacity(string resourceType = null, string name = null, IEnumerable<AzureLocation> locations = null)
+        public static FabricSkuDetailsForNewCapacity FabricSkuDetailsForNewCapacity(string resourceType = default, string name = default, IEnumerable<AzureLocation> locations = default)
         {
-            locations ??= new List<AzureLocation>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
 
-            return new FabricSkuDetailsForNewCapacity(resourceType, name, locations?.ToList(), serializedAdditionalRawData: null);
+            return new FabricSkuDetailsForNewCapacity(resourceType, name, locations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes Resource Quota. </summary>
+        /// <param name="name"> The name of the quota. </param>
+        /// <param name="unit"> The unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <returns> A new <see cref="Models.FabricCapacitiesQuota"/> instance for mocking. </returns>
+        public static FabricCapacitiesQuota FabricCapacitiesQuota(FabricCapacitiesQuotaName name = default, string unit = default, long currentValue = default, long limit = default)
+        {
+            return new FabricCapacitiesQuota(name, unit, currentValue, limit, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Quota Names. </summary>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
+        /// <returns> A new <see cref="Models.FabricCapacitiesQuotaName"/> instance for mocking. </returns>
+        public static FabricCapacitiesQuotaName FabricCapacitiesQuotaName(string value = default, string localizedValue = default)
+        {
+            return new FabricCapacitiesQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
         }
     }
 }

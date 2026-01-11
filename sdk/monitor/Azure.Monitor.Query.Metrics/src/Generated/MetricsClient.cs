@@ -260,7 +260,7 @@ namespace Azure.Monitor.Query.Metrics
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<MetricsQueryResourcesResult> QueryResources(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList batchRequest, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryResources(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = QueryResources(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.ToRequestContext());
             return Response.FromValue((MetricsQueryResourcesResult)result, result);
         }
 
@@ -315,7 +315,7 @@ namespace Azure.Monitor.Query.Metrics
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList batchRequest, string startTime = default, string endTime = default, string interval = default, string aggregation = default, int? top = default, string orderBy = default, string filter = default, string rollUpBy = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryResourcesAsync(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await QueryResourcesAsync(subscriptionId, metricNamespace, metricNames, batchRequest, startTime, endTime, interval, aggregation, top, orderBy, filter, rollUpBy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((MetricsQueryResourcesResult)result, result);
         }
     }

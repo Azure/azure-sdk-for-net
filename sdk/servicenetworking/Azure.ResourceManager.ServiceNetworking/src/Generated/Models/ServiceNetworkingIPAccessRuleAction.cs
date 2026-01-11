@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public readonly partial struct ServiceNetworkingIPAccessRuleAction : IEquatable<ServiceNetworkingIPAccessRuleAction>
     {
         private readonly string _value;
+        /// <summary> Allow Source Ip Prefixes. </summary>
+        private const string AllowValue = "allow";
+        /// <summary> Deny Source Ip Prefixes. </summary>
+        private const string DenyValue = "deny";
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceNetworkingIPAccessRuleAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "allow";
-        private const string DenyValue = "deny";
+            _value = value;
+        }
 
         /// <summary> Allow Source Ip Prefixes. </summary>
         public static ServiceNetworkingIPAccessRuleAction Allow { get; } = new ServiceNetworkingIPAccessRuleAction(AllowValue);
+
         /// <summary> Deny Source Ip Prefixes. </summary>
         public static ServiceNetworkingIPAccessRuleAction Deny { get; } = new ServiceNetworkingIPAccessRuleAction(DenyValue);
+
         /// <summary> Determines if two <see cref="ServiceNetworkingIPAccessRuleAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceNetworkingIPAccessRuleAction left, ServiceNetworkingIPAccessRuleAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceNetworkingIPAccessRuleAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceNetworkingIPAccessRuleAction left, ServiceNetworkingIPAccessRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceNetworkingIPAccessRuleAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceNetworkingIPAccessRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceNetworkingIPAccessRuleAction(string value) => new ServiceNetworkingIPAccessRuleAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceNetworkingIPAccessRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceNetworkingIPAccessRuleAction?(string value) => value == null ? null : new ServiceNetworkingIPAccessRuleAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceNetworkingIPAccessRuleAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceNetworkingIPAccessRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

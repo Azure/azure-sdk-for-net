@@ -211,6 +211,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation",
       "apiVersions": [],
@@ -250,9 +251,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient",
           "apiVersions": [],
@@ -370,9 +372,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations",
               "apiVersions": [],
@@ -453,9 +456,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations",
               "apiVersions": [],
@@ -500,9 +504,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
           "apiVersions": [],
@@ -583,9 +588,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations",
               "apiVersions": [],
@@ -630,9 +636,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient",
           "apiVersions": [],
@@ -713,9 +720,10 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations",
               "apiVersions": [],
@@ -760,9 +768,31 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.endpoint"
+            },
+            {
+              "$id": "60",
+              "kind": "method",
+              "name": "storageAccount",
+              "serializedName": "storageAccount",
+              "type": {
+                "$id": "61",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.getBlob.Parameter.anonymous.storageAccount",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
           "apiVersions": [],
@@ -771,30 +801,30 @@
           },
           "children": [
             {
-              "$id": "60",
+              "$id": "62",
               "kind": "client",
               "name": "BlobOperations",
               "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
               "methods": [
                 {
-                  "$id": "61",
+                  "$id": "63",
                   "kind": "basic",
                   "name": "getBlob",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "62",
+                    "$id": "64",
                     "name": "getBlob",
                     "resourceName": "BlobOperations",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "63",
+                        "$id": "65",
                         "kind": "query",
                         "name": "storageAccount",
                         "serializedName": "storageAccount",
                         "type": {
-                          "$id": "64",
+                          "$id": "66",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -809,12 +839,12 @@
                         "readOnly": false
                       },
                       {
-                        "$id": "65",
+                        "$id": "67",
                         "kind": "query",
                         "name": "container",
                         "serializedName": "container",
                         "type": {
-                          "$id": "66",
+                          "$id": "68",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -829,12 +859,12 @@
                         "readOnly": false
                       },
                       {
-                        "$id": "67",
+                        "$id": "69",
                         "kind": "query",
                         "name": "blob",
                         "serializedName": "blob",
                         "type": {
-                          "$id": "68",
+                          "$id": "70",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -849,7 +879,7 @@
                         "readOnly": false
                       },
                       {
-                        "$id": "69",
+                        "$id": "71",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -891,12 +921,12 @@
                   },
                   "parameters": [
                     {
-                      "$id": "70",
+                      "$id": "72",
                       "kind": "method",
                       "name": "container",
                       "serializedName": "container",
                       "type": {
-                        "$id": "71",
+                        "$id": "73",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -912,12 +942,12 @@
                       "decorators": []
                     },
                     {
-                      "$id": "72",
+                      "$id": "74",
                       "kind": "method",
                       "name": "blob",
                       "serializedName": "blob",
                       "type": {
-                        "$id": "73",
+                        "$id": "75",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -933,7 +963,7 @@
                       "decorators": []
                     },
                     {
-                      "$id": "74",
+                      "$id": "76",
                       "kind": "method",
                       "name": "accept",
                       "serializedName": "Accept",
@@ -963,13 +993,13 @@
               ],
               "parameters": [
                 {
-                  "$id": "75",
+                  "$id": "77",
                   "kind": "endpoint",
                   "name": "endpoint",
                   "serializedName": "endpoint",
                   "doc": "Service host",
                   "type": {
-                    "$id": "76",
+                    "$id": "78",
                     "kind": "url",
                     "name": "endpoint",
                     "crossLanguageDefinitionId": "TypeSpec.url"
@@ -980,7 +1010,7 @@
                   "isEndpoint": true,
                   "defaultValue": {
                     "type": {
-                      "$id": "77",
+                      "$id": "79",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string"
@@ -990,9 +1020,13 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.endpoint"
+                },
+                {
+                  "$ref": "60"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations",
               "apiVersions": [],
@@ -1003,19 +1037,19 @@
           ]
         },
         {
-          "$id": "78",
+          "$id": "80",
           "kind": "client",
           "name": "ArchiveOperations",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation",
           "methods": [
             {
-              "$id": "79",
+              "$id": "81",
               "kind": "basic",
               "name": "archiveProduct",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "80",
+                "$id": "82",
                 "name": "archiveProduct",
                 "resourceName": "ProductOperations",
                 "accessibility": "public",
@@ -1048,13 +1082,13 @@
           ],
           "parameters": [
             {
-              "$id": "81",
+              "$id": "83",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "82",
+                "$id": "84",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1065,7 +1099,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "83",
+                  "$id": "85",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1078,6 +1112,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation",
           "apiVersions": [],

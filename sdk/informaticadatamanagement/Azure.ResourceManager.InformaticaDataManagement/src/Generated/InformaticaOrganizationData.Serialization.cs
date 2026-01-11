@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeInformaticaOrganizationData(document.RootElement, options);
                     }
@@ -221,11 +221,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="InformaticaOrganizationData"/> from. </param>
-        internal static InformaticaOrganizationData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="InformaticaOrganizationData"/> from. </param>
+        internal static InformaticaOrganizationData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeInformaticaOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

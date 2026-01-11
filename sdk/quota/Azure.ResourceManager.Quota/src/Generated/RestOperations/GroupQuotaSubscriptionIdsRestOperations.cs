@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal partial class GroupQuotaSubscriptionIdsRestOperations
+    internal partial class GroupQuotaSubscriptionIds
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of GroupQuotaSubscriptionIdsRestOperations. </summary>
+        /// <summary> Initializes a new instance of GroupQuotaSubscriptionIds for mocking. </summary>
+        protected GroupQuotaSubscriptionIds()
+        {
+        }
+
+        /// <summary> Initializes a new instance of GroupQuotaSubscriptionIds. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public GroupQuotaSubscriptionIdsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal GroupQuotaSubscriptionIds(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-09-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string managementGroupId, string groupQuotaName, string subscriptionId)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string managementGroupId, string groupQuotaName, string subscriptionId, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
@@ -47,262 +52,55 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns the subscriptionIds along with its provisioning state for being associated with the GroupQuota. If the subscription is not a member of GroupQuota, it will return 404, else 200. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotaSubscriptionData>> GetAsync(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string managementGroupId, string groupQuotaName, Guid subscriptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateGetRequest(managementGroupId, groupQuotaName, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotaSubscriptionData.DeserializeGroupQuotaSubscriptionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GroupQuotaSubscriptionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns the subscriptionIds along with its provisioning state for being associated with the GroupQuota. If the subscription is not a member of GroupQuota, it will return 404, else 200. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotaSubscriptionData> Get(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateGetRequest(managementGroupId, groupQuotaName, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GroupQuotaSubscriptionData.DeserializeGroupQuotaSubscriptionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GroupQuotaSubscriptionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Adds a subscription to GroupQuotas. The subscriptions will be validated based on the additionalAttributes defined in the GroupQuota. The additionalAttributes works as filter for the subscriptions, which can be included in the GroupQuotas. The request's TenantId is validated against the subscription's TenantId. </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string managementGroupId, string groupQuotaName, Guid subscriptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateCreateOrUpdateRequest(managementGroupId, groupQuotaName, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Adds a subscription to GroupQuotas. The subscriptions will be validated based on the additionalAttributes defined in the GroupQuota. The additionalAttributes works as filter for the subscriptions, which can be included in the GroupQuotas. The request's TenantId is validated against the subscription's TenantId. </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateCreateOrUpdateRequest(managementGroupId, groupQuotaName, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Updates the GroupQuotas with the subscription to add to the subscriptions list. The subscriptions will be validated if additionalAttributes are defined in the GroupQuota. The request's TenantId is validated against the subscription's TenantId. </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string managementGroupId, string groupQuotaName, string subscriptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateUpdateRequest(managementGroupId, groupQuotaName, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates the GroupQuotas with the subscription to add to the subscriptions list. The subscriptions will be validated if additionalAttributes are defined in the GroupQuota. The request's TenantId is validated against the subscription's TenantId. </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateUpdateRequest(managementGroupId, groupQuotaName, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
@@ -311,81 +109,16 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string managementGroupId, string groupQuotaName, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Removes the subscription from GroupQuotas. The request's TenantId is validated against the subscription's TenantId. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(string managementGroupId, string groupQuotaName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateDeleteRequest(managementGroupId, groupQuotaName, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Removes the subscription from GroupQuotas. The request's TenantId is validated against the subscription's TenantId. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string managementGroupId, string groupQuotaName, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateDeleteRequest(managementGroupId, groupQuotaName, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string managementGroupId, string groupQuotaName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
@@ -393,160 +126,24 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(groupQuotaName, true);
             uri.AppendPath("/subscriptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string managementGroupId, string groupQuotaName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/subscriptions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns a list of the subscriptionIds associated with the GroupQuotas. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotaSubscriptionIdList>> ListAsync(string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string managementGroupId, string groupQuotaName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-
-            using var message = CreateListRequest(managementGroupId, groupQuotaName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaSubscriptionIdList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotaSubscriptionIdList.DeserializeGroupQuotaSubscriptionIdList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a list of the subscriptionIds associated with the GroupQuotas. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotaSubscriptionIdList> List(string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-
-            using var message = CreateListRequest(managementGroupId, groupQuotaName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaSubscriptionIdList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GroupQuotaSubscriptionIdList.DeserializeGroupQuotaSubscriptionIdList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string managementGroupId, string groupQuotaName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string managementGroupId, string groupQuotaName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Returns a list of the subscriptionIds associated with the GroupQuotas. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotaSubscriptionIdList>> ListNextPageAsync(string nextLink, string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-
-            using var message = CreateListNextPageRequest(nextLink, managementGroupId, groupQuotaName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaSubscriptionIdList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotaSubscriptionIdList.DeserializeGroupQuotaSubscriptionIdList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a list of the subscriptionIds associated with the GroupQuotas. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotaSubscriptionIdList> ListNextPage(string nextLink, string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-
-            using var message = CreateListNextPageRequest(nextLink, managementGroupId, groupQuotaName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaSubscriptionIdList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GroupQuotaSubscriptionIdList.DeserializeGroupQuotaSubscriptionIdList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

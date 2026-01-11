@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
+    /// <summary></summary>
     public partial class ExadbVmClusterResource : IJsonModel<ExadbVmClusterData>
     {
-        private static ExadbVmClusterData s_dataDeserializationInstance;
-        private static ExadbVmClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExadbVmClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExadbVmClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExadbVmClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExadbVmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExadbVmClusterData>)Data).Write(writer, options);
 
-        ExadbVmClusterData IJsonModel<ExadbVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExadbVmClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExadbVmClusterData IJsonModel<ExadbVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExadbVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExadbVmClusterData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExadbVmClusterData IPersistableModel<ExadbVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExadbVmClusterData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExadbVmClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

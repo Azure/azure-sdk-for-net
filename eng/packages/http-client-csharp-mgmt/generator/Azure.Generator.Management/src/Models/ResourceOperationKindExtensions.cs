@@ -8,7 +8,7 @@ namespace Azure.Generator.Management.Models
         public static bool IsCrudKind(this ResourceOperationKind kind)
         {
             return kind == ResourceOperationKind.Create ||
-                   kind == ResourceOperationKind.Get ||
+                   kind == ResourceOperationKind.Read ||
                    kind == ResourceOperationKind.Update ||
                    kind == ResourceOperationKind.Delete;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterEntraPrincipalType : IEquatable<MongoClusterEntraPrincipalType>
     {
         private readonly string _value;
+        /// <summary> Entra user type. </summary>
+        private const string UserValue = "user";
+        /// <summary> Entra service principal type. </summary>
+        private const string ServicePrincipalValue = "servicePrincipal";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterEntraPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterEntraPrincipalType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserValue = "user";
-        private const string ServicePrincipalValue = "servicePrincipal";
+            _value = value;
+        }
 
         /// <summary> Entra user type. </summary>
         public static MongoClusterEntraPrincipalType User { get; } = new MongoClusterEntraPrincipalType(UserValue);
+
         /// <summary> Entra service principal type. </summary>
         public static MongoClusterEntraPrincipalType ServicePrincipal { get; } = new MongoClusterEntraPrincipalType(ServicePrincipalValue);
+
         /// <summary> Determines if two <see cref="MongoClusterEntraPrincipalType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterEntraPrincipalType left, MongoClusterEntraPrincipalType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterEntraPrincipalType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterEntraPrincipalType left, MongoClusterEntraPrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterEntraPrincipalType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterEntraPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterEntraPrincipalType(string value) => new MongoClusterEntraPrincipalType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterEntraPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterEntraPrincipalType?(string value) => value == null ? null : new MongoClusterEntraPrincipalType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterEntraPrincipalType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterEntraPrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

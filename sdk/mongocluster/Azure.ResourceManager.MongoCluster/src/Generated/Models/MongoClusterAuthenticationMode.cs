@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterAuthenticationMode : IEquatable<MongoClusterAuthenticationMode>
     {
         private readonly string _value;
+        /// <summary> Native mongo authentication mode using username and password with auth mechanism 'SCRAM-SHA-256'. </summary>
+        private const string NativeAuthValue = "NativeAuth";
+        /// <summary> Microsoft Entra ID authentication mode using Entra users assigned to the cluster and auth mechanism 'MONGODB-OIDC'. </summary>
+        private const string MicrosoftEntraIDValue = "MicrosoftEntraID";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterAuthenticationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterAuthenticationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NativeAuthValue = "NativeAuth";
-        private const string MicrosoftEntraIdValue = "MicrosoftEntraID";
+            _value = value;
+        }
 
         /// <summary> Native mongo authentication mode using username and password with auth mechanism 'SCRAM-SHA-256'. </summary>
         public static MongoClusterAuthenticationMode NativeAuth { get; } = new MongoClusterAuthenticationMode(NativeAuthValue);
+
         /// <summary> Microsoft Entra ID authentication mode using Entra users assigned to the cluster and auth mechanism 'MONGODB-OIDC'. </summary>
-        public static MongoClusterAuthenticationMode MicrosoftEntraId { get; } = new MongoClusterAuthenticationMode(MicrosoftEntraIdValue);
+        public static MongoClusterAuthenticationMode MicrosoftEntraID { get; } = new MongoClusterAuthenticationMode(MicrosoftEntraIDValue);
+
         /// <summary> Determines if two <see cref="MongoClusterAuthenticationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterAuthenticationMode left, MongoClusterAuthenticationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterAuthenticationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterAuthenticationMode left, MongoClusterAuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterAuthenticationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterAuthenticationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterAuthenticationMode(string value) => new MongoClusterAuthenticationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterAuthenticationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterAuthenticationMode?(string value) => value == null ? null : new MongoClusterAuthenticationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterAuthenticationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterAuthenticationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

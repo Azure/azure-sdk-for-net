@@ -10,6 +10,9 @@
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>$(NoWarn);8002</NoWarn>
+
+    <!-- Stop .NET 10 from flagging the transitive System.Runtime.InteropServices, as it cannot be pruned. -->
+    <NoWarn>$(NoWarn);NU1510</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
@@ -19,7 +22,10 @@
 
   <ItemGroup>
     <PackageReference Include="FsCheck.Xunit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NSubstitute" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -35,7 +41,7 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.Conventions.Files.csproj" />
   </ItemGroup>

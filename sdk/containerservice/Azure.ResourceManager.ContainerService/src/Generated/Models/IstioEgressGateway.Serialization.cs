@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -38,16 +37,17 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsCollectionDefined(NodeSelector))
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("nodeSelector"u8);
-                writer.WriteStartObject();
-                foreach (var item in NodeSelector)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(GatewayConfigurationName))
+            {
+                writer.WritePropertyName("gatewayConfigurationName"u8);
+                writer.WriteStringValue(GatewayConfigurationName);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            IDictionary<string, string> nodeSelector = default;
+            string name = default;
+            string @namespace = default;
+            string gatewayConfigurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,18 +99,19 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nodeSelector"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    nodeSelector = dictionary;
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("namespace"u8))
+                {
+                    @namespace = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("gatewayConfigurationName"u8))
+                {
+                    gatewayConfigurationName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IstioEgressGateway(enabled, nodeSelector ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new IstioEgressGateway(enabled, name, @namespace, gatewayConfigurationName, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -144,39 +147,71 @@ namespace Azure.ResourceManager.ContainerService.Models
                 builder.AppendLine($"{boolValue}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeSelector), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  nodeSelector: ");
+                builder.Append("  name: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsCollectionDefined(NodeSelector))
+                if (Optional.IsDefined(Name))
                 {
-                    if (NodeSelector.Any())
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
                     {
-                        builder.Append("  nodeSelector: ");
-                        builder.AppendLine("{");
-                        foreach (var item in NodeSelector)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  namespace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Namespace))
+                {
+                    builder.Append("  namespace: ");
+                    if (Namespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Namespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Namespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayConfigurationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gatewayConfigurationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GatewayConfigurationName))
+                {
+                    builder.Append("  gatewayConfigurationName: ");
+                    if (GatewayConfigurationName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GatewayConfigurationName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GatewayConfigurationName}'");
                     }
                 }
             }

@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The NestedFooModel. </summary>
-    public partial class NestedFooModel : IJsonModel<NestedFooModel>
+    internal partial class NestedFooModel : IJsonModel<NestedFooModel>
     {
         /// <summary> Initializes a new instance of <see cref="NestedFooModel"/> for deserialization. </summary>
         internal NestedFooModel()
@@ -128,7 +128,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeNestedFooModel(document.RootElement, options);
                     }

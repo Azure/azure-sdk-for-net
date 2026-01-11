@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <summary> Initializes a new instance of <see cref="RwxStorageClassTypeProperties"/>. </summary>
         /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backingStorageClassName"/> is null. </exception>
-        public RwxStorageClassTypeProperties(string backingStorageClassName)
+        public RwxStorageClassTypeProperties(string backingStorageClassName) : base(StorageClassType.Rwx)
         {
             Argument.AssertNotNull(backingStorageClassName, nameof(backingStorageClassName));
 
             BackingStorageClassName = backingStorageClassName;
-            Type = StorageClassType.Rwx;
         }
 
         /// <summary> Initializes a new instance of <see cref="RwxStorageClassTypeProperties"/>. </summary>
         /// <param name="type"> Type of the storage class. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
-        internal RwxStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string backingStorageClassName) : base(type, serializedAdditionalRawData)
+        internal RwxStorageClassTypeProperties(StorageClassType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string backingStorageClassName) : base(@type, additionalBinaryDataProperties)
         {
             BackingStorageClassName = backingStorageClassName;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RwxStorageClassTypeProperties"/> for deserialization. </summary>
-        internal RwxStorageClassTypeProperties()
-        {
         }
 
         /// <summary> The backing storageclass used to create new storageclass. </summary>

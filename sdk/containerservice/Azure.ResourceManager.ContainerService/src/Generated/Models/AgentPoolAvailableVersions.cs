@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The list of available versions for an agent pool. </summary>
+    /// <summary>
+    /// The list of available versions for an agent pool.
+    /// Serialized Name: AgentPoolAvailableVersions
+    /// </summary>
     public partial class AgentPoolAvailableVersions : ResourceData
     {
         /// <summary>
@@ -58,7 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="agentPoolVersions"> List of versions available for agent pool. </param>
+        /// <param name="agentPoolVersions">
+        /// List of versions available for agent pool.
+        /// Serialized Name: AgentPoolAvailableVersions.properties.agentPoolVersions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -66,7 +72,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of versions available for agent pool. </summary>
+        /// <summary>
+        /// List of versions available for agent pool.
+        /// Serialized Name: AgentPoolAvailableVersions.properties.agentPoolVersions
+        /// </summary>
         [WirePath("properties.agentPoolVersions")]
         public IReadOnlyList<AgentPoolAvailableVersion> AgentPoolVersions { get; }
     }

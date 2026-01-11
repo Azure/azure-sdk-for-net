@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OnlineExperimentation;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     public readonly partial struct OnlineExperimentationWorkspaceSkuName : IEquatable<OnlineExperimentationWorkspaceSkuName>
     {
         private readonly string _value;
+        /// <summary> The Free service sku name. </summary>
+        private const string F0Value = "F0";
+        /// <summary> The Standard service sku name. </summary>
+        private const string S0Value = "S0";
+        /// <summary> The Premium service sku name. </summary>
+        private const string P0Value = "P0";
+        /// <summary> The Developer service sku name. </summary>
+        private const string D0Value = "D0";
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OnlineExperimentationWorkspaceSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string F0Value = "F0";
-        private const string S0Value = "S0";
-        private const string P0Value = "P0";
-        private const string D0Value = "D0";
+            _value = value;
+        }
 
         /// <summary> The Free service sku name. </summary>
         public static OnlineExperimentationWorkspaceSkuName F0 { get; } = new OnlineExperimentationWorkspaceSkuName(F0Value);
+
         /// <summary> The Standard service sku name. </summary>
         public static OnlineExperimentationWorkspaceSkuName S0 { get; } = new OnlineExperimentationWorkspaceSkuName(S0Value);
+
         /// <summary> The Premium service sku name. </summary>
         public static OnlineExperimentationWorkspaceSkuName P0 { get; } = new OnlineExperimentationWorkspaceSkuName(P0Value);
+
         /// <summary> The Developer service sku name. </summary>
         public static OnlineExperimentationWorkspaceSkuName D0 { get; } = new OnlineExperimentationWorkspaceSkuName(D0Value);
+
         /// <summary> Determines if two <see cref="OnlineExperimentationWorkspaceSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OnlineExperimentationWorkspaceSkuName left, OnlineExperimentationWorkspaceSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OnlineExperimentationWorkspaceSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OnlineExperimentationWorkspaceSkuName left, OnlineExperimentationWorkspaceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OnlineExperimentationWorkspaceSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OnlineExperimentationWorkspaceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OnlineExperimentationWorkspaceSkuName(string value) => new OnlineExperimentationWorkspaceSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OnlineExperimentationWorkspaceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OnlineExperimentationWorkspaceSkuName?(string value) => value == null ? null : new OnlineExperimentationWorkspaceSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OnlineExperimentationWorkspaceSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OnlineExperimentationWorkspaceSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

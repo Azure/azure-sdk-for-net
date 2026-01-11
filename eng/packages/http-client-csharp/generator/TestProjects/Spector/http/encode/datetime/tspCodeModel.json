@@ -448,6 +448,7 @@
           "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Datetime",
       "apiVersions": [],
@@ -945,9 +946,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.Query.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.Query",
           "apiVersions": [],
@@ -1771,9 +1773,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.Property.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.Property",
           "apiVersions": [],
@@ -2275,9 +2278,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.Header.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.Header",
           "apiVersions": [],
@@ -2549,9 +2553,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader",
           "apiVersions": [],

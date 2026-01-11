@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 using static Azure.Core.Pipeline.TaskExtensions;
 
 #pragma warning disable AZC0007
@@ -199,8 +200,8 @@ namespace Azure.Data.AppConfiguration
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
-                new HttpPipelinePolicy[] { authenticationPolicy, syncTokenPolicy },
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new QueryParamPolicy() },
+                new HttpPipelinePolicy[] { new AudienceErrorHandlingPolicy(options.Audience != null), authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceOneAgentAvailabilityState : IEquatable<DynatraceOneAgentAvailabilityState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentAvailabilityState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DynatraceOneAgentAvailabilityState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CrashedValue = "CRASHED";
         private const string LostValue = "LOST";
         private const string MonitoredValue = "MONITORED";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.Dynatrace.Models
         private const string UnknownValue = "UNKNOWN";
         private const string UnmonitoredValue = "UNMONITORED";
 
-        /// <summary> CRASHED. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentAvailabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DynatraceOneAgentAvailabilityState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Crashed. </summary>
         public static DynatraceOneAgentAvailabilityState Crashed { get; } = new DynatraceOneAgentAvailabilityState(CrashedValue);
-        /// <summary> LOST. </summary>
+
+        /// <summary> Gets the Lost. </summary>
         public static DynatraceOneAgentAvailabilityState Lost { get; } = new DynatraceOneAgentAvailabilityState(LostValue);
-        /// <summary> MONITORED. </summary>
+
+        /// <summary> Gets the Monitored. </summary>
         public static DynatraceOneAgentAvailabilityState Monitored { get; } = new DynatraceOneAgentAvailabilityState(MonitoredValue);
-        /// <summary> PRE_MONITORED. </summary>
+
+        /// <summary> Gets the PreMonitored. </summary>
         public static DynatraceOneAgentAvailabilityState PreMonitored { get; } = new DynatraceOneAgentAvailabilityState(PreMonitoredValue);
-        /// <summary> SHUTDOWN. </summary>
+
+        /// <summary> Gets the Shutdown. </summary>
         public static DynatraceOneAgentAvailabilityState Shutdown { get; } = new DynatraceOneAgentAvailabilityState(ShutdownValue);
-        /// <summary> UNEXPECTED_SHUTDOWN. </summary>
+
+        /// <summary> Gets the UnexpectedShutdown. </summary>
         public static DynatraceOneAgentAvailabilityState UnexpectedShutdown { get; } = new DynatraceOneAgentAvailabilityState(UnexpectedShutdownValue);
-        /// <summary> UNKNOWN. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static DynatraceOneAgentAvailabilityState Unknown { get; } = new DynatraceOneAgentAvailabilityState(UnknownValue);
-        /// <summary> UNMONITORED. </summary>
+
+        /// <summary> Gets the Unmonitored. </summary>
         public static DynatraceOneAgentAvailabilityState Unmonitored { get; } = new DynatraceOneAgentAvailabilityState(UnmonitoredValue);
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentAvailabilityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceOneAgentAvailabilityState left, DynatraceOneAgentAvailabilityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentAvailabilityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceOneAgentAvailabilityState left, DynatraceOneAgentAvailabilityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceOneAgentAvailabilityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynatraceOneAgentAvailabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynatraceOneAgentAvailabilityState(string value) => new DynatraceOneAgentAvailabilityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynatraceOneAgentAvailabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynatraceOneAgentAvailabilityState?(string value) => value == null ? null : new DynatraceOneAgentAvailabilityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceOneAgentAvailabilityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynatraceOneAgentAvailabilityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

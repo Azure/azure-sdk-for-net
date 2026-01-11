@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("networkDataplane"u8);
                 writer.WriteStringValue(NetworkDataplane.Value.ToString());
             }
+            if (Optional.IsDefined(AdvancedNetworking))
+            {
+                writer.WritePropertyName("advancedNetworking"u8);
+                writer.WriteObjectValue(AdvancedNetworking, options);
+            }
             if (Optional.IsDefined(PodCidr))
             {
                 writer.WritePropertyName("podCidr"u8);
@@ -96,6 +101,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile, options);
             }
+            if (Optional.IsDefined(StaticEgressGatewayProfile))
+            {
+                writer.WritePropertyName("staticEgressGatewayProfile"u8);
+                writer.WriteObjectValue(StaticEgressGatewayProfile, options);
+            }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
                 writer.WritePropertyName("podCidrs"u8);
@@ -116,11 +126,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPFamilies))
+            if (Optional.IsCollectionDefined(NetworkIPFamilies))
             {
                 writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPFamilies)
+                foreach (var item in NetworkIPFamilies)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -168,6 +178,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceNetworkPolicy? networkPolicy = default;
             ContainerServiceNetworkMode? networkMode = default;
             NetworkDataplane? networkDataplane = default;
+            ManagedClusterAdvancedNetworking advancedNetworking = default;
             string podCidr = default;
             string serviceCidr = default;
             string dnsServiceIP = default;
@@ -175,9 +186,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceLoadBalancerSku? loadBalancerSku = default;
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
             ManagedClusterNatGatewayProfile natGatewayProfile = default;
+            ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
-            IList<IPFamily> ipFamilies = default;
+            IList<ContainerServiceIPFamily> ipFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,6 +237,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     networkDataplane = new NetworkDataplane(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("advancedNetworking"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    advancedNetworking = ManagedClusterAdvancedNetworking.DeserializeManagedClusterAdvancedNetworking(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("podCidr"u8))
@@ -278,6 +299,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("staticEgressGatewayProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staticEgressGatewayProfile = ManagedClusterStaticEgressGatewayProfile.DeserializeManagedClusterStaticEgressGatewayProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("podCidrs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -312,10 +342,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<IPFamily> array = new List<IPFamily>();
+                    List<ContainerServiceIPFamily> array = new List<ContainerServiceIPFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IPFamily(item.GetString()));
+                        array.Add(new ContainerServiceIPFamily(item.GetString()));
                     }
                     ipFamilies = array;
                     continue;
@@ -332,6 +362,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 networkPolicy,
                 networkMode,
                 networkDataplane,
+                advancedNetworking,
                 podCidr,
                 serviceCidr,
                 dnsServiceIP,
@@ -339,9 +370,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 loadBalancerSku,
                 loadBalancerProfile,
                 natGatewayProfile,
+                staticEgressGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
-                ipFamilies ?? new ChangeTrackingList<IPFamily>(),
+                ipFamilies ?? new ChangeTrackingList<ContainerServiceIPFamily>(),
                 serializedAdditionalRawData);
         }
 
@@ -428,6 +460,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  networkDataplane: ");
                     builder.AppendLine($"'{NetworkDataplane.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdvancedNetworking), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  advancedNetworking: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdvancedNetworking))
+                {
+                    builder.Append("  advancedNetworking: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AdvancedNetworking, options, 2, false, "  advancedNetworking: ");
                 }
             }
 
@@ -560,6 +607,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsStaticEgressGatewayAddonEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  staticEgressGatewayProfile: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(StaticEgressGatewayProfile))
+                {
+                    builder.Append("  staticEgressGatewayProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StaticEgressGatewayProfile, options, 2, false, "  staticEgressGatewayProfile: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodCidrs), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -632,7 +697,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPFamilies), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkIPFamilies), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  ipFamilies: ");
@@ -640,13 +705,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(IPFamilies))
+                if (Optional.IsCollectionDefined(NetworkIPFamilies))
                 {
-                    if (IPFamilies.Any())
+                    if (NetworkIPFamilies.Any())
                     {
                         builder.Append("  ipFamilies: ");
                         builder.AppendLine("[");
-                        foreach (var item in IPFamilies)
+                        foreach (var item in NetworkIPFamilies)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
                         }

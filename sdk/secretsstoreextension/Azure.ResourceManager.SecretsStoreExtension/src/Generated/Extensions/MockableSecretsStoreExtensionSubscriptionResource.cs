@@ -5,92 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSecretsStoreExtensionSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics;
-        private AzureKeyVaultSecretProviderClassesRestOperations _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient;
-        private ClientDiagnostics _secretSyncClientDiagnostics;
-        private SecretSyncsRestOperations _secretSyncRestClient;
+        private ClientDiagnostics _azureKeyVaultSecretProviderClassesClientDiagnostics;
+        private AzureKeyVaultSecretProviderClasses _azureKeyVaultSecretProviderClassesRestClient;
+        private ClientDiagnostics _secretSyncsClientDiagnostics;
+        private SecretSyncs _secretSyncsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecretsStoreExtensionSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSecretsStoreExtensionSubscriptionResource for mocking. </summary>
         protected MockableSecretsStoreExtensionSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecretsStoreExtensionSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSecretsStoreExtensionSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSecretsStoreExtensionSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics => _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", KeyVaultSecretProviderClassResource.ResourceType.Namespace, Diagnostics);
-        private AzureKeyVaultSecretProviderClassesRestOperations KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient => _keyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient ??= new AzureKeyVaultSecretProviderClassesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KeyVaultSecretProviderClassResource.ResourceType));
-        private ClientDiagnostics SecretSyncClientDiagnostics => _secretSyncClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", SecretSyncResource.ResourceType.Namespace, Diagnostics);
-        private SecretSyncsRestOperations SecretSyncRestClient => _secretSyncRestClient ??= new SecretSyncsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecretSyncResource.ResourceType));
+        private ClientDiagnostics AzureKeyVaultSecretProviderClassesClientDiagnostics => _azureKeyVaultSecretProviderClassesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private AzureKeyVaultSecretProviderClasses AzureKeyVaultSecretProviderClassesRestClient => _azureKeyVaultSecretProviderClassesRestClient ??= new AzureKeyVaultSecretProviderClasses(AzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Endpoint, "2024-08-21-preview");
+
+        private ClientDiagnostics SecretSyncsClientDiagnostics => _secretSyncsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SecretSyncs SecretSyncsRestClient => _secretSyncsRestClient ??= new SecretSyncs(SecretSyncsClientDiagnostics, Pipeline, Endpoint, "2024-08-21-preview");
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultSecretProviderClassResource> GetKeyVaultSecretProviderClassesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretProviderClassResource(Client, KeyVaultSecretProviderClassData.DeserializeKeyVaultSecretProviderClassData(e)), KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, "MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetBySubscriptionAsyncCollectionResultOfT(AzureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,59 +93,55 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// <returns> A collection of <see cref="KeyVaultSecretProviderClassResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultSecretProviderClassResource> GetKeyVaultSecretProviderClasses(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretProviderClassResource(Client, KeyVaultSecretProviderClassData.DeserializeKeyVaultSecretProviderClassData(e)), KeyVaultSecretProviderClassAzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, "MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetBySubscriptionCollectionResultOfT(AzureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
         /// Lists the SecretSync instances within an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/secretSyncs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/secretSyncs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecretSyncResource> GetSecretSyncsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecretSyncRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecretSyncRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecretSyncResource(Client, SecretSyncData.DeserializeSecretSyncData(e)), SecretSyncClientDiagnostics, Pipeline, "MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetBySubscriptionAsyncCollectionResultOfT(SecretSyncsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>
         /// Lists the SecretSync instances within an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/secretSyncs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SecretSyncController/secretSyncs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,9 +149,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// <returns> A collection of <see cref="SecretSyncResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecretSyncResource> GetSecretSyncs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecretSyncRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecretSyncRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecretSyncResource(Client, SecretSyncData.DeserializeSecretSyncData(e)), SecretSyncClientDiagnostics, Pipeline, "MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetBySubscriptionCollectionResultOfT(SecretSyncsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SecretSyncResource(Client, data));
         }
     }
 }

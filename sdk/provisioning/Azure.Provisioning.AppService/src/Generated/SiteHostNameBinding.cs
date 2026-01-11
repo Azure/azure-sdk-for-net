@@ -165,7 +165,7 @@ public partial class SiteHostNameBinding : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteHostNameBinding.</param>
     public SiteHostNameBinding(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/hostNameBindings", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/hostNameBindings", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -174,6 +174,7 @@ public partial class SiteHostNameBinding : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _azureResourceName = DefineProperty<string>("AzureResourceName", ["properties", "azureResourceName"]);
         _azureResourceType = DefineProperty<AppServiceResourceType>("AzureResourceType", ["properties", "azureResourceType"]);
@@ -195,6 +196,11 @@ public partial class SiteHostNameBinding : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

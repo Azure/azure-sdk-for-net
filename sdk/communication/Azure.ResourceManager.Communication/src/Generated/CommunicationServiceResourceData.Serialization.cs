@@ -86,6 +86,16 @@ namespace Azure.ResourceManager.Communication
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(IsLocalAuthDisabled))
+            {
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -123,6 +133,8 @@ namespace Azure.ResourceManager.Communication
             string version = default;
             Guid? immutableResourceId = default;
             IList<string> linkedDomains = default;
+            CommunicationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,6 +256,24 @@ namespace Azure.ResourceManager.Communication
                             linkedDomains = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new CommunicationPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -268,6 +298,8 @@ namespace Azure.ResourceManager.Communication
                 version,
                 immutableResourceId,
                 linkedDomains ?? new ChangeTrackingList<string>(),
+                publicNetworkAccess,
+                disableLocalAuth,
                 serializedAdditionalRawData);
         }
 
@@ -548,6 +580,37 @@ namespace Azure.ResourceManager.Communication
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLocalAuthDisabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    disableLocalAuth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLocalAuthDisabled))
+                {
+                    builder.Append("    disableLocalAuth: ");
+                    var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

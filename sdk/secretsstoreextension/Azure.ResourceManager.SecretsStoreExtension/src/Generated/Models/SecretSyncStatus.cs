@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Models
 {
     /// <summary> SecretSyncStatus defines the observed state of the secret synchronization process. </summary>
     public partial class SecretSyncStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecretSyncStatus"/>. </summary>
         internal SecretSyncStatus()
@@ -54,16 +26,17 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <summary> Initializes a new instance of <see cref="SecretSyncStatus"/>. </summary>
         /// <param name="lastSuccessfulSyncOn"> LastSuccessfulSyncTime represents the last time the secret was retrieved from the Provider and updated. </param>
         /// <param name="conditions"> Conditions represent the status of the secret create and update processes. The status can be True, False, or Unknown with various reasons and messages explaining the state. Examples of reasons include CreateSucceeded, ProviderError, InvalidClusterSecretLabelError, InvalidClusterSecretAnnotationError, UnknownError, ValidatingAdmissionPolicyCheckFailed, UserInputValidationFailed, ControllerSpcError, ControllerInternalError, NoValueChange, and ValueChangeOrForceUpdateDetected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretSyncStatus(DateTimeOffset? lastSuccessfulSyncOn, IReadOnlyList<SecretSyncCondition> conditions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecretSyncStatus(DateTimeOffset? lastSuccessfulSyncOn, IReadOnlyList<SecretSyncCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastSuccessfulSyncOn = lastSuccessfulSyncOn;
             Conditions = conditions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> LastSuccessfulSyncTime represents the last time the secret was retrieved from the Provider and updated. </summary>
         public DateTimeOffset? LastSuccessfulSyncOn { get; }
+
         /// <summary> Conditions represent the status of the secret create and update processes. The status can be True, False, or Unknown with various reasons and messages explaining the state. Examples of reasons include CreateSucceeded, ProviderError, InvalidClusterSecretLabelError, InvalidClusterSecretAnnotationError, UnknownError, ValidatingAdmissionPolicyCheckFailed, UserInputValidationFailed, ControllerSpcError, ControllerInternalError, NoValueChange, and ValueChangeOrForceUpdateDetected. </summary>
         public IReadOnlyList<SecretSyncCondition> Conditions { get; }
     }

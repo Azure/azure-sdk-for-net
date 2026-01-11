@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    internal class EdgeSchemaOperationSource : IOperationSource<EdgeSchemaResource>
+    /// <summary></summary>
+    internal partial class EdgeSchemaOperationSource : IOperationSource<EdgeSchemaResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EdgeSchemaOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EdgeSchemaResource IOperationSource<EdgeSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSchemaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EdgeSchemaData data = EdgeSchemaData.DeserializeEdgeSchemaData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EdgeSchemaResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EdgeSchemaResource> IOperationSource<EdgeSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSchemaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-            return await Task.FromResult(new EdgeSchemaResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EdgeSchemaData data = EdgeSchemaData.DeserializeEdgeSchemaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EdgeSchemaResource(_client, data);
         }
     }
 }

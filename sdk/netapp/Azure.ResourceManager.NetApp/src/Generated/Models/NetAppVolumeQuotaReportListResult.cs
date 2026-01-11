@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        /// <param name="value"> List of volume quota report records. </param>
+        /// <param name="value"> List of quota reports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume quota report records. </summary>
+        /// <summary> List of quota reports. </summary>
         public IReadOnlyList<NetAppVolumeQuotaReport> Value { get; }
     }
 }

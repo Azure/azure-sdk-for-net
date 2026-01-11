@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CompositeIndexes = new ChangeTrackingList<IList<CosmosDBCompositePath>>();
             SpatialIndexes = new ChangeTrackingList<SpatialSpec>();
             VectorIndexes = new ChangeTrackingList<CosmosDBVectorIndex>();
+            FullTextIndexes = new ChangeTrackingList<FullTextIndexPath>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingPolicy"/>. </summary>
@@ -63,8 +64,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="compositeIndexes"> List of composite path list. </param>
         /// <param name="spatialIndexes"> List of spatial specifics. </param>
         /// <param name="vectorIndexes"> List of paths to include in the vector indexing. </param>
+        /// <param name="fullTextIndexes"> List of paths to include in the full text indexing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IList<FullTextIndexPath> fullTextIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAutomatic = isAutomatic;
             IndexingMode = indexingMode;
@@ -73,6 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CompositeIndexes = compositeIndexes;
             SpatialIndexes = spatialIndexes;
             VectorIndexes = vectorIndexes;
+            FullTextIndexes = fullTextIndexes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,5 +100,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of paths to include in the vector indexing. </summary>
         [WirePath("vectorIndexes")]
         public IList<CosmosDBVectorIndex> VectorIndexes { get; }
+        /// <summary> List of paths to include in the full text indexing. </summary>
+        [WirePath("fullTextIndexes")]
+        public IList<FullTextIndexPath> FullTextIndexes { get; }
     }
 }

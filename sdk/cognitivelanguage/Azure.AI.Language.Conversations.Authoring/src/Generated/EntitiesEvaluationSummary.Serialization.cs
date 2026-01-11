@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            IReadOnlyDictionary<string, ConversationAuthoringConfusionMatrixRow> confusionMatrix = default;
+            IReadOnlyDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix = default;
             IReadOnlyDictionary<string, ConversationAuthoringEntityEvalSummary> entities = default;
             float microF1 = default;
             float microPrecision = default;
@@ -113,10 +113,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 if (property.NameEquals("confusionMatrix"u8))
                 {
-                    Dictionary<string, ConversationAuthoringConfusionMatrixRow> dictionary = new Dictionary<string, ConversationAuthoringConfusionMatrixRow>();
+                    Dictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> dictionary = new Dictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ConversationAuthoringConfusionMatrixRow.DeserializeConversationAuthoringConfusionMatrixRow(property0.Value, options));
+                        dictionary.Add(property0.Name, AnalyzeConversationAuthoringConfusionMatrixRow.DeserializeAnalyzeConversationAuthoringConfusionMatrixRow(property0.Value, options));
                     }
                     confusionMatrix = dictionary;
                     continue;

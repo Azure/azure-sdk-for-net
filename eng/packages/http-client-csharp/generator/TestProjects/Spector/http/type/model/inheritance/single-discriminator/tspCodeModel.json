@@ -1292,6 +1292,7 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator",
       "apiVersions": []

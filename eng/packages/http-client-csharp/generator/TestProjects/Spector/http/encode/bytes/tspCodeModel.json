@@ -625,6 +625,7 @@
           "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Bytes",
       "apiVersions": [],
@@ -984,9 +985,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Query.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.Query",
           "apiVersions": [],
@@ -1654,9 +1656,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Property.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.Property",
           "apiVersions": [],
@@ -2020,9 +2023,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Header.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.Header",
           "apiVersions": [],
@@ -2667,9 +2671,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.RequestBody",
           "apiVersions": [],
@@ -3185,9 +3190,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody",
           "apiVersions": [],

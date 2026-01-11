@@ -579,6 +579,7 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated",
       "apiVersions": []

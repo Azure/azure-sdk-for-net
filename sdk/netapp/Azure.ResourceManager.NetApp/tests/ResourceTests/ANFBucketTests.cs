@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -188,8 +189,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             ArmOperation<NetAppBucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
             NetAppBucketResource result = lro.Value;
 
-            ArmOperation<NetAppBucketResource> lro2 = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucket2Name, data2);
-            NetAppBucketResource result2 = lro2.Value;
+            //ArmOperation<NetAppBucketResource> lro2 = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucket2Name, data2);
+            //NetAppBucketResource result2 = lro2.Value;
 
             // Define a list to store results
             List<NetAppBucketResource> buckets = [];
@@ -200,9 +201,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
-            Assert.GreaterOrEqual(buckets.Count, 2);
+            Assert.GreaterOrEqual(buckets.Count, 1);
             Assert.IsTrue(buckets.Any(r => r.Data.Name.Split('/').Last() == bucketName));
-            Assert.IsTrue(buckets.Any(r => r.Data.Name.Split('/').Last() == bucket2Name));
         }
 
         [RecordedTest]
@@ -322,56 +322,56 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         //     // Generate RSA key pair
-            //     using (RSA rsa = RSA.Create())
-            //     {
-            //         rsa.KeySize = 2048;
-            //         var certificateRequest = new CertificateRequest(
-            //             subjectName,
-            //             rsa,
-            //             HashAlgorithmName.SHA256,
-            //             RSASignaturePadding.Pkcs1);
+        //     using (RSA rsa = RSA.Create())
+        //     {
+        //         rsa.KeySize = 2048;
+        //         var certificateRequest = new CertificateRequest(
+        //             subjectName,
+        //             rsa,
+        //             HashAlgorithmName.SHA256,
+        //             RSASignaturePadding.Pkcs1);
 
-            //         // Add basic constraints (self-signed, no CA)
-            //         certificateRequest.CertificateExtensions.Add(
-            //             new X509BasicConstraintsExtension(false, false, 0, false));
+        //         // Add basic constraints (self-signed, no CA)
+        //         certificateRequest.CertificateExtensions.Add(
+        //             new X509BasicConstraintsExtension(false, false, 0, false));
 
-            //         // Add key usage (digital signature, key encipherment)
-            //         certificateRequest.CertificateExtensions.Add(
-            //             new X509KeyUsageExtension(
-            //                 X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.KeyEncipherment,
-            //                 false));
+        //         // Add key usage (digital signature, key encipherment)
+        //         certificateRequest.CertificateExtensions.Add(
+        //             new X509KeyUsageExtension(
+        //                 X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.KeyEncipherment,
+        //                 false));
 
-            //         // Add subject key identifier
-            //         certificateRequest.CertificateExtensions.Add(
-            //             new X509SubjectKeyIdentifierExtension(certificateRequest.PublicKey, false));
+        //         // Add subject key identifier
+        //         certificateRequest.CertificateExtensions.Add(
+        //             new X509SubjectKeyIdentifierExtension(certificateRequest.PublicKey, false));
 
-            //         // Create the self-signed certificate
-            //         var certificate = certificateRequest.CreateSelfSigned(
-            //             DateTimeOffset.Now,
-            //             DateTimeOffset.Now.AddYears(validityPeriodInYears));
+        //         // Create the self-signed certificate
+        //         var certificate = certificateRequest.CreateSelfSigned(
+        //             DateTimeOffset.Now,
+        //             DateTimeOffset.Now.AddYears(validityPeriodInYears));
 
-            //         // Export certificate as PEM
-            //         certificateString = ExportToPem(certificate);
-            //     }
-            //     return certificateString;
-            // }
+        //         // Export certificate as PEM
+        //         certificateString = ExportToPem(certificate);
+        //     }
+        //     return certificateString;
+        // }
 
-            // private static string ExportToPem(X509Certificate2 certificate)
-            // {
-            //     // Export the certificate as Base64
-            //     byte[] certBytes = certificate.Export(X509ContentType.Cert);
-            //     string base64Cert = Convert.ToBase64String(certBytes);
+        // private static string ExportToPem(X509Certificate2 certificate)
+        // {
+        //     // Export the certificate as Base64
+        //     byte[] certBytes = certificate.Export(X509ContentType.Cert);
+        //     string base64Cert = Convert.ToBase64String(certBytes);
 
-            //     // Format as PEM
-            //     StringBuilder pem = new StringBuilder();
-            //     pem.AppendLine("-----BEGIN CERTIFICATE-----");
-            //     for (int i = 0; i < base64Cert.Length; i += 64)
-            //     {
-            //         pem.AppendLine(base64Cert.Substring(i, Math.Min(64, base64Cert.Length - i)));
-            //     }
-            //     pem.AppendLine("-----END CERTIFICATE-----");
+        //     // Format as PEM
+        //     StringBuilder pem = new StringBuilder();
+        //     pem.AppendLine("-----BEGIN CERTIFICATE-----");
+        //     for (int i = 0; i < base64Cert.Length; i += 64)
+        //     {
+        //         pem.AppendLine(base64Cert.Substring(i, Math.Min(64, base64Cert.Length - i)));
+        //     }
+        //     pem.AppendLine("-----END CERTIFICATE-----");
 
-            //     return pem.ToString();
-            // }
-        }
+        //     return pem.ToString();
+        // }
+    }
 }

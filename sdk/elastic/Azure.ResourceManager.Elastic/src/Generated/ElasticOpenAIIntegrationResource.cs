@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Elastic
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _elasticOpenAIIntegrationOpenAIClientDiagnostics;
-        private readonly OpenAIRestOperations _elasticOpenAIIntegrationOpenAIRestClient;
+        private readonly ClientDiagnostics _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics;
+        private readonly OpenAIIntegrationRPModelsRestOperations _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient;
         private readonly ElasticOpenAIIntegrationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticOpenAIIntegrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticOpenAIIntegrationOpenAIClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string elasticOpenAIIntegrationOpenAIApiVersion);
-            _elasticOpenAIIntegrationOpenAIRestClient = new OpenAIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticOpenAIIntegrationOpenAIApiVersion);
+            _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string elasticOpenAIIntegrationOpenAIIntegrationRPModelsApiVersion);
+            _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient = new OpenAIIntegrationRPModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticOpenAIIntegrationOpenAIIntegrationRPModelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration rule for a given monitor resource.
+        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_Get</description>
+        /// <description>OpenAIIntegrationRPModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticOpenAIIntegrationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Get");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Get");
             scope.Start();
             try
             {
-                var response = await _elasticOpenAIIntegrationOpenAIRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticOpenAIIntegrationResource(Client, response.Value), response.GetRawResponse());
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration rule for a given monitor resource.
+        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_Get</description>
+        /// <description>OpenAIIntegrationRPModel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticOpenAIIntegrationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Get");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Get");
             scope.Start();
             try
             {
-                var response = _elasticOpenAIIntegrationOpenAIRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticOpenAIIntegrationResource(Client, response.Value), response.GetRawResponse());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete OpenAI integration rule for a given monitor resource.
+        /// Delete an OpenAI integration rule for a given Elastic monitor resource, removing AI-driven observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_Delete</description>
+        /// <description>OpenAIIntegrationRPModel_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Delete");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticOpenAIIntegrationOpenAIRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _elasticOpenAIIntegrationOpenAIRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ElasticArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete OpenAI integration rule for a given monitor resource.
+        /// Delete an OpenAI integration rule for a given Elastic monitor resource, removing AI-driven observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_Delete</description>
+        /// <description>OpenAIIntegrationRPModel_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Delete");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticOpenAIIntegrationOpenAIRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _elasticOpenAIIntegrationOpenAIRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ElasticArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a OpenAI integration rule for a given monitor resource.
+        /// Create or update an OpenAI integration rule for a given Elastic monitor resource, enabling advanced AI-driven observability and monitoring.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_CreateOrUpdate</description>
+        /// <description>OpenAIIntegrationRPModel_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,12 +286,12 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Update");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Update");
             scope.Start();
             try
             {
-                var response = await _elasticOpenAIIntegrationOpenAIRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _elasticOpenAIIntegrationOpenAIRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ElasticArmOperation<ElasticOpenAIIntegrationResource>(Response.FromValue(new ElasticOpenAIIntegrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a OpenAI integration rule for a given monitor resource.
+        /// Create or update an OpenAI integration rule for a given Elastic monitor resource, enabling advanced AI-driven observability and monitoring.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_CreateOrUpdate</description>
+        /// <description>OpenAIIntegrationRPModel_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -334,12 +334,12 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Update");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.Update");
             scope.Start();
             try
             {
-                var response = _elasticOpenAIIntegrationOpenAIRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _elasticOpenAIIntegrationOpenAIRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ElasticArmOperation<ElasticOpenAIIntegrationResource>(Response.FromValue(new ElasticOpenAIIntegrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration status for a given integration.
+        /// Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_GetStatus</description>
+        /// <description>OpenAIIntegrationRPModels_GetStatus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticOpenAIIntegrationStatusResult>> GetStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.GetStatus");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.GetStatus");
             scope.Start();
             try
             {
-                var response = await _elasticOpenAIIntegrationOpenAIRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration status for a given integration.
+        /// Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -400,11 +400,11 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OpenAI_GetStatus</description>
+        /// <description>OpenAIIntegrationRPModels_GetStatus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,11 +415,11 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticOpenAIIntegrationStatusResult> GetStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticOpenAIIntegrationOpenAIClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.GetStatus");
+            using var scope = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsClientDiagnostics.CreateScope("ElasticOpenAIIntegrationResource.GetStatus");
             scope.Start();
             try
             {
-                var response = _elasticOpenAIIntegrationOpenAIRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _elasticOpenAIIntegrationOpenAIIntegrationRPModelsRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

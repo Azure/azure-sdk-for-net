@@ -1,0 +1,7 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/postgresql/**/*.cs'
+    words:
+      - awsec
+      - postgre

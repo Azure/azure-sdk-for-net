@@ -116,7 +116,7 @@ public partial class StaticSitePrivateEndpointConnection : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSitePrivateEndpointConnection.</param>
     public StaticSitePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/staticSites/privateEndpointConnections", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/privateEndpointConnections", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -126,6 +126,7 @@ public partial class StaticSitePrivateEndpointConnection : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _iPAddresses = DefineListProperty<IPAddress>("IPAddresses", ["properties", "ipAddresses"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
@@ -142,6 +143,11 @@ public partial class StaticSitePrivateEndpointConnection : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

@@ -854,6 +854,7 @@
           "crossLanguageDefinitionId": "Versioning.Added.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Added",
       "apiVersions": [
@@ -1046,7 +1047,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Added.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.endpoint"
             },
             {
               "$id": "77",
@@ -1073,9 +1074,10 @@
               "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Added.version"
+              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2",
           "apiVersions": [

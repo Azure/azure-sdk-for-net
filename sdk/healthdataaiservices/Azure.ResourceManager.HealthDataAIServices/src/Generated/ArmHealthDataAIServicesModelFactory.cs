@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthDataAIServices;
 using Azure.ResourceManager.Models;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Holder for private endpoint connections. </summary>

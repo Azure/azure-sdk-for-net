@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ArcAgentProfile ArcAgentProfile { get; set; }
 
         /// <summary> Security profile for the connected cluster. </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        internal SecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </summary>
         public OidcIssuerProfile OidcIssuerProfile { get; set; }
@@ -150,6 +150,23 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> More properties related to the Connected Cluster. </summary>
         public IReadOnlyDictionary<string, string> MiscellaneousProperties { get; }
+
+        /// <summary> Whether to enable or disable the workload identity Webhook. </summary>
+        public bool? WorkloadIdentityEnabled
+        {
+            get
+            {
+                return SecurityProfile is null ? default : SecurityProfile.WorkloadIdentityEnabled;
+            }
+            set
+            {
+                if (SecurityProfile is null)
+                {
+                    SecurityProfile = new SecurityProfile();
+                }
+                SecurityProfile.WorkloadIdentityEnabled = value;
+            }
+        }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
         public bool? GatewayEnabled

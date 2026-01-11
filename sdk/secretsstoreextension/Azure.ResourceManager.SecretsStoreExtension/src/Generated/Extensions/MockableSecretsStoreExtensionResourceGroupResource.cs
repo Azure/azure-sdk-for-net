@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSecretsStoreExtensionResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSecretsStoreExtensionResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSecretsStoreExtensionResourceGroupResource for mocking. </summary>
         protected MockableSecretsStoreExtensionResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecretsStoreExtensionResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSecretsStoreExtensionResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSecretsStoreExtensionResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of KeyVaultSecretProviderClassResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of KeyVaultSecretProviderClassResources and their operations over a KeyVaultSecretProviderClassResource. </returns>
+        /// <summary> Gets a collection of KeyVaultSecretProviderClasses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of KeyVaultSecretProviderClasses and their operations over a KeyVaultSecretProviderClassResource. </returns>
         public virtual KeyVaultSecretProviderClassCollection GetKeyVaultSecretProviderClasses()
         {
             return GetCachedClient(client => new KeyVaultSecretProviderClassCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// Gets the properties of an AzureKeyVaultSecretProviderClass instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<KeyVaultSecretProviderClassResource>> GetKeyVaultSecretProviderClassAsync(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
+
             return await GetKeyVaultSecretProviderClasses().GetAsync(azureKeyVaultSecretProviderClassName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// Gets the properties of an AzureKeyVaultSecretProviderClass instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses/{azureKeyVaultSecretProviderClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureKeyVaultSecretProviderClass_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureKeyVaultSecretProviderClasses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultSecretProviderClassResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         [ForwardsClientCalls]
         public virtual Response<KeyVaultSecretProviderClassResource> GetKeyVaultSecretProviderClass(string azureKeyVaultSecretProviderClassName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureKeyVaultSecretProviderClassName, nameof(azureKeyVaultSecretProviderClassName));
+
             return GetKeyVaultSecretProviderClasses().Get(azureKeyVaultSecretProviderClassName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecretSyncResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SecretSyncResources and their operations over a SecretSyncResource. </returns>
+        /// <summary> Gets a collection of SecretSyncs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecretSyncs and their operations over a SecretSyncResource. </returns>
         public virtual SecretSyncCollection GetSecretSyncs()
         {
             return GetCachedClient(client => new SecretSyncCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// Gets the properties of a SecretSync instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SecretSyncResource>> GetSecretSyncAsync(string secretSyncName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
+
             return await GetSecretSyncs().GetAsync(secretSyncName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         /// Gets the properties of a SecretSync instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecretSyncController/secretSyncs/{secretSyncName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecretSync_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecretSyncs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-21-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecretSyncResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-21-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +156,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
         [ForwardsClientCalls]
         public virtual Response<SecretSyncResource> GetSecretSync(string secretSyncName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(secretSyncName, nameof(secretSyncName));
+
             return GetSecretSyncs().Get(secretSyncName, cancellationToken);
         }
     }

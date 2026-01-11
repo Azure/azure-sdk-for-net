@@ -560,6 +560,7 @@
           "crossLanguageDefinitionId": "Type.Array.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Array",
       "apiVersions": [],
@@ -807,9 +808,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.Int32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.Int32Value",
           "apiVersions": [],
@@ -1060,9 +1062,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.Int64Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.Int64Value",
           "apiVersions": [],
@@ -1313,9 +1316,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.BooleanValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.BooleanValue",
           "apiVersions": [],
@@ -1566,9 +1570,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.StringValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.StringValue",
           "apiVersions": [],
@@ -1819,9 +1824,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.Float32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.Float32Value",
           "apiVersions": [],
@@ -2080,9 +2086,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.DatetimeValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.DatetimeValue",
           "apiVersions": [],
@@ -2341,9 +2348,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.DurationValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.DurationValue",
           "apiVersions": [],
@@ -2594,9 +2602,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.UnknownValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.UnknownValue",
           "apiVersions": [],
@@ -2836,9 +2845,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.ModelValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.ModelValue",
           "apiVersions": [],
@@ -3094,9 +3104,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableFloatValue",
           "apiVersions": [],
@@ -3352,9 +3363,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableInt32Value",
           "apiVersions": [],
@@ -3610,9 +3622,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue",
           "apiVersions": [],
@@ -3868,9 +3881,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableStringValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableStringValue",
           "apiVersions": [],
@@ -4122,9 +4136,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Array.endpoint"
+              "crossLanguageDefinitionId": "Type.Array.NullableModelValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableModelValue",
           "apiVersions": [],

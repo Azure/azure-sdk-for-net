@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
+            if (Optional.IsDefined(MinCompactionLagTimeInMinutes))
+            {
+                writer.WritePropertyName("minCompactionLagTimeInMinutes"u8);
+                writer.WriteNumberValue(MinCompactionLagTimeInMinutes.Value);
+            }
             if (Optional.IsDefined(TombstoneRetentionTimeInHours))
             {
                 writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             CleanupPolicyRetentionDescription? cleanupPolicy = default;
             long? retentionTimeInHours = default;
+            long? minCompactionLagTimeInMinutes = default;
             int? tombstoneRetentionTimeInHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -112,6 +118,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                     retentionTimeInHours = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("minCompactionLagTimeInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minCompactionLagTimeInMinutes = property.Value.GetInt64();
+                    continue;
+                }
                 if (property.NameEquals("tombstoneRetentionTimeInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -127,7 +142,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RetentionDescription(cleanupPolicy, retentionTimeInHours, tombstoneRetentionTimeInHours, serializedAdditionalRawData);
+            return new RetentionDescription(cleanupPolicy, retentionTimeInHours, minCompactionLagTimeInMinutes, tombstoneRetentionTimeInHours, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,6 +183,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     builder.Append("  retentionTimeInHours: ");
                     builder.AppendLine($"'{RetentionTimeInHours.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCompactionLagTimeInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minCompactionLagTimeInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinCompactionLagTimeInMinutes))
+                {
+                    builder.Append("  minCompactionLagTimeInMinutes: ");
+                    builder.AppendLine($"'{MinCompactionLagTimeInMinutes.Value.ToString()}'");
                 }
             }
 

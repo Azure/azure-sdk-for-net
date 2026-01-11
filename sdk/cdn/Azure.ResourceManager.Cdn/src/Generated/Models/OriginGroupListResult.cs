@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results.
-    /// Serialized Name: OriginGroupListResult
-    /// </summary>
+    /// <summary> Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results. </summary>
     internal partial class OriginGroupListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupListResult"/>. </summary>
-        /// <param name="value">
-        /// List of CDN origin groups within an endpoint
-        /// Serialized Name: OriginGroupListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of origin objects if there are any.
-        /// Serialized Name: OriginGroupListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of CDN origin groups within an endpoint. </param>
+        /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OriginGroupListResult(IReadOnlyList<CdnOriginGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of CDN origin groups within an endpoint
-        /// Serialized Name: OriginGroupListResult.value
-        /// </summary>
+        /// <summary> List of CDN origin groups within an endpoint. </summary>
         public IReadOnlyList<CdnOriginGroupData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of origin objects if there are any.
-        /// Serialized Name: OriginGroupListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of origin objects if there are any. </summary>
         public string NextLink { get; }
     }
 }

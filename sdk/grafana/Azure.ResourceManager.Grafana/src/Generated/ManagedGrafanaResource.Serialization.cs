@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Grafana
 {
+    /// <summary></summary>
     public partial class ManagedGrafanaResource : IJsonModel<ManagedGrafanaData>
     {
-        private static ManagedGrafanaData s_dataDeserializationInstance;
-        private static ManagedGrafanaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedGrafanaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedGrafanaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedGrafanaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedGrafanaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedGrafanaData>)Data).Write(writer, options);
 
-        ManagedGrafanaData IJsonModel<ManagedGrafanaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedGrafanaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedGrafanaData IJsonModel<ManagedGrafanaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedGrafanaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedGrafanaData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedGrafanaData IPersistableModel<ManagedGrafanaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedGrafanaData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<ManagedGrafanaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedGrafanaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedGrafanaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

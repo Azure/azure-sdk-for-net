@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpaceGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/EHNameSpaceGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/EHNameSpaceGet.json
             // this example is just showing the usage of "Namespaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NameSpaceDelete()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/EHNameSpaceDelete.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/EHNameSpaceDelete.json
             // this example is just showing the usage of "Namespaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NamespacesUpdate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/EHNameSpaceUpdate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/EHNameSpaceUpdate.json
             // this example is just showing the usage of "Namespaces_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,8 @@ namespace Azure.ResourceManager.EventHubs.Samples
 },
                 },
             };
-            EventHubsNamespaceResource result = await eventHubsNamespace.UpdateAsync(data);
+            ArmOperation<EventHubsNamespaceResource> lro = await eventHubsNamespace.UpdateAsync(WaitUntil.Completed, data);
+            EventHubsNamespaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -115,10 +116,10 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPrivateLinkResources_NameSpacePrivateLinkResourcesGet()
+        public async Task FailOver_NameSpaceCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/EHNamespaceFailover.json
+            // this example is just showing the usage of "Namespaces_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,26 +128,56 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "subID";
-            string resourceGroupName = "ArunMonocle";
-            string namespaceName = "sdk-Namespace-2924";
+            string subscriptionId = "SampleSubscription";
+            string resourceGroupName = "ResurceGroupSample";
+            string namespaceName = "NamespaceGeoDRFailoverSample";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (EventHubsPrivateLinkResourceData item in eventHubsNamespace.GetPrivateLinkResourcesAsync())
+            // invoke the operation
+            EventHubsNamespaceFailOver eventHubsNamespaceFailOver = new EventHubsNamespaceFailOver
             {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+                PrimaryLocation = new AzureLocation("centralus"),
+                Force = true,
+            };
+            ArmOperation<EventHubsNamespaceFailOver> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, eventHubsNamespaceFailOver);
+            EventHubsNamespaceFailOver result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckEventHubsDisasterRecoveryNameAvailability_NamespacesCheckNameAvailability()
+        {
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/disasterRecoveryConfigs/EHAliasCheckNameAvailability.json
+            // this example is just showing the usage of "DisasterRecoveryConfigs_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EventHubsNamespaceResource created on azure
+            // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
+            string subscriptionId = "exampleSubscriptionId";
+            string resourceGroupName = "exampleResourceGroup";
+            string namespaceName = "sdk-Namespace-9080";
+            ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
+
+            // invoke the operation
+            EventHubsNameAvailabilityContent content = new EventHubsNameAvailabilityContent("sdk-DisasterRecovery-9474");
+            EventHubsNameAvailabilityResult result = await eventHubsNamespace.CheckEventHubsDisasterRecoveryNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkSecurityPerimeterConfigurations_NamspaceNetworkSecurityPerimeterConfigurationList()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/NetworkSecurityPerimeterConfigurationList.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationList.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfiguration_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,9 +204,36 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkSecurityPerimeterAssociationName_NetworkSecurityPerimeterConfigurationassociationProxyName()
+        {
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationAssociationproxy.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_GetResourceAssociationName" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EventHubsNamespaceResource created on azure
+            // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SDK-EventHub-4794";
+            string namespaceName = "sdk-Namespace-5828";
+            ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
+
+            // invoke the operation
+            string resourceAssociationName = "resourceAssociation1";
+            EventHubsNetworkSecurityPerimeterConfiguration result = await eventHubsNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateNetworkSecurityPerimeterConfiguration_NetworkSecurityPerimeterConfigurationList()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/NetworkSecurityPerimeterConfigurationReconcile.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationReconcile.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,10 +258,10 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckEventHubsDisasterRecoveryNameAvailability_NamespacesCheckNameAvailability()
+        public async Task GetPrivateLinkResources_NameSpacePrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasCheckNameAvailability.json
-            // this example is just showing the usage of "DisasterRecoveryConfigs_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/PrivateLinkResourcesGet.json
+            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -212,17 +270,19 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "exampleSubscriptionId";
-            string resourceGroupName = "exampleResourceGroup";
-            string namespaceName = "sdk-Namespace-9080";
+            string subscriptionId = "subID";
+            string resourceGroupName = "ArunMonocle";
+            string namespaceName = "sdk-Namespace-2924";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // invoke the operation
-            EventHubsNameAvailabilityContent content = new EventHubsNameAvailabilityContent("sdk-DisasterRecovery-9474");
-            EventHubsNameAvailabilityResult result = await eventHubsNamespace.CheckEventHubsDisasterRecoveryNameAvailabilityAsync(content);
+            // invoke the operation and iterate over the result
+            await foreach (EventHubsPrivateLinkResourceData item in eventHubsNamespace.GetPrivateLinkResourcesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

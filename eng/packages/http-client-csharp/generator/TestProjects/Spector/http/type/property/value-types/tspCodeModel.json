@@ -2469,6 +2469,7 @@
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Property.ValueTypes",
       "apiVersions": [],
@@ -2710,9 +2711,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean",
           "apiVersions": [],
@@ -2957,9 +2959,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.String",
           "apiVersions": [],
@@ -3204,9 +3207,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes",
           "apiVersions": [],
@@ -3451,9 +3455,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int",
           "apiVersions": [],
@@ -3698,9 +3703,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float",
           "apiVersions": [],
@@ -3945,9 +3951,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal",
           "apiVersions": [],
@@ -4192,9 +4199,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128",
           "apiVersions": [],
@@ -4439,9 +4447,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime",
           "apiVersions": [],
@@ -4686,9 +4695,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration",
           "apiVersions": [],
@@ -4933,9 +4943,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum",
           "apiVersions": [],
@@ -5180,9 +5191,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum",
           "apiVersions": [],
@@ -5427,9 +5439,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model",
           "apiVersions": [],
@@ -5674,9 +5687,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString",
           "apiVersions": [],
@@ -5921,9 +5935,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt",
           "apiVersions": [],
@@ -6168,9 +6183,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel",
           "apiVersions": [],
@@ -6415,9 +6431,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString",
           "apiVersions": [],
@@ -6662,9 +6679,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never",
           "apiVersions": [],
@@ -6909,9 +6927,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString",
           "apiVersions": [],
@@ -7156,9 +7175,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt",
           "apiVersions": [],
@@ -7403,9 +7423,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict",
           "apiVersions": [],
@@ -7650,9 +7671,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray",
           "apiVersions": [],
@@ -7897,9 +7919,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral",
           "apiVersions": [],
@@ -8144,9 +8167,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral",
           "apiVersions": [],
@@ -8391,9 +8415,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral",
           "apiVersions": [],
@@ -8638,9 +8663,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral",
           "apiVersions": [],
@@ -8885,9 +8911,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral",
           "apiVersions": [],
@@ -9132,9 +9159,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral",
           "apiVersions": [],
@@ -9379,9 +9407,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral",
           "apiVersions": [],
@@ -9626,9 +9655,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue",
           "apiVersions": [],

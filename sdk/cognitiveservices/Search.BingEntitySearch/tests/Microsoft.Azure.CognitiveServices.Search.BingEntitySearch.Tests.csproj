@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Microsoft Azure CognitiveServices Search EntitySearch Tests Class Library</Description>
     <AssemblyTitle>Microsoft Azure CognitiveServices Search EntitySearch Tests</AssemblyTitle>
@@ -25,4 +25,18 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.Azure.ResourceManager" />
+    <PackageReference Include="System.Runtime.InteropServices" />
+    <None Include="$(RepoEngPath)\xunit.runner.json" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(RepoEngPath)\mgmt\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" />
+  </ItemGroup>
 </Project>

@@ -3,6 +3,9 @@
     <Description>Azure Batch integration test common library</Description>
     <AssemblyTitle>Microsoft Azure Batch Integration TestsCommon</AssemblyTitle>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Stop .NET 10 from flagging the transitive System.Runtime.InteropServices, as it cannot be pruned. -->
+    <NoWarn>$(NoWarn);NU1510;SYSLIB0014</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,11 +20,11 @@
     <PackageReference Include="Microsoft.Azure.Management.Batch" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>

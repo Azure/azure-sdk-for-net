@@ -19,8 +19,8 @@ namespace Azure.Generator.Management.Models
         string? ParentResourceId,
         IReadOnlyList<string> ChildResourceIds)
     {
-        // the childResourceIds parameter will be populated by the caller of this method later
-        internal static ResourceMetadata DeserializeResourceMetadata(IReadOnlyDictionary<string, BinaryData> args, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
+        // ChildResourceIds is currently unpopulated and passed in as an empty array
+        internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
         {
             string? resourceIdPattern = null;
             string? resourceType = null;
@@ -29,24 +29,23 @@ namespace Azure.Generator.Management.Models
             var methods = new List<ResourceMethod>();
             string? parentResource = null;
             string? resourceName = null;
-            if (args.TryGetValue("resourceIdPattern", out var resourceIdPatternData))
-            {
-                resourceIdPattern = resourceIdPatternData.ToObjectFromJson<string>();
-            }
-            if (args.TryGetValue("resourceType", out var resourceTypeData))
-            {
-                resourceType = resourceTypeData.ToObjectFromJson<string>();
-            }
 
-            if (args.TryGetValue("singletonResourceName", out var singletonResourceData))
+            if (element.TryGetProperty("resourceIdPattern", out var resourceIdPatternElement))
             {
-                singletonResourceName = singletonResourceData.ToObjectFromJson<string>();
+                resourceIdPattern = resourceIdPatternElement.GetString();
             }
-
-            if (args.TryGetValue("resourceScope", out var scopeData))
+            if (element.TryGetProperty("resourceType", out var resourceTypeElement))
             {
-                var scopeString = scopeData.ToObjectFromJson<string>();
-                if (Enum.TryParse<ResourceScope>(scopeString, true, out var scope))
+                resourceType = resourceTypeElement.GetString();
+            }
+            if (element.TryGetProperty("singletonResourceName", out var singletonResourceElement))
+            {
+                singletonResourceName = singletonResourceElement.GetString();
+            }
+            if (element.TryGetProperty("resourceScope", out var scopeElement))
+            {
+                var scopeString = scopeElement.GetString();
+                if (scopeString != null && Enum.TryParse<ResourceScope>(scopeString, true, out var scope))
                 {
                     resourceScope = scope;
                 }
@@ -57,24 +56,20 @@ namespace Azure.Generator.Management.Models
                     resourceScope = ResourceScope.Extension;
                 }
             }
-
-            if (args.TryGetValue("methods", out var operationsData))
+            if (element.TryGetProperty("methods", out var methodsElement))
             {
-                using var document = JsonDocument.Parse(operationsData);
-                foreach (var item in document.RootElement.EnumerateArray())
+                foreach (var item in methodsElement.EnumerateArray())
                 {
                     methods.Add(ResourceMethod.DeserializeResourceMethod(item));
                 }
             }
-
-            if (args.TryGetValue("parentResourceId", out var parentResourceData))
+            if (element.TryGetProperty("parentResourceId", out var parentResourceElement))
             {
-                parentResource = parentResourceData.ToObjectFromJson<string>();
+                parentResource = parentResourceElement.GetString();
             }
-
-            if (args.TryGetValue("resourceName", out var resourceNameData))
+            if (element.TryGetProperty("resourceName", out var resourceNameElement))
             {
-                resourceName = resourceNameData.ToObjectFromJson<string>();
+                resourceName = resourceNameElement.GetString();
             }
 
             return new(

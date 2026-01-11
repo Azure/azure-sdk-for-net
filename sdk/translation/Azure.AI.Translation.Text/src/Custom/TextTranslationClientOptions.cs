@@ -9,7 +9,6 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Client options for TextTranslationClient. </summary>
-    [CodeGenSuppress("TextTranslationClientOptions", typeof(ServiceVersion))]
     public partial class TextTranslationClientOptions : ClientOptions
     {
         /// <summary> Initializes new instance of TextTranslationClientOptions. </summary>
@@ -17,8 +16,8 @@ namespace Azure.AI.Translation.Text
         {
             Version = version switch
             {
-                ServiceVersion.V3_0 => "3.0",
-                _ => throw new NotSupportedException()
+                ServiceVersion.V2025_10_01_Preview => "2025-10-01-preview",
+                ServiceVersion.V3_0 or _ => throw new NotSupportedException()
             };
             Diagnostics.LoggedHeaderNames.Add("X-RequestId");
         }

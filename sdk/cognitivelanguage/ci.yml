@@ -36,3 +36,7 @@ extends:
       safeName: AzureAILanguageConversations
     - name: Azure.AI.Language.QuestionAnswering
       safeName: AzureAILanguageQuestionAnswering
+    - name: Azure.AI.Language.QuestionAnswering.Inference
+      safeName: AzureAILanguageQuestionAnsweringInference
+    - name: Azure.AI.Language.QuestionAnswering.Authoring
+      safeName: AzureAILanguageQuestionAnsweringAuthoring

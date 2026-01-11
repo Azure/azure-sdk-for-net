@@ -3,12 +3,8 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    [CodeGenModel("UnknownStorageMoverCredentials")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownStorageMoverCredentials")]
     internal partial class UnknownCredentials { }
 }

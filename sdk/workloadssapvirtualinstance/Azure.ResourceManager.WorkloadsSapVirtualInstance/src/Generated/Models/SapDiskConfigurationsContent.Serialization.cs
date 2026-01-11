@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class SapDiskConfigurationsContent : IUtf8JsonSerializable, IJsonModel<SapDiskConfigurationsContent>
+    /// <summary> The SAP request to get list of disk configurations. </summary>
+    public partial class SapDiskConfigurationsContent : IJsonModel<SapDiskConfigurationsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskConfigurationsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/> for deserialization. </summary>
+        internal SapDiskConfigurationsContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapDiskConfigurationsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapDiskConfigurationsContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
             writer.WritePropertyName("environment"u8);
@@ -46,15 +52,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("dbVmSku"u8);
             writer.WriteStringValue(DBVmSku);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +69,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        SapDiskConfigurationsContent IJsonModel<SapDiskConfigurationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapDiskConfigurationsContent IJsonModel<SapDiskConfigurationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapDiskConfigurationsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapDiskConfigurationsContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapDiskConfigurationsContent(document.RootElement, options);
         }
 
-        internal static SapDiskConfigurationsContent DeserializeSapDiskConfigurationsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapDiskConfigurationsContent DeserializeSapDiskConfigurationsContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,46 +100,44 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             SapDatabaseType databaseType = default;
             SapDeploymentType deploymentType = default;
             string dbVmSku = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("appLocation"u8))
+                if (prop.NameEquals("appLocation"u8))
                 {
-                    appLocation = new AzureLocation(property.Value.GetString());
+                    appLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("environment"u8))
+                if (prop.NameEquals("environment"u8))
                 {
-                    environment = new SapEnvironmentType(property.Value.GetString());
+                    environment = new SapEnvironmentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sapProduct"u8))
+                if (prop.NameEquals("sapProduct"u8))
                 {
-                    sapProduct = new SapProductType(property.Value.GetString());
+                    sapProduct = new SapProductType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("databaseType"u8))
+                if (prop.NameEquals("databaseType"u8))
                 {
-                    databaseType = new SapDatabaseType(property.Value.GetString());
+                    databaseType = new SapDatabaseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deploymentType"u8))
+                if (prop.NameEquals("deploymentType"u8))
                 {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
+                    deploymentType = new SapDeploymentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dbVmSku"u8))
+                if (prop.NameEquals("dbVmSku"u8))
                 {
-                    dbVmSku = property.Value.GetString();
+                    dbVmSku = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SapDiskConfigurationsContent(
                 appLocation,
                 environment,
@@ -136,13 +145,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 databaseType,
                 deploymentType,
                 dbVmSku,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SapDiskConfigurationsContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapDiskConfigurationsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -152,15 +164,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        SapDiskConfigurationsContent IPersistableModel<SapDiskConfigurationsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapDiskConfigurationsContent IPersistableModel<SapDiskConfigurationsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapDiskConfigurationsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapDiskConfigurationsContent(document.RootElement, options);
                     }
                 default:
@@ -168,6 +185,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapDiskConfigurationsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sapDiskConfigurationsContent"> The <see cref="SapDiskConfigurationsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SapDiskConfigurationsContent sapDiskConfigurationsContent)
+        {
+            if (sapDiskConfigurationsContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sapDiskConfigurationsContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

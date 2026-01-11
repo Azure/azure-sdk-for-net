@@ -62,6 +62,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="CredentialResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
+        public virtual CredentialResource GetCredentialResource(ResourceIdentifier id)
+        {
+            CredentialResource.ValidateResourceId(id);
+            return new CredentialResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyResource"/> object. </returns>
+        public virtual PolicyResource GetPolicyResource(ResourceIdentifier id)
+        {
+            PolicyResource.ValidateResourceId(id);
+            return new PolicyResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceAssetResource"/> object. </returns>

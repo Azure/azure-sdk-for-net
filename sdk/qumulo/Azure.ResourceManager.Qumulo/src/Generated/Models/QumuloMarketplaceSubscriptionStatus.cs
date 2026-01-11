@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Qumulo.Models
     public readonly partial struct QumuloMarketplaceSubscriptionStatus : IEquatable<QumuloMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Fulfillment has not started. </summary>
+        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
+        /// <summary> Marketplace offer is subscribed. </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary> Marketplace offer is suspended because of non payment. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Marketplace offer is unsubscribed. </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="QumuloMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QumuloMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary> Fulfillment has not started. </summary>
         public static QumuloMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new QumuloMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+
         /// <summary> Marketplace offer is subscribed. </summary>
         public static QumuloMarketplaceSubscriptionStatus Subscribed { get; } = new QumuloMarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary> Marketplace offer is suspended because of non payment. </summary>
         public static QumuloMarketplaceSubscriptionStatus Suspended { get; } = new QumuloMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Marketplace offer is unsubscribed. </summary>
         public static QumuloMarketplaceSubscriptionStatus Unsubscribed { get; } = new QumuloMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="QumuloMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QumuloMarketplaceSubscriptionStatus left, QumuloMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QumuloMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QumuloMarketplaceSubscriptionStatus left, QumuloMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QumuloMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QumuloMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QumuloMarketplaceSubscriptionStatus(string value) => new QumuloMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QumuloMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QumuloMarketplaceSubscriptionStatus?(string value) => value == null ? null : new QumuloMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QumuloMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QumuloMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

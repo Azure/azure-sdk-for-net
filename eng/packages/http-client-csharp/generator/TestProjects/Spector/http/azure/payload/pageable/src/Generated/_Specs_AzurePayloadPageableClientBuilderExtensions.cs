@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Specs_.Azure.Payload.Pageable;
+using Specs.Azure.Payload.Pageable;
 
 namespace Microsoft.Extensions.Azure
 {

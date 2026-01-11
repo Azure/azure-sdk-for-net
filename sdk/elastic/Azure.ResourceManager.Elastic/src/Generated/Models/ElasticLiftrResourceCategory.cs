@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> The ElasticLiftrResourceCategory. </summary>
+    /// <summary> The ElasticLiftrResourceCategories. </summary>
     public readonly partial struct ElasticLiftrResourceCategory : IEquatable<ElasticLiftrResourceCategory>
     {
         private readonly string _value;

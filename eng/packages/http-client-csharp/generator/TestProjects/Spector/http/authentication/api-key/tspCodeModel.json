@@ -160,6 +160,7 @@
           "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.ApiKey",
       "apiVersions": []

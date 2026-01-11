@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.DisconnectedOperations
     /// </summary>
     public partial class DisconnectedOperationsImageCollection : ArmCollection, IEnumerable<DisconnectedOperationsImageResource>, IAsyncEnumerable<DisconnectedOperationsImageResource>
     {
-        private readonly ClientDiagnostics _disconnectedOperationsImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _disconnectedOperationsImageImagesRestClient;
+        private readonly ClientDiagnostics _imagesClientDiagnostics;
+        private readonly Images _imagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationsImageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DisconnectedOperationsImageCollection for mocking. </summary>
         protected DisconnectedOperationsImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationsImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DisconnectedOperationsImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _disconnectedOperationsImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DisconnectedOperationsImageResource.ResourceType, out string disconnectedOperationsImageImagesApiVersion);
-            _disconnectedOperationsImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsImageImagesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DisconnectedOperationsImageResource.ResourceType, out string disconnectedOperationsImageApiVersion);
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsImageResource.ResourceType.Namespace, Diagnostics);
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DisconnectedOperationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DisconnectedOperationsImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _disconnectedOperationsImageImagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationsImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DisconnectedOperationsImageData> response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationsImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Get the resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DisconnectedOperationsImageResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _disconnectedOperationsImageImagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationsImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DisconnectedOperationsImageData> response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationsImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,53 +156,16 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// List by disconnected operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_ListByDisconnectedOperation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_ListByDisconnectedOperation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DisconnectedOperationsImageResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _disconnectedOperationsImageImagesRestClient.CreateListByDisconnectedOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _disconnectedOperationsImageImagesRestClient.CreateListByDisconnectedOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DisconnectedOperationsImageResource(Client, DisconnectedOperationsImageData.DeserializeDisconnectedOperationsImageData(e)), _disconnectedOperationsImageImagesClientDiagnostics, Pipeline, "DisconnectedOperationsImageCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by disconnected operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_ListByDisconnectedOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,47 +174,110 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DisconnectedOperationsImageResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DisconnectedOperationsImageResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _disconnectedOperationsImageImagesRestClient.CreateListByDisconnectedOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _disconnectedOperationsImageImagesRestClient.CreateListByDisconnectedOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DisconnectedOperationsImageResource(Client, DisconnectedOperationsImageData.DeserializeDisconnectedOperationsImageData(e)), _disconnectedOperationsImageImagesClientDiagnostics, Pipeline, "DisconnectedOperationsImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DisconnectedOperationsImageData, DisconnectedOperationsImageResource>(new ImagesGetByDisconnectedOperationAsyncCollectionResultOfT(
+                _imagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context), data => new DisconnectedOperationsImageResource(Client, data));
+        }
+
+        /// <summary>
+        /// List by disconnected operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Images_ListByDisconnectedOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DisconnectedOperationsImageResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DisconnectedOperationsImageData, DisconnectedOperationsImageResource>(new ImagesGetByDisconnectedOperationCollectionResultOfT(
+                _imagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _disconnectedOperationsImageImagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Exists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationsImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DisconnectedOperationsImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationsImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,36 +291,50 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _disconnectedOperationsImageImagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Exists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationsImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DisconnectedOperationsImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationsImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,38 +348,54 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DisconnectedOperationsImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _disconnectedOperationsImageImagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.GetIfExists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationsImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DisconnectedOperationsImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationsImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DisconnectedOperationsImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationsImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,38 +409,54 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Image_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationsImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DisconnectedOperationsImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _disconnectedOperationsImageImagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.GetIfExists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationsImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DisconnectedOperationsImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationsImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DisconnectedOperationsImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationsImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,6 +476,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DisconnectedOperationsImageResource> IAsyncEnumerable<DisconnectedOperationsImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

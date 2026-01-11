@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Settings for automatically discovering entities for the health model. </summary>
     public partial class ModelDiscoverySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelDiscoverySettings"/>. </summary>
         /// <param name="scope"> The scope from which entities should be automatically discovered. For example, the resource id of a Service Group. </param>
@@ -61,24 +33,21 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="scope"> The scope from which entities should be automatically discovered. For example, the resource id of a Service Group. </param>
         /// <param name="addRecommendedSignals"> Whether to add all recommended signals to the discovered entities. </param>
         /// <param name="identity"> Which Managed Identity of the health model to use for discovery. Defaults to SystemAssigned, if not set. Can be set to 'SystemAssigned' or to the resource id of a user-assigned managed identity which is linked to the health model. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ModelDiscoverySettings(string scope, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ModelDiscoverySettings(string scope, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, string identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             AddRecommendedSignals = addRecommendedSignals;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ModelDiscoverySettings"/> for deserialization. </summary>
-        internal ModelDiscoverySettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The scope from which entities should be automatically discovered. For example, the resource id of a Service Group. </summary>
         public string Scope { get; set; }
+
         /// <summary> Whether to add all recommended signals to the discovered entities. </summary>
         public DiscoveryRuleRecommendedSignalsBehavior AddRecommendedSignals { get; set; }
+
         /// <summary> Which Managed Identity of the health model to use for discovery. Defaults to SystemAssigned, if not set. Can be set to 'SystemAssigned' or to the resource id of a user-assigned managed identity which is linked to the health model. </summary>
         public string Identity { get; set; }
     }

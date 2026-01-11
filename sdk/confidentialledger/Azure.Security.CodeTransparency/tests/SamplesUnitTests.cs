@@ -137,6 +137,90 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public void Snippet_Sample2_VerifyTransparentStatement_offline_success()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+            // mock first request to get the entry statement
+            var mockedEntryResponse = new MockResponse(200);
+            mockedEntryResponse.AddHeader("Content-Type", "application/cose");
+            mockedEntryResponse.SetContent(transparentStatementBytes);
+
+            // mock second call to download the public keys
+            var mockedKeysResponse = new MockResponse(200);
+            mockedKeysResponse.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(mockedEntryResponse, mockedKeysResponse);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://some.identity.com"
+            };
+
+            #region Snippet:CodeTransparencyVerification_StoreForOfflineUse
+#if !SNIPPET
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), options);
+#endif
+#if SNIPPET
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
+#endif
+            // Download the transparent statement
+            Response<BinaryData> transparentStatementResponse = client.GetEntryStatement("4.44");
+            string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
+            File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
+            // Download and store the public keys for offline verification
+            Response<JwksDocument> ledgerKeys = client.GetPublicKeys();
+            CodeTransparencyOfflineKeys allKeys = new();
+#if !SNIPPET
+            allKeys.Add("foo.bar.com", ledgerKeys.Value);
+#endif
+#if SNIPPET
+            allKeys.Add("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
+#endif
+            string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");
+            File.WriteAllBytes(keysFilePath, allKeys.ToBinaryData().ToArray());
+
+            #endregion Snippet:CodeTransparencyVerification_StoreForOfflineUse
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            #region Snippet:CodeTransparencyVerification_Offline
+            var transparentStatement = File.ReadAllBytes(filePath);
+            var keys = File.ReadAllBytes(keysFilePath);
+#if SNIPPET
+            try
+            {
+#endif
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
+                    OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
+                    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+                };
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+#if SNIPPET
+
+                Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Verification failed: {e.Message}");
+            }
+#endif
+            #endregion Snippet:CodeTransparencyVerification_Offline
+#endif
+        }
+
+        [Test]
         public void Snippet_Sample3_Test()
         {
             #region Snippet:CodeTransparencySample3_CreateClientWithCredentials

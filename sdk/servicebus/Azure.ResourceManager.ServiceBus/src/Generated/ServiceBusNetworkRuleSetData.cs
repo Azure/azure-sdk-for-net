@@ -63,24 +63,27 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction, IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<ServiceBusNetworkRuleSetIPRules> ipRules, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction, IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<ServiceBusNetworkRuleSetIPRules> ipRules, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Location = location;
             IsTrustedServiceAccessEnabled = isTrustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
             IPRules = ipRules;
             PublicNetworkAccess = publicNetworkAccess;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
         [WirePath("properties.trustedServiceAccessEnabled")]
         public bool? IsTrustedServiceAccessEnabled { get; set; }
@@ -96,8 +99,5 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public ServiceBusPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
     }
 }

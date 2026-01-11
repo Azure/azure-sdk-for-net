@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Result of the request to list profiles. It contains a list of profile objects and a URL link to get the next set of results.
-    /// Serialized Name: ProfileListResult
-    /// </summary>
+    /// <summary> Result of the request to list profiles. It contains a list of profile objects and a URL link to get the next set of results. </summary>
     internal partial class ProfileListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileListResult"/>. </summary>
-        /// <param name="value">
-        /// List of CDN profiles within a resource group.
-        /// Serialized Name: ProfileListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of profile objects if there are any.
-        /// Serialized Name: ProfileListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of CDN profiles within a resource group. </param>
+        /// <param name="nextLink"> URL to get the next set of profile objects if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProfileListResult(IReadOnlyList<ProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of CDN profiles within a resource group.
-        /// Serialized Name: ProfileListResult.value
-        /// </summary>
+        /// <summary> List of CDN profiles within a resource group. </summary>
         public IReadOnlyList<ProfileData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of profile objects if there are any.
-        /// Serialized Name: ProfileListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of profile objects if there are any. </summary>
         public string NextLink { get; }
     }
 }

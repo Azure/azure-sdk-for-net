@@ -23,7 +23,10 @@
   "packageOptions": {
     "packageFolderFromFileSearch": false,
     "buildScript": {
-      "command": "dotnet build {packagePath}"
+      "command": "dotnet build {packagePath}/src"
+    },
+    "updateMetadataScript": {
+      "path": "./eng/scripts/Export-API.ps1"
     }
   }
 }

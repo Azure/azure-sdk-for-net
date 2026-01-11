@@ -74,7 +74,7 @@ public partial class ProjectClient : ClientConnectionProvider
             // This environment variable is set by the Project App Service feature during provisioning.
             credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
             {
-                string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
+                string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(clientId)),
                 _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
             };
         }

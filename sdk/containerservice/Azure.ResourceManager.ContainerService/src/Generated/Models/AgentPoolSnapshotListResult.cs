@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The response from the List Snapshots operation. </summary>
+    /// <summary>
+    /// The response from the List Snapshots operation.
+    /// Serialized Name: SnapshotListResult
+    /// </summary>
     internal partial class AgentPoolSnapshotListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolSnapshotListResult"/>. </summary>
-        /// <param name="value"> The list of snapshots. </param>
-        /// <param name="nextLink"> The URL to get the next set of snapshot results. </param>
+        /// <param name="value">
+        /// The list of snapshots.
+        /// Serialized Name: SnapshotListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of snapshot results.
+        /// Serialized Name: SnapshotListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolSnapshotListResult(IReadOnlyList<AgentPoolSnapshotData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of snapshots. </summary>
+        /// <summary>
+        /// The list of snapshots.
+        /// Serialized Name: SnapshotListResult.value
+        /// </summary>
         public IReadOnlyList<AgentPoolSnapshotData> Value { get; }
-        /// <summary> The URL to get the next set of snapshot results. </summary>
+        /// <summary>
+        /// The URL to get the next set of snapshot results.
+        /// Serialized Name: SnapshotListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.1 (2025-12-10)
+
+### Features Added
+
+- Upgraded RegistryTasks api-version to 2025-03-01-preview.
+
+## 1.4.0 (2025-11-05)
+
+### Features Added
+
+- Upgraded api-version to 2025-11-01.
 
 ## 1.3.1 (2025-08-11)
 

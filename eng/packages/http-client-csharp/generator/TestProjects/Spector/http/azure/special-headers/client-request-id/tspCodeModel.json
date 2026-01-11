@@ -127,6 +127,7 @@
           "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId",
       "apiVersions": []

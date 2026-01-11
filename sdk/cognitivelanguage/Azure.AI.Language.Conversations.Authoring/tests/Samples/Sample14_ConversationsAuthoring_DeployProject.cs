@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
@@ -63,8 +64,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 };
 
             // Create Cognitive Services resource with AOAI linkage
-            ConversationAuthoringDeploymentResource assignedResource =
-                new ConversationAuthoringDeploymentResource(
+            ConversationAuthoringAssignedProjectResource assignedResource =
+                new ConversationAuthoringAssignedProjectResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                     region: "{region}")
                 {
@@ -74,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Set up deployment details with assigned resources
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-            deploymentDetails.AssignedResources.Add(assignedResource);
+            deploymentDetails.AzureResourceIds.Add(assignedResource);
 
             // Get deployment client
             ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
@@ -89,6 +90,48 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 ? location : "Not found";
             Console.WriteLine($"Operation-Location header: {operationLocation}");
             #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void DeployProject_WithAssignedResources_20251101()
+        {
+            #region Snippet:Sample14_ConversationsAuthoring_DeployProjectWithAssignedResources_20251101
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+
+            // Use the 2025-11-01 GA version of the service
+            ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01);
+
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+
+            string projectName = "{projectName}";
+            string deploymentName = "{deploymentName}";
+
+            // For 2025-11-01, the service expects azureResourceIds as an array of strings.
+            List<string> azureResourceIds = new List<string>
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    };
+
+            // Set up deployment details with resource ID strings
+            ConversationAuthoringCreateDeploymentDetails deploymentDetails =
+                new ConversationAuthoringCreateDeploymentDetails("ModelWithDG", azureResourceIds);
+
+            // Get deployment client
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            // Start deployment
+            Operation operation = deploymentClient.DeployProject(WaitUntil.Started, deploymentDetails);
+            #endregion
+
+            // Output result
+            Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
+                ? location : "Not found";
+            Console.WriteLine($"Operation-Location header: {operationLocation}");
         }
 
         [Test]
@@ -141,8 +184,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 };
 
             // Create Cognitive Services resource with AOAI linkage
-            ConversationAuthoringDeploymentResource assignedResource =
-                new ConversationAuthoringDeploymentResource(
+            ConversationAuthoringAssignedProjectResource assignedResource =
+                new ConversationAuthoringAssignedProjectResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                     region: "{region}")
                 {
@@ -152,7 +195,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Set up deployment details with assigned resources
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-            deploymentDetails.AssignedResources.Add(assignedResource);
+            deploymentDetails.AzureResourceIds.Add(assignedResource);
 
             // Get deployment client
             ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
@@ -167,6 +210,45 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 ? location : "Not found";
             Console.WriteLine($"Operation-Location header: {operationLocation}");
             #endregion
+        }
+
+        public async Task DeployProjectAsync_WithAssignedResources_20251101()
+        {
+            #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsyncWithAssignedResources_20251101
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+
+            // Use the 2025-11-01 GA version of the service
+            ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01);
+
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+
+            string projectName = "{projectName}";
+            string deploymentName = "{deploymentName}";
+
+            // For 2025-11-01, the service expects azureResourceIds as an array of strings.
+            List<string> azureResourceIds = new List<string>
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    };
+
+            // Set up deployment details with resource ID strings
+            ConversationAuthoringCreateDeploymentDetails deploymentDetails =
+                new ConversationAuthoringCreateDeploymentDetails("ModelWithDG", azureResourceIds);
+
+            // Get deployment client
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            // Start deployment asynchronously
+            Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, deploymentDetails);
+            #endregion
+            // Output result
+            Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
+                ? location : "Not found";
+            Console.WriteLine($"Operation-Location header: {operationLocation}");
         }
     }
 }

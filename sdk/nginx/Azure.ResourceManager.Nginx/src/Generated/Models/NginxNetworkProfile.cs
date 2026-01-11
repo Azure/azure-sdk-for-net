@@ -11,40 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxNetworkProfile. </summary>
+    /// <summary> Nginx Network Profile. </summary>
     public partial class NginxNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         public NginxNetworkProfile()
@@ -52,28 +23,35 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
-        /// <param name="frontEndIPConfiguration"></param>
-        /// <param name="networkInterfaceConfiguration"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="frontEndIPConfiguration"> Nginx Frontend IP Configuration. </param>
+        /// <param name="networkInterfaceConfiguration"> Nginx Network Interface Configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontEndIPConfiguration = frontEndIPConfiguration;
             NetworkInterfaceConfiguration = networkInterfaceConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the front end ip configuration. </summary>
+        /// <summary> Nginx Frontend IP Configuration. </summary>
         public NginxFrontendIPConfiguration FrontEndIPConfiguration { get; set; }
-        /// <summary> Gets or sets the network interface configuration. </summary>
+
+        /// <summary> Nginx Network Interface Configuration. </summary>
         internal NginxNetworkInterfaceConfiguration NetworkInterfaceConfiguration { get; set; }
-        /// <summary> Gets or sets the network interface subnet id. </summary>
+
+        /// <summary> Gets or sets the SubnetId. </summary>
         public ResourceIdentifier NetworkInterfaceSubnetId
         {
-            get => NetworkInterfaceConfiguration is null ? default : NetworkInterfaceConfiguration.SubnetId;
+            get
+            {
+                return NetworkInterfaceConfiguration is null ? default : NetworkInterfaceConfiguration.SubnetId;
+            }
             set
             {
                 if (NetworkInterfaceConfiguration is null)
+                {
                     NetworkInterfaceConfiguration = new NginxNetworkInterfaceConfiguration();
+                }
                 NetworkInterfaceConfiguration.SubnetId = value;
             }
         }

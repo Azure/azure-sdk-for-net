@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AgriculturePlatform
 {
     /// <summary>
     /// A class representing a collection of <see cref="AgricultureServiceResource"/> and their operations.
-    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of the parent resource.
+    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AgricultureServiceCollection : ArmCollection, IEnumerable<AgricultureServiceResource>, IAsyncEnumerable<AgricultureServiceResource>
     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> AgriService_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> AgriService_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> AgriService_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> AgriService_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary> List AgriServiceResource resources by resource group. </summary>
+        /// <summary>
+        /// List AgriServiceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgriService_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgricultureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgricultureServiceResource(Client, data));
         }
 
-        /// <summary> List AgriServiceResource resources by resource group. </summary>
+        /// <summary>
+        /// List AgriServiceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgriService_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgricultureServiceResource> GetAll(CancellationToken cancellationToken = default)
@@ -294,7 +326,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         }
 
         /// <summary>
-        /// Get a AgriServiceResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +334,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> AgriService_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         }
 
         /// <summary>
-        /// Get a AgriServiceResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +391,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> AgriService_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         }
 
         /// <summary>
-        /// Get a AgriServiceResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,7 +448,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> AgriService_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         }
 
         /// <summary>
-        /// Get a AgriServiceResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,7 +509,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> AgriService_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary>
-    /// Renamed to PostActionCallbackApprovalStatus.
+    /// PostActionCallbackApprovalStatus.
     /// </summary>
-    [CodeGenModel("ApprovalCallbackRequestApprovalStatus")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("ApprovalCallbackRequestApprovalStatus")]
     public readonly partial struct PostActionCallbackApprovalStatus
     {
     }

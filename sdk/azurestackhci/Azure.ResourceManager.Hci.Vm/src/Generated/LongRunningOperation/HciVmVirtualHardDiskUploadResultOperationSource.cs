@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Vm.Models;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    internal class HciVmVirtualHardDiskUploadResultOperationSource : IOperationSource<HciVmVirtualHardDiskUploadResult>
+    /// <summary></summary>
+    internal partial class HciVmVirtualHardDiskUploadResultOperationSource : IOperationSource<HciVmVirtualHardDiskUploadResult>
     {
-        HciVmVirtualHardDiskUploadResult IOperationSource<HciVmVirtualHardDiskUploadResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal HciVmVirtualHardDiskUploadResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return HciVmVirtualHardDiskUploadResult.DeserializeHciVmVirtualHardDiskUploadResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        HciVmVirtualHardDiskUploadResult IOperationSource<HciVmVirtualHardDiskUploadResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciVmVirtualHardDiskUploadResult result = HciVmVirtualHardDiskUploadResult.DeserializeHciVmVirtualHardDiskUploadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciVmVirtualHardDiskUploadResult> IOperationSource<HciVmVirtualHardDiskUploadResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return HciVmVirtualHardDiskUploadResult.DeserializeHciVmVirtualHardDiskUploadResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciVmVirtualHardDiskUploadResult result = HciVmVirtualHardDiskUploadResult.DeserializeHciVmVirtualHardDiskUploadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

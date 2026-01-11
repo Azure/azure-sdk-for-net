@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Access profile for managed cluster API server. </summary>
+    /// <summary>
+    /// Access profile for managed cluster API server.
+    /// Serialized Name: ManagedClusterAPIServerAccessProfile
+    /// </summary>
     public partial class ManagedClusterApiServerAccessProfile
     {
         /// <summary>
@@ -52,36 +56,88 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterApiServerAccessProfile"/>. </summary>
-        /// <param name="authorizedIPRanges"> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </param>
-        /// <param name="enablePrivateCluster"> For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters). </param>
-        /// <param name="privateDnsZone"> The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </param>
-        /// <param name="enablePrivateClusterPublicFqdn"> Whether to create additional public FQDN for private cluster or not. </param>
-        /// <param name="disableRunCommand"> Whether to disable run command for the cluster or not. </param>
+        /// <param name="authorizedIPRanges">
+        /// The IP ranges authorized to access the Kubernetes API server. IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges).
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.authorizedIPRanges
+        /// </param>
+        /// <param name="enablePrivateCluster">
+        /// Whether to create the cluster as a private cluster or not. For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters).
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.enablePrivateCluster
+        /// </param>
+        /// <param name="privateDnsZone">
+        /// The private DNS zone mode for the cluster. The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.privateDNSZone
+        /// </param>
+        /// <param name="enablePrivateClusterPublicFqdn">
+        /// Whether to create additional public FQDN for private cluster or not.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.enablePrivateClusterPublicFQDN
+        /// </param>
+        /// <param name="disableRunCommand">
+        /// Whether to disable run command for the cluster or not.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.disableRunCommand
+        /// </param>
+        /// <param name="enableVnetIntegration">
+        /// Whether to enable apiserver vnet integration for the cluster or not. See aka.ms/AksVnetIntegration for more details.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.enableVnetIntegration
+        /// </param>
+        /// <param name="subnetId">
+        /// The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new cluster with BYO Vnet, or when updating an existing cluster to enable apiserver vnet integration.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.subnetId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
             PrivateDnsZone = privateDnsZone;
             EnablePrivateClusterPublicFqdn = enablePrivateClusterPublicFqdn;
             DisableRunCommand = disableRunCommand;
+            EnableVnetIntegration = enableVnetIntegration;
+            SubnetId = subnetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </summary>
+        /// <summary>
+        /// The IP ranges authorized to access the Kubernetes API server. IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges).
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.authorizedIPRanges
+        /// </summary>
         [WirePath("authorizedIPRanges")]
         public IList<string> AuthorizedIPRanges { get; }
-        /// <summary> For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters). </summary>
+        /// <summary>
+        /// Whether to create the cluster as a private cluster or not. For more details, see [Creating a private AKS cluster](https://docs.microsoft.com/azure/aks/private-clusters).
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.enablePrivateCluster
+        /// </summary>
         [WirePath("enablePrivateCluster")]
         public bool? EnablePrivateCluster { get; set; }
-        /// <summary> The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </summary>
+        /// <summary>
+        /// The private DNS zone mode for the cluster. The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.privateDNSZone
+        /// </summary>
         [WirePath("privateDNSZone")]
         public string PrivateDnsZone { get; set; }
-        /// <summary> Whether to create additional public FQDN for private cluster or not. </summary>
+        /// <summary>
+        /// Whether to create additional public FQDN for private cluster or not.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.enablePrivateClusterPublicFQDN
+        /// </summary>
         [WirePath("enablePrivateClusterPublicFQDN")]
         public bool? EnablePrivateClusterPublicFqdn { get; set; }
-        /// <summary> Whether to disable run command for the cluster or not. </summary>
+        /// <summary>
+        /// Whether to disable run command for the cluster or not.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.disableRunCommand
+        /// </summary>
         [WirePath("disableRunCommand")]
         public bool? DisableRunCommand { get; set; }
+        /// <summary>
+        /// Whether to enable apiserver vnet integration for the cluster or not. See aka.ms/AksVnetIntegration for more details.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.enableVnetIntegration
+        /// </summary>
+        [WirePath("enableVnetIntegration")]
+        public bool? EnableVnetIntegration { get; set; }
+        /// <summary>
+        /// The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new cluster with BYO Vnet, or when updating an existing cluster to enable apiserver vnet integration.
+        /// Serialized Name: ManagedClusterAPIServerAccessProfile.subnetId
+        /// </summary>
+        [WirePath("subnetId")]
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

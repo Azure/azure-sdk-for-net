@@ -563,6 +563,7 @@
           "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Spread",
       "apiVersions": [],
@@ -1357,9 +1358,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Model.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Spread.Model",
           "apiVersions": [],
@@ -2412,9 +2414,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Alias.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Spread.Alias",
           "apiVersions": [],

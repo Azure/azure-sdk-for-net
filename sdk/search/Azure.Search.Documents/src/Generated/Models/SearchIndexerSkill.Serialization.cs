@@ -123,6 +123,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill": return EntityRecognitionSkillV3.DeserializeEntityRecognitionSkillV3(element, options);
                     case "#Microsoft.Skills.Text.V3.SentimentSkill": return SentimentSkillV3.DeserializeSentimentSkillV3(element, options);
                     case "#Microsoft.Skills.Util.ConditionalSkill": return ConditionalSkill.DeserializeConditionalSkill(element, options);
+                    case "#Microsoft.Skills.Util.ContentUnderstandingSkill": return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
                     case "#Microsoft.Skills.Util.DocumentExtractionSkill": return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element, options);
                     case "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill": return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
                     case "#Microsoft.Skills.Util.ShaperSkill": return ShaperSkill.DeserializeShaperSkill(element, options);

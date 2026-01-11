@@ -22,20 +22,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="date"> Monthly date string, format is yyyy-MM-dd. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroupId"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="date"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupId"/> is null. </exception>
-        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, ResourceIdentifier resourceGroupId) : base(latestMonthEmissions, previousMonthEmissions)
+        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, ResourceIdentifier resourceGroupId) : base(CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData, latestMonthEmissions, previousMonthEmissions)
         {
-            Argument.AssertNotNull(itemName, nameof(itemName));
-            Argument.AssertNotNull(date, nameof(date));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroupId, nameof(resourceGroupId));
-
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
             SubscriptionId = subscriptionId;
             ResourceGroupId = resourceGroupId;
-            DataType = CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>. </summary>
@@ -44,35 +37,33 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemName"> It's resource group name for ResourceGroup category. </param>
         /// <param name="categoryType"> ResourceGroup Item category. </param>
         /// <param name="date"> Monthly date string, format is yyyy-MM-dd. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroupId"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
-        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, ResourceIdentifier resourceGroupId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, ResourceIdentifier resourceGroupId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, additionalBinaryDataProperties)
         {
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
             SubscriptionId = subscriptionId;
             ResourceGroupId = resourceGroupId;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/> for deserialization. </summary>
-        internal ResourceGroupCarbonEmissionTopItemMonthlySummary()
-        {
         }
 
         /// <summary> It's resource group name for ResourceGroup category. </summary>
         public string ItemName { get; }
+
         /// <summary> ResourceGroup Item category. </summary>
         public CarbonEmissionCategoryType CategoryType { get; }
+
         /// <summary> Monthly date string, format is yyyy-MM-dd. </summary>
         public string Date { get; }
+
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </summary>
         public ResourceIdentifier ResourceGroupId { get; }
     }

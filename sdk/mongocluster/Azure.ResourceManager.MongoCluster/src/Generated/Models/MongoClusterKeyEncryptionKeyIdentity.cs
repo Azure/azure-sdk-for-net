@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
     /// <summary> The identity used for key encryption key. </summary>
     public partial class MongoClusterKeyEncryptionKeyIdentity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterKeyEncryptionKeyIdentity"/>. </summary>
         public MongoClusterKeyEncryptionKeyIdentity()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="MongoClusterKeyEncryptionKeyIdentity"/>. </summary>
         /// <param name="identityType"> The type of identity. Only 'UserAssignedIdentity' is supported. </param>
         /// <param name="userAssignedIdentityResourceId"> The user assigned identity resource id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterKeyEncryptionKeyIdentity(MongoClusterKeyEncryptionKeyIdentityType? identityType, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MongoClusterKeyEncryptionKeyIdentity(MongoClusterKeyEncryptionKeyIdentityType? identityType, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of identity. Only 'UserAssignedIdentity' is supported. </summary>
         public MongoClusterKeyEncryptionKeyIdentityType? IdentityType { get; set; }
+
         /// <summary> The user assigned identity resource id. </summary>
         public string UserAssignedIdentityResourceId { get; set; }
     }

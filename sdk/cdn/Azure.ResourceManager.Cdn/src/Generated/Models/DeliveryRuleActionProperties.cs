@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for delivery rule actions
-    /// Serialized Name: DeliveryRuleActionParameters
     /// Please note <see cref="DeliveryRuleActionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="RouteConfigurationOverrideActionProperties"/>, <see cref="UriRedirectActionProperties"/>, <see cref="UriRewriteActionProperties"/> and <see cref="UriSigningActionProperties"/>.
     /// </summary>
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeliveryRuleActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: DeliveryRuleActionParameters.typeName. </summary>
+        /// <summary> Gets or sets the type name. </summary>
         internal DeliveryRuleActionParametersType TypeName { get; set; }
     }
 }

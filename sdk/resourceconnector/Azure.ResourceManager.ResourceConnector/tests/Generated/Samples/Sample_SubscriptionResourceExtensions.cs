@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetResourceConnectorAppliances_ListAppliancesBySubscription()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesListBySubscription.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/AppliancesListBySubscription.json
             // this example is just showing the usage of "Appliances_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetTelemetryConfigAppliance_GetTelemetryConfigAppliance()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/TelemetryConfig.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/TelemetryConfig.json
             // this example is just showing the usage of "Appliances_GetTelemetryConfig" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

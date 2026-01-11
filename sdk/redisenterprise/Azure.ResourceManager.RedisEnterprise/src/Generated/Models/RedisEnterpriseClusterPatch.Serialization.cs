@@ -109,6 +109,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -159,6 +171,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseClusterResourceState? resourceState = default;
             string redisVersion = default;
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
+            RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,6 +295,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                publicNetworkAccess = null;
+                                continue;
+                            }
+                            publicNetworkAccess = new RedisEnterprisePublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -304,6 +327,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 resourceState,
                 redisVersion,
                 privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 

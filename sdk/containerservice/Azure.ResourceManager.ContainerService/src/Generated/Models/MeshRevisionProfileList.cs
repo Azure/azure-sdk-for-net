@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Holds an array of MeshRevisionsProfiles. </summary>
+    /// <summary>
+    /// Holds an array of MeshRevisionsProfiles
+    /// Serialized Name: MeshRevisionProfileList
+    /// </summary>
     internal partial class MeshRevisionProfileList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshRevisionProfileList"/>. </summary>
-        /// <param name="value"> Array of service mesh add-on revision profiles for all supported mesh modes. </param>
-        /// <param name="nextLink"> The URL to get the next set of mesh revision profile. </param>
+        /// <param name="value">
+        /// Array of service mesh add-on revision profiles for all supported mesh modes.
+        /// Serialized Name: MeshRevisionProfileList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of mesh revision profile.
+        /// Serialized Name: MeshRevisionProfileList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshRevisionProfileList(IReadOnlyList<MeshRevisionProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of service mesh add-on revision profiles for all supported mesh modes. </summary>
+        /// <summary>
+        /// Array of service mesh add-on revision profiles for all supported mesh modes.
+        /// Serialized Name: MeshRevisionProfileList.value
+        /// </summary>
         public IReadOnlyList<MeshRevisionProfileData> Value { get; }
-        /// <summary> The URL to get the next set of mesh revision profile. </summary>
+        /// <summary>
+        /// The URL to get the next set of mesh revision profile.
+        /// Serialized Name: MeshRevisionProfileList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

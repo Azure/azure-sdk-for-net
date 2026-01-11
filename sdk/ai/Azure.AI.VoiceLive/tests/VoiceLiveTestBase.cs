@@ -3,17 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -36,36 +33,6 @@ namespace Azure.AI.VoiceLive.Tests
         public VoiceLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             // Force Live mode - WebSocket tests cannot be recorded
-        }
-
-        [SetUp]
-        public virtual void Setup()
-        {
-            var root = VoiceLiveTestEnvironment.RepositoryRoot;
-            var assetsPath = base.AssetsJsonPath;
-
-            var assetsJson = JsonDocument.Parse(File.ReadAllText(assetsPath));
-
-            var tag = assetsJson.RootElement.GetProperty("Tag");
-
-            var tagString = tag.ToString();
-
-            string crumb = string.Empty;
-
-            foreach (var breadcrumb in Directory.EnumerateFiles(Path.Combine(root, ".assets", "breadcrumb")))
-            {
-                var contents = File.ReadAllText(breadcrumb);
-                var splitContents = contents.Trim().Split(';');
-                if (3 == splitContents.Length && splitContents[2] == tagString)
-                {
-                    crumb = splitContents[1];
-                    break;
-                }
-            }
-
-            var assetsContentPath = Path.Combine(root, ".assets", crumb, "net", "sdk", "ai", "Azure.AI.VoiceLive");
-
-            AudioPath = Path.Combine(assetsContentPath, "audio");
         }
 
         [TearDown]
@@ -115,16 +82,36 @@ namespace Azure.AI.VoiceLive.Tests
             return data;
         }
 
+        protected async Task<byte[]> GenerateTestAudio(string text)
+        {
+            var of = SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm;
+            var sc = SpeechConfig.FromEndpoint(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            sc.SetSpeechSynthesisOutputFormat(of);
+
+            using (var outputStream = AudioOutputStream.CreatePullStream())
+            using (var ac = AudioConfig.FromStreamOutput(outputStream))
+            using (var speechSynthesizer = new SpeechSynthesizer(sc, ac))
+            {
+                var result = await speechSynthesizer.SpeakTextAsync(text).ConfigureAwait(false);
+                if (result.Reason != ResultReason.SynthesizingAudioCompleted)
+                {
+                    throw new Exception($"Error {result.Reason} was not synthesis completed");
+                }
+
+                return result.AudioData;
+            }
+        }
+
         /// <summary>
         /// Sends audio and returns once the audio has been sent.
         /// </summary>
         protected async Task SendAudioAsync(
             VoiceLiveSession session,
-            string audioFile)
+            string textToSend)
         {
-            var audio = LoadTestAudio(audioFile);
-            await session.SendInputAudioAsync(audio);
-            TestContext.WriteLine($"Sent audio file: {audioFile}");
+            var audio = await GenerateTestAudio(textToSend).ConfigureAwait(false);
+            await session.SendInputAudioAsync(audio).ConfigureAwait(false);
+            TestContext.WriteLine($"Sent audio for: {textToSend}");
         }
 
         protected void EnsureEventIdsUnique(SessionUpdate sessionUpdate)

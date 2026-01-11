@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Trusted access role definition. </summary>
+    /// <summary>
+    /// Trusted access role definition.
+    /// Serialized Name: TrustedAccessRole
+    /// </summary>
     public partial class ContainerServiceTrustedAccessRole
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRole"/>. </summary>
-        /// <param name="sourceResourceType"> Resource type of Azure resource. </param>
-        /// <param name="name"> Name of role, name is unique under a source resource type. </param>
-        /// <param name="rules"> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </param>
+        /// <param name="sourceResourceType">
+        /// Resource type of Azure resource
+        /// Serialized Name: TrustedAccessRole.sourceResourceType
+        /// </param>
+        /// <param name="name">
+        /// Name of role, name is unique under a source resource type
+        /// Serialized Name: TrustedAccessRole.name
+        /// </param>
+        /// <param name="rules">
+        /// List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole).
+        /// Serialized Name: TrustedAccessRole.rules
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceTrustedAccessRole(string sourceResourceType, string name, IReadOnlyList<ContainerServiceTrustedAccessRoleRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource type of Azure resource. </summary>
+        /// <summary>
+        /// Resource type of Azure resource
+        /// Serialized Name: TrustedAccessRole.sourceResourceType
+        /// </summary>
         [WirePath("sourceResourceType")]
         public string SourceResourceType { get; }
-        /// <summary> Name of role, name is unique under a source resource type. </summary>
+        /// <summary>
+        /// Name of role, name is unique under a source resource type
+        /// Serialized Name: TrustedAccessRole.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </summary>
+        /// <summary>
+        /// List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole).
+        /// Serialized Name: TrustedAccessRole.rules
+        /// </summary>
         [WirePath("rules")]
         public IReadOnlyList<ContainerServiceTrustedAccessRoleRule> Rules { get; }
     }

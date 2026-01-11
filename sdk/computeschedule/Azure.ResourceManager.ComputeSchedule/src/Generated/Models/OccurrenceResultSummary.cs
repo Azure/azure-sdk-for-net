@@ -14,46 +14,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The summarized provisioning result of an occurrence. </summary>
     public partial class OccurrenceResultSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/>. </summary>
         /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
         /// <param name="statuses"> The summarized status of the resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statuses"/> is null. </exception>
         internal OccurrenceResultSummary(int total, IEnumerable<ResourceResultSummary> statuses)
         {
-            Argument.AssertNotNull(statuses, nameof(statuses));
-
             Total = total;
             Statuses = statuses.ToList();
         }
@@ -61,22 +29,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/>. </summary>
         /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
         /// <param name="statuses"> The summarized status of the resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResultSummary(int total, IReadOnlyList<ResourceResultSummary> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OccurrenceResultSummary(int total, IList<ResourceResultSummary> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Total = total;
             Statuses = statuses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/> for deserialization. </summary>
-        internal OccurrenceResultSummary()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The total number of resources that the occurrence was supposed to act on. </summary>
         public int Total { get; }
+
         /// <summary> The summarized status of the resources. </summary>
-        public IReadOnlyList<ResourceResultSummary> Statuses { get; }
+        public IList<ResourceResultSummary> Statuses { get; }
     }
 }
