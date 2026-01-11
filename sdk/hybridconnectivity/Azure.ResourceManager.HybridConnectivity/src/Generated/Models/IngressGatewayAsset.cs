@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> The ingress gateway access credentials. </summary>
     public partial class IngressGatewayAsset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngressGatewayAsset"/>. </summary>
         internal IngressGatewayAsset()
@@ -51,47 +22,83 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IngressGatewayAsset"/>. </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
-        /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
-        /// <param name="accessKey"> Access key for hybrid connection. </param>
-        /// <param name="expiresOn"> The expiration of access key in unix time. </param>
-        /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
-        /// <param name="hostname"> The ingress hostname. </param>
-        /// <param name="serverId"> The arc ingress gateway server app id. </param>
-        /// <param name="tenantId"> The target resource home tenant id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IngressGatewayAsset(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken, string hostname, Guid? serverId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="relay"> Azure relay hybrid connection access properties. </param>
+        /// <param name="ingress"> Ingress gateway profile. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IngressGatewayAsset(RelayNamespaceAccessProperties relay, IngressProfileProperties ingress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NamespaceName = namespaceName;
-            NamespaceNameSuffix = namespaceNameSuffix;
-            HybridConnectionName = hybridConnectionName;
-            AccessKey = accessKey;
-            ExpiresOn = expiresOn;
-            ServiceConfigurationToken = serviceConfigurationToken;
-            Hostname = hostname;
-            ServerId = serverId;
-            TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Relay = relay;
+            Ingress = ingress;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Azure relay hybrid connection access properties. </summary>
+        internal RelayNamespaceAccessProperties Relay { get; }
+
+        /// <summary> Ingress gateway profile. </summary>
+        internal IngressProfileProperties Ingress { get; }
+
         /// <summary> The namespace name. </summary>
-        public string NamespaceName { get; }
+        public string NamespaceName
+        {
+            get
+            {
+                return Relay.NamespaceName;
+            }
+        }
+
         /// <summary> The suffix domain name of relay namespace. </summary>
-        public string NamespaceNameSuffix { get; }
+        public string NamespaceNameSuffix
+        {
+            get
+            {
+                return Relay.NamespaceNameSuffix;
+            }
+        }
+
         /// <summary> Azure Relay hybrid connection name for the resource. </summary>
-        public string HybridConnectionName { get; }
+        public string HybridConnectionName
+        {
+            get
+            {
+                return Relay.HybridConnectionName;
+            }
+        }
+
         /// <summary> Access key for hybrid connection. </summary>
-        public string AccessKey { get; }
+        public string AccessKey
+        {
+            get
+            {
+                return Relay.AccessKey;
+            }
+        }
+
         /// <summary> The expiration of access key in unix time. </summary>
-        public long? ExpiresOn { get; }
+        public long? ExpiresOn
+        {
+            get
+            {
+                return Relay.ExpiresOn;
+            }
+        }
+
         /// <summary> The token to access the enabled service. </summary>
-        public string ServiceConfigurationToken { get; }
+        public string ServiceConfigurationToken
+        {
+            get
+            {
+                return Relay.ServiceConfigurationToken;
+            }
+        }
+
         /// <summary> The ingress hostname. </summary>
-        public string Hostname { get; }
-        /// <summary> The arc ingress gateway server app id. </summary>
-        public Guid? ServerId { get; }
-        /// <summary> The target resource home tenant id. </summary>
-        public Guid? TenantId { get; }
+        public string Hostname
+        {
+            get
+            {
+                return Ingress.Hostname;
+            }
+        }
     }
 }

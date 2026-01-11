@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    public partial class HybridConnectivityEndpointResource : IJsonModel<HybridConnectivityEndpointData>
+    /// <summary></summary>
+    public partial class HybridConnectivityEndpointResource : ArmResource, IJsonModel<HybridConnectivityEndpointData>
     {
-        private static HybridConnectivityEndpointData s_dataDeserializationInstance;
-        private static HybridConnectivityEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridConnectivityEndpointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridConnectivityEndpointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridConnectivityEndpointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridConnectivityEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityEndpointData>)Data).Write(writer, options);
 
-        HybridConnectivityEndpointData IJsonModel<HybridConnectivityEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridConnectivityEndpointData IJsonModel<HybridConnectivityEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridConnectivityEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridConnectivityEndpointData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridConnectivityEndpointData IPersistableModel<HybridConnectivityEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectivityEndpointData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        string IPersistableModel<HybridConnectivityEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectivityEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridConnectivityEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
