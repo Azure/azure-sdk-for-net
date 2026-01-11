@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockablePowerBIDedicatedArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePowerBIDedicatedArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePowerBIDedicatedArmClient for mocking. </summary>
         protected MockablePowerBIDedicatedArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePowerBIDedicatedArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePowerBIDedicatedArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePowerBIDedicatedArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockablePowerBIDedicatedArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DedicatedCapacityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DedicatedCapacityResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedCapacityResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DedicatedCapacityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DedicatedCapacityResource"/> object. </returns>
         public virtual DedicatedCapacityResource GetDedicatedCapacityResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             return new DedicatedCapacityResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoScaleVCoreResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoScaleVCoreResource.CreateResourceIdentifier" /> to create an <see cref="AutoScaleVCoreResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AutoScaleVCoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AutoScaleVCoreResource"/> object. </returns>
         public virtual AutoScaleVCoreResource GetAutoScaleVCoreResource(ResourceIdentifier id)

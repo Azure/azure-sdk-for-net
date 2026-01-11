@@ -8,18 +8,19 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    /// <summary>
-    /// A class representing the AutoScaleVCore data model.
-    /// Represents an instance of an auto scale v-core resource.
-    /// </summary>
-    public partial class AutoScaleVCoreData : PowerBIDedicatedResourceData
+    /// <summary> Represents an instance of an auto scale v-core resource. </summary>
+    public partial class AutoScaleVCoreData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/>. </summary>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AutoScaleVCoreData(AzureLocation location, AutoScaleVCoreSku sku) : base(location)
@@ -30,37 +31,69 @@ namespace Azure.ResourceManager.PowerBIDedicated
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/>. </summary>
-        /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
-        /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
-        /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
-        /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of an auto scale v-core resource. </param>
         /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
-        /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
-        /// <param name="capacityObjectId"> The object ID of the capacity resource associated with the auto scale v-core resource. </param>
-        /// <param name="provisioningState"> The current deployment state of an auto scale v-core resource. The provisioningState is to indicate states for resource provisioning. </param>
-        internal AutoScaleVCoreData(string id, string name, string resourceType, AzureLocation location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoScaleVCoreSku sku, int? capacityLimit, string capacityObjectId, VCoreProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData)
+        internal AutoScaleVCoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AutoScaleVCoreProperties properties, AutoScaleVCoreSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            CapacityLimit = capacityLimit;
-            CapacityObjectId = capacityObjectId;
-            ProvisioningState = provisioningState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/> for deserialization. </summary>
-        internal AutoScaleVCoreData()
-        {
-        }
+        /// <summary> Properties of an auto scale v-core resource. </summary>
+        internal AutoScaleVCoreProperties Properties { get; set; }
 
         /// <summary> The SKU of the auto scale v-core resource. </summary>
         public AutoScaleVCoreSku Sku { get; set; }
+
         /// <summary> The maximum capacity of an auto scale v-core resource. </summary>
-        public int? CapacityLimit { get; set; }
+        public int? CapacityLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoScaleVCoreProperties();
+                }
+                Properties.CapacityLimit = value.Value;
+            }
+        }
+
         /// <summary> The object ID of the capacity resource associated with the auto scale v-core resource. </summary>
-        public string CapacityObjectId { get; set; }
+        public string CapacityObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoScaleVCoreProperties();
+                }
+                Properties.CapacityObjectId = value;
+            }
+        }
+
         /// <summary> The current deployment state of an auto scale v-core resource. The provisioningState is to indicate states for resource provisioning. </summary>
-        public VCoreProvisioningState? ProvisioningState { get; }
+        public VCoreProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
