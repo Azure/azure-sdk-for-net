@@ -13,111 +13,197 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabArtifactSource data model.
-    /// Properties of an artifact source.
-    /// </summary>
+    /// <summary> Properties of an artifact source. </summary>
     public partial class DevTestLabArtifactSourceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabArtifactSourceData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="displayName"> The artifact source's display name. </param>
-        /// <param name="uri"> The artifact source's URI. </param>
-        /// <param name="sourceType"> The artifact source's type. </param>
-        /// <param name="folderPath"> The folder containing artifacts. </param>
-        /// <param name="armTemplateFolderPath"> The folder containing Azure Resource Manager templates. </param>
-        /// <param name="branchRef"> The artifact source's branch reference. </param>
-        /// <param name="securityToken"> The security token to authenticate to the artifact source. </param>
-        /// <param name="status"> Indicates if the artifact source is enabled (values: Enabled, Disabled). </param>
-        /// <param name="createdOn"> The artifact source's creation date. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ArtifactSourceProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            DisplayName = displayName;
-            Uri = uri;
-            SourceType = sourceType;
-            FolderPath = folderPath;
-            ArmTemplateFolderPath = armTemplateFolderPath;
-            BranchRef = branchRef;
-            SecurityToken = securityToken;
-            Status = status;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceData"/> for deserialization. </summary>
-        internal DevTestLabArtifactSourceData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal ArtifactSourceProperties Properties { get; set; }
 
         /// <summary> The artifact source's display name. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> The artifact source's URI. </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
+
         /// <summary> The artifact source's type. </summary>
-        public DevTestLabSourceControlType? SourceType { get; set; }
+        public DevTestLabSourceControlType? SourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.SourceType = value.Value;
+            }
+        }
+
         /// <summary> The folder containing artifacts. </summary>
-        public string FolderPath { get; set; }
+        public string FolderPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FolderPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.FolderPath = value;
+            }
+        }
+
         /// <summary> The folder containing Azure Resource Manager templates. </summary>
-        public string ArmTemplateFolderPath { get; set; }
+        public string ArmTemplateFolderPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArmTemplateFolderPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.ArmTemplateFolderPath = value;
+            }
+        }
+
         /// <summary> The artifact source's branch reference. </summary>
-        public string BranchRef { get; set; }
+        public string BranchRef
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BranchRef;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.BranchRef = value;
+            }
+        }
+
         /// <summary> The security token to authenticate to the artifact source. </summary>
-        public string SecurityToken { get; set; }
+        public string SecurityToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityToken;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.SecurityToken = value;
+            }
+        }
+
         /// <summary> Indicates if the artifact source is enabled (values: Enabled, Disabled). </summary>
-        public DevTestLabEnableStatus? Status { get; set; }
+        public DevTestLabEnableStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArtifactSourceProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> The artifact source's creation date. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
     }
 }

@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A Class representing a DevTestLabArtifact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArtifactResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabArtifactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource"/> using the GetDevTestLabArtifact method.
+    /// A class representing a DevTestLabArtifact along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArtifactResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabArtifactSourceResource"/> using the GetDevTestLabArtifacts method.
     /// </summary>
     public partial class DevTestLabArtifactResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DevTestLabArtifactResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="labName"> The labName. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _devTestLabArtifactArtifactsClientDiagnostics;
-        private readonly ArtifactsRestOperations _devTestLabArtifactArtifactsRestClient;
+        private readonly ClientDiagnostics _artifactsClientDiagnostics;
+        private readonly Artifacts _artifactsRestClient;
         private readonly DevTestLabArtifactData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources/artifacts";
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevTestLabArtifactResource for mocking. </summary>
         protected DevTestLabArtifactResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabArtifactResource(ArmClient client, DevTestLabArtifactData data) : this(client, data.Id)
@@ -56,72 +44,95 @@ namespace Azure.ResourceManager.DevTestLabs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevTestLabArtifactResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devTestLabArtifactArtifactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string devTestLabArtifactArtifactsApiVersion);
-            _devTestLabArtifactArtifactsRestClient = new ArtifactsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabArtifactArtifactsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string devTestLabArtifactApiVersion);
+            _artifactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
+            _artifactsRestClient = new Artifacts(_artifactsClientDiagnostics, Pipeline, Endpoint, devTestLabArtifactApiVersion ?? "2018-09-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DevTestLabArtifactData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get artifact.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifacts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevTestLabArtifactResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabArtifactResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabArtifactArtifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.Get");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.Get");
             scope.Start();
             try
             {
-                var response = await _devTestLabArtifactArtifactsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabArtifactData> response = Response.FromValue(DevTestLabArtifactData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,34 +146,42 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get artifact.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifacts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevTestLabArtifactResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabArtifactResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabArtifactArtifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.Get");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.Get");
             scope.Start();
             try
             {
-                var response = _devTestLabArtifactArtifactsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabArtifactData> response = Response.FromValue(DevTestLabArtifactData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabArtifactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -176,20 +195,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Generates an ARM template for the given artifact, uploads the required files to a storage account, and validates the generated artifact.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifacts_GenerateArmTemplate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_GenerateArmTemplate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,11 +219,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabArtifactArtifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.GenerateArmTemplate");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.GenerateArmTemplate");
             scope.Start();
             try
             {
-                var response = await _devTestLabArtifactArtifactsRestClient.GenerateArmTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGenerateArmTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DevTestLabArtifactGenerateArmTemplateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabArmTemplateInfo> response = Response.FromValue(DevTestLabArmTemplateInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -218,20 +247,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Generates an ARM template for the given artifact, uploads the required files to a storage account, and validates the generated artifact.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Artifacts_GenerateArmTemplate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_GenerateArmTemplate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabArtifactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevTestLabArtifactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,11 +271,21 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _devTestLabArtifactArtifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.GenerateArmTemplate");
+            using DiagnosticScope scope = _artifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.GenerateArmTemplate");
             scope.Start();
             try
             {
-                var response = _devTestLabArtifactArtifactsRestClient.GenerateArmTemplate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactsRestClient.CreateGenerateArmTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DevTestLabArtifactGenerateArmTemplateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabArmTemplateInfo> response = Response.FromValue(DevTestLabArmTemplateInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

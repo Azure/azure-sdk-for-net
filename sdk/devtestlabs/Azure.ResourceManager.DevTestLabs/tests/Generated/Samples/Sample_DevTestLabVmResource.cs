@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachinesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_Get.json
+            // this example is just showing the usage of "LabVirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualMachinesDelete()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Delete.json
-            // this example is just showing the usage of "VirtualMachines_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_Delete.json
+            // this example is just showing the usage of "LabVirtualMachine_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VirtualMachinesUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Update.json
-            // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_Update.json
+            // this example is just showing the usage of "LabVirtualMachine_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task AddDataDisk_VirtualMachinesAddDataDisk()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_AddDataDisk.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_AddDataDisk.json
             // this example is just showing the usage of "VirtualMachines_AddDataDisk" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ApplyArtifacts_VirtualMachinesApplyArtifacts()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_ApplyArtifacts.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_ApplyArtifacts.json
             // this example is just showing the usage of "VirtualMachines_ApplyArtifacts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task Claim_VirtualMachinesClaim()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Claim.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_Claim.json
             // this example is just showing the usage of "VirtualMachines_Claim" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +207,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task DetachDataDisk_VirtualMachinesDetachDataDisk()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_DetachDataDisk.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_DetachDataDisk.json
             // this example is just showing the usage of "VirtualMachines_DetachDataDisk" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,7 +238,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task GetRdpFileContents_VirtualMachinesGetRdpFileContents()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_GetRdpFileContents.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_GetRdpFileContents.json
             // this example is just showing the usage of "VirtualMachines_GetRdpFileContents" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -265,7 +265,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicableSchedules_VirtualMachinesListApplicableSchedules()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_ListApplicableSchedules.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_ListApplicableSchedules.json
             // this example is just showing the usage of "VirtualMachines_ListApplicableSchedules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -292,7 +292,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_VirtualMachinesRedeploy()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Redeploy.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_Redeploy.json
             // this example is just showing the usage of "VirtualMachines_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -319,7 +319,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task Resize_VirtualMachinesResize()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Resize.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_Resize.json
             // this example is just showing the usage of "VirtualMachines_Resize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -350,7 +350,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_VirtualMachinesRestart()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Restart.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_Restart.json
             // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -377,7 +377,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task Start_VirtualMachinesStart()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Start.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_Start.json
             // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -404,7 +404,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task Stop_VirtualMachinesStop()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Stop.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_Stop.json
             // this example is just showing the usage of "VirtualMachines_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -431,7 +431,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task TransferDisks_VirtualMachinesTransferDisks()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_TransferDisks.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_TransferDisks.json
             // this example is just showing the usage of "VirtualMachines_TransferDisks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -458,7 +458,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
         [Ignore("Only validating compilation of examples")]
         public async Task UnClaim_VirtualMachinesUnClaim()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_UnClaim.json
+            // Generated from example definition: 2018-09-15/VirtualMachines_UnClaim.json
             // this example is just showing the usage of "VirtualMachines_UnClaim" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

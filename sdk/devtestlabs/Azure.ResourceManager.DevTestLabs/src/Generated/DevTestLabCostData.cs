@@ -13,115 +13,172 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary>
-    /// A class representing the DevTestLabCost data model.
-    /// A cost item.
-    /// </summary>
+    /// <summary> A cost item. </summary>
     public partial class DevTestLabCostData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabCostData(AzureLocation location) : base(location)
         {
-            LabCostDetails = new ChangeTrackingList<DevTestLabCostDetails>();
-            ResourceCosts = new ChangeTrackingList<DevTestLabResourceCost>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="targetCost"> The target cost properties. </param>
-        /// <param name="labCostSummary"> The lab cost summary component of the cost data. </param>
-        /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
-        /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
-        /// <param name="currencyCode"> The currency code of the cost. </param>
-        /// <param name="startOn"> The start time of the cost data. </param>
-        /// <param name="endOn"> The end time of the cost data. </param>
-        /// <param name="createdOn"> The creation date of the cost. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, LabCostProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
-            TargetCost = targetCost;
-            LabCostSummary = labCostSummary;
-            LabCostDetails = labCostDetails;
-            ResourceCosts = resourceCosts;
-            CurrencyCode = currencyCode;
-            StartOn = startOn;
-            EndOn = endOn;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/> for deserialization. </summary>
-        internal DevTestLabCostData()
-        {
-        }
+        /// <summary> The properties of the resource. </summary>
+        internal LabCostProperties Properties { get; set; }
 
         /// <summary> The target cost properties. </summary>
-        public DevTestLabTargetCost TargetCost { get; set; }
-        /// <summary> The lab cost summary component of the cost data. </summary>
-        internal LabCostSummaryProperties LabCostSummary { get; }
-        /// <summary> The cost component of the cost item. </summary>
-        public double? EstimatedLabCost
+        public DevTestLabTargetCost TargetCost
         {
-            get => LabCostSummary?.EstimatedLabCost;
+            get
+            {
+                return Properties is null ? default : Properties.TargetCost;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                Properties.TargetCost = value;
+            }
         }
 
         /// <summary> The lab cost details component of the cost data. </summary>
-        public IReadOnlyList<DevTestLabCostDetails> LabCostDetails { get; }
+        public IReadOnlyList<DevTestLabCostDetails> LabCostDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                return Properties.LabCostDetails;
+            }
+        }
+
         /// <summary> The resource cost component of the cost data. </summary>
-        public IReadOnlyList<DevTestLabResourceCost> ResourceCosts { get; }
+        public IReadOnlyList<DevTestLabResourceCost> ResourceCosts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                return Properties.ResourceCosts;
+            }
+        }
+
         /// <summary> The currency code of the cost. </summary>
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrencyCode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                Properties.CurrencyCode = value;
+            }
+        }
+
         /// <summary> The start time of the cost data. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                Properties.StartOn = value.Value;
+            }
+        }
+
         /// <summary> The end time of the cost data. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                Properties.EndOn = value.Value;
+            }
+        }
+
         /// <summary> The creation date of the cost. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LabCostProperties();
+                }
+                Properties.CreatedOn = value.Value;
+            }
+        }
+
         /// <summary> The provisioning status of the resource. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique immutable identifier of a resource (Guid). </summary>
-        public Guid? UniqueIdentifier { get; }
+        public Guid? UniqueIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueIdentifier;
+            }
+        }
+
+        /// <summary> The cost component of the cost item. </summary>
+        public double? EstimatedLabCost
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EstimatedLabCost;
+            }
+        }
     }
 }

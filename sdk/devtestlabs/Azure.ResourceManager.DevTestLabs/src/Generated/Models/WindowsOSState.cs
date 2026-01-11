@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
-    public readonly partial struct WindowsOSState : IEquatable<WindowsOSState>
+    public readonly partial struct WindowsOsState : IEquatable<WindowsOsState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WindowsOSState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WindowsOSState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NonSyspreppedValue = "NonSysprepped";
         private const string SysprepRequestedValue = "SysprepRequested";
         private const string SysprepAppliedValue = "SysprepApplied";
 
-        /// <summary> NonSysprepped. </summary>
-        public static WindowsOSState NonSysprepped { get; } = new WindowsOSState(NonSyspreppedValue);
-        /// <summary> SysprepRequested. </summary>
-        public static WindowsOSState SysprepRequested { get; } = new WindowsOSState(SysprepRequestedValue);
-        /// <summary> SysprepApplied. </summary>
-        public static WindowsOSState SysprepApplied { get; } = new WindowsOSState(SysprepAppliedValue);
-        /// <summary> Determines if two <see cref="WindowsOSState"/> values are the same. </summary>
-        public static bool operator ==(WindowsOSState left, WindowsOSState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="WindowsOSState"/> values are not the same. </summary>
-        public static bool operator !=(WindowsOSState left, WindowsOSState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsOSState"/>. </summary>
-        public static implicit operator WindowsOSState(string value) => new WindowsOSState(value);
+        /// <summary> Initializes a new instance of <see cref="WindowsOsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WindowsOsState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the NonSysprepped. </summary>
+        public static WindowsOsState NonSysprepped { get; } = new WindowsOsState(NonSyspreppedValue);
+
+        /// <summary> Gets the SysprepRequested. </summary>
+        public static WindowsOsState SysprepRequested { get; } = new WindowsOsState(SysprepRequestedValue);
+
+        /// <summary> Gets the SysprepApplied. </summary>
+        public static WindowsOsState SysprepApplied { get; } = new WindowsOsState(SysprepAppliedValue);
+
+        /// <summary> Determines if two <see cref="WindowsOsState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(WindowsOsState left, WindowsOsState right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="WindowsOsState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(WindowsOsState left, WindowsOsState right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="WindowsOsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowsOsState(string value) => new WindowsOsState(value);
+
+        /// <summary> Converts a string to a <see cref="WindowsOsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowsOsState?(string value) => value == null ? null : new WindowsOsState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WindowsOSState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(WindowsOSState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is WindowsOsState other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(WindowsOsState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

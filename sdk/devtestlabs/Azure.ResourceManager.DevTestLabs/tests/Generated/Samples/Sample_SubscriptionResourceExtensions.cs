@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDevTestLabs_LabsListBySubscription()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_ListBySubscription.json
-            // this example is just showing the usage of "Labs_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Labs_ListBySubscription.json
+            // this example is just showing the usage of "Lab_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDevTestLabGlobalSchedules_GlobalSchedulesListBySubscription()
+        public async Task GetSchedules_GlobalSchedulesListBySubscription()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_ListBySubscription.json
-            // this example is just showing the usage of "GlobalSchedules_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/GlobalSchedules_ListBySubscription.json
+            // this example is just showing the usage of "Schedule_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DevTestLabGlobalScheduleResource item in subscriptionResource.GetDevTestLabGlobalSchedulesAsync())
+            await foreach (ScheduleResource item in subscriptionResource.GetSchedulesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

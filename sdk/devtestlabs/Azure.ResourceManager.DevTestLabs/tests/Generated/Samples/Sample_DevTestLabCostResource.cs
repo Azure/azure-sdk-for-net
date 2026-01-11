@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CostsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_Get.json
-            // this example is just showing the usage of "Costs_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Costs_Get.json
+            // this example is just showing the usage of "LabCost_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +50,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CostsCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Costs_CreateOrUpdate.json
-            // this example is just showing the usage of "Costs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Costs_CreateOrUpdate.json
+            // this example is just showing the usage of "LabCost_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,51 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabCostResource devTestLabCost = client.GetDevTestLabCostResource(devTestLabCostResourceId);
 
             // invoke the operation
-            DevTestLabCostData data = new DevTestLabCostData(default)
-            {
-                TargetCost = new DevTestLabTargetCost
-                {
-                    Status = DevTestLabTargetCostStatus.Enabled,
-                    Target = 100,
-                    CostThresholds = {new DevTestLabCostThreshold
-{
-ThresholdId = "00000000-0000-0000-0000-000000000001",
-ThresholdValue = 25,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}, new DevTestLabCostThreshold
-{
-ThresholdId = "00000000-0000-0000-0000-000000000002",
-ThresholdValue = 50,
-DisplayOnChart = DevTestLabCostThresholdStatus.Enabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Enabled,
-}, new DevTestLabCostThreshold
-{
-ThresholdId = "00000000-0000-0000-0000-000000000003",
-ThresholdValue = 75,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}, new DevTestLabCostThreshold
-{
-ThresholdId = "00000000-0000-0000-0000-000000000004",
-ThresholdValue = 100,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}, new DevTestLabCostThreshold
-{
-ThresholdId = "00000000-0000-0000-0000-000000000005",
-ThresholdValue = 125,
-DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
-SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}},
-                    CycleStartOn = DateTimeOffset.Parse("2020-12-01T00:00:00.000Z"),
-                    CycleEndOn = DateTimeOffset.Parse("2020-12-31T00:00:00.000Z"),
-                    CycleType = DevTestLabReportingCycleType.CalendarMonth,
-                },
-                CurrencyCode = "USD",
-                StartOn = DateTimeOffset.Parse("2020-12-01T00:00:00Z"),
-                EndOn = DateTimeOffset.Parse("2020-12-31T23:59:59Z"),
-            };
+            DevTestLabCostData data = new DevTestLabCostData(default);
             ArmOperation<DevTestLabCostResource> lro = await devTestLabCost.UpdateAsync(WaitUntil.Completed, data);
             DevTestLabCostResource result = lro.Value;
 
