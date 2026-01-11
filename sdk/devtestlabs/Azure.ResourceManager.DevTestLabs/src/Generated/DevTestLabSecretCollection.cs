@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,23 +13,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabSecretResource"/> and their operations.
-    /// Each <see cref="DevTestLabSecretResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabSecretCollection"/> instance call the GetDevTestLabSecrets method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabSecretResource"/> in the collection will belong to the same instance of <see cref="DevTestLabUserResource"/>.
+    /// To get a <see cref="DevTestLabSecretCollection"/> instance call the GetDevTestLabSecrets method from an instance of <see cref="DevTestLabUserResource"/>.
     /// </summary>
-    public partial class DevTestLabSecretCollection : ArmCollection, IEnumerable<DevTestLabSecretResource>, IAsyncEnumerable<DevTestLabSecretResource>
+    public partial class DevTestLabSecretCollection : ArmCollection
     {
         private readonly ClientDiagnostics _secretsClientDiagnostics;
         private readonly Secrets _secretsRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
-        /// <summary> The userName. </summary>
-        private readonly string _userName;
 
         /// <summary> Initializes a new instance of DevTestLabSecretCollection for mocking. </summary>
         protected DevTestLabSecretCollection()
@@ -41,13 +34,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabSecretCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        internal DevTestLabSecretCollection(ArmClient client, ResourceIdentifier id, string labName, string userName) : base(client, id)
+        internal DevTestLabSecretCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DevTestLabSecretResource.ResourceType, out string devTestLabSecretApiVersion);
-            _labName = labName;
-            _userName = userName;
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabSecretResource.ResourceType.Namespace, Diagnostics);
             _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, devTestLabSecretApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
@@ -57,9 +46,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabUserResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), id);
             }
         }
 
@@ -81,14 +70,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="data"> A secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DevTestLabSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabSecretData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DevTestLabSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userName, DevTestLabSecretData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.CreateOrUpdate");
@@ -99,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, DevTestLabSecretData.ToRequestContent(data), context);
+                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, DevTestLabSecretData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabSecretResource> operation = new DevTestLabsArmOperation<DevTestLabSecretResource>(
                     new DevTestLabSecretOperationSource(Client),
@@ -139,14 +128,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="data"> A secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DevTestLabSecretResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabSecretData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DevTestLabSecretResource> CreateOrUpdate(WaitUntil waitUntil, string userName, DevTestLabSecretData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.CreateOrUpdate");
@@ -157,7 +146,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, DevTestLabSecretData.ToRequestContent(data), context);
+                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, DevTestLabSecretData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabSecretResource> operation = new DevTestLabsArmOperation<DevTestLabSecretResource>(
                     new DevTestLabSecretOperationSource(Client),
@@ -196,14 +185,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabSecretResource>> GetAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabSecretResource>> GetAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.Get");
             scope.Start();
@@ -213,7 +202,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, expand, context);
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabSecretData> response = Response.FromValue(DevTestLabSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,14 +235,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabSecretResource> Get(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabSecretResource> Get(string userName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.Get");
             scope.Start();
@@ -263,7 +252,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, expand, context);
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabSecretData> response = Response.FromValue(DevTestLabSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,90 +269,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// List secrets in a given user profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Secrets_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabSecretResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabSecretResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DevTestLabSecretData, DevTestLabSecretResource>(new SecretsGetAllAsyncCollectionResultOfT(
-                _secretsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                _labName,
-                _userName,
-                expand,
-                filter,
-                top,
-                @orderby,
-                context), data => new DevTestLabSecretResource(Client, data));
-        }
-
-        /// <summary>
-        /// List secrets in a given user profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Secrets_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabSecretResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabSecretResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DevTestLabSecretData, DevTestLabSecretResource>(new SecretsGetAllCollectionResultOfT(
-                _secretsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                _labName,
-                _userName,
-                expand,
-                filter,
-                top,
-                @orderby,
-                context), data => new DevTestLabSecretResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -380,14 +285,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.Exists");
             scope.Start();
@@ -397,7 +302,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, expand, context);
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabSecretData> response = default;
@@ -438,14 +343,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string userName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.Exists");
             scope.Start();
@@ -455,7 +360,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, expand, context);
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabSecretData> response = default;
@@ -496,14 +401,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabSecretResource>> GetIfExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DevTestLabSecretResource>> GetIfExistsAsync(string userName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.GetIfExists");
             scope.Start();
@@ -513,7 +418,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, expand, context);
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabSecretData> response = default;
@@ -558,14 +463,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabSecretResource> GetIfExists(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DevTestLabSecretResource> GetIfExists(string userName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("DevTestLabSecretCollection.GetIfExists");
             scope.Start();
@@ -575,7 +480,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _userName, name, expand, context);
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, userName, Id.Name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabSecretData> response = default;
@@ -601,22 +506,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<DevTestLabSecretResource> IEnumerable<DevTestLabSecretResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DevTestLabSecretResource> IAsyncEnumerable<DevTestLabSecretResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

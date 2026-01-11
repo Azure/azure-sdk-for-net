@@ -415,53 +415,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="vm"> The virtual machine from which the image is to be created. </param>
-        /// <param name="vhd"> The VHD from which the image is to be created. </param>
-        /// <param name="description"> The description of the custom image. </param>
-        /// <param name="author"> The author of the custom image. </param>
-        /// <param name="createdOn"> The creation date of the custom image. </param>
-        /// <param name="managedImageId"> The Managed Image Id backing the custom image. </param>
-        /// <param name="managedSnapshotId"> The Managed Snapshot Id backing the custom image. </param>
-        /// <param name="dataDiskStorageInfo"> Storage information about the data disks present in the custom image. </param>
-        /// <param name="customImagePlan"> Storage information about the plan related to this custom image. </param>
-        /// <param name="isPlanAuthorized"> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabCustomImageData"/> instance for mocking. </returns>
-        public static DevTestLabCustomImageData DevTestLabCustomImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevTestLabCustomImageVm vm = default, DevTestLabCustomImageVhd vhd = default, string description = default, string author = default, DateTimeOffset? createdOn = default, string managedImageId = default, string managedSnapshotId = default, IEnumerable<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = default, DevTestLabCustomImagePlan customImagePlan = default, bool? isPlanAuthorized = default, string provisioningState = default, Guid? uniqueIdentifier = default, IDictionary<string, string> tags = default, string location = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabCustomImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                vm is null && vhd is null && description is null && author is null && createdOn is null && managedImageId is null && managedSnapshotId is null && dataDiskStorageInfo is null && customImagePlan is null && isPlanAuthorized is null && provisioningState is null && uniqueIdentifier is null ? default : new CustomImageProperties(
-                    vm,
-                    vhd,
-                    description,
-                    author,
-                    createdOn,
-                    managedImageId,
-                    managedSnapshotId,
-                    (dataDiskStorageInfo ?? new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>()).ToList(),
-                    customImagePlan,
-                    isPlanAuthorized,
-                    provisioningState,
-                    uniqueIdentifier,
-                    null),
-                tags,
-                location);
-        }
-
         /// <summary> A custom image. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabCustomImagePatch"/> instance for mocking. </returns>
@@ -1099,8 +1052,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabCustomImageData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevTestLabCustomImageData DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IEnumerable<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier)
+        public static DevTestLabCustomImageData DevTestLabCustomImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabCustomImageVm vm = default, DevTestLabCustomImageVhd vhd = default, string description = default, string author = default, DateTimeOffset? createdOn = default, string managedImageId = default, string managedSnapshotId = default, IEnumerable<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = default, DevTestLabCustomImagePlan customImagePlan = default, bool? isPlanAuthorized = default, string provisioningState = default, Guid? uniqueIdentifier = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             dataDiskStorageInfo ??= new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
@@ -1111,9 +1063,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 default,
-                tags,
-                location);
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabFormulaData"/>. </summary>

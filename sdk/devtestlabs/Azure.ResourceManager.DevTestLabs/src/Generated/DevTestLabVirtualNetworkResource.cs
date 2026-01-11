@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary>
     /// A class representing a DevTestLabVirtualNetwork along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabVirtualNetworkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabVirtualNetworks method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabVirtualNetworks method.
     /// </summary>
     public partial class DevTestLabVirtualNetworkResource : ArmResource
     {

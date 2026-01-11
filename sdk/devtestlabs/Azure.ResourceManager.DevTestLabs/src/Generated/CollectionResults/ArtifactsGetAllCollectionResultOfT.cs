@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _labName, _artifactSourceName, _expand, _filter, _top, _orderby, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _labName, _artifactSourceName, _expand, _filter, _top, _orderby, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevTestLabArtifactCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifacts");
             scope.Start();
             try
             {

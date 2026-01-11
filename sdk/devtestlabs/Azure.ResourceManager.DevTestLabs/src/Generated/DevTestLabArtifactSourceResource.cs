@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary>
     /// A class representing a DevTestLabArtifactSource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArtifactSourceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabArtifactSources method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabArtifactSources method.
     /// </summary>
     public partial class DevTestLabArtifactSourceResource : ArmResource
     {
@@ -670,6 +670,76 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of DevTestLabArmTemplates in the <see cref="DevTestLabArtifactSourceResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabArmTemplates and their operations over a DevTestLabArmTemplateResource. </returns>
+        public virtual DevTestLabArmTemplateCollection GetDevTestLabArmTemplates()
+        {
+            return GetCachedClient(client => new DevTestLabArmTemplateCollection(client, Id));
+        }
+
+        /// <summary> Get azure resource manager template. </summary>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+
+            return await GetDevTestLabArmTemplates().GetAsync(artifactSourceName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get azure resource manager template. </summary>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+
+            return GetDevTestLabArmTemplates().Get(artifactSourceName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabArtifacts in the <see cref="DevTestLabArtifactSourceResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabArtifacts and their operations over a DevTestLabArtifactResource. </returns>
+        public virtual DevTestLabArtifactCollection GetDevTestLabArtifacts()
+        {
+            return GetCachedClient(client => new DevTestLabArtifactCollection(client, Id));
+        }
+
+        /// <summary> Get artifact. </summary>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+
+            return await GetDevTestLabArtifacts().GetAsync(artifactSourceName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get artifact. </summary>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabArtifactResource> GetDevTestLabArtifact(string artifactSourceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+
+            return GetDevTestLabArtifacts().Get(artifactSourceName, expand, cancellationToken);
         }
     }
 }

@@ -15,21 +15,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabVmScheduleResource"/> and their operations.
-    /// Each <see cref="DevTestLabVmScheduleResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabVmScheduleCollection"/> instance call the GetDevTestLabVmSchedules method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabVmScheduleResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabVmScheduleCollection"/> instance call the GetDevTestLabVmSchedules method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabVmScheduleCollection : ArmCollection, IEnumerable<DevTestLabVmScheduleResource>, IAsyncEnumerable<DevTestLabVmScheduleResource>
     {
         private readonly ClientDiagnostics _devTestLabVmSchedulesClientDiagnostics;
         private readonly DevTestLabVmSchedules _devTestLabVmSchedulesRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
         /// <summary> The virtualMachineName. </summary>
         private readonly string _virtualMachineName;
 
@@ -41,12 +38,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmScheduleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
         /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
-        internal DevTestLabVmScheduleCollection(ArmClient client, ResourceIdentifier id, string labName, string virtualMachineName) : base(client, id)
+        internal DevTestLabVmScheduleCollection(ArmClient client, ResourceIdentifier id, string virtualMachineName) : base(client, id)
         {
             TryGetApiVersion(DevTestLabVmScheduleResource.ResourceType, out string devTestLabVmScheduleApiVersion);
-            _labName = labName;
             _virtualMachineName = virtualMachineName;
             _devTestLabVmSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabVmScheduleResource.ResourceType.Namespace, Diagnostics);
             _devTestLabVmSchedulesRestClient = new DevTestLabVmSchedules(_devTestLabVmSchedulesClientDiagnostics, Pipeline, Endpoint, devTestLabVmScheduleApiVersion ?? "2018-09-15");
@@ -57,9 +52,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
             }
         }
 
@@ -99,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, DevTestLabScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, DevTestLabScheduleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -154,7 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, DevTestLabScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, DevTestLabScheduleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -207,7 +202,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +252,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -306,7 +301,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _devTestLabVmSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 _virtualMachineName,
                 expand,
                 filter,
@@ -348,7 +343,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _devTestLabVmSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 _virtualMachineName,
                 expand,
                 filter,
@@ -391,7 +386,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -449,7 +444,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -507,7 +502,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -569,7 +564,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _virtualMachineName, name, expand, context);
+                HttpMessage message = _devTestLabVmSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _virtualMachineName, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;

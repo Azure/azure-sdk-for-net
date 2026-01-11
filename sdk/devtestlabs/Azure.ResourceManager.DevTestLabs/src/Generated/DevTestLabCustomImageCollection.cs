@@ -15,21 +15,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabCustomImageResource"/> and their operations.
-    /// Each <see cref="DevTestLabCustomImageResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabCustomImageCollection"/> instance call the GetDevTestLabCustomImages method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabCustomImageResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabCustomImageCollection"/> instance call the GetDevTestLabCustomImages method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabCustomImageCollection : ArmCollection, IEnumerable<DevTestLabCustomImageResource>, IAsyncEnumerable<DevTestLabCustomImageResource>
     {
         private readonly ClientDiagnostics _customImagesClientDiagnostics;
         private readonly CustomImages _customImagesRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
 
         /// <summary> Initializes a new instance of DevTestLabCustomImageCollection for mocking. </summary>
         protected DevTestLabCustomImageCollection()
@@ -39,11 +36,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        internal DevTestLabCustomImageCollection(ArmClient client, ResourceIdentifier id, string labName) : base(client, id)
+        internal DevTestLabCustomImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DevTestLabCustomImageResource.ResourceType, out string devTestLabCustomImageApiVersion);
-            _labName = labName;
             _customImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabCustomImageResource.ResourceType.Namespace, Diagnostics);
             _customImagesRestClient = new CustomImages(_customImagesClientDiagnostics, Pipeline, Endpoint, devTestLabCustomImageApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
@@ -53,9 +48,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
             }
         }
 
@@ -95,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, DevTestLabCustomImageData.ToRequestContent(data), context);
+                HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabCustomImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabCustomImageResource> operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(
                     new DevTestLabCustomImageOperationSource(Client),
@@ -153,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, DevTestLabCustomImageData.ToRequestContent(data), context);
+                HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabCustomImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabCustomImageResource> operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(
                     new DevTestLabCustomImageOperationSource(Client),
@@ -209,7 +204,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabCustomImageData> response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +254,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabCustomImageData> response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -308,7 +303,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _customImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 expand,
                 filter,
                 top,
@@ -349,7 +344,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _customImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 expand,
                 filter,
                 top,
@@ -391,7 +386,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabCustomImageData> response = default;
@@ -449,7 +444,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabCustomImageData> response = default;
@@ -507,7 +502,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabCustomImageData> response = default;
@@ -569,7 +564,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabCustomImageData> response = default;

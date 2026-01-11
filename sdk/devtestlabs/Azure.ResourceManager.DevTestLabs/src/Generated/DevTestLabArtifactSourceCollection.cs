@@ -15,21 +15,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabArtifactSourceResource"/> and their operations.
-    /// Each <see cref="DevTestLabArtifactSourceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabArtifactSourceCollection"/> instance call the GetDevTestLabArtifactSources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabArtifactSourceResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabArtifactSourceCollection"/> instance call the GetDevTestLabArtifactSources method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabArtifactSourceCollection : ArmCollection, IEnumerable<DevTestLabArtifactSourceResource>, IAsyncEnumerable<DevTestLabArtifactSourceResource>
     {
         private readonly ClientDiagnostics _artifactSourcesClientDiagnostics;
         private readonly ArtifactSources _artifactSourcesRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
 
         /// <summary> Initializes a new instance of DevTestLabArtifactSourceCollection for mocking. </summary>
         protected DevTestLabArtifactSourceCollection()
@@ -39,11 +36,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        internal DevTestLabArtifactSourceCollection(ArmClient client, ResourceIdentifier id, string labName) : base(client, id)
+        internal DevTestLabArtifactSourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DevTestLabArtifactSourceResource.ResourceType, out string devTestLabArtifactSourceApiVersion);
-            _labName = labName;
             _artifactSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabArtifactSourceResource.ResourceType.Namespace, Diagnostics);
             _artifactSourcesRestClient = new ArtifactSources(_artifactSourcesClientDiagnostics, Pipeline, Endpoint, devTestLabArtifactSourceApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
@@ -53,9 +48,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
             }
         }
 
@@ -77,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="data"> Properties of an artifact source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -95,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, DevTestLabArtifactSourceData.ToRequestContent(data), context);
+                HttpMessage message = _artifactSourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabArtifactSourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -132,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="data"> Properties of an artifact source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -150,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, DevTestLabArtifactSourceData.ToRequestContent(data), context);
+                HttpMessage message = _artifactSourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabArtifactSourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -186,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -203,7 +198,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +231,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -253,7 +248,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -302,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _artifactSourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 expand,
                 filter,
                 top,
@@ -343,7 +338,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _artifactSourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 expand,
                 filter,
                 top,
@@ -368,7 +363,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -385,7 +380,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabArtifactSourceData> response = default;
@@ -426,7 +421,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -443,7 +438,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabArtifactSourceData> response = default;
@@ -484,7 +479,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -501,7 +496,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabArtifactSourceData> response = default;
@@ -546,7 +541,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -563,7 +558,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabArtifactSourceData> response = default;

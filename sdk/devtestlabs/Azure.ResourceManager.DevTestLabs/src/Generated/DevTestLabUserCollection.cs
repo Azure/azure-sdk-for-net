@@ -15,21 +15,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabUserResource"/> and their operations.
-    /// Each <see cref="DevTestLabUserResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabUserCollection"/> instance call the GetDevTestLabUsers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabUserResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabUserCollection"/> instance call the GetDevTestLabUsers method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabUserCollection : ArmCollection, IEnumerable<DevTestLabUserResource>, IAsyncEnumerable<DevTestLabUserResource>
     {
         private readonly ClientDiagnostics _usersClientDiagnostics;
         private readonly Users _usersRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
 
         /// <summary> Initializes a new instance of DevTestLabUserCollection for mocking. </summary>
         protected DevTestLabUserCollection()
@@ -39,11 +36,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabUserCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        internal DevTestLabUserCollection(ArmClient client, ResourceIdentifier id, string labName) : base(client, id)
+        internal DevTestLabUserCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DevTestLabUserResource.ResourceType, out string devTestLabUserApiVersion);
-            _labName = labName;
             _usersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabUserResource.ResourceType.Namespace, Diagnostics);
             _usersRestClient = new Users(_usersClientDiagnostics, Pipeline, Endpoint, devTestLabUserApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
@@ -53,9 +48,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
             }
         }
 
@@ -77,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="data"> Profile of a lab user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -95,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, DevTestLabUserData.ToRequestContent(data), context);
+                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabUserData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabUserResource> operation = new DevTestLabsArmOperation<DevTestLabUserResource>(
                     new DevTestLabUserOperationSource(Client),
@@ -135,7 +130,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="data"> Profile of a lab user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -153,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, DevTestLabUserData.ToRequestContent(data), context);
+                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabUserData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabUserResource> operation = new DevTestLabsArmOperation<DevTestLabUserResource>(
                     new DevTestLabUserOperationSource(Client),
@@ -192,7 +187,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -209,7 +204,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +237,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -259,7 +254,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabUserData> response = Response.FromValue(DevTestLabUserData.FromResponse(result), result);
                 if (response.Value == null)
@@ -308,7 +303,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _usersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 expand,
                 filter,
                 top,
@@ -349,7 +344,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _usersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 expand,
                 filter,
                 top,
@@ -374,7 +369,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -391,7 +386,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabUserData> response = default;
@@ -432,7 +427,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -449,7 +444,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabUserData> response = default;
@@ -490,7 +485,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -507,7 +502,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabUserData> response = default;
@@ -552,7 +547,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the User. </param>
+        /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -569,7 +564,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, name, expand, context);
+                HttpMessage message = _usersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabUserData> response = default;

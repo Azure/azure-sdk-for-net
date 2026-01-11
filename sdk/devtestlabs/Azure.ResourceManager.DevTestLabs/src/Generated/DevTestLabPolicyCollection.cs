@@ -15,21 +15,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabPolicyResource"/> and their operations.
-    /// Each <see cref="DevTestLabPolicyResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabPolicyCollection"/> instance call the GetDevTestLabPolicies method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabPolicyResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabPolicyCollection"/> instance call the GetDevTestLabPolicies method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabPolicyCollection : ArmCollection, IEnumerable<DevTestLabPolicyResource>, IAsyncEnumerable<DevTestLabPolicyResource>
     {
         private readonly ClientDiagnostics _policiesClientDiagnostics;
         private readonly Policies _policiesRestClient;
-        /// <summary> The labName. </summary>
-        private readonly string _labName;
         /// <summary> The policySetName. </summary>
         private readonly string _policySetName;
 
@@ -41,12 +38,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="labName"> The labName for the resource. </param>
         /// <param name="policySetName"> The policySetName for the resource. </param>
-        internal DevTestLabPolicyCollection(ArmClient client, ResourceIdentifier id, string labName, string policySetName) : base(client, id)
+        internal DevTestLabPolicyCollection(ArmClient client, ResourceIdentifier id, string policySetName) : base(client, id)
         {
             TryGetApiVersion(DevTestLabPolicyResource.ResourceType, out string devTestLabPolicyApiVersion);
-            _labName = labName;
             _policySetName = policySetName;
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabPolicyResource.ResourceType.Namespace, Diagnostics);
             _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, devTestLabPolicyApiVersion ?? "2018-09-15");
@@ -57,9 +52,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
             }
         }
 
@@ -99,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, DevTestLabPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, DevTestLabPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabPolicyData> response = Response.FromValue(DevTestLabPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -154,7 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, DevTestLabPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, DevTestLabPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabPolicyData> response = Response.FromValue(DevTestLabPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -207,7 +202,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, expand, context);
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabPolicyData> response = Response.FromValue(DevTestLabPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +252,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, expand, context);
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabPolicyData> response = Response.FromValue(DevTestLabPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -306,7 +301,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _policiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 _policySetName,
                 expand,
                 filter,
@@ -348,7 +343,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 _policiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _labName,
+                Id.Name,
                 _policySetName,
                 expand,
                 filter,
@@ -391,7 +386,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, expand, context);
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabPolicyData> response = default;
@@ -449,7 +444,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, expand, context);
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabPolicyData> response = default;
@@ -507,7 +502,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, expand, context);
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabPolicyData> response = default;
@@ -569,7 +564,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _labName, _policySetName, name, expand, context);
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabPolicyData> response = default;

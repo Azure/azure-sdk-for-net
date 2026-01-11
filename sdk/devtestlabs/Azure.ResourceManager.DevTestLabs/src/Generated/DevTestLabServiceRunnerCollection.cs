@@ -13,14 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabServiceRunnerResource"/> and their operations.
-    /// Each <see cref="DevTestLabServiceRunnerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DevTestLabServiceRunnerCollection"/> instance call the GetDevTestLabServiceRunners method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DevTestLabServiceRunnerResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabServiceRunnerCollection"/> instance call the GetDevTestLabServiceRunners method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabServiceRunnerCollection : ArmCollection
     {
@@ -47,9 +46,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
             }
         }
 
@@ -71,15 +70,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="data"> A container for a managed identity to execute DevTest lab services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DevTestLabServiceRunnerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string labName, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DevTestLabServiceRunnerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -91,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
+                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -128,15 +125,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="data"> A container for a managed identity to execute DevTest lab services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DevTestLabServiceRunnerResource> CreateOrUpdate(WaitUntil waitUntil, string labName, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DevTestLabServiceRunnerResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -148,7 +143,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
+                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -184,14 +179,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabServiceRunnerResource>> GetAsync(string labName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabServiceRunnerResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Get");
@@ -202,7 +195,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,14 +228,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabServiceRunnerResource> Get(string labName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabServiceRunnerResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Get");
@@ -253,7 +244,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,14 +277,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string labName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Exists");
@@ -304,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;
@@ -345,14 +334,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string labName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Exists");
@@ -363,7 +350,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;
@@ -404,14 +391,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabServiceRunnerResource>> GetIfExistsAsync(string labName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DevTestLabServiceRunnerResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
@@ -422,7 +407,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;
@@ -467,14 +452,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabServiceRunnerResource> GetIfExists(string labName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DevTestLabServiceRunnerResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
@@ -485,7 +468,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;

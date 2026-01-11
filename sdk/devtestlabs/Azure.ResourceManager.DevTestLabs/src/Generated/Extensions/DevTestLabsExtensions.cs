@@ -441,16 +441,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="name"> The name of the lab. </param>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabResource>> GetDevTestLabAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevTestLabResource>> GetDevTestLabAsync(this ResourceGroupResource resourceGroupResource, string labName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabAsync(labName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -461,16 +461,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="name"> The name of the lab. </param>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DevTestLabResource> GetDevTestLab(this ResourceGroupResource resourceGroupResource, string name, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DevTestLabResource> GetDevTestLab(this ResourceGroupResource resourceGroupResource, string labName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLab(name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLab(labName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -531,1169 +531,291 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabSchedules in the <see cref="ResourceGroupResource"/>
+        /// List azure resource manager templates in a given artifact source.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSchedules(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArmTemplatesAsync(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabSchedules and their operations over a DevTestLabScheduleResource. </returns>
-        public static DevTestLabScheduleCollection GetDevTestLabSchedules(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSchedules(labName);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabScheduleAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabScheduleAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSchedule(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabScheduleResource> GetDevTestLabSchedule(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSchedule(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabServiceFabricSchedules in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabricSchedules(string, string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabServiceFabricSchedules and their operations over a DevTestLabServiceFabricScheduleResource. </returns>
-        public static DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules(this ResourceGroupResource resourceGroupResource, string labName, string userName, string serviceFabricName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabricSchedules(labName, userName, serviceFabricName);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabricScheduleAsync(string, string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabricScheduleAsync(labName, userName, serviceFabricName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabricSchedule(string, string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="serviceFabricName"> The serviceFabricName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(this ResourceGroupResource resourceGroupResource, string labName, string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabricSchedule(labName, userName, serviceFabricName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabVmSchedules in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVmSchedules(string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabVmSchedules and their operations over a DevTestLabVmScheduleResource. </returns>
-        public static DevTestLabVmScheduleCollection GetDevTestLabVmSchedules(this ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmSchedules(labName, virtualMachineName);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVmScheduleAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(this ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmScheduleAsync(labName, virtualMachineName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get schedule.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVmSchedule(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="virtualMachineName"> The virtualMachineName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(this ResourceGroupResource resourceGroupResource, string labName, string virtualMachineName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmSchedule(labName, virtualMachineName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabArtifactSources in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifactSources(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabArtifactSources and their operations over a DevTestLabArtifactSourceResource. </returns>
-        public static DevTestLabArtifactSourceCollection GetDevTestLabArtifactSources(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifactSources(labName);
-        }
-
-        /// <summary>
-        /// Get artifact source.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifactSourceAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabArtifactSourceResource>> GetDevTestLabArtifactSourceAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabArmTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabArmTemplateResource> GetDevTestLabArmTemplatesAsync(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifactSourceAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArmTemplatesAsync(labName, artifactSourceName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Get artifact source.
+        /// List azure resource manager templates in a given artifact source.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifactSource(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArmTemplates(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabArmTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabArmTemplateResource> GetDevTestLabArmTemplates(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifactSource(labName, name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArmTemplates(labName, artifactSourceName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabArmTemplates in the <see cref="ResourceGroupResource"/>
+        /// List artifacts in a given artifact source.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArmTemplates(string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifactsAsync(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabArmTemplates and their operations over a DevTestLabArmTemplateResource. </returns>
-        public static DevTestLabArmTemplateCollection GetDevTestLabArmTemplates(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArmTemplates(labName, artifactSourceName);
-        }
-
-        /// <summary>
-        /// Get azure resource manager template.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArmTemplateAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
-        /// <param name="name"> The name of the ArmTemplate. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArmTemplateAsync(labName, artifactSourceName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get azure resource manager template.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArmTemplate(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
-        /// <param name="name"> The name of the ArmTemplate. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArmTemplate(labName, artifactSourceName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabArtifacts in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifacts(string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabArtifacts and their operations over a DevTestLabArtifactResource. </returns>
-        public static DevTestLabArtifactCollection GetDevTestLabArtifacts(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifacts(labName, artifactSourceName);
-        }
-
-        /// <summary>
-        /// Get artifact.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifactAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
-        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabArtifactResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabArtifactResource> GetDevTestLabArtifactsAsync(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifactAsync(labName, artifactSourceName, name, expand, cancellationToken).ConfigureAwait(false);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifactsAsync(labName, artifactSourceName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Get artifact.
+        /// List artifacts in a given artifact source.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifact(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabArtifacts(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
-        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabArtifactResource> GetDevTestLabArtifact(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabArtifactResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabArtifactResource> GetDevTestLabArtifacts(this ResourceGroupResource resourceGroupResource, string labName, string artifactSourceName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifact(labName, artifactSourceName, name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabArtifacts(labName, artifactSourceName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabCosts in the <see cref="ResourceGroupResource"/>
+        /// List disks in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabCosts()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabCosts and their operations over a DevTestLabCostResource. </returns>
-        public static DevTestLabCostCollection GetDevTestLabCosts(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabCosts();
-        }
-
-        /// <summary>
-        /// Get cost.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabCostAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabDisksAsync(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the LabCost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabCostResource>> GetDevTestLabCostAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabCostAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get cost.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabCost(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the LabCost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabCostResource> GetDevTestLabCost(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabCost(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabCustomImages in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabCustomImages(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabCustomImages and their operations over a DevTestLabCustomImageResource. </returns>
-        public static DevTestLabCustomImageCollection GetDevTestLabCustomImages(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabCustomImages(labName);
-        }
-
-        /// <summary>
-        /// Get custom image.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabCustomImageAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the CustomImage. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabCustomImageResource>> GetDevTestLabCustomImageAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabCustomImageAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get custom image.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabCustomImage(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the CustomImage. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabCustomImageResource> GetDevTestLabCustomImage(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabCustomImage(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabFormulas in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabFormulas(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabFormulas and their operations over a DevTestLabFormulaResource. </returns>
-        public static DevTestLabFormulaCollection GetDevTestLabFormulas(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabFormulas(labName);
-        }
-
-        /// <summary>
-        /// Get formula.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabFormulaAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the Formula. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabFormulaResource>> GetDevTestLabFormulaAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabFormulaAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get formula.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabFormula(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the Formula. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabFormulaResource> GetDevTestLabFormula(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabFormula(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabNotificationChannels in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabNotificationChannels(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabNotificationChannels and their operations over a DevTestLabNotificationChannelResource. </returns>
-        public static DevTestLabNotificationChannelCollection GetDevTestLabNotificationChannels(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabNotificationChannels(labName);
-        }
-
-        /// <summary>
-        /// Get notification channel.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabNotificationChannelAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the NotificationChannel. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabNotificationChannelResource>> GetDevTestLabNotificationChannelAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabNotificationChannelAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get notification channel.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabNotificationChannel(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the NotificationChannel. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabNotificationChannelResource> GetDevTestLabNotificationChannel(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabNotificationChannel(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabPolicies in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabPolicies(string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="policySetName"> The policySetName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabPolicies and their operations over a DevTestLabPolicyResource. </returns>
-        public static DevTestLabPolicyCollection GetDevTestLabPolicies(this ResourceGroupResource resourceGroupResource, string labName, string policySetName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabPolicies(labName, policySetName);
-        }
-
-        /// <summary>
-        /// Get policy.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabPolicyAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="policySetName"> The policySetName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(this ResourceGroupResource resourceGroupResource, string labName, string policySetName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabPolicyAsync(labName, policySetName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get policy.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabPolicy(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="policySetName"> The policySetName for the resource. </param>
-        /// <param name="name"> The name of the Schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabPolicyResource> GetDevTestLabPolicy(this ResourceGroupResource resourceGroupResource, string labName, string policySetName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabPolicy(labName, policySetName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabServiceRunners in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceRunners()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabServiceRunners and their operations over a DevTestLabServiceRunnerResource. </returns>
-        public static DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceRunners();
-        }
-
-        /// <summary>
-        /// Get service runner.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceRunnerAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabServiceRunnerResource>> GetDevTestLabServiceRunnerAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceRunnerAsync(labName, name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get service runner.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceRunner(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the ServiceRunner. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabServiceRunnerResource> GetDevTestLabServiceRunner(this ResourceGroupResource resourceGroupResource, string labName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceRunner(labName, name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabUsers in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabUsers(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabUsers and their operations over a DevTestLabUserResource. </returns>
-        public static DevTestLabUserCollection GetDevTestLabUsers(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabUsers(labName);
-        }
-
-        /// <summary>
-        /// Get user profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabUserAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the User. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabUserResource>> GetDevTestLabUserAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabUserAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get user profile.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabUser(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the User. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabUserResource> GetDevTestLabUser(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabUser(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabDisks in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabDisks(string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabDisks and their operations over a DevTestLabDiskResource. </returns>
-        public static DevTestLabDiskCollection GetDevTestLabDisks(this ResourceGroupResource resourceGroupResource, string labName, string userName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabDisks(labName, userName);
-        }
-
-        /// <summary>
-        /// Get disk.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabDiskAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the Disk. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabDiskResource>> GetDevTestLabDiskAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabDiskResource> GetDevTestLabDisksAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabDiskAsync(labName, userName, name, expand, cancellationToken).ConfigureAwait(false);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabDisksAsync(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Get disk.
+        /// List disks in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabDisk(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabDisks(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the Disk. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabDiskResource> GetDevTestLabDisk(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabDiskResource> GetDevTestLabDisks(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabDisk(labName, userName, name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabDisks(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabEnvironments in the <see cref="ResourceGroupResource"/>
+        /// List environments in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabEnvironments(string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabEnvironmentsAsync(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabEnvironments and their operations over a DevTestLabEnvironmentResource. </returns>
-        public static DevTestLabEnvironmentCollection GetDevTestLabEnvironments(this ResourceGroupResource resourceGroupResource, string labName, string userName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabEnvironments(labName, userName);
-        }
-
-        /// <summary>
-        /// Get environment.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabEnvironmentAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the DtlEnvironment. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabEnvironmentResource> GetDevTestLabEnvironmentsAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabEnvironmentAsync(labName, userName, name, expand, cancellationToken).ConfigureAwait(false);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabEnvironmentsAsync(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Get environment.
+        /// List environments in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabEnvironment(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabEnvironments(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the DtlEnvironment. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabEnvironmentResource> GetDevTestLabEnvironment(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabEnvironmentResource> GetDevTestLabEnvironments(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabEnvironment(labName, userName, name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabEnvironments(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabSecrets in the <see cref="ResourceGroupResource"/>
+        /// List secrets in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSecrets(string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSecretsAsync(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabSecrets and their operations over a DevTestLabSecretResource. </returns>
-        public static DevTestLabSecretCollection GetDevTestLabSecrets(this ResourceGroupResource resourceGroupResource, string labName, string userName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSecrets(labName, userName);
-        }
-
-        /// <summary>
-        /// Get secret.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSecretAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabSecretResource>> GetDevTestLabSecretAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabSecretResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabSecretResource> GetDevTestLabSecretsAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSecretAsync(labName, userName, name, expand, cancellationToken).ConfigureAwait(false);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSecretsAsync(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Get secret.
+        /// List secrets in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSecret(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabSecrets(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabSecretResource> GetDevTestLabSecret(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabSecretResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabSecretResource> GetDevTestLabSecrets(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSecret(labName, userName, name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabSecrets(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabServiceFabrics in the <see cref="ResourceGroupResource"/>
+        /// List service fabrics in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabrics(string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabricsAsync(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabServiceFabrics and their operations over a DevTestLabServiceFabricResource. </returns>
-        public static DevTestLabServiceFabricCollection GetDevTestLabServiceFabrics(this ResourceGroupResource resourceGroupResource, string labName, string userName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabrics(labName, userName);
-        }
-
-        /// <summary>
-        /// Get service fabric.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabricAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the ServiceFabric. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabServiceFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabServiceFabricResource> GetDevTestLabServiceFabricsAsync(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabricAsync(labName, userName, name, expand, cancellationToken).ConfigureAwait(false);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabricsAsync(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
-        /// Get service fabric.
+        /// List service fabrics in a given user profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabric(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabServiceFabrics(string, string, string, string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="userName"> The userName for the resource. </param>
-        /// <param name="name"> The name of the ServiceFabric. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="userName"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(this ResourceGroupResource resourceGroupResource, string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabServiceFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabServiceFabricResource> GetDevTestLabServiceFabrics(this ResourceGroupResource resourceGroupResource, string labName, string userName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabric(labName, userName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabVms in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVms(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabVms and their operations over a DevTestLabVmResource. </returns>
-        public static DevTestLabVmCollection GetDevTestLabVms(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVms(labName);
-        }
-
-        /// <summary>
-        /// Get virtual machine.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVmAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the LabVirtualMachine. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabVmResource>> GetDevTestLabVmAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVmAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get virtual machine.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVm(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the LabVirtualMachine. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabVmResource> GetDevTestLabVm(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVm(labName, name, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of DevTestLabVirtualNetworks in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVirtualNetworks(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabVirtualNetworks and their operations over a DevTestLabVirtualNetworkResource. </returns>
-        public static DevTestLabVirtualNetworkCollection GetDevTestLabVirtualNetworks(this ResourceGroupResource resourceGroupResource, string labName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVirtualNetworks(labName);
-        }
-
-        /// <summary>
-        /// Get virtual network.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVirtualNetworkAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the VirtualNetwork. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabVirtualNetworkResource>> GetDevTestLabVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVirtualNetworkAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get virtual network.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabVirtualNetwork(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The labName for the resource. </param>
-        /// <param name="name"> The name of the VirtualNetwork. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DevTestLabVirtualNetworkResource> GetDevTestLabVirtualNetwork(this ResourceGroupResource resourceGroupResource, string labName, string name, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabVirtualNetwork(labName, name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabServiceFabrics(labName, userName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>
@@ -1734,52 +856,6 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).EvaluatePolicies(labName, name, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// List gallery images in a given lab.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetAllAsync(string, string, string, int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevTestLabGalleryImage> GetAllAsync(this ResourceGroupResource resourceGroupResource, string labName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetAllAsync(labName, expand, filter, top, @orderby, cancellationToken);
-        }
-
-        /// <summary>
-        /// List gallery images in a given lab.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetAll(string, string, string, int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevTestLabGalleryImage> GetAll(this ResourceGroupResource resourceGroupResource, string labName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetAll(labName, expand, filter, top, @orderby, cancellationToken);
         }
 
         /// <summary>

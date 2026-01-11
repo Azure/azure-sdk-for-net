@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string labName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string labName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateClaimAnyVmRequest(string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateClaimAnyVmRequest(string subscriptionId, string resourceGroupName, string labName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendPath("/claimAnyVm", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateCreateEnvironmentRequest(string subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateEnvironmentRequest(string subscriptionId, string resourceGroupName, string labName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendPath("/createEnvironment", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateExportResourceUsageRequest(string subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExportResourceUsageRequest(string subscriptionId, string resourceGroupName, string labName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendPath("/exportResourceUsage", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateGenerateUploadUriRequest(string subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGenerateUploadUriRequest(string subscriptionId, string resourceGroupName, string labName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendPath("/generateUploadUri", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateImportVmRequest(string subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateImportVmRequest(string subscriptionId, string resourceGroupName, string labName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendPath("/importVirtualMachine", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateGetVhdsRequest(string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetVhdsRequest(string subscriptionId, string resourceGroupName, string labName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(labName, true);
             uri.AppendPath("/listVhds", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return message;
         }
 
-        internal HttpMessage CreateNextGetVhdsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateNextGetVhdsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string labName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

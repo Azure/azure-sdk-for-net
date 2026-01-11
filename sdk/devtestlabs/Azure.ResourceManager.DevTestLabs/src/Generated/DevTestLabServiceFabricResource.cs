@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary>
     /// A class representing a DevTestLabServiceFabric along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabServiceFabricResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabServiceFabrics method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource"/> using the GetDevTestLabServiceFabrics method.
     /// </summary>
     public partial class DevTestLabServiceFabricResource : ArmResource
     {
