@@ -8,7 +8,7 @@ namespace System.ClientModel;
 /// <summary>
 /// Holds the credential settings used to configure authentication for a client that can be loaded from an <see cref="IConfigurationSection"/>.
 /// </summary>
-public class CredentialSettings
+public sealed class CredentialSettings
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="CredentialSettings"/> class.

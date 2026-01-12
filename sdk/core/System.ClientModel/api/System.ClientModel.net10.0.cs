@@ -76,7 +76,7 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public partial class CredentialSettings
+    public sealed partial class CredentialSettings
     {
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public string? CredentialSource { get { throw null; } set { } }

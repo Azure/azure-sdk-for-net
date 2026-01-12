@@ -9,7 +9,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// Represents settings used to configure an <see cref="ArmClient"/>.
     /// </summary>
-    public class ArmSettings : ClientSettings
+    public sealed class ArmSettings : ClientSettings
     {
         /// <summary>
         /// Gets or sets the default subscription ID.
