@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             {
                 Sku = new CapacitySku("A1")
                 {
-                    Tier = CapacitySkuTier.PbieAzure,
+                    Tier = CapacitySkuTier.PBIEAzure,
                 },
                 Tags =
 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             {
                 Sku = new CapacitySku("A1")
                 {
-                    Tier = CapacitySkuTier.PbieAzure,
+                    Tier = CapacitySkuTier.PBIEAzure,
                 },
                 Tags =
 {

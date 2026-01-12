@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
         /// <param name="friendlyName"> Capacity name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedCapacityMutableProperties(DedicatedCapacityAdministrators administration, Mode? mode, string tenantId, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedCapacityMutableProperties(DedicatedCapacityAdministrators administration, Mode? mode, Guid? tenantId, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Administration = administration;
             Mode = mode;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public Mode? Mode { get; set; }
 
         /// <summary> Tenant ID for the capacity. Used for creating Pro Plus capacity. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> Capacity name. </summary>
         public string FriendlyName { get; }

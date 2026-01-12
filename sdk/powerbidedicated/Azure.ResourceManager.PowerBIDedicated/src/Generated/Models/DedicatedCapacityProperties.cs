@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
-        internal DedicatedCapacityProperties(DedicatedCapacityAdministrators administration, Mode? mode, string tenantId, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, State? state, CapacityProvisioningState? provisioningState) : base(administration, mode, tenantId, friendlyName, additionalBinaryDataProperties)
+        internal DedicatedCapacityProperties(DedicatedCapacityAdministrators administration, Mode? mode, Guid? tenantId, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, State? state, CapacityProvisioningState? provisioningState) : base(administration, mode, tenantId, friendlyName, additionalBinaryDataProperties)
         {
             State = state;
             ProvisioningState = provisioningState;

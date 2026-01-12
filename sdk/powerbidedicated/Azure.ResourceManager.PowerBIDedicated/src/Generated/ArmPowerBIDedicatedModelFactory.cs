@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <returns> A new <see cref="PowerBIDedicated.DedicatedCapacityData"/> instance for mocking. </returns>
-        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DedicatedCapacityAdministrators administration = default, Mode? mode = default, string tenantId = default, string friendlyName = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
+        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DedicatedCapacityAdministrators administration = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="friendlyName"> Capacity name. </param>
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.DedicatedCapacityPatch"/> instance for mocking. </returns>
-        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = default, IDictionary<string, string> tags = default, Mode? mode = default, string tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default)
+        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = default, IDictionary<string, string> tags = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
