@@ -6,6 +6,28 @@
 
 ### Breaking Changes
 
+*  **Default Sampler Changed**: The default sampling behavior has been changed from
+  `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
+  `RateLimitedSampler` with 5.0 traces per second. This change significantly
+  reduces telemetry volume for high-traffic applications and provides better
+  cost optimization out of the box.
+  **Impact**: Applications with more than 5 requests per second will see fewer
+  traces exported by default.
+  **Migration**: To maintain the previous behavior (100% sampling), explicitly
+  configure the sampler:
+  
+  ```csharp
+  // Option 1: Set SamplingRatio and clear TracesPerSecond
+  builder.Services.AddOpenTelemetry()
+      .UseAzureMonitor(options =>
+      {
+          options.SamplingRatio = 1.0f;
+          options.TracesPerSecond = null;
+      });
+  // Option 2: Use environment variables
+  // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+  // OTEL_TRACES_SAMPLER_ARG=1.0
+  ```
 ### Bugs Fixed
 
 * Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs

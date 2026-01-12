@@ -888,6 +888,29 @@ function buildArmProviderSchemaFromDetectedResources(
           continue;
         }
 
+        // Filter out resources without Get/Read operations (non-singleton resources only)
+        // Singleton resources can exist without Get operations
+        const hasReadOperation = metadata.methods.some(m => m.kind === ResourceOperationKind.Read);
+        if (!hasReadOperation && !metadata.singletonResourceName) {
+          // Move all methods to non-resource methods since there's no Get operation
+          for (const method of metadata.methods) {
+            nonResourceMethods.set(method.methodId, {
+              methodId: method.methodId,
+              operationPath: method.operationPath,
+              operationScope: method.operationScope
+            });
+          }
+          sdkContext.logger.reportDiagnostic({
+            code: "general-warning",
+            messageId: "default",
+            format: {
+              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be treated as non-resource methods.`
+            },
+            target: NoTarget
+          });
+          continue;
+        }
+
         // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
         sortResourceMethods(metadata.methods);
 

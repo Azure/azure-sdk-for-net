@@ -789,9 +789,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.AkriConnectorsImagePullPolicy IfNotPresent { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.AkriConnectorsImagePullPolicy Never { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.AkriConnectorsImagePullPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.AkriConnectorsImagePullPolicy left, Azure.ResourceManager.IotOperations.Models.AkriConnectorsImagePullPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.AkriConnectorsImagePullPolicy (string value) { throw null; }
@@ -854,9 +852,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public AkriConnectorsMqttProtocolType(string value) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttProtocolType Mqtt { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttProtocolType left, Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttProtocolType (string value) { throw null; }
@@ -1134,7 +1130,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateManagedConfigurationSettings AkriConnectorTemplateManagedConfigurationSettings(string managedConfigurationType = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAllocation allocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims = null, System.Collections.Generic.IDictionary<string, string> additionalConfiguration = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> persistentVolumeClaimTemplates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorsSecret> secrets = null, string trustListSecretRef = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeImageConfiguration AkriConnectorTemplateRuntimeImageConfiguration(Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAllocation allocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims = null, System.Collections.Generic.IDictionary<string, string> additionalConfiguration = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> persistentVolumeClaimTemplates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorsSecret> secrets = null, string trustListSecretRef = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeImageConfigurationSettings imageConfigurationSettings = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeStatefulSetConfiguration AkriConnectorTemplateRuntimeStatefulSetConfiguration(Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAllocation allocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims = null, System.Collections.Generic.IDictionary<string, string> additionalConfiguration = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> persistentVolumeClaimTemplates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorsSecret> secrets = null, string trustListSecretRef = null, System.Collections.Generic.IDictionary<string, System.BinaryData> statefulSetConfigurationSettings = null) { throw null; }
-        public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodCustom BrokerAuthenticatorMethodCustom(Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth auth = null, string caCertConfigMap = null, System.Uri endpoint = null, System.Collections.Generic.IDictionary<string, string> headers = null) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodCustom BrokerAuthenticatorMethodCustom(string authX509SecretRef = null, string caCertConfigMap = null, System.Uri endpoint = null, System.Collections.Generic.IDictionary<string, string> headers = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodX509 BrokerAuthenticatorMethodX509(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodX509Attributes> authorizationAttributes = null, string trustedClientCaCert = null, Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod? additionalValidation = default(Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodX509Attributes BrokerAuthenticatorMethodX509Attributes(System.Collections.Generic.IDictionary<string, string> attributes = null, string subject = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthorizationConfig BrokerAuthorizationConfig(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? cache = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.BrokerAuthorizationRule> rules = null) { throw null; }
@@ -1156,42 +1152,34 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.IotOperationsAkriConnectorData IotOperationsAkriConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorProperties IotOperationsAkriConnectorProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorAllocatedDevice> allocatedDevices = null, Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsAkriConnectorTemplateData IotOperationsAkriConnectorTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorTemplateProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorTemplateProperties IotOperationsAkriConnectorTemplateProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAioMetadata aioMetadata = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeConfiguration runtimeConfiguration = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics diagnostics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDeviceInboundEndpointType> deviceInboundEndpointTypes = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttConnectionConfiguration mqttConnectionConfiguration = null, string connectorMetadataRef = null, Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorTemplateProperties IotOperationsAkriConnectorTemplateProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAioMetadata aioMetadata = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeConfiguration runtimeConfiguration = null, string diagnosticsLogsLevel = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDeviceInboundEndpointType> deviceInboundEndpointTypes = null, Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttConnectionConfiguration mqttConnectionConfiguration = null, string connectorMetadataRef = null, Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsBrokerAuthenticationData IotOperationsBrokerAuthenticationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerAuthenticationProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerAuthenticationProperties IotOperationsBrokerAuthenticationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethods> authenticationMethods, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerAuthenticationProperties IotOperationsBrokerAuthenticationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethods> authenticationMethods = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsBrokerAuthorizationData IotOperationsBrokerAuthorizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerAuthorizationProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerAuthorizationProperties IotOperationsBrokerAuthorizationProperties(Azure.ResourceManager.IotOperations.Models.BrokerAuthorizationConfig authorizationPolicies, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerAuthorizationProperties IotOperationsBrokerAuthorizationProperties(Azure.ResourceManager.IotOperations.Models.BrokerAuthorizationConfig authorizationPolicies = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsBrokerData IotOperationsBrokerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsBrokerListenerData IotOperationsBrokerListenerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerListenerProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release")]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerListenerProperties IotOperationsBrokerListenerProperties(string serviceName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.BrokerListenerPort> ports, Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType? serviceType, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerListenerProperties IotOperationsBrokerListenerProperties(string serviceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.BrokerListenerPort> ports = null, Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType? listenerServiceType = default(Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType?), Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerProperties IotOperationsBrokerProperties(Azure.ResourceManager.IotOperations.Models.BrokerAdvancedSettings advanced = null, Azure.ResourceManager.IotOperations.Models.BrokerCardinality cardinality = null, Azure.ResourceManager.IotOperations.Models.BrokerDiagnostics diagnostics = null, Azure.ResourceManager.IotOperations.Models.DiskBackedMessageBuffer diskBackedMessageBuffer = null, Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? generateResourceLimitsCpu = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile? memoryProfile = default(Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile?), Azure.ResourceManager.IotOperations.Models.BrokerPersistence persistence = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerProperties IotOperationsBrokerProperties(Azure.ResourceManager.IotOperations.Models.BrokerAdvancedSettings advanced, Azure.ResourceManager.IotOperations.Models.BrokerCardinality cardinality, Azure.ResourceManager.IotOperations.Models.BrokerDiagnostics diagnostics, Azure.ResourceManager.IotOperations.Models.DiskBackedMessageBuffer diskBackedMessageBuffer, Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? generateResourceLimitsCpu, Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile? memoryProfile, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsDataflowData IotOperationsDataflowData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsDataflowEndpointData IotOperationsDataflowEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType endpointType, Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataExplorer dataExplorerSettings, Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataLakeStorage dataLakeStorageSettings, Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricOneLake fabricOneLakeSettings, Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafka kafkaSettings, string localStoragePersistentVolumeClaimRef, Azure.ResourceManager.IotOperations.Models.DataflowEndpointMqtt mqttSettings, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType endpointType = default(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType), Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType? hostType = default(Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType?), Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataExplorer dataExplorerSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataLakeStorage dataLakeStorageSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricOneLake fabricOneLakeSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafka kafkaSettings = null, string localStoragePersistentVolumeClaimRef = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointMqtt mqttSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointOpenTelemetry openTelemetrySettings = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsDataflowGraphData IotOperationsDataflowGraphData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowGraphProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowGraphProperties IotOperationsDataflowGraphProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? mode = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? requestDiskPersistence = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowGraphNode> nodes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowGraphNodeConnection> nodeConnections = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsDataflowProfileData IotOperationsDataflowProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics diagnostics = null, int? instanceCount = default(int?), Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics diagnostics = null, int? instanceCount = default(int?), Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProperties IotOperationsDataflowProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? mode, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowOperationProperties> operations, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProperties IotOperationsDataflowProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? mode = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? requestDiskPersistence = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowOperationProperties> operations = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsInstanceData IotOperationsInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeature IotOperationsInstanceFeature(Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode? mode = default(Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode> settings = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstancePatch IotOperationsInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties IotOperationsInstanceProperties(string description, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState, string version, Azure.Core.ResourceIdentifier schemaRegistryRefResourceId) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties IotOperationsInstanceProperties(string description = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), string version = null, Azure.Core.ResourceIdentifier schemaRegistryRefResourceId = null, Azure.Core.ResourceIdentifier defaultSecretProviderClassRefResourceId = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeature> features = null, Azure.Core.ResourceIdentifier adrNamespaceRefResourceId = null, Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsRegistryEndpointData IotOperationsRegistryEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsRegistryEndpointProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
@@ -1204,7 +1192,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.VolumeClaimSpecSelector VolumeClaimSpecSelector(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.VolumeClaimSpecSelectorMatchExpressions> matchExpressions = null, System.Collections.Generic.IDictionary<string, string> matchLabels = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.VolumeClaimSpecSelectorMatchExpressions VolumeClaimSpecSelectorMatchExpressions(string key = null, Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue @operator = default(Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("BlockerListenerServiceType is deprecated. Please use BrokerListenerServiceType instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlockerListenerServiceType : System.IEquatable<Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType>
@@ -1216,9 +1203,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType LoadBalancer { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType NodePort { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType left, Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType (string value) { throw null; }
@@ -1252,9 +1237,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticationMethod ServiceAccountToken { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticationMethod X509 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerAuthenticationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerAuthenticationMethod left, Azure.ResourceManager.IotOperations.Models.BrokerAuthenticationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerAuthenticationMethod (string value) { throw null; }
@@ -1279,7 +1262,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class BrokerAuthenticatorMethodCustom : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodCustom>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorMethodCustom>
     {
         public BrokerAuthenticatorMethodCustom(System.Uri endpoint) { }
-        public Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorCustomAuth Auth { get { throw null; } set { } }
+        public string AuthX509SecretRef { get { throw null; } set { } }
         public string CaCertConfigMap { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
@@ -1351,9 +1334,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod AzureDeviceRegistry { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod left, Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerAuthenticatorValidationMethod (string value) { throw null; }
@@ -1536,9 +1517,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType LoadBalancer { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType NodePort { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType left, Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerListenerServiceType (string value) { throw null; }
@@ -1557,9 +1536,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile Medium { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile Tiny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile left, Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerMemoryProfile (string value) { throw null; }
@@ -1578,9 +1555,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue In { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue NotIn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue left, Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerOperatorValue (string value) { throw null; }
@@ -1616,9 +1591,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerProtocolType Mqtt { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerProtocolType WebSockets { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerProtocolType left, Azure.ResourceManager.IotOperations.Models.BrokerProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerProtocolType (string value) { throw null; }
@@ -1636,9 +1609,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerResourceDefinitionMethod Publish { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerResourceDefinitionMethod Subscribe { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerResourceDefinitionMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerResourceDefinitionMethod left, Azure.ResourceManager.IotOperations.Models.BrokerResourceDefinitionMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerResourceDefinitionMethod (string value) { throw null; }
@@ -1728,9 +1699,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.BrokerStateStoreKeyType Pattern { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.BrokerStateStoreKeyType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.BrokerStateStoreKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.BrokerStateStoreKeyType left, Azure.ResourceManager.IotOperations.Models.BrokerStateStoreKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.BrokerStateStoreKeyType (string value) { throw null; }
@@ -1867,9 +1836,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind ClusterIssuer { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind Issuer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind left, Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind (string value) { throw null; }
@@ -1917,9 +1884,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.CloudEventAttributeType CreateOrRemap { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.CloudEventAttributeType Propagate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.CloudEventAttributeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.CloudEventAttributeType left, Azure.ResourceManager.IotOperations.Models.CloudEventAttributeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.CloudEventAttributeType (string value) { throw null; }
@@ -1936,9 +1901,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataExplorerAuthMethod SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataExplorerAuthMethod UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataExplorerAuthMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataExplorerAuthMethod left, Azure.ResourceManager.IotOperations.Models.DataExplorerAuthMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataExplorerAuthMethod (string value) { throw null; }
@@ -2128,9 +2091,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType ScramSha256 { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType ScramSha512 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointAuthenticationSaslType (string value) { throw null; }
@@ -2278,9 +2239,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricPathType Files { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricPathType Tables { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricPathType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricPathType left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricPathType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricPathType (string value) { throw null; }
@@ -2301,9 +2260,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType FabricRT { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType LocalBroker { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointHostType (string value) { throw null; }
@@ -2344,9 +2301,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaAck One { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaAck Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaAck other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaAck left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaAck right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaAck (string value) { throw null; }
@@ -2400,9 +2355,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaCompression None { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaCompression Snappy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaCompression other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaCompression left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaCompression right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaCompression (string value) { throw null; }
@@ -2421,9 +2374,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaPartitionStrategy Static { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaPartitionStrategy Topic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaPartitionStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaPartitionStrategy left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaPartitionStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafkaPartitionStrategy (string value) { throw null; }
@@ -2504,9 +2455,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointType Mqtt { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowEndpointType OpenTelemetry { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType left, Azure.ResourceManager.IotOperations.Models.DataflowEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowEndpointType (string value) { throw null; }
@@ -2522,9 +2471,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public DataflowFilterType(string value) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowFilterType Filter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowFilterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowFilterType left, Azure.ResourceManager.IotOperations.Models.DataflowFilterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowFilterType (string value) { throw null; }
@@ -2558,9 +2505,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat Json { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat Parquet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat left, Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowGraphConnectionSchemaSerializationFormat (string value) { throw null; }
@@ -2786,9 +2731,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowMappingType PassThrough { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowMappingType Rename { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowMappingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowMappingType left, Azure.ResourceManager.IotOperations.Models.DataflowMappingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowMappingType (string value) { throw null; }
@@ -2879,9 +2822,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowOperationType Destination { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataflowOperationType Source { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowOperationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowOperationType left, Azure.ResourceManager.IotOperations.Models.DataflowOperationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowOperationType (string value) { throw null; }
@@ -2930,9 +2871,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public DataflowSourceSerializationFormat(string value) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowSourceSerializationFormat Json { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowSourceSerializationFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowSourceSerializationFormat left, Azure.ResourceManager.IotOperations.Models.DataflowSourceSerializationFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowSourceSerializationFormat (string value) { throw null; }
@@ -2950,9 +2889,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataLakeStorageAuthMethod SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.DataLakeStorageAuthMethod UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.DataLakeStorageAuthMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataLakeStorageAuthMethod left, Azure.ResourceManager.IotOperations.Models.DataLakeStorageAuthMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.DataLakeStorageAuthMethod (string value) { throw null; }
@@ -3000,9 +2937,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.FabricOneLakeAuthMethod SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.FabricOneLakeAuthMethod UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.FabricOneLakeAuthMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.FabricOneLakeAuthMethod left, Azure.ResourceManager.IotOperations.Models.FabricOneLakeAuthMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.FabricOneLakeAuthMethod (string value) { throw null; }
@@ -3032,7 +2967,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAioMetadata AioMetadata { get { throw null; } set { } }
         public string ConnectorMetadataRef { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDeviceInboundEndpointType> DeviceInboundEndpointTypes { get { throw null; } }
-        public Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics Diagnostics { get { throw null; } set { } }
+        public string DiagnosticsLogsLevel { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.ResourceHealthState? HealthState { get { throw null; } }
         public Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttConnectionConfiguration MqttConnectionConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? ProvisioningState { get { throw null; } }
@@ -3102,7 +3037,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.IotOperations.Models.BrokerListenerPort> Ports { get { throw null; } }
         public Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? ProvisioningState { get { throw null; } }
         public string ServiceName { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is deprecated. Please use ServiceType of type BrokerListenerServiceType instead.")]
         public Azure.ResourceManager.IotOperations.Models.BlockerListenerServiceType? ServiceType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.IotOperationsBrokerListenerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3238,9 +3172,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public IotOperationsExtendedLocationType(string value) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType CustomLocation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType left, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType (string value) { throw null; }
@@ -3273,9 +3205,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode Preview { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode Stable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode left, Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode (string value) { throw null; }
@@ -3328,9 +3258,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode Disabled { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode left, Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode (string value) { throw null; }
@@ -3352,9 +3280,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState left, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState (string value) { throw null; }
@@ -3407,9 +3333,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.KafkaAuthMethod UserAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.KafkaAuthMethod X509Certificate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.KafkaAuthMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.KafkaAuthMethod left, Azure.ResourceManager.IotOperations.Models.KafkaAuthMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.KafkaAuthMethod (string value) { throw null; }
@@ -3478,9 +3402,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.MqttAuthMethod UserAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.MqttAuthMethod X509Certificate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.MqttAuthMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.MqttAuthMethod left, Azure.ResourceManager.IotOperations.Models.MqttAuthMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.MqttAuthMethod (string value) { throw null; }
@@ -3497,9 +3419,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.MqttRetainType Keep { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.MqttRetainType Never { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.MqttRetainType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.MqttRetainType left, Azure.ResourceManager.IotOperations.Models.MqttRetainType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.MqttRetainType (string value) { throw null; }
@@ -3537,9 +3457,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.PrivateKeyAlgorithm Rsa4096 { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.PrivateKeyAlgorithm Rsa8192 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.PrivateKeyAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.PrivateKeyAlgorithm left, Azure.ResourceManager.IotOperations.Models.PrivateKeyAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.PrivateKeyAlgorithm (string value) { throw null; }
@@ -3556,9 +3474,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy Always { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy Never { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy left, Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy (string value) { throw null; }
@@ -3716,9 +3632,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.ResourceHealthState Unavailable { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.ResourceHealthState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.ResourceHealthState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.ResourceHealthState left, Azure.ResourceManager.IotOperations.Models.ResourceHealthState right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.ResourceHealthState (string value) { throw null; }
@@ -3765,9 +3679,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.StateStoreResourceDefinitionMethod ReadWrite { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.StateStoreResourceDefinitionMethod Write { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.StateStoreResourceDefinitionMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.StateStoreResourceDefinitionMethod left, Azure.ResourceManager.IotOperations.Models.StateStoreResourceDefinitionMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.StateStoreResourceDefinitionMethod (string value) { throw null; }
@@ -3785,9 +3697,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.StateStoreResourceKeyType Pattern { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.StateStoreResourceKeyType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.StateStoreResourceKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.StateStoreResourceKeyType left, Azure.ResourceManager.IotOperations.Models.StateStoreResourceKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.StateStoreResourceKeyType (string value) { throw null; }
@@ -3820,9 +3730,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.SubscriberMessageDropStrategy DropOldest { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.SubscriberMessageDropStrategy None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.SubscriberMessageDropStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.SubscriberMessageDropStrategy left, Azure.ResourceManager.IotOperations.Models.SubscriberMessageDropStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.SubscriberMessageDropStrategy (string value) { throw null; }
@@ -3854,9 +3762,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode Automatic { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode left, Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode (string value) { throw null; }
@@ -3874,9 +3780,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.TransformationSerializationFormat Json { get { throw null; } }
         public static Azure.ResourceManager.IotOperations.Models.TransformationSerializationFormat Parquet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotOperations.Models.TransformationSerializationFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotOperations.Models.TransformationSerializationFormat left, Azure.ResourceManager.IotOperations.Models.TransformationSerializationFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.TransformationSerializationFormat (string value) { throw null; }
