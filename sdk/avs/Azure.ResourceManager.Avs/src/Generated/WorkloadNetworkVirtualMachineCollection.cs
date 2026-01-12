@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetVirtualMachine");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Get");
             scope.Start();
             try
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkVirtualMachineResource> GetVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkVirtualMachineResource> Get(string virtualMachineId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetVirtualMachine");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Get");
             scope.Start();
             try
             {

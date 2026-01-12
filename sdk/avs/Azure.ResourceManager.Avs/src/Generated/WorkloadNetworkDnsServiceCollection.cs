@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkDnsServiceResource>> GetDnsServiceAsync(string dnsServiceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkDnsServiceResource>> GetAsync(string dnsServiceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetDnsService");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Get");
             scope.Start();
             try
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkDnsServiceResource> GetDnsService(string dnsServiceId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkDnsServiceResource> Get(string dnsServiceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetDnsService");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.Get");
             scope.Start();
             try
             {

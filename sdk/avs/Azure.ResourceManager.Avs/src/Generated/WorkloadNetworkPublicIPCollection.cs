@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkPublicIPResource>> GetPublicIPAsync(string publicIPId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkPublicIPResource>> GetAsync(string publicIPId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetPublicIP");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Get");
             scope.Start();
             try
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkPublicIPResource> GetPublicIP(string publicIPId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkPublicIPResource> Get(string publicIPId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetPublicIP");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Get");
             scope.Start();
             try
             {

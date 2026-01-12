@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetVMGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetAsync(string vmGroupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetVMGroup");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
             scope.Start();
             try
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkVmGroupResource> GetVMGroup(string vmGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkVmGroupResource> Get(string vmGroupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetVMGroup");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
             scope.Start();
             try
             {

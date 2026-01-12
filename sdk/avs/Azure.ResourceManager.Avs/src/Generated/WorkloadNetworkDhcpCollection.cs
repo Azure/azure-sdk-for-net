@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetDhcpAsync(string dhcpId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetAsync(string dhcpId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetDhcp");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Get");
             scope.Start();
             try
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkloadNetworkDhcpResource> GetDhcp(string dhcpId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkDhcpResource> Get(string dhcpId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetDhcp");
+            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Get");
             scope.Start();
             try
             {
