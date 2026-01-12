@@ -35,7 +35,8 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string A2A_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_NAME));
         public string A2A_BASE_URI => GetRecordedOptionalVariable(nameof(A2A_BASE_URI));
         public string PUBLISHED_ENDPOINT => GetRecordedOptionalVariable(nameof(PUBLISHED_ENDPOINT));
-        public string API_KEY => WrappedGetRecordedVariable(nameof(API_KEY));
+        public string APPLICATIONINSIGHTS_CONNECTION_STRING => WrappedGetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING), isSecret: false);
+        public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try

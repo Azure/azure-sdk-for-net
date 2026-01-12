@@ -1315,6 +1315,34 @@ public class AgentsTests : AgentsTestBase
         Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
     }
 
+    [RecordedTest]
+    public async Task TestHostedAgentCreation()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        Uri uriEndpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
+        string projectName = pathParts[pathParts.Length - 1];
+        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
+        ImageBasedHostedAgentDefinition agentDefinition = new(
+            containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+            cpu: "1",
+            memory: "2Gi",
+            image: TestEnvironment.AGENT_DOCKER_IMAGE
+        )
+        {
+            EnvironmentVariables = {
+                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
+                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },
+                // Optional variables, used for logging
+                { "APPLICATIONINSIGHTS_CONNECTION_STRING", TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING },
+                { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.PROJECT_ENDPOINT },
+            }
+        };
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "myHostedAgent",
+            options: new(agentDefinition));
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    }
     private bool ContainsAnnotation(ResponseItem item, ToolType type)
     {
         bool isUriCitationFound = false;
