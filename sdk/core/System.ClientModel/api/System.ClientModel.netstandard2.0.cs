@@ -140,7 +140,7 @@ namespace System.ClientModel.Primitives
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
-        public string? Locator { get { throw null; } }
+        public string Locator { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public override string ToString() { throw null; }
         public bool TryGetLocatorAsUri(out System.Uri? uri) { throw null; }

@@ -17,8 +17,8 @@ public readonly struct ClientConnection
     /// <param name="locator">The endpoint or resource identifier.</param>
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client.</param>
-    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind) : this(id: id, locator: locator, credentialKind: credentialKind, credential: credential, metadata: null)
-    { }
+    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind): this(id: id, locator: locator, credentialKind: credentialKind, credential: credential, metadata: null)
+    {}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with a with no authentication.
@@ -26,7 +26,7 @@ public readonly struct ClientConnection
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
     public ClientConnection(string id, string locator) : this(id: id, locator: locator, credentialKind: CredentialKind.None, credential: null, metadata: null)
-    { }
+    {}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
@@ -58,6 +58,10 @@ public readonly struct ClientConnection
         {
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
         }
+        if (string.IsNullOrWhiteSpace(locator))
+        {
+            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
+        }
         if (credential is null && credentialKind != CredentialKind.None)
         {
             throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
@@ -84,7 +88,7 @@ public readonly struct ClientConnection
     /// <summary>
     /// This is either URI, name, or something similar.
     /// </summary>
-    public string? Locator { get; }
+    public string Locator { get; }
 
     /// <summary>
     /// Gets the credential.
