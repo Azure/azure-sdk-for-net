@@ -143,7 +143,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _contextualPath, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

@@ -51,7 +51,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsPet() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
-            var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdateDogAsAnimalAsync(dog);
+            var response1 = await new HierarchyBuildingClient(host, null).GetPetOperationsClient().UpdateDogAsPetAsync(dog);
             dog = response1.Value as Dog;
             Assert.IsNotNull(dog);
             Assert.AreEqual("Rex", dog!.Name);

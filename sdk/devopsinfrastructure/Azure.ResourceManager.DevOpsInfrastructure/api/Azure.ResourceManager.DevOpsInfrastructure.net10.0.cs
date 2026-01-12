@@ -169,9 +169,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption My { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption Root { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption left, Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption (string value) { throw null; }
@@ -203,9 +201,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason (string value) { throw null; }
@@ -222,9 +218,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus Available { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus (string value) { throw null; }
@@ -274,9 +268,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType Inherit { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType SpecificAccounts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionType (string value) { throw null; }
@@ -328,9 +320,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType (string value) { throw null; }
@@ -362,9 +352,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType CacheDisk { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType ResourceDisk { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType (string value) { throw null; }
@@ -442,9 +430,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState (string value) { throw null; }
@@ -460,9 +446,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public DevOpsInfrastructureResourceType(string value) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType MicrosoftDevOpsInfrastructurePools { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType (string value) { throw null; }
@@ -479,9 +463,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType Interactive { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType Service { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType (string value) { throw null; }
@@ -737,9 +719,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus Starting { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus (string value) { throw null; }
@@ -787,9 +767,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageAccountType StandardSsdLrs { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageAccountType StandardSsdZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageAccountType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageAccountType (string value) { throw null; }
@@ -853,9 +831,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.OSDiskStorageAccountType Standard { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.OSDiskStorageAccountType StandardSsd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.OSDiskStorageAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.OSDiskStorageAccountType left, Azure.ResourceManager.DevOpsInfrastructure.Models.OSDiskStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.OSDiskStorageAccountType (string value) { throw null; }
@@ -895,9 +871,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.PredictionPreference MorePerformance { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.PredictionPreference MostCostEffective { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.PredictionPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.PredictionPreference left, Azure.ResourceManager.DevOpsInfrastructure.Models.PredictionPreference right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.PredictionPreference (string value) { throw null; }
@@ -1003,9 +977,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsReasonCode QuotaId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsReasonCode (string value) { throw null; }
@@ -1022,9 +994,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsType Location { get { throw null; } }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsType Zone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsType left, Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionsType (string value) { throw null; }

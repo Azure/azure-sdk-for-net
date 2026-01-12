@@ -1,7 +1,7 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260108.4"
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260112.1"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.63.0",
