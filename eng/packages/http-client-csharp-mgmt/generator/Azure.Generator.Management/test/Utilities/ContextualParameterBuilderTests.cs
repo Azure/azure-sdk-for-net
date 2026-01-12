@@ -330,7 +330,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
         }
 
-        [TestCase]
+        [Test]
         public void ValidateParameterMapping_ComputeFleetScenario()
         {
             // This test validates the fix for issue #54817
@@ -359,7 +359,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.AreEqual("resourceGroupName", resourceGroupParam!.VariableName);
         }
 
-        [TestCase]
+        [Test]
         public void ValidateParameterMapping_DifferentParameterNames()
         {
             // Test case where operation parameters have different names than contextual parameters
@@ -378,7 +378,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.IsFalse(mapping.TryGetContextualParameter("childName", out _));
         }
 
-        [TestCase]
+        [Test]
         public void ValidateParameterMapping_SameParameterNames()
         {
             // Test case where parameter names match exactly
@@ -396,7 +396,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.IsFalse(mapping.TryGetContextualParameter("name", out _));
         }
 
-        [TestCase]
+        [Test]
         public void ValidateParameterMapping_EmptyContextualPath()
         {
             // Test with tenant-level operations
