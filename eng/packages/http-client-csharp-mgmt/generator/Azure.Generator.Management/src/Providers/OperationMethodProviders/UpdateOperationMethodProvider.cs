@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Runtime.CompilerServices;
@@ -12,14 +13,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     {
         public UpdateOperationMethodProvider(
             ResourceClientProvider resource,
-            RequestPathPattern contextualPath,
+            ContextualPath contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
             ResourceOperationKind methodKind,
-            bool forceLro = false,
-            RequestPathPattern? operationPath = null)
-            : base(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro, operationPath: operationPath)
+            bool forceLro = false)
+            : base(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro)
         {
         }
 

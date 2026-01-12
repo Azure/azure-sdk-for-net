@@ -4,17 +4,24 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
-    internal static class ContextualParameterBuilder
+    internal class ContextualPath
     {
+        public RequestPathPattern RawPath { get; }
+        public IReadOnlyList<ContextualParameter> ContextualParameters { get; }
+        public ContextualPath(RequestPathPattern rawPath)
+        {
+            RawPath = rawPath;
+            ContextualParameters = BuildContextualParameters(rawPath);
+        }
+
         /// <summary>
         /// This method accepts a <see cref="RequestPathPattern"/> as a contextual request path pattern
         /// of a certain resource or resource collection class,
@@ -23,7 +30,7 @@ namespace Azure.Generator.Management.Utilities
         /// </summary>
         /// <param name="requestPathPattern">The contextual request path pattern.</param>
         /// <returns></returns>
-        public static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern)
+        private static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern)
         {
             // we use a stack here because we are building the contextual parameters in reverse order.
             var result = new Stack<ContextualParameter>();
@@ -38,59 +45,92 @@ namespace Azure.Generator.Management.Utilities
         /// Parameters are matched by their key (the constant segment before the parameter) first,
         /// and if no key match is found, by their name.
         /// </summary>
-        /// <param name="contextualPath">The contextual request path (e.g., the resource's path).</param>
         /// <param name="operationPath">The operation's request path.</param>
         /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
-        public static ParameterMapping BuildParameterMapping(RequestPathPattern contextualPath, RequestPathPattern operationPath)
+        public IReadOnlyDictionary<string, ParameterMapping> BuildParameterMapping(RequestPathPattern operationPath)
         {
-            var contextualParameters = BuildContextualParameters(contextualPath);
-            var operationParameters = ExtractParametersWithKeys(operationPath);
+            // we need to find the sharing part between contextual path and the incoming path
+            var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(RawPath, operationPath);
 
-            // Build a lookup for contextual parameters by key
-            var contextualByKey = new Dictionary<string, ContextualParameter>();
-            foreach (var contextualParam in contextualParameters)
+            return BuildParameterMappingCore(ContextualParameters, operationPath, sharedSegmentsCount).ToDictionary(m => m.ParameterName);
+        }
+
+        private static IReadOnlyList<ParameterMapping> BuildParameterMappingCore(IReadOnlyList<ContextualParameter> contextualParameters, RequestPathPattern operationPath, int sharedSegmentsCount)
+        {
+            var parameterMappings = new List<ParameterMapping>();
+            for (int i = 0, parameterIndex = 0; i < operationPath.Count; i++)
             {
-                if (!string.IsNullOrEmpty(contextualParam.Key))
+                var segment = operationPath[i];
+                // skip all the constant segments
+                if (segment.IsConstant)
                 {
-                    contextualByKey[contextualParam.Key] = contextualParam;
+                    continue;
                 }
-            }
-
-            var mapping = new Dictionary<string, ContextualParameter>();
-
-            // Match operation parameters to contextual parameters
-            foreach (var (key, variableName) in operationParameters)
-            {
-                ContextualParameter? matchedParam = null;
-
-                // Try to match by key first
-                if (!string.IsNullOrEmpty(key) && contextualByKey.TryGetValue(key, out var paramByKey))
+                // we can only assign contextual parameters when we are in the shared segments area where this part could be found in the contextual path.
+                if (i < sharedSegmentsCount && parameterIndex < contextualParameters.Count)
                 {
-                    matchedParam = paramByKey;
-                    // Remove from the lookup to avoid matching the same contextual parameter twice
-                    contextualByKey.Remove(key);
+                    // we are in the area of contextual paths
+                    var mapping = new ParameterMapping(segment.VariableName, contextualParameters[parameterIndex]);
+                    parameterMappings.Add(mapping);
                 }
                 else
                 {
-                    // Fall back to matching by variable name if key is empty or no key match found
-                    foreach (var contextualParam in contextualParameters)
-                    {
-                        if (contextualParam.VariableName == variableName && !mapping.ContainsValue(contextualParam))
-                        {
-                            matchedParam = contextualParam;
-                            break;
-                        }
-                    }
+                    var mapping = new ParameterMapping(segment.VariableName, null);
+                    parameterMappings.Add(mapping);
                 }
+                parameterIndex++;
+            }
+            return parameterMappings;
+        }
 
-                if (matchedParam != null)
+        /*
+        private static Dictionary<string, ContextualParameter> BuildMappingForAncestorCase(ContextualPath contextualPath, RequestPathPattern operationPath)
+        {
+            // in this case, the contextual path is an ancestor of the operation path, therefore we just take the that many contextual parameters as the mapping.
+            var contextualParameters = contextualPath.ContextualParameters;
+            var mapping = new Dictionary<string, ContextualParameter>();
+            int parameterIndex = 0;
+            foreach (var segment in operationPath)
+            {
+                if (segment.IsConstant)
                 {
-                    mapping[variableName] = matchedParam;
+                    continue;
                 }
+                if (parameterIndex >= contextualParameters.Count)
+                {
+                    break;
+                }
+                mapping[segment.VariableName] = contextualParameters[parameterIndex];
+                parameterIndex++;
             }
 
-            return new ParameterMapping(mapping);
+            return mapping;
         }
+
+        private static Dictionary<string, ContextualParameter> BuildMappingForNonAncestorCase(ContextualPath contextualPath, RequestPathPattern operationPath)
+        {
+            // find the maximum shared segments between the two paths, we put operationPath as the first argument because later we will iterate on it to match contextual parameters.
+            var sharedSegments = RequestPathPattern.GetMaximumSharingSegments(operationPath, contextualPath.RawPath);
+            var contextualParameters = contextualPath.ContextualParameters;
+            var mapping = new Dictionary<string, ContextualParameter>();
+            int parameterIndex = 0;
+            foreach (var segment in sharedSegments)
+            {
+                if (segment.IsConstant)
+                {
+                    continue;
+                }
+                if (parameterIndex >= contextualParameters.Count)
+                {
+                    break;
+                }
+                mapping[segment.VariableName] = contextualParameters[parameterIndex];
+                parameterIndex++;
+            }
+
+            return mapping;
+        }
+        */
 
         /// <summary>
         /// Extracts parameters with their keys from a request path.

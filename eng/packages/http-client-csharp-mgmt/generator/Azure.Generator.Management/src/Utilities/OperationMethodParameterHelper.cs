@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Utilities
@@ -18,10 +16,9 @@ namespace Azure.Generator.Management.Utilities
         // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
-            RequestPathPattern contextualPath,
+            ContextualPath contextualPath,
             TypeProvider? enclosingTypeProvider,
-            bool forceLro = false,
-            RequestPathPattern? operationPath = null)
+            bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
@@ -33,20 +30,29 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            foreach (var parameter in serviceMethod.Operation.Parameters)
+            // TODO -- Refactor needed. we need the same mapping in RequestPathPatternExtensions.PopulateArguments method.
+            // To avoid large scale of refactoring right now, we just call this method twice to build the map twice.
+            var pathParameterMapping = contextualPath.BuildParameterMapping(new(serviceMethod.Operation.Path));
+
+            // TODO -- considering to change here instead of iterating on raw parameters, iterating on the convenience method parameters in which the parameters have been transformed properly.
+            for (int i = 0; i < serviceMethod.Operation.Parameters.Count; i++)
             {
+                var parameter = serviceMethod.Operation.Parameters[i];
                 if (parameter.Scope != InputParameterScope.Method)
                 {
                     continue;
                 }
 
-                var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
+                var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!.ToPublicInputParameter();
 
-                if (contextualPath.TryGetContextualParameter(outputParameter, operationPath, out _))
+                // if the parameter can be found in the parameter mapping meaning it is a contextual parameter which should not show up on the signature.
+                if (pathParameterMapping.TryGetValue(outputParameter.Name, out var pathParameter) &&
+                    pathParameter.IsContextual)
                 {
                     continue;
                 }
 
+                // TODO -- maybe we no longer need this?
                 if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
                     collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
                 {

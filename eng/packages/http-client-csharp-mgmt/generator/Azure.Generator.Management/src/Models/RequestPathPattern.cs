@@ -1,18 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Generator.Management.Snippets;
-using Azure.Generator.Management.Utilities;
-using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -140,6 +132,46 @@ namespace Azure.Generator.Management.Models
             return false;
         }
 
+        /// <summary>
+        /// Returns the number of shared segments between two <see cref="RequestPathPattern"/> instances,
+        /// starting from the beginning of the paths. Segments are considered shared if both are variable segments,
+        /// or if both are constant segments with equal values. The comparison stops at the first non-matching segment.
+        /// </summary>
+        /// <param name="left">The first <see cref="RequestPathPattern"/> to compare.</param>
+        /// <param name="right">The second <see cref="RequestPathPattern"/> to compare.</param>
+        /// <returns>
+        /// The count of shared segments between the two paths.
+        /// </returns>
+        public static int GetMaximumSharingSegmentsCount(RequestPathPattern left, RequestPathPattern right)
+        {
+            var minCount = Math.Min(left.Count, right.Count);
+            var count = 0;
+            for (int i = 0; i < minCount; i++)
+            {
+                // if both of them are variable segments, we consider them as a match
+                if (!left[i].IsConstant && !right[i].IsConstant)
+                {
+                    count++;
+                    continue;
+                }
+                // if not both of them are constant, they do not match, we stop
+                if (left[i].IsConstant != right[i].IsConstant)
+                {
+                    break;
+                }
+                // now both of them are constant segments, we compare their values
+                if (left[i].Equals(right[i]))
+                {
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return count;
+        }
+
         public RequestPathPattern GetParent()
         {
             // if the request path has 0 or 1 segment, we call its parent the Tenant.
@@ -199,58 +231,6 @@ namespace Azure.Generator.Management.Models
         public static implicit operator string(RequestPathPattern requestPath)
         {
             return requestPath._path;
-        }
-
-        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
-        private Dictionary<string, ParameterMapping>? _parameterMappingCache;
-
-        /// <summary>
-        /// Get the corresponding contextual parameter in this request path for a provided parameter.
-        /// </summary>
-        /// <param name="parameter">The parameter to match.</param>
-        /// <param name="operationPath">The operation's request path. If provided, uses key-based matching.</param>
-        /// <param name="contextualParameter">The matched contextual parameter.</param>
-        /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, RequestPathPattern? operationPath, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
-        {
-            contextualParameter = null;
-            if (parameter.Location != ParameterLocation.Path)
-            {
-                return false;
-            }
-
-            // If we have an operation path, use key-based matching
-            if (operationPath != null)
-            {
-                // Build parameter mapping cache if not already built
-                _parameterMappingCache ??= new Dictionary<string, ParameterMapping>();
-
-                var cacheKey = operationPath.SerializedPath;
-                if (!_parameterMappingCache.TryGetValue(cacheKey, out var mapping))
-                {
-                    mapping = ContextualParameterBuilder.BuildParameterMapping(this, operationPath);
-                    _parameterMappingCache[cacheKey] = mapping;
-                }
-
-                return mapping.TryGetContextualParameter(parameter.WireInfo.SerializedName, out contextualParameter);
-            }
-
-            // Fall back to simple name-based matching if no operation path is provided
-            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
-
-            return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
-        }
-
-        /// <summary>
-        /// Get the corresponding contextual parameter in this request path for a provided parameter (legacy method).
-        /// This overload uses simple name-based matching and is kept for backward compatibility.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <param name="contextualParameter"></param>
-        /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
-        {
-            return TryGetContextualParameter(parameter, null, out contextualParameter);
         }
     }
 }

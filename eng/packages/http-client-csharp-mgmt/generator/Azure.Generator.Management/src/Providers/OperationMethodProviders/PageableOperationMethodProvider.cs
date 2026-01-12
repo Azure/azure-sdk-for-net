@@ -20,7 +20,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class PageableOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly RequestPathPattern _contextualPath;
+        private readonly ContextualPath _contextualPath;
         private readonly RestClientInfo _restClientInfo;
         private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
@@ -31,17 +31,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly string _methodName;
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
-        private readonly RequestPathPattern? _operationPath;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
-            RequestPathPattern contextualPath,
+            ContextualPath contextualPath,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null,
-            RequestPathPattern? operationPath = null)
+            ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -50,7 +48,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
-            _operationPath = operationPath;
             InitializeTypeInfo(
                 _itemType,
                 ref _actualItemType!,
@@ -114,7 +111,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, _enclosingType, operationPath: _operationPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

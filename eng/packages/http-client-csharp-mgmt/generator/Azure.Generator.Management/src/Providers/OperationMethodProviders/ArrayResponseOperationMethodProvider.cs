@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
-using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -28,12 +26,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ArrayResponseOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly RequestPathPattern _contextualPath;
+        private readonly ContextualPath _contextualPath;
         private readonly ClientProvider _restClient;
         private readonly InputServiceMethod _serviceMethod;
         private readonly MethodProvider _convenienceMethod;
         private readonly bool _isAsync;
-        private readonly ValueExpression _clientDiagnosticsField;
         private readonly ValueExpression _restClientField;
         private readonly CSharpType _itemType;
         private readonly CSharpType _actualItemType;
@@ -43,17 +40,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
-        private readonly RequestPathPattern? _operationPath;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
-            RequestPathPattern contextualPath,
+            ContextualPath contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null,
-            RequestPathPattern? operationPath = null)
+            ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -61,9 +56,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             _isAsync = isAsync;
-            _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
-            _operationPath = operationPath;
 
             // Get the list type from the response
             _listType = _serviceMethod.GetResponseBodyType()!;
@@ -146,7 +139,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, operationPath: _operationPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -19,7 +18,7 @@ namespace Azure.Generator.Management.Utilities
     internal static class RequestPathPatternExtensions
     {
         public static IReadOnlyList<ValueExpression> PopulateArguments(
-            this RequestPathPattern contextualPath,
+            this ContextualPath contextualPath,
             ScopedApi<ResourceIdentifier> idProperty,
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
