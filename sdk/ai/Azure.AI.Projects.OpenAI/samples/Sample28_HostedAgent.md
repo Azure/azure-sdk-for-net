@@ -4,7 +4,7 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 
 ## Hosted Agent Deployment prerequisites
 
-In this example we will use agent capable of doing product release defined [here](https://github.com/azure-ai-foundry/foundry-samples/tree/main/samples/python/hosted-agents/calculator-agent). The agent's logic is defined in the file [main.py](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent_framework/agents_in_workflow/main.py). Its [docker file](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent_framework/agents_in_workflow/Dockerfile) installs the required python dependencies, exposes 8088 port and runs `main.py`, which will serve agent on this port.
+In this example we will use agent capable of doing product release defined [here](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/agent_framework/agents_in_workflow). The agent's logic is defined in the file [main.py](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent_framework/agents_in_workflow/main.py). Its [docker file](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent_framework/agents_in_workflow/Dockerfile) installs the required python dependencies, exposes 8088 port and runs `main.py`, which will serve agent on this port.
 As a prerequisite this sample will require [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli).
 
 ## Run the sample
