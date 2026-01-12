@@ -43,22 +43,11 @@ internal class ClientBuilder : IClientBuilder
         _host.ConfigureContainer(factory, configure);
     }
 
-    public IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider> factory)
+    public IHostApplicationBuilder WithCredential(string key = "Credential", Func<IConfigurationSection, AuthenticationTokenProvider>? factory = default)
     {
+        if (key != "Credential")
+            CredentialConfigurationSection = Configuration.GetRequiredSection(key);
         CredentialFactory = factory;
-        return this;
-    }
-
-    public IHostApplicationBuilder WithCredential(string key, Func<IConfigurationSection, AuthenticationTokenProvider> factory)
-    {
-        CredentialConfigurationSection = Configuration.GetRequiredSection(key);
-        CredentialFactory = factory;
-        return this;
-    }
-
-    public IHostApplicationBuilder WithCredential(string key)
-    {
-        CredentialConfigurationSection = Configuration.GetRequiredSection(key);
         return this;
     }
 
