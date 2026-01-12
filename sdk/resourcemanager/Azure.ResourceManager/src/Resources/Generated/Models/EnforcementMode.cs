@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </summary>
+    /// <summary> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </summary>
     public readonly partial struct EnforcementMode : IEquatable<EnforcementMode>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         private const string DefaultValue = "Default";
         private const string DoNotEnforceValue = "DoNotEnforce";
+        private const string EnrollValue = "Enroll";
 
         /// <summary> The policy effect is enforced during resource creation or update. </summary>
         public static EnforcementMode Default { get; } = new EnforcementMode(DefaultValue);
         /// <summary> The policy effect is not enforced during resource creation or update. </summary>
         public static EnforcementMode DoNotEnforce { get; } = new EnforcementMode(DoNotEnforceValue);
+        /// <summary> The policy effect is not enforced during resource creation or update until the resource or scope of the resource is enrolled to the assignment instance. Enrollment occurs upon deployment of the policy enrollment resource. </summary>
+        public static EnforcementMode Enroll { get; } = new EnforcementMode(EnrollValue);
         /// <summary> Determines if two <see cref="EnforcementMode"/> values are the same. </summary>
         public static bool operator ==(EnforcementMode left, EnforcementMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnforcementMode"/> values are not the same. </summary>

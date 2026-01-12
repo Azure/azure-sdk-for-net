@@ -114,5 +114,69 @@ namespace Azure.ResourceManager.Resources
         {
             return new ArmRestApiCollection(this, azureNamespace);
         }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicySetDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetSubscriptionPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken)
+        {
+            return await GetSubscriptionPolicySetDefinitionAsync(policySetDefinitionName, default, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicySetDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionPolicySetDefinitionResource> GetSubscriptionPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken)
+        {
+            return GetSubscriptionPolicySetDefinition(policySetDefinitionName, default, cancellationToken);
+        }
     }
 }

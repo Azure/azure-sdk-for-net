@@ -18,6 +18,54 @@ namespace Azure.ResourceManager.Resources.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetBuiltinsPolicyDefinitionVersions_ListAllBuiltInPolicyDefinitionVersions()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/listAllBuiltInPolicyDefinitionVersions.json
+            // this example is just showing the usage of "PolicyDefinitionVersions_ListAllBuiltins" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            await foreach (PolicyDefinitionVersionData item in tenant.GetBuiltinsPolicyDefinitionVersionsAsync())
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBuiltinsPolicySetDefinitionVersions_ListAllBuiltInPolicyDefinitionVersions()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/listAllBuiltInPolicySetDefinitionVersions.json
+            // this example is just showing the usage of "PolicySetDefinitionVersions_ListAllBuiltins" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            await foreach (PolicySetDefinitionVersionData item in tenant.GetBuiltinsPolicySetDefinitionVersionsAsync())
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTenantResourceProvider_GetAResourceProviderAtTenantScope()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/GetNamedProviderAtTenant.json

@@ -166,13 +166,13 @@ output-folder: $(this-folder)/Resources/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: false
+  skipped-operations:
+    - PolicyAssignments_ListForResource
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/817861452040bf29d14b57ac7418560e4680e06e/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/64f849f847faf0abd5bde445e98b22a481329098/specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/openapi.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/64f849f847faf0abd5bde445e98b22a481329098/specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2020-09-01/dataPolicyManifests.json
     - https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-05-01/locks.json
     - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
     - https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/subscriptions.json
@@ -188,6 +188,14 @@ request-path-to-resource-data:
   /: Tenant
   # provider does not have name and type
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: ResourceProvider
+
+request-path-to-resource-name:
+  /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: PolicyDefinitionVersion
+  /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: ManagementGroupNamePolicyDefinitionVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: SubscriptionPolicyDefinitionVersion
+  /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}: PolicySetDefinitionVersion
+  /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}: ManagementGroupPolicySetDefinitionVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}: SubscriptionPolicySetDefinitionVersion
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
@@ -280,6 +288,12 @@ acronym-mapping:
 
 rename-mapping:
   PolicyAssignment.identity: ManagedIdentity
+  PolicyAssignment.properties.instanceId: -|uuid
+  ExternalEvaluationEndpointInvocationResult.expiration: ExpiredOn
+  PolicyTokenResponse.expiration: ExpiredOn
+  PolicyTokenResponse: PolicyTokenResponseResult
+  PolicyTokenOperation: PolicyTokenOperationData
+  PolicyTokenRequest: PolicyTokenContent
   Override: PolicyOverride
   OverrideKind: PolicyOverrideKind
   Selector: ResourceSelectorExpression
@@ -294,8 +308,14 @@ rename-mapping:
   ResourceNameStatus: ResourceNameValidationStatus
   Resource: ResourceData
   TrackedResource: TrackedResourceData
+  DataEffect: DataPolicyManifestEffect
+  ParameterValuesValue: ArmPolicyParameterValue
 
 directive:
+  - from: resources.json
+    where: $.definitions.Resource
+    transform: >
+      $["x-ms-client-name"] = "TrackedResourceExtendedData";
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_UpdateById
   - remove-operation: PolicyAssignments_DeleteById
@@ -362,13 +382,13 @@ directive:
     transform: >
       $["x-ms-client-name"] = "FeatureErrorResponse";
   # remove the systemData property because we already included this property in its base class and the type replacement somehow does not work in resourcemanager
-  - from: policyAssignments.json
+  - from: openapi.json
     where: $.definitions.PolicyAssignment.properties.systemData
     transform: return undefined;
-  - from: policyDefinitions.json
+  - from: openapi.json
     where: $.definitions.PolicyDefinition.properties.systemData
     transform: return undefined;
-  - from: policySetDefinitions.json
+  - from: openapi.json
     where: $.definitions.PolicySetDefinition.properties.systemData
     transform: return undefined;
   - from: resources.json
@@ -410,9 +430,6 @@ directive:
       from: FeatureResult
       to: Feature
   - rename-model:
-      from: Resource
-      to: TrackedResourceExtendedData
-  - rename-model:
       from: ResourcesMoveInfo
       to: ResourcesMoveContent
   - from: resources.json
@@ -451,18 +468,14 @@ directive:
     where: $.definitions.Alias.properties.type["x-ms-enum"]
     transform:
       $["name"] = "ResourceTypeAliasType";
-  - from: policyDefinitions.json
+  - from: openapi.json
     where: $.definitions.ParameterDefinitionsValue
     transform:
       $["x-ms-client-name"] = "ArmPolicyParameter";
-  - from: policyDefinitions.json
-    where: $.definitions.ParameterDefinitionsValue.properties.type["x-ms-enum"]
+  - from: openapi.json
+    where: $.definitions.ParameterType["x-ms-enum"]
     transform:
       $["name"] = "ArmPolicyParameterType";
-  - from: policyAssignments.json
-    where: $.definitions.ParameterValuesValue
-    transform:
-      $["x-ms-client-name"] = "ArmPolicyParameterValue";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
@@ -562,10 +575,10 @@ directive:
     where: $.definitions.Identity
     transform: >
       $["x-ms-client-name"] = "GenericResourceIdentity";
-  - from: policyAssignments.json
+  - from: openapi.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
-  - from: policyAssignments.json
+  - from: openapi.json
     where: $.definitions.Identity
     transform: >
       $["x-ms-client-name"] = "PolicyAssignmentIdentity";
@@ -593,10 +606,6 @@ directive:
     transform: >
       $["x-ms-client-name"] = "ResourceType";
       $["type"] = "string";
-  - from: dataPolicyManifests.json
-    where: $.definitions.DataEffect
-    transform: >
-      $["x-ms-client-name"] = "DataPolicyManifestEffect";
   - from: locks.json
     where: $.definitions.ManagementLockProperties.properties.level["x-ms-enum"]
     transform: >
@@ -633,7 +642,7 @@ directive:
     where: $.definitions.DataManifestResourceFunctionsDefinition.properties.custom
     transform: >
       $["x-ms-client-name"] = "CustomDefinitions"
-  - from: policyAssignments.json
+  - from: openapi.json
     where: $.definitions.PolicyAssignmentProperties.properties.notScopes
     transform: >
       $["x-ms-client-name"] = "ExcludedScopes"
@@ -661,7 +670,7 @@ directive:
     where: $.definitions.Permission.properties.notDataActions
     transform: >
       $["x-ms-client-name"] = "DeniedDataActions"
-  - from: policyAssignments.json
+  - from: openapi.json
     where: $.definitions.PolicyAssignment.properties.location
     transform: >
       $["x-ms-format"] = "azure-location"

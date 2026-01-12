@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/getPolicyDefinition.json
             // this example is just showing the usage of "PolicyDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPolicyDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/deletePolicyDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/deletePolicyDefinition.json
             // this example is just showing the usage of "PolicyDefinitions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAPolicyDefinition()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicyDefinition.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createOrUpdatePolicyDefinition.json
             // this example is just showing the usage of "PolicyDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ Description = "Resource name suffix",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAPolicyDefinitionWithAdvancedParameters()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicyDefinitionAdvancedParams.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createOrUpdatePolicyDefinitionAdvancedParams.json
             // this example is just showing the usage of "PolicyDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,6 +222,87 @@ Description = "The required diagnostic logs retention in days",
 },
 }
 },
+            };
+            ArmOperation<SubscriptionPolicyDefinitionResource> lro = await subscriptionPolicyDefinition.UpdateAsync(WaitUntil.Completed, data);
+            SubscriptionPolicyDefinitionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyDefinitionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateOrUpdateAPolicyDefinitionWithExternalEvaluationEnforcementSettings()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2025-03-01/examples/createOrUpdatePolicyDefinitionExternalEvaluationEnforcementSettings.json
+            // this example is just showing the usage of "PolicyDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionPolicyDefinitionResource created on azure
+            // for more information of creating SubscriptionPolicyDefinitionResource, please refer to the document of SubscriptionPolicyDefinitionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string policyDefinitionName = "RandomizeVMAllocation";
+            ResourceIdentifier subscriptionPolicyDefinitionResourceId = SubscriptionPolicyDefinitionResource.CreateResourceIdentifier(subscriptionId, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource subscriptionPolicyDefinition = client.GetSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResourceId);
+
+            // invoke the operation
+            PolicyDefinitionData data = new PolicyDefinitionData
+            {
+                Mode = "Indexed",
+                DisplayName = "Randomize VM Allocation",
+                Description = "Randomly disable VM allocation in eastus by having policy rule reference the outcome of invoking an external endpoint using the CoinFlip endpoint that returns random values.",
+                PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["if"] = new
+                    {
+                        allOf = new object[]
+            {
+new
+{
+equals = "Microsoft.Compute/virtualMachines",
+field = "type",
+},
+new
+{
+equals = "eastus",
+field = "location",
+},
+new
+{
+equals = "false",
+value = "[claims().isValid]",
+}
+            },
+                    },
+                    ["then"] = new
+                    {
+                        effect = "deny",
+                    }
+                }),
+                Metadata = BinaryData.FromObjectAsJson(new
+                {
+                    category = "VM",
+                }),
+                ExternalEvaluationEnforcementSettings = new ExternalEvaluationEnforcementSettings
+                {
+                    MissingTokenAction = "audit",
+                    EndpointSettings = new ExternalEvaluationEndpointSettings
+                    {
+                        Kind = "CoinFlip",
+                        Details = BinaryData.FromObjectAsJson(new
+                        {
+                            successProbability = "0.5",
+                        }),
+                    },
+                    RoleDefinitionIds = { "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/roleDefinitions/f0cc2aea-b517-48f6-8f9e-0c01c687907b" },
+                },
             };
             ArmOperation<SubscriptionPolicyDefinitionResource> lro = await subscriptionPolicyDefinition.UpdateAsync(WaitUntil.Completed, data);
             SubscriptionPolicyDefinitionResource result = lro.Value;

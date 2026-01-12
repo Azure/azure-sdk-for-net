@@ -38,6 +38,21 @@ namespace Azure.ResourceManager.Resources.Models
 
             writer.WritePropertyName("policyDefinitionId"u8);
             writer.WriteStringValue(PolicyDefinitionId);
+            if (Optional.IsDefined(DefinitionVersion))
+            {
+                writer.WritePropertyName("definitionVersion"u8);
+                writer.WriteStringValue(DefinitionVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LatestDefinitionVersion))
+            {
+                writer.WritePropertyName("latestDefinitionVersion"u8);
+                writer.WriteStringValue(LatestDefinitionVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EffectiveDefinitionVersion))
+            {
+                writer.WritePropertyName("effectiveDefinitionVersion"u8);
+                writer.WriteStringValue(EffectiveDefinitionVersion);
+            }
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -102,6 +117,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string policyDefinitionId = default;
+            string definitionVersion = default;
+            string latestDefinitionVersion = default;
+            string effectiveDefinitionVersion = default;
             IDictionary<string, ArmPolicyParameterValue> parameters = default;
             string policyDefinitionReferenceId = default;
             IList<string> groupNames = default;
@@ -112,6 +130,21 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("policyDefinitionId"u8))
                 {
                     policyDefinitionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("definitionVersion"u8))
+                {
+                    definitionVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("latestDefinitionVersion"u8))
+                {
+                    latestDefinitionVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("effectiveDefinitionVersion"u8))
+                {
+                    effectiveDefinitionVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -153,7 +186,15 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PolicyDefinitionReference(policyDefinitionId, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(), policyDefinitionReferenceId, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PolicyDefinitionReference(
+                policyDefinitionId,
+                definitionVersion,
+                latestDefinitionVersion,
+                effectiveDefinitionVersion,
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(),
+                policyDefinitionReferenceId,
+                groupNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -186,6 +227,75 @@ namespace Azure.ResourceManager.Resources.Models
                     else
                     {
                         builder.AppendLine($"'{PolicyDefinitionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefinitionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  definitionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefinitionVersion))
+                {
+                    builder.Append("  definitionVersion: ");
+                    if (DefinitionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefinitionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefinitionVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestDefinitionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latestDefinitionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestDefinitionVersion))
+                {
+                    builder.Append("  latestDefinitionVersion: ");
+                    if (LatestDefinitionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LatestDefinitionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LatestDefinitionVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EffectiveDefinitionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  effectiveDefinitionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EffectiveDefinitionVersion))
+                {
+                    builder.Append("  effectiveDefinitionVersion: ");
+                    if (EffectiveDefinitionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EffectiveDefinitionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EffectiveDefinitionVersion}'");
                     }
                 }
             }
