@@ -3,13 +3,10 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    [CodeGenModel("UnknownScriptExecutionParameterDetails")]
+    [CodeGenType("UnknownScriptExecutionParameterDetails")]
     internal partial class UnknownScriptExecutionParameter { }
 }

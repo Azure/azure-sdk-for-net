@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownScriptExecutionParameter : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
+    internal partial class UnknownScriptExecutionParameter : ScriptExecutionParameterDetails, IJsonModel<ScriptExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/> for deserialization. </summary>
+        internal UnknownScriptExecutionParameter()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScriptExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,64 +33,69 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        ScriptExecutionParameterDetails IJsonModel<ScriptExecutionParameterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScriptExecutionParameterDetails IJsonModel<ScriptExecutionParameterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ScriptExecutionParameterDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
         }
 
-        internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ScriptExecutionParameterType type = "Unknown";
+            ScriptExecutionParameterType @type = default;
             string name = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new ScriptExecutionParameterType(property.Value.GetString());
+                    @type = new ScriptExecutionParameterType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownScriptExecutionParameter(type, name, serializedAdditionalRawData);
+            return new UnknownScriptExecutionParameter(@type, name, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -95,15 +105,20 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        ScriptExecutionParameterDetails IPersistableModel<ScriptExecutionParameterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScriptExecutionParameterDetails IPersistableModel<ScriptExecutionParameterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ScriptExecutionParameterDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
                     }
                 default:
@@ -111,6 +126,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScriptExecutionParameterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
