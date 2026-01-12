@@ -111,10 +111,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                             using (StreamReader reader = new StreamReader(stream))
                             {
                                 int lineNumber = 0;
-                                while (!reader.EndOfStream)
+                                string line;
+                                while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) is not null)
                                 {
                                     cancellationToken.ThrowIfCancellationRequested();
-                                    string line = await reader.ReadLineAsync().ConfigureAwait(false);
                                     lineNumber++;
 
                                     if (line != null)
