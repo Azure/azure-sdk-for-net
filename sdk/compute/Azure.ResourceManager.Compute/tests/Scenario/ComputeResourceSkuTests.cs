@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.ResourceManager.Compute.Skus;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
