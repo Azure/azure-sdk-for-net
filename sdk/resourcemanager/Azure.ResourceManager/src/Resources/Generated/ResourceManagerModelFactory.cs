@@ -250,26 +250,26 @@ namespace Azure.ResourceManager.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenContent"/>. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <param name="changeReference"> The change reference. </param>
-        /// <returns> A new <see cref="Resources.Models.PolicyTokenRequest"/> instance for mocking. </returns>
-        public static PolicyTokenRequest PolicyTokenRequest(PolicyTokenOperation operation = null, string changeReference = null)
+        /// <returns> A new <see cref="Resources.Models.PolicyTokenContent"/> instance for mocking. </returns>
+        public static PolicyTokenContent PolicyTokenContent(PolicyTokenOperationData operation = null, string changeReference = null)
         {
-            return new PolicyTokenRequest(operation, changeReference, serializedAdditionalRawData: null);
+            return new PolicyTokenContent(operation, changeReference, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenOperationData"/>. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <param name="content"> The payload of the resource operation. </param>
-        /// <returns> A new <see cref="Resources.Models.PolicyTokenOperation"/> instance for mocking. </returns>
-        public static PolicyTokenOperation PolicyTokenOperation(Uri uri = null, string httpMethod = null, BinaryData content = null)
+        /// <returns> A new <see cref="Resources.Models.PolicyTokenOperationData"/> instance for mocking. </returns>
+        public static PolicyTokenOperationData PolicyTokenOperationData(Uri uri = null, string httpMethod = null, BinaryData content = null)
         {
-            return new PolicyTokenOperation(uri, httpMethod, content, serializedAdditionalRawData: null);
+            return new PolicyTokenOperationData(uri, httpMethod, content, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyTokenResponseResult"/>. </summary>
         /// <param name="result"> The result of the completed token acquisition operation. Possible values are Succeeded and Failed. </param>
         /// <param name="message"> Status message with additional details about the token acquisition operation result. </param>
         /// <param name="retryAfter"> The date and time after which the client can try to acquire a token again in the case of retry-able failures. </param>
@@ -278,12 +278,12 @@ namespace Azure.ResourceManager.Models
         /// <param name="token"> The issued policy token. </param>
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
         /// <param name="expiredOn"> The expiration of the policy token. </param>
-        /// <returns> A new <see cref="Resources.Models.PolicyTokenResponse"/> instance for mocking. </returns>
-        public static PolicyTokenResponse PolicyTokenResponse(PolicyTokenResult? result = null, string message = null, DateTimeOffset? retryAfter = null, IEnumerable<ExternalEvaluationEndpointInvocationResult> results = null, string changeReference = null, string token = null, string tokenId = null, DateTimeOffset? expiredOn = null)
+        /// <returns> A new <see cref="Resources.Models.PolicyTokenResponseResult"/> instance for mocking. </returns>
+        public static PolicyTokenResponseResult PolicyTokenResponseResult(PolicyTokenResult? result = null, string message = null, DateTimeOffset? retryAfter = null, IEnumerable<ExternalEvaluationEndpointInvocationResult> results = null, string changeReference = null, string token = null, string tokenId = null, DateTimeOffset? expiredOn = null)
         {
             results ??= new List<ExternalEvaluationEndpointInvocationResult>();
 
-            return new PolicyTokenResponse(
+            return new PolicyTokenResponseResult(
                 result,
                 message,
                 retryAfter,

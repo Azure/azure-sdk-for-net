@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The policy token response properties. </summary>
-    public partial class PolicyTokenResponse
+    public partial class PolicyTokenResponseResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponse"/>. </summary>
-        internal PolicyTokenResponse()
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponseResult"/>. </summary>
+        internal PolicyTokenResponseResult()
         {
             Results = new ChangeTrackingList<ExternalEvaluationEndpointInvocationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponseResult"/>. </summary>
         /// <param name="result"> The result of the completed token acquisition operation. Possible values are Succeeded and Failed. </param>
         /// <param name="message"> Status message with additional details about the token acquisition operation result. </param>
         /// <param name="retryAfter"> The date and time after which the client can try to acquire a token again in the case of retry-able failures. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
         /// <param name="expiredOn"> The expiration of the policy token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenResponse(PolicyTokenResult? result, string message, DateTimeOffset? retryAfter, IReadOnlyList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiredOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyTokenResponseResult(PolicyTokenResult? result, string message, DateTimeOffset? retryAfter, IReadOnlyList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiredOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Result = result;
             Message = message;

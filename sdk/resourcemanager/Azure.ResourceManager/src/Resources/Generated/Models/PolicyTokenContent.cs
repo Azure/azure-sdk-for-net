@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The policy token request properties. </summary>
-    public partial class PolicyTokenRequest
+    public partial class PolicyTokenContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,35 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenContent"/>. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
-        public PolicyTokenRequest(PolicyTokenOperation operation)
+        public PolicyTokenContent(PolicyTokenOperationData operation)
         {
             Argument.AssertNotNull(operation, nameof(operation));
 
             Operation = operation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenContent"/>. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <param name="changeReference"> The change reference. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenRequest(PolicyTokenOperation operation, string changeReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyTokenContent(PolicyTokenOperationData operation, string changeReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operation = operation;
             ChangeReference = changeReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequest"/> for deserialization. </summary>
-        internal PolicyTokenRequest()
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenContent"/> for deserialization. </summary>
+        internal PolicyTokenContent()
         {
         }
 
         /// <summary> The resource operation to acquire a token for. </summary>
         [WirePath("operation")]
-        public PolicyTokenOperation Operation { get; }
+        public PolicyTokenOperationData Operation { get; }
         /// <summary> The change reference. </summary>
         [WirePath("changeReference")]
         public string ChangeReference { get; set; }

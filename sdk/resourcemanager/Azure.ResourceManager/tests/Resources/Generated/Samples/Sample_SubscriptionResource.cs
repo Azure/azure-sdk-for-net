@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Resources.Samples
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            PolicyTokenRequest policyTokenRequest = new PolicyTokenRequest(new PolicyTokenOperation(new Uri("https://management.azure.com/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testRG/providers/Microsoft.Compute/virtualMachines/testVM?api-version=2024-01-01"), "delete"));
-            PolicyTokenResponse result = await subscription.AcquirePolicyTokenAsync(policyTokenRequest);
+            PolicyTokenContent content = new PolicyTokenContent(new PolicyTokenOperationData(new Uri("https://management.azure.com/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testRG/providers/Microsoft.Compute/virtualMachines/testVM?api-version=2024-01-01"), "delete"));
+            PolicyTokenResponseResult result = await subscription.AcquirePolicyTokenAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

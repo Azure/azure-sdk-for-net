@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource operation to acquire a token for. </summary>
-    public partial class PolicyTokenOperation
+    public partial class PolicyTokenOperationData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperationData"/>. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="httpMethod"/> is null. </exception>
-        public PolicyTokenOperation(Uri uri, string httpMethod)
+        public PolicyTokenOperationData(Uri uri, string httpMethod)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(httpMethod, nameof(httpMethod));
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Resources.Models
             HttpMethod = httpMethod;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperationData"/>. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <param name="content"> The payload of the resource operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenOperation(Uri uri, string httpMethod, BinaryData content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyTokenOperationData(Uri uri, string httpMethod, BinaryData content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             HttpMethod = httpMethod;
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Resources.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperation"/> for deserialization. </summary>
-        internal PolicyTokenOperation()
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperationData"/> for deserialization. </summary>
+        internal PolicyTokenOperationData()
         {
         }
 

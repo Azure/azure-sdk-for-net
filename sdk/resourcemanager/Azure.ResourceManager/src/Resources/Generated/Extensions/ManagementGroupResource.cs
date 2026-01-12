@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyTokenRequest"> The policy token properties. </param>
+        /// <param name="content"> The policy token properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
-        public virtual async Task<Response<PolicyTokenResponse>> AcquireAtManagementGroupPolicyTokenAsync(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PolicyTokenResponseResult>> AcquireAtManagementGroupPolicyTokenAsync(PolicyTokenContent content, CancellationToken cancellationToken = default)
         {
             using var scope = _policyTokensClientDiagnostics.CreateScope("ManagementGroupResource.AcquireAtManagementGroupPolicyToken");
             scope.Start();
             try
             {
-                var response = await _policyTokensRestClient.AcquireAtManagementGroupAsync(this.Id.Name, policyTokenRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _policyTokensRestClient.AcquireAtManagementGroupAsync(this.Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -310,16 +310,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyTokenRequest"> The policy token properties. </param>
+        /// <param name="content"> The policy token properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
-        public virtual Response<PolicyTokenResponse> AcquireAtManagementGroupPolicyToken(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PolicyTokenResponseResult> AcquireAtManagementGroupPolicyToken(PolicyTokenContent content, CancellationToken cancellationToken = default)
         {
             using var scope = _policyTokensClientDiagnostics.CreateScope("ManagementGroupResource.AcquireAtManagementGroupPolicyToken");
             scope.Start();
             try
             {
-                var response = _policyTokensRestClient.AcquireAtManagementGroup(this.Id.Name, policyTokenRequest, cancellationToken);
+                var response = _policyTokensRestClient.AcquireAtManagementGroup(this.Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyTokenRequest : IUtf8JsonSerializable, IJsonModel<PolicyTokenRequest>
+    public partial class PolicyTokenContent : IUtf8JsonSerializable, IJsonModel<PolicyTokenContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTokenRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTokenContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PolicyTokenRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyTokenContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyTokenRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyTokenContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("operation"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        PolicyTokenRequest IJsonModel<PolicyTokenRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PolicyTokenContent IJsonModel<PolicyTokenContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyTokenRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyTokenContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePolicyTokenRequest(document.RootElement, options);
+            return DeserializePolicyTokenContent(document.RootElement, options);
         }
 
-        internal static PolicyTokenRequest DeserializePolicyTokenRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PolicyTokenContent DeserializePolicyTokenContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            PolicyTokenOperation operation = default;
+            PolicyTokenOperationData operation = default;
             string changeReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("operation"u8))
                 {
-                    operation = PolicyTokenOperation.DeserializePolicyTokenOperation(property.Value, options);
+                    operation = PolicyTokenOperationData.DeserializePolicyTokenOperationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("changeReference"u8))
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PolicyTokenRequest(operation, changeReference, serializedAdditionalRawData);
+            return new PolicyTokenContent(operation, changeReference, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PolicyTokenRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PolicyTokenContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyTokenRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyTokenContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PolicyTokenRequest IPersistableModel<PolicyTokenRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PolicyTokenContent IPersistableModel<PolicyTokenContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTokenContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePolicyTokenRequest(document.RootElement, options);
+                        return DeserializePolicyTokenContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyTokenRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyTokenContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PolicyTokenRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyTokenContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

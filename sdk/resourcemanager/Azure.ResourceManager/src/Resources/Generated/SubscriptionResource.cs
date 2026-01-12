@@ -591,18 +591,18 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyTokenRequest"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
-        public virtual async Task<Response<PolicyTokenResponse>> AcquirePolicyTokenAsync(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PolicyTokenResponseResult>> AcquirePolicyTokenAsync(PolicyTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyTokenRequest, nameof(policyTokenRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _policyTokensClientDiagnostics.CreateScope("SubscriptionResource.AcquirePolicyToken");
             scope.Start();
             try
             {
-                var response = await _policyTokensRestClient.AcquireAsync(Id.SubscriptionId, policyTokenRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _policyTokensRestClient.AcquireAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -629,18 +629,18 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyTokenRequest"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
-        public virtual Response<PolicyTokenResponse> AcquirePolicyToken(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PolicyTokenResponseResult> AcquirePolicyToken(PolicyTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyTokenRequest, nameof(policyTokenRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _policyTokensClientDiagnostics.CreateScope("SubscriptionResource.AcquirePolicyToken");
             scope.Start();
             try
             {
-                var response = _policyTokensRestClient.Acquire(Id.SubscriptionId, policyTokenRequest, cancellationToken);
+                var response = _policyTokensRestClient.Acquire(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

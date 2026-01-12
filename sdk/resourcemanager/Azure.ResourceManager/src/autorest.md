@@ -191,7 +191,6 @@ request-path-to-resource-data:
 
 request-path-to-resource-name:
   /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: PolicyDefinitionVersion
-  /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: ManagementGroupIDPolicyDefinitionVersion
   /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: ManagementGroupNamePolicyDefinitionVersion
   /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/versions/{policyDefinitionVersion}: SubscriptionPolicyDefinitionVersion
   /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}: PolicySetDefinitionVersion
@@ -292,6 +291,9 @@ rename-mapping:
   PolicyAssignment.properties.instanceId: -|uuid
   ExternalEvaluationEndpointInvocationResult.expiration: ExpiredOn
   PolicyTokenResponse.expiration: ExpiredOn
+  PolicyTokenResponse: PolicyTokenResponseResult
+  PolicyTokenOperation: PolicyTokenOperationData
+  PolicyTokenRequest: PolicyTokenContent
   Override: PolicyOverride
   OverrideKind: PolicyOverrideKind
   Selector: ResourceSelectorExpression

@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Resources.Samples
             ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
 
             // invoke the operation
-            PolicyTokenRequest policyTokenRequest = new PolicyTokenRequest(new PolicyTokenOperation(new Uri("https://management.azure.com/providers/Microsoft.Management/managementGroups/MyManagementGroup/providers/Microsoft.Authorization/roleAssignments/00000000-0000-0000-0000-000000000000?api-version=2022-04-01"), "delete"));
-            PolicyTokenResponse result = await managementGroupResource.AcquireAtManagementGroupPolicyTokenAsync(policyTokenRequest);
+            PolicyTokenContent content = new PolicyTokenContent(new PolicyTokenOperationData(new Uri("https://management.azure.com/providers/Microsoft.Management/managementGroups/MyManagementGroup/providers/Microsoft.Authorization/roleAssignments/00000000-0000-0000-0000-000000000000?api-version=2022-04-01"), "delete"));
+            PolicyTokenResponseResult result = await managementGroupResource.AcquireAtManagementGroupPolicyTokenAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
