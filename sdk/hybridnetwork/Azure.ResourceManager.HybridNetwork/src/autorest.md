@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: HybridNetwork
 namespace: Azure.ResourceManager.HybridNetwork
-require: https://github.com/Azure/azure-rest-api-specs/blob/eccca594dd50892ada8220fe7b1587c12cc5c871/specification/hybridnetwork/resource-manager/readme.md
+require: D:/Azure/azure-rest-api-specs-pr/specification/hybridnetwork/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,10 +18,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug:
-#  show-serialized-names: true
-
-
+mgmt-debug:
+ show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -81,22 +79,21 @@ rename-mapping:
   StatefulSet: KubernetesStatefulSet
   StatefulSet.desired: DesiredNumberOfPods
   StatefulSet.ready: ReadyNumberOfPods
+  ArtifactStorePropertiesFormat.storageResourceId: -|arm-id
+  AzureStorageAccountCredential.storageAccountId: -|arm-id
+  SecretDeploymentResourceReference.id: -|arm-id
+  OpenDeploymentResourceReference.id: -|arm-id
+  NetworkFunctionPropertiesFormat.nfviId: -|arm-id
+  CancelInformation: CancelSiteNetworkServiceInformation
+  LongRunningOperation: CancelSiteNetworkServiceLongRunningOperationType
 
 directive:
-- from: publisher.json
-  where: $.definitions.ArtifactStorePropertiesFormat.properties.storageResourceId
-  transform: $["x-ms-format"] = "arm-id";
-- from: common.json
-  where: $.definitions.AzureStorageAccountCredential.properties.storageAccountId
-  transform: $["x-ms-format"] = "arm-id";
-- from: common.json
-  where: $.definitions.SecretDeploymentResourceReference.properties.id
-  transform: $["x-ms-format"] = "arm-id";
-- from: common.json
-  where: $.definitions.OpenDeploymentResourceReference.properties.id
-  transform: $["x-ms-format"] = "arm-id";
-- from: networkFunction.json
-  where: $.definitions.NetworkFunctionPropertiesFormat.properties.nfviId
-  transform: $["x-ms-format"] = "arm-id";
-
+# operation removal - should be temporary
+# pageable lro
+  - remove-operation: ArtifactStores_ListNetworkFabricControllerPrivateEndPoints
+  - remove-operation: ArtifactStores_ListPrivateEndPoints
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.SecretDeploymentResourceReference.properties.id['format'] = undefined;
 ```

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Configuration group schema properties. </summary>
+    /// <summary>
+    /// Configuration group schema properties.
+    /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat
+    /// </summary>
     public partial class ConfigurationGroupSchemaPropertiesFormat
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
-        /// <param name="versionState"> The configuration group schema version state. </param>
-        /// <param name="description"> Description of what schema can contain. </param>
-        /// <param name="schemaDefinition"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the Configuration group schema resource.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The configuration group schema version state.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// Description of what schema can contain.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.description
+        /// </param>
+        /// <param name="schemaDefinition">
+        /// Name and value pairs that define the configuration value. It can be a well formed escaped JSON string.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.schemaDefinition
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string schemaDefinition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the Configuration group schema resource. </summary>
+        /// <summary>
+        /// The provisioning state of the Configuration group schema resource.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The configuration group schema version state. </summary>
+        /// <summary>
+        /// The configuration group schema version state.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.versionState
+        /// </summary>
         public VersionState? VersionState { get; }
-        /// <summary> Description of what schema can contain. </summary>
+        /// <summary>
+        /// Description of what schema can contain.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </summary>
+        /// <summary>
+        /// Name and value pairs that define the configuration value. It can be a well formed escaped JSON string.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.schemaDefinition
+        /// </summary>
         public string SchemaDefinition { get; set; }
     }
 }

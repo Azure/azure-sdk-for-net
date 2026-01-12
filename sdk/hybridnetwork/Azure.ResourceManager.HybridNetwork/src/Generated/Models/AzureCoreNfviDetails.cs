@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The Azure Core NFVI detail. </summary>
+    /// <summary>
+    /// The Azure Core NFVI detail.
+    /// Serialized Name: AzureCoreNfviDetails
+    /// </summary>
     public partial class AzureCoreNfviDetails : NFVIs
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNfviDetails"/>. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNfviDetails"/>. </summary>
-        /// <param name="name"> Name of the nfvi. </param>
-        /// <param name="nfviType"> The NFVI type. </param>
+        /// <param name="name">
+        /// Name of the nfvi.
+        /// Serialized Name: NFVIs.name
+        /// </param>
+        /// <param name="nfviType">
+        /// The NFVI type.
+        /// Serialized Name: NFVIs.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="location"> Location of the Azure core. </param>
+        /// <param name="location">
+        /// Location of the Azure core.
+        /// Serialized Name: AzureCoreNfviDetails.location
+        /// </param>
         internal AzureCoreNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location) : base(name, nfviType, serializedAdditionalRawData)
         {
             Location = location;
             NfviType = nfviType;
         }
 
-        /// <summary> Location of the Azure core. </summary>
+        /// <summary>
+        /// Location of the Azure core.
+        /// Serialized Name: AzureCoreNfviDetails.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
     }
 }

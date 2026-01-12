@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Mapping rule profile properties. </summary>
+    /// <summary>
+    /// Mapping rule profile properties.
+    /// Serialized Name: MappingRuleProfile
+    /// </summary>
     public partial class MappingRuleProfile
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MappingRuleProfile"/>. </summary>
-        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="applicationEnablement">
+        /// The application enablement.
+        /// Serialized Name: MappingRuleProfile.applicationEnablement
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The application enablement. </summary>
+        /// <summary>
+        /// The application enablement.
+        /// Serialized Name: MappingRuleProfile.applicationEnablement
+        /// </summary>
         public ApplicationEnablement? ApplicationEnablement { get; set; }
     }
 }

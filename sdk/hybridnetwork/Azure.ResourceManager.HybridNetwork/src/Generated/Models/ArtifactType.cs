@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact type. </summary>
+    /// <summary>
+    /// The artifact type.
+    /// Serialized Name: ArtifactType
+    /// </summary>
     public readonly partial struct ArtifactType : IEquatable<ArtifactType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ArmTemplateValue = "ArmTemplate";
         private const string ImageFileValue = "ImageFile";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ArtifactType.Unknown
+        /// </summary>
         public static ArtifactType Unknown { get; } = new ArtifactType(UnknownValue);
-        /// <summary> OCIArtifact. </summary>
+        /// <summary>
+        /// OCIArtifact
+        /// Serialized Name: ArtifactType.OCIArtifact
+        /// </summary>
         public static ArtifactType OCIArtifact { get; } = new ArtifactType(OCIArtifactValue);
-        /// <summary> VhdImageFile. </summary>
+        /// <summary>
+        /// VhdImageFile
+        /// Serialized Name: ArtifactType.VhdImageFile
+        /// </summary>
         public static ArtifactType VhdImageFile { get; } = new ArtifactType(VhdImageFileValue);
-        /// <summary> ArmTemplate. </summary>
+        /// <summary>
+        /// ArmTemplate
+        /// Serialized Name: ArtifactType.ArmTemplate
+        /// </summary>
         public static ArtifactType ArmTemplate { get; } = new ArtifactType(ArmTemplateValue);
-        /// <summary> ImageFile. </summary>
+        /// <summary>
+        /// ImageFile
+        /// Serialized Name: ArtifactType.ImageFile
+        /// </summary>
         public static ArtifactType ImageFile { get; } = new ArtifactType(ImageFileValue);
         /// <summary> Determines if two <see cref="ArtifactType"/> values are the same. </summary>
         public static bool operator ==(ArtifactType left, ArtifactType right) => left.Equals(right);

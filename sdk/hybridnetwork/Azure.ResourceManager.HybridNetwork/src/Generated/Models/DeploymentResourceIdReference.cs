@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The azure resource reference which is used for deployment.
+    /// Serialized Name: DeploymentResourceIdReference
     /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
     /// </summary>
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentResourceIdReference"/>. </summary>
-        /// <param name="idType"> The resource reference arm id type. </param>
+        /// <param name="idType">
+        /// The resource reference arm id type.
+        /// Serialized Name: DeploymentResourceIdReference.idType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentResourceIdReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource reference arm id type. </summary>
+        /// <summary>
+        /// The resource reference arm id type.
+        /// Serialized Name: DeploymentResourceIdReference.idType
+        /// </summary>
         internal IdType IdType { get; set; }
     }
 }

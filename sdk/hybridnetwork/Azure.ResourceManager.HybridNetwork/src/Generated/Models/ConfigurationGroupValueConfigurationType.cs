@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The secret type which indicates if secret or not. </summary>
+    /// <summary>
+    /// The secret type which indicates if secret or not.
+    /// Serialized Name: ConfigurationGroupValueConfigurationType
+    /// </summary>
     internal readonly partial struct ConfigurationGroupValueConfigurationType : IEquatable<ConfigurationGroupValueConfigurationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string SecretValue = "Secret";
         private const string OpenValue = "Open";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ConfigurationGroupValueConfigurationType.Unknown
+        /// </summary>
         public static ConfigurationGroupValueConfigurationType Unknown { get; } = new ConfigurationGroupValueConfigurationType(UnknownValue);
-        /// <summary> Secret. </summary>
+        /// <summary>
+        /// Secret
+        /// Serialized Name: ConfigurationGroupValueConfigurationType.Secret
+        /// </summary>
         public static ConfigurationGroupValueConfigurationType Secret { get; } = new ConfigurationGroupValueConfigurationType(SecretValue);
-        /// <summary> Open. </summary>
+        /// <summary>
+        /// Open
+        /// Serialized Name: ConfigurationGroupValueConfigurationType.Open
+        /// </summary>
         public static ConfigurationGroupValueConfigurationType Open { get; } = new ConfigurationGroupValueConfigurationType(OpenValue);
         /// <summary> Determines if two <see cref="ConfigurationGroupValueConfigurationType"/> values are the same. </summary>
         public static bool operator ==(ConfigurationGroupValueConfigurationType left, ConfigurationGroupValueConfigurationType right) => left.Equals(right);

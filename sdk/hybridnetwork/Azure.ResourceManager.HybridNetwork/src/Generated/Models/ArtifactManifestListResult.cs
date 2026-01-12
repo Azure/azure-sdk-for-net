@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> A list of artifact manifests. </summary>
+    /// <summary>
+    /// The response of a ArtifactManifest list operation.
+    /// Serialized Name: ArtifactManifestListResult
+    /// </summary>
     internal partial class ArtifactManifestListResult
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/>. </summary>
-        internal ArtifactManifestListResult()
+        /// <param name="value">
+        /// The ArtifactManifest items on this page
+        /// Serialized Name: ArtifactManifestListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ArtifactManifestListResult(IEnumerable<ArtifactManifestData> value)
         {
-            Value = new ChangeTrackingList<ArtifactManifestData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/>. </summary>
-        /// <param name="value"> A list of artifact manifests. </param>
-        /// <param name="nextLink"> The URI to get the next set of results. </param>
+        /// <param name="value">
+        /// The ArtifactManifest items on this page
+        /// Serialized Name: ArtifactManifestListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: ArtifactManifestListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactManifestListResult(IReadOnlyList<ArtifactManifestData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArtifactManifestListResult(IReadOnlyList<ArtifactManifestData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of artifact manifests. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/> for deserialization. </summary>
+        internal ArtifactManifestListResult()
+        {
+        }
+
+        /// <summary>
+        /// The ArtifactManifest items on this page
+        /// Serialized Name: ArtifactManifestListResult.value
+        /// </summary>
         public IReadOnlyList<ArtifactManifestData> Value { get; }
-        /// <summary> The URI to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: ArtifactManifestListResult.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

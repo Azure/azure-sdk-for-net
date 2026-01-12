@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The ProxyArtifactOverviewPropertiesValue. </summary>
+    /// <summary>
+    /// The ProxyArtifactOverviewPropertiesValue.
+    /// Serialized Name: ProxyArtifactOverviewPropertiesValue
+    /// </summary>
     public partial class ProxyArtifactOverviewPropertiesValue
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewPropertiesValue"/>. </summary>
-        /// <param name="artifactType"> The artifact type. </param>
-        /// <param name="artifactVersion"> The artifact version. </param>
-        /// <param name="artifactState"> The artifact state. </param>
+        /// <param name="artifactType">
+        /// The artifact type.
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactType
+        /// </param>
+        /// <param name="artifactVersion">
+        /// The artifact version.
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactVersion
+        /// </param>
+        /// <param name="artifactState">
+        /// The artifact state
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType, string artifactVersion, ArtifactState? artifactState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The artifact type. </summary>
+        /// <summary>
+        /// The artifact type.
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactType
+        /// </summary>
         public ArtifactType? ArtifactType { get; }
-        /// <summary> The artifact version. </summary>
+        /// <summary>
+        /// The artifact version.
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactVersion
+        /// </summary>
         public string ArtifactVersion { get; }
-        /// <summary> The artifact state. </summary>
+        /// <summary>
+        /// The artifact state
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactState
+        /// </summary>
         public ArtifactState? ArtifactState { get; }
     }
 }

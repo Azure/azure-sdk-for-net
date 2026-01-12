@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Network function properties.
+    /// Serialized Name: NetworkFunctionPropertiesFormat
     /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
     /// </summary>
@@ -57,22 +58,56 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
-        /// <param name="publisherName"> The publisher name for the network function. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The network function definition group name for the network function. </param>
-        /// <param name="networkFunctionDefinitionVersion"> The network function definition version for the network function. </param>
-        /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function resource.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="networkFunctionDefinitionGroupName">
+        /// The network function definition group name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionGroupName
+        /// </param>
+        /// <param name="networkFunctionDefinitionVersion">
+        /// The network function definition version for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersion
+        /// </param>
+        /// <param name="networkFunctionDefinitionOfferingLocation">
+        /// The location of the network function definition offering.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionOfferingLocation
+        /// </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="nfviType"> The nfvi type for the network function. </param>
-        /// <param name="nfviId"> The nfviId for the network function. </param>
-        /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
-        /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
-        /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
+        /// <param name="nfviType">
+        /// The nfvi type for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviType
+        /// </param>
+        /// <param name="nfviId">
+        /// The nfviId for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviId
+        /// </param>
+        /// <param name="allowSoftwareUpdate">
+        /// Indicates if software updates are allowed during deployment.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.allowSoftwareUpdate
+        /// </param>
+        /// <param name="configurationType">
+        /// The value which indicates if NF  values are secrets
+        /// Serialized Name: NetworkFunctionPropertiesFormat.configurationType
+        /// </param>
+        /// <param name="roleOverrideValues">
+        /// The role configuration override values from the user.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.roleOverrideValues
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,33 +126,67 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the network function resource. </summary>
+        /// <summary>
+        /// The provisioning state of the network function resource.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The publisher name for the network function. </summary>
-        public string PublisherName { get; }
-        /// <summary> The scope of the publisher. </summary>
-        public PublisherScope? PublisherScope { get; }
-        /// <summary> The network function definition group name for the network function. </summary>
-        public string NetworkFunctionDefinitionGroupName { get; }
-        /// <summary> The network function definition version for the network function. </summary>
-        public string NetworkFunctionDefinitionVersion { get; }
-        /// <summary> The location of the network function definition offering. </summary>
-        public string NetworkFunctionDefinitionOfferingLocation { get; }
+        /// <summary>
+        /// The publisher name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherName
+        /// </summary>
+        public string PublisherName { get; set; }
+        /// <summary>
+        /// The scope of the publisher.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherScope
+        /// </summary>
+        public PublisherScope? PublisherScope { get; set; }
+        /// <summary>
+        /// The network function definition group name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionGroupName
+        /// </summary>
+        public string NetworkFunctionDefinitionGroupName { get; set; }
+        /// <summary>
+        /// The network function definition version for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersion
+        /// </summary>
+        public string NetworkFunctionDefinitionVersion { get; set; }
+        /// <summary>
+        /// The location of the network function definition offering.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionOfferingLocation
+        /// </summary>
+        public string NetworkFunctionDefinitionOfferingLocation { get; set; }
         /// <summary>
         /// The network function definition version resource reference.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </summary>
         public DeploymentResourceIdReference NetworkFunctionDefinitionVersionResourceReference { get; set; }
-        /// <summary> The nfvi type for the network function. </summary>
+        /// <summary>
+        /// The nfvi type for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviType
+        /// </summary>
         public NfviType? NfviType { get; set; }
-        /// <summary> The nfviId for the network function. </summary>
+        /// <summary>
+        /// The nfviId for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviId
+        /// </summary>
         public ResourceIdentifier NfviId { get; set; }
-        /// <summary> Indicates if software updates are allowed during deployment. </summary>
+        /// <summary>
+        /// Indicates if software updates are allowed during deployment.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.allowSoftwareUpdate
+        /// </summary>
         public bool? AllowSoftwareUpdate { get; set; }
-        /// <summary> The value which indicates if NF  values are secrets. </summary>
+        /// <summary>
+        /// The value which indicates if NF  values are secrets
+        /// Serialized Name: NetworkFunctionPropertiesFormat.configurationType
+        /// </summary>
         internal NetworkFunctionConfigurationType ConfigurationType { get; set; }
-        /// <summary> The role configuration override values from the user. </summary>
+        /// <summary>
+        /// The role configuration override values from the user.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.roleOverrideValues
+        /// </summary>
         public IList<string> RoleOverrideValues { get; }
     }
 }

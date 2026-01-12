@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Template artifact profile. </summary>
+    /// <summary>
+    /// Template artifact profile.
+    /// Serialized Name: ArmTemplateArtifactProfile
+    /// </summary>
     public partial class ArmTemplateArtifactProfile
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmTemplateArtifactProfile"/>. </summary>
-        /// <param name="templateName"> Template name. </param>
-        /// <param name="templateVersion"> Template version. </param>
+        /// <param name="templateName">
+        /// Template name.
+        /// Serialized Name: ArmTemplateArtifactProfile.templateName
+        /// </param>
+        /// <param name="templateVersion">
+        /// Template version.
+        /// Serialized Name: ArmTemplateArtifactProfile.templateVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArmTemplateArtifactProfile(string templateName, string templateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Template name. </summary>
+        /// <summary>
+        /// Template name.
+        /// Serialized Name: ArmTemplateArtifactProfile.templateName
+        /// </summary>
         public string TemplateName { get; set; }
-        /// <summary> Template version. </summary>
+        /// <summary>
+        /// Template version.
+        /// Serialized Name: ArmTemplateArtifactProfile.templateVersion
+        /// </summary>
         public string TemplateVersion { get; set; }
     }
 }

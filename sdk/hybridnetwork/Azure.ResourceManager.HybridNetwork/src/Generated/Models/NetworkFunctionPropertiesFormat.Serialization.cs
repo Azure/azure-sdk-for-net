@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (Optional.IsDefined(PublisherScope))
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionGroupName))
+            if (Optional.IsDefined(NetworkFunctionDefinitionGroupName))
             {
                 writer.WritePropertyName("networkFunctionDefinitionGroupName"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionVersion))
+            if (Optional.IsDefined(NetworkFunctionDefinitionVersion))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersion"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
+            if (Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
             {
                 writer.WritePropertyName("networkFunctionDefinitionOfferingLocation"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> network service design group properties. </summary>
+    /// <summary>
+    /// network service design group properties.
+    /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat
+    /// </summary>
     public partial class NetworkServiceDesignGroupPropertiesFormat
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
-        /// <param name="description"> The network service design group description. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network service design groups resource.
+        /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="description">
+        /// The network service design group description.
+        /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the network service design groups resource. </summary>
+        /// <summary>
+        /// The provisioning state of the network service design groups resource.
+        /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The network service design group description. </summary>
+        /// <summary>
+        /// The network service design group description.
+        /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

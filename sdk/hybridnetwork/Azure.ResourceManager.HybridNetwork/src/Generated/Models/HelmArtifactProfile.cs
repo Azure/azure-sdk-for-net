@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm artifact profile. </summary>
+    /// <summary>
+    /// Helm artifact profile.
+    /// Serialized Name: HelmArtifactProfile
+    /// </summary>
     public partial class HelmArtifactProfile
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HelmArtifactProfile"/>. </summary>
-        /// <param name="helmPackageName"> Helm package name. </param>
-        /// <param name="helmPackageVersionRange"> Helm package version range. </param>
-        /// <param name="registryValuesPaths"> The registry values path list. </param>
-        /// <param name="imagePullSecretsValuesPaths"> The image pull secrets values path list. </param>
+        /// <param name="helmPackageName">
+        /// Helm package name.
+        /// Serialized Name: HelmArtifactProfile.helmPackageName
+        /// </param>
+        /// <param name="helmPackageVersionRange">
+        /// Helm package version range.
+        /// Serialized Name: HelmArtifactProfile.helmPackageVersionRange
+        /// </param>
+        /// <param name="registryValuesPaths">
+        /// The registry values path list.
+        /// Serialized Name: HelmArtifactProfile.registryValuesPaths
+        /// </param>
+        /// <param name="imagePullSecretsValuesPaths">
+        /// The image pull secrets values path list.
+        /// Serialized Name: HelmArtifactProfile.imagePullSecretsValuesPaths
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HelmArtifactProfile(string helmPackageName, string helmPackageVersionRange, IList<string> registryValuesPaths, IList<string> imagePullSecretsValuesPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +82,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Helm package name. </summary>
+        /// <summary>
+        /// Helm package name.
+        /// Serialized Name: HelmArtifactProfile.helmPackageName
+        /// </summary>
         public string HelmPackageName { get; set; }
-        /// <summary> Helm package version range. </summary>
+        /// <summary>
+        /// Helm package version range.
+        /// Serialized Name: HelmArtifactProfile.helmPackageVersionRange
+        /// </summary>
         public string HelmPackageVersionRange { get; set; }
-        /// <summary> The registry values path list. </summary>
+        /// <summary>
+        /// The registry values path list.
+        /// Serialized Name: HelmArtifactProfile.registryValuesPaths
+        /// </summary>
         public IList<string> RegistryValuesPaths { get; }
-        /// <summary> The image pull secrets values path list. </summary>
+        /// <summary>
+        /// The image pull secrets values path list.
+        /// Serialized Name: HelmArtifactProfile.imagePullSecretsValuesPaths
+        /// </summary>
         public IList<string> ImagePullSecretsValuesPaths { get; }
     }
 }

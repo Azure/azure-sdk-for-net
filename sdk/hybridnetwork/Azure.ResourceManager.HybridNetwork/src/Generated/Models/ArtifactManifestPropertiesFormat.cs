@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Artifact manifest properties. </summary>
+    /// <summary>
+    /// Artifact manifest properties.
+    /// Serialized Name: ArtifactManifestPropertiesFormat
+    /// </summary>
     public partial class ArtifactManifestPropertiesFormat
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactManifestPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
-        /// <param name="artifactManifestState"> The artifact manifest state. </param>
-        /// <param name="artifacts"> The artifacts list. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the ArtifactManifest resource.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="artifactManifestState">
+        /// The artifact manifest state.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.artifactManifestState
+        /// </param>
+        /// <param name="artifacts">
+        /// The artifacts list.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.artifacts
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState, ArtifactManifestState? artifactManifestState, IList<ManifestArtifactFormat> artifacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the ArtifactManifest resource. </summary>
+        /// <summary>
+        /// The provisioning state of the ArtifactManifest resource.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The artifact manifest state. </summary>
+        /// <summary>
+        /// The artifact manifest state.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.artifactManifestState
+        /// </summary>
         public ArtifactManifestState? ArtifactManifestState { get; }
-        /// <summary> The artifacts list. </summary>
+        /// <summary>
+        /// The artifacts list.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.artifacts
+        /// </summary>
         public IList<ManifestArtifactFormat> Artifacts { get; }
     }
 }

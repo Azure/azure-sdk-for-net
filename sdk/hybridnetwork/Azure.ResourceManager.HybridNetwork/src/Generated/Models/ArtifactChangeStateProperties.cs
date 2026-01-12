@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact update state properties. </summary>
+    /// <summary>
+    /// The artifact update state properties.
+    /// Serialized Name: ArtifactChangeStateProperties
+    /// </summary>
     internal partial class ArtifactChangeStateProperties
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactChangeStateProperties"/>. </summary>
-        /// <param name="artifactState"> The artifact state. </param>
+        /// <param name="artifactState">
+        /// The artifact state
+        /// Serialized Name: ArtifactChangeStateProperties.artifactState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactChangeStateProperties(ArtifactState? artifactState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The artifact state. </summary>
+        /// <summary>
+        /// The artifact state
+        /// Serialized Name: ArtifactChangeStateProperties.artifactState
+        /// </summary>
         public ArtifactState? ArtifactState { get; set; }
     }
 }

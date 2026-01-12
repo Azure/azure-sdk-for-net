@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the ConfigurationGroupValue data model.
     /// Hybrid configuration group value resource.
+    /// Serialized Name: ConfigurationGroupValue
     /// </summary>
     public partial class ConfigurationGroupValueData : TrackedResourceData
     {
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// Hybrid configuration group value properties.
+        /// Serialized Name: ConfigurationGroupValue.properties
         /// Please note <see cref="ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConfigurationValueWithoutSecrets"/> and <see cref="ConfigurationValueWithSecrets"/>.
         /// </param>
@@ -83,6 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork
 
         /// <summary>
         /// Hybrid configuration group value properties.
+        /// Serialized Name: ConfigurationGroupValue.properties
         /// Please note <see cref="ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConfigurationValueWithoutSecrets"/> and <see cref="ConfigurationValueWithSecrets"/>.
         /// </summary>

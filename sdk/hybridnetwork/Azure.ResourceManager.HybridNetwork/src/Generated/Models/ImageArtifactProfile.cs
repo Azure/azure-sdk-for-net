@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Image artifact profile. </summary>
+    /// <summary>
+    /// Image artifact profile.
+    /// Serialized Name: ImageArtifactProfile
+    /// </summary>
     public partial class ImageArtifactProfile
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageArtifactProfile"/>. </summary>
-        /// <param name="imageName"> Image name. </param>
-        /// <param name="imageVersion"> Image version. </param>
+        /// <param name="imageName">
+        /// Image name.
+        /// Serialized Name: ImageArtifactProfile.imageName
+        /// </param>
+        /// <param name="imageVersion">
+        /// Image version.
+        /// Serialized Name: ImageArtifactProfile.imageVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ImageArtifactProfile(string imageName, string imageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Image name. </summary>
+        /// <summary>
+        /// Image name.
+        /// Serialized Name: ImageArtifactProfile.imageName
+        /// </summary>
         public string ImageName { get; set; }
-        /// <summary> Image version. </summary>
+        /// <summary>
+        /// Image version.
+        /// Serialized Name: ImageArtifactProfile.imageVersion
+        /// </summary>
         public string ImageVersion { get; set; }
     }
 }

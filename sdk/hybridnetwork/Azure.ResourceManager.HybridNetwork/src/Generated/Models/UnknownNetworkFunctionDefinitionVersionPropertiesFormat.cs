@@ -14,11 +14,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     internal partial class UnknownNetworkFunctionDefinitionVersionPropertiesFormat : NetworkFunctionDefinitionVersionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
-        /// <param name="versionState"> The network function definition version state. </param>
-        /// <param name="description"> The network function definition version description. </param>
-        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="networkFunctionType"> The network function type. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition version resource.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition version description.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="deployParameters">
+        /// The deployment parameters of the network function definition version.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.deployParameters
+        /// </param>
+        /// <param name="networkFunctionType">
+        /// The network function type.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.networkFunctionType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownNetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, versionState, description, deployParameters, networkFunctionType, serializedAdditionalRawData)
         {

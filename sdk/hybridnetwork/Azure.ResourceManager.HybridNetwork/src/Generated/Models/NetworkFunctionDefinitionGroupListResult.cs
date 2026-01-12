@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> A list of network function definition group resources. </summary>
+    /// <summary>
+    /// The response of a NetworkFunctionDefinitionGroup list operation.
+    /// Serialized Name: NetworkFunctionDefinitionGroupListResult
+    /// </summary>
     internal partial class NetworkFunctionDefinitionGroupListResult
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/>. </summary>
-        internal NetworkFunctionDefinitionGroupListResult()
+        /// <param name="value">
+        /// The NetworkFunctionDefinitionGroup items on this page
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkFunctionDefinitionGroupListResult(IEnumerable<NetworkFunctionDefinitionGroupData> value)
         {
-            Value = new ChangeTrackingList<NetworkFunctionDefinitionGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/>. </summary>
-        /// <param name="value"> A list of network function definition group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The NetworkFunctionDefinitionGroup items on this page
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionDefinitionGroupListResult(IReadOnlyList<NetworkFunctionDefinitionGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFunctionDefinitionGroupListResult(IReadOnlyList<NetworkFunctionDefinitionGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of network function definition group. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/> for deserialization. </summary>
+        internal NetworkFunctionDefinitionGroupListResult()
+        {
+        }
+
+        /// <summary>
+        /// The NetworkFunctionDefinitionGroup items on this page
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.value
+        /// </summary>
         public IReadOnlyList<NetworkFunctionDefinitionGroupData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

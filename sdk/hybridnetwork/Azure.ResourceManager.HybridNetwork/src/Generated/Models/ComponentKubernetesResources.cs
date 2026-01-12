@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The resources of the network function component. </summary>
+    /// <summary>
+    /// The resources of the network function component.
+    /// Serialized Name: Resources
+    /// </summary>
     public partial class ComponentKubernetesResources
     {
         /// <summary>
@@ -56,11 +59,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentKubernetesResources"/>. </summary>
-        /// <param name="deployments"> Deployments that are related to component resource. </param>
-        /// <param name="pods"> Pods related to component resource. </param>
-        /// <param name="replicaSets"> Replica sets related to component resource. </param>
-        /// <param name="statefulSets"> Stateful sets related to component resource. </param>
-        /// <param name="daemonSets"> Daemonsets related to component resource. </param>
+        /// <param name="deployments">
+        /// Deployments that are related to component resource.
+        /// Serialized Name: Resources.deployments
+        /// </param>
+        /// <param name="pods">
+        /// Pods related to component resource.
+        /// Serialized Name: Resources.pods
+        /// </param>
+        /// <param name="replicaSets">
+        /// Replica sets related to component resource.
+        /// Serialized Name: Resources.replicaSets
+        /// </param>
+        /// <param name="statefulSets">
+        /// Stateful sets related to component resource.
+        /// Serialized Name: Resources.statefulSets
+        /// </param>
+        /// <param name="daemonSets">
+        /// Daemonsets related to component resource.
+        /// Serialized Name: Resources.daemonSets
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComponentKubernetesResources(IReadOnlyList<KubernetesDeployment> deployments, IReadOnlyList<KubernetesPod> pods, IReadOnlyList<KubernetesReplicaSet> replicaSets, IReadOnlyList<KubernetesStatefulSet> statefulSets, IReadOnlyList<KubernetesDaemonSet> daemonSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +90,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Deployments that are related to component resource. </summary>
+        /// <summary>
+        /// Deployments that are related to component resource.
+        /// Serialized Name: Resources.deployments
+        /// </summary>
         public IReadOnlyList<KubernetesDeployment> Deployments { get; }
-        /// <summary> Pods related to component resource. </summary>
+        /// <summary>
+        /// Pods related to component resource.
+        /// Serialized Name: Resources.pods
+        /// </summary>
         public IReadOnlyList<KubernetesPod> Pods { get; }
-        /// <summary> Replica sets related to component resource. </summary>
+        /// <summary>
+        /// Replica sets related to component resource.
+        /// Serialized Name: Resources.replicaSets
+        /// </summary>
         public IReadOnlyList<KubernetesReplicaSet> ReplicaSets { get; }
-        /// <summary> Stateful sets related to component resource. </summary>
+        /// <summary>
+        /// Stateful sets related to component resource.
+        /// Serialized Name: Resources.statefulSets
+        /// </summary>
         public IReadOnlyList<KubernetesStatefulSet> StatefulSets { get; }
-        /// <summary> Daemonsets related to component resource. </summary>
+        /// <summary>
+        /// Daemonsets related to component resource.
+        /// Serialized Name: Resources.daemonSets
+        /// </summary>
         public IReadOnlyList<KubernetesDaemonSet> DaemonSets { get; }
     }
 }

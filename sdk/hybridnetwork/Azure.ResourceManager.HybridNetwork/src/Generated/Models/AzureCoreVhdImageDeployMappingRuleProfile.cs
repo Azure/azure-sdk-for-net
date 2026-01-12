@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure vhd deploy mapping rule profile. </summary>
+    /// <summary>
+    /// Azure vhd deploy mapping rule profile.
+    /// Serialized Name: AzureCoreVhdImageDeployMappingRuleProfile
+    /// </summary>
     public partial class AzureCoreVhdImageDeployMappingRuleProfile : MappingRuleProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageDeployMappingRuleProfile"/>. </summary>
@@ -19,17 +22,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageDeployMappingRuleProfile"/>. </summary>
-        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="applicationEnablement">
+        /// The application enablement.
+        /// Serialized Name: MappingRuleProfile.applicationEnablement
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vhdImageMappingRuleProfile"> The vhd mapping rule profile. </param>
+        /// <param name="vhdImageMappingRuleProfile">
+        /// The vhd mapping rule profile.
+        /// Serialized Name: AzureCoreVhdImageDeployMappingRuleProfile.vhdImageMappingRuleProfile
+        /// </param>
         internal AzureCoreVhdImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, VhdImageMappingRuleProfile vhdImageMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
         {
             VhdImageMappingRuleProfile = vhdImageMappingRuleProfile;
         }
 
-        /// <summary> The vhd mapping rule profile. </summary>
+        /// <summary>
+        /// The vhd mapping rule profile.
+        /// Serialized Name: AzureCoreVhdImageDeployMappingRuleProfile.vhdImageMappingRuleProfile
+        /// </summary>
         internal VhdImageMappingRuleProfile VhdImageMappingRuleProfile { get; set; }
-        /// <summary> List of values. </summary>
+        /// <summary>
+        /// List of values.
+        /// Serialized Name: VhdImageMappingRuleProfile.userConfiguration
+        /// </summary>
         public string VhdImageMappingRuleUserConfiguration
         {
             get => VhdImageMappingRuleProfile is null ? default : VhdImageMappingRuleProfile.UserConfiguration;

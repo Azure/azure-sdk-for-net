@@ -32,8 +32,230 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2025-03-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get a Artifact overview information. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="publisherName"> The name of the publisher. </param>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ProxyArtifactVersionsOverviewListResult>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ProxyArtifactVersionsOverviewListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ProxyArtifactVersionsOverviewListResult.DeserializeProxyArtifactVersionsOverviewListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get a Artifact overview information. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="publisherName"> The name of the publisher. </param>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ProxyArtifactVersionsOverviewListResult> Get(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ProxyArtifactVersionsOverviewListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ProxyArtifactVersionsOverviewListResult.DeserializeProxyArtifactVersionsOverviewListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions/", false);
+            uri.AppendPath(artifactVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions/", false);
+            uri.AppendPath(artifactVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(artifactChangeState, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Change artifact state defined in artifact store. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="publisherName"> The name of the publisher. </param>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="artifactVersionName"> The name of the artifact version. </param>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/>, <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
+
+            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Change artifact state defined in artifact store. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="publisherName"> The name of the publisher. </param>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="artifactVersionName"> The name of the artifact version. </param>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/>, <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
+
+            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
@@ -138,42 +360,22 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        internal RequestUriBuilder CreateGetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/artifactStores/", false);
-            uri.AppendPath(artifactStoreName, true);
-            uri.AppendPath("/artifactVersions", false);
-            uri.AppendQuery("artifactName", artifactName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/artifactStores/", false);
-            uri.AppendPath(artifactStoreName, true);
-            uri.AppendPath("/artifactVersions", false);
-            uri.AppendQuery("artifactName", artifactName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -181,23 +383,25 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary> Get a Artifact overview information. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProxyArtifactVersionsOverviewListResult>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProxyArtifactVersionsOverviewListResult>> GetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
             Argument.AssertNotNull(artifactName, nameof(artifactName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
+            using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -214,23 +418,25 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary> Get a Artifact overview information. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProxyArtifactVersionsOverviewListResult> Get(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
+        public Response<ProxyArtifactVersionsOverviewListResult> GetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
             Argument.AssertNotNull(artifactName, nameof(artifactName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
+            using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -241,120 +447,6 @@ namespace Azure.ResourceManager.HybridNetwork
                         value = ProxyArtifactVersionsOverviewListResult.DeserializeProxyArtifactVersionsOverviewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/artifactStores/", false);
-            uri.AppendPath(artifactStoreName, true);
-            uri.AppendPath("/artifactVersions/", false);
-            uri.AppendPath(artifactVersionName, true);
-            uri.AppendQuery("artifactName", artifactName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/artifactStores/", false);
-            uri.AppendPath(artifactStoreName, true);
-            uri.AppendPath("/artifactVersions/", false);
-            uri.AppendPath(artifactVersionName, true);
-            uri.AppendQuery("artifactName", artifactName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(artifactChangeState, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Change artifact state defined in artifact store. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="artifactStoreName"> The name of the artifact store. </param>
-        /// <param name="artifactVersionName"> The name of the artifact version. </param>
-        /// <param name="artifactName"> The name of the artifact. </param>
-        /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/>, <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
-            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
-
-            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Change artifact state defined in artifact store. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="artifactStoreName"> The name of the artifact store. </param>
-        /// <param name="artifactVersionName"> The name of the artifact version. </param>
-        /// <param name="artifactName"> The name of the artifact. </param>
-        /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/>, <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
-            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
-
-            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -441,98 +533,6 @@ namespace Azure.ResourceManager.HybridNetwork
                         ProxyArtifactOverviewListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProxyArtifactOverviewListResult.DeserializeProxyArtifactOverviewListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a Artifact overview information. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="artifactStoreName"> The name of the artifact store. </param>
-        /// <param name="artifactName"> The name of the artifact. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProxyArtifactVersionsOverviewListResult>> GetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-
-            using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ProxyArtifactVersionsOverviewListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ProxyArtifactVersionsOverviewListResult.DeserializeProxyArtifactVersionsOverviewListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a Artifact overview information. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="artifactStoreName"> The name of the artifact store. </param>
-        /// <param name="artifactName"> The name of the artifact. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProxyArtifactVersionsOverviewListResult> GetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-
-            using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ProxyArtifactVersionsOverviewListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ProxyArtifactVersionsOverviewListResult.DeserializeProxyArtifactVersionsOverviewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

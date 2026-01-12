@@ -33,6 +33,75 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of SiteNetworkServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
+        public virtual SiteNetworkServiceCollection GetSiteNetworkServices()
+        {
+            return GetCachedClient(client => new SiteNetworkServiceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified site network service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteNetworkServices().GetAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified site network service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteNetworkServiceResource> GetSiteNetworkService(string siteNetworkServiceName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteNetworkServices().Get(siteNetworkServiceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ConfigurationGroupValueResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ConfigurationGroupValueResources and their operations over a ConfigurationGroupValueResource. </returns>
         public virtual ConfigurationGroupValueCollection GetConfigurationGroupValues()
@@ -53,7 +122,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +153,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +191,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +199,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -153,7 +222,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,7 +230,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -191,7 +260,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +291,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +329,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +360,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -307,75 +376,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         public virtual Response<SiteResource> GetSite(string siteName, CancellationToken cancellationToken = default)
         {
             return GetSites().Get(siteName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SiteNetworkServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
-        public virtual SiteNetworkServiceCollection GetSiteNetworkServices()
-        {
-            return GetCachedClient(client => new SiteNetworkServiceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified site network service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
-        {
-            return await GetSiteNetworkServices().GetAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified site network service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SiteNetworkServiceResource> GetSiteNetworkService(string siteNetworkServiceName, CancellationToken cancellationToken = default)
-        {
-            return GetSiteNetworkServices().Get(siteNetworkServiceName, cancellationToken);
         }
     }
 }

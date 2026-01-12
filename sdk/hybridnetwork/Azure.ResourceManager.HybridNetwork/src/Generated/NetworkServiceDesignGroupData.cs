@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the NetworkServiceDesignGroup data model.
     /// network service design group resource.
+    /// Serialized Name: NetworkServiceDesignGroup
     /// </summary>
     public partial class NetworkServiceDesignGroupData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> network service design group properties. </param>
+        /// <param name="properties">
+        /// network service design group properties.
+        /// Serialized Name: NetworkServiceDesignGroup.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkServiceDesignGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkServiceDesignGroupPropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> network service design group properties. </summary>
+        /// <summary>
+        /// network service design group properties.
+        /// Serialized Name: NetworkServiceDesignGroup.properties
+        /// </summary>
         public NetworkServiceDesignGroupPropertiesFormat Properties { get; set; }
     }
 }

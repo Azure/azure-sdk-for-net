@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the Component data model.
     /// The component sub resource.
+    /// Serialized Name: Component
     /// </summary>
     public partial class ComponentData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The component properties. </param>
+        /// <param name="properties">
+        /// The component properties.
+        /// Serialized Name: Component.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComponentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +73,10 @@ namespace Azure.ResourceManager.HybridNetwork
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The component properties. </summary>
+        /// <summary>
+        /// The component properties.
+        /// Serialized Name: Component.properties
+        /// </summary>
         public ComponentProperties Properties { get; set; }
     }
 }

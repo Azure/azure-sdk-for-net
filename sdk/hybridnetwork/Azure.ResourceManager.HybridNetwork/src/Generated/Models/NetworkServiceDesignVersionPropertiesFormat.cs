@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> network service design version properties. </summary>
+    /// <summary>
+    /// network service design version properties.
+    /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat
+    /// </summary>
     public partial class NetworkServiceDesignVersionPropertiesFormat
     {
         /// <summary>
@@ -55,13 +58,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
-        /// <param name="versionState"> The network service design version state. </param>
-        /// <param name="description"> The network service design version description. </param>
-        /// <param name="configurationGroupSchemaReferences"> The configuration schemas to used to define the values. </param>
-        /// <param name="nfvisFromSite"> The nfvis from the site. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network service design version resource.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network service design version state.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network service design version description.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="configurationGroupSchemaReferences">
+        /// The configuration schemas to used to define the values.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.configurationGroupSchemaReferences
+        /// </param>
+        /// <param name="nfvisFromSite">
+        /// The nfvis from the site.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.nfvisFromSite
+        /// </param>
         /// <param name="resourceElementTemplates">
         /// List of resource element template
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.resourceElementTemplates
         /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
         /// </param>
@@ -77,18 +96,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the network service design version resource. </summary>
+        /// <summary>
+        /// The provisioning state of the network service design version resource.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The network service design version state. </summary>
+        /// <summary>
+        /// The network service design version state.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.versionState
+        /// </summary>
         public VersionState? VersionState { get; }
-        /// <summary> The network service design version description. </summary>
+        /// <summary>
+        /// The network service design version description.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The configuration schemas to used to define the values. </summary>
+        /// <summary>
+        /// The configuration schemas to used to define the values.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.configurationGroupSchemaReferences
+        /// </summary>
         public IDictionary<string, WritableSubResource> ConfigurationGroupSchemaReferences { get; }
-        /// <summary> The nfvis from the site. </summary>
+        /// <summary>
+        /// The nfvis from the site.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.nfvisFromSite
+        /// </summary>
         public IDictionary<string, NfviDetails> NfvisFromSite { get; }
         /// <summary>
         /// List of resource element template
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.resourceElementTemplates
         /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
         /// </summary>

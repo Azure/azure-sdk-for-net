@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact updating request payload. </summary>
+    /// <summary>
+    /// The artifact updating request payload.
+    /// Serialized Name: ArtifactChangeState
+    /// </summary>
     public partial class ArtifactChangeState
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactChangeState"/>. </summary>
-        /// <param name="properties"> Artifact update state properties. </param>
+        /// <param name="properties">
+        /// Artifact update state properties.
+        /// Serialized Name: ArtifactChangeState.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactChangeState(ArtifactChangeStateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,9 +65,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Artifact update state properties. </summary>
+        /// <summary>
+        /// Artifact update state properties.
+        /// Serialized Name: ArtifactChangeState.properties
+        /// </summary>
         internal ArtifactChangeStateProperties Properties { get; set; }
-        /// <summary> The artifact state. </summary>
+        /// <summary>
+        /// The artifact state
+        /// Serialized Name: ArtifactChangeStateProperties.artifactState
+        /// </summary>
         public ArtifactState? ArtifactState
         {
             get => Properties is null ? default : Properties.ArtifactState;

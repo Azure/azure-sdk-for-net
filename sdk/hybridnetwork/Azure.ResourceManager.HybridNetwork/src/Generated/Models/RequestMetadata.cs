@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Request metadata of execute request post call payload. </summary>
+    /// <summary>
+    /// Request metadata of execute request post call payload.
+    /// Serialized Name: RequestMetadata
+    /// </summary>
     public partial class RequestMetadata
     {
         /// <summary>
@@ -46,9 +49,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RequestMetadata"/>. </summary>
-        /// <param name="relativePath"> The relative path of the request. </param>
-        /// <param name="httpMethod"> The http method of the request. </param>
-        /// <param name="serializedBody"> The serialized body of the request. </param>
+        /// <param name="relativePath">
+        /// The relative path of the request.
+        /// Serialized Name: RequestMetadata.relativePath
+        /// </param>
+        /// <param name="httpMethod">
+        /// The http method of the request.
+        /// Serialized Name: RequestMetadata.httpMethod
+        /// </param>
+        /// <param name="serializedBody">
+        /// The serialized body of the request.
+        /// Serialized Name: RequestMetadata.serializedBody
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativePath"/> or <paramref name="serializedBody"/> is null. </exception>
         public RequestMetadata(string relativePath, HttpMethod httpMethod, string serializedBody)
         {
@@ -61,10 +73,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestMetadata"/>. </summary>
-        /// <param name="relativePath"> The relative path of the request. </param>
-        /// <param name="httpMethod"> The http method of the request. </param>
-        /// <param name="serializedBody"> The serialized body of the request. </param>
-        /// <param name="apiVersion"> The api version of the request. </param>
+        /// <param name="relativePath">
+        /// The relative path of the request.
+        /// Serialized Name: RequestMetadata.relativePath
+        /// </param>
+        /// <param name="httpMethod">
+        /// The http method of the request.
+        /// Serialized Name: RequestMetadata.httpMethod
+        /// </param>
+        /// <param name="serializedBody">
+        /// The serialized body of the request.
+        /// Serialized Name: RequestMetadata.serializedBody
+        /// </param>
+        /// <param name="apiVersion">
+        /// The api version of the request.
+        /// Serialized Name: RequestMetadata.apiVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestMetadata(string relativePath, HttpMethod httpMethod, string serializedBody, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,13 +104,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The relative path of the request. </summary>
+        /// <summary>
+        /// The relative path of the request.
+        /// Serialized Name: RequestMetadata.relativePath
+        /// </summary>
         public string RelativePath { get; }
-        /// <summary> The http method of the request. </summary>
+        /// <summary>
+        /// The http method of the request.
+        /// Serialized Name: RequestMetadata.httpMethod
+        /// </summary>
         public HttpMethod HttpMethod { get; }
-        /// <summary> The serialized body of the request. </summary>
+        /// <summary>
+        /// The serialized body of the request.
+        /// Serialized Name: RequestMetadata.serializedBody
+        /// </summary>
         public string SerializedBody { get; }
-        /// <summary> The api version of the request. </summary>
+        /// <summary>
+        /// The api version of the request.
+        /// Serialized Name: RequestMetadata.apiVersion
+        /// </summary>
         public string ApiVersion { get; set; }
     }
 }

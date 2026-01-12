@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Artifact store properties. </summary>
+    /// <summary>
+    /// Artifact store properties.
+    /// Serialized Name: ArtifactStorePropertiesFormat
+    /// </summary>
     public partial class ArtifactStorePropertiesFormat
     {
         /// <summary>
@@ -52,31 +55,65 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
-        /// <param name="storeType"> The artifact store type. </param>
-        /// <param name="replicationStrategy"> The replication strategy. </param>
-        /// <param name="managedResourceGroupConfiguration"></param>
-        /// <param name="storageResourceId"> The created storage resource id. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the application groups resource.
+        /// Serialized Name: ArtifactStorePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="storeType">
+        /// The artifact store type.
+        /// Serialized Name: ArtifactStorePropertiesFormat.storeType
+        /// </param>
+        /// <param name="backingResourcePublicNetworkAccess">
+        /// The artifact store backing resource network access type
+        /// Serialized Name: ArtifactStorePropertiesFormat.backingResourcePublicNetworkAccess
+        /// </param>
+        /// <param name="replicationStrategy">
+        /// The replication strategy.
+        /// Serialized Name: ArtifactStorePropertiesFormat.replicationStrategy
+        /// </param>
+        /// <param name="managedResourceGroupConfiguration"> Serialized Name: ArtifactStorePropertiesFormat.managedResourceGroupConfiguration. </param>
+        /// <param name="storageResourceId">
+        /// The created storage resource id
+        /// Serialized Name: ArtifactStorePropertiesFormat.storageResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StoreType = storeType;
+            BackingResourcePublicNetworkAccess = backingResourcePublicNetworkAccess;
             ReplicationStrategy = replicationStrategy;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             StorageResourceId = storageResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the application groups resource. </summary>
+        /// <summary>
+        /// The provisioning state of the application groups resource.
+        /// Serialized Name: ArtifactStorePropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The artifact store type. </summary>
+        /// <summary>
+        /// The artifact store type.
+        /// Serialized Name: ArtifactStorePropertiesFormat.storeType
+        /// </summary>
         public ArtifactStoreType? StoreType { get; set; }
-        /// <summary> The replication strategy. </summary>
+        /// <summary>
+        /// The artifact store backing resource network access type
+        /// Serialized Name: ArtifactStorePropertiesFormat.backingResourcePublicNetworkAccess
+        /// </summary>
+        public BackingResourcePublicNetworkAccess? BackingResourcePublicNetworkAccess { get; set; }
+        /// <summary>
+        /// The replication strategy.
+        /// Serialized Name: ArtifactStorePropertiesFormat.replicationStrategy
+        /// </summary>
         public ArtifactReplicationStrategy? ReplicationStrategy { get; set; }
-        /// <summary> Gets or sets the managed resource group configuration. </summary>
+        /// <summary> Serialized Name: ArtifactStorePropertiesFormat.managedResourceGroupConfiguration. </summary>
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
-        /// <summary> The created storage resource id. </summary>
+        /// <summary>
+        /// The created storage resource id
+        /// Serialized Name: ArtifactStorePropertiesFormat.storageResourceId
+        /// </summary>
         public ResourceIdentifier StorageResourceId { get; }
     }
 }

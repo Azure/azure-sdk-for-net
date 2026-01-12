@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure Operator Distributed Services template deploy mapping rule profile. </summary>
+    /// <summary>
+    /// Azure Operator Distributed Services template deploy mapping rule profile.
+    /// Serialized Name: AzureOperatorNexusArmTemplateDeployMappingRuleProfile
+    /// </summary>
     public partial class AzureOperatorNexusArmTemplateDeployMappingRuleProfile : MappingRuleProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateDeployMappingRuleProfile"/>. </summary>
@@ -19,17 +22,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateDeployMappingRuleProfile"/>. </summary>
-        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="applicationEnablement">
+        /// The application enablement.
+        /// Serialized Name: MappingRuleProfile.applicationEnablement
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="templateMappingRuleProfile"> The template mapping rule profile. </param>
+        /// <param name="templateMappingRuleProfile">
+        /// The template mapping rule profile.
+        /// Serialized Name: AzureOperatorNexusArmTemplateDeployMappingRuleProfile.templateMappingRuleProfile
+        /// </param>
         internal AzureOperatorNexusArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
         {
             TemplateMappingRuleProfile = templateMappingRuleProfile;
         }
 
-        /// <summary> The template mapping rule profile. </summary>
+        /// <summary>
+        /// The template mapping rule profile.
+        /// Serialized Name: AzureOperatorNexusArmTemplateDeployMappingRuleProfile.templateMappingRuleProfile
+        /// </summary>
         internal ArmTemplateMappingRuleProfile TemplateMappingRuleProfile { get; set; }
-        /// <summary> List of template parameters. </summary>
+        /// <summary>
+        /// List of template parameters.
+        /// Serialized Name: ArmTemplateMappingRuleProfile.templateParameters
+        /// </summary>
         public string TemplateParameters
         {
             get => TemplateMappingRuleProfile is null ? default : TemplateMappingRuleProfile.TemplateParameters;

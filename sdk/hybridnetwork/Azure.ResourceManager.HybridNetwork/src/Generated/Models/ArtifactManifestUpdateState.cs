@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact manifest updating request payload. Only the 'Uploaded' state is allowed for updates. Other states are used for internal state transitioning. </summary>
+    /// <summary>
+    /// The artifact manifest updating request payload. Only the 'Uploaded' state is allowed for updates. Other states are used for internal state transitioning.
+    /// Serialized Name: ArtifactManifestUpdateState
+    /// </summary>
     public partial class ArtifactManifestUpdateState
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactManifestUpdateState"/>. </summary>
-        /// <param name="artifactManifestState"> The artifact manifest state. </param>
+        /// <param name="artifactManifestState">
+        /// The artifact manifest state.
+        /// Serialized Name: ArtifactManifestUpdateState.artifactManifestState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactManifestUpdateState(ArtifactManifestState? artifactManifestState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The artifact manifest state. </summary>
+        /// <summary>
+        /// The artifact manifest state.
+        /// Serialized Name: ArtifactManifestUpdateState.artifactManifestState
+        /// </summary>
         public ArtifactManifestState? ArtifactManifestState { get; set; }
     }
 }

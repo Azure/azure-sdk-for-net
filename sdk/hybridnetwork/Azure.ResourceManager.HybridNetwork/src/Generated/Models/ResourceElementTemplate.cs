@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The resource element template object.
+    /// Serialized Name: ResourceElementTemplate
     /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
     /// </summary>
@@ -55,9 +56,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceElementTemplate"/>. </summary>
-        /// <param name="name"> Name of the resource element template. </param>
-        /// <param name="resourceElementType"> The resource element template type. </param>
-        /// <param name="dependsOnProfile"> The depends on profile. </param>
+        /// <param name="name">
+        /// Name of the resource element template.
+        /// Serialized Name: ResourceElementTemplate.name
+        /// </param>
+        /// <param name="resourceElementType">
+        /// The resource element template type.
+        /// Serialized Name: ResourceElementTemplate.type
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// The depends on profile.
+        /// Serialized Name: ResourceElementTemplate.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceElementTemplate(string name, Type resourceElementType, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,11 +77,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the resource element template. </summary>
+        /// <summary>
+        /// Name of the resource element template.
+        /// Serialized Name: ResourceElementTemplate.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The resource element template type. </summary>
+        /// <summary>
+        /// The resource element template type.
+        /// Serialized Name: ResourceElementTemplate.type
+        /// </summary>
         internal Type ResourceElementType { get; set; }
-        /// <summary> The depends on profile. </summary>
+        /// <summary>
+        /// The depends on profile.
+        /// Serialized Name: ResourceElementTemplate.dependsOnProfile
+        /// </summary>
         public DependsOnProfile DependsOnProfile { get; set; }
     }
 }

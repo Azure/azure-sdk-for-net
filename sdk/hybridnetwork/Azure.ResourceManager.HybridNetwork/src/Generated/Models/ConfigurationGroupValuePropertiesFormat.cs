@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Hybrid configuration group value properties.
+    /// Serialized Name: ConfigurationGroupValuePropertiesFormat
     /// Please note <see cref="ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConfigurationValueWithoutSecrets"/> and <see cref="ConfigurationValueWithSecrets"/>.
     /// </summary>
@@ -55,17 +56,36 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationGroupValuePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. </param>
-        /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="configurationGroupSchemaName"> The configuration group schema name. </param>
-        /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site resource.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the configuration group schema.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="configurationGroupSchemaName">
+        /// The configuration group schema name.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaName
+        /// </param>
+        /// <param name="configurationGroupSchemaOfferingLocation">
+        /// The location of the configuration group schema offering.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaOfferingLocation
+        /// </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
+        /// <param name="configurationType">
+        /// The value which indicates if configuration values are secrets
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,23 +99,42 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the site resource. </summary>
+        /// <summary>
+        /// The provisioning state of the site resource.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The publisher name for the configuration group schema. </summary>
+        /// <summary>
+        /// The publisher name for the configuration group schema.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherName
+        /// </summary>
         public string PublisherName { get; }
-        /// <summary> The scope of the publisher. </summary>
+        /// <summary>
+        /// The scope of the publisher.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherScope
+        /// </summary>
         public PublisherScope? PublisherScope { get; }
-        /// <summary> The configuration group schema name. </summary>
+        /// <summary>
+        /// The configuration group schema name.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaName
+        /// </summary>
         public string ConfigurationGroupSchemaName { get; }
-        /// <summary> The location of the configuration group schema offering. </summary>
+        /// <summary>
+        /// The location of the configuration group schema offering.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaOfferingLocation
+        /// </summary>
         public string ConfigurationGroupSchemaOfferingLocation { get; }
         /// <summary>
         /// The configuration group schema resource reference.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </summary>
         public DeploymentResourceIdReference ConfigurationGroupSchemaResourceReference { get; set; }
-        /// <summary> The value which indicates if configuration values are secrets. </summary>
+        /// <summary>
+        /// The value which indicates if configuration values are secrets
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationType
+        /// </summary>
         internal ConfigurationGroupValueConfigurationType ConfigurationType { get; set; }
     }
 }

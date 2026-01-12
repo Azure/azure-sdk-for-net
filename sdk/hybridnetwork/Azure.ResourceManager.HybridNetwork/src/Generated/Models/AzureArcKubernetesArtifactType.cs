@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact type. </summary>
+    /// <summary>
+    /// The artifact type.
+    /// Serialized Name: AzureArcKubernetesArtifactType
+    /// </summary>
     internal readonly partial struct AzureArcKubernetesArtifactType : IEquatable<AzureArcKubernetesArtifactType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string UnknownValue = "Unknown";
         private const string HelmPackageValue = "HelmPackage";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: AzureArcKubernetesArtifactType.Unknown
+        /// </summary>
         public static AzureArcKubernetesArtifactType Unknown { get; } = new AzureArcKubernetesArtifactType(UnknownValue);
-        /// <summary> HelmPackage. </summary>
+        /// <summary>
+        /// HelmPackage
+        /// Serialized Name: AzureArcKubernetesArtifactType.HelmPackage
+        /// </summary>
         public static AzureArcKubernetesArtifactType HelmPackage { get; } = new AzureArcKubernetesArtifactType(HelmPackageValue);
         /// <summary> Determines if two <see cref="AzureArcKubernetesArtifactType"/> values are the same. </summary>
         public static bool operator ==(AzureArcKubernetesArtifactType left, AzureArcKubernetesArtifactType right) => left.Equals(right);
