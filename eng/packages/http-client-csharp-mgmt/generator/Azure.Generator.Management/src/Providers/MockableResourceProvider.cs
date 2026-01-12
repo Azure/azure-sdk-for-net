@@ -212,29 +212,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _nonResourceMethods)
             {
                 // Process both async and sync method variants
-                var methodsToProcess = new[] {
-                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
-                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
-                };
-                foreach (var m in methodsToProcess)
-                {
-                    methods.Add(m);
-                    var updated = false;
-                    foreach (var p in m.Signature.Parameters)
-                    {
-                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                        if (normalizedName != null && normalizedName != p.Name)
-                        {
-                            p.Update(name: normalizedName);
-                            updated = true;
-                        }
-                    }
-                    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-                    if (updated)
-                    {
-                        m.Update(signature: m.Signature);
-                    }
-                }
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];

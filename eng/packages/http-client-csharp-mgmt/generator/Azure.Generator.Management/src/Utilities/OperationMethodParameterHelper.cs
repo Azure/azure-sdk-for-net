@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -16,6 +17,7 @@ namespace Azure.Generator.Management.Utilities
         // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
+            MethodProvider convenienceMethod,
             ContextualPath contextualPath,
             TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
@@ -30,64 +32,107 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            // TODO -- Refactor needed. we need the same mapping in RequestPathPatternExtensions.PopulateArguments method.
-            // To avoid large scale of refactoring right now, we just call this method twice to build the map twice.
-            var pathParameterMapping = contextualPath.BuildParameterMapping(new(serviceMethod.Operation.Path));
+            // Build a dictionary of convenience method parameters by name for efficient lookup
+            var convenienceParamsByName = convenienceMethod.Signature.Parameters
+                .Where(p => !p.Type.Equals(typeof(System.Threading.CancellationToken)))
+                .ToDictionary(p => p.Name, p => p);
 
-            // TODO -- considering to change here instead of iterating on raw parameters, iterating on the convenience method parameters in which the parameters have been transformed properly.
-            for (int i = 0; i < serviceMethod.Operation.Parameters.Count; i++)
+            // Loop through service method parameters and check their scope
+            foreach (var inputParameter in serviceMethod.Operation.Parameters)
             {
-                var parameter = serviceMethod.Operation.Parameters[i];
-                if (parameter.Scope != InputParameterScope.Method)
+                // Only include parameters with Method scope
+                if (inputParameter.Scope != InputParameterScope.Method)
                 {
                     continue;
                 }
 
-                var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!.ToPublicInputParameter();
+                // Create temporary parameter to check filtering conditions
+                var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
 
-                // if the parameter can be found in the parameter mapping meaning it is a contextual parameter which should not show up on the signature.
-                if (pathParameterMapping.TryGetValue(outputParameter.Name, out var pathParameter) &&
-                    pathParameter.IsContextual)
+                // Skip filtered parameters
+                if (contextualPath.TryGetContextualParameter(tempParameter, out _))
                 {
                     continue;
                 }
 
                 // TODO -- maybe we no longer need this?
                 if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
-                    collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
+                    collectionProvider.TryGetPrivateFieldParameter(tempParameter, out _))
                 {
                     continue;
                 }
 
+                // Try to find corresponding parameter in convenience method by name
+                ParameterProvider? outputParameter = null;
+                var inputParamName = tempParameter.Name;
+
+                // Check if convenience method has a parameter with the same name
+                if (convenienceParamsByName.TryGetValue(inputParamName, out var matchedParam))
+                {
+                    outputParameter = matchedParam;
+                }
+                else
+                {
+                    // If no match by name, create it from input parameter
+                    outputParameter = tempParameter;
+                }
+
+                // TODO -- we should be able to just update the parameters from convenience method.
+                // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
+
+                // Apply name transformations as needed
                 // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
-                // This is the scope parameter for non-resource operations
                 if (enclosingTypeProvider is MockableArmClientProvider &&
                     !scopeParameterTransformed &&
-                    parameter.Type is InputPrimitiveType primitiveType &&
+                    inputParameter.Type is InputPrimitiveType primitiveType &&
                     primitiveType.Kind == InputPrimitiveTypeKind.String)
                 {
-                    // Update the parameter to use ResourceIdentifier type and "scope" name while preserving wire info
-                    outputParameter.Update(name: "scope", description: $"The scope that the resource will apply against.", type: typeof(ResourceIdentifier));
+                    outputParameter = new ParameterProvider(
+                        name: "scope",
+                        description: $"The scope that the resource will apply against.",
+                        type: typeof(ResourceIdentifier),
+                        defaultValue: outputParameter.DefaultValue,
+                        isRef: outputParameter.IsRef,
+                        isOut: outputParameter.IsOut,
+                        isIn: outputParameter.IsIn,
+                        isParams: outputParameter.IsParams,
+                        attributes: outputParameter.Attributes,
+                        property: outputParameter.Property,
+                        field: outputParameter.Field,
+                        initializationValue: outputParameter.InitializationValue,
+                        location: outputParameter.Location,
+                        wireInfo: outputParameter.WireInfo,
+                        validation: outputParameter.Validation);
                     scopeParameterTransformed = true;
                 }
 
-                if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                {
-                    outputParameter.Update(name: "data");
-                }
-
-                // Rename body parameters for resource/resourcecollection/mockablearmclient operations
-                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider) &&
+                // Rename body parameters for Resource/ResourCecollection/MockableArmClient/MockableResource operations
+                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider) &&
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
                     var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
                     if (normalizedName != null)
                     {
-                        outputParameter.Update(name: normalizedName);
+                        outputParameter = new ParameterProvider(
+                            name: normalizedName,
+                            description: outputParameter.Description,
+                            type: outputParameter.Type,
+                            defaultValue: outputParameter.DefaultValue,
+                            isRef: outputParameter.IsRef,
+                            isOut: outputParameter.IsOut,
+                            isIn: outputParameter.IsIn,
+                            isParams: outputParameter.IsParams,
+                            attributes: outputParameter.Attributes,
+                            property: outputParameter.Property,
+                            field: outputParameter.Field,
+                            initializationValue: outputParameter.InitializationValue,
+                            location: outputParameter.Location,
+                            wireInfo: outputParameter.WireInfo,
+                            validation: outputParameter.Validation);
                     }
                 }
 
-                if (parameter.IsRequired)
+                if (inputParameter.IsRequired)
                 {
                     requiredParameters.Add(outputParameter);
                 }
