@@ -8,17 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationNavigation : IUtf8JsonSerializable, IJsonModel<GuestConfigurationNavigation>
+    /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
+    public partial class GuestConfigurationNavigation : IJsonModel<GuestConfigurationNavigation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationNavigation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationNavigation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,23 +29,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Kind))
             {
-                if (Kind != null)
-                {
-                    writer.WritePropertyName("kind"u8);
-                    writer.WriteStringValue(Kind.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("kind");
-                }
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
@@ -61,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUri"u8);
-                writer.WriteStringValue(ContentUri.AbsoluteUri);
+                writer.WriteStringValue(ContentUri);
             }
             if (Optional.IsDefined(ContentHash))
             {
@@ -75,55 +66,34 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsDefined(AssignmentType))
             {
-                if (AssignmentType != null)
-                {
-                    writer.WritePropertyName("assignmentType"u8);
-                    writer.WriteStringValue(AssignmentType.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("assignmentType");
-                }
+                writer.WritePropertyName("assignmentType"u8);
+                writer.WriteStringValue(AssignmentType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(AssignmentSource))
             {
-                if (AssignmentSource != null)
-                {
-                    writer.WritePropertyName("assignmentSource"u8);
-                    writer.WriteStringValue(AssignmentSource);
-                }
-                else
-                {
-                    writer.WriteNull("assignmentSource");
-                }
+                writer.WritePropertyName("assignmentSource"u8);
+                writer.WriteStringValue(AssignmentSource);
             }
             if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
-                if (ContentType != null)
-                {
-                    writer.WritePropertyName("contentType"u8);
-                    writer.WriteStringValue(ContentType);
-                }
-                else
-                {
-                    writer.WriteNull("contentType");
-                }
+                writer.WritePropertyName("contentType"u8);
+                writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsCollectionDefined(ConfigurationParameters))
+            if (Optional.IsCollectionDefined(ConfigurationParameter))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationParameters)
+                foreach (ConfigurationParameter item in ConfigurationParameter)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameter))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationProtectedParameters)
+                foreach (ConfigurationParameter item in ConfigurationProtectedParameter)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,25 +101,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationSetting))
             {
-                if (ConfigurationSetting != null)
-                {
-                    writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("configurationSetting");
-                }
+                writer.WritePropertyName("configurationSetting"u8);
+                writer.WriteObjectValue(ConfigurationSetting, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -158,22 +121,27 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
         }
 
-        GuestConfigurationNavigation IJsonModel<GuestConfigurationNavigation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GuestConfigurationNavigation IJsonModel<GuestConfigurationNavigation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GuestConfigurationNavigation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGuestConfigurationNavigation(document.RootElement, options);
         }
 
-        internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -181,132 +149,123 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationKind? kind = default;
             string name = default;
             string version = default;
-            Uri contentUri = default;
+            string contentUri = default;
             string contentHash = default;
             string contentManagedIdentity = default;
-            GuestConfigurationAssignmentType? assignmentType = default;
+            AssignmentType? assignmentType = default;
             string assignmentSource = default;
             string contentType = default;
-            IList<GuestConfigurationParameter> configurationParameter = default;
-            IList<GuestConfigurationParameter> configurationProtectedParameter = default;
-            LcmConfigurationSetting configurationSetting = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<ConfigurationParameter> configurationParameter = default;
+            IList<ConfigurationParameter> configurationProtectedParameter = default;
+            ConfigurationSetting configurationSetting = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        kind = null;
-                        continue;
-                    }
-                    kind = new GuestConfigurationKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("contentUri"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    contentUri = new Uri(property.Value.GetString());
+                    kind = new GuestConfigurationKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("contentHash"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    contentHash = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentManagedIdentity"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    contentManagedIdentity = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignmentType"u8))
+                if (prop.NameEquals("contentUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    contentUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("contentHash"u8))
+                {
+                    contentHash = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("contentManagedIdentity"u8))
+                {
+                    contentManagedIdentity = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("assignmentType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        assignmentType = null;
                         continue;
                     }
-                    assignmentType = new GuestConfigurationAssignmentType(property.Value.GetString());
+                    assignmentType = new AssignmentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assignmentSource"u8))
+                if (prop.NameEquals("assignmentSource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         assignmentSource = null;
                         continue;
                     }
-                    assignmentSource = property.Value.GetString();
+                    assignmentSource = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"u8))
+                if (prop.NameEquals("contentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         contentType = null;
                         continue;
                     }
-                    contentType = property.Value.GetString();
+                    contentType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationParameter"u8))
+                if (prop.NameEquals("configurationParameter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
+                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item, options));
                     }
                     configurationParameter = array;
                     continue;
                 }
-                if (property.NameEquals("configurationProtectedParameter"u8))
+                if (prop.NameEquals("configurationProtectedParameter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
+                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item, options));
                     }
                     configurationProtectedParameter = array;
                     continue;
                 }
-                if (property.NameEquals("configurationSetting"u8))
+                if (prop.NameEquals("configurationSetting"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        configurationSetting = null;
                         continue;
                     }
-                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value, options);
+                    configurationSetting = ConfigurationSetting.DeserializeConfigurationSetting(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationNavigation(
                 kind,
                 name,
@@ -317,295 +276,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 assignmentType,
                 assignmentSource,
                 contentType,
-                configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
-                configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationParameter ?? new ChangeTrackingList<ConfigurationParameter>(),
+                configurationProtectedParameter ?? new ChangeTrackingList<ConfigurationParameter>(),
                 configurationSetting,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    builder.AppendLine($"'{Kind.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  version: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Version))
-                {
-                    builder.Append("  version: ");
-                    if (Version.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Version}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Version}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentUri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentUri))
-                {
-                    builder.Append("  contentUri: ");
-                    builder.AppendLine($"'{ContentUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentHash), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentHash: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentHash))
-                {
-                    builder.Append("  contentHash: ");
-                    if (ContentHash.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentHash}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentHash}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentManagedIdentity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentManagedIdentity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentManagedIdentity))
-                {
-                    builder.Append("  contentManagedIdentity: ");
-                    if (ContentManagedIdentity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentManagedIdentity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentManagedIdentity}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignmentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  assignmentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AssignmentType))
-                {
-                    builder.Append("  assignmentType: ");
-                    builder.AppendLine($"'{AssignmentType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignmentSource), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  assignmentSource: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AssignmentSource))
-                {
-                    builder.Append("  assignmentSource: ");
-                    if (AssignmentSource.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AssignmentSource}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AssignmentSource}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentType))
-                {
-                    builder.Append("  contentType: ");
-                    if (ContentType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationParameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurationParameter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ConfigurationParameters))
-                {
-                    if (ConfigurationParameters.Any())
-                    {
-                        builder.Append("  configurationParameter: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ConfigurationParameters)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurationParameter: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationProtectedParameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurationProtectedParameter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
-                {
-                    if (ConfigurationProtectedParameters.Any())
-                    {
-                        builder.Append("  configurationProtectedParameter: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ConfigurationProtectedParameters)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurationProtectedParameter: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationSetting), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurationSetting: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfigurationSetting))
-                {
-                    builder.Append("  configurationSetting: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ConfigurationSetting, options, 2, false, "  configurationSetting: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GuestConfigurationNavigation IPersistableModel<GuestConfigurationNavigation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GuestConfigurationNavigation IPersistableModel<GuestConfigurationNavigation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GuestConfigurationNavigation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGuestConfigurationNavigation(document.RootElement, options);
                     }
                 default:
@@ -613,6 +319,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GuestConfigurationNavigation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
