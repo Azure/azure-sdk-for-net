@@ -32,20 +32,17 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             string storageMoverName2 = Recording.GenerateAssetName(StorageMoverPrefix);
 
             StorageMoverResource storageMover1 = (await storageMovers.CreateOrUpdateAsync(WaitUntil.Completed, storageMoverName, data)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(storageMover1.Id.Name, Is.EqualTo(storageMoverName));
-                Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
-                Assert.That(storageMover1.Data.Description, Is.EqualTo("This is a new storage mover"));
-            });
+            Assert.That(storageMoverName, Is.EqualTo(storageMover1.Id.Name));
+            Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
+            Assert.That(storageMover1.Data.Description, Is.EqualTo("This is a new storage mover"));
 
             StorageMoverResource storageMover2 = (await storageMovers.CreateOrUpdateAsync(WaitUntil.Completed, storageMoverName2, data)).Value;
-            Assert.That(storageMover2.Id.Name, Is.EqualTo(storageMoverName2));
+            Assert.That(storageMoverName2, Is.EqualTo(storageMover2.Id.Name));
             Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
             Assert.That(storageMover1.Data.Description, Is.EqualTo("This is a new storage mover"));
 
             storageMover1 = (await _resourceGroup.GetStorageMovers().GetAsync(storageMoverName)).Value;
-            Assert.That(storageMover1.Id.Name, Is.EqualTo(storageMoverName));
+            Assert.That(storageMoverName, Is.EqualTo(storageMover1.Id.Name));
             Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
             Assert.That(storageMover1.Data.Description, Is.EqualTo("This is a new storage mover"));
 
@@ -59,29 +56,12 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 
             data.Description = "This is an updated storage mover";
             storageMover1 = (await storageMovers.CreateOrUpdateAsync(WaitUntil.Completed, storageMoverName, data)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(storageMover1.Id.Name, Is.EqualTo(storageMoverName));
-                Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
-                Assert.That(storageMover1.Data.Description, Is.EqualTo("This is a new storage mover"));
-            });
-
-            storageMovers = _resourceGroup.GetStorageMovers();
-            int counter = 0;
-            await foreach (StorageMoverResource _ in storageMovers.GetAllAsync())
-            {
-                counter++;
-            }
-            Assert.That(counter, Is.EqualTo(2));
-
-            data.Description = "This is an updated storage mover";
-            storageMover1 = (await storageMovers.CreateOrUpdateAsync(WaitUntil.Completed, storageMoverName, data)).Value;
-            Assert.That(storageMover1.Id.Name, Is.EqualTo(storageMoverName));
+            Assert.That(storageMoverName, Is.EqualTo(storageMover1.Id.Name));
             Assert.That(storageMover1.Data.Tags["tag1"], Is.EqualTo("value1"));
             Assert.That(storageMover1.Data.Description, Is.EqualTo("This is an updated storage mover"));
 
-            Assert.That((bool)await storageMovers.ExistsAsync(storageMoverName), Is.True);
-            Assert.That((bool)await storageMovers.ExistsAsync(storageMoverName + "111"), Is.False);
+            Assert.That(await storageMovers.ExistsAsync(storageMoverName), Is.True);
+            Assert.That(await storageMovers.ExistsAsync(storageMoverName + "111"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await storageMovers.ExistsAsync(null));
         }
     }

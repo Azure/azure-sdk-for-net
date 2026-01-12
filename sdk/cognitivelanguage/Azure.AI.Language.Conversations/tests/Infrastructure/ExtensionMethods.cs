@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <param name="constraint"></param>
         /// <param name="paramName"></param>
         /// <returns></returns>
-        public static EqualStringConstraint WithParamName(this ExactTypeConstraint constraint, string paramName)
+        public static EqualConstraint WithParamName(this ExactTypeConstraint constraint, string paramName)
         {
             return constraint.With.Property(nameof(ArgumentException.ParamName)).EqualTo(paramName);
         }

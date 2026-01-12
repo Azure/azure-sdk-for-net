@@ -273,11 +273,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private static void AssertAreEqual(SubjectAlternativeNames expected, SubjectAlternativeNames actual)
         {
-            Assert.That(actual?.DnsNames, Is.EqualTo(expected?.DnsNames).Using(StringComparer.Ordinal));
-            Assert.That(actual?.Emails, Is.EqualTo(expected?.Emails).Using(StringComparer.Ordinal));
-            Assert.That(actual?.UserPrincipalNames, Is.EqualTo(expected?.UserPrincipalNames).Using(StringComparer.Ordinal));
-            Assert.That(actual?.UniformResourceIdentifiers, Is.EqualTo(expected?.UniformResourceIdentifiers).Using(StringComparer.Ordinal));
-            Assert.That(actual?.IpAddresses, Is.EqualTo(expected?.IpAddresses).Using(StringComparer.Ordinal));
+            Assert.That(actual?.DnsNames, Is.EqualTo(expected?.DnsNames).Using((IComparer<string>)StringComparer.Ordinal));
+            Assert.That(actual?.Emails, Is.EqualTo(expected?.Emails).Using((IComparer<string>)(IComparer<string>)StringComparer.Ordinal));
+            Assert.That(actual?.UserPrincipalNames, Is.EqualTo(expected?.UserPrincipalNames).Using((IComparer<string>)StringComparer.Ordinal));
+            Assert.That(actual?.UniformResourceIdentifiers, Is.EqualTo(expected?.UniformResourceIdentifiers).Using((IComparer<string>)StringComparer.Ordinal));
+            Assert.That(actual?.IpAddresses, Is.EqualTo(expected?.IpAddresses).Using((IComparer<string>)StringComparer.Ordinal));
         }
 
         private class LifetimeActionComparer : IComparer<LifetimeAction>

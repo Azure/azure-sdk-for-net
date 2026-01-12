@@ -49,17 +49,14 @@ namespace Azure.Messaging.WebPubSub.Tests
             Assert.That(audience, Is.Not.Null);
             Assert.That(audience.Value, Is.EqualTo("http://localhost:8080/client/hubs/hub"));
             var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(iat, Is.Not.Null);
-                Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
-            });
+
+            Assert.That(iat, Is.Not.Null);
+            Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
+
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(exp, Is.Not.Null);
-                Assert.That(long.TryParse(exp, out var expireAt), Is.True);
-            });
+
+            Assert.That(exp, Is.Not.Null);
+            Assert.That(long.TryParse(exp, out var expireAt), Is.True);
 
             // default expire after should be ~5 minutes (~300 seconds)
             var expireAfter = expireAt - issuedAt;
@@ -105,17 +102,14 @@ namespace Azure.Messaging.WebPubSub.Tests
             Assert.That(audience, Is.Not.Null);
             Assert.That(audience.Value, Is.EqualTo("http://localhost:8080/client/hubs/hub"));
             var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(iat, Is.Not.Null);
-                Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
-            });
+
+            Assert.That(iat, Is.Not.Null);
+            Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
+
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(exp, Is.Not.Null);
-                Assert.That(long.TryParse(exp, out var expireAt), Is.True);
-            });
+
+            Assert.That(exp, Is.Not.Null);
+            Assert.That(long.TryParse(exp, out var expireAt), Is.True);
 
             // default expire after should be ~5 minutes (~300 seconds)
             var expireAfter = expireAt - issuedAt;
