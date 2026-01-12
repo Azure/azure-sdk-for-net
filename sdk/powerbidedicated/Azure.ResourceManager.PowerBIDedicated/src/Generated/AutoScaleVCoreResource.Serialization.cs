@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
+    /// <summary></summary>
     public partial class AutoScaleVCoreResource : IJsonModel<AutoScaleVCoreData>
     {
-        private static AutoScaleVCoreData s_dataDeserializationInstance;
-        private static AutoScaleVCoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutoScaleVCoreData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutoScaleVCoreData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutoScaleVCoreData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoScaleVCoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoScaleVCoreData>)Data).Write(writer, options);
 
-        AutoScaleVCoreData IJsonModel<AutoScaleVCoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoScaleVCoreData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoScaleVCoreData IJsonModel<AutoScaleVCoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoScaleVCoreData>(Data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutoScaleVCoreData IPersistableModel<AutoScaleVCoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoScaleVCoreData>(data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
-        string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoScaleVCoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

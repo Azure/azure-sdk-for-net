@@ -8,18 +8,19 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    /// <summary>
-    /// A class representing the DedicatedCapacity data model.
-    /// Represents an instance of a Dedicated Capacity resource.
-    /// </summary>
-    public partial class DedicatedCapacityData : PowerBIDedicatedResourceData
+    /// <summary> Represents an instance of a Dedicated Capacity resource. </summary>
+    public partial class DedicatedCapacityData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/>. </summary>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DedicatedCapacityData(AzureLocation location, CapacitySku sku) : base(location)
@@ -30,60 +31,96 @@ namespace Azure.ResourceManager.PowerBIDedicated
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/>. </summary>
-        /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
-        /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
-        /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
-        /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the provision operation request. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
-        /// <param name="administration"> A collection of Dedicated capacity administrators. </param>
-        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
-        /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
-        /// <param name="friendlyName"> Capacity name. </param>
-        /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
-        /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
-        internal DedicatedCapacityData(string id, string name, string resourceType, AzureLocation location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, CapacitySku sku, DedicatedCapacityAdministrators administration, Mode? mode, Guid? tenantId, string friendlyName, State? state, CapacityProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData)
+        internal DedicatedCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedCapacityProperties properties, CapacitySku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            Administration = administration;
-            Mode = mode;
-            TenantId = tenantId;
-            FriendlyName = friendlyName;
-            State = state;
-            ProvisioningState = provisioningState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/> for deserialization. </summary>
-        internal DedicatedCapacityData()
-        {
-        }
+        /// <summary> Properties of the provision operation request. </summary>
+        internal DedicatedCapacityProperties Properties { get; set; }
 
         /// <summary> The SKU of the PowerBI Dedicated capacity resource. </summary>
         public CapacitySku Sku { get; set; }
+
         /// <summary> A collection of Dedicated capacity administrators. </summary>
-        internal DedicatedCapacityAdministrators Administration { get; set; }
-        /// <summary> An array of administrator user identities. </summary>
-        public IList<string> AdministrationMembers
+        public DedicatedCapacityAdministrators Administration
         {
             get
             {
-                if (Administration is null)
-                    Administration = new DedicatedCapacityAdministrators();
-                return Administration.Members;
+                return Properties is null ? default : Properties.Administration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedCapacityProperties();
+                }
+                Properties.Administration = value;
             }
         }
 
         /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
-        public Mode? Mode { get; set; }
+        public Mode? Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedCapacityProperties();
+                }
+                Properties.Mode = value.Value;
+            }
+        }
+
         /// <summary> Tenant ID for the capacity. Used for creating Pro Plus capacity. </summary>
-        public Guid? TenantId { get; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+        }
+
         /// <summary> Capacity name. </summary>
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
         /// <summary> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </summary>
-        public State? State { get; }
+        public State? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </summary>
-        public CapacityProvisioningState? ProvisioningState { get; }
+        public CapacityProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

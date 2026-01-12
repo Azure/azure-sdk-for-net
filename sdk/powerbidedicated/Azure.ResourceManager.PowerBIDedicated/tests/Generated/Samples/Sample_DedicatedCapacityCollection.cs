@@ -43,10 +43,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             string dedicatedCapacityName = "azsdktest";
             DedicatedCapacityData data = new DedicatedCapacityData(new AzureLocation("West US"), new CapacitySku("A1")
             {
-                Tier = CapacitySkuTier.PbieAzure,
+                Tier = CapacitySkuTier.PBIEAzure,
             })
             {
-                AdministrationMembers = { "azsdktest@microsoft.com", "azsdktest2@microsoft.com" },
+                Administration = new DedicatedCapacityAdministrators()
+                {
+                    Members = { "azsdktest@microsoft.com", "azsdktest2@microsoft.com" }
+                },
                 Tags =
 {
 ["testKey"] = "testValue"

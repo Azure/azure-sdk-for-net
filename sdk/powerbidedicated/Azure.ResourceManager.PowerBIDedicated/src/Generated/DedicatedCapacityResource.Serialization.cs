@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
+    /// <summary></summary>
     public partial class DedicatedCapacityResource : IJsonModel<DedicatedCapacityData>
     {
-        private static DedicatedCapacityData s_dataDeserializationInstance;
-        private static DedicatedCapacityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DedicatedCapacityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DedicatedCapacityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DedicatedCapacityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedCapacityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedCapacityData>)Data).Write(writer, options);
 
-        DedicatedCapacityData IJsonModel<DedicatedCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedCapacityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedCapacityData IJsonModel<DedicatedCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedCapacityData>(Data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DedicatedCapacityData IPersistableModel<DedicatedCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedCapacityData>(data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
-        string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedCapacityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
