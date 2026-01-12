@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ElasticSan
     [ModelReaderWriterBuildable(typeof(AutoScaleProperties))]
     [ModelReaderWriterBuildable(typeof(DiskSnapshotListContent))]
     [ModelReaderWriterBuildable(typeof(ElasticSanData))]
-    [ModelReaderWriterBuildable(typeof(ElasticSanDeleteRetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(ElasticSanEncryptionIdentity))]
     [ModelReaderWriterBuildable(typeof(ElasticSanEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(ElasticSanKeyVaultProperties))]

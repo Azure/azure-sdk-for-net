@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ElasticSan.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumesCreateMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Create_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "Volume_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumesCreateMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Create_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Create_MinimumSet_Gen.json
             // this example is just showing the usage of "Volume_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumesGetMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumesGetMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Get_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumesListByVolumeGroupMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_ListByVolumeGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_ListByVolumeGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "Volume_ListByVolumeGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,8 +184,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeCollection collection = elasticSanVolumeGroup.GetElasticSanVolumes();
 
             // invoke the operation and iterate over the result
-            ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = ElasticSanAccessSoftDeletedVolume.True;
-            await foreach (ElasticSanVolumeResource item in collection.GetAllAsync(accessSoftDeletedResources: accessSoftDeletedResources))
+            await foreach (ElasticSanVolumeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -202,7 +200,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumesListByVolumeGroupMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_ListByVolumeGroup_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_ListByVolumeGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "Volume_ListByVolumeGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,8 +221,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeCollection collection = elasticSanVolumeGroup.GetElasticSanVolumes();
 
             // invoke the operation and iterate over the result
-            ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = ElasticSanAccessSoftDeletedVolume.True;
-            await foreach (ElasticSanVolumeResource item in collection.GetAllAsync(accessSoftDeletedResources: accessSoftDeletedResources))
+            await foreach (ElasticSanVolumeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -240,7 +237,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumesGetMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +268,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumesGetMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Get_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -302,7 +299,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumesGetMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -345,7 +342,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumesGetMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_Get_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
