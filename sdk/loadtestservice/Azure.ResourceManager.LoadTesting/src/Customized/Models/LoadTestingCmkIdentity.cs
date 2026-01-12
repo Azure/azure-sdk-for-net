@@ -6,8 +6,9 @@
 using System.Collections.Generic;
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("LoadTestingCmkIdentity")]
+// [assembly: CodeGenSuppressType("LoadTestingCmkIdentity")]
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>

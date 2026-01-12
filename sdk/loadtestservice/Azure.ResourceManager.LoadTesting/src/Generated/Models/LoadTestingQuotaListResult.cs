@@ -7,64 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    /// <summary> List of quota bucket objects. It contains a URL link to get the next set of results. </summary>
     internal partial class LoadTestingQuotaListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
-        internal LoadTestingQuotaListResult()
+        /// <param name="value"> The QuotaResource items on this page. </param>
+        internal LoadTestingQuotaListResult(IEnumerable<LoadTestingQuotaData> value)
         {
-            Value = new ChangeTrackingList<LoadTestingQuotaData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
-        /// <param name="value"> List of quota bucket objects provided by the loadtestservice. </param>
-        /// <param name="nextLink"> URL to get the next set of quota bucket objects results (if there are any). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaListResult(IReadOnlyList<LoadTestingQuotaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The QuotaResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaListResult(IList<LoadTestingQuotaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of quota bucket objects provided by the loadtestservice. </summary>
-        public IReadOnlyList<LoadTestingQuotaData> Value { get; }
-        /// <summary> URL to get the next set of quota bucket objects results (if there are any). </summary>
-        public string NextLink { get; }
+        /// <summary> The QuotaResource items on this page. </summary>
+        public IList<LoadTestingQuotaData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

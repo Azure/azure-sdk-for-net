@@ -7,69 +7,69 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Check quota availability response object. </summary>
-    public partial class LoadTestingQuotaAvailabilityResult : ResourceData
+    public partial class LoadTestingQuotaAvailabilityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaAvailabilityResult"/>. </summary>
-        public LoadTestingQuotaAvailabilityResult()
+        internal LoadTestingQuotaAvailabilityResult()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaAvailabilityResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isAvailable"> True/False indicating whether the quota request be granted based on availability. </param>
-        /// <param name="availabilityStatus"> Message indicating additional details to add to quota support request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAvailable, string availabilityStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="properties"> Check quota availability response properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaAvailabilityResult(string id, string @type, SystemData systemData, string name, CheckQuotaAvailabilityResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsAvailable = isAvailable;
-            AvailabilityStatus = availabilityStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Id = id;
+            Type = @type;
+            SystemData = systemData;
+            Name = name;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
+        public string Id { get; }
+
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        public string Type { get; }
+
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        public SystemData SystemData { get; }
+
+        /// <summary> The name of the resource. </summary>
+        public string Name { get; }
+
+        /// <summary> Check quota availability response properties. </summary>
+        internal CheckQuotaAvailabilityResponseProperties Properties { get; }
 
         /// <summary> True/False indicating whether the quota request be granted based on availability. </summary>
-        public bool? IsAvailable { get; set; }
+        public bool? IsAvailable
+        {
+            get
+            {
+                return Properties.IsAvailable;
+            }
+        }
+
         /// <summary> Message indicating additional details to add to quota support request. </summary>
-        public string AvailabilityStatus { get; set; }
+        public string AvailabilityStatus
+        {
+            get
+            {
+                return Properties.AvailabilityStatus;
+            }
+        }
     }
 }
