@@ -92,6 +92,22 @@ public partial class FlowLog : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
+    /// Optional field to filter network traffic logs based on flow states.
+    /// Value of this field could be any comma separated combination string of
+    /// letters B,C,E or D. B represents Begin, when a flow is created. C
+    /// represents Continue for an ongoing flow generated at every five-minute
+    /// interval. E represents End, when a flow is terminated. D represents
+    /// Deny, when a flow is denied. If not specified, all network traffic
+    /// will be logged.
+    /// </summary>
+    public BicepValue<string> RecordTypes 
+    {
+        get { Initialize(); return _recordTypes!; }
+        set { Initialize(); _recordTypes!.Assign(value); }
+    }
+    private BicepValue<string>? _recordTypes;
+
+    /// <summary>
     /// Parameters that define the retention policy for flow log.
     /// </summary>
     public RetentionPolicyParameters RetentionPolicy 
@@ -189,7 +205,7 @@ public partial class FlowLog : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the FlowLog.</param>
     public FlowLog(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/networkWatchers/flowLogs", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/networkWatchers/flowLogs", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -206,6 +222,7 @@ public partial class FlowLog : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _recordTypes = DefineProperty<string>("RecordTypes", ["properties", "recordTypes"]);
         _retentionPolicy = DefineModelProperty<RetentionPolicyParameters>("RetentionPolicy", ["properties", "retentionPolicy"]);
         _storageId = DefineProperty<ResourceIdentifier>("StorageId", ["properties", "storageId"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -222,6 +239,16 @@ public partial class FlowLog : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

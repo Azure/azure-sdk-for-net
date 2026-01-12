@@ -1,10 +1,20 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- Added support for the latest Azure AI Translator API, including translations using LLM models, adaptive custom translation, tone variant translations, and gender-specific language translations.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0-beta.1 (2026-01-08)
+
+### Features Added
+
+- Added support for the Azure AI Translator API 2025-10-01-preview, including translations using LLM models, adaptive custom translation, tone variant translations, and gender-specific language translations.
 - Added `TranslationTarget` class for configuring translation options.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
@@ -17,10 +27,6 @@
 - Removed `TextTranslationTranslateOptions` and `TextTranslationTransliterateOptions`.
 - `SourceText` property in `TranslatedTextItem` deprecated and marked as obsolete.
 - Dictionary, sentence boundaries and text alignments features have been removed and relevant classes and properties have been marked as deprecated.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2024-05-21)
 

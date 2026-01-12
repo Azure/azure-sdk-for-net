@@ -63,29 +63,18 @@ namespace Azure.Projects
     {
         public ProjectInfrastructure(Azure.Projects.Core.ConnectionStore connections, string? projectId = null) { }
         public ProjectInfrastructure(string? projectId = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Projects.Core.ConnectionStore Connections { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Projects.Core.FeatureCollection Features { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Roles.UserAssignedIdentity Identity { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
         public string ProjectId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void AddConstruct(string id, Azure.Provisioning.Primitives.NamedProvisionableConstruct construct) { }
         public T AddFeature<T>(T feature) where T : Azure.Projects.Core.AzureProjectFeature { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void AddSystemRole(Azure.Provisioning.Primitives.Provisionable provisionable, string roleName, string roleId) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public T GetConstruct<T>(string id) where T : Azure.Provisioning.Primitives.NamedProvisionableConstruct { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     public partial class ServiceBusNamespaceFeature : Azure.Projects.Core.AzureProjectFeature
@@ -122,11 +111,8 @@ namespace Azure.Projects.Core
         protected void EmitConnection(Azure.Projects.ProjectInfrastructure infrastructure, string connectionId, string endpoint) { }
         protected internal abstract void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure);
         protected internal virtual void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     public abstract partial class ConnectionStore

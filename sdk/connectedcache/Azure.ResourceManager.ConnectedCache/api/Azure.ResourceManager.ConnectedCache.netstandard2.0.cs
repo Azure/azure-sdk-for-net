@@ -337,9 +337,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.AutoUpdateRingType Preview { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.AutoUpdateRingType Slow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.AutoUpdateRingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.AutoUpdateRingType left, Azure.ResourceManager.ConnectedCache.Models.AutoUpdateRingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.AutoUpdateRingType (string value) { throw null; }
@@ -392,9 +390,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.ConnectedCacheProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.ConnectedCacheProvisioningState Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.ConnectedCacheProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.ConnectedCacheProvisioningState left, Azure.ResourceManager.ConnectedCache.Models.ConnectedCacheProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.ConnectedCacheProvisioningState (string value) { throw null; }
@@ -412,9 +408,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.CustomerTransitState NoTransit { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.CustomerTransitState TransitOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.CustomerTransitState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.CustomerTransitState left, Azure.ResourceManager.ConnectedCache.Models.CustomerTransitState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.CustomerTransitState (string value) { throw null; }
@@ -555,9 +549,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpReviewState InReview { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpReviewState NotConfigured { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpReviewState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpReviewState left, Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpReviewState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpReviewState (string value) { throw null; }
@@ -574,9 +566,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeConfigurationState Configured { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeConfigurationState NotConfiguredIP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeConfigurationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeConfigurationState left, Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeConfigurationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeConfigurationState (string value) { throw null; }
@@ -743,9 +733,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeOSType Linux { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeOSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeOSType left, Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeOSType (string value) { throw null; }
@@ -783,9 +771,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProxyRequired None { get { throw null; } }
         public static Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProxyRequired Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProxyRequired other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProxyRequired left, Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProxyRequired right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProxyRequired (string value) { throw null; }

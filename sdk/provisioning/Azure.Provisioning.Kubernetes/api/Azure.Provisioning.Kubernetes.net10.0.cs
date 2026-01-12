@@ -27,7 +27,6 @@ namespace Azure.Provisioning.Kubernetes
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kubernetes.ConnectedCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -51,11 +50,8 @@ namespace Azure.Provisioning.Kubernetes
         public KubernetesBuiltInRole(string value) { throw null; }
         public static Azure.Provisioning.Kubernetes.KubernetesBuiltInRole KubernetesClusterAzureArcOnboarding { get { throw null; } }
         public bool Equals(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole left, Azure.Provisioning.Kubernetes.KubernetesBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.Kubernetes.KubernetesBuiltInRole (string value) { throw null; }

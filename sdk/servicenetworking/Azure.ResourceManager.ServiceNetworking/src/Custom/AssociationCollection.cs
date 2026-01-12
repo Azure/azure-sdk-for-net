@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     public partial class AssociationCollection : ArmCollection, IEnumerable<AssociationResource>, IAsyncEnumerable<AssociationResource>
     {
         private readonly ClientDiagnostics _associationAssociationsInterfaceClientDiagnostics;
-        private readonly AssociationsInterfaceRestOperations _associationAssociationsInterfaceRestClient;
+        private readonly AssociationsInterface _associationAssociationsInterfaceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AssociationCollection"/> class for mocking. </summary>
         protected AssociationCollection()
@@ -38,18 +39,20 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AssociationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _associationAssociationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", AssociationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AssociationResource.ResourceType, out string associationAssociationsInterfaceApiVersion);
-            _associationAssociationsInterfaceRestClient = new AssociationsInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, associationAssociationsInterfaceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _associationAssociationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", AssociationResource.ResourceType.Namespace, Diagnostics);
+            _associationAssociationsInterfaceRestClient = new AssociationsInterface(_associationAssociationsInterfaceClientDiagnostics, Pipeline, Endpoint, associationAssociationsInterfaceApiVersion ?? "2023-11-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
@@ -84,14 +87,27 @@ namespace Azure.ResourceManager.ServiceNetworking
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _associationAssociationsInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData(), cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation<AssociationResource>(new AssociationOperationSource(Client),_associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData()).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, TrafficControllerAssociationData.ToRequestContent(data.ToTrafficControllerAssociationData()), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ServiceNetworkingArmOperation<AssociationResource> operation = new ServiceNetworkingArmOperation<AssociationResource>(
+                    new AssociationOperationSource(Client),
+                    _associationAssociationsInterfaceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -133,14 +149,27 @@ namespace Azure.ResourceManager.ServiceNetworking
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _associationAssociationsInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData(), cancellationToken);
-                var operation = new ServiceNetworkingArmOperation<AssociationResource>(new AssociationOperationSource(Client), _associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, data.ToTrafficControllerAssociationData()).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, TrafficControllerAssociationData.ToRequestContent(data.ToTrafficControllerAssociationData()), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ServiceNetworkingArmOperation<AssociationResource> operation = new ServiceNetworkingArmOperation<AssociationResource>(
+                    new AssociationOperationSource(Client),
+                    _associationAssociationsInterfaceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -179,13 +208,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Get");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TrafficControllerAssociationData> response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,13 +261,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Get");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Get");
             scope.Start();
             try
             {
-                var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TrafficControllerAssociationData> response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,9 +310,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An async collection of <see cref="AssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssociationResource(Client, AssociationData.DeserializeAssociationData(e)), _associationAssociationsInterfaceClientDiagnostics, Pipeline, "AssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AssociationData, AssociationResource>(new AssociationInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_associationAssociationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AssociationResource(Client, data));
         }
 
         /// <summary>
@@ -295,9 +342,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> A collection of <see cref="AssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssociationResource(Client, AssociationData.DeserializeAssociationData(e)), _associationAssociationsInterfaceClientDiagnostics, Pipeline, "AssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AssociationData, AssociationResource>(new AssociationInterfaceGetByTrafficControllerCollectionResultOfT(_associationAssociationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AssociationResource(Client, data));
         }
 
         /// <summary>
@@ -329,11 +378,29 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Exists");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TrafficControllerAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrafficControllerAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -372,11 +439,29 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Exists");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TrafficControllerAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrafficControllerAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -415,13 +500,33 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.GetIfExists");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TrafficControllerAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrafficControllerAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AssociationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
@@ -460,13 +565,33 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.GetIfExists");
+            using DiagnosticScope scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TrafficControllerAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrafficControllerAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AssociationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +611,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AssociationResource> IAsyncEnumerable<AssociationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -801,7 +801,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1164,7 +1164,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1369,7 +1369,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint"
             }
           ],
           "initializedBy": 0,

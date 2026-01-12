@@ -104,9 +104,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState left, Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState (string value) { throw null; }
@@ -124,9 +122,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState PendingUnregister { get { throw null; } }
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState Registered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState left, Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState (string value) { throw null; }

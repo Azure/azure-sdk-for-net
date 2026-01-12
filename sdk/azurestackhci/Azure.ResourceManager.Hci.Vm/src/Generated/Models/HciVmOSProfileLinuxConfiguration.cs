@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> OSProfile update linux configuration. </summary>
     public partial class HciVmOSProfileLinuxConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmOSProfileLinuxConfiguration"/>. </summary>
         public HciVmOSProfileLinuxConfiguration()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmOSProfileLinuxConfiguration"/>. </summary>
         /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
         /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmOSProfileLinuxConfiguration(bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmOSProfileLinuxConfiguration(bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisionVmAgent = provisionVmAgent;
             ProvisionVmConfigAgent = provisionVmConfigAgent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </summary>
         public bool? ProvisionVmAgent { get; set; }
+
         /// <summary> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </summary>
         public bool? ProvisionVmConfigAgent { get; set; }
     }

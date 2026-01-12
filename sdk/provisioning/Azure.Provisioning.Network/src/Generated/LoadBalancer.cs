@@ -146,6 +146,17 @@ public partial class LoadBalancer : ProvisionableResource
     private BicepList<ProbeResource>? _probes;
 
     /// <summary>
+    /// Indicates the scope of the load balancer: external (Public) or internal
+    /// (Private).
+    /// </summary>
+    public BicepValue<LoadBalancerScope> Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); _scope!.Assign(value); }
+    }
+    private BicepValue<LoadBalancerScope>? _scope;
+
+    /// <summary>
     /// The load balancer SKU.
     /// </summary>
     public LoadBalancerSku Sku 
@@ -203,7 +214,7 @@ public partial class LoadBalancer : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the LoadBalancer.</param>
     public LoadBalancer(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/loadBalancers", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/loadBalancers", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -224,6 +235,7 @@ public partial class LoadBalancer : ProvisionableResource
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _outboundRules = DefineListProperty<OutboundRule>("OutboundRules", ["properties", "outboundRules"]);
         _probes = DefineListProperty<ProbeResource>("Probes", ["properties", "probes"]);
+        _scope = DefineProperty<LoadBalancerScope>("Scope", ["properties", "scope"]);
         _sku = DefineModelProperty<LoadBalancerSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
@@ -236,6 +248,16 @@ public partial class LoadBalancer : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>
