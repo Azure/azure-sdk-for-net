@@ -29,6 +29,11 @@
 
 ### Bugs Fixed
 
+* Fixed performance counter metrics not using configured resource attributes
+  (cloud_RoleName and cloud_RoleInstance), which previously showed
+  "unknown_service:appName" instead of the configured values.
+  ([#54944](https://github.com/Azure/azure-sdk-for-net/pull/54944))
+
 ### Other Changes
 
 ## 1.6.0-beta.1 (2025-12-03)
