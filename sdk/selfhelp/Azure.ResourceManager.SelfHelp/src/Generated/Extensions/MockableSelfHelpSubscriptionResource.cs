@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription. </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpXXXAsync(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = DiscoverySolutionNLPClientDiagnostics.CreateScope("MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlpXXX");
+            using DiagnosticScope scope = DiscoverySolutionNLPClientDiagnostics.CreateScope("MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
             scope.Start();
             try
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsNlpXXXRequest(Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context);
+                HttpMessage message = DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsNlpRequest(Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiscoveryNlpResult> response = Response.FromValue(DiscoveryNlpResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription. </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiscoveryNlpResult> DiscoverSolutionsNlpXXX(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryNlpResult> DiscoverSolutionsNlp(DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = DiscoverySolutionNLPClientDiagnostics.CreateScope("MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlpXXX");
+            using DiagnosticScope scope = DiscoverySolutionNLPClientDiagnostics.CreateScope("MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
             scope.Start();
             try
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsNlpXXXRequest(Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context);
+                HttpMessage message = DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsNlpRequest(Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiscoveryNlpResult> response = Response.FromValue(DiscoveryNlpResult.FromResponse(result), result);
                 if (response.Value == null)

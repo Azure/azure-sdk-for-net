@@ -402,36 +402,36 @@ namespace Azure.ResourceManager.SelfHelp
         /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlpXXXAsync(DiscoveryNlpContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlpAsync(DiscoveryNlpContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpXXXAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpXXXAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlpXXX(DiscoveryNlpContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp(DiscoveryNlpContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DiscoveryNlpResult> DiscoverSolutionsNlpXXX(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
+        public static Response<DiscoveryNlpResult> DiscoverSolutionsNlp(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpXXX(content, cancellationToken);
+            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlp(content, cancellationToken);
         }
 
         /// <summary>

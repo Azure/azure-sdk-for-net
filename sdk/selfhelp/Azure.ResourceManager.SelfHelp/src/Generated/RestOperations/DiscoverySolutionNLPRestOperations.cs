@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDiscoverSolutionsNlpXXXRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDiscoverSolutionsNlpRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
