@@ -452,6 +452,44 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
+        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSelfHelpSolutionResultAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SelfHelpSolutionResultResource>> GetSelfHelpSolutionResultAsync(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSelfHelpTenantResource(tenantResource).GetSelfHelpSolutionResultAsync(solutionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSelfHelpSolutionResult(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SelfHelpSolutionResultResource> GetSelfHelpSolutionResult(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSelfHelpTenantResource(tenantResource).GetSelfHelpSolutionResult(solutionId, cancellationToken);
+        }
+
+        /// <summary>
         /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
         /// <item>
         /// <term> Mocking. </term>

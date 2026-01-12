@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="checkNameAvailabilityRequest"> The required parameters for availability check. </param>
+        /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="checkNameAvailabilityRequest"> The required parameters for availability check. </param>
+        /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>

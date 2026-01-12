@@ -53,6 +53,64 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return GetCachedClient(client => new SelfHelpSolutionResultCollection(client, Id));
         }
 
+        /// <summary>
+        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Help/selfHelp/{solutionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResourceSelfHelps_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SelfHelpSolutionResultResource>> GetSelfHelpSolutionResultAsync(string solutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+
+            return await GetSelfHelpSolutionResults().GetAsync(solutionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Help/selfHelp/{solutionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResourceSelfHelps_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SelfHelpSolutionResultResource> GetSelfHelpSolutionResult(string solutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+
+            return GetSelfHelpSolutionResults().Get(solutionId, cancellationToken);
+        }
+
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
