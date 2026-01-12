@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. Indicates the current lifecycle status of the update summary operation, such as whether it has been accepted, is in progress, or has completed. </param>
         /// <param name="oemFamily"> OEM family name. </param>
         /// <param name="currentOemVersion"> Current OEM Version. </param>
         /// <param name="hardwareModel"> Name of the hardware model. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="healthState"> Overall health state for update-specific health checks. </param>
         /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="state"> Overall update state of the stamp. </param>
+        /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterUpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdatedOn, DateTimeOffset? lastCheckedOn, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the UpdateSummaries proxy resource. </summary>
+        /// <summary> Provisioning state of the UpdateSummaries proxy resource. Indicates the current lifecycle status of the update summary operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
         /// <summary> OEM family name. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Last time the package-specific checks were run. </summary>
         [WirePath("properties.healthCheckDate")]
         public DateTimeOffset? HealthCheckOn { get; set; }
-        /// <summary> Overall update state of the stamp. </summary>
+        /// <summary> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </summary>
         [WirePath("properties.state")]
         public HciClusterUpdateState? State { get; set; }
     }

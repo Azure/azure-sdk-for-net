@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceChangeRequestProperties"/>. </summary>
-        /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
+        /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. This indicates whether the customer wishes to opt in or out of the Software Assurance program, which provides licensing and support benefits. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SoftwareAssuranceChangeRequestProperties(SoftwareAssuranceIntent? softwareAssuranceIntent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Customer Intent for Software Assurance Benefit. </summary>
+        /// <summary> Customer Intent for Software Assurance Benefit. This indicates whether the customer wishes to opt in or out of the Software Assurance program, which provides licensing and support benefits. </summary>
         [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
     }

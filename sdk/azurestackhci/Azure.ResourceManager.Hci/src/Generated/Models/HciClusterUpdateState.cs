@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Overall update state of the stamp. </summary>
+    /// <summary> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </summary>
     public readonly partial struct HciClusterUpdateState : IEquatable<HciClusterUpdateState>
     {
         private readonly string _value;
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.Hci.Models
         private const string PreparationInProgressValue = "PreparationInProgress";
         private const string PreparationFailedValue = "PreparationFailed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> The update state is not known. </summary>
         public static HciClusterUpdateState Unknown { get; } = new HciClusterUpdateState(UnknownValue);
-        /// <summary> AppliedSuccessfully. </summary>
+        /// <summary> Updates have been successfully applied to the stamp. </summary>
         public static HciClusterUpdateState AppliedSuccessfully { get; } = new HciClusterUpdateState(AppliedSuccessfullyValue);
-        /// <summary> UpdateAvailable. </summary>
+        /// <summary> Updates are available but have not yet been applied. </summary>
         public static HciClusterUpdateState UpdateAvailable { get; } = new HciClusterUpdateState(UpdateAvailableValue);
-        /// <summary> UpdateInProgress. </summary>
+        /// <summary> Updates are currently being applied to the stamp. </summary>
         public static HciClusterUpdateState UpdateInProgress { get; } = new HciClusterUpdateState(UpdateInProgressValue);
-        /// <summary> UpdateFailed. </summary>
+        /// <summary> The update process failed. </summary>
         public static HciClusterUpdateState UpdateFailed { get; } = new HciClusterUpdateState(UpdateFailedValue);
-        /// <summary> NeedsAttention. </summary>
+        /// <summary> The update process requires user intervention or has encountered issues needing attention. </summary>
         public static HciClusterUpdateState NeedsAttention { get; } = new HciClusterUpdateState(NeedsAttentionValue);
-        /// <summary> PreparationInProgress. </summary>
+        /// <summary> Preparation for the update is currently in progress. </summary>
         public static HciClusterUpdateState PreparationInProgress { get; } = new HciClusterUpdateState(PreparationInProgressValue);
-        /// <summary> PreparationFailed. </summary>
+        /// <summary> Preparation for the update failed. </summary>
         public static HciClusterUpdateState PreparationFailed { get; } = new HciClusterUpdateState(PreparationFailedValue);
         /// <summary> Determines if two <see cref="HciClusterUpdateState"/> values are the same. </summary>
         public static bool operator ==(HciClusterUpdateState left, HciClusterUpdateState right) => left.Equals(right);

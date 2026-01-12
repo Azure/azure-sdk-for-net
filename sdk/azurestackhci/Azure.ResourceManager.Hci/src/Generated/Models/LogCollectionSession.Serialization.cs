@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("logCollectionStatus"u8);
                 writer.WriteStringValue(LogCollectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LogCollectionJobType))
-            {
-                writer.WritePropertyName("logCollectionJobType"u8);
-                writer.WriteStringValue(LogCollectionJobType.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LogCollectionJobType))
+            {
+                writer.WritePropertyName("logCollectionJobType"u8);
+                writer.WriteStringValue(LogCollectionJobType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(EndTimeCollected))
             {
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset? timeCollected = default;
             long? logSize = default;
             LogCollectionStatus? logCollectionStatus = default;
-            LogCollectionJobType? logCollectionJobType = default;
             string correlationId = default;
+            LogCollectionJobType? logCollectionJobType = default;
             DateTimeOffset? endTimeCollected = default;
             LogCollectionError logCollectionError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -175,6 +175,11 @@ namespace Azure.ResourceManager.Hci.Models
                     logCollectionStatus = new LogCollectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("logCollectionJobType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -182,11 +187,6 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     logCollectionJobType = new LogCollectionJobType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("endTimeCollected"u8))
@@ -219,8 +219,8 @@ namespace Azure.ResourceManager.Hci.Models
                 timeCollected,
                 logSize,
                 logCollectionStatus,
-                logCollectionJobType,
                 correlationId,
+                logCollectionJobType,
                 endTimeCollected,
                 logCollectionError,
                 serializedAdditionalRawData);
@@ -315,21 +315,6 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionJobType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  logCollectionJobType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LogCollectionJobType))
-                {
-                    builder.Append("  logCollectionJobType: ");
-                    builder.AppendLine($"'{LogCollectionJobType.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -350,6 +335,21 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         builder.AppendLine($"'{CorrelationId}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionJobType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logCollectionJobType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogCollectionJobType))
+                {
+                    builder.Append("  logCollectionJobType: ");
+                    builder.AppendLine($"'{LogCollectionJobType.Value.ToString()}'");
                 }
             }
 

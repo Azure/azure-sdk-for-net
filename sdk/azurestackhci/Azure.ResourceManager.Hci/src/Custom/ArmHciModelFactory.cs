@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -285,6 +284,269 @@ namespace Azure.ResourceManager.Hci.Models
                 progressPercentage,
                 notifyMessage,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of HciClusterData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="status"> Status of the cluster agent. </param>
+        /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
+        /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
+        /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
+        /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
+        /// <param name="billingModel"> Type of billing applied to the resource. </param>
+        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
+        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
+        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
+        /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
+        /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.HciClusterData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterData HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        {
+            return HciClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, status: status, connectivityStatus: default, cloudId: cloudId, cloudManagementEndpoint: cloudManagementEndpoint, aadClientId: aadClientId, aadTenantId: aadTenantId, aadApplicationObjectId: aadApplicationObjectId, aadServicePrincipalObjectId: aadServicePrincipalObjectId, softwareAssuranceProperties: softwareAssuranceProperties, logCollectionProperties: default, remoteSupportProperties: default, desiredProperties: desiredProperties, reportedProperties: reportedProperties, isolatedVmAttestationConfiguration: default, trialDaysRemaining: trialDaysRemaining, billingModel: billingModel, registrationTimestamp: registrationTimestamp, lastSyncTimestamp: lastSyncTimestamp, lastBillingTimestamp: lastBillingTimestamp, serviceEndpoint: serviceEndpoint, resourceProviderObjectId: resourceProviderObjectId, principalId: principalId, tenantId: tenantId, typeIdentityType: typeIdentityType, userAssignedIdentities: userAssignedIdentities);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Hci.HciClusterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="status"> Status of the cluster agent. </param>
+        /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. </param>
+        /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
+        /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
+        /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
+        /// <param name="logCollectionProperties"> Log Collection properties of the cluster. </param>
+        /// <param name="remoteSupportProperties"> RemoteSupport properties of the cluster. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
+        /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
+        /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
+        /// <param name="billingModel"> Type of billing applied to the resource. </param>
+        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
+        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
+        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
+        /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
+        /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterData HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, HciClusterConnectivityStatus? connectivityStatus = null, Guid? cloudId = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, LogCollectionProperties logCollectionProperties = null, RemoteSupportProperties remoteSupportProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? typeIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            return HciClusterData(id, name, resourceType, systemData, tags, location, kind: default, principalId, tenantId, typeIdentityType, userAssignedIdentities, provisioningState, status, connectivityStatus, supportStatus: default, cloudId, ring: default, cloudManagementEndpoint, aadClientId, aadTenantId, aadApplicationObjectId, aadServicePrincipalObjectId, softwareAssuranceProperties, isManagementCluster: default, logCollectionProperties, remoteSupportProperties, desiredProperties);
+        }
+
+        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
+        /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
+        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.ArcExtensionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade)
+        {
+            return ArcExtensionData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, aggregateState: aggregateState, perNodeExtensionDetails: perNodeExtensionDetails, managedBy: default, forceUpdateTag: forceUpdateTag, publisher: publisher, arcExtensionType: arcExtensionType, typeHandlerVersion: typeHandlerVersion, shouldAutoUpgradeMinorVersion: shouldAutoUpgradeMinorVersion, settings: settings, protectedSettings: protectedSettings, enableAutomaticUpgrade: enableAutomaticUpgrade);
+        }
+
+        /// <summary> Initializes a new instance of ArcSettingData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
+        /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
+        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
+        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
+        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
+        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
+        /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.ArcSettingData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties)
+        {
+            return ArcSettingData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, arcInstanceResourceGroup: arcInstanceResourceGroup, arcApplicationClientId: arcApplicationClientId, arcApplicationTenantId: arcApplicationTenantId, arcServicePrincipalObjectId: arcServicePrincipalObjectId, arcApplicationObjectId: arcApplicationObjectId, aggregateState: aggregateState, perNodeDetails: perNodeDetails, connectivityProperties: connectivityProperties, defaultExtensions: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Hci.ArcSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
+        /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
+        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
+        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
+        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
+        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
+        /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
+        /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IEnumerable<ArcDefaultExtensionDetails> defaultExtensions)
+        {
+            return ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails, connectivityConfigurations: default, defaultExtensions);
+        }
+
+        /// <summary> Initializes a new instance of HciClusterNode. </summary>
+        /// <param name="name"> Name of the cluster node. </param>
+        /// <param name="id"> Id of the node in the cluster. </param>
+        /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
+        /// <param name="nodeType"> Type of the cluster node hardware. </param>
+        /// <param name="ehcResourceId"> Edge Hardware Center Resource Id. </param>
+        /// <param name="manufacturer"> Manufacturer of the cluster node hardware. </param>
+        /// <param name="model"> Model name of the cluster node hardware. </param>
+        /// <param name="osName"> Operating system running on the cluster node. </param>
+        /// <param name="osVersion"> Version of the operating system running on the cluster node. </param>
+        /// <param name="osDisplayVersion"> Display version of the operating system running on the cluster node. </param>
+        /// <param name="serialNumber"> Immutable id of the cluster node. </param>
+        /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
+        /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
+        /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.Models.HciClusterNode" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterNode HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp)
+        {
+            return HciClusterNode(name: name, id: id, windowsServerSubscription: windowsServerSubscription, nodeType: nodeType, ehcResourceId: ehcResourceId, manufacturer: manufacturer, model: model, osName: osName, osVersion: osVersion, osDisplayVersion: osDisplayVersion, serialNumber: serialNumber, coreCount: coreCount, memoryInGiB: memoryInGiB, lastLicensingTimestamp: lastLicensingTimestamp, oemActivation: default);
+        }
+
+        /// <summary> Initializes a new instance of HciClusterReportedProperties. </summary>
+        /// <param name="clusterName"> Name of the on-prem cluster connected to this resource. </param>
+        /// <param name="clusterId"> Unique id generated by the on-prem cluster. </param>
+        /// <param name="clusterVersion"> Version of the cluster software. </param>
+        /// <param name="nodes"> List of nodes reported by the cluster. </param>
+        /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
+        /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
+        /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
+        /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.Models.HciClusterReportedProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities)
+        {
+            return HciClusterReportedProperties(clusterName: clusterName, clusterId: clusterId, clusterVersion: clusterVersion, nodes: nodes, lastUpdatedOn: lastUpdatedOn, imdsAttestation: imdsAttestation, diagnosticLevel: diagnosticLevel, supportedCapabilities: supportedCapabilities, clusterType: default, manufacturer: default, oemActivation: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciClusterReportedProperties"/>. </summary>
+        /// <param name="clusterName"> Name of the on-prem cluster connected to this resource. </param>
+        /// <param name="clusterId"> Unique id generated by the on-prem cluster. </param>
+        /// <param name="clusterVersion"> Version of the cluster software. </param>
+        /// <param name="nodes"> List of nodes reported by the cluster. </param>
+        /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
+        /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
+        /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
+        /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
+        /// <param name="clusterType"> The node type of all the nodes of the cluster. </param>
+        /// <param name="manufacturer"> The manufacturer of all the nodes of the cluster. </param>
+        /// <param name="oemActivation"> OEM activation status of the cluster. </param>
+        /// <returns> A new <see cref="Models.HciClusterReportedProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities = null, ClusterNodeType? clusterType = null, string manufacturer = null, OemActivation? oemActivation = null)
+        {
+            return HciClusterReportedProperties(clusterName, clusterId, clusterVersion, nodes, lastUpdatedOn, msiExpirationTimeStamp: default, imdsAttestation, diagnosticLevel, supportedCapabilities, clusterType, manufacturer, oemActivation, hardwareClass: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciNicDetail"/>. </summary>
+        /// <param name="adapterName"> Adapter Name of NIC. </param>
+        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
+        /// <param name="componentId"> Component Id of NIC. </param>
+        /// <param name="driverVersion"> Driver Version of NIC. </param>
+        /// <param name="ipv4Address"> Subnet Mask of NIC. </param>
+        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
+        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
+        /// <param name="dnsServers"> DNS Servers for NIC. </param>
+        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
+        /// <param name="macAddress"> MAC address information of NIC. </param>
+        /// <param name="slot"> The slot attached to the NIC. </param>
+        /// <param name="switchName"> The switch attached to the NIC, if any. </param>
+        /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
+        /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
+        /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
+        /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciNicDetail HciNicDetail(string adapterName, string interfaceDescription, string componentId = null, string driverVersion = null, string ipv4Address = null, string subnetMask = null, string defaultGateway = null, IEnumerable<string> dnsServers = null, string defaultIsolationId = null, string macAddress = null, string slot = null, string switchName = null, string nicType = null, string vlanId = null, string nicStatus = null)
+        {
+            return HciNicDetail(adapterName, interfaceDescription, componentId, driverVersion, ipv4Address, subnetMask, defaultGateway, dnsServers, defaultIsolationId, macAddress, slot, switchName, nicType, vlanId, nicStatus, rdmaCapability: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciReportedProperties"/>. </summary>
+        /// <param name="deviceState"> edge device state. </param>
+        /// <param name="extensions"> Extensions details for edge device. </param>
+        /// <param name="networkProfile"> HCI device network information. </param>
+        /// <param name="osProfile"> HCI device OS specific information. </param>
+        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
+        /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions, HciNetworkProfile networkProfile = null, HciOSProfile osProfile = null, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = null)
+        {
+            return HciReportedProperties(deviceState, extensions, networkProfile, osProfile, sbeDeploymentPackageInfo, storagePoolableDisksCount: default, hardwareProcessorType: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionSession"/>. </summary>
+        /// <param name="logStartOn"> Start Time of the logs when it was collected. </param>
+        /// <param name="logEndOn"> End Time of the logs when it was collected. </param>
+        /// <param name="timeCollected"> Duration of logs collected. </param>
+        /// <param name="logSize"> Size of the logs collected. </param>
+        /// <param name="logCollectionStatus"> LogCollection status. </param>
+        /// <param name="logCollectionJobType"> LogCollection job type. </param>
+        /// <param name="correlationId"> CorrelationId of the log collection. </param>
+        /// <param name="endTimeCollected"> End Time of the logs when it was collected. </param>
+        /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
+        /// <returns> A new <see cref="Models.LogCollectionSession"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, LogCollectionJobType? logCollectionJobType, string correlationId, DateTimeOffset? endTimeCollected = null, LogCollectionError logCollectionError = null)
+        {
+            return LogCollectionSession(logStartOn, logEndOn, timeCollected, logSize, logCollectionStatus, correlationId, logCollectionJobType, endTimeCollected, logCollectionError);
+        }
+
+        /// <summary> Initializes a new instance of PerNodeArcState. </summary>
+        /// <param name="name"> Name of the Node in HCI Cluster. </param>
+        /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
+        /// <param name="state"> State of Arc agent in this node. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Hci.Models.PerNodeArcState" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PerNodeArcState PerNodeArcState(string name, string arcInstance, NodeArcState? state)
+        {
+            return PerNodeArcState(name: name, arcInstance: arcInstance, arcNodeServicePrincipalObjectId: default, state: state);
         }
     }
 }

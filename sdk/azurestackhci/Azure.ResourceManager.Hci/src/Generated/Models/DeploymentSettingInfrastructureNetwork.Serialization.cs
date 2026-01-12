@@ -56,6 +56,21 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DnsServerConfig))
+            {
+                writer.WritePropertyName("dnsServerConfig"u8);
+                writer.WriteStringValue(DnsServerConfig.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(DnsZones))
+            {
+                writer.WritePropertyName("dnsZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsZones)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
@@ -111,6 +126,8 @@ namespace Azure.ResourceManager.Hci.Models
             string subnetMask = default;
             string gateway = default;
             IList<DeploymentSettingIPPools> ipPools = default;
+            HciNetworkDnsServerConfig? dnsServerConfig = default;
+            IList<HciNetworkDnsZones> dnsZones = default;
             IList<string> dnsServers = default;
             bool? useDhcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,6 +156,29 @@ namespace Azure.ResourceManager.Hci.Models
                         array.Add(DeploymentSettingIPPools.DeserializeDeploymentSettingIPPools(item, options));
                     }
                     ipPools = array;
+                    continue;
+                }
+                if (property.NameEquals("dnsServerConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dnsServerConfig = new HciNetworkDnsServerConfig(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dnsZones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HciNetworkDnsZones> array = new List<HciNetworkDnsZones>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HciNetworkDnsZones.DeserializeHciNetworkDnsZones(item, options));
+                    }
+                    dnsZones = array;
                     continue;
                 }
                 if (property.NameEquals("dnsServers"u8))
@@ -174,6 +214,8 @@ namespace Azure.ResourceManager.Hci.Models
                 subnetMask,
                 gateway,
                 ipPools ?? new ChangeTrackingList<DeploymentSettingIPPools>(),
+                dnsServerConfig,
+                dnsZones ?? new ChangeTrackingList<HciNetworkDnsZones>(),
                 dnsServers ?? new ChangeTrackingList<string>(),
                 useDhcp,
                 serializedAdditionalRawData);
@@ -253,6 +295,44 @@ namespace Azure.ResourceManager.Hci.Models
                         foreach (var item in IPPools)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipPools: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServerConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dnsServerConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsServerConfig))
+                {
+                    builder.Append("  dnsServerConfig: ");
+                    builder.AppendLine($"'{DnsServerConfig.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dnsZones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DnsZones))
+                {
+                    if (DnsZones.Any())
+                    {
+                        builder.Append("  dnsZones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DnsZones)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dnsZones: ");
                         }
                         builder.AppendLine("  ]");
                     }

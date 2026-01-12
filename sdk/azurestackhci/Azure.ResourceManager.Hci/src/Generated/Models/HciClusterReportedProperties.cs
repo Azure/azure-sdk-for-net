@@ -58,26 +58,30 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="clusterVersion"> Version of the cluster software. </param>
         /// <param name="nodes"> List of nodes reported by the cluster. </param>
         /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
+        /// <param name="msiExpirationTimeStamp"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
         /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
-        /// <param name="clusterType"> The node type of all the nodes of the cluster. </param>
+        /// <param name="clusterType"> Specifies the type of hardware vendor for all nodes in the cluster. Indicates whether the nodes are provided by Microsoft or a third-party vendor. </param>
         /// <param name="manufacturer"> The manufacturer of all the nodes of the cluster. </param>
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
+        /// <param name="hardwareClass"> Hardware class of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, DateTimeOffset? msiExpirationTimeStamp, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, HciClusterHardwareClass? hardwareClass, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterName = clusterName;
             ClusterId = clusterId;
             ClusterVersion = clusterVersion;
             Nodes = nodes;
             LastUpdatedOn = lastUpdatedOn;
+            MsiExpirationTimeStamp = msiExpirationTimeStamp;
             ImdsAttestation = imdsAttestation;
             DiagnosticLevel = diagnosticLevel;
             SupportedCapabilities = supportedCapabilities;
             ClusterType = clusterType;
             Manufacturer = manufacturer;
             OemActivation = oemActivation;
+            HardwareClass = hardwareClass;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,6 +100,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Last time the cluster reported the data. </summary>
         [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdatedOn { get; }
+        /// <summary> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </summary>
+        [WirePath("msiExpirationTimeStamp")]
+        public DateTimeOffset? MsiExpirationTimeStamp { get; }
         /// <summary> IMDS attestation status of the cluster. </summary>
         [WirePath("imdsAttestation")]
         public ImdsAttestationState? ImdsAttestation { get; }
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Capabilities supported by the cluster. </summary>
         [WirePath("supportedCapabilities")]
         public IReadOnlyList<string> SupportedCapabilities { get; }
-        /// <summary> The node type of all the nodes of the cluster. </summary>
+        /// <summary> Specifies the type of hardware vendor for all nodes in the cluster. Indicates whether the nodes are provided by Microsoft or a third-party vendor. </summary>
         [WirePath("clusterType")]
         public ClusterNodeType? ClusterType { get; }
         /// <summary> The manufacturer of all the nodes of the cluster. </summary>
@@ -114,5 +121,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> OEM activation status of the cluster. </summary>
         [WirePath("oemActivation")]
         public OemActivation? OemActivation { get; }
+        /// <summary> Hardware class of the cluster. </summary>
+        [WirePath("hardwareClass")]
+        public HciClusterHardwareClass? HardwareClass { get; }
     }
 }

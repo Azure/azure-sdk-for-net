@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity. </summary>
+    /// <summary> Indicates the importance or impact level of the result. Determines whether the result is informational, a warning, or a critical issue that may block updates. </summary>
     public readonly partial struct UpdateSeverity : IEquatable<UpdateSeverity>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Hci.Models
         private const string InformationalValue = "Informational";
         private const string HiddenValue = "Hidden";
 
-        /// <summary> Critical. </summary>
+        /// <summary> A critical issue that blocks updates and requires immediate attention. </summary>
         public static UpdateSeverity Critical { get; } = new UpdateSeverity(CriticalValue);
-        /// <summary> Warning. </summary>
+        /// <summary> A warning that may indicate a potential issue but does not block updates. </summary>
         public static UpdateSeverity Warning { get; } = new UpdateSeverity(WarningValue);
-        /// <summary> Informational. </summary>
+        /// <summary> General information that does not indicate any issue. </summary>
         public static UpdateSeverity Informational { get; } = new UpdateSeverity(InformationalValue);
-        /// <summary> Hidden. </summary>
+        /// <summary> The result is hidden and not shown in the output. </summary>
         public static UpdateSeverity Hidden { get; } = new UpdateSeverity(HiddenValue);
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are the same. </summary>
         public static bool operator ==(UpdateSeverity left, UpdateSeverity right) => left.Equals(right);

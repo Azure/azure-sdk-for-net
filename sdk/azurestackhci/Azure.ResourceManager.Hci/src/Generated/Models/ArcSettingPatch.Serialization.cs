@@ -47,17 +47,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectivityProperties))
+            if (Optional.IsDefined(ConnectivityConfigurations))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConnectivityProperties);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ConnectivityProperties, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(ConnectivityConfigurations, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            BinaryData connectivityProperties = default;
+            HciArcConnectivityProperties connectivityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            connectivityProperties = BinaryData.FromString(property0.Value.GetRawText());
+                            connectivityProperties = HciArcConnectivityProperties.DeserializeHciArcConnectivityProperties(property0.Value, options);
                             continue;
                         }
                     }

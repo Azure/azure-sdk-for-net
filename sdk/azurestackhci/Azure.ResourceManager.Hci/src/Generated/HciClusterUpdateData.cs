@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </param>
         /// <param name="installedOn"> Date that the update was installed. </param>
         /// <param name="description"> Description of the update. </param>
         /// <param name="minSbeVersionRequired"> Minimum Sbe Version of the update. </param>
-        /// <param name="state"> State of the update as it relates to this stamp. </param>
+        /// <param name="state"> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </param>
         /// <param name="prerequisites"> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </param>
-        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </param>
-        /// <param name="rebootRequired"></param>
+        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise. </param>
+        /// <param name="rebootRequired"> Indicates whether a reboot is required after the update or operation. Helps determine if a system restart is necessary to complete the process. </param>
         /// <param name="healthState"> Overall health state for update-specific health checks. </param>
         /// <param name="healthCheckResult"> An array of PrecheckResult objects. </param>
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="version"> Version of the update. </param>
         /// <param name="publisher"> Publisher of the update package. </param>
         /// <param name="releaseLink"> Link to release notes for the update. </param>
-        /// <param name="availabilityType"> Indicates the way the update content can be downloaded. </param>
+        /// <param name="availabilityType"> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </param>
         /// <param name="packageType"> Customer-visible type of the update. </param>
         /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
         /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the Updates proxy resource. </summary>
+        /// <summary> Provisioning state of the Updates proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
         /// <summary> Date that the update was installed. </summary>
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Minimum Sbe Version of the update. </summary>
         [WirePath("properties.minSbeVersionRequired")]
         public string MinSbeVersionRequired { get; set; }
-        /// <summary> State of the update as it relates to this stamp. </summary>
+        /// <summary> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </summary>
         [WirePath("properties.state")]
         public HciUpdateState? State { get; set; }
         /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
         [WirePath("properties.prerequisites")]
         public IList<HciClusterUpdatePrerequisite> Prerequisites { get; }
-        /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </summary>
+        /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise. </summary>
         [WirePath("properties.componentVersions")]
         public IList<HciPackageVersionInfo> ComponentVersions { get; }
-        /// <summary> Gets or sets the reboot required. </summary>
+        /// <summary> Indicates whether a reboot is required after the update or operation. Helps determine if a system restart is necessary to complete the process. </summary>
         [WirePath("properties.rebootRequired")]
         public HciNodeRebootRequirement? RebootRequired { get; set; }
         /// <summary> Overall health state for update-specific health checks. </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Link to release notes for the update. </summary>
         [WirePath("properties.releaseLink")]
         public string ReleaseLink { get; set; }
-        /// <summary> Indicates the way the update content can be downloaded. </summary>
+        /// <summary> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </summary>
         [WirePath("properties.availabilityType")]
         public HciAvailabilityType? AvailabilityType { get; set; }
         /// <summary> Customer-visible type of the update. </summary>

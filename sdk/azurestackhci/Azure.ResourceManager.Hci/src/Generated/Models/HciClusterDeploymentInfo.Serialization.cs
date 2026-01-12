@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("cluster"u8);
                 writer.WriteObjectValue(Cluster, options);
             }
+            if (Optional.IsDefined(IdentityProvider))
+            {
+                writer.WritePropertyName("identityProvider"u8);
+                writer.WriteStringValue(IdentityProvider.Value.ToString());
+            }
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
@@ -96,6 +101,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sdnIntegration"u8);
                 writer.WriteObjectValue(SdnIntegration, options);
             }
+            if (Optional.IsDefined(IsManagementCluster))
+            {
+                writer.WritePropertyName("isManagementCluster"u8);
+                writer.WriteBooleanValue(IsManagementCluster.Value);
+            }
             if (Optional.IsDefined(AdouPath))
             {
                 writer.WritePropertyName("adouPath"u8);
@@ -120,6 +130,21 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("optionalServices"u8);
                 writer.WriteObjectValue(OptionalServices, options);
+            }
+            if (Optional.IsCollectionDefined(LocalAvailabilityZones))
+            {
+                writer.WritePropertyName("localAvailabilityZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocalAvailabilityZones)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AssemblyInfo))
+            {
+                writer.WritePropertyName("assemblyInfo"u8);
+                writer.WriteObjectValue(AssemblyInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -161,6 +186,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterDeploymentSecuritySettings securitySettings = default;
             DeploymentSettingObservability observability = default;
             HciDeploymentCluster cluster = default;
+            HciDeploymentIdentityProvider? identityProvider = default;
             DeploymentSettingStorage storage = default;
             string namingPrefix = default;
             string domainFqdn = default;
@@ -168,10 +194,13 @@ namespace Azure.ResourceManager.Hci.Models
             IList<DeploymentSettingPhysicalNodes> physicalNodes = default;
             DeploymentSettingHostNetwork hostNetwork = default;
             SdnIntegration sdnIntegration = default;
+            bool? isManagementCluster = default;
             string adouPath = default;
             string secretsLocation = default;
             IList<EceDeploymentSecrets> secrets = default;
             OptionalServices optionalServices = default;
+            IList<HciClusterLocalAvailabilityZones> localAvailabilityZones = default;
+            HciDeploymentAssemblyInfo assemblyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,6 +230,15 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     cluster = HciDeploymentCluster.DeserializeHciDeploymentCluster(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identityProvider"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityProvider = new HciDeploymentIdentityProvider(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storage"u8))
@@ -268,6 +306,15 @@ namespace Azure.ResourceManager.Hci.Models
                     sdnIntegration = SdnIntegration.DeserializeSdnIntegration(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("isManagementCluster"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isManagementCluster = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("adouPath"u8))
                 {
                     adouPath = property.Value.GetString();
@@ -301,6 +348,29 @@ namespace Azure.ResourceManager.Hci.Models
                     optionalServices = OptionalServices.DeserializeOptionalServices(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("localAvailabilityZones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HciClusterLocalAvailabilityZones> array = new List<HciClusterLocalAvailabilityZones>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HciClusterLocalAvailabilityZones.DeserializeHciClusterLocalAvailabilityZones(item, options));
+                    }
+                    localAvailabilityZones = array;
+                    continue;
+                }
+                if (property.NameEquals("assemblyInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assemblyInfo = HciDeploymentAssemblyInfo.DeserializeHciDeploymentAssemblyInfo(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -311,6 +381,7 @@ namespace Azure.ResourceManager.Hci.Models
                 securitySettings,
                 observability,
                 cluster,
+                identityProvider,
                 storage,
                 namingPrefix,
                 domainFqdn,
@@ -318,10 +389,13 @@ namespace Azure.ResourceManager.Hci.Models
                 physicalNodes ?? new ChangeTrackingList<DeploymentSettingPhysicalNodes>(),
                 hostNetwork,
                 sdnIntegration,
+                isManagementCluster,
                 adouPath,
                 secretsLocation,
                 secrets ?? new ChangeTrackingList<EceDeploymentSecrets>(),
                 optionalServices,
+                localAvailabilityZones ?? new ChangeTrackingList<HciClusterLocalAvailabilityZones>(),
+                assemblyInfo,
                 serializedAdditionalRawData);
         }
 
@@ -378,6 +452,21 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     builder.Append("  cluster: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Cluster, options, 2, false, "  cluster: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityProvider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identityProvider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityProvider))
+                {
+                    builder.Append("  identityProvider: ");
+                    builder.AppendLine($"'{IdentityProvider.Value.ToString()}'");
                 }
             }
 
@@ -524,6 +613,22 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagementCluster), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isManagementCluster: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsManagementCluster))
+                {
+                    builder.Append("  isManagementCluster: ");
+                    var boolValue = IsManagementCluster.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdouPath), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -608,6 +713,44 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     builder.Append("  optionalServices: ");
                     BicepSerializationHelpers.AppendChildObject(builder, OptionalServices, options, 2, false, "  optionalServices: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalAvailabilityZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  localAvailabilityZones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocalAvailabilityZones))
+                {
+                    if (LocalAvailabilityZones.Any())
+                    {
+                        builder.Append("  localAvailabilityZones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocalAvailabilityZones)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  localAvailabilityZones: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssemblyInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assemblyInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssemblyInfo))
+                {
+                    builder.Append("  assemblyInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AssemblyInfo, options, 2, false, "  assemblyInfo: ");
                 }
             }
 
