@@ -187,6 +187,7 @@
   <Import Project="ApiListing.targets" />
   <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
+  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
