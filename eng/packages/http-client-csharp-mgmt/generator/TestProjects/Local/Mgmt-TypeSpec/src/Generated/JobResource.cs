@@ -217,7 +217,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourcePatch patch, string ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourcePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -277,7 +277,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourcePatch patch, string ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourcePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
