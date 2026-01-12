@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseDatabasesGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisEnterpriseDatabasesDelete()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesDelete.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesDelete.json
             // this example is just showing the usage of "Databases_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisEnterpriseDatabasesUpdate()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesUpdate.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesUpdate.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisEnterpriseDatabasesUpdateClusteringOnNoClusterCache()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesNoClusterCacheUpdateClustering.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesNoClusterCacheUpdateClustering.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,93 +158,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetKeys_RedisEnterpriseDatabasesListKeys()
-        {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesListKeys.json
-            // this example is just showing the usage of "Databases_ListKeys" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
-            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
-            string resourceGroupName = "rg1";
-            string clusterName = "cache1";
-            string databaseName = "default";
-            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
-            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
-
-            // invoke the operation
-            RedisEnterpriseDataAccessKeys result = await redisEnterpriseDatabase.GetKeysAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task RegenerateKey_RedisEnterpriseDatabasesRegenerateKey()
-        {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesRegenerateKey.json
-            // this example is just showing the usage of "Databases_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
-            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
-            string resourceGroupName = "rg1";
-            string clusterName = "cache1";
-            string databaseName = "default";
-            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
-            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
-
-            // invoke the operation
-            RedisEnterpriseRegenerateKeyContent content = new RedisEnterpriseRegenerateKeyContent(RedisEnterpriseAccessKeyType.Primary);
-            ArmOperation<RedisEnterpriseDataAccessKeys> lro = await redisEnterpriseDatabase.RegenerateKeyAsync(WaitUntil.Completed, content);
-            RedisEnterpriseDataAccessKeys result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Import_RedisEnterpriseDatabasesImport()
-        {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesImport.json
-            // this example is just showing the usage of "Databases_Import" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
-            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
-            string resourceGroupName = "rg1";
-            string clusterName = "cache1";
-            string databaseName = "default";
-            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
-            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
-
-            // invoke the operation
-            ImportRedisEnterpriseDatabaseContent content = new ImportRedisEnterpriseDatabaseContent(new Uri[] { new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParameters"), new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile2?sasKeyParameters") });
-            await redisEnterpriseDatabase.ImportAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Export_RedisEnterpriseDatabasesExport()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesExport.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesExport.json
             // this example is just showing the usage of "Databases_Export" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,10 +186,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ForceUnlink_HowToUnlinkADatabaseDuringARegionalOutage()
+        public async Task Flush_HowToFlushAllTheKeysInTheDatabase()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesForceUnlink.json
-            // this example is just showing the usage of "Databases_ForceUnlink" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesFlush.json
+            // this example is just showing the usage of "Databases_Flush" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -290,8 +206,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            ForceUnlinkRedisEnterpriseDatabaseContent content = new ForceUnlinkRedisEnterpriseDatabaseContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default") });
-            await redisEnterpriseDatabase.ForceUnlinkAsync(WaitUntil.Completed, content);
+            FlushRedisEnterpriseDatabaseContent content = new FlushRedisEnterpriseDatabaseContent
+            {
+                Ids = { new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default") },
+            };
+            await redisEnterpriseDatabase.FlushAsync(WaitUntil.Completed, content: content);
 
             Console.WriteLine("Succeeded");
         }
@@ -300,7 +219,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ForceLinkToReplicationGroup_HowToRelinkADatabaseAfterARegionalOutage()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesForceLink.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesForceLink.json
             // this example is just showing the usage of "Databases_ForceLinkToReplicationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -336,10 +255,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Flush_HowToFlushAllTheKeysInTheDatabase()
+        public async Task ForceUnlink_HowToUnlinkADatabaseDuringARegionalOutage()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesFlush.json
-            // this example is just showing the usage of "Databases_Flush" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesForceUnlink.json
+            // this example is just showing the usage of "Databases_ForceUnlink" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -356,20 +275,101 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            FlushRedisEnterpriseDatabaseContent content = new FlushRedisEnterpriseDatabaseContent
-            {
-                Ids = { new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default") },
-            };
-            await redisEnterpriseDatabase.FlushAsync(WaitUntil.Completed, content: content);
+            ForceUnlinkRedisEnterpriseDatabaseContent content = new ForceUnlinkRedisEnterpriseDatabaseContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default") });
+            await redisEnterpriseDatabase.ForceUnlinkAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Import_RedisEnterpriseDatabasesImport()
+        {
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesImport.json
+            // this example is just showing the usage of "Databases_Import" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
+            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
+            string resourceGroupName = "rg1";
+            string clusterName = "cache1";
+            string databaseName = "default";
+            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
+            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
+
+            // invoke the operation
+            ImportRedisEnterpriseDatabaseContent content = new ImportRedisEnterpriseDatabaseContent(new Uri[] { new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParameters"), new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile2?sasKeyParameters") });
+            await redisEnterpriseDatabase.ImportAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetKeys_RedisEnterpriseDatabasesListKeys()
+        {
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesListKeys.json
+            // this example is just showing the usage of "Databases_ListKeys" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
+            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
+            string resourceGroupName = "rg1";
+            string clusterName = "cache1";
+            string databaseName = "default";
+            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
+            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
+
+            // invoke the operation
+            RedisEnterpriseDataAccessKeys result = await redisEnterpriseDatabase.GetKeysAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RegenerateKey_RedisEnterpriseDatabasesRegenerateKey()
+        {
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesRegenerateKey.json
+            // this example is just showing the usage of "Databases_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
+            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
+            string resourceGroupName = "rg1";
+            string clusterName = "cache1";
+            string databaseName = "default";
+            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
+            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
+
+            // invoke the operation
+            RedisEnterpriseRegenerateKeyContent content = new RedisEnterpriseRegenerateKeyContent(RedisEnterpriseAccessKeyType.Primary);
+            ArmOperation<RedisEnterpriseDataAccessKeys> lro = await redisEnterpriseDatabase.RegenerateKeyAsync(WaitUntil.Completed, content);
+            RedisEnterpriseDataAccessKeys result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeDBRedisVersion_HowToUpgradeYourDatabaseRedisVersion()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDatabasesUpgradeDBRedisVersion.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/preview/2025-08-01-preview/examples/RedisEnterpriseDatabasesUpgradeDBRedisVersion.json
             // this example is just showing the usage of "Databases_UpgradeDBRedisVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

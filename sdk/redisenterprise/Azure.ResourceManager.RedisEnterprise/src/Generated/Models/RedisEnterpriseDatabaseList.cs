@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseList"/>. </summary>
-        internal RedisEnterpriseDatabaseList()
+        /// <param name="value"> The Database items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RedisEnterpriseDatabaseList(IEnumerable<RedisEnterpriseDatabaseData> value)
         {
-            Value = new ChangeTrackingList<RedisEnterpriseDatabaseData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseList"/>. </summary>
-        /// <param name="value"> List of databases. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of results. </param>
+        /// <param name="value"> The Database items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseDatabaseList(IReadOnlyList<RedisEnterpriseDatabaseData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseDatabaseList(IReadOnlyList<RedisEnterpriseDatabaseData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of databases. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseList"/> for deserialization. </summary>
+        internal RedisEnterpriseDatabaseList()
+        {
+        }
+
+        /// <summary> The Database items on this page. </summary>
         public IReadOnlyList<RedisEnterpriseDatabaseData> Value { get; }
-        /// <summary> The URI to fetch the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
