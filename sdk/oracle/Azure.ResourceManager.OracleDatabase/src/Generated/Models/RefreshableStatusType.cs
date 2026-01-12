@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct RefreshableStatusType : IEquatable<RefreshableStatusType>
     {
         private readonly string _value;
+        /// <summary> Refreshing status. </summary>
+        private const string RefreshingValue = "Refreshing";
+        /// <summary> NotRefreshing status. </summary>
+        private const string NotRefreshingValue = "NotRefreshing";
 
         /// <summary> Initializes a new instance of <see cref="RefreshableStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RefreshableStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RefreshingValue = "Refreshing";
-        private const string NotRefreshingValue = "NotRefreshing";
+            _value = value;
+        }
 
         /// <summary> Refreshing status. </summary>
         public static RefreshableStatusType Refreshing { get; } = new RefreshableStatusType(RefreshingValue);
+
         /// <summary> NotRefreshing status. </summary>
         public static RefreshableStatusType NotRefreshing { get; } = new RefreshableStatusType(NotRefreshingValue);
+
         /// <summary> Determines if two <see cref="RefreshableStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RefreshableStatusType left, RefreshableStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RefreshableStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RefreshableStatusType left, RefreshableStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RefreshableStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RefreshableStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RefreshableStatusType(string value) => new RefreshableStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RefreshableStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RefreshableStatusType?(string value) => value == null ? null : new RefreshableStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RefreshableStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RefreshableStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

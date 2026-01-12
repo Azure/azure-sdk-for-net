@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmSecurityEncryptionType : IEquatable<HciVmSecurityEncryptionType>
     {
         private readonly string _value;
+        /// <summary> Non-persisted TPM encryption type. </summary>
+        private const string NonPersistedTpmValue = "NonPersistedTPM";
 
         /// <summary> Initializes a new instance of <see cref="HciVmSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmSecurityEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NonPersistedTpmValue = "NonPersistedTPM";
+            _value = value;
+        }
 
         /// <summary> Non-persisted TPM encryption type. </summary>
         public static HciVmSecurityEncryptionType NonPersistedTpm { get; } = new HciVmSecurityEncryptionType(NonPersistedTpmValue);
+
         /// <summary> Determines if two <see cref="HciVmSecurityEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmSecurityEncryptionType left, HciVmSecurityEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmSecurityEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmSecurityEncryptionType left, HciVmSecurityEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmSecurityEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmSecurityEncryptionType(string value) => new HciVmSecurityEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmSecurityEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmSecurityEncryptionType?(string value) => value == null ? null : new HciVmSecurityEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmSecurityEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmSecurityEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> SecurityProfile - Specifies the security settings for the virtual machine instance. </summary>
     public partial class HciVmInstanceSecurityProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceSecurityProfile"/>. </summary>
         public HciVmInstanceSecurityProfile()
@@ -54,32 +25,39 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="isTpmEnabled"> Enable TPM flag. </param>
         /// <param name="uefiSettings"> Uefi settings of the virtual machine instance. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceSecurityProfile(bool? isTpmEnabled, VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings, HciVmSecurityType? securityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmInstanceSecurityProfile(bool? isTpmEnabled, VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings, HciVmSecurityType? securityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsTpmEnabled = isTpmEnabled;
             UefiSettings = uefiSettings;
             SecurityType = securityType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable TPM flag. </summary>
         public bool? IsTpmEnabled { get; set; }
+
         /// <summary> Uefi settings of the virtual machine instance. </summary>
         internal VirtualMachineInstancePropertiesSecurityProfileUefiSettings UefiSettings { get; set; }
-        /// <summary> Specifies whether secure boot should be enabled on the virtual machine instance. </summary>
-        public bool? SecureBootEnabled
-        {
-            get => UefiSettings is null ? default : UefiSettings.SecureBootEnabled;
-            set
-            {
-                if (UefiSettings is null)
-                    UefiSettings = new VirtualMachineInstancePropertiesSecurityProfileUefiSettings();
-                UefiSettings.SecureBootEnabled = value;
-            }
-        }
 
         /// <summary> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </summary>
         public HciVmSecurityType? SecurityType { get; set; }
+
+        /// <summary> Specifies whether secure boot should be enabled on the virtual machine instance. </summary>
+        public bool? SecureBootEnabled
+        {
+            get
+            {
+                return UefiSettings is null ? default : UefiSettings.SecureBootEnabled;
+            }
+            set
+            {
+                if (UefiSettings is null)
+                {
+                    UefiSettings = new VirtualMachineInstancePropertiesSecurityProfileUefiSettings();
+                }
+                UefiSettings.SecureBootEnabled = value;
+            }
+        }
     }
 }

@@ -106,7 +106,7 @@ namespace Azure.Generator.Management.Providers
 
                 switch (method.Kind)
                 {
-                    case ResourceOperationKind.Get:
+                    case ResourceOperationKind.Read:
                         getMethod = method;
                         break;
                     case ResourceOperationKind.List:
@@ -376,7 +376,7 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
                 _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
             };
         }
@@ -387,7 +387,7 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, _resource);
             }
 
             return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
@@ -401,7 +401,8 @@ namespace Azure.Generator.Management.Providers
             }
 
             var restClientInfo = _clientInfos[_get.InputClient];
-            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync, methodName);
         }
 
         private List<MethodProvider> BuildGetMethods()

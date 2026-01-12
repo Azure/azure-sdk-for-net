@@ -13,47 +13,12 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> The artifact properties. </summary>
     public partial class DisconnectedOperationsArtifactProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsArtifactProperties"/>. </summary>
-        /// <param name="artifactOrder"> The artifact display order. </param>
-        /// <param name="title"> The artifact title. </param>
-        /// <param name="description"> The artifact description. </param>
-        internal DisconnectedOperationsArtifactProperties(int artifactOrder, string title, string description)
+        internal DisconnectedOperationsArtifactProperties()
         {
-            ArtifactOrder = artifactOrder;
-            Title = title;
-            Description = description;
         }
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsArtifactProperties"/>. </summary>
@@ -62,30 +27,29 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="title"> The artifact title. </param>
         /// <param name="description"> The artifact description. </param>
         /// <param name="size"> The artifact size in MB. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationsArtifactProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, int artifactOrder, string title, string description, long? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DisconnectedOperationsArtifactProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, int artifactOrder, string title, string description, long? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ArtifactOrder = artifactOrder;
             Title = title;
             Description = description;
             Size = size;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsArtifactProperties"/> for deserialization. </summary>
-        internal DisconnectedOperationsArtifactProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource provisioning state. </summary>
         public DisconnectedOperationsResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> The artifact display order. </summary>
         public int ArtifactOrder { get; }
+
         /// <summary> The artifact title. </summary>
         public string Title { get; }
+
         /// <summary> The artifact description. </summary>
         public string Description { get; }
+
         /// <summary> The artifact size in MB. </summary>
         public long? Size { get; }
     }
