@@ -246,9 +246,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileShareMediaTier(string value) { throw null; }
         public static Azure.ResourceManager.FileShares.Models.FileShareMediaTier Ssd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileShareMediaTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileShareMediaTier left, Azure.ResourceManager.FileShares.Models.FileShareMediaTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileShareMediaTier (string value) { throw null; }
@@ -296,9 +294,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileShareNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.FileShareNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileShareNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileShareNameUnavailableReason left, Azure.ResourceManager.FileShares.Models.FileShareNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileShareNameUnavailableReason (string value) { throw null; }
@@ -382,9 +378,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileSharePrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.FileSharePrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileSharePrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileSharePrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.FileShares.Models.FileSharePrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileSharePrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -447,9 +441,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileShareProtocol(string value) { throw null; }
         public static Azure.ResourceManager.FileShares.Models.FileShareProtocol Nfs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileShareProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileShareProtocol left, Azure.ResourceManager.FileShares.Models.FileShareProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileShareProtocol (string value) { throw null; }
@@ -537,9 +529,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileShareProvisioningState TransientFailure { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.FileShareProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileShareProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileShareProvisioningState left, Azure.ResourceManager.FileShares.Models.FileShareProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileShareProvisioningState (string value) { throw null; }
@@ -556,9 +546,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess left, Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileSharePublicNetworkAccess (string value) { throw null; }
@@ -575,9 +563,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileShareRedundancyLevel Local { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.FileShareRedundancyLevel Zone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileShareRedundancyLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileShareRedundancyLevel left, Azure.ResourceManager.FileShares.Models.FileShareRedundancyLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileShareRedundancyLevel (string value) { throw null; }
@@ -625,9 +611,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.FileSharesPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -659,9 +643,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static Azure.ResourceManager.FileShares.Models.ShareRootSquash NoRootSquash { get { throw null; } }
         public static Azure.ResourceManager.FileShares.Models.ShareRootSquash RootSquash { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FileShares.Models.ShareRootSquash other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.FileShares.Models.ShareRootSquash left, Azure.ResourceManager.FileShares.Models.ShareRootSquash right) { throw null; }
         public static implicit operator Azure.ResourceManager.FileShares.Models.ShareRootSquash (string value) { throw null; }

@@ -117,9 +117,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.AccessProfileType ClusterCustomerUser { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.AccessProfileType ClusterUser { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.AccessProfileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.AccessProfileType left, Azure.ResourceManager.ResourceConnector.Models.AccessProfileType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.AccessProfileType (string value) { throw null; }
@@ -184,9 +182,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider Scvmm { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider VMware { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider left, Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider (string value) { throw null; }
@@ -332,9 +328,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public ResourceConnectorDistro(string value) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro AksEdge { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro left, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro (string value) { throw null; }
@@ -380,9 +374,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus WaitingForHeartbeat { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus WaitingForKvaio { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus left, Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus (string value) { throw null; }
