@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> QnA record. </summary>
-    public partial class QuestionAnsweringAuthoringRecord
+    public partial class QnaRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QnaRecord"/>. </summary>
         /// <param name="id"> Unique ID for the QnA. </param>
-        public QuestionAnsweringAuthoringRecord(int id)
+        public QnaRecord(int id)
         {
             Id = id;
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ActiveLearningSuggestionClusters = new ChangeTrackingList<SuggestedQuestionsCluster>();
+            ActiveLearningSuggestions = new ChangeTrackingList<SuggestedQuestionsCluster>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QnaRecord"/>. </summary>
         /// <param name="id"> Unique ID for the QnA. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="source">
@@ -39,9 +39,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// answers.
         /// </param>
         /// <param name="dialog"> Context of a QnA. </param>
-        /// <param name="activeLearningSuggestionClusters"> List of Active Learning suggestions for the QnA. </param>
+        /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QuestionAnsweringAuthoringDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestionClusters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QnaDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Answer = answer;
@@ -49,7 +49,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Questions = questions;
             Metadata = metadata;
             Dialog = dialog;
-            ActiveLearningSuggestionClusters = activeLearningSuggestionClusters;
+            ActiveLearningSuggestions = activeLearningSuggestions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,9 +75,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> Context of a QnA. </summary>
-        public QuestionAnsweringAuthoringDialog Dialog { get; set; }
+        public QnaDialog Dialog { get; set; }
 
         /// <summary> List of Active Learning suggestions for the QnA. </summary>
-        public IList<SuggestedQuestionsCluster> ActiveLearningSuggestionClusters { get; }
+        public IList<SuggestedQuestionsCluster> ActiveLearningSuggestions { get; }
     }
 }

@@ -86,11 +86,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("dialog"u8);
                 writer.WriteObjectValue(Dialog, options);
             }
-            if (Optional.IsCollectionDefined(ActiveLearningSuggestionClusters))
+            if (Optional.IsCollectionDefined(ActiveLearningSuggestions))
             {
                 writer.WritePropertyName("activeLearningSuggestions"u8);
                 writer.WriteStartArray();
-                foreach (SuggestedQuestionsCluster item in ActiveLearningSuggestionClusters)
+                foreach (SuggestedQuestionsCluster item in ActiveLearningSuggestions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -148,8 +148,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             string source = default;
             IList<string> questions = default;
             IDictionary<string, string> metadata = default;
-            QuestionAnsweringAuthoringDialog dialog = default;
-            IList<SuggestedQuestionsCluster> activeLearningSuggestionClusters = default;
+            QnaDialog dialog = default;
+            IList<SuggestedQuestionsCluster> activeLearningSuggestions = default;
             DateTimeOffset? lastUpdatedDateTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -217,7 +217,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    dialog = QuestionAnsweringAuthoringDialog.DeserializeQuestionAnsweringAuthoringDialog(prop.Value, options);
+                    dialog = QnaDialog.DeserializeQnaDialog(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("activeLearningSuggestions"u8))
@@ -231,7 +231,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         array.Add(SuggestedQuestionsCluster.DeserializeSuggestedQuestionsCluster(item, options));
                     }
-                    activeLearningSuggestionClusters = array;
+                    activeLearningSuggestions = array;
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
@@ -255,7 +255,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 questions ?? new ChangeTrackingList<string>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 dialog,
-                activeLearningSuggestionClusters ?? new ChangeTrackingList<SuggestedQuestionsCluster>(),
+                activeLearningSuggestions ?? new ChangeTrackingList<SuggestedQuestionsCluster>(),
                 lastUpdatedDateTime,
                 additionalBinaryDataProperties);
         }

@@ -38,10 +38,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsDefined(LastDeployed))
+            if (Optional.IsDefined(LastDeployedDateTime))
             {
                 writer.WritePropertyName("lastDeployedDateTime"u8);
-                writer.WriteStringValue(LastDeployed.Value, "O");
+                writer.WriteStringValue(LastDeployedDateTime.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 return null;
             }
             string deploymentName = default;
-            DateTimeOffset? lastDeployed = default;
+            DateTimeOffset? lastDeployedDateTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    lastDeployed = prop.Value.GetDateTimeOffset("O");
+                    lastDeployedDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectDeployment(deploymentName, lastDeployed, additionalBinaryDataProperties);
+            return new ProjectDeployment(deploymentName, lastDeployedDateTime, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

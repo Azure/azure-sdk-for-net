@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    internal partial class QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT : Pageable<WordAlterationsGroups>
+    internal partial class QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT : Pageable<WordAlterations>
     {
         private readonly QuestionAnsweringAuthoringClient _client;
         private readonly string _projectName;
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WordAlterationsGroups>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<WordAlterations>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedWordAlterations result = (PagedWordAlterations)response;
-                yield return Page<WordAlterationsGroups>.FromValues((IReadOnlyList<WordAlterationsGroups>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WordAlterations>.FromValues((IReadOnlyList<WordAlterations>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

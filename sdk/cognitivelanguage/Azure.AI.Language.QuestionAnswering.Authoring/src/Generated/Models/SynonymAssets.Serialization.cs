@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (WordAlterationsGroups item in Value)
+            foreach (WordAlterations item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -93,17 +93,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<WordAlterationsGroups> value = default;
+            IList<WordAlterations> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<WordAlterationsGroups> array = new List<WordAlterationsGroups>();
+                    List<WordAlterations> array = new List<WordAlterations>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WordAlterationsGroups.DeserializeWordAlterationsGroups(item, options));
+                        array.Add(WordAlterations.DeserializeWordAlterations(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

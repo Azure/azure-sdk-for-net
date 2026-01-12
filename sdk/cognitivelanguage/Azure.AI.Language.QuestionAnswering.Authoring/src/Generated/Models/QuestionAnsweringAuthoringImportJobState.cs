@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
-        internal QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status)
+        internal QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status)
         {
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public DateTimeOffset LastUpdatedDateTime { get; }
 
         /// <summary> Job Status. </summary>
-        public QuestionAnsweringAuthoringJobStatus Status { get; }
+        public JobStatus Status { get; }
 
         /// <summary> The errors encountered while executing the job. </summary>
         public IList<ResponseError> Errors { get; }

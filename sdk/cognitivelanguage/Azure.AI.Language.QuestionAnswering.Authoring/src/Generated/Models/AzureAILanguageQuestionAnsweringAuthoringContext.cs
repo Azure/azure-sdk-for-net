@@ -25,15 +25,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     [ModelReaderWriterBuildable(typeof(PagedWordAlterations))]
     [ModelReaderWriterBuildable(typeof(ProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(ProjectSettings))]
+    [ModelReaderWriterBuildable(typeof(QnaDialog))]
+    [ModelReaderWriterBuildable(typeof(QnaPrompt))]
+    [ModelReaderWriterBuildable(typeof(QnaRecord))]
+    [ModelReaderWriterBuildable(typeof(QnaSourceRecord))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringAssets))]
-    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringDialog))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringExportJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringImportJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringProjectDeletionJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringProjectDeploymentJobState))]
-    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringPrompt))]
-    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringRecord))]
-    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringSourceRecord))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringUpdateQnasJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringUpdateSourcesJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringProject))]
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     [ModelReaderWriterBuildable(typeof(SuggestedQuestion))]
     [ModelReaderWriterBuildable(typeof(SuggestedQuestionsCluster))]
     [ModelReaderWriterBuildable(typeof(SynonymAssets))]
-    [ModelReaderWriterBuildable(typeof(WordAlterationsGroups))]
+    [ModelReaderWriterBuildable(typeof(WordAlterations))]
     public partial class AzureAILanguageQuestionAnsweringAuthoringContext : ModelReaderWriterContext
     {
     }

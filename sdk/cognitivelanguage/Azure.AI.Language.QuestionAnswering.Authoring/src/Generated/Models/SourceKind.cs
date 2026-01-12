@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Supported source types. </summary>
-    public readonly partial struct KnowledgeBaseSourceKind : IEquatable<KnowledgeBaseSourceKind>
+    public readonly partial struct SourceKind : IEquatable<SourceKind>
     {
         private readonly string _value;
         /// <summary> File Source. </summary>
@@ -19,10 +19,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> URI Source. </summary>
         private const string UrlValue = "url";
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSourceKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KnowledgeBaseSourceKind(string value)
+        public SourceKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,35 +30,35 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> File Source. </summary>
-        public static KnowledgeBaseSourceKind File { get; } = new KnowledgeBaseSourceKind(FileValue);
+        public static SourceKind File { get; } = new SourceKind(FileValue);
 
         /// <summary> URI Source. </summary>
-        public static KnowledgeBaseSourceKind Url { get; } = new KnowledgeBaseSourceKind(UrlValue);
+        public static SourceKind Url { get; } = new SourceKind(UrlValue);
 
-        /// <summary> Determines if two <see cref="KnowledgeBaseSourceKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(KnowledgeBaseSourceKind left, KnowledgeBaseSourceKind right) => left.Equals(right);
+        public static bool operator ==(SourceKind left, SourceKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KnowledgeBaseSourceKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SourceKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(KnowledgeBaseSourceKind left, KnowledgeBaseSourceKind right) => !left.Equals(right);
+        public static bool operator !=(SourceKind left, SourceKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KnowledgeBaseSourceKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseSourceKind(string value) => new KnowledgeBaseSourceKind(value);
+        public static implicit operator SourceKind(string value) => new SourceKind(value);
 
-        /// <summary> Converts a string to a <see cref="KnowledgeBaseSourceKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnowledgeBaseSourceKind?(string value) => value == null ? null : new KnowledgeBaseSourceKind(value);
+        public static implicit operator SourceKind?(string value) => value == null ? null : new SourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KnowledgeBaseSourceKind other && Equals(other);
+        public override bool Equals(object obj) => obj is SourceKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(KnowledgeBaseSourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

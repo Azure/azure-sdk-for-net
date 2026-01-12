@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    internal partial class QuestionAnsweringAuthoringClientGetSourcesCollectionResultOfT : Pageable<QuestionAnsweringAuthoringSourceRecord>
+    internal partial class QuestionAnsweringAuthoringClientGetSourcesCollectionResultOfT : Pageable<QnaSourceRecord>
     {
         private readonly QuestionAnsweringAuthoringClient _client;
         private readonly string _projectName;
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of QuestionAnsweringAuthoringClientGetSourcesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<QuestionAnsweringAuthoringSourceRecord>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<QnaSourceRecord>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedQnaSourceRecord result = (PagedQnaSourceRecord)response;
-                yield return Page<QuestionAnsweringAuthoringSourceRecord>.FromValues((IReadOnlyList<QuestionAnsweringAuthoringSourceRecord>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<QnaSourceRecord>.FromValues((IReadOnlyList<QnaSourceRecord>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

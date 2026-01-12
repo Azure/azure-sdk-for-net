@@ -53,7 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WriteStringValue(JobId);
             }
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdated, "O");
+            writer.WriteStringValue(LastUpdatedDateTime, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsCollectionDefined(Errors))
@@ -118,8 +118,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             DateTimeOffset createdDateTime = default;
             DateTimeOffset? expirationDateTime = default;
             string jobId = default;
-            DateTimeOffset lastUpdated = default;
-            QuestionAnsweringAuthoringJobStatus status = default;
+            DateTimeOffset lastUpdatedDateTime = default;
+            JobStatus status = default;
             IList<ResponseError> errors = default;
             string resultUrl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,12 +146,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
                 {
-                    lastUpdated = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new QuestionAnsweringAuthoringJobStatus(prop.Value.GetString());
+                    status = new JobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
@@ -189,7 +189,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 createdDateTime,
                 expirationDateTime,
                 jobId,
-                lastUpdated,
+                lastUpdatedDateTime,
                 status,
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 resultUrl,

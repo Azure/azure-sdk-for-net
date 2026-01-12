@@ -117,7 +117,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             DateTimeOffset? expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            QuestionAnsweringAuthoringJobStatus status = default;
+            JobStatus status = default;
             IList<ResponseError> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new QuestionAnsweringAuthoringJobStatus(prop.Value.GetString());
+                    status = new JobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))

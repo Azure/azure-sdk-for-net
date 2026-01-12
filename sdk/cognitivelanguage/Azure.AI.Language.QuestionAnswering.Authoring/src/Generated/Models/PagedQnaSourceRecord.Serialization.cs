@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (QuestionAnsweringAuthoringSourceRecord item in Value)
+            foreach (QnaSourceRecord item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -93,17 +93,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<QuestionAnsweringAuthoringSourceRecord> value = default;
+            IList<QnaSourceRecord> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<QuestionAnsweringAuthoringSourceRecord> array = new List<QuestionAnsweringAuthoringSourceRecord>();
+                    List<QnaSourceRecord> array = new List<QnaSourceRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuestionAnsweringAuthoringSourceRecord.DeserializeQuestionAnsweringAuthoringSourceRecord(item, options));
+                        array.Add(QnaSourceRecord.DeserializeQnaSourceRecord(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

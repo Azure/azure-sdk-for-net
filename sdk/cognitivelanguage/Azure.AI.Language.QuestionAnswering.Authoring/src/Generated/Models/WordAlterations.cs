@@ -12,25 +12,25 @@ using System.Linq;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Collection of word alterations. </summary>
-    public partial class WordAlterationsGroups
+    public partial class WordAlterations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroups"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordAlterations"/>. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alterations"/> is null. </exception>
-        public WordAlterationsGroups(IEnumerable<string> alterations)
+        public WordAlterations(IEnumerable<string> alterations)
         {
             Argument.AssertNotNull(alterations, nameof(alterations));
 
             Alterations = alterations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroups"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordAlterations"/>. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WordAlterationsGroups(IList<string> alterations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WordAlterations(IList<string> alterations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alterations = alterations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

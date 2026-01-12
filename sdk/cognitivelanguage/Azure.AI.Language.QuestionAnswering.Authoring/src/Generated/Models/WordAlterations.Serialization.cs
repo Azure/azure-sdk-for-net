@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Collection of word alterations. </summary>
-    public partial class WordAlterationsGroups : IJsonModel<WordAlterationsGroups>
+    public partial class WordAlterations : IJsonModel<WordAlterations>
     {
-        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroups"/> for deserialization. </summary>
-        internal WordAlterationsGroups()
+        /// <summary> Initializes a new instance of <see cref="WordAlterations"/> for deserialization. </summary>
+        internal WordAlterations()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WordAlterationsGroups>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WordAlterations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WordAlterationsGroups)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WordAlterations)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("alterations"u8);
             writer.WriteStartArray();
@@ -69,24 +69,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WordAlterationsGroups IJsonModel<WordAlterationsGroups>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WordAlterations IJsonModel<WordAlterations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WordAlterationsGroups JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual WordAlterations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WordAlterationsGroups)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WordAlterations)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWordAlterationsGroups(document.RootElement, options);
+            return DeserializeWordAlterations(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WordAlterationsGroups DeserializeWordAlterationsGroups(JsonElement element, ModelReaderWriterOptions options)
+        internal static WordAlterations DeserializeWordAlterations(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,47 +118,47 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WordAlterationsGroups(alterations, additionalBinaryDataProperties);
+            return new WordAlterations(alterations, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WordAlterationsGroups>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WordAlterations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WordAlterationsGroups)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WordAlterations)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WordAlterationsGroups IPersistableModel<WordAlterationsGroups>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WordAlterations IPersistableModel<WordAlterations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WordAlterationsGroups PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual WordAlterations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroups>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWordAlterationsGroups(document.RootElement, options);
+                        return DeserializeWordAlterations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WordAlterationsGroups)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WordAlterations)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WordAlterationsGroups>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WordAlterations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

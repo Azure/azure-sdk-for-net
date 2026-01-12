@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Dialog associated with QnA Record. </summary>
-    public partial class QuestionAnsweringAuthoringDialog : IJsonModel<QuestionAnsweringAuthoringDialog>
+    public partial class QnaDialog : IJsonModel<QnaDialog>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QuestionAnsweringAuthoringDialog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QnaDialog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringDialog>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QnaDialog>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringDialog)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QnaDialog)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(IsContextOnly))
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 writer.WritePropertyName("prompts"u8);
                 writer.WriteStartArray();
-                foreach (QuestionAnsweringAuthoringPrompt item in Prompts)
+                foreach (QnaPrompt item in Prompts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -67,31 +67,31 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringAuthoringDialog IJsonModel<QuestionAnsweringAuthoringDialog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QnaDialog IJsonModel<QnaDialog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuestionAnsweringAuthoringDialog JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual QnaDialog JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringDialog>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QnaDialog>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringDialog)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QnaDialog)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuestionAnsweringAuthoringDialog(document.RootElement, options);
+            return DeserializeQnaDialog(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QuestionAnsweringAuthoringDialog DeserializeQuestionAnsweringAuthoringDialog(JsonElement element, ModelReaderWriterOptions options)
+        internal static QnaDialog DeserializeQnaDialog(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool? isContextOnly = default;
-            IList<QuestionAnsweringAuthoringPrompt> prompts = default;
+            IList<QnaPrompt> prompts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -110,10 +110,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    List<QuestionAnsweringAuthoringPrompt> array = new List<QuestionAnsweringAuthoringPrompt>();
+                    List<QnaPrompt> array = new List<QnaPrompt>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuestionAnsweringAuthoringPrompt.DeserializeQuestionAnsweringAuthoringPrompt(item, options));
+                        array.Add(QnaPrompt.DeserializeQnaPrompt(item, options));
                     }
                     prompts = array;
                     continue;
@@ -123,47 +123,47 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuestionAnsweringAuthoringDialog(isContextOnly, prompts ?? new ChangeTrackingList<QuestionAnsweringAuthoringPrompt>(), additionalBinaryDataProperties);
+            return new QnaDialog(isContextOnly, prompts ?? new ChangeTrackingList<QnaPrompt>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuestionAnsweringAuthoringDialog>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QnaDialog>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringDialog>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QnaDialog>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringDialog)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QnaDialog)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringAuthoringDialog IPersistableModel<QuestionAnsweringAuthoringDialog>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QnaDialog IPersistableModel<QnaDialog>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuestionAnsweringAuthoringDialog PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual QnaDialog PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringDialog>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QnaDialog>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQuestionAnsweringAuthoringDialog(document.RootElement, options);
+                        return DeserializeQnaDialog(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringDialog)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QnaDialog)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuestionAnsweringAuthoringDialog>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QnaDialog>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Initializes a new instance of <see cref="PagedQnaSourceRecord"/>. </summary>
         /// <param name="value"> The QnaSourceRecord items on this page. </param>
-        internal PagedQnaSourceRecord(IEnumerable<QuestionAnsweringAuthoringSourceRecord> value)
+        internal PagedQnaSourceRecord(IEnumerable<QnaSourceRecord> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="value"> The QnaSourceRecord items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedQnaSourceRecord(IList<QuestionAnsweringAuthoringSourceRecord> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedQnaSourceRecord(IList<QnaSourceRecord> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> The QnaSourceRecord items on this page. </summary>
-        public IList<QuestionAnsweringAuthoringSourceRecord> Value { get; }
+        public IList<QnaSourceRecord> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

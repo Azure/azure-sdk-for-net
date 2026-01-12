@@ -20,7 +20,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of <see cref="SynonymAssets"/>. </summary>
         /// <param name="value"> The WordAlterations items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SynonymAssets(IEnumerable<WordAlterationsGroups> value)
+        public SynonymAssets(IEnumerable<WordAlterations> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="value"> The WordAlterations items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SynonymAssets(IList<WordAlterationsGroups> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SynonymAssets(IList<WordAlterations> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> The WordAlterations items on this page. </summary>
-        public IList<WordAlterationsGroups> Value { get; }
+        public IList<WordAlterations> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; set; }

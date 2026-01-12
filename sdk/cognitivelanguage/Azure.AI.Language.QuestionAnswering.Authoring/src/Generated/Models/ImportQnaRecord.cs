@@ -23,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Id = id;
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ActiveLearningSuggestionClusters = new ChangeTrackingList<SuggestedQuestionsCluster>();
+            ActiveLearningSuggestions = new ChangeTrackingList<SuggestedQuestionsCluster>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportQnaRecord"/>. </summary>
@@ -39,11 +39,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// answers.
         /// </param>
         /// <param name="dialog"> Context of a QnA. </param>
-        /// <param name="activeLearningSuggestionClusters"> List of Active Learning suggestions for the QnA. </param>
-        /// <param name="lastUpdated"> Date-time when the QnA was last updated. </param>
+        /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
+        /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="sourceDisplayName"> Friendly name of the Source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportQnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QuestionAnsweringAuthoringDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestionClusters, DateTimeOffset? lastUpdated, string sourceDisplayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportQnaRecord(int id, string answer, string source, IList<string> questions, IDictionary<string, string> metadata, QnaDialog dialog, IList<SuggestedQuestionsCluster> activeLearningSuggestions, DateTimeOffset? lastUpdatedDateTime, string sourceDisplayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Answer = answer;
@@ -51,8 +51,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Questions = questions;
             Metadata = metadata;
             Dialog = dialog;
-            ActiveLearningSuggestionClusters = activeLearningSuggestionClusters;
-            LastUpdated = lastUpdated;
+            ActiveLearningSuggestions = activeLearningSuggestions;
+            LastUpdatedDateTime = lastUpdatedDateTime;
             SourceDisplayName = sourceDisplayName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -79,13 +79,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> Context of a QnA. </summary>
-        public QuestionAnsweringAuthoringDialog Dialog { get; set; }
+        public QnaDialog Dialog { get; set; }
 
         /// <summary> List of Active Learning suggestions for the QnA. </summary>
-        public IList<SuggestedQuestionsCluster> ActiveLearningSuggestionClusters { get; }
+        public IList<SuggestedQuestionsCluster> ActiveLearningSuggestions { get; }
 
         /// <summary> Date-time when the QnA was last updated. </summary>
-        public DateTimeOffset? LastUpdated { get; set; }
+        public DateTimeOffset? LastUpdatedDateTime { get; set; }
 
         /// <summary> Friendly name of the Source. </summary>
         public string SourceDisplayName { get; set; }

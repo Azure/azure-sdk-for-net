@@ -11,27 +11,27 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Prompt for an answer. </summary>
-    public partial class QuestionAnsweringAuthoringPrompt
+    public partial class QnaPrompt
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringPrompt"/>. </summary>
-        public QuestionAnsweringAuthoringPrompt()
+        /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
+        public QnaPrompt()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt. It is used for ordering of the prompts. </param>
         /// <param name="qnaId"> ID of the QnA corresponding to the prompt. </param>
-        /// <param name="qnaRecord"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
+        /// <param name="qna"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringPrompt(int? displayOrder, int? qnaId, QuestionAnsweringAuthoringRecord qnaRecord, string displayText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QnaPrompt(int? displayOrder, int? qnaId, QnaRecord qna, string displayText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayOrder = displayOrder;
             QnaId = qnaId;
-            QnaRecord = qnaRecord;
+            Qna = qna;
             DisplayText = displayText;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public int? QnaId { get; set; }
 
         /// <summary> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </summary>
-        public QuestionAnsweringAuthoringRecord QnaRecord { get; set; }
+        public QnaRecord Qna { get; set; }
 
         /// <summary> Text displayed to represent a follow up question prompt. </summary>
         public string DisplayText { get; set; }

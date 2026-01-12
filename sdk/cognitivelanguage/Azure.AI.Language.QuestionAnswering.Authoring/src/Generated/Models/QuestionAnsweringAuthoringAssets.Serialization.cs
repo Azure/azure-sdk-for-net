@@ -37,7 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 writer.WritePropertyName("synonyms"u8);
                 writer.WriteStartArray();
-                foreach (WordAlterationsGroups item in Synonyms)
+                foreach (WordAlterations item in Synonyms)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<WordAlterationsGroups> synonyms = default;
+            IList<WordAlterations> synonyms = default;
             IList<ImportQnaRecord> qnas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -106,10 +106,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    List<WordAlterationsGroups> array = new List<WordAlterationsGroups>();
+                    List<WordAlterations> array = new List<WordAlterations>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WordAlterationsGroups.DeserializeWordAlterationsGroups(item, options));
+                        array.Add(WordAlterations.DeserializeWordAlterations(item, options));
                     }
                     synonyms = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuestionAnsweringAuthoringAssets(synonyms ?? new ChangeTrackingList<WordAlterationsGroups>(), qnas ?? new ChangeTrackingList<ImportQnaRecord>(), additionalBinaryDataProperties);
+            return new QuestionAnsweringAuthoringAssets(synonyms ?? new ChangeTrackingList<WordAlterations>(), qnas ?? new ChangeTrackingList<ImportQnaRecord>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

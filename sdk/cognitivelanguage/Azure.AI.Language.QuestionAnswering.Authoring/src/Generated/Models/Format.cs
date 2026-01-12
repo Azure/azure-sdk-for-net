@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Knowledge base Import or Export format. </summary>
-    public readonly partial struct FileFormat : IEquatable<FileFormat>
+    public readonly partial struct Format : IEquatable<Format>
     {
         private readonly string _value;
         /// <summary> Export or Import QnA assets in JSON format. </summary>
@@ -27,10 +27,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private const string ExcelValue = "excel";
 
-        /// <summary> Initializes a new instance of <see cref="FileFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Format"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileFormat(string value)
+        public Format(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -38,44 +38,44 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Export or Import QnA assets in JSON format. </summary>
-        public static FileFormat Json { get; } = new FileFormat(JsonValue);
+        public static Format Json { get; } = new Format(JsonValue);
 
         /// <summary>
         /// Export or Import knowledge base replica including all assets and metadata in
         /// Excel format.
         /// </summary>
-        public static FileFormat Tsv { get; } = new FileFormat(TsvValue);
+        public static Format Tsv { get; } = new Format(TsvValue);
 
         /// <summary>
         /// Export or Import knowledge base replica including all assets and metadata in
         /// Tsv format.
         /// </summary>
-        public static FileFormat Excel { get; } = new FileFormat(ExcelValue);
+        public static Format Excel { get; } = new Format(ExcelValue);
 
-        /// <summary> Determines if two <see cref="FileFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="Format"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FileFormat left, FileFormat right) => left.Equals(right);
+        public static bool operator ==(Format left, Format right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FileFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="Format"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FileFormat left, FileFormat right) => !left.Equals(right);
+        public static bool operator !=(Format left, Format right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FileFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="Format"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileFormat(string value) => new FileFormat(value);
+        public static implicit operator Format(string value) => new Format(value);
 
-        /// <summary> Converts a string to a <see cref="FileFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="Format"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FileFormat?(string value) => value == null ? null : new FileFormat(value);
+        public static implicit operator Format?(string value) => value == null ? null : new Format(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FileFormat other && Equals(other);
+        public override bool Equals(object obj) => obj is Format other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FileFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(Format other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

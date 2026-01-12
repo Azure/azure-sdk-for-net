@@ -49,10 +49,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(IsMultilingualResource))
+            if (Optional.IsDefined(MultilingualResource))
             {
                 writer.WritePropertyName("multilingualResource"u8);
-                writer.WriteBooleanValue(IsMultilingualResource.Value);
+                writer.WriteBooleanValue(MultilingualResource.Value);
             }
             if (Optional.IsDefined(Settings))
             {
@@ -74,10 +74,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("lastDeployedDateTime"u8);
                 writer.WriteStringValue(LastDeployedDateTime.Value, "O");
             }
-            if (Optional.IsDefined(IsConfiguredSemanticRankingEnabled))
+            if (Optional.IsDefined(ConfigureSemanticRanking))
             {
                 writer.WritePropertyName("configureSemanticRanking"u8);
-                writer.WriteBooleanValue(IsConfiguredSemanticRankingEnabled.Value);
+                writer.WriteBooleanValue(ConfigureSemanticRanking.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -124,12 +124,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             string projectName = default;
             string description = default;
             string language = default;
-            bool? isMultilingualResource = default;
+            bool? multilingualResource = default;
             ProjectSettings settings = default;
             DateTimeOffset? createdDateTime = default;
             DateTimeOffset? lastModifiedDateTime = default;
             DateTimeOffset? lastDeployedDateTime = default;
-            bool? isConfiguredSemanticRankingEnabled = default;
+            bool? configureSemanticRanking = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    isMultilingualResource = prop.Value.GetBoolean();
+                    multilingualResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    isConfiguredSemanticRankingEnabled = prop.Value.GetBoolean();
+                    configureSemanticRanking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,12 +211,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 projectName,
                 description,
                 language,
-                isMultilingualResource,
+                multilingualResource,
                 settings,
                 createdDateTime,
                 lastModifiedDateTime,
                 lastDeployedDateTime,
-                isConfiguredSemanticRankingEnabled,
+                configureSemanticRanking,
                 additionalBinaryDataProperties);
         }
 

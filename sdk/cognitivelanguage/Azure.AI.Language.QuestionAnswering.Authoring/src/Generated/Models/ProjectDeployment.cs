@@ -23,12 +23,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Initializes a new instance of <see cref="ProjectDeployment"/>. </summary>
         /// <param name="deploymentName"> Name of the deployment. </param>
-        /// <param name="lastDeployed"> Represents the project last deployment date-time. </param>
+        /// <param name="lastDeployedDateTime"> Represents the project last deployment date-time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectDeployment(string deploymentName, DateTimeOffset? lastDeployed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectDeployment(string deploymentName, DateTimeOffset? lastDeployedDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentName = deploymentName;
-            LastDeployed = lastDeployed;
+            LastDeployedDateTime = lastDeployedDateTime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public string DeploymentName { get; }
 
         /// <summary> Represents the project last deployment date-time. </summary>
-        public DateTimeOffset? LastDeployed { get; }
+        public DateTimeOffset? LastDeployedDateTime { get; }
     }
 }
