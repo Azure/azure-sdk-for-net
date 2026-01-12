@@ -273,6 +273,8 @@ namespace System.ClientModel.Primitives
     public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
     {
         Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider> factory);
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(string key);
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(string key, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider> factory);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

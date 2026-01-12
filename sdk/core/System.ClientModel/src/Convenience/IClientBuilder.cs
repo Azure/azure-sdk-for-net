@@ -16,4 +16,17 @@ public interface IClientBuilder : IHostApplicationBuilder
     /// </summary>
     /// <param name="factory">A method that creates a credential object from the specified <see cref="IConfigurationSection"/>.</param>
     IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider> factory);
+
+    /// <summary>
+    /// Configures the <see cref="IClientBuilder"/> to use the specified factory function to create the credential object.
+    /// </summary>
+    /// <param name="key">The key for which section to load the credential settings from.</param>
+    /// <param name="factory">A method that creates a credential object from the specified <see cref="IConfigurationSection"/>.</param>
+    IHostApplicationBuilder WithCredential(string key, Func<IConfigurationSection, AuthenticationTokenProvider> factory);
+
+    /// <summary>
+    /// Configures the <see cref="IClientBuilder"/> to use the specified factory function to create the credential object.
+    /// </summary>
+    /// <param name="key">The key for which section to load the credential settings from.</param>
+    IHostApplicationBuilder WithCredential(string key);
 }

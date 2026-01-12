@@ -18,6 +18,7 @@ internal class ClientBuilder : IClientBuilder
     {
         _host = host;
         _section = section;
+        CredentialConfigurationSection = section.GetSection("Credential");
     }
 
     public IDictionary<object, object> Properties => _host.Properties;
@@ -34,6 +35,8 @@ internal class ClientBuilder : IClientBuilder
 
     internal IConfigurationSection ConfigurationSection => _section;
 
+    internal IConfigurationSection CredentialConfigurationSection { get; private set; }
+
     public void ConfigureContainer<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory, Action<TContainerBuilder>? configure = null)
         where TContainerBuilder : notnull
     {
@@ -43,6 +46,19 @@ internal class ClientBuilder : IClientBuilder
     public IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider> factory)
     {
         CredentialFactory = factory;
+        return this;
+    }
+
+    public IHostApplicationBuilder WithCredential(string key, Func<IConfigurationSection, AuthenticationTokenProvider> factory)
+    {
+        CredentialConfigurationSection = Configuration.GetRequiredSection(key);
+        CredentialFactory = factory;
+        return this;
+    }
+
+    public IHostApplicationBuilder WithCredential(string key)
+    {
+        CredentialConfigurationSection = Configuration.GetRequiredSection(key);
         return this;
     }
 

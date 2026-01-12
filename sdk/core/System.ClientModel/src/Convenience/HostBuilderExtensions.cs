@@ -56,13 +56,7 @@ public static class HostBuilderExtensions
         ClientBuilder builder = new(host, section);
         host.Services.AddKeyedSingleton(key, (sp, key) =>
         {
-            TSettings settings = builder.ConfigurationSection.GetClientSettings<TSettings>();
-            configureSettings?.Invoke(settings);
-            if (builder.CredentialFactory is not null)
-            {
-                settings.CredentialObject = builder.CredentialFactory.Invoke(builder.ConfigurationSection);
-            }
-            return settings;
+            return CreateSettings(configureSettings, builder);
         });
         host.Services.AddKeyedSingleton(key, (sp, key) => ActivatorUtilities.CreateInstance<TClient>(sp, sp.GetRequiredKeyedService<TSettings>(key)));
         return builder;
@@ -107,15 +101,24 @@ public static class HostBuilderExtensions
         ClientBuilder builder = new(host, section);
         host.Services.AddSingleton(sp =>
         {
-            TSettings settings = builder.ConfigurationSection.GetClientSettings<TSettings>();
-            configureSettings?.Invoke(settings);
-            if (builder.CredentialFactory is not null)
-            {
-                settings.CredentialObject = builder.CredentialFactory.Invoke(builder.ConfigurationSection);
-            }
-            return settings;
+            return CreateSettings(configureSettings, builder);
         });
         host.Services.AddSingleton(sp => ActivatorUtilities.CreateInstance<TClient>(sp, sp.GetRequiredService<TSettings>()));
         return builder;
+    }
+
+    private static TSettings CreateSettings<TSettings>(Action<TSettings> configureSettings, ClientBuilder builder) where TSettings : ClientSettings, new()
+    {
+        TSettings settings = builder.ConfigurationSection.GetClientSettings<TSettings>();
+        if (!ReferenceEquals(builder.ConfigurationSection, builder.CredentialConfigurationSection))
+        {
+            settings.Credential = new CredentialSettings(builder.CredentialConfigurationSection);
+        }
+        configureSettings?.Invoke(settings);
+        if (builder.CredentialFactory is not null)
+        {
+            settings.CredentialObject = builder.CredentialFactory.Invoke(builder.CredentialConfigurationSection);
+        }
+        return settings;
     }
 }

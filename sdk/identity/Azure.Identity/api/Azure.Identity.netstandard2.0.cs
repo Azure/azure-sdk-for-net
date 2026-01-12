@@ -142,6 +142,7 @@ namespace Azure.Identity
     public static partial class ClientBuilderExtensions
     {
         public static Microsoft.Extensions.Hosting.IHostApplicationBuilder WithAzureCredential(this System.ClientModel.Primitives.IClientBuilder clientBuilder) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder WithAzureCredential(this System.ClientModel.Primitives.IClientBuilder clientBuilder, string key) { throw null; }
     }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
