@@ -149,7 +149,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The AAD token if found, otherwise null.</returns>
-        public virtual async Task<Response<string>> GetCurrentAadTokenDirectAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<string>> GetCurrentAadTokenDirectAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentAadTokenDirectAsync)}");
             scope.Start();
@@ -171,7 +171,7 @@ namespace Azure.Communication.CallAutomation
         /// Gets the current AAD token directly by creating a minimal request.
         /// </summary>
         /// <returns>The AAD token if found, otherwise null.</returns>
-        public virtual Response<string> GetCurrentAadTokenDirect(CancellationToken cancellationToken = default)
+        internal virtual Response<string> GetCurrentAadTokenDirect(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentAadTokenDirectAsync)}");
             scope.Start();
@@ -194,7 +194,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Response containing HmacTokenInfo with the HMAC signature, date, and content SHA256 if found, otherwise null values.</returns>
-        public virtual async Task<Response<HmacTokenInfo>> GetCurrentHmacTokenDirectAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<HmacTokenInfo>> GetCurrentHmacTokenDirectAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentHmacTokenDirectAsync)}");
             scope.Start();
@@ -216,7 +216,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Response containing HmacTokenInfo with the HMAC signature, date, and content SHA256 if found, otherwise null values.</returns>
-        public virtual Response<HmacTokenInfo> GetCurrentHmacTokenDirect(CancellationToken cancellationToken = default)
+        internal virtual Response<HmacTokenInfo> GetCurrentHmacTokenDirect(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCurrentHmacTokenDirect)}");
             scope.Start();
@@ -447,6 +447,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets the WebSocket connection helper for establishing authenticated WebSocket connections
+        /// to Azure Communication Services media streaming and transcription endpoints.
+        /// </summary>
+        /// <returns>A WebSocketConnectionHelper instance.</returns>
+        public virtual WebSocketConnectionHelper GetWebSocketConnectionHelper()
+        {
+            return new WebSocketConnectionHelper(this, _clientDiagnostics);
+        }
 
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
