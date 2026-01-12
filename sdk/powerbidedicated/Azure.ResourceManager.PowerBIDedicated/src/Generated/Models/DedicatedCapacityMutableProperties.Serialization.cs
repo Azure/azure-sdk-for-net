@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             DedicatedCapacityAdministrators administration = default;
             Mode? mode = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             string friendlyName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -123,7 +123,11 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))

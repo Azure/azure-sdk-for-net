@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             return message;
         }
 
-        internal HttpMessage CreateGetSkusRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetSkusCapacitiesRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityCapacityRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckNameAvailabilityCapacityRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PowerBIDedicated/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();

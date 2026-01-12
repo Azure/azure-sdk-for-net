@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         }
 
         /// <summary> Tenant ID for the capacity. Used for creating Pro Plus capacity. </summary>
-        public string TenantId
+        public Guid? TenantId
         {
             get
             {

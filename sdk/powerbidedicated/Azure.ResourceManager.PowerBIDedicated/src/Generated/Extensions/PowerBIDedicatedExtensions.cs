@@ -260,41 +260,41 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// Lists eligible SKUs for PowerBI Dedicated resource provider.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacitiesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SkuEnumerationForNewResourceResult>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<SkuEnumerationForNewResourceResult>> GetSkusCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetSkusCapacitiesAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Lists eligible SKUs for PowerBI Dedicated resource provider.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkus(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SkuEnumerationForNewResourceResult> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<SkuEnumerationForNewResourceResult> GetSkusCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
+            return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetSkusCapacities(cancellationToken);
         }
 
         /// <summary>
         /// Check the name availability in the target location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacityAsync(string, CheckCapacityNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacityAsync(AzureLocation, CheckCapacityNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(this SubscriptionResource subscriptionResource, string location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// Check the name availability in the target location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity(string, CheckCapacityNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity(AzureLocation, CheckCapacityNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(this SubscriptionResource subscriptionResource, string location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

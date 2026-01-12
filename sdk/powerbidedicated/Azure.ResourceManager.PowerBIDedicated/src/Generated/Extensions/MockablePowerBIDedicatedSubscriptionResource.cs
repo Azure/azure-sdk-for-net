@@ -176,9 +176,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuEnumerationForNewResourceResult>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SkuEnumerationForNewResourceResult>> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.GetSkus");
+            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
             scope.Start();
             try
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CapacitiesRestClient.CreateGetSkusRequest(Id.SubscriptionId, context);
+                HttpMessage message = CapacitiesRestClient.CreateGetSkusCapacitiesRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SkuEnumerationForNewResourceResult> response = Response.FromValue(SkuEnumerationForNewResourceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuEnumerationForNewResourceResult> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Response<SkuEnumerationForNewResourceResult> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.GetSkus");
+            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CapacitiesRestClient.CreateGetSkusRequest(Id.SubscriptionId, context);
+                HttpMessage message = CapacitiesRestClient.CreateGetSkusCapacitiesRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SkuEnumerationForNewResourceResult> response = Response.FromValue(SkuEnumerationForNewResourceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,11 +250,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(string location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
@@ -285,11 +283,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(string location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
