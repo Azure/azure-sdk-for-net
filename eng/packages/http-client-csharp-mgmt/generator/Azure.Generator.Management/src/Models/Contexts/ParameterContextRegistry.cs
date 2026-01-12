@@ -8,19 +8,19 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Models
 {
-    internal class ParameterMappings : IReadOnlyDictionary<string, ParameterMapping>
+    internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterContextMapping>
     {
-        private readonly IReadOnlyDictionary<string, ParameterMapping> _parameters;
-        public ParameterMappings(IReadOnlyList<ParameterMapping> parameters)
+        private readonly IReadOnlyDictionary<string, ParameterContextMapping> _parameters;
+        public ParameterContextRegistry(IReadOnlyList<ParameterContextMapping> parameters)
         {
             _parameters = parameters.ToDictionary(p => p.ParameterName);
         }
 
-        public ParameterMapping this[string key] => _parameters[key];
+        public ParameterContextMapping this[string key] => _parameters[key];
 
         public IEnumerable<string> Keys => _parameters.Keys;
 
-        public IEnumerable<ParameterMapping> Values => _parameters.Values;
+        public IEnumerable<ParameterContextMapping> Values => _parameters.Values;
 
         public int Count => _parameters.Count;
 
@@ -29,12 +29,12 @@ namespace Azure.Generator.Management.Models
             return _parameters.ContainsKey(key);
         }
 
-        public IEnumerator<KeyValuePair<string, ParameterMapping>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, ParameterContextMapping>> GetEnumerator()
         {
             return _parameters.GetEnumerator();
         }
 
-        public bool TryGetValue(string key, [MaybeNullWhen(false)] out ParameterMapping value)
+        public bool TryGetValue(string key, [MaybeNullWhen(false)] out ParameterContextMapping value)
         {
             return _parameters.TryGetValue(key, out value);
         }

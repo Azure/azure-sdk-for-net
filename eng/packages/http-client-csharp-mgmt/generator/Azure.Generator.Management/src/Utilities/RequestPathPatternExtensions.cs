@@ -19,7 +19,7 @@ namespace Azure.Generator.Management.Utilities
     internal static class RequestPathPatternExtensions
     {
         public static IReadOnlyList<ValueExpression> PopulateArguments(
-            this ParameterMappings parameterMapping,
+            this ParameterContextRegistry parameterMapping,
             ScopedApi<ResourceIdentifier> idProperty,
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,

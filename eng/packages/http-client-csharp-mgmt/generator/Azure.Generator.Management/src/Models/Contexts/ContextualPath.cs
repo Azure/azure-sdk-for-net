@@ -44,17 +44,17 @@ namespace Azure.Generator.Management.Models
         /// </summary>
         /// <param name="operationPath">The operation's request path.</param>
         /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
-        public ParameterMappings BuildParameterMapping(RequestPathPattern operationPath)
+        public ParameterContextRegistry BuildParameterMapping(RequestPathPattern operationPath)
         {
             // we need to find the sharing part between contextual path and the incoming path
             var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(RawPath, operationPath);
 
-            return new ParameterMappings(BuildParameterMappingCore(ContextualParameters, operationPath, sharedSegmentsCount));
+            return new ParameterContextRegistry(BuildParameterMappingCore(ContextualParameters, operationPath, sharedSegmentsCount));
         }
 
-        private static IReadOnlyList<ParameterMapping> BuildParameterMappingCore(IReadOnlyList<ContextualParameter> contextualParameters, RequestPathPattern operationPath, int sharedSegmentsCount)
+        private static IReadOnlyList<ParameterContextMapping> BuildParameterMappingCore(IReadOnlyList<ContextualParameter> contextualParameters, RequestPathPattern operationPath, int sharedSegmentsCount)
         {
-            var parameterMappings = new List<ParameterMapping>();
+            var parameterMappings = new List<ParameterContextMapping>();
             for (int i = 0, parameterIndex = 0; i < operationPath.Count; i++)
             {
                 var segment = operationPath[i];
@@ -67,12 +67,12 @@ namespace Azure.Generator.Management.Models
                 if (i < sharedSegmentsCount && parameterIndex < contextualParameters.Count)
                 {
                     // we are in the area of contextual paths
-                    var mapping = new ParameterMapping(segment.VariableName, contextualParameters[parameterIndex]);
+                    var mapping = new ParameterContextMapping(segment.VariableName, contextualParameters[parameterIndex]);
                     parameterMappings.Add(mapping);
                 }
                 else
                 {
-                    var mapping = new ParameterMapping(segment.VariableName, null);
+                    var mapping = new ParameterContextMapping(segment.VariableName, null);
                     parameterMappings.Add(mapping);
                 }
                 parameterIndex++;

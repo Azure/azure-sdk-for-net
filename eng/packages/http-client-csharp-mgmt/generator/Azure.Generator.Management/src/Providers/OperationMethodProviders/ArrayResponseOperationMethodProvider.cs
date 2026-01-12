@@ -40,7 +40,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
-        private readonly ParameterMappings _parameterMapping;
+        private readonly ParameterContextRegistry _parameterMapping;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,

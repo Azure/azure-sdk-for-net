@@ -47,7 +47,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
         private readonly FormattableString? _description;
 
-        private readonly ParameterMappings _parameterMappings;
+        private readonly ParameterContextRegistry _parameterMappings;
 
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client

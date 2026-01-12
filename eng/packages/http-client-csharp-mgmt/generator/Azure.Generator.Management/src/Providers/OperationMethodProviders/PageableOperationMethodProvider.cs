@@ -32,7 +32,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
 
-        private readonly ParameterMappings _parameterMappings;
+        private readonly ParameterContextRegistry _parameterMappings;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,

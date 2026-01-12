@@ -19,7 +19,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
-            ParameterMappings parameterMapping,
+            ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {

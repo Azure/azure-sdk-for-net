@@ -39,7 +39,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
-        private readonly ParameterMappings _parameterMappings;
+        private readonly ParameterContextRegistry _parameterMappings;
 
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
