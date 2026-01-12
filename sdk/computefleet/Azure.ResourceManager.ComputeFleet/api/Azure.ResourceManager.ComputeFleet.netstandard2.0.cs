@@ -111,9 +111,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer Nvidia { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer Xilinx { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer left, Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer (string value) { throw null; }
@@ -129,9 +127,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorType FPGA { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorType GPU { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.AcceleratorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.AcceleratorType left, Azure.ResourceManager.ComputeFleet.Models.AcceleratorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.AcceleratorType (string value) { throw null; }
@@ -159,9 +155,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName AutoLogon { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName FirstLogonCommands { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName left, Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName (string value) { throw null; }
@@ -177,9 +171,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ArchitectureType ARM64 { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ArchitectureType X64 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ArchitectureType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ArchitectureType left, Azure.ResourceManager.ComputeFleet.Models.ArchitectureType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ArchitectureType (string value) { throw null; }
@@ -193,13 +185,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.ComputeFleetData ComputeFleetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties properties = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetImageReference ComputeFleetImageReference(Azure.Core.ResourceIdentifier id = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetInnerError ComputeFleetInnerError(string exceptionType = null, string errorDetail = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState, Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributes vmAttributes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> additionalLocationsLocationProfiles, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile, System.DateTimeOffset? createdOn, string uniqueId) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState?), Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile = null, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributes vmAttributes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> additionalLocationsLocationProfiles = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string uniqueId = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode? mode = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode?), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType? capacityType = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType?), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVirtualMachine ComputeFleetVirtualMachine(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmProfile ComputeFleetVmProfile(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssOSProfile osProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssStorageProfile storageProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssNetworkProfile networkProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityProfile securityProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetBootDiagnostics bootDiagnostics = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProfile extensionProfile = null, string licenseType = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetScheduledEventsProfile scheduledEventsProfile = null, string userData = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmGalleryApplication> galleryApplications = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProperties hardwareVmSizeProperties = null, Azure.Core.ResourceIdentifier serviceArtifactReferenceId = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityPostureReference securityPostureReference = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss ComputeFleetVmss(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss ComputeFleetVmss(Azure.Core.ResourceIdentifier id, string type, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtension ComputeFleetVmssExtension(Azure.Core.ResourceIdentifier id = null, string name = null, string extensionType = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProperties ComputeFleetVmssExtensionProperties(string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? shouldAutoUpgradeMinorVersion = default(bool?), bool? isAutomaticUpgradeEnabled = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null, bool? isSuppressFailuresEnabled = default(bool?), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetKeyVaultSecretReference protectedSettingsFromKeyVault = null) { throw null; }
@@ -254,9 +244,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCachingType ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCachingType ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCachingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCachingType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCachingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCachingType (string value) { throw null; }
@@ -272,9 +260,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType VCpu { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType Vm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetCapacityType (string value) { throw null; }
@@ -303,9 +289,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetDiffDiskOption(string value) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskOption Local { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskOption left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskOption (string value) { throw null; }
@@ -322,9 +306,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskPlacement NvmeDisk { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskPlacement ResourceDisk { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskPlacement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskPlacement left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskPlacement right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiffDiskPlacement (string value) { throw null; }
@@ -352,9 +334,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskControllerType Nvme { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskControllerType Scsi { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskControllerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskControllerType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskControllerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskControllerType (string value) { throw null; }
@@ -373,9 +353,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskCreateOptionType FromImage { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskCreateOptionType Restore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskCreateOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskCreateOptionType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskCreateOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskCreateOptionType (string value) { throw null; }
@@ -391,9 +369,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskDeleteOptionType Delete { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskDeleteOptionType Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskDeleteOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskDeleteOptionType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskDeleteOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDiskDeleteOptionType (string value) { throw null; }
@@ -411,9 +387,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDomainNameLabelScopeType SubscriptionReuse { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDomainNameLabelScopeType TenantReuse { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDomainNameLabelScopeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDomainNameLabelScopeType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDomainNameLabelScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetDomainNameLabelScopeType (string value) { throw null; }
@@ -429,9 +403,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetEvictionPolicy Deallocate { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetEvictionPolicy Delete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetEvictionPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetEvictionPolicy left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetEvictionPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetEvictionPolicy (string value) { throw null; }
@@ -477,9 +449,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetIPVersion IPv4 { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetIPVersion IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetIPVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetIPVersion left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetIPVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetIPVersion (string value) { throw null; }
@@ -522,9 +492,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxPatchAssessmentMode AutomaticByPlatform { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxPatchAssessmentMode ImageDefault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxPatchAssessmentMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxPatchAssessmentMode left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxPatchAssessmentMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxPatchAssessmentMode (string value) { throw null; }
@@ -555,9 +523,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting Never { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
@@ -585,9 +551,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchMode AutomaticByPlatform { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchMode ImageDefault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchMode left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetLinuxVmGuestPatchMode (string value) { throw null; }
@@ -603,9 +567,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode Instance { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetMode (string value) { throw null; }
@@ -620,9 +582,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetNetworkApiVersion(string value) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion V20201101 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion (string value) { throw null; }
@@ -639,9 +599,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliaryMode Floating { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliaryMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliaryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliaryMode left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliaryMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliaryMode (string value) { throw null; }
@@ -660,9 +618,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliarySku A8 { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliarySku None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliarySku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliarySku left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliarySku right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkInterfaceAuxiliarySku (string value) { throw null; }
@@ -678,9 +634,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetOperatingSystemType Linux { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetOperatingSystemType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetOperatingSystemType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetOperatingSystemType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetOperatingSystemType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetOperatingSystemType (string value) { throw null; }
@@ -744,9 +698,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProtocolType Http { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProtocolType Https { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProtocolType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProtocolType (string value) { throw null; }
@@ -767,9 +719,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState (string value) { throw null; }
@@ -810,9 +760,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuName Basic { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuName left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuName (string value) { throw null; }
@@ -828,9 +776,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuTier Global { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuTier Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuTier left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetPublicIPAddressSkuTier (string value) { throw null; }
@@ -859,9 +805,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityEncryptionType NonPersistedTpm { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityEncryptionType VmGuestStateOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityEncryptionType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityEncryptionType (string value) { throw null; }
@@ -905,9 +849,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityType ConfidentialVm { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityType TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityType (string value) { throw null; }
@@ -940,9 +882,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetStorageAccountType StandardSsdZrs { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetStorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetStorageAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetStorageAccountType left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetStorageAccountType (string value) { throw null; }
@@ -1073,9 +1013,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributeSupport Included { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributeSupport Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributeSupport other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributeSupport left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributeSupport right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmAttributeSupport (string value) { throw null; }
@@ -1096,9 +1034,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmCategory MemoryOptimized { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmCategory StorageOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmCategory left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmCategory (string value) { throw null; }
@@ -1114,9 +1050,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmDeleteOption Delete { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmDeleteOption Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmDeleteOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmDeleteOption left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmDeleteOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmDeleteOption (string value) { throw null; }
@@ -1177,9 +1111,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmOperationStatus (string value) { throw null; }
@@ -1538,9 +1470,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsPatchAssessmentMode AutomaticByPlatform { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsPatchAssessmentMode ImageDefault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsPatchAssessmentMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsPatchAssessmentMode left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsPatchAssessmentMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsPatchAssessmentMode (string value) { throw null; }
@@ -1558,9 +1488,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting Never { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
@@ -1589,9 +1517,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchMode AutomaticByPlatform { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchMode Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchMode left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWindowsVmGuestPatchMode (string value) { throw null; }
@@ -1631,9 +1557,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneDistributionStrategy BestEffortSingleZone { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneDistributionStrategy Prioritized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneDistributionStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneDistributionStrategy left, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneDistributionStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ComputeFleetZoneDistributionStrategy (string value) { throw null; }
@@ -1651,9 +1575,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer Intel { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer Microsoft { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer left, Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer (string value) { throw null; }
@@ -1669,9 +1591,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType HDD { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType SSD { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType left, Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType (string value) { throw null; }
@@ -1699,9 +1619,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode Audit { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode Enforce { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode left, Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode (string value) { throw null; }
@@ -1717,9 +1635,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.RegularPriorityAllocationStrategy LowestPrice { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.RegularPriorityAllocationStrategy Prioritized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.RegularPriorityAllocationStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.RegularPriorityAllocationStrategy left, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityAllocationStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.RegularPriorityAllocationStrategy (string value) { throw null; }
@@ -1749,9 +1665,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.Models.SpotAllocationStrategy LowestPrice { get { throw null; } }
         public static Azure.ResourceManager.ComputeFleet.Models.SpotAllocationStrategy PriceCapacityOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.SpotAllocationStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.SpotAllocationStrategy left, Azure.ResourceManager.ComputeFleet.Models.SpotAllocationStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.SpotAllocationStrategy (string value) { throw null; }
@@ -1796,9 +1710,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public WindowsSetupAdditionalInformationComponentName(string value) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationComponentName MicrosoftWindowsShellSetup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationComponentName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationComponentName left, Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationComponentName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationComponentName (string value) { throw null; }
@@ -1813,9 +1725,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public WindowsSetupAdditionalInformationPassName(string value) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName OobeSystem { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName left, Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformationPassName (string value) { throw null; }

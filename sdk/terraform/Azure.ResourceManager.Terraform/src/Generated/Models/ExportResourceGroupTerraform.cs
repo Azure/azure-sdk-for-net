@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
@@ -16,12 +17,11 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/>. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public ExportResourceGroupTerraform(string resourceGroupName)
+        public ExportResourceGroupTerraform(string resourceGroupName) : base(CommonExportType.ExportResourceGroup)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             ResourceGroupName = resourceGroupName;
-            Type = CommonExportType.ExportResourceGroup;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/>. </summary>
@@ -33,23 +33,18 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
-        internal ExportResourceGroupTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
+        internal ExportResourceGroupTerraform(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties, string resourceGroupName, string namePattern) : base(@type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, additionalBinaryDataProperties)
         {
             ResourceGroupName = resourceGroupName;
             NamePattern = namePattern;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/> for deserialization. </summary>
-        internal ExportResourceGroupTerraform()
-        {
         }
 
         /// <summary> The name of the resource group to be exported. </summary>
         public string ResourceGroupName { get; }
+
         /// <summary> The id prefix for the exported Terraform resources. Defaults to `res-`. </summary>
         public string NamePattern { get; set; }
     }

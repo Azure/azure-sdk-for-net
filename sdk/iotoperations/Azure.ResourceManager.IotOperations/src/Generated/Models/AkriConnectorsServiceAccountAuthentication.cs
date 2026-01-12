@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,38 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class AkriConnectorsServiceAccountAuthentication : AkriConnectorsMqttAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsServiceAccountAuthentication"/>. </summary>
-        /// <param name="serviceAccountTokenSettings"> The service account token for the MQTT connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenSettings"/> is null. </exception>
-        public AkriConnectorsServiceAccountAuthentication(AkriConnectorsServiceAccountTokenSettings serviceAccountTokenSettings)
+        /// <param name="serviceAccountTokenAudience"> The audience for the service account token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountTokenAudience"/> is null. </exception>
+        public AkriConnectorsServiceAccountAuthentication(string serviceAccountTokenAudience) : base(AkriConnectorsMqttAuthenticationMethod.ServiceAccountToken)
         {
-            Argument.AssertNotNull(serviceAccountTokenSettings, nameof(serviceAccountTokenSettings));
+            Argument.AssertNotNull(serviceAccountTokenAudience, nameof(serviceAccountTokenAudience));
 
-            ServiceAccountTokenSettings = serviceAccountTokenSettings;
-            Method = AkriConnectorsMqttAuthenticationMethod.ServiceAccountToken;
+            ServiceAccountTokenSettings = new AkriConnectorsServiceAccountTokenSettings(serviceAccountTokenAudience);
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsServiceAccountAuthentication"/>. </summary>
         /// <param name="method"> The authentication method for the MQTT connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serviceAccountTokenSettings"> The service account token for the MQTT connection. </param>
-        internal AkriConnectorsServiceAccountAuthentication(AkriConnectorsMqttAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, AkriConnectorsServiceAccountTokenSettings serviceAccountTokenSettings) : base(method, serializedAdditionalRawData)
+        internal AkriConnectorsServiceAccountAuthentication(AkriConnectorsMqttAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, AkriConnectorsServiceAccountTokenSettings serviceAccountTokenSettings) : base(@method, additionalBinaryDataProperties)
         {
             ServiceAccountTokenSettings = serviceAccountTokenSettings;
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorsServiceAccountAuthentication"/> for deserialization. </summary>
-        internal AkriConnectorsServiceAccountAuthentication()
-        {
         }
 
         /// <summary> The service account token for the MQTT connection. </summary>
         internal AkriConnectorsServiceAccountTokenSettings ServiceAccountTokenSettings { get; set; }
+
         /// <summary> The audience for the service account token. </summary>
         public string ServiceAccountTokenAudience
         {
-            get => ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audience;
-            set => ServiceAccountTokenSettings = new AkriConnectorsServiceAccountTokenSettings(value);
+            get
+            {
+                return ServiceAccountTokenSettings is null ? default : ServiceAccountTokenSettings.Audience;
+            }
+            set
+            {
+                ServiceAccountTokenSettings = new AkriConnectorsServiceAccountTokenSettings(value);
+            }
         }
     }
 }

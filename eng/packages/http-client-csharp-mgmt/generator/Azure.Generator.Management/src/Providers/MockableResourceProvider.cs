@@ -212,29 +212,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _nonResourceMethods)
             {
                 // Process both async and sync method variants
-                var methodsToProcess = new[] {
-                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
-                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
-                };
-                foreach (var m in methodsToProcess)
-                {
-                    methods.Add(m);
-                    var updated = false;
-                    foreach (var p in m.Signature.Parameters)
-                    {
-                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                        if (normalizedName != null && normalizedName != p.Name)
-                        {
-                            p.Update(name: normalizedName);
-                            updated = true;
-                        }
-                    }
-                    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-                    if (updated)
-                    {
-                        m.Update(signature: m.Signature);
-                    }
-                }
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];
@@ -327,14 +306,26 @@ namespace Azure.Generator.Management.Providers
             return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
         }
 
-        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
                 InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName)
+                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName)
             };
+        }
+
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            }
+
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

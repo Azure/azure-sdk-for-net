@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PureStorageBlock.Models;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
-    internal partial class AvsVmVolumesRestOperations
+    internal partial class AvsVmVolumes
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AvsVmVolumesRestOperations. </summary>
+        /// <summary> Initializes a new instance of AvsVmVolumes for mocking. </summary>
+        protected AvsVmVolumes()
+        {
+        }
+
+        /// <summary> Initializes a new instance of AvsVmVolumes. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AvsVmVolumesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal AvsVmVolumes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-11-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, RequestContent content, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
@@ -51,105 +56,22 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/avsVmVolumes/", false);
             uri.AppendPath(volumeId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
-            uri.AppendPath(storagePoolName, true);
-            uri.AppendPath("/avsVms/", false);
-            uri.AppendPath(avsVmId, true);
-            uri.AppendPath("/avsVmVolumes/", false);
-            uri.AppendPath(volumeId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Update a volume in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="volumeId"> ID of the volume in the AVS VM. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/>, <paramref name="volumeId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-            Argument.AssertNotNullOrEmpty(volumeId, nameof(volumeId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId, volumeId, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a volume in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="volumeId"> ID of the volume in the AVS VM. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/>, <paramref name="volumeId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-            Argument.AssertNotNullOrEmpty(volumeId, nameof(volumeId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId, volumeId, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
@@ -159,109 +81,20 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/avsVmVolumes/", false);
             uri.AppendPath(volumeId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
-            uri.AppendPath(storagePoolName, true);
-            uri.AppendPath("/avsVms/", false);
-            uri.AppendPath(avsVmId, true);
-            uri.AppendPath("/avsVmVolumes/", false);
-            uri.AppendPath(volumeId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a volume in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="volumeId"> ID of the volume in the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PureStorageAvsVmVolumeData>> GetAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-            Argument.AssertNotNullOrEmpty(volumeId, nameof(volumeId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId, volumeId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PureStorageAvsVmVolumeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PureStorageAvsVmVolumeData.DeserializePureStorageAvsVmVolumeData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PureStorageAvsVmVolumeData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a volume in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="volumeId"> ID of the volume in the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PureStorageAvsVmVolumeData> Get(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-            Argument.AssertNotNullOrEmpty(volumeId, nameof(volumeId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId, volumeId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PureStorageAvsVmVolumeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PureStorageAvsVmVolumeData.DeserializePureStorageAvsVmVolumeData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PureStorageAvsVmVolumeData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
@@ -271,96 +104,19 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/avsVmVolumes/", false);
             uri.AppendPath(volumeId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
-            uri.AppendPath(storagePoolName, true);
-            uri.AppendPath("/avsVms/", false);
-            uri.AppendPath(avsVmId, true);
-            uri.AppendPath("/avsVmVolumes/", false);
-            uri.AppendPath(volumeId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a volume in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="volumeId"> ID of the volume in the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByAvsVmRequest(Guid subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-            Argument.AssertNotNullOrEmpty(volumeId, nameof(volumeId));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId, volumeId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a volume in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="volumeId"> ID of the volume in the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-            Argument.AssertNotNullOrEmpty(volumeId, nameof(volumeId));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId, volumeId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByAvsVmRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
@@ -369,180 +125,24 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(avsVmId, true);
             uri.AppendPath("/avsVmVolumes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByAvsVmRequest(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
-            uri.AppendPath(storagePoolName, true);
-            uri.AppendPath("/avsVms/", false);
-            uri.AppendPath(avsVmId, true);
-            uri.AppendPath("/avsVmVolumes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List volumes in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsVmVolumeListResult>> ListByAvsVmAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByAvsVmRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-
-            using var message = CreateListByAvsVmRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AvsVmVolumeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AvsVmVolumeListResult.DeserializeAvsVmVolumeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List volumes in an AVS VM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsVmVolumeListResult> ListByAvsVm(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-
-            using var message = CreateListByAvsVmRequest(subscriptionId, resourceGroupName, storagePoolName, avsVmId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AvsVmVolumeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AvsVmVolumeListResult.DeserializeAvsVmVolumeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByAvsVmNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByAvsVmNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List volumes in an AVS VM. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsVmVolumeListResult>> ListByAvsVmNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-
-            using var message = CreateListByAvsVmNextPageRequest(nextLink, subscriptionId, resourceGroupName, storagePoolName, avsVmId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AvsVmVolumeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AvsVmVolumeListResult.DeserializeAvsVmVolumeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List volumes in an AVS VM. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsVmVolumeListResult> ListByAvsVmNextPage(string nextLink, string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-
-            using var message = CreateListByAvsVmNextPageRequest(nextLink, subscriptionId, resourceGroupName, storagePoolName, avsVmId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AvsVmVolumeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AvsVmVolumeListResult.DeserializeAvsVmVolumeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

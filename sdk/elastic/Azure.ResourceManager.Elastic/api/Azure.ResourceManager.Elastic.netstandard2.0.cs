@@ -128,9 +128,7 @@ namespace Azure.ResourceManager.Elastic
         public virtual Azure.ResourceManager.ArmOperation DetachTrafficFilter(Azure.WaitUntil waitUntil, string rulesetId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachTrafficFilterAsync(Azure.WaitUntil waitUntil, string rulesetId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterListResult> GetAllTrafficFilter(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterListResult>> GetAllTrafficFilterAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterListResult> GetAllTrafficFilters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterListResult>> GetAllTrafficFiltersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -171,10 +169,8 @@ namespace Azure.ResourceManager.Elastic
         Azure.ResourceManager.Elastic.ElasticMonitorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource> Update(Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Elastic.ElasticMonitorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource>> UpdateAsync(Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Elastic.ElasticMonitorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateVmCollection(Azure.ResourceManager.Elastic.Models.VmCollectionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -314,26 +310,21 @@ namespace Azure.ResourceManager.Elastic.Models
     public static partial class ArmElasticModelFactory
     {
         public static Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceInfo ConnectedPartnerResourceInfo(Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName, System.Uri partnerDeploymentUri, Azure.Core.ResourceIdentifier azureResourceId, Azure.Core.AzureLocation? location) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName = null, System.Uri partnerDeploymentUri = null, Azure.Core.ResourceIdentifier azureResourceId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string connectedPartnerResourcePropertiesType = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticBillingInfoResult ElasticBillingInfoResult(Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, Azure.ResourceManager.Elastic.Models.PartnerBillingEntity partnerBillingEntity = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, System.Uri elasticsearchServiceUri = null, System.Uri kibanaServiceUri = null, System.Uri kibanaSsoUri = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticCloudUser ElasticCloudUser(string emailAddress = null, string id = null, System.Uri elasticCloudSsoDefaultUri = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.Models.ElasticDeploymentInfoResult ElasticDeploymentInfoResult(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, System.Uri deploymentUri, Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo marketplaceSaasInfo) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticDeploymentInfoResult ElasticDeploymentInfoResult(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus? status = default(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus?), string version = null, string memoryCapacity = null, string diskCapacity = null, string elasticsearchEndPoint = null, System.Uri deploymentUri = null, Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, string projectType = null, string configurationType = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticExternalUserCreationResult ElasticExternalUserCreationResult(bool? isCreated = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Elastic.ElasticMonitorData ElasticMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties properties = null, string kind = null, string skuName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.ElasticMonitorData ElasticMonitorData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string skuName, Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties properties, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { throw null; }
         public static Azure.ResourceManager.Elastic.ElasticMonitoredSubscriptionData ElasticMonitoredSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.ElasticMonitoredSubscriptionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticMonitoredSubscriptionProperties ElasticMonitoredSubscriptionProperties(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation? operation = default(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> monitoredSubscriptionList = null, Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties ElasticMonitorProperties(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState, Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus? monitoringStatus, Azure.ResourceManager.Elastic.Models.ElasticCloudProperties elasticProperties, Azure.ResourceManager.Elastic.Models.ElasticUserInfo userInfo, Azure.ResourceManager.Elastic.Models.ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties ElasticMonitorProperties(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?), Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus?), Azure.ResourceManager.Elastic.Models.ElasticCloudProperties elasticProperties = null, Azure.ResourceManager.Elastic.Models.ElasticUserInfo userInfo = null, Azure.ResourceManager.Elastic.Models.ElasticPlanDetails planDetails = null, string version = null, string subscriptionState = null, string saaSAzureSubscriptionStatus = null, string sourceCampaignName = null, string sourceCampaignId = null, Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory?), int? liftrResourcePreference = default(int?), bool? isApiKeyGenerated = default(bool?), Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType? hostingType = default(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType?), Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails projectDetails = null) { throw null; }
         public static Azure.ResourceManager.Elastic.ElasticOpenAIIntegrationData ElasticOpenAIIntegrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(Azure.Core.ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, System.DateTimeOffset? lastRefreshOn) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(Azure.Core.ResourceIdentifier openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, System.DateTimeOffset? lastRefreshOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationStatusResult ElasticOpenAIIntegrationStatusResult(string elasticOpenAIIntegrationStatus = null) { throw null; }
@@ -347,7 +338,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticUserApiKeyResult ElasticUserApiKeyResult(string elasticUserApiKey = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticVersion ElasticVersion(string availableVersion = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticVmResourceInfo ElasticVmResourceInfo(Azure.Core.ResourceIdentifier vmResourceId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(Azure.Core.ResourceIdentifier marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription = null, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSaaSInfoMarketplaceSubscription(Azure.Core.ResourceIdentifier id = null, string publisherId = null, string offerId = null) { throw null; }
@@ -479,9 +469,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus Healthy { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus Unhealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus left, Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus (string value) { throw null; }
@@ -536,9 +524,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticFilterType AzurePrivateEndpoint { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ElasticFilterType IP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticFilterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticFilterType left, Azure.ResourceManager.Elastic.Models.ElasticFilterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticFilterType (string value) { throw null; }
@@ -554,9 +540,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory MonitorLogs { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory left, Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory (string value) { throw null; }
@@ -599,9 +583,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus left, Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus (string value) { throw null; }
@@ -737,9 +719,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ElasticProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState left, Azure.ResourceManager.Elastic.Models.ElasticProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticProvisioningState (string value) { throw null; }
@@ -757,9 +737,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType TimeSeries { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType Vector { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType left, Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType (string value) { throw null; }
@@ -889,9 +867,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.FilteringTagAction Exclude { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.FilteringTagAction Include { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.FilteringTagAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.FilteringTagAction left, Azure.ResourceManager.Elastic.Models.FilteringTagAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.FilteringTagAction (string value) { throw null; }
@@ -907,7 +883,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public string MarketplaceResourceId { get { throw null; } }
         public string MarketplaceStatus { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSubscription { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier MarketplaceSubscriptionId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -968,9 +943,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.MonitoringStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.MonitoringStatus InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.MonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.MonitoringStatus left, Azure.ResourceManager.Elastic.Models.MonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.MonitoringStatus (string value) { throw null; }
@@ -986,9 +959,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType Hosted { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType Serverless { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType left, Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType (string value) { throw null; }
@@ -1018,9 +989,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType Observability { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType Security { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType left, Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType (string value) { throw null; }
@@ -1052,9 +1021,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation DeleteBegin { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation DeleteComplete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation left, Azure.ResourceManager.Elastic.Models.ResourcePatchOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.ResourcePatchOperation (string value) { throw null; }
@@ -1085,9 +1052,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.SendingLogsStatus False { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.SendingLogsStatus True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.SendingLogsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.SendingLogsStatus left, Azure.ResourceManager.Elastic.Models.SendingLogsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.SendingLogsStatus (string value) { throw null; }
@@ -1127,9 +1092,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.VmCollectionUpdateOperationName Add { get { throw null; } }
         public static Azure.ResourceManager.Elastic.Models.VmCollectionUpdateOperationName Delete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Elastic.Models.VmCollectionUpdateOperationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Elastic.Models.VmCollectionUpdateOperationName left, Azure.ResourceManager.Elastic.Models.VmCollectionUpdateOperationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Elastic.Models.VmCollectionUpdateOperationName (string value) { throw null; }

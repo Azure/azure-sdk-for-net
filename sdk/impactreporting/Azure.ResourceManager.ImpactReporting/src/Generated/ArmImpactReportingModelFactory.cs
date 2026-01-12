@@ -8,36 +8,39 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ImpactReporting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmImpactReportingModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.WorkloadImpactData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+
+        /// <summary> Workload Impact properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ImpactReporting.WorkloadImpactData"/> instance for mocking. </returns>
-        public static WorkloadImpactData WorkloadImpactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadImpactProperties properties = null)
+        public static WorkloadImpactData WorkloadImpactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadImpactProperties properties = default)
         {
             return new WorkloadImpactData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadImpactProperties"/>. </summary>
+        /// <summary> Workload impact properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="startOn"> Time at which impact was observed. </param>
-        /// <param name="endOn"> Time at which impact has ended. </param>
+        /// <param name="startOn"> Time at which impact was observed . </param>
+        /// <param name="endOn"> Time at which impact has ended . </param>
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
         /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
@@ -53,11 +56,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <returns> A new <see cref="Models.WorkloadImpactProperties"/> instance for mocking. </returns>
-        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = null, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, ResourceIdentifier impactedResourceId = null, string impactUniqueId = null, DateTimeOffset? reportedTimeUtc = null, string impactCategory = null, string impactDescription = null, IEnumerable<string> armCorrelationIds = null, IEnumerable<ImpactPerformance> performance = null, ImpactConnectivityDetails connectivity = null, IDictionary<string, BinaryData> additionalProperties = null, ImpactErrorDetails errorDetails = null, ImpactedWorkload workload = null, string impactGroupId = null, ImpactConfidenceLevel? confidenceLevel = null, ImpactClientIncidentDetails clientIncidentDetails = null)
+        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
         {
-            armCorrelationIds ??= new List<string>();
-            performance ??= new List<ImpactPerformance>();
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            armCorrelationIds ??= new ChangeTrackingList<string>();
+            performance ??= new ChangeTrackingList<ImpactPerformance>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new WorkloadImpactProperties(
                 provisioningState,
@@ -68,8 +71,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 reportedTimeUtc,
                 impactCategory,
                 impactDescription,
-                armCorrelationIds?.ToList(),
-                performance?.ToList(),
+                armCorrelationIds.ToList(),
+                performance.ToList(),
                 connectivity,
                 additionalProperties,
                 errorDetails,
@@ -77,77 +80,77 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 impactGroupId,
                 confidenceLevel,
                 clientIncidentDetails,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.ImpactCategoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> ImpactCategory resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ImpactReporting.ImpactCategoryData"/> instance for mocking. </returns>
-        public static ImpactCategoryData ImpactCategoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ImpactCategoryProperties properties = null)
+        public static ImpactCategoryData ImpactCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactCategoryProperties properties = default)
         {
             return new ImpactCategoryData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImpactCategoryProperties"/>. </summary>
+        /// <summary> Impact category properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="categoryId"> Unique ID of the category. </param>
         /// <param name="parentCategoryId"> Unique ID of the parent category. </param>
         /// <param name="description"> Description of the category. </param>
         /// <param name="requiredImpactProperties"> The workloadImpact properties which are required when reporting with the impact category. </param>
         /// <returns> A new <see cref="Models.ImpactCategoryProperties"/> instance for mocking. </returns>
-        public static ImpactCategoryProperties ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState = null, string categoryId = null, string parentCategoryId = null, string description = null, IEnumerable<RequiredImpactProperties> requiredImpactProperties = null)
+        public static ImpactCategoryProperties ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState = default, string categoryId = default, string parentCategoryId = default, string description = default, IEnumerable<RequiredImpactProperties> requiredImpactProperties = default)
         {
-            requiredImpactProperties ??= new List<RequiredImpactProperties>();
+            requiredImpactProperties ??= new ChangeTrackingList<RequiredImpactProperties>();
 
             return new ImpactCategoryProperties(
                 provisioningState,
                 categoryId,
                 parentCategoryId,
                 description,
-                requiredImpactProperties?.ToList(),
-                serializedAdditionalRawData: null);
+                requiredImpactProperties.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RequiredImpactProperties"/>. </summary>
+        /// <summary> Required impact properties. </summary>
         /// <param name="name"> Name of the property. </param>
         /// <param name="allowedValues"> Allowed values values for the property. </param>
         /// <returns> A new <see cref="Models.RequiredImpactProperties"/> instance for mocking. </returns>
-        public static RequiredImpactProperties RequiredImpactProperties(string name = null, IEnumerable<string> allowedValues = null)
+        public static RequiredImpactProperties RequiredImpactProperties(string name = default, IEnumerable<string> allowedValues = default)
         {
-            allowedValues ??= new List<string>();
+            allowedValues ??= new ChangeTrackingList<string>();
 
-            return new RequiredImpactProperties(name, allowedValues?.ToList(), serializedAdditionalRawData: null);
+            return new RequiredImpactProperties(name, allowedValues.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.ImpactInsightData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Insight resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ImpactReporting.ImpactInsightData"/> instance for mocking. </returns>
-        public static ImpactInsightData ImpactInsightData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ImpactInsightProperties properties = null)
+        public static ImpactInsightData ImpactInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactInsightProperties properties = default)
         {
             return new ImpactInsightData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImpactInsightProperties"/>. </summary>
+        /// <summary> Impact category properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="category"> category of the insight. </param>
         /// <param name="status"> status of the insight. example resolved, repaired, other. </param>
@@ -159,9 +162,9 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="impact"> details of of the impact for which insight has been generated. </param>
         /// <param name="additionalDetails"> additional details of the insight. </param>
         /// <returns> A new <see cref="Models.ImpactInsightProperties"/> instance for mocking. </returns>
-        public static ImpactInsightProperties ImpactInsightProperties(ImpactReportingProvisioningState? provisioningState = null, string category = null, string status = null, string eventId = null, string groupId = null, ImpactInsightContent content = null, DateTimeOffset? eventOn = null, string insightUniqueId = null, ImpactDetails impact = null, IDictionary<string, BinaryData> additionalDetails = null)
+        public static ImpactInsightProperties ImpactInsightProperties(ImpactReportingProvisioningState? provisioningState = default, string category = default, string status = default, string eventId = default, string groupId = default, ImpactInsightContent content = default, DateTimeOffset? eventOn = default, string insightUniqueId = default, ImpactDetails impact = default, IDictionary<string, BinaryData> additionalDetails = default)
         {
-            additionalDetails ??= new Dictionary<string, BinaryData>();
+            additionalDetails ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ImpactInsightProperties(
                 provisioningState,
@@ -174,35 +177,35 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 insightUniqueId,
                 impact,
                 additionalDetails,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.ImpactConnectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A connector is a resource that can be used to proactively report impacts against workloads in Azure to Microsoft. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ImpactReporting.ImpactConnectorData"/> instance for mocking. </returns>
-        public static ImpactConnectorData ImpactConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ImpactConnectorProperties properties = null)
+        public static ImpactConnectorData ImpactConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactConnectorProperties properties = default)
         {
             return new ImpactConnectorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImpactConnectorProperties"/>. </summary>
+        /// <summary> Details of the Connector. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="connectorId"> unique id of the connector. </param>
         /// <param name="tenantId"> tenant id of this connector. </param>
         /// <param name="connectorType"> connector type. </param>
         /// <param name="lastRanOn"> last run time stamp of this connector in UTC time zone. </param>
         /// <returns> A new <see cref="Models.ImpactConnectorProperties"/> instance for mocking. </returns>
-        public static ImpactConnectorProperties ImpactConnectorProperties(ImpactReportingProvisioningState? provisioningState = null, string connectorId = null, string tenantId = null, ImpactConnectorType connectorType = default, DateTimeOffset lastRanOn = default)
+        public static ImpactConnectorProperties ImpactConnectorProperties(ImpactReportingProvisioningState? provisioningState = default, string connectorId = default, string tenantId = default, ImpactConnectorType connectorType = default, DateTimeOffset lastRanOn = default)
         {
             return new ImpactConnectorProperties(
                 provisioningState,
@@ -210,7 +213,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 tenantId,
                 connectorType,
                 lastRanOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }

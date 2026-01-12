@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmGalleryImageResource : IJsonModel<HciVmGalleryImageData>
     {
-        private static HciVmGalleryImageData s_dataDeserializationInstance;
-        private static HciVmGalleryImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmGalleryImageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmGalleryImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmGalleryImageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmGalleryImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmGalleryImageData>)Data).Write(writer, options);
 
-        HciVmGalleryImageData IJsonModel<HciVmGalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmGalleryImageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmGalleryImageData IJsonModel<HciVmGalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmGalleryImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmGalleryImageData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmGalleryImageData IPersistableModel<HciVmGalleryImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmGalleryImageData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmGalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmGalleryImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmGalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

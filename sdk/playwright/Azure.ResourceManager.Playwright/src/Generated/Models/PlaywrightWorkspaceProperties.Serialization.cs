@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    dataplaneUri = new Uri(prop.Value.GetString());
+                    dataplaneUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalAffinity"u8))

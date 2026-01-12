@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the AgentPoolSnapshot data model.
     /// A node pool snapshot resource.
+    /// Serialized Name: Snapshot
     /// </summary>
     public partial class AgentPoolSnapshotData : TrackedResourceData
     {
@@ -64,14 +65,38 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="creationData"> CreationData to be used to specify the source agent pool resource ID to create this snapshot. </param>
-        /// <param name="snapshotType"> The type of a snapshot. The default is NodePool. </param>
-        /// <param name="kubernetesVersion"> The version of Kubernetes. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
-        /// <param name="vmSize"> The size of the VM. </param>
-        /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
+        /// <param name="creationData">
+        /// CreationData to be used to specify the source agent pool resource ID to create this snapshot.
+        /// Serialized Name: Snapshot.properties.creationData
+        /// </param>
+        /// <param name="snapshotType">
+        /// The type of a snapshot. The default is NodePool.
+        /// Serialized Name: Snapshot.properties.snapshotType
+        /// </param>
+        /// <param name="kubernetesVersion">
+        /// The version of Kubernetes.
+        /// Serialized Name: Snapshot.properties.kubernetesVersion
+        /// </param>
+        /// <param name="nodeImageVersion">
+        /// The version of node image.
+        /// Serialized Name: Snapshot.properties.nodeImageVersion
+        /// </param>
+        /// <param name="osType">
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: Snapshot.properties.osType
+        /// </param>
+        /// <param name="osSku">
+        /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
+        /// Serialized Name: Snapshot.properties.osSku
+        /// </param>
+        /// <param name="vmSize">
+        /// The size of the VM.
+        /// Serialized Name: Snapshot.properties.vmSize
+        /// </param>
+        /// <param name="enableFips">
+        /// Whether to use a FIPS-enabled OS.
+        /// Serialized Name: Snapshot.properties.enableFIPS
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -91,9 +116,15 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> CreationData to be used to specify the source agent pool resource ID to create this snapshot. </summary>
+        /// <summary>
+        /// CreationData to be used to specify the source agent pool resource ID to create this snapshot.
+        /// Serialized Name: Snapshot.properties.creationData
+        /// </summary>
         internal ContainerServiceCreationData CreationData { get; set; }
-        /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
+        /// <summary>
+        /// This is the ARM ID of the source object to be used to create the target object.
+        /// Serialized Name: CreationData.sourceResourceId
+        /// </summary>
         [WirePath("properties.creationData.sourceResourceId")]
         public ResourceIdentifier CreationDataSourceResourceId
         {
@@ -106,25 +137,46 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The type of a snapshot. The default is NodePool. </summary>
+        /// <summary>
+        /// The type of a snapshot. The default is NodePool.
+        /// Serialized Name: Snapshot.properties.snapshotType
+        /// </summary>
         [WirePath("properties.snapshotType")]
         public SnapshotType? SnapshotType { get; set; }
-        /// <summary> The version of Kubernetes. </summary>
+        /// <summary>
+        /// The version of Kubernetes.
+        /// Serialized Name: Snapshot.properties.kubernetesVersion
+        /// </summary>
         [WirePath("properties.kubernetesVersion")]
         public string KubernetesVersion { get; }
-        /// <summary> The version of node image. </summary>
+        /// <summary>
+        /// The version of node image.
+        /// Serialized Name: Snapshot.properties.nodeImageVersion
+        /// </summary>
         [WirePath("properties.nodeImageVersion")]
         public string NodeImageVersion { get; }
-        /// <summary> The operating system type. The default is Linux. </summary>
+        /// <summary>
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: Snapshot.properties.osType
+        /// </summary>
         [WirePath("properties.osType")]
         public ContainerServiceOSType? OSType { get; }
-        /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
+        /// <summary>
+        /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
+        /// Serialized Name: Snapshot.properties.osSku
+        /// </summary>
         [WirePath("properties.osSku")]
         public ContainerServiceOSSku? OSSku { get; }
-        /// <summary> The size of the VM. </summary>
+        /// <summary>
+        /// The size of the VM.
+        /// Serialized Name: Snapshot.properties.vmSize
+        /// </summary>
         [WirePath("properties.vmSize")]
         public string VmSize { get; }
-        /// <summary> Whether to use a FIPS-enabled OS. </summary>
+        /// <summary>
+        /// Whether to use a FIPS-enabled OS.
+        /// Serialized Name: Snapshot.properties.enableFIPS
+        /// </summary>
         [WirePath("properties.enableFIPS")]
         public bool? EnableFips { get; }
     }

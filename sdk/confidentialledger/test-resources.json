@@ -2,9 +2,16 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "namePrefix": {
+      "type": "string",
+      "defaultValue": "dotnet-sdk-test-ledger-",
+      "metadata": {
+        "description": "The base resource name."
+      }
+    },
     "baseName": {
       "type": "string",
-      "defaultValue": "[resourceGroup().name]",
+      "defaultValue": "[concat(parameters('namePrefix'), resourceGroup().name)]",
       "metadata": {
         "description": "The base resource name."
       }
@@ -67,6 +74,10 @@
     }
   ],
   "outputs": {
+    "TEST_LEDGER_NAME_PREFIX": {
+      "type": "string",
+      "value": "[parameters('namePrefix')]"
+    },
     "CONFIDENTIALLEDGER_URL": {
       "type": "string",
       "value": "[format('https://{0}.confidential-ledger.azure.com', parameters('baseName'))]"

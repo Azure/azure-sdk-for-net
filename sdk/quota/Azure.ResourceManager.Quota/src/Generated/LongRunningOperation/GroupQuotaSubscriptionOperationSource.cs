@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal class GroupQuotaSubscriptionOperationSource : IOperationSource<GroupQuotaSubscriptionResource>
+    /// <summary></summary>
+    internal partial class GroupQuotaSubscriptionOperationSource : IOperationSource<GroupQuotaSubscriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal GroupQuotaSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         GroupQuotaSubscriptionResource IOperationSource<GroupQuotaSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            GroupQuotaSubscriptionData data = GroupQuotaSubscriptionData.DeserializeGroupQuotaSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new GroupQuotaSubscriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<GroupQuotaSubscriptionResource> IOperationSource<GroupQuotaSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
-            return await Task.FromResult(new GroupQuotaSubscriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            GroupQuotaSubscriptionData data = GroupQuotaSubscriptionData.DeserializeGroupQuotaSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GroupQuotaSubscriptionResource(_client, data);
         }
     }
 }
