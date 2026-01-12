@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 400
+- Total libraries: 401
 - Management Plane (MPG): 227
   - Autorest/Swagger: 156
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 18
-- Data Plane (DPG): 173
-  - Autorest/Swagger: 86
-  - New Emitter (TypeSpec): 22
-  - Old TypeSpec: 16
+- Data Plane (DPG): 174
+  - Autorest/Swagger: 87
+  - New Emitter (TypeSpec): 23
+  - Old TypeSpec: 15
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 22 / 38 (57.9%)
+**Migration Status**: 23 / 38 (60.5%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,7 +40,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
@@ -74,7 +74,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 | Service | Library |
 | ------- | ------- |
@@ -131,6 +131,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 | provisioning | Azure.Provisioning.Network |
 | provisioning | Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql |
+| provisioning | Azure.Provisioning.PrivateDns |
 | provisioning | Azure.Provisioning.Redis |
 | provisioning | Azure.Provisioning.RedisEnterprise |
 | provisioning | Azure.Provisioning.Search |
