@@ -50,7 +50,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
-            string? methodName = null)
+            string? methodName = null,
+            ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -71,7 +72,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InitializeTypeInfo(
                 _itemType,
                 ref _actualItemType!,
-                ref _itemResourceClient
+                ref _itemResourceClient,
+                explicitResourceClient
             );
 
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
@@ -84,11 +86,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private static void InitializeTypeInfo(
             CSharpType itemType,
             ref CSharpType actualItemType,
-            ref ResourceClientProvider? resourceClient
+            ref ResourceClientProvider? resourceClient,
+            ResourceClientProvider? explicitResourceClient = null
             )
         {
             actualItemType = itemType;
-            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
+            // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
+            if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
+            {
+                resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
             {
                 actualItemType = resourceClient.Type;
             }
