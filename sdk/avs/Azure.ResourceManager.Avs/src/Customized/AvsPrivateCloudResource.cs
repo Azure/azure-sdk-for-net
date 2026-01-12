@@ -4,15 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -80,7 +76,7 @@ namespace Azure.ResourceManager.Avs
         {
             throw new NotSupportedException("The method is deprecated as of API version 2023-09-01 and will be removed in a future release.");
         }
-/*
+
         /// <summary>
         /// Get dhcp by id in a private cloud workload network.
         /// <list type="bullet">
@@ -655,6 +651,6 @@ namespace Azure.ResourceManager.Avs
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkVmGroups();
-        }*/
+        }
     }
 }

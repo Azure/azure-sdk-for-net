@@ -3,7 +3,6 @@
 
 using System.ComponentModel;
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 

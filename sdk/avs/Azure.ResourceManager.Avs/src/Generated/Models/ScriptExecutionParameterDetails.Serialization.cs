@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Avs.Models
     [PersistableModelProxy(typeof(UnknownScriptExecutionParameter))]
     public abstract partial class ScriptExecutionParameterDetails : IJsonModel<ScriptExecutionParameterDetails>
     {
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/> for deserialization. </summary>
+        internal ScriptExecutionParameterDetails()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScriptExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
