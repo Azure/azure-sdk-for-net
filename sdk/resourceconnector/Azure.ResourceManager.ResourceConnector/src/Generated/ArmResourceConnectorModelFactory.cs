@@ -160,6 +160,56 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The Upgrade Graph for appliance. </summary>
+        /// <param name="id"> The appliance resource path. </param>
+        /// <param name="name"> The release train name. </param>
+        /// <param name="properties"> The properties of supported version. </param>
+        /// <returns> A new <see cref="Models.ApplianceUpgradeGraph"/> instance for mocking. </returns>
+        public static ApplianceUpgradeGraph ApplianceUpgradeGraph(string id = default, string name = default, ApplianceUpgradeGraphProperties properties = default)
+        {
+            return new ApplianceUpgradeGraph(id, name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Upgrade Graph Properties for appliance. </summary>
+        /// <param name="applianceVersion"> The current appliance version. </param>
+        /// <param name="supportedVersions"> This contains the current version and supported upgrade versions. </param>
+        /// <returns> A new <see cref="Models.ApplianceUpgradeGraphProperties"/> instance for mocking. </returns>
+        public static ApplianceUpgradeGraphProperties ApplianceUpgradeGraphProperties(string applianceVersion = default, IEnumerable<ApplianceSupportedVersion> supportedVersions = default)
+        {
+            supportedVersions ??= new ChangeTrackingList<ApplianceSupportedVersion>();
+
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="metadataCatalogVersion"> The newer supported version catalog version. </param>
+        /// <param name="version"> The newer version available for upgrade. </param>
+        /// <returns> A new <see cref="Models.ApplianceSupportedVersion"/> instance for mocking. </returns>
+        public static ApplianceSupportedVersion ApplianceSupportedVersion(ApplianceSupportedVersionCatalogVersion metadataCatalogVersion = default, string version = default)
+        {
+            return new ApplianceSupportedVersion(metadataCatalogVersion is null ? default : new ApplianceSupportedVersionMetadata(metadataCatalogVersion, null), version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SupportedVersionCatalogVersion object for appliance. </summary>
+        /// <param name="data"> The newer supported version catalog version data. </param>
+        /// <param name="name"> The catalog version name for the version available for upgrade. </param>
+        /// <param name="namespace"> The catalog version namespace for the version available for upgrade. </param>
+        /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersion"/> instance for mocking. </returns>
+        public static ApplianceSupportedVersionCatalogVersion ApplianceSupportedVersionCatalogVersion(ApplianceSupportedVersionCatalogVersionProperties data = default, string name = default, string @namespace = default)
+        {
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SupportedVersionCatalogVersionData object for appliance. </summary>
+        /// <param name="audience"> The image audience name for the version available for upgrade. </param>
+        /// <param name="catalog"> The image catalog name for the version available for upgrade. </param>
+        /// <param name="offer"> The image offer name for the version available for upgrade. </param>
+        /// <param name="version"> The image version for the version available for upgrade. </param>
+        /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersionProperties"/> instance for mocking. </returns>
+        public static ApplianceSupportedVersionCatalogVersionProperties ApplianceSupportedVersionCatalogVersionProperties(string audience = default, string catalog = default, string offer = default, string version = default)
+        {
+            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The Get Telemetry Config Result appliance. </summary>
         /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
         /// <returns> A new <see cref="Models.ApplianceTelemetryConfigResult"/> instance for mocking. </returns>

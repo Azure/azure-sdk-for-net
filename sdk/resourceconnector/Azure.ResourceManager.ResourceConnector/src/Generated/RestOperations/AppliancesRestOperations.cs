@@ -222,6 +222,27 @@ namespace Azure.ResourceManager.ResourceConnector
             return message;
         }
 
+        internal HttpMessage CreateGetUpgradeGraphRequest(string subscriptionId, string resourceGroupName, string resourceName, string upgradeGraph, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/upgradeGraphs/", false);
+            uri.AppendPath(upgradeGraph, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetOperationsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

@@ -392,6 +392,112 @@ namespace Azure.ResourceManager.ResourceConnector
         }
 
         /// <summary>
+        /// Gets the upgrade graph of an Appliance with a specified resource group and name and specific release train.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/upgradeGraphs/{upgradeGraph}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_GetUpgradeGraph. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceConnectorApplianceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="upgradeGraph"> Upgrade graph version, ex - stable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upgradeGraph"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="upgradeGraph"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplianceUpgradeGraph>> GetUpgradeGraphAsync(string upgradeGraph, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(upgradeGraph, nameof(upgradeGraph));
+
+            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetUpgradeGraph");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, upgradeGraph, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplianceUpgradeGraph> response = Response.FromValue(ApplianceUpgradeGraph.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the upgrade graph of an Appliance with a specified resource group and name and specific release train.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}/upgradeGraphs/{upgradeGraph}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Appliances_GetUpgradeGraph. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceConnectorApplianceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="upgradeGraph"> Upgrade graph version, ex - stable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upgradeGraph"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="upgradeGraph"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplianceUpgradeGraph> GetUpgradeGraph(string upgradeGraph, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(upgradeGraph, nameof(upgradeGraph));
+
+            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetUpgradeGraph");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, upgradeGraph, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplianceUpgradeGraph> response = Response.FromValue(ApplianceUpgradeGraph.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Returns the cluster user credentials for the dedicated appliance.
         /// <list type="bullet">
         /// <item>
