@@ -338,7 +338,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.KBSearchResult KBSearchResult(string solutionId = null, string content = null, string title = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence? confidence = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence?), string source = null, Azure.ResourceManager.SelfHelp.Models.KBSearchResultType? resultType = default(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType?), int? rank = default(int?), string link = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.KBWebResult KBWebResult(string replacementKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.KBSearchResult> searchResults = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart MetricsBasedChart(string name = null, Azure.ResourceManager.SelfHelp.Models.ChartAggregationType? aggregationType = default(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType?), System.TimeSpan? timeSpanDuration = default(System.TimeSpan?), string title = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> filter = null, string replacementKey = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult ReplacementMapsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.KBWebResult> webResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> videos = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> videoGroups = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.ResponseConfig ResponseConfig(string key = null, string value = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties(string regex = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope? validationScope = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope?), bool? isRequired = default(bool?), string validationErrorMessage = null, long? maxLength = default(long?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null) { throw null; }
@@ -360,7 +359,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo SelfHelpVideo(string src = null, string title = null, string replacementKey = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType? solutionType = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType?), string description = null, System.Collections.Generic.IEnumerable<string> requiredInputs = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata SolutionNlpMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> solutions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.ClassificationService> relatedServices = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps SolutionReplacementMaps(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.KBWebResult> webResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic> diagnostics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> troubleshooters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> metricsBasedCharts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> videos = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> videoGroups = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic SolutionsDiagnostic(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? status = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus?), string statusDetails = null, string replacementKey = null, string estimatedCompletionTime = null, System.Collections.Generic.IEnumerable<string> requiredParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionSection SolutionSection(string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult replacementMaps = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters SolutionsTroubleshooters(string solutionId = null, string title = null, string summary = null) { throw null; }
@@ -515,7 +513,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     {
         internal KBWebResult() { }
         public string ReplacementKey { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.KBSearchResult> SearchResults { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.KBSearchResult> SearchResults { get { throw null; } }
         protected virtual Azure.ResourceManager.SelfHelp.Models.KBWebResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SelfHelp.Models.KBWebResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,7 +528,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     {
         internal MetricsBasedChart() { }
         public Azure.ResourceManager.SelfHelp.Models.ChartAggregationType? AggregationType { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> Filter { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> Filter { get { throw null; } }
         public string Name { get { throw null; } }
         public string ReplacementKey { get { throw null; } }
         public System.TimeSpan? TimeSpanDuration { get { throw null; } }
@@ -548,9 +546,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class ReplacementMapsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>
     {
         internal ReplacementMapsResult() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> VideoGroups { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.KBWebResult> WebResults { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> VideoGroups { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.KBWebResult> WebResults { get { throw null; } }
         protected virtual Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -899,8 +897,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string ExecutionStatusDescription { get { throw null; } }
         public string Guidance { get { throw null; } }
         public string Id { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput> Inputs { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput> Inputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
         public bool? IsLastStep { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.SelfHelpType? StepType { get { throw null; } }
         public string Title { get { throw null; } }
@@ -1007,12 +1005,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class SolutionReplacementMaps : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>
     {
         internal SolutionReplacementMaps() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic> Diagnostics { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> MetricsBasedCharts { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> Troubleshooters { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> VideoGroups { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.KBWebResult> WebResults { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic> Diagnostics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> MetricsBasedCharts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> Troubleshooters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> VideoGroups { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.KBWebResult> WebResults { get { throw null; } }
         protected virtual Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1027,9 +1025,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
     {
         internal SolutionsDiagnostic() { }
         public string EstimatedCompletionTime { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
         public string ReplacementKey { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredParameters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredParameters { get { throw null; } }
         public string SolutionId { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
@@ -1223,7 +1221,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType? QuestionType { get { throw null; } }
         public string RecommendedOption { get { throw null; } }
         public string ResponseHint { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.ResponseConfig> ResponseOptions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.ResponseConfig> ResponseOptions { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties { get { throw null; } }
         public string SelectedOptionValue { get { throw null; } }
         protected virtual Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1243,7 +1241,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private readonly int _dummyPrimitive;
         public TroubleshooterValidationScope(string value) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope GuidFormat { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope IpAddressFormat { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope IPAddressFormat { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope None { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope NumberOnlyFormat { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope UrlFormat { get { throw null; } }

@@ -30,21 +30,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplacementMapsResult(IList<KBWebResult> webResults, IList<SelfHelpVideo> videos, IList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReplacementMapsResult(IReadOnlyList<KBWebResult> webResults, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebResults = webResults;
             Videos = videos;
             VideoGroups = videoGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Solution AzureKB results. </summary>
-        public IList<KBWebResult> WebResults { get; }
-
-        /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
-        public IList<SelfHelpVideo> Videos { get; }
-
-        /// <summary> Group of Videos. </summary>
-        public IList<VideoGroupDetail> VideoGroups { get; }
     }
 }

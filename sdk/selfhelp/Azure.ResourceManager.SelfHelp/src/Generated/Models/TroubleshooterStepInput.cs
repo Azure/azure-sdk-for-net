@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshooterStepInput(string questionId, TroubleshooterQuestionType? questionType, string questionTitle, string questionContent, TroubleshooterQuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TroubleshooterStepInput(string questionId, TroubleshooterQuestionType? questionType, string questionTitle, string questionContent, TroubleshooterQuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -76,8 +76,5 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Troubleshooter step input response validation properties. </summary>
         public ResponseValidationProperties ResponseValidationProperties { get; }
-
-        /// <summary> Gets the ResponseOptions. </summary>
-        public IList<ResponseConfig> ResponseOptions { get; }
     }
 }

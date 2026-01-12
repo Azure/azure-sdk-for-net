@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string statusDetails = default;
             string replacementKey = default;
             string estimatedCompletionTime = default;
-            IList<string> requiredParameters = default;
-            IList<SelfHelpDiagnosticInsight> insights = default;
+            IReadOnlyList<string> requiredParameters = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

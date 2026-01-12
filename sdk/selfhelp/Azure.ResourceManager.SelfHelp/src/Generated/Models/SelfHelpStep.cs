@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpStep(string id, string title, string description, string guidance, TroubleshooterExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IList<TroubleshooterStepInput> inputs, AutomatedCheckResult automatedCheckResults, IList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SelfHelpStep(string id, string title, string description, string guidance, TroubleshooterExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<TroubleshooterStepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Title = title;
@@ -80,14 +80,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> is this last step of the workflow. </summary>
         public bool? IsLastStep { get; }
 
-        /// <summary> Gets the Inputs. </summary>
-        public IList<TroubleshooterStepInput> Inputs { get; }
-
         /// <summary> Only for AutomatedStep type. </summary>
         public AutomatedCheckResult AutomatedCheckResults { get; }
-
-        /// <summary> Gets the Insights. </summary>
-        public IList<SelfHelpDiagnosticInsight> Insights { get; }
 
         /// <summary> The error detail. </summary>
         public ResponseError Error { get; }

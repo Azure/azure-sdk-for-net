@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string replacementKey = default;
-            IList<KBSearchResult> searchResults = default;
+            IReadOnlyList<KBSearchResult> searchResults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

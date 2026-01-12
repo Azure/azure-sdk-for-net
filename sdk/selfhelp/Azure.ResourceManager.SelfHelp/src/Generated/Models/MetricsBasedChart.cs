@@ -57,14 +57,5 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Place holder used in HTML Content replace control with the content. </summary>
         public string ReplacementKey { get; }
-
-        /// <summary> List of filters. </summary>
-        public IList<SelfHelpFilter> Filter
-        {
-            get
-            {
-                return FilterGroup.Filter;
-            }
-        }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string NoneValue = "None";
         private const string UrlFormatValue = "URLFormat";
         private const string GuidFormatValue = "GuidFormat";
-        private const string IpAddressFormatValue = "IpAddressFormat";
+        private const string IPAddressFormatValue = "IpAddressFormat";
         private const string NumberOnlyFormatValue = "NumberOnlyFormat";
 
         /// <summary> Initializes a new instance of <see cref="TroubleshooterValidationScope"/>. </summary>
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Gets the GuidFormat. </summary>
         public static TroubleshooterValidationScope GuidFormat { get; } = new TroubleshooterValidationScope(GuidFormatValue);
 
-        /// <summary> Gets the IpAddressFormat. </summary>
-        public static TroubleshooterValidationScope IpAddressFormat { get; } = new TroubleshooterValidationScope(IpAddressFormatValue);
+        /// <summary> Gets the IPAddressFormat. </summary>
+        public static TroubleshooterValidationScope IPAddressFormat { get; } = new TroubleshooterValidationScope(IPAddressFormatValue);
 
         /// <summary> Gets the NumberOnlyFormat. </summary>
         public static TroubleshooterValidationScope NumberOnlyFormat { get; } = new TroubleshooterValidationScope(NumberOnlyFormatValue);

@@ -13,7 +13,6 @@ using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Filter group. </summary>
     internal partial class ChartFilterGroup : IJsonModel<ChartFilterGroup>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IList<SelfHelpFilter> filter = default;
+            IReadOnlyList<SelfHelpFilter> filter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
