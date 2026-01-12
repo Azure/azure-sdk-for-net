@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             };
             var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
-            Assert.Multiple(() =>
+            Assert.Multiple(async () =>
             {
                 // Check if the server is exist
                 Assert.That((await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value, Is.EqualTo(true));

@@ -90,7 +90,7 @@ namespace Azure.Core.Tests
             foreach (dynamic property in json)
             {
                 Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
-                Assert.That(property.Value, Is.EqualTo(expected));
+                Assert.That((int)property.Value, Is.EqualTo(expected));
                 expected++;
             }
         }
@@ -118,7 +118,7 @@ namespace Azure.Core.Tests
             foreach (dynamic property in json)
             {
                 Assert.That(property.Name, Is.EqualTo(expectedNames[index]));
-                Assert.That(property.Value, Is.EqualTo(index + 1));
+                Assert.That((int)property.Value, Is.EqualTo(index + 1));
                 index++;
             }
         }
@@ -163,7 +163,7 @@ namespace Azure.Core.Tests
             int expected = 0;
             foreach (dynamic value in json.Array)
             {
-                Assert.That(value, Is.EqualTo(expected++));
+                Assert.That((int)value, Is.EqualTo(expected++));
             }
 
             expected = 0;
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
             foreach (dynamic property in json.Object)
             {
                 Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
-                Assert.That(property.Value, Is.EqualTo(expected));
+                Assert.That((int)property.Value, Is.EqualTo(expected));
                 expected++;
             }
         }
@@ -197,7 +197,7 @@ namespace Azure.Core.Tests
             foreach (dynamic property in json.Object)
             {
                 Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
-                Assert.That(property.Value, Is.EqualTo(expected));
+                Assert.That((int)property.Value, Is.EqualTo(expected));
                 expected++;
             }
         }
@@ -333,7 +333,7 @@ namespace Azure.Core.Tests
             foreach (dynamic property in json.Object)
             {
                 Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
-                Assert.That(property.Value, Is.EqualTo(++expected));
+                Assert.That((int)property.Value, Is.EqualTo(++expected));
             }
         }
     }
