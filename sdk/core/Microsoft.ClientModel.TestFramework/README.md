@@ -4,7 +4,7 @@
 
 ## Using the test framework
 
-The Test Framework is released to the Azure SDK for .NET dev feed. To use it in your project, you'll need to configure access to the dev feed as described in the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
+The test framework is released to the Azure SDK for .NET dev feed. To use it in your project, you'll need to configure access to the dev feed as described in the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
 
 Once you have access to the dev feed, add a package reference to `Microsoft.ClientModel.TestFramework` in your test project.
 
@@ -12,7 +12,7 @@ Additionally, for recorded tests that use the test proxy, you'll need to add the
 
 ### Required project configuration
 
-For proper test recording functionality, test projects must include a `SourcePath` assembly metadata attribute that specifies the source directory of the test project. This attribute is used by the Test Framework to locate the correct directory for storing session recording files, ensuring recordings are saved relative to your test source code rather than the compiled assembly location.
+For proper test recording functionality, test projects must include a `SourcePath` assembly metadata attribute that specifies the source directory of the test project. This attribute is used by the test framework to locate the correct directory for storing session recording files, ensuring recordings are saved relative to your test source code rather than the compiled assembly location.
 
 **Note**: If you're working in the azure-sdk-for-net repository, this is already added to all test projects by default.
 
@@ -29,7 +29,7 @@ Here's an example of adding this attribute to your test `.csproj` file:
 
 **`$(MSBuildProjectDirectory)`**: This MSBuild property automatically resolves to the directory containing the `.csproj` file, ensuring the correct path is used regardless of build environment or developer machine setup
 
-Without this attribute, the Test Framework falls back to using the assembly's output directory, which may not be the desired location for storing test recordings in your source tree.
+Without this attribute, the test framework falls back to using the assembly's output directory, which may not be the desired location for storing test recordings in your source tree.
 
 ## Key concepts
 

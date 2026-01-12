@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.Mocks;
-using Moq;
 using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests.Samples;
@@ -19,7 +18,7 @@ public class UnitTestsSamples
         }
 
         [Test]
-        public async Task MockTypesTest()
+        public void MockTypesTest()
         {
             #region Snippet:MockTypesBasics
             MockCredential credential = new();
@@ -32,7 +31,7 @@ public class UnitTestsSamples
         }
 
         [Test]
-        public async Task MockTransportReturnsConfiguredResponse()
+        public void MockTransportReturnsConfiguredResponse()
         {
             #region Snippet:MockTransportBasics
             // Create a mock transport that returns a 200 response
@@ -90,7 +89,7 @@ public class UnitTestsSamples
                 new ApiKeyCredential("fake-key"),
                 options));
 
-             var result = await client.GetCountryCodeAsync("test");
+            var result = await client.GetCountryCodeAsync("test");
 
             var request = mockTransport.Requests[0];
             #endregion

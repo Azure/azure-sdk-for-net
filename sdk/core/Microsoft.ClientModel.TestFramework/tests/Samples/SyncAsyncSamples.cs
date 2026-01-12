@@ -159,7 +159,7 @@ public class SyncAsyncSamples
         #endregion
 
         [Test]
-        public async Task ErrorScenariorioTest()
+        public async Task ErrorScenarioTest()
         {
             #region Snippet:ErrorScenario
             MapsClientOptions options = new();

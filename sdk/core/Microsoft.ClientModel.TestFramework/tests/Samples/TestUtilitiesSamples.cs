@@ -19,6 +19,7 @@ public class TestUtilitiesSamples : RecordedTestBase
     {
     }
 
+    [Test]
     public void CanSetAndRetrieveEnvironmentVariable()
     {
         #region Snippet:TestEnvVarUsage
