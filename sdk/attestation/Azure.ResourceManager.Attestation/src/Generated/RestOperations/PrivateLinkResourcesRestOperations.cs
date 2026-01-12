@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Attestation
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01-preview";
+            _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Attestation
         /// <summary> Gets the private link resources supported for the attestation provider. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> The name of the attestation provider. </param>
+        /// <param name="providerName"> Name of the attestation provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="providerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Attestation
         /// <summary> Gets the private link resources supported for the attestation provider. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> The name of the attestation provider. </param>
+        /// <param name="providerName"> Name of the attestation provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="providerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>

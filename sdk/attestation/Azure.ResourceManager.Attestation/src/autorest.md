@@ -8,9 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Attestation
 namespace: Azure.ResourceManager.Attestation
-require: https://github.com/Azure/azure-rest-api-specs/blob/4270cc435fd2496bdb2a5f056dbddb463e52c7c2/specification/attestation/resource-manager/readme.md
-# This tag is for preview
-tag: package-2021-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/efa49a123da7ce3ffe093a13832258305f529711/specification/attestation/resource-manager/Microsoft.Attestation/Attestation/readme.md
+# tag: package-2021-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -54,6 +53,14 @@ acronym-mapping:
 
 rename-mapping:
   PrivateEndpoint.id: stringId
+  JsonWebKey: AttestationPolicyJsonWebKey
+  PublicNetworkAccessType: AttestationProviderPublicNetworkAccessType
+  AttestationServicePatchSpecificParams: AttestationServicePatchProperties
+
+override-operation-name:
+  AttestationProviders_GetDefaultByLocation: GetDefaultAttestationProviderByLocation
+  AttestationProviders_ListDefault: GetDefaultAttestationProviders
+
 
 directive:
   - from: attestation.json

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         {
             return new AttestationProviderCreateOrUpdateContent(location, new AttestationServiceCreationSpecificParams()
             {
-                PublicNetworkAccess = PublicNetworkAccessType.Enabled,
+                PublicNetworkAccess = AttestationProviderPublicNetworkAccessType.Enabled,
             })
             {
                 Tags =

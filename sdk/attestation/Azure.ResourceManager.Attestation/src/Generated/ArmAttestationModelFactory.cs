@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="attestUri"> Gets the uri of attestation service. </param>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
-        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string trustModel = null, AttestationServiceStatus? status = null, Uri attestUri = null, PublicNetworkAccessType? publicNetworkAccess = null, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string trustModel = null, AttestationServiceStatus? status = null, Uri attestUri = null, AttestationProviderPublicNetworkAccessType? publicNetworkAccess = null, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = null, TpmAttestationAuthenticationType? tpmAttestationAuthentication = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<AttestationPrivateEndpointConnectionData>();
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 attestUri,
                 publicNetworkAccess,
                 privateEndpointConnections?.ToList(),
+                tpmAttestationAuthentication,
                 serializedAdditionalRawData: null);
         }
 
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationProviderCreateOrUpdateContent(location, tags, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AttestationPolicyJsonWebKey"/>. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -136,12 +138,12 @@ namespace Azure.ResourceManager.Attestation.Models
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        /// <returns> A new <see cref="Models.JsonWebKey"/> instance for mocking. </returns>
-        public static JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, IEnumerable<string> x5C = null, string y = null)
+        /// <returns> A new <see cref="Models.AttestationPolicyJsonWebKey"/> instance for mocking. </returns>
+        public static AttestationPolicyJsonWebKey AttestationPolicyJsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, IEnumerable<string> x5C = null, string y = null)
         {
             x5C ??= new List<string>();
 
-            return new JsonWebKey(
+            return new AttestationPolicyJsonWebKey(
                 alg,
                 crv,
                 d,

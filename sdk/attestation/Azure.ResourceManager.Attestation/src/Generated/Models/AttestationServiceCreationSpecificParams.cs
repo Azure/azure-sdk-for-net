@@ -53,16 +53,18 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="policySigningCertificates"> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationServiceCreationSpecificParams(PublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AttestationServiceCreationSpecificParams(AttestationProviderPublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
             PolicySigningCertificates = policySigningCertificates;
+            TpmAttestationAuthentication = tpmAttestationAuthentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public AttestationProviderPublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </summary>
         internal JsonWebKeySet PolicySigningCertificates { get; set; }
         /// <summary>
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<JsonWebKey> PolicySigningCertificatesKeys
+        public IList<AttestationPolicyJsonWebKey> PolicySigningCertificatesKeys
         {
             get
             {
@@ -81,5 +83,8 @@ namespace Azure.ResourceManager.Attestation.Models
                 return PolicySigningCertificates.Keys;
             }
         }
+
+        /// <summary> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </summary>
+        public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; set; }
     }
 }
