@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName"> Appliances name. </param>
-        /// <param name="data"> Parameters supplied to create or update an Appliance. </param>
+        /// <param name="applianceData"> Parameters supplied to create or update an Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="applianceData"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplianceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ApplianceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplianceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ApplianceData applianceData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(applianceData, nameof(applianceData));
 
             using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ApplianceCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ApplianceData.ToRequestContent(data), context);
+                HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ApplianceData.ToRequestContent(applianceData), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourceConnectorArmOperation<ApplianceResource> operation = new ResourceConnectorArmOperation<ApplianceResource>(
                     new ApplianceOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName"> Appliances name. </param>
-        /// <param name="data"> Parameters supplied to create or update an Appliance. </param>
+        /// <param name="applianceData"> Parameters supplied to create or update an Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="applianceData"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplianceResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ApplianceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplianceResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ApplianceData applianceData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(applianceData, nameof(applianceData));
 
             using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ApplianceCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ApplianceData.ToRequestContent(data), context);
+                HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ApplianceData.ToRequestContent(applianceData), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourceConnectorArmOperation<ApplianceResource> operation = new ResourceConnectorArmOperation<ApplianceResource>(
                     new ApplianceOperationSource(Client),

@@ -3,8 +3,8 @@ namespace Azure.ResourceManager.ResourceConnector
     public partial class ApplianceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ResourceConnector.ApplianceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.ApplianceResource>, System.Collections.IEnumerable
     {
         protected ApplianceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceConnector.ApplianceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.ResourceConnector.ApplianceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceConnector.ApplianceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.ResourceConnector.ApplianceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceConnector.ApplianceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.ResourceConnector.ApplianceData applianceData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceConnector.ApplianceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.ResourceConnector.ApplianceData applianceData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.ApplianceResource> Get(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -122,9 +122,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.AccessProfileType ClusterCustomerUser { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.AccessProfileType ClusterUser { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.AccessProfileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.AccessProfileType left, Azure.ResourceManager.ResourceConnector.Models.AccessProfileType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.AccessProfileType (string value) { throw null; }
@@ -247,9 +245,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public Distro(string value) { throw null; }
         public static Azure.ResourceManager.ResourceConnector.Models.Distro AKSEdge { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.Distro other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.Distro left, Azure.ResourceManager.ResourceConnector.Models.Distro right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.Distro (string value) { throw null; }
@@ -335,9 +331,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.Provider SCVMM { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.Provider VMWare { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.Provider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.Provider left, Azure.ResourceManager.ResourceConnector.Models.Provider right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.Provider (string value) { throw null; }
@@ -354,9 +348,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType None { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType left, Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType (string value) { throw null; }
@@ -433,9 +425,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.Status WaitingForHeartbeat { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.Status WaitingForKVAIO { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceConnector.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceConnector.Models.Status left, Azure.ResourceManager.ResourceConnector.Models.Status right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceConnector.Models.Status (string value) { throw null; }
