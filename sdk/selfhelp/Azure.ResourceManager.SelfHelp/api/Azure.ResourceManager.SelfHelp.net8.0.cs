@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     {
         internal VideoGroupDetail() { }
         public string ReplacementKey { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo> Videos { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo> Videos { get { throw null; } }
         protected virtual Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
