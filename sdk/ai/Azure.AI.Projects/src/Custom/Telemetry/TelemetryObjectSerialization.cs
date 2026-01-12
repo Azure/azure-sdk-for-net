@@ -12,8 +12,13 @@ namespace Azure.AI.Projects;
 
 internal class EventContent
 {
+    public string type { get; set; }
     public string content { get; set; }
-    public EventContent(string content) { this.content = content; }
+    public EventContent(string content)
+    {
+        this.type = "text";
+        this.content = content;
+    }
 }
 
 internal class EventRole
@@ -44,10 +49,24 @@ internal class EventContentId
     }
 }
 
+internal class WorkflowEventContent
+{
+    public string type { get; set; }
+    public string content { get; set; }
+    public WorkflowEventContent(string content)
+    {
+        this.type = "workflow";
+        this.content = content;
+    }
+}
+
 [JsonSerializable(typeof(EventContentId))]
 [JsonSerializable(typeof(EventContentRole))]
 [JsonSerializable(typeof(EventRole))]
 [JsonSerializable(typeof(EventContent))]
+[JsonSerializable(typeof(EventContent[]))]
+[JsonSerializable(typeof(WorkflowEventContent))]
+[JsonSerializable(typeof(WorkflowEventContent[]))]
 [JsonSerializable(typeof(Dictionary<string, string>))]
 internal partial class EventsContext : JsonSerializerContext
 {
