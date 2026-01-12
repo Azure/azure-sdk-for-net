@@ -1,8 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
-
-### Features Added
+## 1.6.0-beta.2 (2026-01-12)
 
 ### Breaking Changes
 * **Default Sampler Changed**: The default sampling behavior has been changed from
@@ -33,8 +31,6 @@
   (cloud_RoleName and cloud_RoleInstance), which previously showed
   "unknown_service:appName" instead of the configured values.
   ([#54944](https://github.com/Azure/azure-sdk-for-net/pull/54944))
-
-### Other Changes
 
 ## 1.6.0-beta.1 (2025-12-03)
 
