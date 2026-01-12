@@ -13,6 +13,7 @@ using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
+    // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/54886 is resolved
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetExecutionLogsAsync", typeof(IList<ScriptOutputStreamType>), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetExecutionLogs", typeof(IList<ScriptOutputStreamType>), typeof(CancellationToken))]
     public partial class ScriptExecutionResource : ArmResource
