@@ -93,11 +93,10 @@ namespace Azure.Generator.Mgmt.Tests
                 Assert.That($"{resourceProviderName}{skuModelName}", Is.EqualTo(type!.Constructors[0].Signature.Name));
             });
             var serializationProvider = type?.SerializationProviders.SingleOrDefault();
-            Assert.Multiple(() =>
-            {
-                Assert.That(serializationProvider, Is.Not.Null);
-                Assert.That(updatedSkuModelName, Is.EqualTo(serializationProvider!.Name));
-            });
+
+            Assert.That(serializationProvider, Is.Not.Null);
+            Assert.That(updatedSkuModelName, Is.EqualTo(serializationProvider!.Name));
+
             var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.StartsWith("Deserialize"));
             Assert.That(deserializationMethod!.Signature.Name, Is.EqualTo("DeserializeSamplesSku"));
         }

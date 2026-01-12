@@ -72,13 +72,11 @@ namespace Azure.AI.Translation.Text.Tests
                 Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
                 Assert.That(response.Value.Transliteration, Is.Not.Empty);
             });
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Value.Transliteration.TryGetValue("be", out TransliterationLanguage transliterationLanguage), Is.True);
-                Assert.That(transliterationLanguage.Name, Is.Not.Null);
-                Assert.That(transliterationLanguage.NativeName, Is.Not.Null);
-                Assert.That(transliterationLanguage.Scripts, Is.Not.Null);
-            });
+
+            Assert.That(response.Value.Transliteration.TryGetValue("be", out TransliterationLanguage transliterationLanguage), Is.True);
+            Assert.That(transliterationLanguage.Name, Is.Not.Null);
+            Assert.That(transliterationLanguage.NativeName, Is.Not.Null);
+            Assert.That(transliterationLanguage.Scripts, Is.Not.Null);
 
             Assert.That(transliterationLanguage.Scripts.Count, Is.GreaterThan(0));
             Assert.Multiple(() =>
@@ -112,13 +110,11 @@ namespace Azure.AI.Translation.Text.Tests
                 Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
                 Assert.That(response.Value.Transliteration, Is.Not.Empty);
             });
-            Assert.Multiple(() =>
-            {
-                Assert.That(response.Value.Transliteration.TryGetValue("zh-Hant", out TransliterationLanguage transliterationLanguage), Is.True);
-                Assert.That(transliterationLanguage.Name, Is.Not.Null);
-                Assert.That(transliterationLanguage.NativeName, Is.Not.Null);
-                Assert.That(transliterationLanguage.Scripts, Is.Not.Null);
-            });
+
+            Assert.That(response.Value.Transliteration.TryGetValue("zh-Hant", out TransliterationLanguage transliterationLanguage), Is.True);
+            Assert.That(transliterationLanguage.Name, Is.Not.Null);
+            Assert.That(transliterationLanguage.NativeName, Is.Not.Null);
+            Assert.That(transliterationLanguage.Scripts, Is.Not.Null);
 
             Assert.That(transliterationLanguage.Scripts.Count, Is.GreaterThan(1));
             Assert.Multiple(() =>

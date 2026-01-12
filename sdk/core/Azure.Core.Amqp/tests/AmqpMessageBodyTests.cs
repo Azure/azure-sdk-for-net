@@ -113,11 +113,10 @@ namespace Azure.Core.Amqp.Tests
         {
             var sequence = new List<object>[] { new List<object> { 1, "two" }, new List<object> { 3, "four" } };
             var body = AmqpMessageBody.FromSequence(sequence);
-            Assert.Multiple(() =>
-            {
-                Assert.That(body.BodyType, Is.EqualTo(AmqpMessageBodyType.Sequence));
-                Assert.That(body.TryGetSequence(out var outSequence), Is.True);
-            });
+
+            Assert.That(body.BodyType, Is.EqualTo(AmqpMessageBodyType.Sequence));
+            Assert.That(body.TryGetSequence(out var outSequence), Is.True);
+
             var outList = outSequence.ToList();
             Assert.Multiple(() =>
             {

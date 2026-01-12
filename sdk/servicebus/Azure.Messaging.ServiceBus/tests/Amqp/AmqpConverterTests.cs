@@ -136,20 +136,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void CanRoundTripDictionaryValueSection()
         {
             var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(new Dictionary<string, string> { { "key", "value" } }));
-            Assert.Multiple(() =>
-            {
-                Assert.That(annotatedMessage.Body.TryGetValue(out object val), Is.True);
-                Assert.That(((Dictionary<string, string>)val)["key"], Is.EqualTo("value"));
-            });
+
+            Assert.That(annotatedMessage.Body.TryGetValue(out object val), Is.True);
+            Assert.That(((Dictionary<string, string>)val)["key"], Is.EqualTo("value"));
 
             var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(annotatedMessage);
 
             annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
-            Assert.Multiple(() =>
-            {
-                Assert.That(annotatedMessage.Body.TryGetValue(out val), Is.True);
-                Assert.That(((Dictionary<string, object>)val)["key"], Is.EqualTo("value"));
-            });
+
+            Assert.That(annotatedMessage.Body.TryGetValue(out val), Is.True);
+            Assert.That(((Dictionary<string, object>)val)["key"], Is.EqualTo("value"));
         }
 
         [Test]
