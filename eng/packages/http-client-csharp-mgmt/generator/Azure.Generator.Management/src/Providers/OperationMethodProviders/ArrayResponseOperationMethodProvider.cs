@@ -43,6 +43,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
+        private readonly RequestPathPattern? _operationPath;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
@@ -51,7 +52,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InputServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            RequestPathPattern? operationPath = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -61,6 +63,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
+            _operationPath = operationPath;
 
             // Get the list type from the response
             _listType = _serviceMethod.GetResponseBodyType()!;
@@ -143,7 +146,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, operationPath: _operationPath),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

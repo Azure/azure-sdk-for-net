@@ -41,6 +41,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly ValueExpression _restClientField;
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
+        protected readonly RequestPathPattern? _operationPath;
 
         private readonly string _methodName;
         private protected readonly CSharpType? _originalBodyType;
@@ -59,6 +60,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
+        /// <param name="operationPath">The operation path for this method, used for contextual parameter matching.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
@@ -67,13 +69,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             FormattableString? description = null,
-            bool forceLro = false)
+            bool forceLro = false,
+            RequestPathPattern? operationPath = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _isAsync = isAsync;
+            _operationPath = operationPath;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
             bool isFakeLongRunningOperation = false;
@@ -197,7 +201,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation, _operationPath);
         }
 
         protected virtual MethodSignature CreateSignature()

@@ -20,7 +20,8 @@ namespace Azure.Generator.Management.Utilities
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
             TypeProvider? enclosingTypeProvider,
-            bool forceLro = false)
+            bool forceLro = false,
+            RequestPathPattern? operationPath = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
@@ -41,7 +42,7 @@ namespace Azure.Generator.Management.Utilities
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
 
-                if (contextualPath.TryGetContextualParameter(outputParameter, out _))
+                if (contextualPath.TryGetContextualParameter(outputParameter, operationPath, out _))
                 {
                     continue;
                 }

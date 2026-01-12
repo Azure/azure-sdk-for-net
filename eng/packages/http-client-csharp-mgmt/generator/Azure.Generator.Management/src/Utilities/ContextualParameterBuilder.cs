@@ -33,6 +33,91 @@ namespace Azure.Generator.Management.Utilities
             return [.. result];
         }
 
+        /// <summary>
+        /// Builds a mapping from operation path parameters to contextual parameters.
+        /// Parameters are matched by their key (the constant segment before the parameter) first,
+        /// and if no key match is found, by their name.
+        /// </summary>
+        /// <param name="contextualPath">The contextual request path (e.g., the resource's path).</param>
+        /// <param name="operationPath">The operation's request path.</param>
+        /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
+        public static ParameterMapping BuildParameterMapping(RequestPathPattern contextualPath, RequestPathPattern operationPath)
+        {
+            var contextualParameters = BuildContextualParameters(contextualPath);
+            var operationParameters = ExtractParametersWithKeys(operationPath);
+
+            // Build a lookup for contextual parameters by key
+            var contextualByKey = new Dictionary<string, ContextualParameter>();
+            foreach (var contextualParam in contextualParameters)
+            {
+                if (!string.IsNullOrEmpty(contextualParam.Key))
+                {
+                    contextualByKey[contextualParam.Key] = contextualParam;
+                }
+            }
+
+            var mapping = new Dictionary<string, ContextualParameter>();
+
+            // Match operation parameters to contextual parameters
+            foreach (var (key, variableName) in operationParameters)
+            {
+                ContextualParameter? matchedParam = null;
+
+                // Try to match by key first
+                if (!string.IsNullOrEmpty(key) && contextualByKey.TryGetValue(key, out var paramByKey))
+                {
+                    matchedParam = paramByKey;
+                    // Remove from the lookup to avoid matching the same contextual parameter twice
+                    contextualByKey.Remove(key);
+                }
+                else
+                {
+                    // Fall back to matching by variable name if key is empty or no key match found
+                    foreach (var contextualParam in contextualParameters)
+                    {
+                        if (contextualParam.VariableName == variableName && !mapping.ContainsValue(contextualParam))
+                        {
+                            matchedParam = contextualParam;
+                            break;
+                        }
+                    }
+                }
+
+                if (matchedParam != null)
+                {
+                    mapping[variableName] = matchedParam;
+                }
+            }
+
+            return new ParameterMapping(mapping);
+        }
+
+        /// <summary>
+        /// Extracts parameters with their keys from a request path.
+        /// Each parameter is paired with the constant segment immediately before it (the key).
+        /// </summary>
+        private static IReadOnlyList<(string Key, string VariableName)> ExtractParametersWithKeys(RequestPathPattern requestPath)
+        {
+            var result = new List<(string, string)>();
+
+            for (int i = 0; i < requestPath.Count; i++)
+            {
+                var segment = requestPath[i];
+                if (!segment.IsConstant)
+                {
+                    // Found a parameter - look for the key (the constant segment before it)
+                    string key = string.Empty;
+                    if (i > 0 && requestPath[i - 1].IsConstant)
+                    {
+                        key = requestPath[i - 1].Value;
+                    }
+                    result.Add((key, segment.VariableName));
+                }
+            }
+
+            return result;
+        }
+
         private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
         {
             // TODO -- handle scope/extension resources

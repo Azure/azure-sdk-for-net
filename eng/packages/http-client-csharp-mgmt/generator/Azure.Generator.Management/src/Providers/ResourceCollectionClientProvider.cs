@@ -360,11 +360,12 @@ namespace Azure.Generator.Management.Providers
 
             var result = new List<MethodProvider>();
             var restClientInfo = _clientInfos[_create.InputClient];
+            var operationPath = new RequestPathPattern(_create.OperationPath);
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
                 var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
+                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true, operationPath: operationPath));
             }
 
             return result;
@@ -374,23 +375,24 @@ namespace Azure.Generator.Management.Providers
         {
             var restClientInfo = _clientInfos[getAll.InputClient];
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
+            var operationPath = new RequestPathPattern(getAll.OperationPath);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
-                _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName, _resource, operationPath),
+                _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName, operationPath)
             };
         }
 
-        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, RequestPathPattern operationPath)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, _resource);
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, _resource, operationPath);
             }
 
-            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, operationPath: operationPath);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)
@@ -402,7 +404,8 @@ namespace Azure.Generator.Management.Providers
 
             var restClientInfo = _clientInfos[_get.InputClient];
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
-            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync, methodName);
+            var operationPath = new RequestPathPattern(_get.OperationPath);
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync, methodName, operationPath: operationPath);
         }
 
         private List<MethodProvider> BuildGetMethods()

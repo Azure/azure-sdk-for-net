@@ -329,5 +329,84 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             // because Id.Name would return "spot" (the singleton name)
             Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
         }
+
+        [TestCase]
+        public void ValidateParameterMapping_ComputeFleetScenario()
+        {
+            // This test validates the fix for issue #54817
+            // Contextual path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}
+            // Operation path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets
+            // The {name} parameter in the operation path should match {fleetName} in the contextual path because they both follow the "fleets" key
+
+            var contextualPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}");
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets");
+
+            var mapping = ContextualParameterBuilder.BuildParameterMapping(contextualPath, operationPath);
+
+            // The "name" parameter from operation path should map to contextual parameter with key "fleets" and variableName "fleetName"
+            Assert.IsTrue(mapping.TryGetContextualParameter("name", out var contextualParameter));
+            Assert.IsNotNull(contextualParameter);
+            Assert.AreEqual("fleets", contextualParameter!.Key);
+            Assert.AreEqual("fleetName", contextualParameter!.VariableName);
+
+            // subscriptionId and resourceGroupName should also map correctly
+            Assert.IsTrue(mapping.TryGetContextualParameter("subscriptionId", out var subscriptionParam));
+            Assert.AreEqual("subscriptions", subscriptionParam!.Key);
+            Assert.AreEqual("subscriptionId", subscriptionParam!.VariableName);
+
+            Assert.IsTrue(mapping.TryGetContextualParameter("resourceGroupName", out var resourceGroupParam));
+            Assert.AreEqual("resourceGroups", resourceGroupParam!.Key);
+            Assert.AreEqual("resourceGroupName", resourceGroupParam!.VariableName);
+        }
+
+        [TestCase]
+        public void ValidateParameterMapping_DifferentParameterNames()
+        {
+            // Test case where operation parameters have different names than contextual parameters
+            // but should still match by key
+            var contextualPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/examples/{exampleName}");
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/examples/{name}/children/{childName}");
+
+            var mapping = ContextualParameterBuilder.BuildParameterMapping(contextualPath, operationPath);
+
+            // "name" should match "exampleName" because both follow "examples" key
+            Assert.IsTrue(mapping.TryGetContextualParameter("name", out var exampleParam));
+            Assert.AreEqual("examples", exampleParam!.Key);
+            Assert.AreEqual("exampleName", exampleParam!.VariableName);
+
+            // "childName" should not match anything in contextual path (it's a pass-through parameter)
+            Assert.IsFalse(mapping.TryGetContextualParameter("childName", out _));
+        }
+
+        [TestCase]
+        public void ValidateParameterMapping_SameParameterNames()
+        {
+            // Test case where parameter names match exactly
+            var contextualPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{name}");
+
+            var mapping = ContextualParameterBuilder.BuildParameterMapping(contextualPath, operationPath);
+
+            // All matching parameters should be found
+            Assert.IsTrue(mapping.TryGetContextualParameter("subscriptionId", out _));
+            Assert.IsTrue(mapping.TryGetContextualParameter("resourceGroupName", out _));
+            Assert.IsTrue(mapping.TryGetContextualParameter("vmName", out _));
+
+            // "name" is a pass-through parameter (not in contextual path)
+            Assert.IsFalse(mapping.TryGetContextualParameter("name", out _));
+        }
+
+        [TestCase]
+        public void ValidateParameterMapping_EmptyContextualPath()
+        {
+            // Test with tenant-level operations
+            var contextualPath = RequestPathPattern.Tenant;
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}");
+
+            var mapping = ContextualParameterBuilder.BuildParameterMapping(contextualPath, operationPath);
+
+            // No contextual parameters available, so nothing should match
+            Assert.IsFalse(mapping.TryGetContextualParameter("subscriptionId", out _));
+        }
     }
 }

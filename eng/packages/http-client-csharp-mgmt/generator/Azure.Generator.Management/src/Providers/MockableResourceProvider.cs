@@ -324,29 +324,30 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
+            var operationPath = new RequestPathPattern(resourceMethod.OperationPath);
+            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, operationPath);
         }
 
-        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, RequestPathPattern? operationPath = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
-                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName, operationPath: operationPath),
+                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName, operationPath)
             };
         }
 
-        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, RequestPathPattern? operationPath = null)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, operationPath: operationPath);
             }
 
-            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, operationPath: operationPath);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

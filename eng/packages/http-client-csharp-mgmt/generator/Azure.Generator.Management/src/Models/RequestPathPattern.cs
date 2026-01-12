@@ -182,12 +182,16 @@ namespace Azure.Generator.Management.Models
 
         IEnumerator IEnumerable.GetEnumerator() => _segments.GetEnumerator();
 
-        public static bool operator ==(RequestPathPattern left, RequestPathPattern right)
+        public static bool operator ==(RequestPathPattern? left, RequestPathPattern? right)
         {
+            if (ReferenceEquals(left, right))
+                return true;
+            if (left is null || right is null)
+                return false;
             return left.Equals(right);
         }
 
-        public static bool operator !=(RequestPathPattern left, RequestPathPattern right)
+        public static bool operator !=(RequestPathPattern? left, RequestPathPattern? right)
         {
             return !(left == right);
         }
@@ -198,14 +202,16 @@ namespace Azure.Generator.Management.Models
         }
 
         private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
+        private Dictionary<string, ParameterMapping>? _parameterMappingCache;
 
         /// <summary>
         /// Get the corresponding contextual parameter in this request path for a provided parameter.
         /// </summary>
-        /// <param name="parameter"></param>
-        /// <param name="contextualParameter"></param>
+        /// <param name="parameter">The parameter to match.</param>
+        /// <param name="operationPath">The operation's request path. If provided, uses key-based matching.</param>
+        /// <param name="contextualParameter">The matched contextual parameter.</param>
         /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        public bool TryGetContextualParameter(ParameterProvider parameter, RequestPathPattern? operationPath, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
         {
             contextualParameter = null;
             if (parameter.Location != ParameterLocation.Path)
@@ -213,9 +219,38 @@ namespace Azure.Generator.Management.Models
                 return false;
             }
 
+            // If we have an operation path, use key-based matching
+            if (operationPath != null)
+            {
+                // Build parameter mapping cache if not already built
+                _parameterMappingCache ??= new Dictionary<string, ParameterMapping>();
+
+                var cacheKey = operationPath.SerializedPath;
+                if (!_parameterMappingCache.TryGetValue(cacheKey, out var mapping))
+                {
+                    mapping = ContextualParameterBuilder.BuildParameterMapping(this, operationPath);
+                    _parameterMappingCache[cacheKey] = mapping;
+                }
+
+                return mapping.TryGetContextualParameter(parameter.WireInfo.SerializedName, out contextualParameter);
+            }
+
+            // Fall back to simple name-based matching if no operation path is provided
             _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
 
             return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
+        }
+
+        /// <summary>
+        /// Get the corresponding contextual parameter in this request path for a provided parameter (legacy method).
+        /// This overload uses simple name-based matching and is kept for backward compatibility.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="contextualParameter"></param>
+        /// <returns></returns>
+        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        {
+            return TryGetContextualParameter(parameter, null, out contextualParameter);
         }
     }
 }
