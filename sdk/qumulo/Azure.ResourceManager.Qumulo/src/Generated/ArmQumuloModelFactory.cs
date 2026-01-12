@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     marketplaceDetails,
                     armProvisioningState,
                     storageSkuName,
-                    new QumuloUserDetails(storageSkuName, null),
+                    new QumuloUserDetails(userDetailsEmail, null),
                     delegatedSubnetId,
                     clusterLoginUri,
                     (privateIPs ?? new ChangeTrackingList<IPAddress>()).ToList(),
