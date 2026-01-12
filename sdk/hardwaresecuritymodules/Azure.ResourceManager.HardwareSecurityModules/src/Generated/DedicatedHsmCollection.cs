@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the dedicated Hsm. </param>
-        /// <param name="data"> Parameters to create or update the dedicated hsm. </param>
+        /// <param name="dedicatedHsmData"> Parameters to create or update the dedicated hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dedicatedHsmData"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DedicatedHsmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DedicatedHsmData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DedicatedHsmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DedicatedHsmData dedicatedHsmData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(dedicatedHsmData, nameof(dedicatedHsmData));
 
             using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
+                HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(dedicatedHsmData), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
                     new DedicatedHsmOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the dedicated Hsm. </param>
-        /// <param name="data"> Parameters to create or update the dedicated hsm. </param>
+        /// <param name="dedicatedHsmData"> Parameters to create or update the dedicated hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dedicatedHsmData"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DedicatedHsmResource> CreateOrUpdate(WaitUntil waitUntil, string name, DedicatedHsmData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DedicatedHsmResource> CreateOrUpdate(WaitUntil waitUntil, string name, DedicatedHsmData dedicatedHsmData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(dedicatedHsmData, nameof(dedicatedHsmData));
 
             using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
+                HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(dedicatedHsmData), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
                     new DedicatedHsmOperationSource(Client),
