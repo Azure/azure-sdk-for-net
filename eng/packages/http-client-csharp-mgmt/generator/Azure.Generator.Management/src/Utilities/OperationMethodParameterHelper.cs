@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -18,7 +19,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
-            ContextualPath contextualPath,
+            ParameterMappings parameterMapping,
             TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {
@@ -49,11 +50,11 @@ namespace Azure.Generator.Management.Utilities
                 // Create temporary parameter to check filtering conditions
                 var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
 
-                //// Skip filtered parameters
-                //if (contextualPath.TryGetContextualParameter(tempParameter, out _))
-                //{
-                //    continue;
-                //}
+                // Skip filtered parameters
+                if (parameterMapping.TryGetValue(tempParameter.WireInfo.SerializedName, out var mapping) && mapping.IsContextual)
+                {
+                    continue;
+                }
 
                 // TODO -- maybe we no longer need this?
                 if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&

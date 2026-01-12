@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.Snippets;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
-namespace Azure.Generator.Management.Utilities
+namespace Azure.Generator.Management.Models
 {
     internal class ContextualPath
     {
@@ -47,12 +44,12 @@ namespace Azure.Generator.Management.Utilities
         /// </summary>
         /// <param name="operationPath">The operation's request path.</param>
         /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
-        public IReadOnlyDictionary<string, ParameterMapping> BuildParameterMapping(RequestPathPattern operationPath)
+        public ParameterMappings BuildParameterMapping(RequestPathPattern operationPath)
         {
             // we need to find the sharing part between contextual path and the incoming path
             var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(RawPath, operationPath);
 
-            return BuildParameterMappingCore(ContextualParameters, operationPath, sharedSegmentsCount).ToDictionary(m => m.ParameterName);
+            return new ParameterMappings(BuildParameterMappingCore(ContextualParameters, operationPath, sharedSegmentsCount));
         }
 
         private static IReadOnlyList<ParameterMapping> BuildParameterMappingCore(IReadOnlyList<ContextualParameter> contextualParameters, RequestPathPattern operationPath, int sharedSegmentsCount)

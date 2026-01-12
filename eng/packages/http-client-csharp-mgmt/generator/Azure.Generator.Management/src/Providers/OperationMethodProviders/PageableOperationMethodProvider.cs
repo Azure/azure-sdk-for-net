@@ -32,6 +32,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly ParameterMappings _parameterMappings;
+
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
             ContextualPath contextualPath,
@@ -45,6 +47,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _contextualPath = contextualPath;
             _restClientInfo = restClientInfo;
             _method = method;
+            _parameterMappings = contextualPath.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
@@ -111,7 +114,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _contextualPath, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -137,7 +140,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientInfo.RestClient,
             };
 
-            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
+            arguments.AddRange(_parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

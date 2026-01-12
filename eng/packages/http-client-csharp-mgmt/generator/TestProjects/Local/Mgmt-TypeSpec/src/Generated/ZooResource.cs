@@ -538,7 +538,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
+                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooAddressListListResult> response = Response.FromValue(ZooAddressListListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -587,7 +587,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
+                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooAddressListListResult> response = Response.FromValue(ZooAddressListListResult.FromResponse(result), result);
                 if (response.Value == null)

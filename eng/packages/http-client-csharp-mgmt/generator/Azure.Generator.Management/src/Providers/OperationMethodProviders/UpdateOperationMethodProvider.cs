@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Runtime.CompilerServices;

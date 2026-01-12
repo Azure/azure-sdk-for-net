@@ -17,7 +17,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -48,6 +47,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
         private readonly FormattableString? _description;
 
+        private readonly ParameterMappings _parameterMappings;
+
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
@@ -73,6 +74,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _contextualPath = contextualPath;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
+            _parameterMappings = contextualPath.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
@@ -197,7 +199,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, IsFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -227,7 +229,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
+            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 

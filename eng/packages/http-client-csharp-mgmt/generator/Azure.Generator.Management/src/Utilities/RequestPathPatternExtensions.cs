@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -18,7 +19,7 @@ namespace Azure.Generator.Management.Utilities
     internal static class RequestPathPatternExtensions
     {
         public static IReadOnlyList<ValueExpression> PopulateArguments(
-            this ContextualPath contextualPath,
+            this ParameterMappings parameterMapping,
             ScopedApi<ResourceIdentifier> idProperty,
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
@@ -29,10 +30,23 @@ namespace Azure.Generator.Management.Utilities
             // here we always assume that the parameter name matches the parameter name in the request path.
             foreach (var parameter in requestParameters)
             {
-                // find the corresponding contextual parameter in the contextual parameter list
-                if (contextualPath.TryGetContextualParameter(parameter, out var contextualParameter))
+                // find the corresponding parameter in the parameter mapping
+                if (parameterMapping.TryGetValue(parameter.WireInfo.SerializedName, out var mapping))
                 {
-                    arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
+                    // check if this is a contextual parameter
+                    if (mapping.ContextualParameter is not null)
+                    {
+                        arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
+                    }
+                    else
+                    {
+                        // contextual is null then this is a pass through parameter
+                        var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
+                        if (methodParam != null)
+                        {
+                            arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
+                        }
+                    }
                 }
                 //Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
                 else if (enclosingType is ResourceCollectionClientProvider collectionProvider && collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
@@ -58,15 +72,9 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
-                    if (methodParam != null)
-                    {
-                        arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
-                    }
-                    else
-                    {
-                        arguments.Add(Null);
-                    }
+                    // we did not find a parameter to fill in this argument, just put default here.
+                    // this might be incorrect but we put it here in case there is a compilation error
+                    arguments.Add(Default);
                 }
             }
 

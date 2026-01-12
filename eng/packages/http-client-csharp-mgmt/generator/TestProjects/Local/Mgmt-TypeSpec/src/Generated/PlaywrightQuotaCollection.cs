@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), PlaywrightQuotaData.ToRequestContent(data), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), PlaywrightQuotaData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightQuotaData> response = Response.FromValue(PlaywrightQuotaData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), PlaywrightQuotaData.ToRequestContent(data), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), PlaywrightQuotaData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightQuotaData> response = Response.FromValue(PlaywrightQuotaData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightQuotaData> response = Response.FromValue(PlaywrightQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightQuotaData> response = Response.FromValue(PlaywrightQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
+            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -394,7 +394,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -447,7 +447,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -504,7 +504,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), playwrightQuotaName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
