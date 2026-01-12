@@ -3,7 +3,7 @@
 ## 1.6.0-beta.2 (2026-01-12)
 
 ### Breaking Changes
-* **Default Sampler Changed**: The default sampling behavior has been changed from
+* **Default Sampler Changed** ([#54942](https://github.com/Azure/azure-sdk-for-net/pull/54942)): The default sampling behavior has been changed from
   `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
   `RateLimitedSampler` with 5.0 traces per second. This change significantly
   reduces telemetry volume for high-traffic applications and provides better
