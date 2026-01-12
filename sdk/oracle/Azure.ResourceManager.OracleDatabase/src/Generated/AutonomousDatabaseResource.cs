@@ -190,104 +190,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Delete a AutonomousDatabase
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_autonomousDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a AutonomousDatabase
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_autonomousDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Update a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
@@ -406,15 +308,15 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Perform switchover action on Autonomous Database
+        /// Delete a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/switchover. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Switchover. </description>
+        /// <description> AutonomousDatabases_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -427,14 +329,10 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> SwitchoverAsync(WaitUntil waitUntil, AutonomousDatabaseActionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Switchover");
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Delete");
             scope.Start();
             try
             {
@@ -442,7 +340,109 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
+                HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_autonomousDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a AutonomousDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabases_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_autonomousDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Perform Lifecycle Management Action on Autonomous Database
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabases_Action. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> ActionAsync(WaitUntil waitUntil, AutonomousDatabaseLifecycleAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Action");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseOperationSource(Client),
@@ -465,15 +465,15 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Perform switchover action on Autonomous Database
+        /// Perform Lifecycle Management Action on Autonomous Database
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/switchover. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/action. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Switchover. </description>
+        /// <description> AutonomousDatabases_Action. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -486,14 +486,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<AutonomousDatabaseResource> Switchover(WaitUntil waitUntil, AutonomousDatabaseActionContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual ArmOperation<AutonomousDatabaseResource> Action(WaitUntil waitUntil, AutonomousDatabaseLifecycleAction body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Switchover");
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Action");
             scope.Start();
             try
             {
@@ -501,7 +501,125 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
+                HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
+                    new AutonomousDatabaseOperationSource(Client),
+                    _autonomousDatabasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Perform ChangeDisasterRecoveryConfiguration action on Autonomous Database
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/changeDisasterRecoveryConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabases_ChangeDisasterRecoveryConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> ChangeDisasterRecoveryConfigurationAsync(WaitUntil waitUntil, DisasterRecoveryConfigurationDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.ChangeDisasterRecoveryConfiguration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
+                    new AutonomousDatabaseOperationSource(Client),
+                    _autonomousDatabasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Perform ChangeDisasterRecoveryConfiguration action on Autonomous Database
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/changeDisasterRecoveryConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutonomousDatabases_ChangeDisasterRecoveryConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual ArmOperation<AutonomousDatabaseResource> ChangeDisasterRecoveryConfiguration(WaitUntil waitUntil, DisasterRecoveryConfigurationDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.ChangeDisasterRecoveryConfiguration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseOperationSource(Client),
@@ -974,15 +1092,15 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Perform ChangeDisasterRecoveryConfiguration action on Autonomous Database
+        /// Perform switchover action on Autonomous Database
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/changeDisasterRecoveryConfiguration. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/switchover. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_ChangeDisasterRecoveryConfiguration. </description>
+        /// <description> AutonomousDatabases_Switchover. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -995,14 +1113,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="details"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> ChangeDisasterRecoveryConfigurationAsync(WaitUntil waitUntil, DisasterRecoveryConfigurationDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> SwitchoverAsync(WaitUntil waitUntil, AutonomousDatabaseActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.ChangeDisasterRecoveryConfiguration");
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Switchover");
             scope.Start();
             try
             {
@@ -1010,7 +1128,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
+                HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseOperationSource(Client),
@@ -1033,15 +1151,15 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Perform ChangeDisasterRecoveryConfiguration action on Autonomous Database
+        /// Perform switchover action on Autonomous Database
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/changeDisasterRecoveryConfiguration. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/switchover. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_ChangeDisasterRecoveryConfiguration. </description>
+        /// <description> AutonomousDatabases_Switchover. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1054,14 +1172,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="details"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual ArmOperation<AutonomousDatabaseResource> ChangeDisasterRecoveryConfiguration(WaitUntil waitUntil, DisasterRecoveryConfigurationDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AutonomousDatabaseResource> Switchover(WaitUntil waitUntil, AutonomousDatabaseActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.ChangeDisasterRecoveryConfiguration");
+            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Switchover");
             scope.Start();
             try
             {
@@ -1069,125 +1187,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
-                    _autonomousDatabasesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Perform Lifecycle Management Action on Autonomous Database
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/action. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Action. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutonomousDatabaseResource>> ActionAsync(WaitUntil waitUntil, AutonomousDatabaseLifecycleAction body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Action");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
-                    _autonomousDatabasesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Perform Lifecycle Management Action on Autonomous Database
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}/action. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Action. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AutonomousDatabaseResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<AutonomousDatabaseResource> Action(WaitUntil waitUntil, AutonomousDatabaseLifecycleAction body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseResource.Action");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
+                HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseOperationSource(Client),

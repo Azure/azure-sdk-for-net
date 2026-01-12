@@ -37,7 +37,8 @@ import {
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope
+  ResourceScope,
+  sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
@@ -206,8 +207,35 @@ export function resolveArmResources(
     }
   }
 
+  // Sort methods in all valid resources for deterministic ordering
+  // This is necessary because methods may have been merged from incomplete resources
+  // and list operations may have been processed, so we sort at the end to ensure consistency
+  for (const resource of validResources) {
+    sortResourceMethods(resource.metadata.methods);
+  }
+
+  // Filter out resources without Get/Read operations (non-singleton resources only)
+  // Singleton resources can exist without Get operations
+  const filteredResources: ArmResourceSchema[] = [];
+  for (const resource of validResources) {
+    const hasReadOperation = resource.metadata.methods.some(m => m.kind === ResourceOperationKind.Read);
+    if (!hasReadOperation && !resource.metadata.singletonResourceName) {
+      // Move all methods to non-resource methods since there's no Get operation
+      for (const method of resource.metadata.methods) {
+        nonResourceMethods.push({
+          methodId: method.methodId,
+          operationPath: method.operationPath,
+          operationScope: method.operationScope
+        });
+      }
+      // Note: We don't add a diagnostic here because it's already added in buildArmProviderSchema
+      continue;
+    }
+    filteredResources.push(resource);
+  }
+
   return {
-    resources: validResources,
+    resources: filteredResources,
     nonResourceMethods
   };
 }

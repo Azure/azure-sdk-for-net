@@ -24,6 +24,7 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
     - sdk/provisioning/Azure.Provisioning.Network
     - sdk/provisioning/Azure.Provisioning.OperationalInsights
+    - sdk/provisioning/Azure.Provisioning.PrivateDns
     exclude:
     - sdk/provisioning/Generator/
 
@@ -52,6 +53,7 @@ pr:
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
     - sdk/provisioning/Azure.Provisioning.Network
     - sdk/provisioning/Azure.Provisioning.OperationalInsights
+    - sdk/provisioning/Azure.Provisioning.PrivateDns
     exclude:
     - sdk/provisioning/Generator/
 
@@ -90,3 +92,5 @@ extends:
       safeName: AzureProvisioningNetwork
     - name: Azure.Provisioning.OperationalInsights
       safeName: AzureProvisioningOperationalInsights
+    - name: Azure.Provisioning.PrivateDns
+      safeName: AzureProvisioningPrivateDns

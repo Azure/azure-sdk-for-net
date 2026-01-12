@@ -406,15 +406,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Limits constraining certain resource properties.
+        /// Provides a summarized report along with actions for resources billed via given reservation
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetResourceLimits. </description>
+        /// <description> Reservations_GetBillingReport. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PureStorageResourceLimitDetails>> GetResourceLimitsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationBillingUsageReport>> GetBillingReportAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingReport");
             scope.Start();
             try
             {
@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _reservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
+                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -454,15 +454,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Limits constraining certain resource properties.
+        /// Provides a summarized report along with actions for resources billed via given reservation
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetResourceLimits. </description>
+        /// <description> Reservations_GetBillingReport. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PureStorageResourceLimitDetails> GetResourceLimits(CancellationToken cancellationToken = default)
+        public virtual Response<ReservationBillingUsageReport> GetBillingReport(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingReport");
             scope.Start();
             try
             {
@@ -485,9 +485,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _reservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
+                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -598,15 +598,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// Limits constraining certain resource properties.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetBillingReport. </description>
+        /// <description> Reservations_GetResourceLimits. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -619,9 +619,9 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationBillingUsageReport>> GetBillingReportAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageResourceLimitDetails>> GetResourceLimitsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingReport");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
             scope.Start();
             try
             {
@@ -629,9 +629,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _reservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
+                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -646,15 +646,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Provides a summarized report along with actions for resources billed via given reservation
+        /// Limits constraining certain resource properties.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getBillingReport. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}/getResourceLimits. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Reservations_GetBillingReport. </description>
+        /// <description> Reservations_GetResourceLimits. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -667,9 +667,9 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationBillingUsageReport> GetBillingReport(CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageResourceLimitDetails> GetResourceLimits(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetBillingReport");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
             scope.Start();
             try
             {
@@ -677,9 +677,9 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetBillingReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _reservationsRestClient.CreateGetResourceLimitsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReservationBillingUsageReport> response = Response.FromValue(ReservationBillingUsageReport.FromResponse(result), result);
+                Response<PureStorageResourceLimitDetails> response = Response.FromValue(PureStorageResourceLimitDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
