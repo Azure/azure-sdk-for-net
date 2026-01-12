@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The artifact's target OS. </summary>
-        public string TargetOsType
+        public string TargetOSType
         {
             get
             {
-                return Properties.TargetOsType;
+                return Properties.TargetOSType;
             }
         }
 

@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetOsType))
+            if (options.Format != "W" && Optional.IsDefined(TargetOSType))
             {
                 writer.WritePropertyName("targetOsType"u8);
-                writer.WriteStringValue(TargetOsType);
+                writer.WriteStringValue(TargetOSType);
             }
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string publisher = default;
             string filePath = default;
             string icon = default;
-            string targetOsType = default;
+            string targetOSType = default;
             BinaryData parameters = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (prop.NameEquals("targetOsType"u8))
                 {
-                    targetOsType = prop.Value.GetString();
+                    targetOSType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 publisher,
                 filePath,
                 icon,
-                targetOsType,
+                targetOSType,
                 parameters,
                 createdOn,
                 additionalBinaryDataProperties);

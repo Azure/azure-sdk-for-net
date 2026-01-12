@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly Labs _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _labName;
+        private readonly string _name;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of LabsGetVhdsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Labs client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the lab. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LabsGetVhdsAsyncCollectionResultOfT(Labs client, string subscriptionId, string resourceGroupName, string labName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LabsGetVhdsAsyncCollectionResultOfT(Labs client, string subscriptionId, string resourceGroupName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _labName = labName;
+            _name = name;
             _context = context;
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetVhdsRequest(nextLink, _subscriptionId, _resourceGroupName, _labName, _context) : _client.CreateGetVhdsRequest(_subscriptionId, _resourceGroupName, _labName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetVhdsRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetVhdsRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevTestLabResource.GetVhds");
             scope.Start();
             try

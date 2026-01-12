@@ -296,45 +296,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="title"> The artifact's title. </param>
-        /// <param name="description"> The artifact's description. </param>
-        /// <param name="publisher"> The artifact's publisher. </param>
-        /// <param name="filePath"> The file path to the artifact. </param>
-        /// <param name="icon"> The URI to the artifact icon. </param>
-        /// <param name="targetOsType"> The artifact's target OS. </param>
-        /// <param name="parameters"> The artifact's parameters. </param>
-        /// <param name="createdOn"> The artifact's creation date. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactData"/> instance for mocking. </returns>
-        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string title = default, string description = default, string publisher = default, string filePath = default, string icon = default, string targetOsType = default, BinaryData parameters = default, DateTimeOffset? createdOn = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabArtifactData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                title is null && description is null && publisher is null && filePath is null && icon is null && targetOsType is null && parameters is null && createdOn is null ? default : new ArtifactProperties(
-                    title,
-                    description,
-                    publisher,
-                    filePath,
-                    icon,
-                    targetOsType,
-                    parameters,
-                    createdOn,
-                    null),
-                tags);
-        }
-
         /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
         /// <param name="vmName"> The resource name of the virtual machine. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
@@ -981,8 +942,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="parameters"> The artifact's parameters. </param>
         /// <param name="createdOn"> The artifact's creation date. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn)
+        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string title = default, string description = default, string publisher = default, string filePath = default, string icon = default, string targetOSType = default, BinaryData parameters = default, DateTimeOffset? createdOn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

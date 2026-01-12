@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="publisher"> The artifact's publisher. </param>
         /// <param name="filePath"> The file path to the artifact. </param>
         /// <param name="icon"> The URI to the artifact icon. </param>
-        /// <param name="targetOsType"> The artifact's target OS. </param>
+        /// <param name="targetOSType"> The artifact's target OS. </param>
         /// <param name="parameters"> The artifact's parameters. </param>
         /// <param name="createdOn"> The artifact's creation date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactProperties(string title, string description, string publisher, string filePath, string icon, string targetOsType, BinaryData parameters, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArtifactProperties(string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
             Publisher = publisher;
             FilePath = filePath;
             Icon = icon;
-            TargetOsType = targetOsType;
+            TargetOSType = targetOSType;
             Parameters = parameters;
             CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Icon { get; }
 
         /// <summary> The artifact's target OS. </summary>
-        public string TargetOsType { get; }
+        public string TargetOSType { get; }
 
         /// <summary>
         /// The artifact's parameters.
