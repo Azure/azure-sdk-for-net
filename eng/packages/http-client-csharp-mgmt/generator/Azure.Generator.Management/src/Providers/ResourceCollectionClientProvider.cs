@@ -62,6 +62,7 @@ namespace Azure.Generator.Management.Providers
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
 
             // this depends on _getAll being initialized
+            // TODO -- this is some extra contextual parameters in resource collection, we need to find a way to update this and include this information in a universal way
             _pathParameterMap = BuildPathParameterMap();
         }
 

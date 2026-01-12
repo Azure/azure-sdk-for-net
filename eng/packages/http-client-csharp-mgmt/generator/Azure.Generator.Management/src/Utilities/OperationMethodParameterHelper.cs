@@ -49,11 +49,11 @@ namespace Azure.Generator.Management.Utilities
                 // Create temporary parameter to check filtering conditions
                 var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
 
-                // Skip filtered parameters
-                if (contextualPath.TryGetContextualParameter(tempParameter, out _))
-                {
-                    continue;
-                }
+                //// Skip filtered parameters
+                //if (contextualPath.TryGetContextualParameter(tempParameter, out _))
+                //{
+                //    continue;
+                //}
 
                 // TODO -- maybe we no longer need this?
                 if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
