@@ -140,17 +140,17 @@ $exeName = Split-Path $tempExe -Leaf
 $exeDestination = Join-Path $toolInstallDirectory $exeName
 
 # On Windows, if the exe is already running, we can't overwrite it.
-# In that case, fall back to running from the temp directory.
+# In that case, fall back to running from the temp directory where it was installed.
 $exeToRun = $exeDestination
 try {
     Copy-Item -Path $tempExe -Destination $exeDestination -Force
 }
 catch {
-    # Detect a file-in-use (sharing violation) error in a locale-independent way.
+    # Detect a file-in-use error in a locale-independent way.
     # ERROR_SHARING_VIOLATION => 0x80070020 => -2147024864
     if (($_.Exception -is [System.IO.IOException]) -and ($_.Exception.HResult -eq -2147024864)) {
-        log -warn "Could not update '$exeDestination' because it is currently running. Using temporary copy instead."
-        log -warn "The update will be applied the next time the tool is installed when no instance is running."
+        log -warn "Could not override '$exeDestination' because it is currently running."
+        log -warn "Running it from the temp directory where it was installed instead."
         $exeToRun = $tempExe
     }
     else {
