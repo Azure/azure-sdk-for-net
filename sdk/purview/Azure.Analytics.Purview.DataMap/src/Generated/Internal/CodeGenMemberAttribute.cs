@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Analytics.Purview.DataMap
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

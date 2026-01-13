@@ -1868,7 +1868,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response<IReadOnlyList<AtlasTypeDefHeader>> GetHeaders(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
             Response result = GetHeaders(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext());
-            IList<AtlasTypeDefHeader> value = new List<AtlasTypeDefHeader>();
+            List<AtlasTypeDefHeader> value = new List<AtlasTypeDefHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -1890,7 +1890,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response<IReadOnlyList<AtlasTypeDefHeader>>> GetHeadersAsync(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
             Response result = await GetHeadersAsync(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasTypeDefHeader> value = new List<AtlasTypeDefHeader>();
+            List<AtlasTypeDefHeader> value = new List<AtlasTypeDefHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())

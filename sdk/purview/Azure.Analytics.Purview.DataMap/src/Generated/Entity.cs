@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -2367,7 +2368,19 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = BatchSetClassifications(body, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
+            List<string> value = new List<string>();
+            BinaryData data = result.Content;
+            Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
+            jsonReader.Read();
+            while (jsonReader.Read())
+            {
+                if (jsonReader.TokenType == JsonTokenType.EndArray)
+                {
+                    break;
+                }
+                value.Add(jsonReader.GetString());
+            }
+            return Response.FromValue((IReadOnlyList<string>)value, result);
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
@@ -2380,7 +2393,19 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await BatchSetClassificationsAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
+            List<string> value = new List<string>();
+            BinaryData data = result.Content;
+            Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
+            jsonReader.Read();
+            while (jsonReader.Read())
+            {
+                if (jsonReader.TokenType == JsonTokenType.EndArray)
+                {
+                    break;
+                }
+                value.Add(jsonReader.GetString());
+            }
+            return Response.FromValue((IReadOnlyList<string>)value, result);
         }
 
         /// <summary>

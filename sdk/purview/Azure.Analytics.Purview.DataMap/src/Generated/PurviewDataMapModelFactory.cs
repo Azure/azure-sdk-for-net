@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AnalyticsPurviewDataMapModelFactory
+    public static partial class PurviewDataMapModelFactory
     {
         /// <summary>
         /// An instance of an entity along with extended info - like hive_table,

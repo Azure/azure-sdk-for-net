@@ -129,7 +129,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response<IReadOnlyList<AtlasGlossary>> BatchGet(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
             Response result = BatchGet(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext());
-            IList<AtlasGlossary> value = new List<AtlasGlossary>();
+            List<AtlasGlossary> value = new List<AtlasGlossary>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response<IReadOnlyList<AtlasGlossary>>> BatchGetAsync(int? limit = default, int? offset = default, string sort = default, bool? ignoreTermsAndCategories = default, CancellationToken cancellationToken = default)
         {
             Response result = await BatchGetAsync(limit, offset, sort, ignoreTermsAndCategories, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasGlossary> value = new List<AtlasGlossary>();
+            List<AtlasGlossary> value = new List<AtlasGlossary>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -325,7 +325,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = CreateCategories(content, cancellationToken.ToRequestContext());
-            IList<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -346,7 +346,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = await CreateCategoriesAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -931,7 +931,9 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
             Response result = GetRelatedCategories(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>(), result);
+            IDictionary<string, IList<AtlasRelatedCategoryHeader>> value = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>)value, result);
         }
 
         /// <summary>
@@ -951,7 +953,9 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
             Response result = await GetRelatedCategoriesAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>(), result);
+            IDictionary<string, IList<AtlasRelatedCategoryHeader>> value = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>)value, result);
         }
 
         /// <summary>
@@ -1038,7 +1042,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
             Response result = GetCategoryTerms(categoryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IList<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -1062,7 +1066,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
 
             Response result = await GetCategoryTermsAsync(categoryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -1646,7 +1650,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = CreateTerms(content, includeTermHierarchy, cancellationToken.ToRequestContext());
-            IList<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -1668,7 +1672,7 @@ namespace Azure.Analytics.Purview.DataMap
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = await CreateTermsAsync(content, includeTermHierarchy, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -1767,7 +1771,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
             Response result = GetEntitiesAssignedWithTerm(termId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IList<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
+            List<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -1794,7 +1798,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
             Response result = await GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
+            List<AtlasRelatedObjectId> value = new List<AtlasRelatedObjectId>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -2117,7 +2121,9 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
             Response result = GetRelatedTerms(termId, limit, offset, sort, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>(), result);
+            IDictionary<string, IList<AtlasRelatedTermHeader>> value = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>)value, result);
         }
 
         /// <summary>
@@ -2137,7 +2143,9 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
 
             Response result = await GetRelatedTermsAsync(termId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>(), result);
+            IDictionary<string, IList<AtlasRelatedTermHeader>> value = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
+            BinaryData data = result.Content;
+            return Response.FromValue((IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>)value, result);
         }
 
         /// <summary>
@@ -2523,7 +2531,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = GetCategories(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IList<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -2550,7 +2558,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = await GetCategoriesAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
+            List<AtlasGlossaryCategory> value = new List<AtlasGlossaryCategory>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -2649,7 +2657,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = GetCategoriesHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IList<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
+            List<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -2676,7 +2684,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = await GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
+            List<AtlasRelatedCategoryHeader> value = new List<AtlasRelatedCategoryHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -3043,7 +3051,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = GetTerms(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IList<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -3070,7 +3078,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = await GetTermsAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
+            List<AtlasGlossaryTerm> value = new List<AtlasGlossaryTerm>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -3169,7 +3177,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = GetTermHeaders(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext());
-            IList<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
@@ -3196,7 +3204,7 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
             Response result = await GetTermHeadersAsync(glossaryId, limit, offset, sort, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IList<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
+            List<AtlasRelatedTermHeader> value = new List<AtlasRelatedTermHeader>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
