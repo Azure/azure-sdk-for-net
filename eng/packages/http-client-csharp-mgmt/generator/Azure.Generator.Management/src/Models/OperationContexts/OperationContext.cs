@@ -11,6 +11,27 @@ using System.Diagnostics;
 
 namespace Azure.Generator.Management.Models
 {
+    /// <summary>
+    /// Represents the context for an Azure resource operation, encapsulating the primary and (optionally) secondary request path patterns
+    /// and their associated contextual parameters.
+    /// <para>
+    /// The <see cref="OperationContext"/> is used during code generation to determine which parameters for an operation
+    /// can be derived contextually from the resource identifier (Id) of the enclosing resource or resource collection,
+    /// and which must be supplied by the caller. It analyzes the request path(s) to build a list of <see cref="ContextualParameter"/>s,
+    /// which describe how to extract parameter values from the Id property.
+    /// </para>
+    /// <para>
+    /// A secondary contextual path is only provided in the case of a resource collection for a "tuple resource".
+    /// Unlike regular resources, which can be specified from their parent by a single parameter (typically their name),
+    /// tuple resources require multiple parameters to be specified from their parent—hence the name "tuple resource".
+    /// In such cases, the resource collection may need to take additional parameters from its constructor,
+    /// and the secondary contextual path is used to model this scenario and extract those parameters.
+    /// </para>
+    /// <para>
+    /// The <see cref="BuildParameterMapping"/> method enables mapping operation path parameters to their contextual sources,
+    /// supporting both primary and tuple resource collection scenarios.
+    /// </para>
+    /// </summary>
     internal class OperationContext
     {
         public static OperationContext Create(RequestPathPattern contextualPath)
