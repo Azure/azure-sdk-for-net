@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.LargeInstance.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.LargeInstance.Samples
@@ -129,10 +130,10 @@ namespace Azure.ResourceManager.LargeInstance.Samples
             LargeInstanceResource largeInstance = client.GetLargeInstanceResource(largeInstanceResourceId);
 
             // invoke the operation
-            ArmOperation<LargeInstanceOperationStatusResult> lro = await largeInstance.RestartAsync(WaitUntil.Completed);
-            LargeInstanceOperationStatusResult result = lro.Value;
+            ArmOperation lro = await largeInstance.RestartAsync(WaitUntil.Completed);
+            Response result = lro.GetRawResponse();
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine($"Succeeded: {result.Status}");
         }
 
         [Test]
@@ -156,8 +157,8 @@ namespace Azure.ResourceManager.LargeInstance.Samples
             LargeInstanceResource largeInstance = client.GetLargeInstanceResource(largeInstanceResourceId);
 
             // invoke the operation
-            ArmOperation<LargeInstanceOperationStatusResult> lro = await largeInstance.ShutdownAsync(WaitUntil.Completed);
-            LargeInstanceOperationStatusResult result = lro.Value;
+            ArmOperation<OperationStatusResult> lro = await largeInstance.ShutdownAsync(WaitUntil.Completed);
+            OperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -183,8 +184,8 @@ namespace Azure.ResourceManager.LargeInstance.Samples
             LargeInstanceResource largeInstance = client.GetLargeInstanceResource(largeInstanceResourceId);
 
             // invoke the operation
-            ArmOperation<LargeInstanceOperationStatusResult> lro = await largeInstance.StartAsync(WaitUntil.Completed);
-            LargeInstanceOperationStatusResult result = lro.Value;
+            ArmOperation<OperationStatusResult> lro = await largeInstance.StartAsync(WaitUntil.Completed);
+            OperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
