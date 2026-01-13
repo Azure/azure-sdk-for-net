@@ -27,6 +27,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Conversations](#conversations)
   - [Published Agents](#published-agents)
   - [Container App](#container-app)
+  - [Hosted Agents](#hosted-agents)
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)
   - [Computer use](#computer-use)
@@ -361,6 +362,50 @@ AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersi
         containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
         containerAppResourceId: containerAppResourceId,
         ingressSubdomainSuffix: ingressSubdomainSuffix)));
+```
+
+### Hosted Agents
+
+Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
+
+To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
+
+```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
+private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+{
+    ImageBasedHostedAgentDefinition agentDefinition = new(
+        containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+        cpu: "1",
+        memory: "2Gi",
+        image: dockerImage
+    )
+    {
+        EnvironmentVariables = {
+            { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
+            { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
+            // Optional variables, used for logging
+            { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
+            { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
+        }
+    };
+    return agentDefinition;
+}
+```
+
+The created agent needs to be deployed using [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
+
+```bash
+az login
+az cognitiveservices agent start --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+```
+
+After the deployment is complete, this Agent can be used for calling responses.
+
+Agent deletion should be done through Azure CLI.
+
+```bash
+az cognitiveservices agent delete-deployment --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
 ```
 
 ### File search
