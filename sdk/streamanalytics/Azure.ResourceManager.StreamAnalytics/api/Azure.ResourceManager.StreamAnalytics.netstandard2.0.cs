@@ -325,7 +325,6 @@ namespace Azure.ResourceManager.StreamAnalytics
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization Serialization { get { throw null; } set { } }
         public float? SizeWindow { get { throw null; } set { } }
         public System.TimeSpan? TimeFrame { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use TimeFrame instead.", false)]
         public System.DateTimeOffset? TimeWindow { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkProperties WatermarkSettings { get { throw null; } set { } }
@@ -573,9 +572,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.BlobOutputWriteMode Append { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.BlobOutputWriteMode Once { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.BlobOutputWriteMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.BlobOutputWriteMode left, Azure.ResourceManager.StreamAnalytics.Models.BlobOutputWriteMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.BlobOutputWriteMode (string value) { throw null; }
@@ -591,11 +588,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string DateFormat { get { throw null; } set { } }
         public string DeltaPathPattern { get { throw null; } set { } }
         public System.TimeSpan? DeltaSnapshotRefreshInterval { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use DeltaSnapshotRefreshInterval instead.", false)]
         public string DeltaSnapshotRefreshRate { get { throw null; } set { } }
         public System.TimeSpan? FullSnapshotRefreshInterval { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use FullSnapshotRefreshInterval instead.", false)]
         public string FullSnapshotRefreshRate { get { throw null; } set { } }
         public string PathPattern { get { throw null; } set { } }
@@ -707,9 +702,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType RefreshPeriodicallyWithFull { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType left, Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType (string value) { throw null; }
@@ -757,9 +750,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType CloudEventSchema { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType EventGridEventSchema { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType left, Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType (string value) { throw null; }
@@ -861,9 +852,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy Adjust { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy Drop { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy left, Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy (string value) { throw null; }
@@ -976,9 +965,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat Array { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat LineSeparated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat left, Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat (string value) { throw null; }
@@ -1286,7 +1273,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string FullSnapshotQuery { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public System.TimeSpan? RefreshInterval { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use RefreshInterval instead.", false)]
         public System.DateTimeOffset? RefreshRate { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType? RefreshType { get { throw null; } set { } }
@@ -1321,9 +1307,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode Msi { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode UserToken { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode (string value) { throw null; }
@@ -1369,9 +1353,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProvisioningState InProgress { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProvisioningState left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProvisioningState (string value) { throw null; }
@@ -1398,9 +1380,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public StreamAnalyticsClusterSkuName(string value) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterSkuName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterSkuName left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterSkuName (string value) { throw null; }
@@ -1440,9 +1420,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public StreamAnalyticsDataSerializationEncoding(string value) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding Utf8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding (string value) { throw null; }
@@ -1598,9 +1576,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryTestingResultStatus Timeout { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryTestingResultStatus UnknownError { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryTestingResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryTestingResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryTestingResultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryTestingResultStatus (string value) { throw null; }
@@ -1658,9 +1634,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSampleInputResultStatus NoEventsFoundInRange { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSampleInputResultStatus ReadAllEventsInRange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSampleInputResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSampleInputResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSampleInputResultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSampleInputResultStatus (string value) { throw null; }
@@ -1675,9 +1649,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public StreamAnalyticsSkuName(string value) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSkuName left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSkuName (string value) { throw null; }
@@ -1753,9 +1725,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestDatasourceResultStatus TestFailed { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestDatasourceResultStatus TestSucceeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestDatasourceResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestDatasourceResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestDatasourceResultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestDatasourceResultStatus (string value) { throw null; }
@@ -1796,9 +1766,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType Gzip { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType left, Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType (string value) { throw null; }
@@ -1814,9 +1782,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel Level1_0 { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel Level1_2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel (string value) { throw null; }
@@ -1832,9 +1798,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy JobStorageAccount { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy SystemAccount { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy (string value) { throw null; }
@@ -1923,9 +1887,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public StreamingJobFunctionUdfType(string value) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType Scalar { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType (string value) { throw null; }
@@ -1941,9 +1903,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode Refreshable { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode (string value) { throw null; }
@@ -1975,9 +1935,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode None { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode ReadWatermark { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode (string value) { throw null; }
@@ -2003,9 +1961,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy Drop { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy Stop { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy (string value) { throw null; }
@@ -2022,9 +1978,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputStartMode JobStartTime { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputStartMode LastOutputEventTime { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputStartMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputStartMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputStartMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputStartMode (string value) { throw null; }
@@ -2041,9 +1995,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkMode SendCurrentPartitionWatermark { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkMode SendLowestWatermarkAcrossPartitions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkMode (string value) { throw null; }
@@ -2094,9 +2046,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobState Stopped { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobState left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobState (string value) { throw null; }
@@ -2122,9 +2072,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType Cloud { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType Edge { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType (string value) { throw null; }

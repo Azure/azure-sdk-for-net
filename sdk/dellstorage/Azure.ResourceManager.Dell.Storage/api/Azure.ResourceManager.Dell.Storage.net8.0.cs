@@ -159,9 +159,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType (string value) { throw null; }
@@ -210,9 +208,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType CustomerManagedKeysCmk { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType MicrosoftManagedKeysMmk { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType (string value) { throw null; }
@@ -253,9 +249,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -335,9 +329,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState (string value) { throw null; }

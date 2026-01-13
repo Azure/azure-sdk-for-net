@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<FileShareSnapshotResource>> GetFileShareSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShareSnapshotResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _fileShareSnapshotsClientDiagnostics.CreateScope("FileShareSnapshotCollection.GetFileShareSnapshot");
+            using DiagnosticScope scope = _fileShareSnapshotsClientDiagnostics.CreateScope("FileShareSnapshotCollection.Get");
             scope.Start();
             try
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<FileShareSnapshotResource> GetFileShareSnapshot(string name, CancellationToken cancellationToken = default)
+        public virtual Response<FileShareSnapshotResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _fileShareSnapshotsClientDiagnostics.CreateScope("FileShareSnapshotCollection.GetFileShareSnapshot");
+            using DiagnosticScope scope = _fileShareSnapshotsClientDiagnostics.CreateScope("FileShareSnapshotCollection.Get");
             scope.Start();
             try
             {

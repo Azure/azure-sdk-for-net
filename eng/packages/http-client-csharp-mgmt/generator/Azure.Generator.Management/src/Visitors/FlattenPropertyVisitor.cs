@@ -61,14 +61,14 @@ namespace Azure.Generator.Management.Visitors
             propertyNameMap = null;
             if (_flattenedModelTypes.TryGetValue(returnType, out var value))
             {
-                propertyNameMap = value.Item1;
+                propertyNameMap = value;
                 return true;
             }
             // handle the case where the return type is a derived type of a flattened model type
             // we only deal with single level inheritance here to avoid complexity
             else if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(returnType, out var typeProvider) && typeProvider is ModelProvider model && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
             {
-                propertyNameMap = value.Item1;
+                propertyNameMap = value;
                 return true;
             }
             return false;
@@ -280,17 +280,29 @@ namespace Azure.Generator.Management.Visitors
                     }
                     else
                     {
-                        if (_flattenedModelTypes.TryGetValue(propertyType, out var result))
+                        // This is a nested flattened property case - the constructor parameter is a complex type
+                        // We need to find the correct internal property by matching the constructor parameter name,
+                        // then recursively collect all nested flattened properties for that specific internal property
+                        if (_flattenedModelTypes.TryGetValue(propertyType, out var propertyNameMap))
                         {
-                            var (_, propertyTypeMap) = result;
-                            if (propertyTypeMap.TryGetValue(constructorParameterType, out var list))
+                            // Try to match the constructor parameter name with an internal property name
+                            if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list) && list.Count > 0)
                             {
-                                // Theoretically there should be only one flattened property for the constructor parameter type, and the corresponding parameter should be singleton as well.
-                                // For some reason, there are multiple parameters of the same type in some constructors, we need to enforce that we use the correct one.
-                                var flattenPropertyTypes = list.Select(x => x.FlattenedProperty.Type).ToHashSet();
-                                var innerFlattenedProperties = flattenedProperties.Where(x => flattenPropertyTypes.Contains(x.FlattenedProperty.Type)).ToList();
-                                var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
-                                parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                                // Found the internal property by name, now collect all nested flattened properties
+                                // that correspond to this internal property from the current flattened properties list
+                                // Note: list.Count > 0 check above ensures list[0] is safe to access
+                                var internalProperty = list[0].InternalProperty;
+                                var innerFlattenedProperties = CollectNestedFlattenedProperties(internalProperty, flattenedProperties);
+
+                                if (innerFlattenedProperties.Count > 0)
+                                {
+                                    var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
+                                    parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                                }
+                                // Note: If innerFlattenedProperties is empty, we skip adding this parameter.
+                                // This can happen when the nested model has no required properties, and all
+                                // flattened properties are optional. In such cases, the model factory will
+                                // not include this nested object in the constructor call.
                             }
                         }
                     }
@@ -327,7 +339,7 @@ namespace Azure.Generator.Management.Visitors
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
-        private readonly Dictionary<CSharpType, (Dictionary<string, List<FlattenPropertyInfo>>, Dictionary<CSharpType, List<FlattenPropertyInfo>>)> _flattenedModelTypes = new(new CSharpTypeNameComparer());
+        private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -393,13 +405,12 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var propertyNameMap = propertyMap.ToDictionary(kvp => kvp.Key.Name.ToVariableName(), kvp => kvp.Value);
-            var propertyTypeMap = propertyMap.GroupBy(kvp => kvp.Key.Type).ToDictionary(kvp => kvp.Key, kvp => kvp.SelectMany(x => x.Value).ToList());
 
             if (isSafeFlatten || isFlattenProperty)
             {
                 var flattenedProperties = propertyMap.Values.SelectMany(x => x.Select(item => item.FlattenedProperty));
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
-                _flattenedModelTypes.Add(model.Type, (propertyNameMap, propertyTypeMap));
+                _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
         }
@@ -707,5 +718,64 @@ namespace Azure.Generator.Management.Visitors
 
         private bool IsOverriddenValueType(PropertyProvider flattenedProperty)
             => flattenedProperty.Type.IsValueType && !flattenedProperty.Type.IsNullable;
+
+        /// <summary>
+        /// Recursively collects all nested flattened properties for a given internal property.
+        /// This handles cases where properties are flattened multiple levels deep.
+        /// </summary>
+        /// <param name="internalProperty">The internal property to collect nested flattened properties for</param>
+        /// <param name="flattenedProperties">The list of all flattened properties at the current level</param>
+        /// <returns>A list of FlattenPropertyInfo for all nested flattened properties</returns>
+        private List<FlattenPropertyInfo> CollectNestedFlattenedProperties(PropertyProvider internalProperty, List<FlattenPropertyInfo> flattenedProperties)
+        {
+            var result = new List<FlattenPropertyInfo>();
+
+            // Find all flattened properties at the current level that originate from this internal property
+            foreach (var flattenedInfo in flattenedProperties)
+            {
+                if (flattenedInfo.FlattenedProperty is FlattenedPropertyProvider flattenedProvider)
+                {
+                    // Check if this flattened property comes from a chain that includes the target internal property
+                    if (IsInFlattenChain(flattenedProvider, internalProperty))
+                    {
+                        result.Add(flattenedInfo);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Checks if the given internal property is in the flattening chain of the flattened property.
+        /// This handles multi-level flattening by recursively checking the chain.
+        /// Note: The recursion depth is typically very shallow (2-3 levels at most) in practice,
+        /// as TypeSpec models rarely have deeply nested flattening structures.
+        /// </summary>
+        /// <param name="flattenedProvider">The flattened property provider to check</param>
+        /// <param name="targetInternalProperty">The internal property to look for in the chain</param>
+        /// <returns>True if the internal property is in the flattening chain</returns>
+        private bool IsInFlattenChain(FlattenedPropertyProvider flattenedProvider, PropertyProvider targetInternalProperty)
+        {
+            // The FlattenedProperty is the immediate parent (the property this was flattened from)
+            // The OriginalProperty is the actual property from the inner model
+
+            // Check if the OriginalProperty is itself a FlattenedPropertyProvider (multi-level flattening)
+            if (flattenedProvider.OriginalProperty is FlattenedPropertyProvider innerFlattened)
+            {
+                // The inner flattened property's FlattenedProperty is what we need to check
+                if (innerFlattened.FlattenedProperty == targetInternalProperty)
+                {
+                    return true;
+                }
+
+                // Recursively check deeper levels
+                return IsInFlattenChain(innerFlattened, targetInternalProperty);
+            }
+
+            // For single-level flattening, check if FlattenedProperty matches
+            // This handles the case where we're at the last level of flattening
+            return flattenedProvider.FlattenedProperty == targetInternalProperty;
+        }
     }
 }

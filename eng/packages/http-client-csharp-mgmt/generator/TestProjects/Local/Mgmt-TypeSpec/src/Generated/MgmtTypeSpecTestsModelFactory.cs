@@ -163,7 +163,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, null),
                     new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), null),
-                    new VmProfile(new ApplicationProfile((prop1 ?? new ChangeTrackingList<string>()).ToList(), null), null),
+                    new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), null), null),
                     etag,
                     writableSubResourceProp,
                     new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, null), null), null),
