@@ -18,9 +18,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static string? s_prefix;
         internal static string s_sdkVersion = GetSdkVersion();
-        internal static SdkVersionType s_sdkVersionType = SdkVersionType.Exporter;
+        internal static SdkVersionType? s_sdkVersionType;
         internal static string? s_extensionVersion;
         internal static string? s_extensionVersionOverride;
+
+        /// <summary>
+        /// IsHydrated represents whether the SdkVersionUtils has been populated by CreateAzureMonitorResource.
+        /// </summary>
+        internal static bool IsHydrated => s_sdkVersionType != null || s_extensionVersionOverride != null;
 
         internal static string? SdkVersionPrefix
         {
@@ -34,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static SdkVersionType VersionType
         {
-            get => s_sdkVersionType;
+            get => s_sdkVersionType ?? SdkVersionType.Exporter;
             set
             {
                 s_sdkVersionType = value;
