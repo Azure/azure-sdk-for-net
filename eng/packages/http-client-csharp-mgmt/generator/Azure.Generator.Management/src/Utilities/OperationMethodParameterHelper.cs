@@ -80,7 +80,7 @@ namespace Azure.Generator.Management.Utilities
                 // TODO -- we should be able to just update the parameters from convenience method.
                 // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
 
-                // TODO: Rename resource model parameters to "data", this should be handled by below renaming already, need to investigate why it is not working.
+                // Rename resource model parameters to "data"
                 if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                 {
                     outputParameter = new ParameterProvider(
