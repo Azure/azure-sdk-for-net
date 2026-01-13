@@ -28,7 +28,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         public KeyVaultSecretProviderClassData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -97,7 +100,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         public SecretSyncData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.SecretSyncData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.SecretSyncData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.SecretSyncData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.SecretSyncData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.SecretSyncData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -162,11 +168,14 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public static partial class ArmSecretsStoreExtensionModelFactory
     {
         public static Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData KeyVaultSecretProviderClassData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch KeyVaultSecretProviderClassPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, System.Guid clientId = default(System.Guid), System.Guid tenantId = default(System.Guid), string objects = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition SecretSyncCondition(System.DateTimeOffset? lastTransitionOn = default(System.DateTimeOffset?), string message = null, long? observedGeneration = default(long?), string reason = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType status = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType), string type = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.SecretSyncData SecretSyncData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch SecretSyncPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties SecretSyncProperties(string secretProviderClassName = null, string serviceAccountName = null, Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType kubernetesSecretType = default(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType), string forceSynchronization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> objectSecretMapping = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus status = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus SecretSyncStatus(System.DateTimeOffset? lastSuccessfulSyncOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition> conditions = null) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties SecretSyncUpdateProperties(string secretProviderClassName = null, string serviceAccountName = null, string forceSynchronization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> objectSecretMapping = null) { throw null; }
     }
     public partial class AzureKeyVaultSecretProviderClassUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>
     {
@@ -175,7 +184,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public string KeyvaultName { get { throw null; } set { } }
         public string Objects { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -187,7 +199,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public KeyVaultSecretProviderClassPatch() { }
         public Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -202,7 +217,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public string Objects { get { throw null; } set { } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -214,7 +232,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public KubernetesSecretObjectMapping(string sourcePath, string targetKey) { }
         public string SourcePath { get { throw null; } set { } }
         public string TargetKey { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -230,12 +251,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType Opaque { get { throw null; } }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType Tls { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType left, Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType left, Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -249,12 +269,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState left, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState left, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -267,7 +286,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType Status { get { throw null; } }
         public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -284,12 +306,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType True { get { throw null; } }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType left, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType left, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -298,7 +319,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public SecretSyncPatch() { }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -315,7 +339,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public string SecretProviderClassName { get { throw null; } set { } }
         public string ServiceAccountName { get { throw null; } set { } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -327,7 +354,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         internal SecretSyncStatus() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition> Conditions { get { throw null; } }
         public System.DateTimeOffset? LastSuccessfulSyncOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -341,7 +371,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> ObjectSecretMapping { get { throw null; } }
         public string SecretProviderClassName { get { throw null; } set { } }
         public string ServiceAccountName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal class CloudVmClusterVirtualNetworkAddressOperationSource : IOperationSource<CloudVmClusterVirtualNetworkAddressResource>
+    /// <summary></summary>
+    internal partial class CloudVmClusterVirtualNetworkAddressOperationSource : IOperationSource<CloudVmClusterVirtualNetworkAddressResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal CloudVmClusterVirtualNetworkAddressOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         CloudVmClusterVirtualNetworkAddressResource IOperationSource<CloudVmClusterVirtualNetworkAddressResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CloudVmClusterVirtualNetworkAddressData data = CloudVmClusterVirtualNetworkAddressData.DeserializeCloudVmClusterVirtualNetworkAddressData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CloudVmClusterVirtualNetworkAddressResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CloudVmClusterVirtualNetworkAddressResource> IOperationSource<CloudVmClusterVirtualNetworkAddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
-            return await Task.FromResult(new CloudVmClusterVirtualNetworkAddressResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CloudVmClusterVirtualNetworkAddressData data = CloudVmClusterVirtualNetworkAddressData.DeserializeCloudVmClusterVirtualNetworkAddressData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CloudVmClusterVirtualNetworkAddressResource(_client, data);
         }
     }
 }

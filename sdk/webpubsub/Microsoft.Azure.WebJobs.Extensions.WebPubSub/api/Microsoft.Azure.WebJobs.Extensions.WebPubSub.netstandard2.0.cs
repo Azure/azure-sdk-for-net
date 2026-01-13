@@ -133,7 +133,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class WebPubSubAttribute : System.Attribute
     {
         public WebPubSubAttribute() { }
-        [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
         public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }
@@ -154,7 +153,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public WebPubSubConnectionAttribute() { }
         public Azure.Messaging.WebPubSub.WebPubSubClientProtocol ClientProtocol { get { throw null; } set { } }
-        [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
         public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } set { } }
@@ -188,7 +186,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubFunctionsOptions() { }
         public string ConnectionString { get { throw null; } set { } }
         public string Hub { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
     public enum WebPubSubTriggerAcceptedClientProtocols

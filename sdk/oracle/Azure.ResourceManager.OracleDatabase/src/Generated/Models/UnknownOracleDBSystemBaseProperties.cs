@@ -11,7 +11,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Unknown version of OracleDBSystemBaseProperties. </summary>
     internal partial class UnknownOracleDBSystemBaseProperties : OracleDBSystemBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOracleDBSystemBaseProperties"/>. </summary>
@@ -45,14 +44,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="version"> The Oracle Database version of the DB system. </param>
         /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
         /// <param name="computeCount"> The number of compute servers for the DB system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOracleDBSystemBaseProperties(DBSystemSourceType? source, OracleDatabaseProvisioningState? provisioningState, Uri ociUri, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, string clusterName, string displayName, int? initialDataStorageSizeInGb, int? dataStorageSizeInGbs, OracleDBSystemOptions dbSystemOptions, DBSystemDiskRedundancyType? diskRedundancy, string domainV2, string gridImageOcid, string hostname, string ocid, OracleLicenseModel? licenseModelV2, string lifecycleDetails, DBSystemLifecycleState? lifecycleState, int? listenerPort, int? memorySizeInGbs, int? nodeCount, string scanDnsName, IReadOnlyList<string> scanIPs, string shape, IList<string> sshPublicKeys, StorageVolumePerformanceMode? storageVolumePerformanceMode, string timeZone, string version, OracleDatabaseComputeModel? computeModel, int? computeCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(source, provisioningState, ociUri, resourceAnchorId, networkAnchorId, clusterName, displayName, initialDataStorageSizeInGb, dataStorageSizeInGbs, dbSystemOptions, diskRedundancy, domainV2, gridImageOcid, hostname, ocid, licenseModelV2, lifecycleDetails, lifecycleState, listenerPort, memorySizeInGbs, nodeCount, scanDnsName, scanIPs, shape, sshPublicKeys, storageVolumePerformanceMode, timeZone, version, computeModel, computeCount, serializedAdditionalRawData)
-        {
-            Source = source;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownOracleDBSystemBaseProperties"/> for deserialization. </summary>
-        internal UnknownOracleDBSystemBaseProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOracleDBSystemBaseProperties(DBSystemSourceType? source, OracleDatabaseProvisioningState? provisioningState, Uri ociUri, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, string clusterName, string displayName, int? initialDataStorageSizeInGb, int? dataStorageSizeInGbs, OracleDBSystemOptions dbSystemOptions, DBSystemDiskRedundancyType? diskRedundancy, string domainV2, string gridImageOcid, string hostname, string ocid, OracleLicenseModel? licenseModelV2, string lifecycleDetails, DBSystemLifecycleState? lifecycleState, int? listenerPort, int? memorySizeInGbs, int? nodeCount, string scanDnsName, IReadOnlyList<string> scanIPs, string shape, IList<string> sshPublicKeys, StorageVolumePerformanceMode? storageVolumePerformanceMode, string timeZone, string version, OracleDatabaseComputeModel? computeModel, int? computeCount, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(source != default ? source : "unknown", provisioningState, ociUri, resourceAnchorId, networkAnchorId, clusterName, displayName, initialDataStorageSizeInGb, dataStorageSizeInGbs, dbSystemOptions, diskRedundancy, domainV2, gridImageOcid, hostname, ocid, licenseModelV2, lifecycleDetails, lifecycleState, listenerPort, memorySizeInGbs, nodeCount, scanDnsName, scanIPs, shape, sshPublicKeys, storageVolumePerformanceMode, timeZone, version, computeModel, computeCount, additionalBinaryDataProperties)
         {
         }
     }

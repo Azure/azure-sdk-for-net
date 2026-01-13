@@ -1,14 +1,26 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Added `BicepMetadata` class that provides a clean, type-safe way to set Bicep metadata on resources:
+    - Description - Adds `@description('...')` decorator
+    - BatchSize - Adds `@batchSize(n)` decorator for loop deployments
+    - OnlyIfNotExists - Adds `@onlyIfNotExists()` decorator
+- Added `BicepMetadata` property on `ProvisionableResource`
+
+## 1.4.0 (2025-12-10)
+
+### Features Added
+
+- Added extension method `BicepValueExtensions.ToBicepExpression` which converts any `IBicepValue` into `BicepExpression` to build up complex expressions in bicep. For more details, please refer to the documents in `README`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
+- Fixed exception when output variable has a type of array or object.
+- Fixed bug when indexing output list or dictionary, a `KeyNotFoundException` was always thrown. ([#48491](https://github.com/Azure/azure-sdk-for-net/issues/48491))
 
 ## 1.4.0-beta.3 (2025-11-26)
 

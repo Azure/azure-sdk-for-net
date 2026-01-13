@@ -229,7 +229,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.endpoint"
         },
         {
           "$id": "17",
@@ -247,7 +247,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.client"
         }
       ],
       "initializedBy": 1,
@@ -393,7 +393,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.endpoint"
         },
         {
           "$id": "27",
@@ -411,7 +411,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.client"
         }
       ],
       "initializedBy": 1,

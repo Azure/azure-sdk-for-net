@@ -245,7 +245,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Baz.endpoint"
             },
             {
               "$id": "19",
@@ -263,7 +263,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Baz.client"
             }
           ],
           "initializedBy": 0,
@@ -338,7 +338,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.endpoint"
                 },
                 {
                   "$id": "25",
@@ -356,7 +356,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.client"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.client"
                 }
               ],
               "initializedBy": 0,
@@ -433,7 +433,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Qux.endpoint"
             },
             {
               "$id": "31",
@@ -451,7 +451,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Qux.client"
             }
           ],
           "initializedBy": 0,
@@ -526,7 +526,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.endpoint"
                 },
                 {
                   "$id": "37",
@@ -544,7 +544,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.client"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.client"
                 }
               ],
               "initializedBy": 0,
@@ -658,7 +658,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Foo.endpoint"
             },
             {
               "$id": "45",
@@ -676,7 +676,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Foo.client"
             }
           ],
           "initializedBy": 0,
@@ -788,7 +788,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Bar.endpoint"
             },
             {
               "$id": "53",
@@ -806,7 +806,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Bar.client"
             }
           ],
           "initializedBy": 0,

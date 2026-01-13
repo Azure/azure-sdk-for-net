@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The OIDC issuer profile of the Managed Cluster. </summary>
+    /// <summary>
+    /// The OIDC issuer profile of the Managed Cluster.
+    /// Serialized Name: ManagedClusterOidcIssuerProfile
+    /// </summary>
     public partial class ManagedClusterOidcIssuerProfile
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterOidcIssuerProfile"/>. </summary>
-        /// <param name="issuerUriInfo"> The OIDC issuer url of the Managed Cluster. </param>
-        /// <param name="isEnabled"> Whether the OIDC issuer is enabled. </param>
+        /// <param name="issuerUriInfo">
+        /// The OIDC issuer url of the Managed Cluster.
+        /// Serialized Name: ManagedClusterOidcIssuerProfile.issuerURL
+        /// </param>
+        /// <param name="isEnabled">
+        /// Whether the OIDC issuer is enabled.
+        /// Serialized Name: ManagedClusterOidcIssuerProfile.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterOidcIssuerProfile(string issuerUriInfo, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The OIDC issuer url of the Managed Cluster. </summary>
+        /// <summary>
+        /// The OIDC issuer url of the Managed Cluster.
+        /// Serialized Name: ManagedClusterOidcIssuerProfile.issuerURL
+        /// </summary>
         [WirePath("issuerURL")]
         public string IssuerUriInfo { get; }
-        /// <summary> Whether the OIDC issuer is enabled. </summary>
+        /// <summary>
+        /// Whether the OIDC issuer is enabled.
+        /// Serialized Name: ManagedClusterOidcIssuerProfile.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }

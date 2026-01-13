@@ -17,6 +17,11 @@
 - Added BlobErrorCode.IncrementalCopyOfEarlierSnapshotNotAllowed, deprecated BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed.
 - Added support for missing SkuName values.
 
+## 12.27.0 (2026-01-08)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
+
 ## 12.27.0-beta.1 (2025-11-17)
 
 ### Features Added

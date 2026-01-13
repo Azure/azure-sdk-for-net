@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public readonly partial struct ImpactConnectorType : IEquatable<ImpactConnectorType>
     {
         private readonly string _value;
+        /// <summary> Type of Azure Monitor. </summary>
+        private const string AzureMonitorValue = "AzureMonitor";
 
         /// <summary> Initializes a new instance of <see cref="ImpactConnectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImpactConnectorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureMonitorValue = "AzureMonitor";
+            _value = value;
+        }
 
         /// <summary> Type of Azure Monitor. </summary>
         public static ImpactConnectorType AzureMonitor { get; } = new ImpactConnectorType(AzureMonitorValue);
+
         /// <summary> Determines if two <see cref="ImpactConnectorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImpactConnectorType left, ImpactConnectorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImpactConnectorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImpactConnectorType left, ImpactConnectorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImpactConnectorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImpactConnectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImpactConnectorType(string value) => new ImpactConnectorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImpactConnectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImpactConnectorType?(string value) => value == null ? null : new ImpactConnectorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImpactConnectorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImpactConnectorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
     {
         public VirtualEnclaveApprovalData() { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveApprovalData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveApprovalData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveApprovalData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveApprovalData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveApprovalData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -94,7 +97,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
         public VirtualEnclaveCommunityData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -122,7 +128,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
     {
         public VirtualEnclaveCommunityEndpointData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -212,7 +221,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
     {
         public VirtualEnclaveConnectionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,7 +265,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
         public VirtualEnclaveData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -281,7 +296,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
     {
         public VirtualEnclaveEndpointData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -410,7 +428,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
     {
         public VirtualEnclaveTransitHubData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveTransitHubData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveTransitHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveTransitHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveTransitHubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveTransitHubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -463,7 +484,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
     {
         public VirtualEnclaveWorkloadData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveWorkloadData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveWorkloadData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveWorkloadData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveWorkloadData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveWorkloadData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -547,29 +571,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
 }
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionPerformed : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionPerformed(string value) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed Approved { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed Rejected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed left, Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed left, Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ApprovalActionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent>
     {
         public ApprovalActionContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus approvalStatus) { }
         public Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus ApprovalStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -580,7 +589,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     {
         internal ApprovalActionResult() { }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -589,11 +601,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     }
     public partial class ApprovalCallbackContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent>
     {
-        public ApprovalCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction resourceRequestAction, Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus approvalStatus) { }
+        public ApprovalCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType resourceRequestAction, Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus approvalStatus) { }
         public string ApprovalCallbackPayload { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus ApprovalStatus { get { throw null; } }
-        public Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction ResourceRequestAction { get { throw null; } }
+        public Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType ResourceRequestAction { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -602,9 +617,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     }
     public partial class ApprovalDeletionCallbackContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent>
     {
-        public ApprovalDeletionCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction resourceRequestAction) { }
-        public Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction ResourceRequestAction { get { throw null; } }
+        public ApprovalDeletionCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType resourceRequestAction) { }
+        public Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType ResourceRequestAction { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -618,7 +636,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string ApprovalCallbackRoute { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus? ApprovalStatus { get { throw null; } set { } }
         public string ResourceAction { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -632,49 +653,90 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string ApprovalCallbackRoute { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus? ApprovalStatus { get { throw null; } set { } }
         public string ResourceAction { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApproverActionPerformed : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApproverActionPerformed(string value) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed Approved { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed Rejected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed left, Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed left, Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmVirtualEnclavesModelFactory
     {
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionContent ApprovalActionContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus approvalStatus = default(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus)) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ApprovalActionResult ApprovalActionResult(string message = null) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent ApprovalCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction resourceRequestAction = default(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction), Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus approvalStatus = default(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus), string approvalCallbackPayload = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ApprovalCallbackContent ApprovalCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType resourceRequestAction = default(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType), Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus approvalStatus = default(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus), string approvalCallbackPayload = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ApprovalDeletionCallbackContent ApprovalDeletionCallbackContent(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType resourceRequestAction = default(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType)) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch ApprovalRequestMetadataPatch(string resourceAction = null, string approvalCallbackRoute = null, string approvalCallbackPayload = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus? approvalStatus = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus?)) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent CheckAddressSpaceAvailabilityContent(Azure.Core.ResourceIdentifier communityResourceId = null, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork enclaveVirtualNetwork = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult CheckAddressSpaceAvailabilityResult(bool isAvailable = false) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule CommunityEndpointDestinationRule(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType? destinationType = default(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol> protocols = null, Azure.Core.ResourceIdentifier transitHubResourceId = null, string endpointRuleName = null, string destination = null, string ports = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces EnclaveAddressSpaces(string enclaveAddressSpace = null, string managedAddressSpace = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings EnclaveDefaultSettings(Azure.Core.ResourceIdentifier keyVaultResourceId = null, Azure.Core.ResourceIdentifier storageAccountResourceId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> logAnalyticsResourceIdCollection = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination? diagnosticDestination = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination?)) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule EnclaveEndpointDestinationRule(System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol> protocols = null, string endpointRuleName = null, string destination = null, string ports = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork EnclaveVirtualNetwork(string networkName = null, string networkSize = null, string customCidrRange = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration> subnetConfigurations = null, bool? allowSubnetCommunication = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource MoboBrokerResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveApprovalData VirtualEnclaveApprovalData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties properties = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties VirtualEnclaveApprovalPatchProperties(Azure.Core.ResourceIdentifier parentResourceId = null, Azure.Core.ResourceIdentifier grandparentResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover> approvers = null, string ticketId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? stateChangedOn = default(System.DateTimeOffset?), Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch requestMetadata = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties VirtualEnclaveApprovalProperties(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), Azure.Core.ResourceIdentifier parentResourceId = null, Azure.Core.ResourceIdentifier grandparentResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover> approvers = null, string ticketId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? stateChangedOn = default(System.DateTimeOffset?), Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata requestMetadata = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings VirtualEnclaveApprovalSettings(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? endpointCreation = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? endpointUpdate = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? endpointDeletion = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? connectionCreation = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? connectionUpdate = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? connectionDeletion = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? enclaveCreation = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? enclaveDeletion = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? maintenanceMode = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? serviceCatalogDeployment = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? notificationOnApprovalCreation = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? notificationOnApprovalAction = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? notificationOnApprovalDeletion = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover> mandatoryApprovers = null, long? minimumApproversRequired = default(long?)) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityData VirtualEnclaveCommunityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveCommunityEndpointData VirtualEnclaveCommunityEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch VirtualEnclaveCommunityEndpointPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> communityEndpointPatchRuleCollection = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties VirtualEnclaveCommunityEndpointProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> ruleCollection = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> managedOnBehalfOfMoboBrokerResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> governedServiceList = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride? policyOverride = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku? firewallSku = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings approvalSettings = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch VirtualEnclaveCommunityPatch(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties VirtualEnclaveCommunityPatchProperties(System.Collections.Generic.IEnumerable<string> dnsServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> governedServiceList = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride? policyOverride = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku? firewallSku = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover> approvalMandatoryApprovers = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> governedServiceList = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride? policyOverride = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku? firewallSku = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings approvalSettings = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveConnectionData VirtualEnclaveConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch VirtualEnclaveConnectionPatch(string enclaveConnectionPatchSourceCidr = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties VirtualEnclaveConnectionProperties(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState? state = default(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState?), Azure.Core.ResourceIdentifier communityResourceId = null, Azure.Core.ResourceIdentifier sourceResourceId = null, string sourceCidr = null, Azure.Core.ResourceIdentifier destinationEndpointId = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveData VirtualEnclaveData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveEndpointData VirtualEnclaveEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch VirtualEnclaveEndpointPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> enclaveEndpointPatchRuleCollection = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties VirtualEnclaveEndpointProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> ruleCollection = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService VirtualEnclaveGovernedService(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier serviceId = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier), string serviceName = null, Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType? option = default(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType?), Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement? enforcement = default(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement?), Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction? policyAction = default(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction?), System.Collections.Generic.IEnumerable<string> initiatives = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService VirtualEnclaveGovernedService(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier serviceId = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier), string serviceName = null, Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType? option = default(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType?), Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement? enforcement = default(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement?), Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType? policyAction = default(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType?), System.Collections.Generic.IEnumerable<string> initiatives = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration VirtualEnclaveMaintenanceModeConfiguration(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode mode = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal> principals = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification? justification = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification?)) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch VirtualEnclaveMaintenanceModeConfigurationPatch(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode mode = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal> principals = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification? justification = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification?)) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch VirtualEnclavePatch(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties VirtualEnclavePatchProperties(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork enclaveVirtualNetwork = null, bool? isBastionEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> governedServiceList = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination? enclaveDefaultDiagnosticDestination = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = null) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties VirtualEnclaveProperties(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork enclaveVirtualNetwork = null, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces enclaveAddressSpaces = null, Azure.Core.ResourceIdentifier communityResourceId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> managedOnBehalfOfMoboBrokerResources = null, bool? isBastionEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> governedServiceList = null, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings enclaveDefaultSettings = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties VirtualEnclaveProperties(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork enclaveVirtualNetwork = null, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces enclaveAddressSpaces = null, Azure.Core.ResourceIdentifier communityResourceId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null, string managedResourceGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, bool? isBastionEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> governedServiceList = null, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings enclaveDefaultSettings = null, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem VirtualEnclaveRoleAssignmentItem(string roleDefinitionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal> principals = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration VirtualEnclaveSubnetConfiguration(string subnetName = null, Azure.Core.ResourceIdentifier subnetResourceId = null, int networkPrefixSize = 0, string subnetDelegation = null, string addressPrefix = null, Azure.Core.ResourceIdentifier networkSecurityGroupResourceId = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveTransitHubData VirtualEnclaveTransitHubData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch VirtualEnclaveTransitHubPatch(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties VirtualEnclaveTransitHubProperties(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState? state = default(Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState?), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties transitOption = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceCollection = null) { throw null; }
         public static Azure.ResourceManager.VirtualEnclaves.VirtualEnclaveWorkloadData VirtualEnclaveWorkloadData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties VirtualEnclaveWorkloadProperties(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), System.Collections.Generic.IEnumerable<string> resourceGroupCollection = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch VirtualEnclaveWorkloadPatch(System.Collections.Generic.IEnumerable<string> workloadPatchResourceGroupCollection = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties VirtualEnclaveWorkloadProperties(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? provisioningState = default(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState?), System.Collections.Generic.IEnumerable<string> resourceGroupCollection = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
     }
     public partial class CheckAddressSpaceAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent>
     {
         public CheckAddressSpaceAvailabilityContent(Azure.Core.ResourceIdentifier communityResourceId, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork enclaveVirtualNetwork) { }
         public Azure.Core.ResourceIdentifier CommunityResourceId { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork EnclaveVirtualNetwork { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,7 +747,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     {
         internal CheckAddressSpaceAvailabilityResult() { }
         public bool IsAvailable { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.CheckAddressSpaceAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -701,7 +766,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string Ports { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol> Protocols { get { throw null; } }
         public Azure.Core.ResourceIdentifier TransitHubResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -719,12 +787,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType IPAddress { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType PrivateNetwork { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType left, Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType left, Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -743,12 +810,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol left, Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol left, Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -757,7 +823,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         internal EnclaveAddressSpaces() { }
         public string EnclaveAddressSpace { get { throw null; } }
         public string ManagedAddressSpace { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveAddressSpaces>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -778,12 +847,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState PendingApproval { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState PendingUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState left, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState left, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -794,7 +862,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.Core.ResourceIdentifier KeyVaultResourceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> LogAnalyticsResourceIdCollection { get { throw null; } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveDefaultSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -808,7 +879,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string EndpointRuleName { get { throw null; } set { } }
         public string Ports { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol> Protocols { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -828,12 +902,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol left, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol left, Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -845,12 +918,29 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string NetworkName { get { throw null; } set { } }
         public string NetworkSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveVirtualNetwork>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MoboBrokerResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>
+    {
+        internal MoboBrokerResource() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PostActionApprovalStatus : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus>
@@ -861,12 +951,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus Approved { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionApprovalStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -879,71 +968,67 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus Approved { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionCallbackApprovalStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PostActionDeletionResourceRequestAction : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction>
+    public readonly partial struct PostActionDeletionResourceActionType : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PostActionDeletionResourceRequestAction(string value) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction Create { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction Delete { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction Update { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public PostActionDeletionResourceActionType(string value) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType Create { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType Delete { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType Update { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceRequestAction right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionDeletionResourceActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PostActionResourceRequestAction : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction>
+    public readonly partial struct PostActionResourceActionType : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PostActionResourceRequestAction(string value) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction Create { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction Delete { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction Reset { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction Update { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public PostActionResourceActionType(string value) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType Create { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType Delete { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType Reset { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType Update { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceRequestAction right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType left, Azure.ResourceManager.VirtualEnclaves.Models.PostActionResourceActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ServiceEnforcementPolicyAction : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction>
+    public readonly partial struct ServiceEnforcementPolicyActionType : System.IEquatable<Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ServiceEnforcementPolicyAction(string value) { throw null; }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction AuditOnly { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction Enforce { get { throw null; } }
-        public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ServiceEnforcementPolicyActionType(string value) { throw null; }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType AuditOnly { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType Enforce { get { throw null; } }
+        public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -957,12 +1042,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType ExceptionOnly { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -975,12 +1059,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement Disabled { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement left, Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -996,12 +1079,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState PendingApproval { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState PendingUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState left, Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState left, Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1010,7 +1092,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public TransitOptionParams() { }
         public Azure.Core.ResourceIdentifier RemoteVirtualNetworkId { get { throw null; } set { } }
         public long? ScaleUnits { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1027,12 +1112,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType Gateway { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType Peering { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType left, Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType left, Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1040,7 +1124,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     {
         public VirtualEnclaveApprovalPatch() { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1057,7 +1144,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadataPatch RequestMetadata { get { throw null; } }
         public System.DateTimeOffset? StateChangedOn { get { throw null; } set { } }
         public string TicketId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1073,12 +1163,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy NotRequired { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1093,7 +1182,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.ApprovalRequestMetadata RequestMetadata { get { throw null; } set { } }
         public System.DateTimeOffset? StateChangedOn { get { throw null; } set { } }
         public string TicketId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1118,7 +1210,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? NotificationOnApprovalCreation { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? NotificationOnApprovalDeletion { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalPolicy? ServiceCatalogDeployment { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1137,22 +1232,24 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprovalStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class VirtualEnclaveApprover : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover>
     {
         public VirtualEnclaveApprover(string approverEntraId, System.DateTimeOffset lastUpdatedOn) { }
-        public Azure.ResourceManager.VirtualEnclaves.Models.ActionPerformed? ActionPerformed { get { throw null; } set { } }
+        public Azure.ResourceManager.VirtualEnclaves.Models.ApproverActionPerformed? ActionPerformed { get { throw null; } set { } }
         public string ApproverEntraId { get { throw null; } set { } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveApprover>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1162,9 +1259,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public partial class VirtualEnclaveCommunityEndpointPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>
     {
         public VirtualEnclaveCommunityEndpointPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> CommunityEndpointPatchRuleCollection { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> CommunityEndpointPatchRuleCollection { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1177,7 +1277,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ResourceCollection { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.CommunityEndpointDestinationRule> RuleCollection { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityEndpointProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1190,7 +1293,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1207,7 +1313,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> GovernedServiceList { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch MaintenanceModeConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride? PolicyOverride { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1223,12 +1332,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride Enclave { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1242,12 +1350,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku? FirewallSku { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> GovernedServiceList { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public string ManagedResourceGroupName { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityPolicyOverride? PolicyOverride { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ResourceCollection { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveCommunityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1259,7 +1370,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclaveConnectionPatch() { }
         public string EnclaveConnectionPatchSourceCidr { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1276,7 +1390,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string SourceCidr { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.EnclaveConnectionState? State { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1293,21 +1410,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination CommunityOnly { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination EnclaveOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveDiagnosticDestination right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class VirtualEnclaveEndpointPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>
     {
         public VirtualEnclaveEndpointPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> EnclaveEndpointPatchRuleCollection { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> EnclaveEndpointPatchRuleCollection { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1320,7 +1439,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ResourceCollection { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.EnclaveEndpointDestinationRule> RuleCollection { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveEndpointProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1337,12 +1459,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku Premium { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveFirewallSku right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1352,10 +1473,13 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.ServiceInitiativeEnforcement? Enforcement { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> Initiatives { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.ServiceGovernanceOptionType? Option { get { throw null; } set { } }
-        public Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyAction? PolicyAction { get { throw null; } set { } }
+        public Azure.ResourceManager.VirtualEnclaves.Models.ServiceEnforcementPolicyActionType? PolicyAction { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier ServiceId { get { throw null; } set { } }
         public string ServiceName { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1384,12 +1508,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier ServiceBus { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier Storage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedServiceIdentifier right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1403,12 +1526,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification Networking { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification Off { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1424,12 +1546,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode Off { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1439,7 +1560,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification? Justification { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode Mode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal> Principals { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1452,7 +1576,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceJustification? Justification { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceMode Mode { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal> Principals { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1463,7 +1590,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     {
         public VirtualEnclaveMandatoryApprover(string approverEntraId) { }
         public string ApproverEntraId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMandatoryApprover>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1476,7 +1606,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1493,7 +1626,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public bool? IsBastionEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfigurationPatch MaintenanceModeConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1505,7 +1641,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclavePrincipal(string id, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType type) { }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1522,12 +1661,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType ServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipalType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1542,12 +1680,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveGovernedService> GovernedServiceList { get { throw null; } }
         public bool? IsBastionEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public string ManagedResourceGroupName { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ResourceCollection { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1570,12 +1711,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState left, Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1584,7 +1724,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclaveRoleAssignmentItem(string roleDefinitionId) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclavePrincipal> Principals { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveRoleAssignmentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1600,7 +1743,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public string SubnetDelegation { get { throw null; } set { } }
         public string SubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveSubnetConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1612,7 +1758,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclaveTransitHubPatch() { }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1624,7 +1773,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclaveTransitHubPatchProperties() { }
         public Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState? State { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties TransitOption { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1638,7 +1790,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ResourceCollection { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.TransitHubState? State { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties TransitOption { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitHubProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1650,7 +1805,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclaveTransitOptionProperties() { }
         public Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionParams Params { get { throw null; } set { } }
         public Azure.ResourceManager.VirtualEnclaves.Models.TransitOptionType? Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveTransitOptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1662,7 +1820,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         public VirtualEnclaveWorkloadPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<string> WorkloadPatchResourceGroupCollection { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1672,10 +1833,13 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public partial class VirtualEnclaveWorkloadProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties>
     {
         public VirtualEnclaveWorkloadProperties() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.VirtualEnclaves.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> ResourceGroupCollection { get { throw null; } }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VirtualEnclaves.Models.VirtualEnclaveWorkloadProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

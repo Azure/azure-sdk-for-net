@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct BrokerProtocolType : IEquatable<BrokerProtocolType>
     {
         private readonly string _value;
+        /// <summary> protocol broker. </summary>
+        private const string MqttValue = "Mqtt";
+        /// <summary> protocol websocket. </summary>
+        private const string WebSocketsValue = "WebSockets";
 
         /// <summary> Initializes a new instance of <see cref="BrokerProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BrokerProtocolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MqttValue = "Mqtt";
-        private const string WebSocketsValue = "WebSockets";
+            _value = value;
+        }
 
         /// <summary> protocol broker. </summary>
         public static BrokerProtocolType Mqtt { get; } = new BrokerProtocolType(MqttValue);
+
         /// <summary> protocol websocket. </summary>
         public static BrokerProtocolType WebSockets { get; } = new BrokerProtocolType(WebSocketsValue);
+
         /// <summary> Determines if two <see cref="BrokerProtocolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BrokerProtocolType left, BrokerProtocolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BrokerProtocolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BrokerProtocolType left, BrokerProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BrokerProtocolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BrokerProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BrokerProtocolType(string value) => new BrokerProtocolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BrokerProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BrokerProtocolType?(string value) => value == null ? null : new BrokerProtocolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BrokerProtocolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BrokerProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
