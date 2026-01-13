@@ -114,9 +114,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.MapTileScheme Tms { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileScheme Xyz { get { throw null; } }
         public bool Equals(Azure.Maps.Rendering.MapTileScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Rendering.MapTileScheme left, Azure.Maps.Rendering.MapTileScheme right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.MapTileScheme (string value) { throw null; }
@@ -169,9 +167,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftWeatherInfraredMain { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftWeatherRadarMain { get { throw null; } }
         public bool Equals(Azure.Maps.Rendering.MapTileSetId other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Rendering.MapTileSetId left, Azure.Maps.Rendering.MapTileSetId right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.MapTileSetId (string value) { throw null; }
@@ -187,9 +183,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.MapTileSize Size256 { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSize Size512 { get { throw null; } }
         public bool Equals(Azure.Maps.Rendering.MapTileSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Rendering.MapTileSize left, Azure.Maps.Rendering.MapTileSize right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.MapTileSize (string value) { throw null; }
@@ -205,9 +199,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.MediaType ImageJpeg { get { throw null; } }
         public static Azure.Maps.Rendering.MediaType ImagePng { get { throw null; } }
         public bool Equals(Azure.Maps.Rendering.MediaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Rendering.MediaType left, Azure.Maps.Rendering.MediaType right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.MediaType (string value) { throw null; }
@@ -279,9 +271,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.RenderingLanguage TraditionalChinese { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage Turkish { get { throw null; } }
         public bool Equals(Azure.Maps.Rendering.RenderingLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Rendering.RenderingLanguage left, Azure.Maps.Rendering.RenderingLanguage right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.RenderingLanguage (string value) { throw null; }
@@ -297,9 +287,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.TrafficTilesetId MicrosoftTrafficRelativeMain { get { throw null; } }
         public static Azure.Maps.Rendering.TrafficTilesetId None { get { throw null; } }
         public bool Equals(Azure.Maps.Rendering.TrafficTilesetId other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Rendering.TrafficTilesetId left, Azure.Maps.Rendering.TrafficTilesetId right) { throw null; }
         public static implicit operator Azure.Maps.Rendering.TrafficTilesetId (string value) { throw null; }

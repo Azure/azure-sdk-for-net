@@ -12,13 +12,13 @@
 
 ## Summary
 
-- Total libraries: 400
+- Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 53
+  - Autorest/Swagger: 155
+  - New Emitter (TypeSpec): 54
   - Old TypeSpec: 18
-- Data Plane (DPG): 173
-  - Autorest/Swagger: 86
+- Data Plane (DPG): 174
+  - Autorest/Swagger: 87
   - New Emitter (TypeSpec): 22
   - Old TypeSpec: 16
 - No generator: 49
@@ -74,7 +74,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 | Service | Library |
 | ------- | ------- |
@@ -131,6 +131,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 | provisioning | Azure.Provisioning.Network |
 | provisioning | Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql |
+| provisioning | Azure.Provisioning.PrivateDns |
 | provisioning | Azure.Provisioning.Redis |
 | provisioning | Azure.Provisioning.RedisEnterprise |
 | provisioning | Azure.Provisioning.Search |
@@ -170,7 +171,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 53 / 71 (74.6%)
+**Migration Status**: 54 / 72 (75%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -198,6 +199,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
@@ -249,7 +251,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 156
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 155
 
 | Service | Library |
 | ------- | ------- |
@@ -311,7 +313,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
 | edgeorder | Azure.ResourceManager.EdgeOrder |
-| edgezones | Azure.ResourceManager.EdgeZones |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations |

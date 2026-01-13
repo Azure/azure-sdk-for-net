@@ -683,9 +683,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.AtlasSortType Descend { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.AtlasSortType None { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.AtlasSortType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.AtlasSortType left, Azure.Analytics.Purview.DataMap.AtlasSortType right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.AtlasSortType (string value) { throw null; }
@@ -763,9 +761,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus Proposed { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus Validated { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus left, Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus (string value) { throw null; }
@@ -799,9 +795,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus Obsolete { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus Other { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus left, Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus (string value) { throw null; }
@@ -953,9 +947,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior Merge { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior Replace { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior left, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior (string value) { throw null; }
@@ -983,9 +975,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.CardinalityValue Set { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.CardinalityValue Single { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.CardinalityValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.CardinalityValue left, Azure.Analytics.Purview.DataMap.CardinalityValue right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.CardinalityValue (string value) { throw null; }
@@ -1231,9 +1221,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.EntityStatus Active { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.EntityStatus Deleted { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.EntityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.EntityStatus left, Azure.Analytics.Purview.DataMap.EntityStatus right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.EntityStatus (string value) { throw null; }
@@ -1378,9 +1366,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.ImportStatus Failed { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.ImportStatus Success { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.ImportStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.ImportStatus left, Azure.Analytics.Purview.DataMap.ImportStatus right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.ImportStatus (string value) { throw null; }
@@ -1414,9 +1400,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.LineageDirection Input { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.LineageDirection Output { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.LineageDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.LineageDirection left, Azure.Analytics.Purview.DataMap.LineageDirection right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.LineageDirection (string value) { throw null; }
@@ -1539,9 +1523,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.RelationshipCategory Association { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.RelationshipCategory Composition { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.RelationshipCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.RelationshipCategory left, Azure.Analytics.Purview.DataMap.RelationshipCategory right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.RelationshipCategory (string value) { throw null; }
@@ -1575,9 +1557,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.RoundingMode Unnecessary { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.RoundingMode Up { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.RoundingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.RoundingMode left, Azure.Analytics.Purview.DataMap.RoundingMode right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.RoundingMode (string value) { throw null; }
@@ -1697,9 +1677,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.SearchSortOrder Ascend { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.SearchSortOrder Descend { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.SearchSortOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.SearchSortOrder left, Azure.Analytics.Purview.DataMap.SearchSortOrder right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.SearchSortOrder (string value) { throw null; }
@@ -1727,9 +1705,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.StatusAtlasRelationship Active { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.StatusAtlasRelationship Deleted { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.StatusAtlasRelationship other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.StatusAtlasRelationship left, Azure.Analytics.Purview.DataMap.StatusAtlasRelationship right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.StatusAtlasRelationship (string value) { throw null; }
@@ -1816,9 +1792,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.TermStatus Draft { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.TermStatus Expired { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.TermStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.TermStatus left, Azure.Analytics.Purview.DataMap.TermStatus right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.TermStatus (string value) { throw null; }
@@ -1880,9 +1854,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.TypeCategory Struct { get { throw null; } }
         public static Azure.Analytics.Purview.DataMap.TypeCategory TermTemplate { get { throw null; } }
         public bool Equals(Azure.Analytics.Purview.DataMap.TypeCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Purview.DataMap.TypeCategory left, Azure.Analytics.Purview.DataMap.TypeCategory right) { throw null; }
         public static implicit operator Azure.Analytics.Purview.DataMap.TypeCategory (string value) { throw null; }

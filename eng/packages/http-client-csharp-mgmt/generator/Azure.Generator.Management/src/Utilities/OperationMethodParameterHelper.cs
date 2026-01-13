@@ -8,6 +8,7 @@ using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -74,6 +75,12 @@ namespace Azure.Generator.Management.Utilities
                 // TODO -- we should be able to just update the parameters from convenience method.
                 // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
 
+                // Rename resource model parameters to "data"
+                if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                {
+                    outputParameter = RenameWithNewInstance(outputParameter, "data");
+                }
+
                 // Apply name transformations as needed
                 // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
                 if (enclosingTypeProvider is MockableArmClientProvider &&
@@ -81,22 +88,7 @@ namespace Azure.Generator.Management.Utilities
                     inputParameter.Type is InputPrimitiveType primitiveType &&
                     primitiveType.Kind == InputPrimitiveTypeKind.String)
                 {
-                    outputParameter = new ParameterProvider(
-                        name: "scope",
-                        description: $"The scope that the resource will apply against.",
-                        type: typeof(ResourceIdentifier),
-                        defaultValue: outputParameter.DefaultValue,
-                        isRef: outputParameter.IsRef,
-                        isOut: outputParameter.IsOut,
-                        isIn: outputParameter.IsIn,
-                        isParams: outputParameter.IsParams,
-                        attributes: outputParameter.Attributes,
-                        property: outputParameter.Property,
-                        field: outputParameter.Field,
-                        initializationValue: outputParameter.InitializationValue,
-                        location: outputParameter.Location,
-                        wireInfo: outputParameter.WireInfo,
-                        validation: outputParameter.Validation);
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
                     scopeParameterTransformed = true;
                 }
 
@@ -107,22 +99,7 @@ namespace Azure.Generator.Management.Utilities
                     var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
                     if (normalizedName != null)
                     {
-                        outputParameter = new ParameterProvider(
-                            name: normalizedName,
-                            description: outputParameter.Description,
-                            type: outputParameter.Type,
-                            defaultValue: outputParameter.DefaultValue,
-                            isRef: outputParameter.IsRef,
-                            isOut: outputParameter.IsOut,
-                            isIn: outputParameter.IsIn,
-                            isParams: outputParameter.IsParams,
-                            attributes: outputParameter.Attributes,
-                            property: outputParameter.Property,
-                            field: outputParameter.Field,
-                            initializationValue: outputParameter.InitializationValue,
-                            location: outputParameter.Location,
-                            wireInfo: outputParameter.WireInfo,
-                            validation: outputParameter.Validation);
+                        outputParameter = RenameWithNewInstance(outputParameter, normalizedName);
                     }
                 }
 
@@ -140,5 +117,23 @@ namespace Azure.Generator.Management.Utilities
 
             return [.. requiredParameters, .. optionalParameters];
         }
+
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
+            => new(
+                    name: normalizedName,
+                    description: description ?? outputParameter.Description,
+                    type: type ?? outputParameter.Type,
+                    defaultValue: outputParameter.DefaultValue,
+                    isRef: outputParameter.IsRef,
+                    isOut: outputParameter.IsOut,
+                    isIn: outputParameter.IsIn,
+                    isParams: outputParameter.IsParams,
+                    attributes: outputParameter.Attributes,
+                    property: outputParameter.Property,
+                    field: outputParameter.Field,
+                    initializationValue: outputParameter.InitializationValue,
+                    location: outputParameter.Location,
+                    wireInfo: outputParameter.WireInfo,
+                    validation: outputParameter.Validation);
     }
 }
