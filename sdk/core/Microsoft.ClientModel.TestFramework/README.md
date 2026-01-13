@@ -44,10 +44,10 @@ Without this attribute, the test framework falls back to using the assembly's ou
 ## Examples
 
 Additional samples with explanations can be found in this repository, these are linked below:
-- [Recorded Tests]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/RecordedTests.md)-->: complete guide showing how to set up recorded tests with TestEnvironment classes and credential management.
-- [Sync/Async Testing]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/SyncAsync.md)-->: demonstrates writing a single async test that automatically validates both sync and async client method calls.
-- [Unit Testing]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/UnitTests.md)-->: examples of using mock utilities to test error handling, retry logic, and authentication scenarios without live services.
-- [Test Utilities]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/TestUtilities.md)-->: advanced testing patterns including environment variable management, randomization, and performance testing utilities.
+- [Recorded Tests](https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/RecordedTests.md): complete guide showing how to set up recorded tests with TestEnvironment classes and credential management.
+- [Sync/Async Testing](https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/SyncAsync.md): demonstrates writing a single async test that automatically validates both sync and async client method calls.
+- [Unit Testing](https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/UnitTests.md): examples of using mock utilities to test error handling, retry logic, and authentication scenarios without live services.
+- [Test Utilities](https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/TestUtilities.md): advanced testing patterns including environment variable management, randomization, and performance testing utilities.
 
 ### Recorded tests
 
@@ -130,7 +130,7 @@ By default tests are run in playback mode. You can change the mode in several wa
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
 __Do not check in session records containing secrets.__ Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of `RecordedTestBase` can be used to customize the sanitization process.
 
-For examples, refer to the recorded test [samples]<!--(https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/RecordedTests.md)-->.
+For examples, refer to the recorded test [samples](https://github.com/azure-sdk-for-net/blob/main/sdk/core/Microsoft.ClientModel.TestFramework/samples/RecordedTests.md).
 
 ### Unit tests
 
