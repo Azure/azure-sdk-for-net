@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionReplacementMaps : IUtf8JsonSerializable, IJsonModel<SolutionReplacementMaps>
+    /// <summary> Solution replacement maps. </summary>
+    public partial class SolutionReplacementMaps : IJsonModel<SolutionReplacementMaps>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionReplacementMaps>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SolutionReplacementMaps>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +29,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SolutionReplacementMaps)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(WebResults))
             {
                 writer.WritePropertyName("webResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in WebResults)
+                foreach (KBWebResult item in WebResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();
-                foreach (var item in Diagnostics)
+                foreach (SolutionsDiagnostic item in Diagnostics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("troubleshooters"u8);
                 writer.WriteStartArray();
-                foreach (var item in Troubleshooters)
+                foreach (SolutionsTroubleshooters item in Troubleshooters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("metricsBasedCharts"u8);
                 writer.WriteStartArray();
-                foreach (var item in MetricsBasedCharts)
+                foreach (MetricsBasedChart item in MetricsBasedCharts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();
-                foreach (var item in Videos)
+                foreach (SelfHelpVideo item in Videos)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,21 +88,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("videoGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in VideoGroups)
+                foreach (VideoGroupDetail item in VideoGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,114 +111,118 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        SolutionReplacementMaps IJsonModel<SolutionReplacementMaps>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SolutionReplacementMaps IJsonModel<SolutionReplacementMaps>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SolutionReplacementMaps JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SolutionReplacementMaps)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSolutionReplacementMaps(document.RootElement, options);
         }
 
-        internal static SolutionReplacementMaps DeserializeSolutionReplacementMaps(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SolutionReplacementMaps DeserializeSolutionReplacementMaps(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<KBWebResult> webResults = default;
-            IReadOnlyList<SolutionsDiagnostic> diagnostics = default;
-            IReadOnlyList<SolutionsTroubleshooters> troubleshooters = default;
-            IReadOnlyList<MetricsBasedChart> metricsBasedCharts = default;
-            IReadOnlyList<SelfHelpVideo> videos = default;
-            IReadOnlyList<VideoGroupDetail> videoGroups = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<KBWebResult> webResults = default;
+            IList<SolutionsDiagnostic> diagnostics = default;
+            IList<SolutionsTroubleshooters> troubleshooters = default;
+            IList<MetricsBasedChart> metricsBasedCharts = default;
+            IList<SelfHelpVideo> videos = default;
+            IList<VideoGroupDetail> videoGroups = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("webResults"u8))
+                if (prop.NameEquals("webResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<KBWebResult> array = new List<KBWebResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(KBWebResult.DeserializeKBWebResult(item, options));
                     }
                     webResults = array;
                     continue;
                 }
-                if (property.NameEquals("diagnostics"u8))
+                if (prop.NameEquals("diagnostics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SolutionsDiagnostic> array = new List<SolutionsDiagnostic>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item, options));
                     }
                     diagnostics = array;
                     continue;
                 }
-                if (property.NameEquals("troubleshooters"u8))
+                if (prop.NameEquals("troubleshooters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SolutionsTroubleshooters> array = new List<SolutionsTroubleshooters>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item, options));
                     }
                     troubleshooters = array;
                     continue;
                 }
-                if (property.NameEquals("metricsBasedCharts"u8))
+                if (prop.NameEquals("metricsBasedCharts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MetricsBasedChart> array = new List<MetricsBasedChart>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item, options));
                     }
                     metricsBasedCharts = array;
                     continue;
                 }
-                if (property.NameEquals("videos"u8))
+                if (prop.NameEquals("videos"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SelfHelpVideo> array = new List<SelfHelpVideo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item, options));
                     }
                     videos = array;
                     continue;
                 }
-                if (property.NameEquals("videoGroups"u8))
+                if (prop.NameEquals("videoGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VideoGroupDetail> array = new List<VideoGroupDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VideoGroupDetail.DeserializeVideoGroupDetail(item, options));
                     }
@@ -227,10 +231,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SolutionReplacementMaps(
                 webResults ?? new ChangeTrackingList<KBWebResult>(),
                 diagnostics ?? new ChangeTrackingList<SolutionsDiagnostic>(),
@@ -238,13 +241,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 metricsBasedCharts ?? new ChangeTrackingList<MetricsBasedChart>(),
                 videos ?? new ChangeTrackingList<SelfHelpVideo>(),
                 videoGroups ?? new ChangeTrackingList<VideoGroupDetail>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SolutionReplacementMaps>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SolutionReplacementMaps>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -254,15 +260,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        SolutionReplacementMaps IPersistableModel<SolutionReplacementMaps>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SolutionReplacementMaps IPersistableModel<SolutionReplacementMaps>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SolutionReplacementMaps PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSolutionReplacementMaps(document.RootElement, options);
                     }
                 default:
@@ -270,6 +281,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SolutionReplacementMaps>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

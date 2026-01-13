@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             List<SolutionMetadataProperties> array = new List<SolutionMetadataProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
+                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item, default));
                             }
                             solutions = array;
                             continue;

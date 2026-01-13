@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Discover NLP request. </summary>
     public partial class DiscoveryNlpContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the issue. </param>
@@ -60,27 +32,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. Only applicable for Discovery Solution NLP Subscription Scope. </param>
         /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
         /// <param name="additionalContext"> Additional information in the form of a string. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryNlpContent(string issueSummary, string resourceId, string serviceId, string additionalContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveryNlpContent(string issueSummary, string resourceId, string serviceId, string additionalContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueSummary = issueSummary;
             ResourceId = resourceId;
             ServiceId = serviceId;
             AdditionalContext = additionalContext;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/> for deserialization. </summary>
-        internal DiscoveryNlpContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Natural language description of the issue. </summary>
         public string IssueSummary { get; }
+
         /// <summary> ARM resource Id of the resource that is having the issue. Only applicable for Discovery Solution NLP Subscription Scope. </summary>
         public string ResourceId { get; set; }
+
         /// <summary> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </summary>
         public string ServiceId { get; set; }
+
         /// <summary> Additional information in the form of a string. </summary>
         public string AdditionalContext { get; set; }
     }

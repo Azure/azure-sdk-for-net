@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionsDiagnostic : IUtf8JsonSerializable, IJsonModel<SolutionsDiagnostic>
+    /// <summary> Solutions Diagnostic. </summary>
+    public partial class SolutionsDiagnostic : IJsonModel<SolutionsDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionsDiagnostic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SolutionsDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
@@ -63,8 +63,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("requiredParameters"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredParameters)
+                foreach (string item in RequiredParameters)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -73,21 +78,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
-                foreach (var item in Insights)
+                foreach (SelfHelpDiagnosticInsight item in Insights)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +101,27 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        SolutionsDiagnostic IJsonModel<SolutionsDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SolutionsDiagnostic IJsonModel<SolutionsDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SolutionsDiagnostic JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSolutionsDiagnostic(document.RootElement, options);
         }
 
-        internal static SolutionsDiagnostic DeserializeSolutionsDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SolutionsDiagnostic DeserializeSolutionsDiagnostic(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -121,63 +131,69 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string statusDetails = default;
             string replacementKey = default;
             string estimatedCompletionTime = default;
-            IReadOnlyList<string> requiredParameters = default;
-            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<string> requiredParameters = default;
+            IList<SelfHelpDiagnosticInsight> insights = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("solutionId"u8))
+                if (prop.NameEquals("solutionId"u8))
                 {
-                    solutionId = property.Value.GetString();
+                    solutionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new SelfHelpDiagnosticStatus(property.Value.GetString());
+                    status = new SelfHelpDiagnosticStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusDetails"u8))
+                if (prop.NameEquals("statusDetails"u8))
                 {
-                    statusDetails = property.Value.GetString();
+                    statusDetails = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replacementKey"u8))
+                if (prop.NameEquals("replacementKey"u8))
                 {
-                    replacementKey = property.Value.GetString();
+                    replacementKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("estimatedCompletionTime"u8))
+                if (prop.NameEquals("estimatedCompletionTime"u8))
                 {
-                    estimatedCompletionTime = property.Value.GetString();
+                    estimatedCompletionTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredParameters"u8))
+                if (prop.NameEquals("requiredParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     requiredParameters = array;
                     continue;
                 }
-                if (property.NameEquals("insights"u8))
+                if (prop.NameEquals("insights"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
@@ -186,10 +202,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SolutionsDiagnostic(
                 solutionId,
                 status,
@@ -198,13 +213,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 estimatedCompletionTime,
                 requiredParameters ?? new ChangeTrackingList<string>(),
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -214,15 +232,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        SolutionsDiagnostic IPersistableModel<SolutionsDiagnostic>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SolutionsDiagnostic IPersistableModel<SolutionsDiagnostic>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SolutionsDiagnostic PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSolutionsDiagnostic(document.RootElement, options);
                     }
                 default:
@@ -230,6 +253,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SolutionsDiagnostic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
