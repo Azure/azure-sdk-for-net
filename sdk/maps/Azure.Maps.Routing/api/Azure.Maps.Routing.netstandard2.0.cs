@@ -9,9 +9,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.AlternativeRouteType AnyRoute { get { throw null; } }
         public static Azure.Maps.Routing.AlternativeRouteType BetterRoute { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.AlternativeRouteType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.AlternativeRouteType left, Azure.Maps.Routing.AlternativeRouteType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.AlternativeRouteType (string value) { throw null; }
@@ -28,9 +26,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.InclineLevel Low { get { throw null; } }
         public static Azure.Maps.Routing.InclineLevel Normal { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.InclineLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.InclineLevel left, Azure.Maps.Routing.InclineLevel right) { throw null; }
         public static implicit operator Azure.Maps.Routing.InclineLevel (string value) { throw null; }
@@ -84,9 +80,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.RouteAvoidType TollRoads { get { throw null; } }
         public static Azure.Maps.Routing.RouteAvoidType UnpavedRoads { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.RouteAvoidType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.RouteAvoidType left, Azure.Maps.Routing.RouteAvoidType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.RouteAvoidType (string value) { throw null; }
@@ -164,9 +158,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.RouteInstructionsType Tagged { get { throw null; } }
         public static Azure.Maps.Routing.RouteInstructionsType Text { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.RouteInstructionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.RouteInstructionsType left, Azure.Maps.Routing.RouteInstructionsType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.RouteInstructionsType (string value) { throw null; }
@@ -251,9 +243,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.RouteRepresentationForBestOrder Polyline { get { throw null; } }
         public static Azure.Maps.Routing.RouteRepresentationForBestOrder SummaryOnly { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.RouteRepresentationForBestOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.RouteRepresentationForBestOrder left, Azure.Maps.Routing.RouteRepresentationForBestOrder right) { throw null; }
         public static implicit operator Azure.Maps.Routing.RouteRepresentationForBestOrder (string value) { throw null; }
@@ -271,9 +261,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.RouteType Shortest { get { throw null; } }
         public static Azure.Maps.Routing.RouteType Thrilling { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.RouteType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.RouteType left, Azure.Maps.Routing.RouteType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.RouteType (string value) { throw null; }
@@ -318,9 +306,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.RoutingLanguage TraditionalChinese { get { throw null; } }
         public static Azure.Maps.Routing.RoutingLanguage Turkish { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.RoutingLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.RoutingLanguage left, Azure.Maps.Routing.RoutingLanguage right) { throw null; }
         public static implicit operator Azure.Maps.Routing.RoutingLanguage (string value) { throw null; }
@@ -346,9 +332,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.SectionType Tunnel { get { throw null; } }
         public static Azure.Maps.Routing.SectionType Urban { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.SectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.SectionType left, Azure.Maps.Routing.SectionType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.SectionType (string value) { throw null; }
@@ -370,9 +354,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.TravelMode Truck { get { throw null; } }
         public static Azure.Maps.Routing.TravelMode Van { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.TravelMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.TravelMode left, Azure.Maps.Routing.TravelMode right) { throw null; }
         public static implicit operator Azure.Maps.Routing.TravelMode (string value) { throw null; }
@@ -388,9 +370,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.TravelTimeType All { get { throw null; } }
         public static Azure.Maps.Routing.TravelTimeType None { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.TravelTimeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.TravelTimeType left, Azure.Maps.Routing.TravelTimeType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.TravelTimeType (string value) { throw null; }
@@ -406,9 +386,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.VehicleEngineType Combustion { get { throw null; } }
         public static Azure.Maps.Routing.VehicleEngineType Electric { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.VehicleEngineType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.VehicleEngineType left, Azure.Maps.Routing.VehicleEngineType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.VehicleEngineType (string value) { throw null; }
@@ -434,9 +412,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.VehicleLoadType USHazmatClass8 { get { throw null; } }
         public static Azure.Maps.Routing.VehicleLoadType USHazmatClass9 { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.VehicleLoadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.VehicleLoadType left, Azure.Maps.Routing.VehicleLoadType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.VehicleLoadType (string value) { throw null; }
@@ -453,9 +429,7 @@ namespace Azure.Maps.Routing
         public static Azure.Maps.Routing.WindingnessLevel Low { get { throw null; } }
         public static Azure.Maps.Routing.WindingnessLevel Normal { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.WindingnessLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.WindingnessLevel left, Azure.Maps.Routing.WindingnessLevel right) { throw null; }
         public static implicit operator Azure.Maps.Routing.WindingnessLevel (string value) { throw null; }
@@ -483,9 +457,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.DelayMagnitude Undefined { get { throw null; } }
         public static Azure.Maps.Routing.Models.DelayMagnitude Unknown { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.DelayMagnitude other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.DelayMagnitude left, Azure.Maps.Routing.Models.DelayMagnitude right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.DelayMagnitude (string value) { throw null; }
@@ -501,9 +473,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.DrivingSide Left { get { throw null; } }
         public static Azure.Maps.Routing.Models.DrivingSide Right { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.DrivingSide other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.DrivingSide left, Azure.Maps.Routing.Models.DrivingSide right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.DrivingSide (string value) { throw null; }
@@ -561,9 +531,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.GuidanceInstructionType RoadChange { get { throw null; } }
         public static Azure.Maps.Routing.Models.GuidanceInstructionType Turn { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.GuidanceInstructionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.GuidanceInstructionType left, Azure.Maps.Routing.Models.GuidanceInstructionType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.GuidanceInstructionType (string value) { throw null; }
@@ -610,9 +578,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.GuidanceManeuver WaypointReached { get { throw null; } }
         public static Azure.Maps.Routing.Models.GuidanceManeuver WaypointRight { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.GuidanceManeuver other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.GuidanceManeuver left, Azure.Maps.Routing.Models.GuidanceManeuver right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.GuidanceManeuver (string value) { throw null; }
@@ -629,9 +595,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.JunctionType Regular { get { throw null; } }
         public static Azure.Maps.Routing.Models.JunctionType Roundabout { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.JunctionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.JunctionType left, Azure.Maps.Routing.Models.JunctionType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.JunctionType (string value) { throw null; }
@@ -674,9 +638,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.ResponseSectionType Tunnel { get { throw null; } }
         public static Azure.Maps.Routing.Models.ResponseSectionType Urban { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.ResponseSectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.ResponseSectionType left, Azure.Maps.Routing.Models.ResponseSectionType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.ResponseSectionType (string value) { throw null; }
@@ -699,9 +661,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.ResponseTravelMode Truck { get { throw null; } }
         public static Azure.Maps.Routing.Models.ResponseTravelMode Van { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.ResponseTravelMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.ResponseTravelMode left, Azure.Maps.Routing.Models.ResponseTravelMode right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.ResponseTravelMode (string value) { throw null; }
@@ -879,9 +839,7 @@ namespace Azure.Maps.Routing.Models
         public static Azure.Maps.Routing.Models.TrafficIncidentCategory RoadClosure { get { throw null; } }
         public static Azure.Maps.Routing.Models.TrafficIncidentCategory RoadWork { get { throw null; } }
         public bool Equals(Azure.Maps.Routing.Models.TrafficIncidentCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Routing.Models.TrafficIncidentCategory left, Azure.Maps.Routing.Models.TrafficIncidentCategory right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.TrafficIncidentCategory (string value) { throw null; }

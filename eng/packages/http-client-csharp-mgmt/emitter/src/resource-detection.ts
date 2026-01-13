@@ -154,17 +154,20 @@ export function buildArmProviderSchema(
               // If we can't calculate resource type, try string matching
             }
 
-            // If resource types match, this list operation belongs to this resource
+            // If resource types match exactly, this list operation belongs to this resource
             if (existingResourceType && operationResourceType === existingResourceType) {
               resourcePath = existingPath;
               break;
             }
 
             // Fallback: check if the operation path ends with a segment that matches the existing path
-            const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
-            if (operationPath.startsWith(existingParentPath)) {
-              resourcePath = existingPath;
-              break;
+            // But only if we haven't found a better match yet
+            if (!resourcePath) {
+              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
+              if (operationPath.startsWith(existingParentPath)) {
+                // Store this as a potential match, but continue looking for exact matches
+                resourcePath = existingPath;
+              }
             }
           }
         }
@@ -879,6 +882,29 @@ function buildArmProviderSchemaFromDetectedResources(
             messageId: "default",
             format: {
               message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+            },
+            target: NoTarget
+          });
+          continue;
+        }
+
+        // Filter out resources without Get/Read operations (non-singleton resources only)
+        // Singleton resources can exist without Get operations
+        const hasReadOperation = metadata.methods.some(m => m.kind === ResourceOperationKind.Read);
+        if (!hasReadOperation && !metadata.singletonResourceName) {
+          // Move all methods to non-resource methods since there's no Get operation
+          for (const method of metadata.methods) {
+            nonResourceMethods.set(method.methodId, {
+              methodId: method.methodId,
+              operationPath: method.operationPath,
+              operationScope: method.operationScope
+            });
+          }
+          sdkContext.logger.reportDiagnostic({
+            code: "general-warning",
+            messageId: "default",
+            format: {
+              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be treated as non-resource methods.`
             },
             target: NoTarget
           });

@@ -148,9 +148,7 @@ namespace Azure.AI.Language.Text.Authoring
         public DataGenerationConnectionInfoKind(string value) { throw null; }
         public static Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind AzureOpenAI { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind left, Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind (string value) { throw null; }
@@ -601,9 +599,7 @@ namespace Azure.AI.Language.Text.Authoring
         public StringIndexType(string value) { throw null; }
         public static Azure.AI.Language.Text.Authoring.StringIndexType Utf16CodeUnit { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.StringIndexType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.StringIndexType left, Azure.AI.Language.Text.Authoring.StringIndexType right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.StringIndexType (string value) { throw null; }
@@ -799,9 +795,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode CombineComponents { get { throw null; } }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode SeparateComponents { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode left, Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode (string value) { throw null; }
@@ -1072,9 +1066,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind Manual { get { throw null; } }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind Percentage { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind left, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind (string value) { throw null; }
@@ -1353,9 +1345,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Running { get { throw null; } }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus left, Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus (string value) { throw null; }
@@ -1507,9 +1497,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind CustomSingleLabelClassification { get { throw null; } }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind CustomTextSentiment { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind left, Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind (string value) { throw null; }
@@ -1592,9 +1580,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringSentiment Neutral { get { throw null; } }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringSentiment Positive { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment left, Azure.AI.Language.Text.Authoring.TextAuthoringSentiment right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringSentiment (string value) { throw null; }

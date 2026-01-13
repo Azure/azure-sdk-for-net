@@ -141,9 +141,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind AND { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind OR { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind left, Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind (string value) { throw null; }
@@ -169,9 +167,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType Answer { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType Questions { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType left, Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType (string value) { throw null; }
@@ -249,9 +245,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience AzureGovernment { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience left, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience (string value) { throw null; }
@@ -323,9 +317,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.RankerKind Default { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Inference.RankerKind QuestionOnly { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.RankerKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.RankerKind left, Azure.AI.Language.QuestionAnswering.Inference.RankerKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.RankerKind (string value) { throw null; }
@@ -342,9 +334,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.Scorer Semantic { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Inference.Scorer Transformer { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.Scorer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.Scorer left, Azure.AI.Language.QuestionAnswering.Inference.Scorer right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.Scorer (string value) { throw null; }
@@ -374,9 +364,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.StringIndexType UnicodeCodePoint { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.Inference.StringIndexType Utf16CodeUnit { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.StringIndexType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.StringIndexType left, Azure.AI.Language.QuestionAnswering.Inference.StringIndexType right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.StringIndexType (string value) { throw null; }
