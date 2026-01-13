@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeZones.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,25 +19,26 @@ namespace Azure.ResourceManager.EdgeZones
     /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeZones. </summary>
     public static partial class EdgeZonesExtensions
     {
+        /// <param name="client"></param>
         private static MockableEdgeZonesArmClient GetMockableEdgeZonesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableEdgeZonesArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableEdgeZonesArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableEdgeZonesSubscriptionResource GetMockableEdgeZonesSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableEdgeZonesSubscriptionResource GetMockableEdgeZonesSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableEdgeZonesSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableEdgeZonesSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExtendedZoneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedZoneResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ExtendedZoneResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeZonesArmClient.GetExtendedZoneResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeZonesArmClient.GetExtendedZoneResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ExtendedZoneResource"/> object. </returns>
@@ -47,15 +50,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Gets a collection of ExtendedZoneResources in the SubscriptionResource.
+        /// Gets a collection of ExtendedZones in the <see cref="SubscriptionResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeZonesSubscriptionResource.GetExtendedZones()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeZonesSubscriptionResource.GetExtendedZones()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExtendedZoneResources and their operations over a ExtendedZoneResource. </returns>
+        /// <returns> An object representing collection of ExtendedZones and their operations over a ExtendedZoneResource. </returns>
         public static ExtendedZoneCollection GetExtendedZones(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -65,34 +68,15 @@ namespace Azure.ResourceManager.EdgeZones
 
         /// <summary>
         /// Gets an Azure Extended Zone for a subscription
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtendedZones_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExtendedZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeZonesSubscriptionResource.GetExtendedZoneAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeZonesSubscriptionResource.GetExtendedZoneAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="extendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ExtendedZoneResource>> GetExtendedZoneAsync(this SubscriptionResource subscriptionResource, string extendedZoneName, CancellationToken cancellationToken = default)
         {
@@ -103,34 +87,15 @@ namespace Azure.ResourceManager.EdgeZones
 
         /// <summary>
         /// Gets an Azure Extended Zone for a subscription
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtendedZones_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExtendedZoneResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeZonesSubscriptionResource.GetExtendedZone(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeZonesSubscriptionResource.GetExtendedZone(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="extendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ExtendedZoneResource> GetExtendedZone(this SubscriptionResource subscriptionResource, string extendedZoneName, CancellationToken cancellationToken = default)
         {
