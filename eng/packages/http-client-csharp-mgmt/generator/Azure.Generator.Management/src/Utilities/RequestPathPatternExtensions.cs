@@ -41,18 +41,13 @@ namespace Azure.Generator.Management.Utilities
                     else
                     {
                         // contextual is null then this is a pass through parameter
-                        var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
-                        if (methodParam != null)
+                        var argument = FindParameter(methodParameters, parameter);
+                        if (argument != null)
                         {
-                            arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
+                            arguments.Add(argument);
                         }
                     }
                 }
-                ////Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
-                //else if (enclosingType is ResourceCollectionClientProvider collectionProvider && collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
-                //{
-                //    arguments.Add(Convert(matchingField, matchingField.Type, parameter.Type));
-                //}
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
                     // find the body parameter
@@ -72,13 +67,31 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    // we did not find a parameter to fill in this argument, just put default here.
-                    // this might be incorrect but we put it here in case there is a compilation error
-                    arguments.Add(Default);
+                    // we did not find it and this parameter does not fall into any known conversion case, so we just pass it through.
+                    var argument = FindParameter(methodParameters, parameter);
+                    if (argument != null)
+                    {
+                        arguments.Add(argument);
+                    }
+                    else
+                    {
+                        arguments.Add(Default);
+                    }
                 }
             }
 
             return arguments;
+
+            static ValueExpression? FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
+            {
+                var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
+                if (methodParam != null)
+                {
+                    return Convert(methodParam, methodParam.Type, parameterToFind.Type);
+                }
+
+                return null;
+            }
 
             static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
             {
