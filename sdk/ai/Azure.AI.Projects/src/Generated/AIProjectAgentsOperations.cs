@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects
@@ -31,5 +32,181 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary>
+        /// [Protocol Method] Returns the list of all agents.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kind"> Filter agents by kind. If not provided, all agents are returned. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetAgents(string kind, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            return new AIProjectAgentsOperationsGetAgentsCollectionResult(
+                this,
+                kind,
+                limit,
+                order,
+                after,
+                before,
+                options);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the list of all agents.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kind"> Filter agents by kind. If not provided, all agents are returned. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetAgentsAsync(string kind, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            return new AIProjectAgentsOperationsGetAgentsAsyncCollectionResult(
+                this,
+                kind,
+                limit,
+                order,
+                after,
+                before,
+                options);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the list of versions of an agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve versions for. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetAgentVersions(string agentName, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return new AIProjectAgentsOperationsGetAgentVersionsCollectionResult(
+                this,
+                agentName,
+                limit,
+                order,
+                after,
+                before,
+                options);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the list of versions of an agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve versions for. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetAgentVersionsAsync(string agentName, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return new AIProjectAgentsOperationsGetAgentVersionsAsyncCollectionResult(
+                this,
+                agentName,
+                limit,
+                order,
+                after,
+                before,
+                options);
+        }
     }
 }

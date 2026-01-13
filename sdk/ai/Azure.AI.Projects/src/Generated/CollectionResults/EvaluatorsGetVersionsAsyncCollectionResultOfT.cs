@@ -25,12 +25,8 @@ namespace Azure.AI.Projects
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public EvaluatorsGetVersionsAsyncCollectionResultOfT(Evaluators client, string name, string @type, int? limit, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             _client = client;
             _name = name;
             _type = @type;

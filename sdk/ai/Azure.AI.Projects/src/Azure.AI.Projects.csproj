@@ -39,4 +39,7 @@
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Custom\Evaluations\" />
+  </ItemGroup>
 </Project>

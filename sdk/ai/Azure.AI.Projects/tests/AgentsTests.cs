@@ -562,7 +562,7 @@ public class AgentsTests : AgentsTestBase
         string scope = MEMORY_STORE_SCOPE;
         MemorySearchOptions opts = new(scope)
         {
-            Items = { ResponseItem.CreateUserMessageItem("Name assistamt's favorite animal") },
+            Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
             ResultOptions = new MemorySearchResultOptions()
             {
                 MaxMemories = 1,
@@ -574,14 +574,14 @@ public class AgentsTests : AgentsTestBase
         );
         Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
         // Populate the scope and make sure, we can get the result.
-        ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
-        ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
+        //ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
+        ResponseItem userItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
         int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
         MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
             memoryStoreName: store.Name,
             options: new MemoryUpdateOptions(scope)
             {
-                Items = { userItem, agentItem },
+                Items = { userItem },
                 UpdateDelay = 0,
             },
             pollingInterval: pollingInterval);

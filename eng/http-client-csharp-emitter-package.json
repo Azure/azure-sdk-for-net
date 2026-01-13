@@ -15,6 +15,7 @@
     "@azure-tools/typespec-azure-core": "0.63.0",
     "@azure-tools/typespec-azure-rulesets": "0.63.0",
     "@azure-tools/typespec-azure-resource-manager": "0.63.0",
-    "@azure-tools/typespec-autorest": "0.63.0"
+    "@azure-tools/typespec-autorest": "0.63.0",
+    "@azure-tools/openai-typespec":"^0.1.9"
   }
 }
