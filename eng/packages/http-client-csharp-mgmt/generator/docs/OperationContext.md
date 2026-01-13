@@ -33,14 +33,18 @@ The **operation path** is the request path for a specific API operation being in
 /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{extensionName}
 ```
 
-This operation lists extensions for a virtual machine. Some parameters match the contextual path, while `extensionName` is new and must be provided by the caller.
+This operation gets a specific extension for a virtual machine. Some parameters match the contextual path, while `extensionName` is new and must be provided by the caller.
 
 ### 3. Contextual Parameter
 
-A **contextual parameter** represents a parameter whose value can be derived from the resource's `Id` property. It contains:
+A **contextual parameter** represents a parameter whose value can be derived contextually, either from:
+- The resource's `Id` property (e.g., `subscriptionId`, `resourceGroupName`, parent resource names)
+- Private fields in a resource collection class (for tuple resources requiring multiple parent parameters)
+
+It contains:
 - **Key**: The constant path segment preceding the parameter (e.g., `virtualMachines`)
 - **VariableName**: The parameter name in the path (e.g., `vmName`)
-- **ValueExpressionBuilder**: A function that generates code to extract the value from the `Id` (e.g., `Id.Name`, `Id.Parent.Name`, `Id.SubscriptionId`)
+- **ValueExpressionBuilder**: A function that generates code to extract the value from the `Id` (e.g., `Id.Name`, `Id.Parent.Name`, `Id.SubscriptionId`) or from a field
 
 ### 4. Parameter Context Mapping
 
@@ -50,28 +54,28 @@ A **parameter context mapping** links an operation parameter name to its context
 
 ## The Problem This Solves
 
-### Scenario: ComputeFleet Example
+### Scenario: Parameter Name Mismatch
 
-Consider this resource operation in the ComputeFleet service:
+Consider a resource operation where the operation path uses a different parameter name than the contextual path:
 
-**Contextual Path (Fleet Resource):**
+**Contextual Path (Resource):**
 ```
-/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}
+/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/resources/{resourceName}
 ```
 
-**Operation Path (List Virtual Machine Scale Sets):**
+**Operation Path (List Child Resources):**
 ```
-/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets
+/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/resources/{name}/childResources
 ```
 
 **The Challenge:**
-The operation path uses `{name}` for the fleet parameter, while the contextual path uses `{fleetName}`. A naive name-based matching would fail to recognize these as the same parameter.
+The operation path uses `{name}` for the resource parameter, while the contextual path uses `{resourceName}`. A naive name-based matching would fail to recognize these as the same parameter.
 
 **The Solution:**
 The system matches parameters by their **position in the path** rather than by name. When the shared portion of both paths is analyzed:
-- Both paths share the first 11 segments (up to and including the fleet name parameter)
-- The parameter at position 11 in both paths represents the same logical value (the fleet name)
-- Therefore, `{name}` in the operation path maps to the contextual parameter for `{fleetName}`
+- Both paths share the first several segments (up to and including the resource name parameter)
+- The parameter at the same position in both paths represents the same logical value (the resource name)
+- Therefore, `{name}` in the operation path maps to the contextual parameter for `{resourceName}`
 
 ## How It Works
 
@@ -175,55 +179,6 @@ The system handles these specially, treating `resourceUri` as a contextual param
 
 Singleton resources have a fixed name (e.g., `/placementScores/spot`). The constant name segment increases the parent layer count so that parameters are extracted from the correct level in the Id hierarchy.
 
-## Class Relationships
-
-```
-OperationContext
-├── Contains: RequestPathPattern (contextual path)
-├── Contains: List<ContextualParameter> (primary parameters)
-├── Contains: RequestPathPattern? (secondary contextual path, optional)
-├── Contains: List<ContextualParameter> (secondary parameters, optional)
-└── Provides: BuildParameterMapping(operationPath) → ParameterContextRegistry
-
-ParameterContextRegistry
-├── Contains: Dictionary<string, ParameterContextMapping>
-└── Provides: PopulateArguments(...) → List<ValueExpression>
-
-ParameterContextMapping
-├── ParameterName: string
-└── ContextualParameter: ContextualParameter? (null for pass-through)
-
-ContextualParameter
-├── Key: string (path segment before parameter)
-├── VariableName: string (parameter name)
-└── BuildValueExpression(Id) → ValueExpression (code to extract from Id)
-```
-
-## Code Flow During Generation
-
-1. **Resource/Collection Creation**
-   ```csharp
-   var context = OperationContext.Create(contextualPath);
-   ```
-
-2. **Method Generation** (for each operation)
-   ```csharp
-   var registry = context.BuildParameterMapping(operationPath);
-   ```
-
-3. **Parameter Filtering**
-   ```csharp
-   var methodParams = OperationMethodParameterHelper.GetOperationMethodParameters(
-       serviceMethod, context, ...);
-   // Filters out parameters found in registry with non-null ContextualParameter
-   ```
-
-4. **Argument Population** (in method body)
-   ```csharp
-   var args = registry.PopulateArguments(Id, restClientParams, context, methodParams);
-   // Generates: Id.SubscriptionId, Id.Name, passedParameter, etc.
-   ```
-
 ## Benefits
 
 1. **Cleaner API Surface**: Method signatures only include parameters the caller must provide
@@ -231,17 +186,6 @@ ContextualParameter
 3. **Maintainability**: Centralized logic for parameter resolution
 4. **Correctness**: Handles complex scenarios like name mismatches, tuple resources, and hierarchical dependencies
 5. **Documentation**: Generated XML docs accurately reflect which parameters are needed
-
-## Testing
-
-The system includes comprehensive unit tests in `OperationContextTests.cs` covering:
-- Standard resource hierarchies (subscription → resource group → resource)
-- Child and grandchild resources
-- Management group resources
-- Extension resources
-- Tuple resources with secondary contextual paths
-- Parameter mapping with name mismatches (ComputeFleet scenario)
-- Edge cases (empty paths, singleton resources, etc.)
 
 ## Summary
 
