@@ -29,7 +29,7 @@ namespace Azure.Generator.Management.Providers
         private protected readonly IReadOnlyList<NonResourceMethod> _nonResourceMethods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
-        private readonly ContextualPath _contextualPath;
+        private readonly OperationContext _operationContext;
 
         /// <summary>
         /// Creates a new instance of the <see cref="MockableResourceProvider"/> class.
@@ -39,7 +39,7 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
         /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
         private MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
-            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), new ContextualPath(RequestPathPattern.GetFromScope(resourceScope)), resources, resourceMethods, nonResourceMethods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), new OperationContext(RequestPathPattern.GetFromScope(resourceScope)), resources, resourceMethods, nonResourceMethods)
         {
         }
 
@@ -60,13 +60,13 @@ namespace Azure.Generator.Management.Providers
             return new MockableResourceProvider(resourceScope, resources, resourceMethods, nonResourceMethods);
         }
 
-        private protected MockableResourceProvider(CSharpType armCoreType, ContextualPath contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        private protected MockableResourceProvider(CSharpType armCoreType, OperationContext contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
         {
             _resources = resources;
             _resourceMethods = resourceMethods;
             _nonResourceMethods = nonResourceMethods;
             ArmCoreType = armCoreType;
-            _contextualPath = contextualPath;
+            _operationContext = contextualPath;
             _clientInfos = BuildRestClientInfos(resourceMethods.Values.SelectMany(m => m).Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)), this);
         }
 
@@ -311,7 +311,7 @@ namespace Azure.Generator.Management.Providers
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName),
                 _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName)
             };
         }
@@ -322,10 +322,10 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
             }
 
-            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

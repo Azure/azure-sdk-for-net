@@ -12,7 +12,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     {
         public UpdateOperationMethodProvider(
             ResourceClientProvider resource,
-            ContextualPath contextualPath,
+            OperationContext contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,

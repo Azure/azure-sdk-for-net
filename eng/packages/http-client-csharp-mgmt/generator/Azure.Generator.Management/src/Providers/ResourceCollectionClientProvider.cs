@@ -46,12 +46,12 @@ namespace Azure.Generator.Management.Providers
         // This is the resource type of the current resource. Not the resource type of my parent resource
         private ScopedApi<ResourceType> _resourceTypeExpression;
 
-        private readonly ContextualPath _contextualPath;
+        private readonly OperationContext _operationContext;
 
         internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _contextualPath = GetContextualPath(resourceMetadata);
+            _operationContext = GetContextualPath(resourceMetadata);
             _resource = resource;
 
             // Initialize client info dictionary using extension method
@@ -73,7 +73,7 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resourceMetadata"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        private static ContextualPath GetContextualPath(ResourceMetadata resourceMetadata)
+        private static OperationContext GetContextualPath(ResourceMetadata resourceMetadata)
         {
             if (resourceMetadata.ParentResourceId is not null)
             {
@@ -123,7 +123,7 @@ namespace Azure.Generator.Management.Providers
         public ResourceClientProvider Resource => _resource;
         public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterMap.Values.ToList();
         public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
-        public ContextualPath ContextualPath => _contextualPath;
+        public OperationContext ContextualPath => _operationContext;
 
         // Cached Get method providers for reuse in other places
         public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
@@ -186,7 +186,7 @@ namespace Azure.Generator.Management.Providers
                 return map;
             }
 
-            var diff = ContextualPath.RawPath.TrimAncestorFrom(new RequestPathPattern(_getAll.OperationPath));
+            var diff = ContextualPath.ContextualPath.TrimAncestorFrom(new RequestPathPattern(_getAll.OperationPath));
             var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
 
             foreach (var seg in variableSegments)
@@ -366,7 +366,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
                 var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
+                result.Add(new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
             return result;
@@ -378,7 +378,7 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
                 _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
             };
         }
@@ -389,10 +389,10 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName, _resource);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, _resource);
             }
 
-            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)
@@ -404,7 +404,7 @@ namespace Azure.Generator.Management.Providers
 
             var restClientInfo = _clientInfos[_get.InputClient];
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
-            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, _get.InputMethod, isAsync, methodName);
         }
 
         private List<MethodProvider> BuildGetMethods()
@@ -440,7 +440,7 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _operationContext, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
 
@@ -458,7 +458,7 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _operationContext, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }
 

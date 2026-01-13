@@ -31,7 +31,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsFakeLongRunningOperation { get; }
 
         protected readonly TypeProvider _enclosingType;
-        protected readonly ContextualPath _contextualPath;
+        protected readonly OperationContext _contextualPath;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -62,7 +62,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
-            ContextualPath contextualPath,
+            OperationContext contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,

@@ -26,7 +26,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ArrayResponseOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly ContextualPath _contextualPath;
+        private readonly OperationContext _contextualPath;
         private readonly ClientProvider _restClient;
         private readonly InputServiceMethod _serviceMethod;
         private readonly MethodProvider _convenienceMethod;
@@ -44,7 +44,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
-            ContextualPath contextualPath,
+            OperationContext contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,

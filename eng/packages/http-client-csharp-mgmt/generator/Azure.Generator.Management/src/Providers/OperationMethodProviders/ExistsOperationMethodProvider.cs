@@ -16,7 +16,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class ExistsOperationMethodProvider(
         ResourceCollectionClientProvider collection,
-        ContextualPath contextualPath,
+        OperationContext contextualPath,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
         bool isAsync)

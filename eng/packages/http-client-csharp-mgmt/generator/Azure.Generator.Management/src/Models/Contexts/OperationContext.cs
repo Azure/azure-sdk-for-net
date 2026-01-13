@@ -9,14 +9,14 @@ using System.Diagnostics;
 
 namespace Azure.Generator.Management.Models
 {
-    internal class ContextualPath
+    internal class OperationContext
     {
-        public RequestPathPattern RawPath { get; }
-        public IReadOnlyList<ContextualParameter> ContextualParameters { get; }
-        public ContextualPath(RequestPathPattern rawPath)
+        public RequestPathPattern ContextualPath { get; }
+        public IReadOnlyList<ContextualParameter> ContextualPathParameters { get; }
+        public OperationContext(RequestPathPattern contextualPath)
         {
-            RawPath = rawPath;
-            ContextualParameters = BuildContextualParameters(rawPath);
+            ContextualPath = contextualPath;
+            ContextualPathParameters = BuildContextualParameters(contextualPath);
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Azure.Generator.Management.Models
         public ParameterContextRegistry BuildParameterMapping(RequestPathPattern operationPath)
         {
             // we need to find the sharing part between contextual path and the incoming path
-            var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(RawPath, operationPath);
+            var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(ContextualPath, operationPath);
 
-            return new ParameterContextRegistry(BuildParameterMappingCore(ContextualParameters, operationPath, sharedSegmentsCount));
+            return new ParameterContextRegistry(BuildParameterMappingCore(ContextualPathParameters, operationPath, sharedSegmentsCount));
         }
 
         private static IReadOnlyList<ParameterContextMapping> BuildParameterMappingCore(IReadOnlyList<ContextualParameter> contextualParameters, RequestPathPattern operationPath, int sharedSegmentsCount)
@@ -78,81 +78,6 @@ namespace Azure.Generator.Management.Models
                 parameterIndex++;
             }
             return parameterMappings;
-        }
-
-        /*
-        private static Dictionary<string, ContextualParameter> BuildMappingForAncestorCase(ContextualPath contextualPath, RequestPathPattern operationPath)
-        {
-            // in this case, the contextual path is an ancestor of the operation path, therefore we just take the that many contextual parameters as the mapping.
-            var contextualParameters = contextualPath.ContextualParameters;
-            var mapping = new Dictionary<string, ContextualParameter>();
-            int parameterIndex = 0;
-            foreach (var segment in operationPath)
-            {
-                if (segment.IsConstant)
-                {
-                    continue;
-                }
-                if (parameterIndex >= contextualParameters.Count)
-                {
-                    break;
-                }
-                mapping[segment.VariableName] = contextualParameters[parameterIndex];
-                parameterIndex++;
-            }
-
-            return mapping;
-        }
-
-        private static Dictionary<string, ContextualParameter> BuildMappingForNonAncestorCase(ContextualPath contextualPath, RequestPathPattern operationPath)
-        {
-            // find the maximum shared segments between the two paths, we put operationPath as the first argument because later we will iterate on it to match contextual parameters.
-            var sharedSegments = RequestPathPattern.GetMaximumSharingSegments(operationPath, contextualPath.RawPath);
-            var contextualParameters = contextualPath.ContextualParameters;
-            var mapping = new Dictionary<string, ContextualParameter>();
-            int parameterIndex = 0;
-            foreach (var segment in sharedSegments)
-            {
-                if (segment.IsConstant)
-                {
-                    continue;
-                }
-                if (parameterIndex >= contextualParameters.Count)
-                {
-                    break;
-                }
-                mapping[segment.VariableName] = contextualParameters[parameterIndex];
-                parameterIndex++;
-            }
-
-            return mapping;
-        }
-        */
-
-        /// <summary>
-        /// Extracts parameters with their keys from a request path.
-        /// Each parameter is paired with the constant segment immediately before it (the key).
-        /// </summary>
-        private static IReadOnlyList<(string Key, string VariableName)> ExtractParametersWithKeys(RequestPathPattern requestPath)
-        {
-            var result = new List<(string, string)>();
-
-            for (int i = 0; i < requestPath.Count; i++)
-            {
-                var segment = requestPath[i];
-                if (!segment.IsConstant)
-                {
-                    // Found a parameter - look for the key (the constant segment before it)
-                    string key = string.Empty;
-                    if (i > 0 && requestPath[i - 1].IsConstant)
-                    {
-                        key = requestPath[i - 1].Value;
-                    }
-                    result.Add((key, segment.VariableName));
-                }
-            }
-
-            return result;
         }
 
         private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)

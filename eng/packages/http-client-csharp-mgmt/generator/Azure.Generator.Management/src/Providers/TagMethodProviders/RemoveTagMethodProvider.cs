@@ -17,7 +17,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public RemoveTagMethodProvider(
             ResourceClientProvider resource,
-            ContextualPath contextualPath,
+            OperationContext contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,

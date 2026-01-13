@@ -30,7 +30,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly InputServiceMethod _getMethodProvider;
         protected readonly ClientProvider _updateRestClient;
         protected readonly ClientProvider _getRestClient;
-        protected readonly ContextualPath _contextualPath;
+        protected readonly OperationContext _contextualPath;
         protected readonly FieldProvider _updateClientDiagnosticsField;
         protected readonly FieldProvider _getRestClientField;
         protected readonly bool _isPatch;
@@ -44,7 +44,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
-            ContextualPath contextualPath,
+            OperationContext contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,

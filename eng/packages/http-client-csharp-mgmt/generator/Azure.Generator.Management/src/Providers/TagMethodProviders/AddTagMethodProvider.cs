@@ -17,7 +17,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public AddTagMethodProvider(
             ResourceClientProvider resource,
-            ContextualPath contextualPath,
+            OperationContext contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,
