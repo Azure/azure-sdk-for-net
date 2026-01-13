@@ -80,6 +80,27 @@ namespace Azure.Generator.Management.Utilities
                 // TODO -- we should be able to just update the parameters from convenience method.
                 // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
 
+                // TODO: Rename resource model parameters to "data", this should be handled by below renaming already, need to investigate why it is not working.
+                if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                {
+                    outputParameter = new ParameterProvider(
+                        name: "data",
+                        description: outputParameter.Description,
+                        type: outputParameter.Type,
+                        defaultValue: outputParameter.DefaultValue,
+                        isRef: outputParameter.IsRef,
+                        isOut: outputParameter.IsOut,
+                        isIn: outputParameter.IsIn,
+                        isParams: outputParameter.IsParams,
+                        attributes: outputParameter.Attributes,
+                        property: outputParameter.Property,
+                        field: outputParameter.Field,
+                        initializationValue: outputParameter.InitializationValue,
+                        location: outputParameter.Location,
+                        wireInfo: outputParameter.WireInfo,
+                        validation: outputParameter.Validation);
+                }
+
                 // Apply name transformations as needed
                 // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
                 if (enclosingTypeProvider is MockableArmClientProvider &&
