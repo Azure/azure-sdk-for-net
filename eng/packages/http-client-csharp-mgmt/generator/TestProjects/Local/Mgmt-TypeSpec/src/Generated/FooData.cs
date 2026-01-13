@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
@@ -23,17 +24,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="something"> something. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
-        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/>, <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooData(AzureLocation location, FooProperties properties, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
-            Properties = new FooProperties(something, prop1, nestedPropertyProperties);
+            Properties = properties;
+            Something = something;
+            Prop1 = prop1.ToList();
+            Prop2 = new ChangeTrackingList<int>();
+            NestedPropertyProperties = nestedPropertyProperties;
+            FlattenedProperty = new ChangeTrackingList<string>();
+            VmGalleryApplications = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>

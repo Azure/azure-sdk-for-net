@@ -372,6 +372,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 discriminatorProperty);
         }
 
+        /// <summary> The BarNestedQuotaProperties. </summary>
+        /// <param name="innerProp1"></param>
+        /// <param name="innerProp2"></param>
+        /// <param name="middleProp1"></param>
+        /// <param name="middleProp2"></param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <returns> A new <see cref="Models.BarNestedQuotaProperties"/> instance for mocking. </returns>
+        public static BarNestedQuotaProperties BarNestedQuotaProperties(int? innerProp1 = default, string innerProp2 = default, int middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int prop2 = default)
+        {
+            middleProp2 ??= new ChangeTrackingDictionary<string, string>();
+            prop1 ??= new ChangeTrackingList<string>();
+
+            return new BarNestedQuotaProperties(
+                innerProp1,
+                innerProp2,
+                additionalBinaryDataProperties: null,
+                middleProp1,
+                middleProp2,
+                prop1.ToList(),
+                prop2);
+        }
+
+        /// <summary> The BarMiddleNestedQuotaProperties. </summary>
+        /// <param name="innerProp1"></param>
+        /// <param name="innerProp2"></param>
+        /// <param name="middleProp1"></param>
+        /// <param name="middleProp2"></param>
+        /// <returns> A new <see cref="Models.BarMiddleNestedQuotaProperties"/> instance for mocking. </returns>
+        public static BarMiddleNestedQuotaProperties BarMiddleNestedQuotaProperties(int? innerProp1 = default, string innerProp2 = default, int middleProp1 = default, IDictionary<string, string> middleProp2 = default)
+        {
+            middleProp2 ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BarMiddleNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties: null, middleProp1, middleProp2);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

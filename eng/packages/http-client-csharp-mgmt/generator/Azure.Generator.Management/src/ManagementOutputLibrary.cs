@@ -324,9 +324,9 @@ namespace Azure.Generator.Management
 
             // Extract array response collection results from all methods
             var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
-
+            var baseProviders = base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider);
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                .. baseProviders,
                 WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
@@ -20,6 +21,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
+        /// <param name="property"></param>
+        /// <param name="anotherProperty"></param>
+        /// <param name="flattenedNestedProperty"></param>
+        /// <param name="discriminatorProperty"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
@@ -27,22 +32,32 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="middleProp2"> Gets the MiddleProp2. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
-        /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/>, <paramref name="flattenedNestedProperty"/>, <paramref name="discriminatorProperty"/>, <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
+        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, LimitJsonObject discriminatorProperty, string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2)
         {
+            Argument.AssertNotNull(@property, nameof(@property));
+            Argument.AssertNotNull(anotherProperty, nameof(anotherProperty));
+            Argument.AssertNotNull(flattenedNestedProperty, nameof(flattenedNestedProperty));
+            Argument.AssertNotNull(discriminatorProperty, nameof(discriminatorProperty));
             Argument.AssertNotNull(propertyLeft, nameof(propertyLeft));
             Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
             Argument.AssertNotNull(middleProp2, nameof(middleProp2));
             Argument.AssertNotNull(prop1, nameof(prop1));
-            Argument.AssertNotNull(discriminatorProperty, nameof(discriminatorProperty));
 
             StringArray = new ChangeTrackingList<string>();
-            Property = new BarQuotaProperties(propertyLeft);
-            AnotherProperty = new BarQuotaProperties(anotherPropertyLeft);
-            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
+            Property = @property;
+            AnotherProperty = anotherProperty;
+            FlattenedNestedProperty = flattenedNestedProperty;
             DiscriminatorProperty = discriminatorProperty;
+            PropertyLeft = propertyLeft;
+            AnotherPropertyLeft = anotherPropertyLeft;
+            InnerProp2 = innerProp2;
+            MiddleProp1 = middleProp1;
+            MiddleProp2 = middleProp2;
+            Prop1 = prop1.ToList();
+            Prop2 = prop2;
+            OptionalFlattenPropertyRandomCollectionProp = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
