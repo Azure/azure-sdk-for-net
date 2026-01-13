@@ -7,13 +7,13 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 
-namespace Azure.Generator.Mgmt.Tests.Utilities
+namespace Azure.Generator.Mgmt.Tests
 {
-    public class ContextualParameterBuilderTests
+    public class OperationContextTests
     {
         private readonly ScopedApi<ResourceIdentifier> _idVariable;
 
-        public ContextualParameterBuilderTests()
+        public OperationContextTests()
         {
             _idVariable = new ParameterProvider("id", $"", typeof(ResourceIdentifier)).As<ResourceIdentifier>();
         }
@@ -21,8 +21,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         [TestCase]
         public void ValidateContextualParameters_Tenant()
         {
-            var contextualPath = new OperationContext(new RequestPathPattern(string.Empty));
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var requestPathPattern = new RequestPathPattern(string.Empty);
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(0, contextualParameters.Count, "Tenant path should not have any contextual parameters.");
         }
 
@@ -30,8 +31,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_Subscription()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
 
             Assert.AreEqual(1, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
@@ -44,8 +45,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ResourceGroup()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
 
             Assert.AreEqual(2, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
@@ -61,8 +62,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ManagementGroup()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(1, contextualParameters.Count);
             Assert.AreEqual("managementGroups", contextualParameters[0].Key);
             Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
@@ -73,8 +74,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_TenantResource()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Example/examples/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(1, contextualParameters.Count);
             Assert.AreEqual("examples", contextualParameters[0].Key);
             Assert.AreEqual("name", contextualParameters[0].VariableName);
@@ -85,8 +86,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_TenantResource_ChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(2, contextualParameters.Count);
             Assert.AreEqual("examples", contextualParameters[0].Key);
             Assert.AreEqual("exampleName", contextualParameters[0].VariableName);
@@ -100,8 +101,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_TenantResource_GrandChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Example/examples/{exampleName}/childResources/{childName}/grandChildResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(3, contextualParameters.Count);
             Assert.AreEqual("examples", contextualParameters[0].Key);
             Assert.AreEqual("exampleName", contextualParameters[0].VariableName);
@@ -118,8 +119,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ResourceGroupResource()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(3, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -136,8 +137,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ResourceGroupResource_ChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(4, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -157,8 +158,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ResourceGroupResource_GrandChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{extensionName}/childResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(5, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -181,8 +182,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_SubscriptionResource()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(2, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -196,8 +197,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_SubscriptionResource_ChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(3, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -214,8 +215,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_SubscriptionResource_GrandChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{childName}/grandChildResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(4, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -235,8 +236,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ManagementGroupResource()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Example/examples/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(2, contextualParameters.Count);
             Assert.AreEqual("managementGroups", contextualParameters[0].Key);
             Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
@@ -250,8 +251,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ManagementGroupResource_ChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(3, contextualParameters.Count);
             Assert.AreEqual("managementGroups", contextualParameters[0].Key);
             Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
@@ -268,8 +269,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ManagementGroupResource_GrandChildResource()
         {
             var requestPathPattern = new RequestPathPattern("/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Example/examples/{exampleName}/childResources/{childName}/grandChildResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(4, contextualParameters.Count);
             Assert.AreEqual("managementGroups", contextualParameters[0].Key);
             Assert.AreEqual("managementGroupId", contextualParameters[0].VariableName);
@@ -289,8 +290,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ProviderNamespaceAsAVariable()
         {
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/examples/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual(3, contextualParameters.Count);
             Assert.AreEqual("subscriptions", contextualParameters[0].Key);
             Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
@@ -307,8 +308,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         public void ValidateContextualParameters_ExtensionResource()
         {
             var requestPathPattern = new RequestPathPattern("/{resourceUri}/providers/Microsoft.Example/examples/{exampleName}/childResources/{name}");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
             Assert.AreEqual("resourceUri", contextualParameters[0].Key);
             Assert.AreEqual("resourceUri", contextualParameters[0].VariableName);
             Assert.AreEqual("id.Parent.Parent", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
@@ -328,8 +329,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             // Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot
             // This is a singleton resource (ends with constant "spot")
             var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot");
-            var contextualPath = new OperationContext(requestPathPattern);
-            var contextualParameters = contextualPath.ContextualPathParameters;
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
 
             Assert.AreEqual(2, contextualParameters.Count, "Should have subscriptionId and location parameters");
 

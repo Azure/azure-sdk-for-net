@@ -62,7 +62,7 @@ namespace Azure.Generator.Management.Providers
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _operationContext = new(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
+            _operationContext = OperationContext.Create(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
@@ -84,8 +84,6 @@ namespace Azure.Generator.Management.Providers
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
-
-        public OperationContext ContextualPath => _operationContext;
 
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 

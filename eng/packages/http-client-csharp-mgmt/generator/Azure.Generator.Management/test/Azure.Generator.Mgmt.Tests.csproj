@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
+		<ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

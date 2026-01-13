@@ -39,7 +39,7 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
         /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
         private MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
-            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), new OperationContext(RequestPathPattern.GetFromScope(resourceScope)), resources, resourceMethods, nonResourceMethods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), OperationContext.Create(RequestPathPattern.GetFromScope(resourceScope)), resources, resourceMethods, nonResourceMethods)
         {
         }
 
@@ -60,13 +60,13 @@ namespace Azure.Generator.Management.Providers
             return new MockableResourceProvider(resourceScope, resources, resourceMethods, nonResourceMethods);
         }
 
-        private protected MockableResourceProvider(CSharpType armCoreType, OperationContext contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        private protected MockableResourceProvider(CSharpType armCoreType, OperationContext operationContext, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
         {
             _resources = resources;
             _resourceMethods = resourceMethods;
             _nonResourceMethods = nonResourceMethods;
             ArmCoreType = armCoreType;
-            _operationContext = contextualPath;
+            _operationContext = operationContext;
             _clientInfos = BuildRestClientInfos(resourceMethods.Values.SelectMany(m => m).Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)), this);
         }
 

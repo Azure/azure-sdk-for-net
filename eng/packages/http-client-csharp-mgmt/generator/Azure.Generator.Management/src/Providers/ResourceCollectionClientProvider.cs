@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Models;
@@ -51,7 +52,7 @@ namespace Azure.Generator.Management.Providers
         internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _operationContext = GetContextualPath(resourceMetadata);
+            //_operationContext = GetContextualPath(resourceMetadata);
             _resource = resource;
 
             // Initialize client info dictionary using extension method
@@ -60,10 +61,41 @@ namespace Azure.Generator.Management.Providers
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
+            _operationContext = InitializeContext(this, resourceMetadata, _getAll);
 
             // this depends on _getAll being initialized
             // TODO -- this is some extra contextual parameters in resource collection, we need to find a way to update this and include this information in a universal way
             _pathParameterMap = BuildPathParameterMap();
+        }
+
+        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ResourceMetadata resourceMetadata, ResourceMethod? getAll)
+        {
+            var contextualPath = GetContextualPath(resourceMetadata);
+            if (getAll is not null)
+            {
+                var secondaryContextualPath = new RequestPathPattern(getAll.OperationPath);
+                // validate the contextualPath should be an ancestor of the secondaryContextualPath, otherwise report diagnostic.
+                if (!contextualPath.IsAncestorOf(secondaryContextualPath))
+                {
+                    // Report diagnostic
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        code: "malformed-resource-detected",
+                        message: $"The contextual path '{contextualPath}' is not an ancestor of the secondary contextual path '{secondaryContextualPath}'.",
+                        targetCrossLanguageDefinitionId: getAll.InputMethod.CrossLanguageDefinitionId
+                    );
+                }
+                return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField);
+            }
+            else
+            {
+                return OperationContext.Create(contextualPath);
+            }
+        }
+
+        private FieldProvider FindField(string variableName)
+        {
+            // TODO -- refactor this.
+            return _pathParameterMap.Values.First(field => field.Name == $"_{variableName}");
         }
 
         /// <summary>
@@ -73,11 +105,11 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resourceMetadata"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        private static OperationContext GetContextualPath(ResourceMetadata resourceMetadata)
+        private static RequestPathPattern GetContextualPath(ResourceMetadata resourceMetadata)
         {
             if (resourceMetadata.ParentResourceId is not null)
             {
-                return new(new RequestPathPattern(resourceMetadata.ParentResourceId));
+                return new RequestPathPattern(resourceMetadata.ParentResourceId);
             }
 
             if (resourceMetadata.ResourceScope == ResourceScope.Extension)
@@ -86,10 +118,27 @@ namespace Azure.Generator.Management.Providers
                 {
                     throw new InvalidOperationException("Extension resource's IdPattern can't be empty or null.");
                 }
-                return new(RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope, new RequestPathPattern(resourceMetadata.ResourceIdPattern)));
+                return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope, new RequestPathPattern(resourceMetadata.ResourceIdPattern));
             }
 
-            return new(RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope));
+            return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
+        }
+
+        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
+        {
+            var map = new Dictionary<ParameterProvider, FieldProvider>();
+            var secondaryContextualParameters = _operationContext.SecondaryContextualPathParameters;
+            foreach (var contextualParameter in secondaryContextualParameters)
+            {
+                var parameter = new ParameterProvider(
+                    contextualParameter.VariableName,
+                    $"The {contextualParameter.VariableName} for the resource.",
+                    ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAll!.InputMethod));
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{contextualParameter.VariableName}", this, description: $"The {contextualParameter.VariableName}.");
+                parameter.Field = field;
+                map.Add(parameter, field);
+            }
+            return map;
         }
 
         private static void InitializeMethods(
@@ -121,9 +170,8 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
-        public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterMap.Values.ToList();
+        // TODO -- remove this and introduce a FactoryMethodSignature to replace this property
         public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
-        public OperationContext ContextualPath => _operationContext;
 
         // Cached Get method providers for reuse in other places
         public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
@@ -175,30 +223,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             return [.. properties];
-        }
-
-        // TODO -- this should also be handled by contextual parameters
-        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
-        {
-            var map = new Dictionary<ParameterProvider, FieldProvider>();
-            if (_getAll is null)
-            {
-                return map;
-            }
-
-            var diff = ContextualPath.ContextualPath.TrimAncestorFrom(new RequestPathPattern(_getAll.OperationPath));
-            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
-
-            foreach (var seg in variableSegments)
-            {
-                var parameter = new ParameterProvider(
-                    seg.VariableName,
-                    $"The {seg.VariableName} for the resource.",
-                    Resource.GetPathParameterType(seg.VariableName));
-                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
-                map.Add(parameter, field);
-            }
-            return map;
         }
 
         // BuildPathParameters is now handled by BuildPathParametersAndFields
@@ -465,12 +489,12 @@ namespace Azure.Generator.Management.Providers
             return result;
         }
 
-        public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
-        {
-            matchingField = _pathParameterMap
-                .FirstOrDefault(kvp => kvp.Key.WireInfo.SerializedName.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
-                .Value;
-            return matchingField != null;
-        }
+        //public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
+        //{
+        //    matchingField = _pathParameterMap
+        //        .FirstOrDefault(kvp => kvp.Key.WireInfo.SerializedName.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
+        //        .Value;
+        //    return matchingField != null;
+        //}
     }
 }

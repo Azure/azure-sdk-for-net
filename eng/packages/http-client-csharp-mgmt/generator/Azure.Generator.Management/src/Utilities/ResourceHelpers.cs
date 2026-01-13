@@ -139,6 +139,36 @@ namespace Azure.Generator.Management.Utilities
             return operationId;
         }
 
+        public static CSharpType GetRequestPathParameterType(string parameterName, InputServiceMethod inputMethod)
+        {
+            foreach (var parameter in inputMethod.Operation.Parameters)
+            {
+                if (parameter is not InputPathParameter)
+                {
+                    continue; // we only find type for path parameters as the method name suggests
+                }
+                if (parameter.SerializedName == parameterName)
+                {
+                    var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
+                    return parameterName switch
+                    {
+                        // backward compatibility requirement for subscriptionId parameters
+                        "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
+                        _ => csharpType
+                    };
+                }
+            }
+
+            // when we did not find it
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "general-warning",
+                message: $"Cannot find parameter {parameterName} in operation {inputMethod.CrossLanguageDefinitionId}.",
+                targetCrossLanguageDefinitionId: inputMethod.CrossLanguageDefinitionId
+                );
+
+            return typeof(string); // Default to string if not found
+        }
+
         /// <summary>
         /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
         /// </summary>

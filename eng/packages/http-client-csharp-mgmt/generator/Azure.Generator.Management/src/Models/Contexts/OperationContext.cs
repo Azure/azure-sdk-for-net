@@ -3,7 +3,9 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -11,12 +13,40 @@ namespace Azure.Generator.Management.Models
 {
     internal class OperationContext
     {
+        public static OperationContext Create(RequestPathPattern contextualPath)
+        {
+            return new OperationContext(contextualPath, null, null);
+        }
+
+        public static OperationContext Create(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
+        {
+            return new OperationContext(contextualPath, secondaryContextualPath, fieldSelector);
+        }
+
         public RequestPathPattern ContextualPath { get; }
+
+        public RequestPathPattern? SecondaryContextualPath { get; }
+
         public IReadOnlyList<ContextualParameter> ContextualPathParameters { get; }
-        public OperationContext(RequestPathPattern contextualPath)
+
+        public IReadOnlyList<ContextualParameter> SecondaryContextualPathParameters { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the OperationContext class with the specified primary and secondary request
+        /// path patterns.
+        /// </summary>
+        /// <param name="contextualPath">The primary request path pattern that defines the main context for the operation. Cannot be null.</param>
+        /// <param name="secondaryContextualPath">An optional secondary request path pattern that provides additional context for the operation. Can be null
+        /// if no secondary context is required.</param>
+        /// <param name="fieldSelector">The function to get the corresponding field for secondary contextual parameters.</param>
+        private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector)
         {
             ContextualPath = contextualPath;
+            SecondaryContextualPath = secondaryContextualPath;
             ContextualPathParameters = BuildContextualParameters(contextualPath);
+            SecondaryContextualPathParameters = secondaryContextualPath != null && fieldSelector != null ?
+                BuildSecondaryContextualParameters(contextualPath, secondaryContextualPath, fieldSelector) :
+                [];
         }
 
         /// <summary>
@@ -25,59 +55,16 @@ namespace Azure.Generator.Management.Models
         /// and builds a list of <see cref="ContextualParameter"/>s that represent the parameters
         /// provided by this contextual request path pattern.
         /// </summary>
-        /// <param name="requestPathPattern">The contextual request path pattern.</param>
+        /// <param name="contextualPath">The contextual request path pattern.</param>
         /// <returns></returns>
-        private static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern)
+        private static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern contextualPath)
         {
             // we use a stack here because we are building the contextual parameters in reverse order.
             var result = new Stack<ContextualParameter>();
 
-            BuildContextualParameterHierarchy(requestPathPattern, result, 0);
+            BuildContextualParameterHierarchy(contextualPath, result, 0);
 
             return [.. result];
-        }
-
-        /// <summary>
-        /// Builds a mapping from operation path parameters to contextual parameters.
-        /// Parameters are matched by their key (the constant segment before the parameter) first,
-        /// and if no key match is found, by their name.
-        /// </summary>
-        /// <param name="operationPath">The operation's request path.</param>
-        /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
-        public ParameterContextRegistry BuildParameterMapping(RequestPathPattern operationPath)
-        {
-            // we need to find the sharing part between contextual path and the incoming path
-            var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(ContextualPath, operationPath);
-
-            return new ParameterContextRegistry(BuildParameterMappingCore(ContextualPathParameters, operationPath, sharedSegmentsCount));
-        }
-
-        private static IReadOnlyList<ParameterContextMapping> BuildParameterMappingCore(IReadOnlyList<ContextualParameter> contextualParameters, RequestPathPattern operationPath, int sharedSegmentsCount)
-        {
-            var parameterMappings = new List<ParameterContextMapping>();
-            for (int i = 0, parameterIndex = 0; i < operationPath.Count; i++)
-            {
-                var segment = operationPath[i];
-                // skip all the constant segments
-                if (segment.IsConstant)
-                {
-                    continue;
-                }
-                // we can only assign contextual parameters when we are in the shared segments area where this part could be found in the contextual path.
-                if (i < sharedSegmentsCount && parameterIndex < contextualParameters.Count)
-                {
-                    // we are in the area of contextual paths
-                    var mapping = new ParameterContextMapping(segment.VariableName, contextualParameters[parameterIndex]);
-                    parameterMappings.Add(mapping);
-                }
-                else
-                {
-                    var mapping = new ParameterContextMapping(segment.VariableName, null);
-                    parameterMappings.Add(mapping);
-                }
-                parameterIndex++;
-            }
-            return parameterMappings;
         }
 
         private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
@@ -124,6 +111,7 @@ namespace Azure.Generator.Management.Models
                     // we have a pair of segment, key and value
                     // In majority of cases, the key is a constant segment. In some rare scenarios, the key could be a variable.
                     // The value could be a constant or a variable segment.
+                    // TODO -- we did not consider the case that key would be a variable here.
                     if (!value.IsConstant)
                     {
                         if (key.IsProvidersSegment) // if the key is `providers` and the value is a parameter
@@ -197,6 +185,98 @@ namespace Azure.Generator.Management.Models
 
                 return pairs;
             }
+        }
+
+        private static IReadOnlyList<ContextualParameter> BuildSecondaryContextualParameters(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
+        {
+            // for secondary contextual path, we first trim off the main contextual path part from it
+            var extraContextualPath = contextualPath.TrimAncestorFrom(secondaryContextualPath);
+            return BuildSecondaryContextualParametersCore(extraContextualPath, fieldSelector);
+
+            static List<ContextualParameter> BuildSecondaryContextualParametersCore(RequestPathPattern extraPath, Func<string, FieldProvider> fieldSelector)
+            {
+                var result = new List<ContextualParameter>();
+                // iterate the secondary contextual path segments by pairs
+                for (int i = 0; i < extraPath.Count - 1; i += 2)
+                {
+                    var key = extraPath[i];
+                    var value = extraPath[i + 1]; // this would never be out of range.
+
+                    if (key.IsConstant && value.IsConstant)
+                    {
+                        continue;
+                    }
+                    // TODO -- we did not consider the case that key would be a variable here.
+                    if (!value.IsConstant)
+                    {
+                        // in this case we need to build a contextual parameter
+                        var contextualParameter = new ContextualParameter(key.Value, value.VariableName, _ => fieldSelector(value.VariableName));
+                        result.Add(contextualParameter);
+                    }
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Builds a mapping from operation path parameters to contextual parameters.
+        /// Parameters are matched by their key (the constant segment before the parameter) first,
+        /// and if no key match is found, by their name.
+        /// </summary>
+        /// <param name="operationPath">The operation's request path.</param>
+        /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
+        public ParameterContextRegistry BuildParameterMapping(RequestPathPattern operationPath)
+        {
+            // we need to find the sharing part between contextual path and the incoming path
+            var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(ContextualPath, operationPath);
+
+            // then find the sharing part between secondary contextual path and the incoming path
+            int secondarySharedSegmentsCount = 0;
+            if (SecondaryContextualPath != null)
+            {
+                secondarySharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(SecondaryContextualPath, operationPath);
+            }
+
+            return new ParameterContextRegistry(BuildParameterMappingCore(ContextualPathParameters, SecondaryContextualPathParameters, operationPath, sharedSegmentsCount, secondarySharedSegmentsCount));
+        }
+
+        private static IReadOnlyList<ParameterContextMapping> BuildParameterMappingCore(
+            IReadOnlyList<ContextualParameter> contextualParameters, IReadOnlyList<ContextualParameter> extraContextualParameters,
+            RequestPathPattern operationPath, int sharedSegmentsCount, int secondarySharedSegmentsCount)
+        {
+            var parameterMappings = new List<ParameterContextMapping>();
+            var consumedContextualParameters = 0;
+            var consumedSecondaryContextualParameters = 0;
+            for (int i = 0; i < operationPath.Count; i++)
+            {
+                var segment = operationPath[i];
+                // skip all the constant segments
+                if (segment.IsConstant)
+                {
+                    continue;
+                }
+                // we can only assign contextual parameters when we are in the shared segments area where this part could be found in the contextual path.
+                if (i < sharedSegmentsCount && consumedContextualParameters < contextualParameters.Count)
+                {
+                    // we are in the area of contextual paths
+                    var mapping = new ParameterContextMapping(segment.VariableName, contextualParameters[consumedContextualParameters]);
+                    parameterMappings.Add(mapping);
+                    consumedContextualParameters++;
+                }
+                else if (i < secondarySharedSegmentsCount && consumedSecondaryContextualParameters < extraContextualParameters.Count)
+                {
+                    // we are in the area of secondary contextual paths
+                    var mapping = new ParameterContextMapping(segment.VariableName, extraContextualParameters[consumedSecondaryContextualParameters]);
+                    parameterMappings.Add(mapping);
+                    consumedSecondaryContextualParameters++;
+                }
+                else
+                {
+                    var mapping = new ParameterContextMapping(segment.VariableName, null);
+                    parameterMappings.Add(mapping);
+                }
+            }
+            return parameterMappings;
         }
     }
 }

@@ -56,12 +56,12 @@ namespace Azure.Generator.Management.Utilities
                     continue;
                 }
 
-                // TODO -- maybe we no longer need this?
-                if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
-                    collectionProvider.TryGetPrivateFieldParameter(tempParameter, out _))
-                {
-                    continue;
-                }
+                //// TODO -- maybe we no longer need this?
+                //if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
+                //    collectionProvider.TryGetPrivateFieldParameter(tempParameter, out _))
+                //{
+                //    continue;
+                //}
 
                 // Try to find corresponding parameter in convenience method by name
                 ParameterProvider? outputParameter = null;
