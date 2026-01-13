@@ -14,19 +14,6 @@ trigger:
     exclude:
       - eng/scripts/typespec
 
-pr:
-  branches:
-    include:
-      - main
-      - feature/*
-      - release/*
-      - hotfix/*
-  paths:
-    include:
-      - eng/scripts/*
-    exclude:
-      - eng/scripts/typespec
-
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-sdk-tool-pwsh.yml
   parameters:

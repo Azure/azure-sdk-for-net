@@ -17,23 +17,6 @@ trigger:
     - sdk/synapse/Azure.Analytics.Synapse.Monitoring
     - sdk/synapse/Azure.Analytics.Synapse.Spark
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/synapse/ci.yml
-    - sdk/synapse/service.projects
-    - sdk/synapse/Azure.Analytics.Synapse.AccessControl
-    - sdk/synapse/Azure.Analytics.Synapse.Artifacts
-    - sdk/synapse/Azure.Analytics.Synapse.ManagedPrivateEndpoints
-    - sdk/synapse/Azure.Analytics.Synapse.Monitoring
-    - sdk/synapse/Azure.Analytics.Synapse.Spark
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

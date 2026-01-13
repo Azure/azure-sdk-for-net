@@ -12,19 +12,6 @@ trigger:
     - sdk/tables/service.projects
     - sdk/tables/ci.yml
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/tables/Azure.Data.Tables
-    - sdk/tables/service.projects
-    - sdk/tables/ci.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
