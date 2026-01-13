@@ -837,9 +837,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ApplicationEnablement Enabled { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ApplicationEnablement Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ApplicationEnablement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ApplicationEnablement left, Azure.ResourceManager.HybridNetwork.Models.ApplicationEnablement right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ApplicationEnablement (string value) { throw null; }
@@ -980,9 +978,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestState Validating { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestState ValidationFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestState left, Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestState (string value) { throw null; }
@@ -1020,9 +1016,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy SingleReplication { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy left, Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy (string value) { throw null; }
@@ -1040,9 +1034,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactState Preview { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ArtifactState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ArtifactState left, Azure.ResourceManager.HybridNetwork.Models.ArtifactState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ArtifactState (string value) { throw null; }
@@ -1086,9 +1078,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType AzureStorageAccount { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType left, Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType (string value) { throw null; }
@@ -1107,9 +1097,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactType Unknown { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactType VhdImageFile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ArtifactType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ArtifactType left, Azure.ResourceManager.HybridNetwork.Models.ArtifactType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ArtifactType (string value) { throw null; }
@@ -1471,9 +1459,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentStatus Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ComponentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ComponentStatus left, Azure.ResourceManager.HybridNetwork.Models.ComponentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ComponentStatus (string value) { throw null; }
@@ -1692,9 +1678,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.HttpMethod Put { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.HttpMethod Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.HttpMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.HttpMethod left, Azure.ResourceManager.HybridNetwork.Models.HttpMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.HttpMethod (string value) { throw null; }
@@ -1722,9 +1706,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName Basic { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName left, Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName (string value) { throw null; }
@@ -1740,9 +1722,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier Basic { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier left, Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier (string value) { throw null; }
@@ -2056,9 +2036,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.NfviType AzureOperatorNexus { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.NfviType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.NfviType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.NfviType left, Azure.ResourceManager.HybridNetwork.Models.NfviType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.NfviType (string value) { throw null; }
@@ -2112,9 +2090,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.PodEventType Normal { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.PodEventType Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.PodEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.PodEventType left, Azure.ResourceManager.HybridNetwork.Models.PodEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.PodEventType (string value) { throw null; }
@@ -2135,9 +2111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.PodStatus Terminating { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.PodStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.PodStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.PodStatus left, Azure.ResourceManager.HybridNetwork.Models.PodStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.PodStatus (string value) { throw null; }
@@ -2159,9 +2133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.ProvisioningState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState left, Azure.ResourceManager.HybridNetwork.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.ProvisioningState (string value) { throw null; }
@@ -2223,9 +2195,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.PublisherScope Private { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.PublisherScope Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.PublisherScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.PublisherScope left, Azure.ResourceManager.HybridNetwork.Models.PublisherScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.PublisherScope (string value) { throw null; }
@@ -2324,9 +2294,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.TemplateType ArmTemplate { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.TemplateType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.TemplateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.TemplateType left, Azure.ResourceManager.HybridNetwork.Models.TemplateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.TemplateType (string value) { throw null; }
@@ -2346,9 +2314,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.VersionState Validating { get { throw null; } }
         public static Azure.ResourceManager.HybridNetwork.Models.VersionState ValidationFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridNetwork.Models.VersionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.VersionState left, Azure.ResourceManager.HybridNetwork.Models.VersionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridNetwork.Models.VersionState (string value) { throw null; }

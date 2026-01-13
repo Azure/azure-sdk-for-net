@@ -61,7 +61,6 @@ namespace Azure.Provisioning.EventHubs
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.EventHubs.EventHubsAccessKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -151,11 +150,8 @@ namespace Azure.Provisioning.EventHubs
         public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole SchemaRegistryContributor { get { throw null; } }
         public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole SchemaRegistryReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.EventHubs.EventHubsBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.EventHubs.EventHubsBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.EventHubs.EventHubsBuiltInRole left, Azure.Provisioning.EventHubs.EventHubsBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.EventHubs.EventHubsBuiltInRole (string value) { throw null; }
@@ -193,7 +189,6 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -236,7 +231,6 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> UserMetadata { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsConsumerGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -262,7 +256,6 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsDisasterRecovery FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -320,7 +313,6 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAuth { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHubsEncryption Encryption { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.EventHubs.NamespaceGeoDataReplicationProperties GeoDataReplication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -345,7 +337,6 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespace FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -368,7 +359,6 @@ namespace Azure.Provisioning.EventHubs
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespaceAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.EventHubs.EventHubsAccessKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -562,7 +552,6 @@ namespace Azure.Provisioning.EventHubs
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
         Tls1_2 = 2,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NamespaceGeoDataReplicationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NamespaceGeoDataReplicationProperties() { }
@@ -570,13 +559,11 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<int> MaxReplicationLagDurationInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum NamespaceGeoDRRoleType
     {
         Primary = 0,
         Secondary = 1,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NamespaceReplicaLocation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NamespaceReplicaLocation() { }
