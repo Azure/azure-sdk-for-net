@@ -212,11 +212,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckAvailabilityQuotaAsync(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckLoadTestingQuotaAvailabilityAsync(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckAvailabilityQuota");
+            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
             try
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateCheckAvailabilityQuotaRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
+                HttpMessage message = _loadTestMgmtClientRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestingQuotaAvailabilityResult> response = Response.FromValue(LoadTestingQuotaAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,11 +264,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<LoadTestingQuotaAvailabilityResult> CheckAvailabilityQuota(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestingQuotaAvailabilityResult> CheckLoadTestingQuotaAvailability(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckAvailabilityQuota");
+            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateCheckAvailabilityQuotaRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
+                HttpMessage message = _loadTestMgmtClientRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestingQuotaAvailabilityResult> response = Response.FromValue(LoadTestingQuotaAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
