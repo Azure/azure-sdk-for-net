@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourceInfo))]
     [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourceProperties))]
@@ -75,8 +76,9 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionListResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmCollectionContent))]
-    [ModelReaderWriterBuildable(typeof(VmHostListResponse))]
+    [ModelReaderWriterBuildable(typeof(VMHostListResponse))]
     [ModelReaderWriterBuildable(typeof(VmIngestionDetailsResult))]
     public partial class AzureResourceManagerElasticContext : ModelReaderWriterContext
     {

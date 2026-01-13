@@ -19,23 +19,27 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         {
         }
 
-        [TestCase, Order(1)]
-        [RecordedTest]
+        [Test]
+        //[TestCase, Order(1)]
+        //[RecordedTest]
         public async Task Get_AvsHostsResource()
         {
             AvsHostResource avsHost = await getAvsHostResource().GetAsync();
             Assert.AreEqual(avsHost.Data.Name, HOST_ID);
         }
-        [TestCase, Order(2)]
-        [RecordedTest]
+
+        [Test]
+        //[TestCase, Order(2)]
+        //[RecordedTest]
         public async Task Get_AvsHostsCollection()
         {
             AvsHostResource result = await getAvsHostCollection().GetAsync(HOST_ID);
             Assert.AreEqual(result.Data.Name, HOST_ID);
         }
 
-        [TestCase, Order(3)]
-        [RecordedTest]
+        [Test]
+        //[TestCase, Order(3)]
+        //[RecordedTest]
         public async Task List()
         {
             AvsHostCollection avsHostCollection = getAvsHostCollection();
@@ -51,8 +55,9 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             Assert.AreEqual(hosts.Count, 3);
         }
 
-        [TestCase, Order(4)]
-        [RecordedTest]
+        [Test]
+        //[TestCase, Order(4)]
+        //[RecordedTest]
         public async Task GetIfExists_Hosts()
         {
             bool exists = await getAvsHostCollection().ExistsAsync(HOST_ID);

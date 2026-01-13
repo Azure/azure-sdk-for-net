@@ -5,7 +5,7 @@
 
 using System.ComponentModel;
 using Azure.Core;
-
+/*
 namespace Azure.ResourceManager.Elastic.Models
 {
     public static partial class ArmElasticModelFactory
@@ -32,3 +32,4 @@ namespace Azure.ResourceManager.Elastic.Models
         }
     }
 }
+*/

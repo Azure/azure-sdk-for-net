@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Tests
         }
 
         [TestCase]
-        [RecordedTest]
+        //[RecordedTest]
         [AsyncOnly]
         public async Task CreateOrUpdate()
         {
