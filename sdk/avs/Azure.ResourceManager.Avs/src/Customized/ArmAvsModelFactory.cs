@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -151,5 +152,28 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, ResourceIdentifier elasticSanVolumeTargetId, DatastoreStatus? status)
             => AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId, diskPoolVolume, elasticSanVolumeTargetId, null, status);
+
+        /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVmGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the VM group. </param>
+        /// <param name="members"> Virtual machine members of this group. </param>
+        /// <param name="status"> VM Group status. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="revision"> NSX revision number. </param>
+        /// <returns> A new <see cref="Avs.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> members = null, WorkloadNetworkVmGroupStatus? status = null, WorkloadNetworkVmGroupProvisioningState? provisioningState = null, long? revision = null)
+        {
+            return new WorkloadNetworkVmGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                null,
+                displayName is null && members is null ? default : new WorkloadNetworkVmGroupProperties(displayName, members.ToList(), status, provisioningState, revision, null));
+        }
     }
 }
