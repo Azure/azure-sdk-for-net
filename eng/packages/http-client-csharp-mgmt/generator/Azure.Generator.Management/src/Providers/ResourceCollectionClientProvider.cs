@@ -52,7 +52,6 @@ namespace Azure.Generator.Management.Providers
         internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            //_operationContext = GetContextualPath(resourceMetadata);
             _resource = resource;
 
             // Initialize client info dictionary using extension method
@@ -488,13 +487,5 @@ namespace Azure.Generator.Management.Providers
 
             return result;
         }
-
-        //public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
-        //{
-        //    matchingField = _pathParameterMap
-        //        .FirstOrDefault(kvp => kvp.Key.WireInfo.SerializedName.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase))
-        //        .Value;
-        //    return matchingField != null;
-        //}
     }
 }

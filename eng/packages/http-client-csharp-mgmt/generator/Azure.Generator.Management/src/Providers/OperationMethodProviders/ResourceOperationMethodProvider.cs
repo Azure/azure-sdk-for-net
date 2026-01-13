@@ -31,7 +31,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsFakeLongRunningOperation { get; }
 
         protected readonly TypeProvider _enclosingType;
-        protected readonly OperationContext _contextualPath;
+        protected readonly OperationContext _operationContext;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -53,7 +53,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
         /// <param name="enclosingType">The enclosing type of this operation. </param>
-        /// <param name="contextualPath">The contextual path of the enclosing type. </param>
+        /// <param name="operationContext">The contextual path of the enclosing type. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
@@ -62,7 +62,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext contextualPath,
+            OperationContext operationContext,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
@@ -71,10 +71,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool forceLro = false)
         {
             _enclosingType = enclosingType;
-            _contextualPath = contextualPath;
+            _operationContext = operationContext;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _parameterMappings = contextualPath.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;

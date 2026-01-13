@@ -20,7 +20,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class PageableOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly OperationContext _contextualPath;
+        private readonly OperationContext _operationContext;
         private readonly RestClientInfo _restClientInfo;
         private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
@@ -36,7 +36,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext contextualPath,
+            OperationContext operationContext,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
@@ -44,10 +44,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
-            _contextualPath = contextualPath;
+            _operationContext = operationContext;
             _restClientInfo = restClientInfo;
             _method = method;
-            _parameterMappings = contextualPath.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
