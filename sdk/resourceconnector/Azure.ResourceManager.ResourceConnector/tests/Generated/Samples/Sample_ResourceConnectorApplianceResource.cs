@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            string upgradeGraph = "stable";
-            ApplianceUpgradeGraph result = await resourceConnectorAppliance.GetUpgradeGraphAsync(upgradeGraph);
+            //string upgradeGraph = "stable";
+            //ApplianceUpgradeGraph result = await resourceConnectorAppliance.GetUpgradeGraphAsync(upgradeGraph);
 
-            Console.WriteLine($"Succeeded: {result}");
+            //Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

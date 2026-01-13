@@ -122,10 +122,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Response updateSynonymsResponse = Client.UpdateSynonyms(testProjectName, updateSynonymsRequestContent);
 
             // Synonyms can be retrieved as follows
-            Pageable<WordAlterationsGroups> synonyms = Client.GetSynonyms(testProjectName);
+            Pageable<WordAlterations> synonyms = Client.GetSynonyms(testProjectName);
 
             Console.WriteLine("Synonyms: ");
-            foreach (WordAlterationsGroups synonym in synonyms)
+            foreach (WordAlterations synonym in synonyms)
             {
                 Console.WriteLine(synonym);
             }
@@ -268,10 +268,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
 
             // Synonyms can be retrieved as follows
-            AsyncPageable<WordAlterationsGroups> synonyms = Client.GetSynonymsAsync(testProjectName);
+            AsyncPageable<WordAlterations> synonyms = Client.GetSynonymsAsync(testProjectName);
 
             Console.WriteLine("Synonyms: ");
-            await foreach (WordAlterationsGroups synonym in synonyms)
+            await foreach (WordAlterations synonym in synonyms)
             {
                 Console.WriteLine(synonym);
             }
