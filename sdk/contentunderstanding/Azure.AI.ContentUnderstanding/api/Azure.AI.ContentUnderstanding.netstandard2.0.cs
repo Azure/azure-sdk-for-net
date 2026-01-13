@@ -46,9 +46,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.AnnotationFormat Markdown { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.AnnotationFormat None { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.AnnotationFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.AnnotationFormat left, Azure.AI.ContentUnderstanding.AnnotationFormat right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.AnnotationFormat (string value) { throw null; }
@@ -140,9 +138,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ChartFormat ChartJs { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.ChartFormat Markdown { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.ChartFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.ChartFormat left, Azure.AI.ContentUnderstanding.ChartFormat right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.ChartFormat (string value) { throw null; }
@@ -220,9 +216,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ContentAnalyzerStatus Failed { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.ContentAnalyzerStatus Ready { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus left, Azure.AI.ContentUnderstanding.ContentAnalyzerStatus right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.ContentAnalyzerStatus (string value) { throw null; }
@@ -323,9 +317,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ContentFieldType String { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.ContentFieldType Time { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.ContentFieldType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.ContentFieldType left, Azure.AI.ContentUnderstanding.ContentFieldType right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.ContentFieldType (string value) { throw null; }
@@ -567,9 +559,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentAnnotationKind Strikethrough { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.DocumentAnnotationKind Underline { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.DocumentAnnotationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.DocumentAnnotationKind left, Azure.AI.ContentUnderstanding.DocumentAnnotationKind right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.DocumentAnnotationKind (string value) { throw null; }
@@ -619,9 +609,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentBarcodeKind UPCA { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.DocumentBarcodeKind UPCE { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.DocumentBarcodeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.DocumentBarcodeKind left, Azure.AI.ContentUnderstanding.DocumentBarcodeKind right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.DocumentBarcodeKind (string value) { throw null; }
@@ -767,9 +755,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentFormulaKind Display { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.DocumentFormulaKind Inline { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.DocumentFormulaKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.DocumentFormulaKind left, Azure.AI.ContentUnderstanding.DocumentFormulaKind right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.DocumentFormulaKind (string value) { throw null; }
@@ -933,9 +919,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentTableCellKind RowHeader { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.DocumentTableCellKind StubHead { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.DocumentTableCellKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.DocumentTableCellKind left, Azure.AI.ContentUnderstanding.DocumentTableCellKind right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.DocumentTableCellKind (string value) { throw null; }
@@ -970,9 +954,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.GenerationMethod Extract { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.GenerationMethod Generate { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.GenerationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.GenerationMethod left, Azure.AI.ContentUnderstanding.GenerationMethod right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.GenerationMethod (string value) { throw null; }
@@ -1046,9 +1028,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.LengthUnit Inch { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.LengthUnit Pixel { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.LengthUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.LengthUnit left, Azure.AI.ContentUnderstanding.LengthUnit right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.LengthUnit (string value) { throw null; }
@@ -1114,9 +1094,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.ProcessingLocation Geography { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.ProcessingLocation Global { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.ProcessingLocation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.ProcessingLocation left, Azure.AI.ContentUnderstanding.ProcessingLocation right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.ProcessingLocation (string value) { throw null; }
@@ -1138,9 +1116,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.SemanticRole SectionHeading { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.SemanticRole Title { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.SemanticRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.SemanticRole left, Azure.AI.ContentUnderstanding.SemanticRole right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.SemanticRole (string value) { throw null; }
@@ -1186,9 +1162,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.TableFormat Html { get { throw null; } }
         public static Azure.AI.ContentUnderstanding.TableFormat Markdown { get { throw null; } }
         public bool Equals(Azure.AI.ContentUnderstanding.TableFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentUnderstanding.TableFormat left, Azure.AI.ContentUnderstanding.TableFormat right) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.TableFormat (string value) { throw null; }

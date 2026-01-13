@@ -205,9 +205,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState Active { get { throw null; } }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState left, Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState (string value) { throw null; }
@@ -247,9 +245,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName Hpe { get { throw null; } }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName SDFlex { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName left, Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName right) { throw null; }
         public static implicit operator Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName (string value) { throw null; }
@@ -336,9 +332,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstancePowerState Stopping { get { throw null; } }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstancePowerState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LargeInstance.Models.LargeInstancePowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LargeInstance.Models.LargeInstancePowerState left, Azure.ResourceManager.LargeInstance.Models.LargeInstancePowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LargeInstance.Models.LargeInstancePowerState (string value) { throw null; }
@@ -360,9 +354,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LargeInstance.Models.LargeInstanceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LargeInstance.Models.LargeInstanceProvisioningState left, Azure.ResourceManager.LargeInstance.Models.LargeInstanceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LargeInstance.Models.LargeInstanceProvisioningState (string value) { throw null; }
@@ -421,9 +413,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName S96 { get { throw null; } }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName S960m { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName left, Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName right) { throw null; }
         public static implicit operator Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName (string value) { throw null; }

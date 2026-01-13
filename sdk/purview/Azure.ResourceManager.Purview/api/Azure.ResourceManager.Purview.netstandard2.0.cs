@@ -309,7 +309,6 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PrivateEndpointConnectionStatusUpdateResult PrivateEndpointConnectionStatusUpdateResult(string privateEndpointId = null, string status = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountAccessKey PurviewAccountAccessKey(string atlasKafkaPrimaryEndpoint = null, string atlasKafkaSecondaryEndpoint = null) { throw null; }
         public static Azure.ResourceManager.Purview.PurviewAccountData PurviewAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Purview.Models.PurviewAccountSku sku = null, Azure.ResourceManager.Purview.Models.PurviewAccountStatus accountStatus = null, string cloudConnectorsAwsExternalId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, string createdByObjectId = null, Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint endpoints = null, string friendlyName = null, Azure.ResourceManager.Purview.Models.PurviewIngestionStorage ingestionStorage = null, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? managedEventHubState = default(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState?), string managedResourceGroupName = null, Azure.ResourceManager.Purview.Models.PurviewManagedResource managedResources = null, Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState = default(Azure.ResourceManager.Purview.Models.PurviewProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Purview.PurviewAccountData PurviewAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Purview.Models.PurviewAccountSku sku, string cloudConnectorsAwsExternalId, System.DateTimeOffset? createdOn, string createdBy, string createdByObjectId, Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, Azure.ResourceManager.Purview.Models.PurviewManagedResource managedResources, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint PurviewAccountEndpoint(string catalog = null, string guardian = null, string scan = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountNameAvailabilityResult PurviewAccountNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason? reason = default(Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason?)) { throw null; }
@@ -364,9 +363,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess left, Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess (string value) { throw null; }
@@ -413,7 +410,6 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal PurviewAccountEndpoint() { }
         public string Catalog { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Guardian { get { throw null; } }
         public string Scan { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -457,9 +453,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason left, Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason (string value) { throw null; }
@@ -521,9 +515,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState left, Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState (string value) { throw null; }
@@ -539,9 +531,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewAccountScopeType Subscription { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountScopeType Tenant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewAccountScopeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewAccountScopeType left, Azure.ResourceManager.Purview.Models.PurviewAccountScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewAccountScopeType (string value) { throw null; }
@@ -569,9 +559,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewAccountSkuName Free { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewAccountSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewAccountSkuName left, Azure.ResourceManager.Purview.Models.PurviewAccountSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewAccountSkuName (string value) { throw null; }
@@ -634,9 +622,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewCredentialsType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewCredentialsType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewCredentialsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewCredentialsType left, Azure.ResourceManager.Purview.Models.PurviewCredentialsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewCredentialsType (string value) { throw null; }
@@ -652,9 +638,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewEventStreamingState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewEventStreamingState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewEventStreamingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewEventStreamingState left, Azure.ResourceManager.Purview.Models.PurviewEventStreamingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewEventStreamingState (string value) { throw null; }
@@ -671,9 +655,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewEventStreamingType Managed { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewEventStreamingType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewEventStreamingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewEventStreamingType left, Azure.ResourceManager.Purview.Models.PurviewEventStreamingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewEventStreamingType (string value) { throw null; }
@@ -702,9 +684,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewKafkaEventHubType Hook { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewKafkaEventHubType Notification { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewKafkaEventHubType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewKafkaEventHubType left, Azure.ResourceManager.Purview.Models.PurviewKafkaEventHubType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewKafkaEventHubType (string value) { throw null; }
@@ -721,9 +701,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState Enabled { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState left, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState (string value) { throw null; }
@@ -781,9 +759,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Rejected { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus left, Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus (string value) { throw null; }
@@ -806,9 +782,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewProvisioningState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewProvisioningState left, Azure.ResourceManager.Purview.Models.PurviewProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewProvisioningState (string value) { throw null; }
@@ -825,9 +799,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess left, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess (string value) { throw null; }
