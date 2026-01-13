@@ -752,7 +752,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Check if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// Checks if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
         /// </summary>
         /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -767,7 +767,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Check if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// Checks if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1586,7 +1586,7 @@ namespace Azure.Data.AppConfiguration
                 int nextLinkEndIndex = linkHeader.IndexOf('>');
                 nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
 
-                var uriBuilder = new UriBuilder("https://dummy.com" + nextLink);
+                var uriBuilder = new UriBuilder("https://example.com" + nextLink);
                 var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
                 after = query["after"];
             }
