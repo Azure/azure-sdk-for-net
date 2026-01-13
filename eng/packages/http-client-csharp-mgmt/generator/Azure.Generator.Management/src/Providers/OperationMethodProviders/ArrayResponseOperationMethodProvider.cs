@@ -169,7 +169,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientField,
             };
 
-            arguments.AddRange(_parameterMapping.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
+            arguments.AddRange(_parameterMapping.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

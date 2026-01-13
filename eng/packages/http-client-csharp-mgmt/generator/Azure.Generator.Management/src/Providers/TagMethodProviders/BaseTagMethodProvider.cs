@@ -120,7 +120,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var requestMethod = _getRestClient.GetRequestMethodByOperation(_getMethodProvider.Operation);
 
-            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
+            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
