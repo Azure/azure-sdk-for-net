@@ -2596,7 +2596,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
+              "crossLanguageDefinitionId": "Payload.MultiPart.FormData.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2756,7 +2756,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
+                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -3142,7 +3142,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
+                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -3302,7 +3302,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
+                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.endpoint"
                     }
                   ],
                   "initializedBy": 0,

@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
             ImageStorageAccountType? storageAccountType = default;
             GalleryReplicationMode? replicationMode = default;
             IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
+            StorageAccountStrategy? storageAccountStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,6 +256,15 @@ namespace Azure.ResourceManager.Compute.Models
                     targetExtendedLocations = array;
                     continue;
                 }
+                if (property.NameEquals("storageAccountStrategy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountStrategy = new StorageAccountStrategy(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -270,6 +280,7 @@ namespace Azure.ResourceManager.Compute.Models
                 storageAccountType,
                 replicationMode,
                 targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
+                storageAccountStrategy,
                 serializedAdditionalRawData,
                 source,
                 manageActions,
