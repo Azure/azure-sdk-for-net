@@ -157,7 +157,7 @@ namespace Azure.Generator.Management.Providers
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     ResourceCollection.Type,
                     $"An object representing collection of {pluralOfResourceName} and their operations over a {Name}.",
-                    []
+                    [.. ResourceCollection.PathParameters]
                     );
             }
             else

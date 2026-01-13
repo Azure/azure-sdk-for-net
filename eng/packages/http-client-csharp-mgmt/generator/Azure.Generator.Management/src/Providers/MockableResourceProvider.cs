@@ -248,10 +248,12 @@ namespace Azure.Generator.Management.Providers
                 // the first method is returning the collection
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
-                var pathParameters = collection.PathParameters;
-                collectionMethodSignature.Update(parameters: [.. collectionMethodSignature.Parameters, .. pathParameters]);
+                // we skip the first two parameters in the ctor signature which are client and id, these parameters are pass through parameters
+                var extraParameters = collectionMethodSignature.Parameters.Skip(2);
 
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, [client, This.As<ArmResource>().Id(), .. pathParameters])));
+                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"),
+                    client => New.Instance(collection.Type,
+                        [client, This.As<ArmResource>().Id(), .. extraParameters.Skip(2)]))); // the first two parameters have values, others we just pass through them.
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -263,16 +265,16 @@ namespace Azure.Generator.Management.Providers
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}Async");
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, extraParameters, $"Get{resource.ResourceName}Async");
                 }
 
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}");
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, extraParameters, $"Get{resource.ResourceName}");
                 }
 
-                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, IReadOnlyList<ParameterProvider> pathParameters, string methodName)
+                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, IEnumerable<ParameterProvider> pathParameters, string methodName)
                 {
                     var signature = new MethodSignature(
                         methodName,

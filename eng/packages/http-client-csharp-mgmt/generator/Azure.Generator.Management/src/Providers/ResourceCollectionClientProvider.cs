@@ -64,7 +64,6 @@ namespace Azure.Generator.Management.Providers
             _operationContext = InitializeContext(this, resourceMetadata, _getAll);
 
             // this depends on _getAll being initialized
-            // TODO -- this is some extra contextual parameters in resource collection, we need to find a way to update this and include this information in a universal way
             (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
@@ -175,7 +174,6 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
-        // TODO -- remove this and introduce a FactoryMethodSignature to replace this property
         public IReadOnlyList<ParameterProvider> PathParameters => _extraCtorParameters;
 
         // Cached Get method providers for reuse in other places
@@ -229,8 +227,6 @@ namespace Azure.Generator.Management.Providers
 
             return [.. properties];
         }
-
-        // BuildPathParameters is now handled by BuildPathParametersAndFields
 
         protected override FieldProvider[] BuildFields()
         {
