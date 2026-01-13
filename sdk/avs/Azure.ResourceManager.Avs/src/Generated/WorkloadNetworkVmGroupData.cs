@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkloadNetworkVMGroupProperties properties) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkloadNetworkVmGroupProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal WorkloadNetworkVMGroupProperties Properties { get; set; }
+        internal WorkloadNetworkVmGroupProperties Properties { get; set; }
 
         /// <summary> Display name of the VM group. </summary>
         public string DisplayName
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkloadNetworkVMGroupProperties();
+                    Properties = new WorkloadNetworkVmGroupProperties();
                 }
                 Properties.DisplayName = value;
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkloadNetworkVMGroupProperties();
+                    Properties = new WorkloadNetworkVmGroupProperties();
                 }
                 return Properties.Members;
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Avs
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkloadNetworkVMGroupProperties();
+                    Properties = new WorkloadNetworkVmGroupProperties();
                 }
                 Properties.Revision = value.Value;
             }

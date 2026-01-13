@@ -11,26 +11,25 @@ using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> NSX VM Group Properties. </summary>
-    internal partial class WorkloadNetworkVMGroupProperties
+    internal partial class WorkloadNetworkVmGroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVMGroupProperties"/>. </summary>
-        public WorkloadNetworkVMGroupProperties()
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupProperties"/>. </summary>
+        public WorkloadNetworkVmGroupProperties()
         {
             Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVMGroupProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupProperties"/>. </summary>
         /// <param name="displayName"> Display name of the VM group. </param>
         /// <param name="members"> Virtual machine members of this group. </param>
         /// <param name="status"> VM Group status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVMGroupProperties(string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadNetworkVmGroupProperties(string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Members = members;

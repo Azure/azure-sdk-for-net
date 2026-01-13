@@ -1586,33 +1586,6 @@ namespace Azure.ResourceManager.Avs.Models
                 provisioningState is null && displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Display name of the VM group. </param>
-        /// <param name="members"> Virtual machine members of this group. </param>
-        /// <param name="status"> VM Group status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Avs.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
-        public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> members = default, WorkloadNetworkVmGroupStatus? status = default, WorkloadNetworkVmGroupProvisioningState? provisioningState = default, long? revision = default)
-        {
-            return new WorkloadNetworkVmGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && members is null && status is null && provisioningState is null && revision is null ? default : new WorkloadNetworkVMGroupProperties(
-                    displayName,
-                    (members ?? new ChangeTrackingList<string>()).ToList(),
-                    status,
-                    provisioningState,
-                    revision,
-                    null));
-        }
-
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

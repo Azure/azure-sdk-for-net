@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     yield break;
                 }
-                WorkloadNetworkVMGroupsList result = WorkloadNetworkVMGroupsList.FromResponse(response);
+                WorkloadNetworkVmGroupsListResult result = WorkloadNetworkVmGroupsListResult.FromResponse(response);
                 yield return Page<WorkloadNetworkVmGroupData>.FromValues((IReadOnlyList<WorkloadNetworkVmGroupData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

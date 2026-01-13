@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVirtualMachineResource))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVirtualMachinesList))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupData))]
-    [ModelReaderWriterBuildable(typeof(WorkloadNetworkVMGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupResource))]
-    [ModelReaderWriterBuildable(typeof(WorkloadNetworkVMGroupsList))]
+    [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupsListResult))]
     public partial class AzureResourceManagerAvsContext : ModelReaderWriterContext
     {
     }

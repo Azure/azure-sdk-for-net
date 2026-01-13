@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            WorkloadNetworkVMGroupProperties properties = default;
+            WorkloadNetworkVmGroupProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = WorkloadNetworkVMGroupProperties.DeserializeWorkloadNetworkVMGroupProperties(prop.Value, options);
+                    properties = WorkloadNetworkVmGroupProperties.DeserializeWorkloadNetworkVmGroupProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
