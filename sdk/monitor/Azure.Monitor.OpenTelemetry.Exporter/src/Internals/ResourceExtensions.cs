@@ -42,6 +42,7 @@ internal static class ResourceExtensions
         string? serviceNamespace = null;
         string? serviceInstance = null;
         string? serviceVersion = null;
+        SdkVersionType? distroType = null;
         string? distroVersion = null;
         bool? hasDefaultServiceName = null;
 
@@ -77,7 +78,7 @@ internal static class ResourceExtensions
                     serviceVersion = _serviceVersion;
                     break;
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
-                    SdkVersionUtils.VersionType = _aiSdkDistroValue switch
+                    distroType = _aiSdkDistroValue switch
                     {
                         "Azure.Monitor.OpenTelemetry.AspNetCore" => SdkVersionType.Distro,
                         "Microsoft.ApplicationInsights" => SdkVersionType.ShimBase,
@@ -85,7 +86,7 @@ internal static class ResourceExtensions
                         "Microsoft.ApplicationInsights.WorkerService" => SdkVersionType.ShimWorkerService,
                         "Microsoft.ApplicationInsights.Web" => SdkVersionType.ShimWeb,
                         "Microsoft.ApplicationInsights.NLogTarget" => SdkVersionType.ShimNLog,
-                        _ => SdkVersionUtils.VersionType
+                        _ => null,
                     };
                     break;
                 case TelemetryDistroVersionKey when attribute.Value is string _aiSdkDistroVersionValue:
@@ -98,11 +99,6 @@ internal static class ResourceExtensions
                         aksResourceProcessor.MapAttributeToProperty(attribute);
                     }
                     break;
-            }
-
-            if (distroVersion != null)
-            {
-                SdkVersionUtils.ExtensionVersion = distroVersion;
             }
 
             if (metricsData != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
@@ -123,6 +119,18 @@ internal static class ResourceExtensions
         else
         {
             roleName = serviceName;
+        }
+
+        if (distroType != null)
+        {
+            SdkVersionUtils.VersionType = distroType.Value;
+
+            // Only set distroVersion if distroType is not null and a known distro
+            // This avoids us accidentally emitting customer distro versions
+            if (distroVersion != null)
+            {
+                SdkVersionUtils.ExtensionVersion = distroVersion;
+            }
         }
 
         try

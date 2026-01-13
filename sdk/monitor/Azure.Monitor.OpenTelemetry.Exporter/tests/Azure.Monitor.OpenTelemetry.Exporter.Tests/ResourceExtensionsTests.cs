@@ -114,7 +114,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
         var testAttributes = new Dictionary<string, object>
         {
@@ -136,7 +136,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
         var testAttributes = new Dictionary<string, object>
         {
@@ -159,7 +159,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
 
         // Reset to default state before test
@@ -192,7 +192,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
         var testAttributes = new Dictionary<string, object>
         {
@@ -221,7 +221,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
         var testAttributes = new Dictionary<string, object>
         {
@@ -247,7 +247,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
         var testAttributes = new Dictionary<string, object>
         {
@@ -273,7 +273,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
 
         var resource = ResourceBuilder.CreateDefault().Build();
@@ -292,7 +292,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
 
         var testAttributes = new Dictionary<string, object>
@@ -316,7 +316,7 @@ public class ResourceExtensionsTests
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        var sdkVersionType = SdkVersionUtils.VersionType;
         var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
         var testAttributes = new Dictionary<string, object>
             {
