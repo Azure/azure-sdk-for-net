@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
@@ -93,7 +94,7 @@ namespace Azure.Generator.Management.Utilities
                     inputParameter.Type is InputPrimitiveType primitiveType &&
                     primitiveType.Kind == InputPrimitiveTypeKind.String)
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.");
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
                     scopeParameterTransformed = true;
                 }
 
@@ -123,11 +124,11 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
-                    type: outputParameter.Type,
+                    type: type ?? outputParameter.Type,
                     defaultValue: outputParameter.DefaultValue,
                     isRef: outputParameter.IsRef,
                     isOut: outputParameter.IsOut,
