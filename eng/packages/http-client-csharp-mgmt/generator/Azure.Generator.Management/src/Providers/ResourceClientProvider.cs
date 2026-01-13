@@ -59,6 +59,8 @@ namespace Azure.Generator.Management.Providers
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
+        private readonly ResourceMethod _readMethod;
+
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
@@ -70,6 +72,7 @@ namespace Azure.Generator.Management.Providers
             ResourceName = resourceName;
 
             _resourceServiceMethods = resourceMethods;
+            _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
             // Initialize client info dictionary using extension method
@@ -129,7 +132,7 @@ namespace Azure.Generator.Management.Providers
         {
             if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
             {
-                return typeof(Azure.ResourceManager.ArmResource);
+                return typeof(ArmResource);
             }
 
             // if the resource has a parent resource id, we can find it in the output library
@@ -314,44 +317,6 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements.ToArray(), this);
         }
 
-        // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
-        public CSharpType GetPathParameterType(string parameterName)
-        {
-            foreach (var resourceMethod in _resourceServiceMethods)
-            {
-                if (!resourceMethod.Kind.IsCrudKind())
-                {
-                    continue; // Skip non-CRUD operations
-                }
-                // iterate through all parameters in this method to find a matching parameter
-                foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
-                {
-                    if (parameter is not InputPathParameter)
-                    {
-                        continue; // Skip parameters that are not in the path
-                    }
-                    if (parameter.Name == parameterName)
-                    {
-                        var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
-                        return parameterName switch
-                        {
-                            "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
-                            // Cases will be added later
-                            _ => csharpType
-                        };
-                    }
-                }
-            }
-
-            // what if we did not find the parameter in any method?
-            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                "general-warning",
-                $"Cannot find parameter {parameterName} in any registered operations in resource {ResourceName}."
-                );
-
-            return typeof(string); // Default to string if not found
-        }
-
         private MethodProvider BuildCreateResourceIdentifierMethod()
         {
             var parameters = new List<ParameterProvider>();
@@ -371,7 +336,7 @@ namespace Azure.Generator.Management.Providers
                         formatBuilder.Append('/');
                     }
                     var variableName = segment.VariableName;
-                    var parameter = new ParameterProvider(variableName, $"The {variableName}", GetPathParameterType(variableName));
+                    var parameter = new ParameterProvider(variableName, $"The {variableName}", ResourceHelpers.GetRequestPathParameterType(variableName, _readMethod.InputMethod));
                     parameters.Add(parameter);
                     formatBuilder.Append($"{{{refCount++}}}");
                 }
@@ -452,25 +417,25 @@ namespace Azure.Generator.Management.Providers
                 ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
-            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Read)?.InputMethod;
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
-            if (HasTags() && getMethod is not null && updateMethodProvider is not null)
+            if (HasTags() && _readMethod is not null && updateMethodProvider is not null)
             {
-                (bool isPatch, InputClient? updateClient) = PopulateUpdateClient();
-                var getClient = PopulateGetClient();
-                if (updateClient is not null && getClient is not null)
+                (bool isPatch, InputClient? inputUpdateClient) = PopulateUpdateClient();
+                var inputReadMethod = _readMethod.InputMethod;
+                var inputReadClient = _readMethod.InputClient;
+                if (inputUpdateClient is not null && inputReadClient is not null)
                 {
-                    var updateRestClientInfo = _clientInfos[updateClient];
-                    var getRestClientInfo = _clientInfos[getClient];
+                    var updateRestClientInfo = _clientInfos[inputUpdateClient];
+                    var getRestClientInfo = _clientInfos[inputReadClient];
 
                     methods.AddRange([
-                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
                     ]);
                 }
             }
@@ -492,9 +457,6 @@ namespace Azure.Generator.Management.Providers
 
             return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
         }
-
-        private InputClient? PopulateGetClient()
-            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Read)?.InputClient;
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {
