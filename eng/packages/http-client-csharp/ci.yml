@@ -6,6 +6,18 @@ trigger:
     include:
       - eng/packages/http-client-csharp
       - eng/scripts/typespec
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - eng/packages/http-client-csharp
+      - eng/scripts/typespec
+
 parameters:
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"

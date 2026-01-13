@@ -6,6 +6,18 @@ trigger:
     include:
       - eng/packages/plugins/client/Client.Plugin
       - eng/packages/http-client-csharp
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - eng/packages/plugins/client/Client.Plugin
+      - eng/packages/http-client-csharp
+
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
   - template: /eng/pipelines/templates/variables/globals.yml
