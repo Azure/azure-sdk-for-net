@@ -313,9 +313,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public DisconnectedOperationsBillingModel(string value) { throw null; }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel Capacity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsBillingModel (string value) { throw null; }
@@ -332,9 +330,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent Connected { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionIntent (string value) { throw null; }
@@ -351,9 +347,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus Connected { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsConnectionStatus (string value) { throw null; }
@@ -413,9 +407,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus Registered { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus Unregistered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsRegistrationStatus (string value) { throw null; }
@@ -432,9 +424,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType Install { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType Update { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsReleaseType (string value) { throw null; }
@@ -452,9 +442,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState left, Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DisconnectedOperations.Models.DisconnectedOperationsResourceProvisioningState (string value) { throw null; }

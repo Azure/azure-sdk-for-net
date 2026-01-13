@@ -22,6 +22,9 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Needed to override the bundled version in Microsoft.Azure.WebJobs -->
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>
