@@ -63,8 +63,7 @@ public partial class SubnetResource : ProvisionableResource
 
     /// <summary>
     /// Set this property to false to disable default outbound connectivity for
-    /// all VMs in the subnet. This property can only be set at the time of
-    /// subnet creation and cannot be updated for an existing subnet.
+    /// all VMs in the subnet.
     /// </summary>
     public BicepValue<bool> DefaultOutboundAccess 
     {
@@ -293,7 +292,7 @@ public partial class SubnetResource : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SubnetResource.</param>
     public SubnetResource(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/virtualNetworks/subnets", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/virtualNetworks/subnets", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -336,6 +335,16 @@ public partial class SubnetResource : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

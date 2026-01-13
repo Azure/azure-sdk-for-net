@@ -549,7 +549,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.HeaderParam.endpoint"
         },
         {
           "$id": "47",
@@ -888,7 +888,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MultipleParams.endpoint"
         },
         {
           "$id": "73",
@@ -1291,7 +1291,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MixedParams.endpoint"
         },
         {
           "$id": "105",
@@ -1626,7 +1626,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.PathParam.endpoint"
         },
         {
           "$id": "129",
@@ -1814,7 +1814,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParamAlias.endpoint"
         },
         {
           "$id": "143",
@@ -1879,7 +1879,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -2192,7 +2192,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Service.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.ChildClient.endpoint"
             },
             {
               "$ref": "129"

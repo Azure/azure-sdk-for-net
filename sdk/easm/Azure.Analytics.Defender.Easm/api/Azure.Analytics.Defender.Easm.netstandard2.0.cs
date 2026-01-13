@@ -125,9 +125,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetChainSource ASSET { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetChainSource DISCOGROUP { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetChainSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetChainSource left, Azure.Analytics.Defender.Easm.AssetChainSource right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetChainSource (string value) { throw null; }
@@ -167,9 +165,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetKind Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetKind SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetKind left, Azure.Analytics.Defender.Easm.AssetKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetKind (string value) { throw null; }
@@ -232,9 +228,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetResponseType Reduced { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetResponseType Standard { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetResponseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetResponseType left, Azure.Analytics.Defender.Easm.AssetResponseType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetResponseType (string value) { throw null; }
@@ -317,9 +311,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetState Confirmed { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetState Dismissed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetState left, Azure.Analytics.Defender.Easm.AssetState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetState (string value) { throw null; }
@@ -382,9 +374,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetUpdateState Confirmed { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateState Dismissed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetUpdateState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetUpdateState left, Azure.Analytics.Defender.Easm.AssetUpdateState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetUpdateState (string value) { throw null; }
@@ -407,9 +397,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetUpdateTransfers other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AssetUpdateTransfers left, Azure.Analytics.Defender.Easm.AssetUpdateTransfers right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AssetUpdateTransfers (string value) { throw null; }
@@ -470,9 +458,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AuditTrailItemKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.AuditTrailItemKind left, Azure.Analytics.Defender.Easm.AuditTrailItemKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.AuditTrailItemKind (string value) { throw null; }
@@ -727,9 +713,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DataConnectionContent Assets { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DataConnectionContent AttackSurfaceInsights { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DataConnectionContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DataConnectionContent left, Azure.Analytics.Defender.Easm.DataConnectionContent right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DataConnectionContent (string value) { throw null; }
@@ -747,9 +731,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DataConnectionFrequency Monthly { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DataConnectionFrequency Weekly { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DataConnectionFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DataConnectionFrequency left, Azure.Analytics.Defender.Easm.DataConnectionFrequency right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DataConnectionFrequency (string value) { throw null; }
@@ -935,9 +917,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DeltaDetailType Added { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DeltaDetailType Removed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DeltaDetailType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DeltaDetailType left, Azure.Analytics.Defender.Easm.DeltaDetailType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DeltaDetailType (string value) { throw null; }
@@ -1078,9 +1058,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DiscoRunState Pending { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DiscoRunState Running { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DiscoRunState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DiscoRunState left, Azure.Analytics.Defender.Easm.DiscoRunState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DiscoRunState (string value) { throw null; }
@@ -1202,9 +1180,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind Host { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind IpBlock { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DiscoverySourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.DiscoverySourceKind left, Azure.Analytics.Defender.Easm.DiscoverySourceKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.DiscoverySourceKind (string value) { throw null; }
@@ -1556,9 +1532,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.GlobalAssetType Resource { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.GlobalAssetType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.GlobalAssetType left, Azure.Analytics.Defender.Easm.GlobalAssetType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.GlobalAssetType (string value) { throw null; }
@@ -1582,9 +1556,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.GlobalInventoryState Confirmed { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalInventoryState Dismissed { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.GlobalInventoryState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.GlobalInventoryState left, Azure.Analytics.Defender.Easm.GlobalInventoryState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.GlobalInventoryState (string value) { throw null; }
@@ -1948,9 +1920,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationPriority Medium { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationPriority None { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationPriority other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationPriority left, Azure.Analytics.Defender.Easm.ObservationPriority right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationPriority (string value) { throw null; }
@@ -1983,9 +1953,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationRemediationSource System { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationRemediationSource User { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationRemediationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationRemediationSource left, Azure.Analytics.Defender.Easm.ObservationRemediationSource right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationRemediationSource (string value) { throw null; }
@@ -2002,9 +1970,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationRemediationState Active { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationRemediationState NonApplicable { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationRemediationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationRemediationState left, Azure.Analytics.Defender.Easm.ObservationRemediationState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationRemediationState (string value) { throw null; }
@@ -2041,9 +2007,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservationType Cve { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservationType Insight { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservationType left, Azure.Analytics.Defender.Easm.ObservationType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservationType (string value) { throw null; }
@@ -2190,9 +2154,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ObservedPortStateValue Filtered { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ObservedPortStateValue Open { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ObservedPortStateValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ObservedPortStateValue left, Azure.Analytics.Defender.Easm.ObservedPortStateValue right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ObservedPortStateValue (string value) { throw null; }
@@ -2317,9 +2279,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.PageAssetRedirectType Javascript { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.PageAssetRedirectType MetaRefresh { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.PageAssetRedirectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.PageAssetRedirectType left, Azure.Analytics.Defender.Easm.PageAssetRedirectType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.PageAssetRedirectType (string value) { throw null; }
@@ -2373,9 +2333,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.PolicyAction SetExternalID { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.PolicyAction SetState { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.PolicyAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.PolicyAction left, Azure.Analytics.Defender.Easm.PolicyAction right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.PolicyAction (string value) { throw null; }
@@ -2515,9 +2473,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind Host { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind IpAddress { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind left, Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind (string value) { throw null; }
@@ -2756,9 +2712,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.SslCertAssetValidationType ExtendedValidation { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.SslCertAssetValidationType OrganizationValidation { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.SslCertAssetValidationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.SslCertAssetValidationType left, Azure.Analytics.Defender.Easm.SslCertAssetValidationType right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.SslCertAssetValidationType (string value) { throw null; }
@@ -2839,9 +2793,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.TaskResourcePhase Polling { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.TaskResourcePhase Running { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.TaskResourcePhase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.TaskResourcePhase left, Azure.Analytics.Defender.Easm.TaskResourcePhase right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.TaskResourcePhase (string value) { throw null; }
@@ -2863,9 +2815,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.TaskResourceState Running { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.TaskResourceState Warning { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.TaskResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Defender.Easm.TaskResourceState left, Azure.Analytics.Defender.Easm.TaskResourceState right) { throw null; }
         public static implicit operator Azure.Analytics.Defender.Easm.TaskResourceState (string value) { throw null; }

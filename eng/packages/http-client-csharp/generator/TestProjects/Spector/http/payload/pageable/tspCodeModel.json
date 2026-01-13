@@ -1344,7 +1344,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2759,7 +2759,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -3033,7 +3033,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.PageSize.endpoint"
             }
           ],
           "initializedBy": 0,

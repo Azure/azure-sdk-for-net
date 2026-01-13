@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The instance view of the VM Config Agent running on the virtual machine. </summary>
     public partial class HciVmConfigAgentInstanceView
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmConfigAgentInstanceView"/>. </summary>
         internal HciVmConfigAgentInstanceView()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmConfigAgentInstanceView"/>. </summary>
         /// <param name="vmConfigAgentVersion"> The VM Config Agent full version. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmConfigAgentInstanceView(string vmConfigAgentVersion, IReadOnlyList<HciVmInstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmConfigAgentInstanceView(string vmConfigAgentVersion, IList<HciVmInstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmConfigAgentVersion = vmConfigAgentVersion;
             Statuses = statuses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The VM Config Agent full version. </summary>
         public string VmConfigAgentVersion { get; }
+
         /// <summary> The resource status information. </summary>
-        public IReadOnlyList<HciVmInstanceViewStatus> Statuses { get; }
+        public IList<HciVmInstanceViewStatus> Statuses { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct AttestBootIntegrityStatus : IEquatable<AttestBootIntegrityStatus>
     {
         private readonly string _value;
+        /// <summary> Boot integrity properties are valid. </summary>
+        private const string ValidValue = "Valid";
+        /// <summary> Boot integrity properties are invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Boot integrity properties status is unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="AttestBootIntegrityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestBootIntegrityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ValidValue = "Valid";
-        private const string InvalidValue = "Invalid";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Boot integrity properties are valid. </summary>
         public static AttestBootIntegrityStatus Valid { get; } = new AttestBootIntegrityStatus(ValidValue);
+
         /// <summary> Boot integrity properties are invalid. </summary>
         public static AttestBootIntegrityStatus Invalid { get; } = new AttestBootIntegrityStatus(InvalidValue);
+
         /// <summary> Boot integrity properties status is unknown. </summary>
         public static AttestBootIntegrityStatus Unknown { get; } = new AttestBootIntegrityStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="AttestBootIntegrityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttestBootIntegrityStatus left, AttestBootIntegrityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttestBootIntegrityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttestBootIntegrityStatus left, AttestBootIntegrityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestBootIntegrityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttestBootIntegrityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttestBootIntegrityStatus(string value) => new AttestBootIntegrityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttestBootIntegrityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttestBootIntegrityStatus?(string value) => value == null ? null : new AttestBootIntegrityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttestBootIntegrityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttestBootIntegrityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
