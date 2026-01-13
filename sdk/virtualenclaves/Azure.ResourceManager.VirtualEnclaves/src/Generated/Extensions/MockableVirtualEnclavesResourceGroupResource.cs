@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableVirtualEnclavesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableVirtualEnclavesResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableVirtualEnclavesResourceGroupResource for mocking. </summary>
         protected MockableVirtualEnclavesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableVirtualEnclavesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableVirtualEnclavesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableVirtualEnclavesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of VirtualEnclaveResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualEnclaveResources and their operations over a VirtualEnclaveResource. </returns>
+        /// <summary> Gets a collection of VirtualEnclaves in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualEnclaves and their operations over a VirtualEnclaveResource. </returns>
         public virtual VirtualEnclaveCollection GetVirtualEnclaves()
         {
             return GetCachedClient(client => new VirtualEnclaveCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// Get a EnclaveResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEnclave_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualEnclaveResource>> GetVirtualEnclaveAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
+
             return await GetVirtualEnclaves().GetAsync(virtualEnclaveName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// Get a EnclaveResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/virtualEnclaves/{virtualEnclaveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEnclave_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualEnclaveResource> GetVirtualEnclave(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
+
             return GetVirtualEnclaves().Get(virtualEnclaveName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualEnclaveCommunityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualEnclaveCommunityResources and their operations over a VirtualEnclaveCommunityResource. </returns>
+        /// <summary> Gets a collection of VirtualEnclaveCommunities in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualEnclaveCommunities and their operations over a VirtualEnclaveCommunityResource. </returns>
         public virtual VirtualEnclaveCommunityCollection GetVirtualEnclaveCommunities()
         {
             return GetCachedClient(client => new VirtualEnclaveCommunityCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// Get a CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Community_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualEnclaveCommunityResource>> GetVirtualEnclaveCommunityAsync(string communityName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+
             return await GetVirtualEnclaveCommunities().GetAsync(communityName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// Get a CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Community_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,11 +156,13 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunity(string communityName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+
             return GetVirtualEnclaveCommunities().Get(communityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualEnclaveConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualEnclaveConnectionResources and their operations over a VirtualEnclaveConnectionResource. </returns>
+        /// <summary> Gets a collection of VirtualEnclaveConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualEnclaveConnections and their operations over a VirtualEnclaveConnectionResource. </returns>
         public virtual VirtualEnclaveConnectionCollection GetVirtualEnclaveConnections()
         {
             return GetCachedClient(client => new VirtualEnclaveConnectionCollection(client, Id));
@@ -182,20 +172,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// Get a EnclaveConnectionResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveConnectionResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveConnection_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +192,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualEnclaveConnectionResource>> GetVirtualEnclaveConnectionAsync(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
+
             return await GetVirtualEnclaveConnections().GetAsync(enclaveConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -213,20 +201,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// Get a EnclaveConnectionResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnclaveConnectionResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnclaveConnection_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,6 +221,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnection(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
+
             return GetVirtualEnclaveConnections().Get(enclaveConnectionName, cancellationToken);
         }
     }

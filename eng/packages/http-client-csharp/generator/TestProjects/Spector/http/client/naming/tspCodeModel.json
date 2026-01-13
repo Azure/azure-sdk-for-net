@@ -1308,7 +1308,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.Model.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1577,7 +1577,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.UnionEnum.endpoint"
             }
           ],
           "initializedBy": 0,

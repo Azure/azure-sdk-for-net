@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Response for getting all the linkable environments. </summary>
     public partial class LinkableEnvironmentResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentResult"/>. </summary>
         internal LinkableEnvironmentResult()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="environmentId"> environment id for which user is an admin. </param>
         /// <param name="environmentName"> Name of the environment. </param>
         /// <param name="planData"> Billing plan information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkableEnvironmentResult(string environmentId, string environmentName, DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinkableEnvironmentResult(string environmentId, string environmentName, DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnvironmentId = environmentId;
             EnvironmentName = environmentName;
             PlanData = planData;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> environment id for which user is an admin. </summary>
         public string EnvironmentId { get; }
+
         /// <summary> Name of the environment. </summary>
         public string EnvironmentName { get; }
+
         /// <summary> Billing plan information. </summary>
         public DynatraceBillingPlanInfo PlanData { get; }
     }

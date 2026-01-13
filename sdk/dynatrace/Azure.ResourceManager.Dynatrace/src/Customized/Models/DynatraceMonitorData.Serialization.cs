@@ -5,13 +5,11 @@
 
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Dynatrace.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    [CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(WriteIdentity), DeserializationValueHook = nameof(ReadIdentity))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(WriteIdentity), DeserializationValueHook = nameof(ReadIdentity))]
     public partial class DynatraceMonitorData
     {
         internal void WriteIdentity(Utf8JsonWriter writer, ModelReaderWriterOptions options)

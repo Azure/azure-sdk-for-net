@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The response from the List Managed Clusters operation. </summary>
+    /// <summary>
+    /// The response from the List Managed Clusters operation.
+    /// Serialized Name: ManagedClusterListResult
+    /// </summary>
     internal partial class ManagedClusterListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
-        /// <param name="value"> The list of managed clusters. </param>
-        /// <param name="nextLink"> The URL to get the next set of managed cluster results. </param>
+        /// <param name="value">
+        /// The list of managed clusters.
+        /// Serialized Name: ManagedClusterListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of managed cluster results.
+        /// Serialized Name: ManagedClusterListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of managed clusters. </summary>
+        /// <summary>
+        /// The list of managed clusters.
+        /// Serialized Name: ManagedClusterListResult.value
+        /// </summary>
         public IReadOnlyList<ContainerServiceManagedClusterData> Value { get; }
-        /// <summary> The URL to get the next set of managed cluster results. </summary>
+        /// <summary>
+        /// The URL to get the next set of managed cluster results.
+        /// Serialized Name: ManagedClusterListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

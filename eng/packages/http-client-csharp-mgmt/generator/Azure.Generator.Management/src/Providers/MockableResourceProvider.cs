@@ -38,9 +38,26 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resources">the resources in this scope.</param>
         /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
         /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
-        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        private MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
             : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, resourceMethods, nonResourceMethods)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="MockableResourceProvider"/> if there are resources or methods to generate.
+        /// </summary>
+        /// <param name="resourceScope">The scope of this mockable resource.</param>
+        /// <param name="resources">The resources in this scope.</param>
+        /// <param name="resourceMethods">The resource methods that belong to this scope.</param>
+        /// <param name="nonResourceMethods">The non-resource methods that belong to this scope.</param>
+        /// <returns>A new instance of <see cref="MockableResourceProvider"/> if there are resources or methods, otherwise null.</returns>
+        public static MockableResourceProvider? TryCreate(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        {
+            if (resources.Count == 0 && resourceMethods.Count == 0 && nonResourceMethods.Count == 0)
+            {
+                return null;
+            }
+            return new MockableResourceProvider(resourceScope, resources, resourceMethods, nonResourceMethods);
         }
 
         private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
@@ -195,29 +212,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _nonResourceMethods)
             {
                 // Process both async and sync method variants
-                var methodsToProcess = new[] {
-                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
-                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
-                };
-                foreach (var m in methodsToProcess)
-                {
-                    methods.Add(m);
-                    var updated = false;
-                    foreach (var p in m.Signature.Parameters)
-                    {
-                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                        if (normalizedName != null && normalizedName != p.Name)
-                        {
-                            p.Update(name: normalizedName);
-                            updated = true;
-                        }
-                    }
-                    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-                    if (updated)
-                    {
-                        m.Update(signature: m.Signature);
-                    }
-                }
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];
@@ -310,14 +306,26 @@ namespace Azure.Generator.Management.Providers
             return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
         }
 
-        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
                 InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName)
+                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName)
             };
+        }
+
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            }
+
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

@@ -96,10 +96,6 @@ public abstract class BicepValue : IBicepValue
         {
             return _expression!;
         }
-        if (_source is not null)
-        {
-            return _source.GetReference();
-        }
         if (_kind == BicepValueKind.Literal)
         {
             return CompileLiteralValue();
@@ -107,6 +103,10 @@ public abstract class BicepValue : IBicepValue
         if (_self is not null)
         {
             return _self.GetReference();
+        }
+        if (_source is not null)
+        {
+            return _source.GetReference();
         }
         if (_kind is BicepValueKind.Unset)
         {

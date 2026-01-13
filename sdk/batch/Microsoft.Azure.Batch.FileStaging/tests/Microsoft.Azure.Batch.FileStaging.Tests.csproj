@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />-->
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
@@ -26,12 +25,17 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
-  <ItemGroup>
+
+   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Batch.FileStaging.csproj" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
+   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="TestResources\Data.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

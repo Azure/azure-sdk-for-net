@@ -7,55 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Cert-Manager issuerRef properties. </summary>
     public partial class CertManagerIssuerRef
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertManagerIssuerRef"/>. </summary>
         /// <param name="group"> group of issuer. </param>
         /// <param name="kind"> kind of issuer (Issuer or ClusterIssuer). </param>
         /// <param name="name"> name of issuer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="name"/> is null. </exception>
-        public CertManagerIssuerRef(string group, CertManagerIssuerKind kind, string name)
+        public CertManagerIssuerRef(string @group, CertManagerIssuerKind kind, string name)
         {
-            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNull(@group, nameof(@group));
             Argument.AssertNotNull(name, nameof(name));
 
-            Group = group;
+            Group = @group;
             Kind = kind;
             Name = name;
         }
@@ -64,24 +36,21 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="group"> group of issuer. </param>
         /// <param name="kind"> kind of issuer (Issuer or ClusterIssuer). </param>
         /// <param name="name"> name of issuer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertManagerIssuerRef(string group, CertManagerIssuerKind kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CertManagerIssuerRef(string @group, CertManagerIssuerKind kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Group = group;
+            Group = @group;
             Kind = kind;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CertManagerIssuerRef"/> for deserialization. </summary>
-        internal CertManagerIssuerRef()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> group of issuer. </summary>
         public string Group { get; set; }
+
         /// <summary> kind of issuer (Issuer or ClusterIssuer). </summary>
         public CertManagerIssuerKind Kind { get; set; }
+
         /// <summary> name of issuer. </summary>
         public string Name { get; set; }
     }

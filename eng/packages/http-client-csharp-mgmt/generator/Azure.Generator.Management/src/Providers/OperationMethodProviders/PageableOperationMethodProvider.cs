@@ -38,7 +38,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
-            string? methodName = null)
+            string? methodName = null,
+            ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -50,7 +51,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InitializeTypeInfo(
                 _itemType,
                 ref _actualItemType!,
-                ref _itemResourceClient
+                ref _itemResourceClient,
+                explicitResourceClient
             );
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
@@ -60,11 +62,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private static void InitializeTypeInfo(
             CSharpType itemType,
             ref CSharpType actualItemType,
-            ref ResourceClientProvider? resourceClient
+            ref ResourceClientProvider? resourceClient,
+            ResourceClientProvider? explicitResourceClient = null
             )
         {
             actualItemType = itemType;
-            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
+            // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
+            if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
+            {
+                resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
             {
                 actualItemType = resourceClient.Type;
             }
@@ -102,7 +111,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _contextualPath, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -116,7 +125,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var collectionResult = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!;
             var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult, diagnosticScope);
+            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, diagnosticScope);
 
             var collectionResultOfT = collectionResult.Type;
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));

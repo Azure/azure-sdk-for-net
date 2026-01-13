@@ -548,9 +548,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentState Active { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentState left, Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentState (string value) { throw null; }
@@ -568,9 +566,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentKind Staging { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentKind Testing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentKind left, Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentKind (string value) { throw null; }
@@ -640,9 +636,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState left, Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState (string value) { throw null; }
@@ -712,9 +706,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiKind Webhook { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiKind Websocket { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiKind left, Azure.ResourceManager.ApiCenter.Models.ApiKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiKind (string value) { throw null; }
@@ -748,9 +740,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage Retired { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage Testing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage left, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage (string value) { throw null; }
@@ -778,9 +768,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat Inline { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat Link { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat left, Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat (string value) { throw null; }
@@ -833,9 +821,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecImportSourceFormat Inline { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecImportSourceFormat Link { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiSpecImportSourceFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiSpecImportSourceFormat left, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportSourceFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiSpecImportSourceFormat (string value) { throw null; }
@@ -884,9 +870,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType Kubernetes { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType MuleSoftApiManagement { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType left, Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType (string value) { throw null; }
@@ -903,9 +887,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.MetadataAssignmentEntity Deployment { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.MetadataAssignmentEntity Environment { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.MetadataAssignmentEntity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.MetadataAssignmentEntity left, Azure.ResourceManager.ApiCenter.Models.MetadataAssignmentEntity right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.MetadataAssignmentEntity (string value) { throw null; }
@@ -932,9 +914,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat Inline { get { throw null; } }
         public static Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat Link { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat left, Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat (string value) { throw null; }

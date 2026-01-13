@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapProductType : IEquatable<SapProductType>
     {
         private readonly string _value;
+        /// <summary> SAP Product ECC. </summary>
+        private const string EccValue = "ECC";
+        /// <summary> SAP Product S4HANA. </summary>
+        private const string S4HanaValue = "S4HANA";
+        /// <summary> SAP Products other than the ones listed. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="SapProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapProductType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EccValue = "ECC";
-        private const string S4HanaValue = "S4HANA";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> SAP Product ECC. </summary>
         public static SapProductType Ecc { get; } = new SapProductType(EccValue);
+
         /// <summary> SAP Product S4HANA. </summary>
         public static SapProductType S4Hana { get; } = new SapProductType(S4HanaValue);
+
         /// <summary> SAP Products other than the ones listed. </summary>
         public static SapProductType Other { get; } = new SapProductType(OtherValue);
+
         /// <summary> Determines if two <see cref="SapProductType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapProductType left, SapProductType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapProductType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapProductType left, SapProductType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapProductType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapProductType(string value) => new SapProductType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapProductType?(string value) => value == null ? null : new SapProductType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapProductType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapProductType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

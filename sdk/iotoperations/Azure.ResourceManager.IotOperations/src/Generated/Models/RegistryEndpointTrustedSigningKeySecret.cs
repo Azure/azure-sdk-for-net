@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeySecret"/>. </summary>
         /// <param name="secretRef"> The name of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretRef"/> is null. </exception>
-        public RegistryEndpointTrustedSigningKeySecret(string secretRef)
+        public RegistryEndpointTrustedSigningKeySecret(string secretRef) : base(RegistryEndpointTrustedSigningKeyType.Secret)
         {
             Argument.AssertNotNull(secretRef, nameof(secretRef));
 
             SecretRef = secretRef;
-            Type = RegistryEndpointTrustedSigningKeyType.Secret;
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeySecret"/>. </summary>
         /// <param name="type"> The trust type for the registry endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretRef"> The name of the secret. </param>
-        internal RegistryEndpointTrustedSigningKeySecret(RegistryEndpointTrustedSigningKeyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string secretRef) : base(type, serializedAdditionalRawData)
+        internal RegistryEndpointTrustedSigningKeySecret(RegistryEndpointTrustedSigningKeyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string secretRef) : base(@type, additionalBinaryDataProperties)
         {
             SecretRef = secretRef;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeySecret"/> for deserialization. </summary>
-        internal RegistryEndpointTrustedSigningKeySecret()
-        {
         }
 
         /// <summary> The name of the secret. </summary>

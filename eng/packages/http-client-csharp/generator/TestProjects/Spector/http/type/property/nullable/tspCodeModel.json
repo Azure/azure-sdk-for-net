@@ -1713,7 +1713,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.String.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2158,7 +2158,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2603,7 +2603,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3048,7 +3048,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3493,7 +3493,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3938,7 +3938,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4383,7 +4383,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.endpoint"
             }
           ],
           "initializedBy": 0,

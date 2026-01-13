@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct CommunityEndpointDestinationType : IEquatable<CommunityEndpointDestinationType>
     {
         private readonly string _value;
+        /// <summary> DestinationType Type FQDN. </summary>
+        private const string FqdnValue = "FQDN";
+        /// <summary> DestinationType Type FQDNTag. </summary>
+        private const string FqdnTagValue = "FQDNTag";
+        /// <summary> DestinationType Type IPAddress. </summary>
+        private const string IPAddressValue = "IPAddress";
+        /// <summary> DestinationType Type PrivateNetwork. </summary>
+        private const string PrivateNetworkValue = "PrivateNetwork";
 
         /// <summary> Initializes a new instance of <see cref="CommunityEndpointDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunityEndpointDestinationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FqdnValue = "FQDN";
-        private const string FqdnTagValue = "FQDNTag";
-        private const string IPAddressValue = "IPAddress";
-        private const string PrivateNetworkValue = "PrivateNetwork";
+            _value = value;
+        }
 
         /// <summary> DestinationType Type FQDN. </summary>
         public static CommunityEndpointDestinationType Fqdn { get; } = new CommunityEndpointDestinationType(FqdnValue);
+
         /// <summary> DestinationType Type FQDNTag. </summary>
         public static CommunityEndpointDestinationType FqdnTag { get; } = new CommunityEndpointDestinationType(FqdnTagValue);
+
         /// <summary> DestinationType Type IPAddress. </summary>
         public static CommunityEndpointDestinationType IPAddress { get; } = new CommunityEndpointDestinationType(IPAddressValue);
+
         /// <summary> DestinationType Type PrivateNetwork. </summary>
         public static CommunityEndpointDestinationType PrivateNetwork { get; } = new CommunityEndpointDestinationType(PrivateNetworkValue);
+
         /// <summary> Determines if two <see cref="CommunityEndpointDestinationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunityEndpointDestinationType left, CommunityEndpointDestinationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommunityEndpointDestinationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunityEndpointDestinationType left, CommunityEndpointDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunityEndpointDestinationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommunityEndpointDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommunityEndpointDestinationType(string value) => new CommunityEndpointDestinationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommunityEndpointDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommunityEndpointDestinationType?(string value) => value == null ? null : new CommunityEndpointDestinationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommunityEndpointDestinationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommunityEndpointDestinationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

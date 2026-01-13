@@ -44,9 +44,7 @@ namespace Azure.Data.AppConfiguration
 
         private static readonly string[] s_requiredJsonPropertyNames =
         {
-            "id",
-            "enabled",
-            "conditions"
+            "id"
         };
 
         /// <summary>

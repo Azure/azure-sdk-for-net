@@ -51,7 +51,7 @@ namespace Samples
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextCat;
-                if ((nextPageString == null))
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }

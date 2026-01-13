@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The response to the List Namespace operation. </summary>
+    /// <summary> The response of a SBAuthorizationRule list operation. </summary>
     internal partial class SBAuthorizationRuleListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SBAuthorizationRuleListResult"/>. </summary>
-        internal SBAuthorizationRuleListResult()
+        /// <param name="value"> The SBAuthorizationRule items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SBAuthorizationRuleListResult(IEnumerable<ServiceBusAuthorizationRuleData> value)
         {
-            Value = new ChangeTrackingList<ServiceBusAuthorizationRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SBAuthorizationRuleListResult"/>. </summary>
-        /// <param name="value"> Result of the List Authorization Rules operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Authorization Rules. </param>
+        /// <param name="value"> The SBAuthorizationRule items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SBAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SBAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the List Authorization Rules operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBAuthorizationRuleListResult"/> for deserialization. </summary>
+        internal SBAuthorizationRuleListResult()
+        {
+        }
+
+        /// <summary> The SBAuthorizationRule items on this page. </summary>
         public IReadOnlyList<ServiceBusAuthorizationRuleData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Authorization Rules. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

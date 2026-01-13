@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct AttestCertValidationStatus : IEquatable<AttestCertValidationStatus>
     {
         private readonly string _value;
+        /// <summary> Attestation certificate is valid. </summary>
+        private const string ValidValue = "Valid";
+        /// <summary> Attestation certificate is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Attestation certificate status is unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="AttestCertValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestCertValidationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ValidValue = "Valid";
-        private const string InvalidValue = "Invalid";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Attestation certificate is valid. </summary>
         public static AttestCertValidationStatus Valid { get; } = new AttestCertValidationStatus(ValidValue);
+
         /// <summary> Attestation certificate is invalid. </summary>
         public static AttestCertValidationStatus Invalid { get; } = new AttestCertValidationStatus(InvalidValue);
+
         /// <summary> Attestation certificate status is unknown. </summary>
         public static AttestCertValidationStatus Unknown { get; } = new AttestCertValidationStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="AttestCertValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttestCertValidationStatus left, AttestCertValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttestCertValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttestCertValidationStatus left, AttestCertValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestCertValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttestCertValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttestCertValidationStatus(string value) => new AttestCertValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttestCertValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttestCertValidationStatus?(string value) => value == null ? null : new AttestCertValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttestCertValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttestCertValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

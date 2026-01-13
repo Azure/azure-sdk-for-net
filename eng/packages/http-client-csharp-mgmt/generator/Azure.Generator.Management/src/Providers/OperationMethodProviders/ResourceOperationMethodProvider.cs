@@ -88,6 +88,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
                 _serviceMethod,
+                _enclosingType,
                 ref _originalBodyType,
                 ref _returnBodyType,
                 ref _returnBodyResourceClient);
@@ -110,6 +111,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeTypeInfo(
             in InputServiceMethod serviceMethod,
+            TypeProvider enclosingType,
             ref CSharpType? originalBodyType,
             ref CSharpType? returnBodyType,
             ref ResourceClientProvider? wrappedResourceClient)
@@ -117,9 +119,37 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             originalBodyType = serviceMethod.GetResponseBodyType();
             // see if the body type could be wrapped into a resource client
             returnBodyType = originalBodyType;
-            if (originalBodyType != null && ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(originalBodyType, out wrappedResourceClient))
+            if (originalBodyType != null)
             {
-                returnBodyType = wrappedResourceClient.Type;
+                // If the enclosing type is a ResourceCollectionClientProvider, use its associated resource
+                // This ensures we get the correct resource when multiple resources share the same data type
+                if (enclosingType is ResourceCollectionClientProvider collectionProvider)
+                {
+                    // Check if the collection's resource data type matches the response body type
+                    if (collectionProvider.ResourceData.Type == originalBodyType)
+                    {
+                        wrappedResourceClient = collectionProvider.Resource;
+                        returnBodyType = wrappedResourceClient.Type;
+                        return;
+                    }
+                }
+                // If the enclosing type is a ResourceClientProvider itself, use it directly
+                else if (enclosingType is ResourceClientProvider resourceProvider)
+                {
+                    // Check if this resource's data type matches the response body type
+                    if (resourceProvider.ResourceData.Type == originalBodyType)
+                    {
+                        wrappedResourceClient = resourceProvider;
+                        returnBodyType = wrappedResourceClient.Type;
+                        return;
+                    }
+                }
+
+                // Fallback to the general lookup for other cases (e.g., MockableResourceProvider)
+                if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(originalBodyType, out wrappedResourceClient))
+                {
+                    returnBodyType = wrappedResourceClient.Type;
+                }
             }
         }
 
@@ -133,15 +163,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            var methodProvider = new MethodProvider(
+            var methodProvider = new ScmMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                null,
+                null,
+                resourceOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
                 resourceOperationMethodProvider._serviceMethod,
-                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._description,
                 resourceOperationMethodProvider._enclosingType,
                 methodProvider.XmlDocs);
 
@@ -163,7 +197,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
