@@ -14,9 +14,9 @@ using Azure.Core;
 
 namespace Payload.MultiPart
 {
-    internal partial class MultiPartFormDataBinaryContent : RequestContent
+    internal partial class MultiPartFormDataRequestContent : RequestContent
     {
-        public MultiPartFormDataBinaryContent() => throw null;
+        public MultiPartFormDataRequestContent() => throw null;
 
         public string ContentType => throw null;
 
